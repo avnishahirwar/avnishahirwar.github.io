@@ -8,7 +8,7 @@
     
     
     <!-- ⭐ PREMIUM SEO & META TAGS -->
-    <title>Avnish Ahirwar (Avnish Kumar) | Official Biography & Portfolio</title>
+    <title>Avnish Ahirwar | Official Biography & Portfolio</title>
     <meta name="description" content="Official luxury portfolio of Avnish Ahirwar (Avnish Kumar). Author of 'Flight 143: Khaufnak Pal', Web Developer, and Government Professional based in Bhopal. Discover biography, metrics, parentage, and smart tools.">
     <meta name="keywords" content="Avnish Ahirwar, Avnish Ahirwar, Author Avnish Ahirwar, Flight 143 Khaufnak Pal, Mansingh Ahirwar, Barkatullah Vishwavidyalaya, Avnish Ahirwar Height, Google Knowledge Panel Avnish">
     <meta name="author" content="Avnish Ahirwar">
@@ -864,19 +864,77 @@
                 </div>
             </div>
 
-            <!-- 🎬 FEATURED HIGHLIGHTS (YOUTUBE & INSTAGRAM REEL FULL FRAME VIEW) -->
-            <h3 class="video-container-heading">Featured Highlights</h3>
-            <div class="video-grid">
-                <!-- YouTube Short Layout -->
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
-                <!-- Instagram Video Layout (Fully Rendered Auto Viewport) -->
-                <div class="video-wrapper">
-                    <iframe src="https://www.instagram.com/reel/DVlxOKWjD_B/embed/?autoplay=1" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-            </div>
-        </section>
+
+            
+            
+           <section class="highlights-section">
+    <h3 class="video-container-heading">Featured Highlights</h3>
+    <div class="video-grid">
+        
+        <div class="video-wrapper">
+            <iframe 
+                src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&origin=https://www.w3schools.com" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <div class="video-wrapper instagram-wrapper">
+            <iframe 
+                src="https://www.instagram.com/reel/DVlxOKWjD_B/embed/?autoplay=1&mute=1" 
+                allowtransparency="true" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+    </div>
+</section>
+
+<style>
+/* Grid Setup: Positions both videos side-by-side */
+.video-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+/* 9:16 Aspect Ratio Container for YouTube Shorts */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px; 
+    aspect-ratio: 9 / 16; 
+    background-color: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Adjusting Instagram wrapper specifically to allow full height visibility for UI + Video */
+.instagram-wrapper {
+    max-width: 340px;
+    aspect-ratio: 9 / 17.5; /* Slightly increased ratio to prevent the bottom/top from clipping */
+}
+
+/* Forces the iframes to fill up the entire wrapper container */
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+</style>
+
+
+
+            
+
+                
 
         <!-- Smart Utilities Tools -->
         <section id="tools">
