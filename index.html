@@ -867,60 +867,114 @@
 
             
             
-           <section class="highlights-section">
-    <h3 class="video-container-heading">Featured Highlights</h3>
+           <!-- 🎬 FEATURED HIGHLIGHTS (PREMIUM DARK & GOLD STYLE) -->
+<section class="highlights-section">
+    <h3 class="highlights-main-heading">Featured Highlights</h3>
+    <div class="highlights-underline"></div>
+    
     <div class="video-grid">
         
+        <!-- YouTube Short Layout -->
         <div class="video-wrapper">
-            <iframe 
-                src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&origin=https://www.w3schools.com" 
-                allow="autoplay; encrypted-media" 
-                allowfullscreen>
-            </iframe>
+            <div class="video-inner-border">
+                <iframe 
+                    src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&origin=https://www.w3schools.com" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
         
+        <!-- Instagram Video Layout -->
         <div class="video-wrapper instagram-wrapper">
-            <iframe 
-                src="https://www.instagram.com/reel/DVlxOKWjD_B/embed/?autoplay=1&mute=1" 
-                allowtransparency="true" 
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                allowfullscreen>
-            </iframe>
+            <div class="video-inner-border">
+                <iframe 
+                    src="https://www.instagram.com/reel/DVlxOKWjD_B/embed/?autoplay=1&mute=1" 
+                    allowtransparency="true" 
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
         
     </div>
 </section>
 
 <style>
-/* Grid Setup: Positions both videos side-by-side */
+/* Main Section Layout with Premium Dark Gradient Background */
+.highlights-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #111116 0%, #1a1a24 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+/* Premium Gold Heading to match your Brand Identity */
+.highlights-main-heading {
+    font-size: 1.8rem;
+    color: #dfb76c; /* Premium Gold Color */
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Gold Section Divider */
+.highlights-underline {
+    width: 60px;
+    height: 2px;
+    background-color: #dfb76c;
+    margin: 0 auto 40px auto;
+}
+
+/* Grid Layout for Side-by-Side Horizontal Centering */
 .video-grid {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
     flex-wrap: wrap;
     padding: 10px;
 }
 
-/* 9:16 Aspect Ratio Container for YouTube Shorts */
+/* Outer Card Container with clean shadow and gradient backdrop */
 .video-wrapper {
     position: relative;
+    background: linear-gradient(180deg, #1c1c24 0%, #121217 100%);
+    border-radius: 16px;
     width: 100%;
     max-width: 320px; 
-    aspect-ratio: 9 / 16; 
-    background-color: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    aspect-ratio: 9 / 16; /* Clean vertical format for Shorts */
+    padding: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Adjusting Instagram wrapper specifically to allow full height visibility for UI + Video */
+/* Instagram specific layout ratio to accommodate the platform's native interface */
 .instagram-wrapper {
-    max-width: 340px;
-    aspect-ratio: 9 / 17.5; /* Slightly increased ratio to prevent the bottom/top from clipping */
+    max-width: 335px;
+    aspect-ratio: 9 / 17.2; 
 }
 
-/* Forces the iframes to fill up the entire wrapper container */
-.video-wrapper iframe {
+/* Subtle Hover Glow effect matching your Digital Card ecosystem */
+.video-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(223, 183, 108, 0.15);
+}
+
+/* Inner Thin Gold Frame Border enclosing the iframe safely */
+.video-inner-border {
+    position: relative;
+    border: 1px solid #dfb76c;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* Forces the absolute embedded frames to scale flawlessly within the gold wireframe */
+.video-inner-border iframe {
     position: absolute;
     top: 0;
     left: 0;
