@@ -866,8 +866,10 @@
 
 
             
-            
-           <!-- 🎬 FEATURED HIGHLIGHTS (PREMIUM DARK & GOLD STYLE) -->
+
+
+
+          <!-- 🎬 FEATURED HIGHLIGHTS (PREMIUM DARK & GOLD STYLE) -->
 <section class="highlights-section">
     <h3 class="highlights-main-heading">Featured Highlights</h3>
     <div class="highlights-underline"></div>
@@ -909,10 +911,10 @@
     text-align: center;
 }
 
-/* Premium Gold Heading to match your Brand Identity */
+/* Premium Gold Heading */
 .highlights-main-heading {
     font-size: 1.8rem;
-    color: #dfb76c; /* Premium Gold Color */
+    color: #dfb76c; 
     letter-spacing: 2px;
     margin-bottom: 8px;
     font-weight: 700;
@@ -936,27 +938,27 @@
     padding: 10px;
 }
 
-/* Outer Card Container with clean shadow and gradient backdrop */
+/* Fixed Height and Aspect Ratio constraints applied simultaneously */
 .video-wrapper {
     position: relative;
     background: linear-gradient(180deg, #1c1c24 0%, #121217 100%);
     border-radius: 16px;
     width: 100%;
     max-width: 320px; 
-    aspect-ratio: 9 / 16; /* Clean vertical format for Shorts */
+    height: 520px; /* Explicit height ensures visibility regardless of browser rendering */
     padding: 12px;
     box-sizing: border-box;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Instagram specific layout ratio to accommodate the platform's native interface */
+/* Instagram layout container height extended to prevent interface cutting */
 .instagram-wrapper {
     max-width: 335px;
-    aspect-ratio: 9 / 17.2; 
+    height: 560px; 
 }
 
-/* Subtle Hover Glow effect matching your Digital Card ecosystem */
+/* Hover effect */
 .video-wrapper:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(223, 183, 108, 0.15);
@@ -968,12 +970,12 @@
     border: 1px solid #dfb76c;
     border-radius: 12px;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Spans full dynamic container height */
     overflow: hidden;
     background-color: #000;
 }
 
-/* Forces the absolute embedded frames to scale flawlessly within the gold wireframe */
+/* Forces absolute embedded iframes to render perfectly inside the inner gold layout */
 .video-inner-border iframe {
     position: absolute;
     top: 0;
