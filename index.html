@@ -869,41 +869,29 @@
 
 
 
-          <!-- 🎬 FEATURED HIGHLIGHTS (PREMIUM DARK & GOLD STYLE) -->
-<section class="highlights-section">
+          <section class="highlights-section">
     <h3 class="highlights-main-heading">Featured Highlights</h3>
     <div class="highlights-underline"></div>
     
     <div class="video-grid">
         
-        <!-- YouTube Short Layout -->
-        <div class="video-wrapper">
+        <div class="cinema-tv-wrapper">
             <div class="video-inner-border">
                 <iframe 
-                    src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&origin=https://www.w3schools.com" 
+                    src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&controls=0&rel=0&showinfo=0&iv_load_policy=3" 
                     allow="autoplay; encrypted-media" 
+                    sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-presentation"
                     allowfullscreen>
                 </iframe>
             </div>
-        </div>
-        
-        <!-- Instagram Video Layout -->
-        <div class="video-wrapper instagram-wrapper">
-            <div class="video-inner-border">
-                <iframe 
-                    src="https://www.instagram.com/reel/DVlxOKWjD_B/embed/?autoplay=1&mute=1" 
-                    allowtransparency="true" 
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
-            </div>
+            <div class="tv-glow-bar"></div>
         </div>
         
     </div>
 </section>
 
 <style>
-/* Main Section Layout with Premium Dark Gradient Background */
+/* Main Section Layout with Premium Dark Gradient Backdrop */
 .highlights-section {
     padding: 60px 20px;
     background: linear-gradient(135deg, #111116 0%, #1a1a24 100%);
@@ -911,7 +899,7 @@
     text-align: center;
 }
 
-/* Premium Gold Heading */
+/* Premium Gold Branding Title */
 .highlights-main-heading {
     font-size: 1.8rem;
     color: #dfb76c; 
@@ -921,7 +909,7 @@
     text-transform: uppercase;
 }
 
-/* Gold Section Divider */
+/* Gold Branding Accent Line */
 .highlights-underline {
     width: 60px;
     height: 2px;
@@ -929,53 +917,45 @@
     margin: 0 auto 40px auto;
 }
 
-/* Grid Layout for Side-by-Side Horizontal Centering */
+/* Center Layout Grid */
 .video-grid {
     display: flex;
-    gap: 30px;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
     padding: 10px;
 }
 
-/* Fixed Height and Aspect Ratio constraints applied simultaneously */
-.video-wrapper {
+/* Cinematic 16:9 Widescreen Frame Layout (TV Box) */
+.cinema-tv-wrapper {
     position: relative;
     background: linear-gradient(180deg, #1c1c24 0%, #121217 100%);
-    border-radius: 16px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 320px; 
-    height: 520px; /* Explicit height ensures visibility regardless of browser rendering */
-    padding: 12px;
+    max-width: 850px; 
+    aspect-ratio: 16 / 9; 
+    padding: 16px;
     box-sizing: border-box;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-/* Instagram layout container height extended to prevent interface cutting */
-.instagram-wrapper {
-    max-width: 335px;
-    height: 560px; 
+/* Interactive scale responsive animation */
+.cinema-tv-wrapper:hover {
+    transform: scale(1.015);
 }
 
-/* Hover effect */
-.video-wrapper:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(223, 183, 108, 0.15);
-}
-
-/* Inner Thin Gold Frame Border enclosing the iframe safely */
+/* Inner Thin Metallic Gold Frame encompassing the TV panel screen */
 .video-inner-border {
     position: relative;
-    border: 1px solid #dfb76c;
-    border-radius: 12px;
+    border: 2px solid #dfb76c; 
+    border-radius: 14px;
     width: 100%;
-    height: 100%; /* Spans full dynamic container height */
+    height: 100%;
     overflow: hidden;
     background-color: #000;
 }
 
-/* Forces absolute embedded iframes to render perfectly inside the inner gold layout */
+/* Dynamic absolute forced-scaling inside the viewport */
 .video-inner-border iframe {
     position: absolute;
     top: 0;
@@ -984,8 +964,31 @@
     height: 100%;
     border: none;
 }
-</style>
 
+/* Premium Ambient Neon Gold Glow Effect under the TV frame */
+.tv-glow-bar {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: radial-gradient(circle, #dfb76c 0%, transparent 80%);
+    box-shadow: 0 0 20px 4px rgba(223, 183, 108, 0.4);
+    opacity: 0.7;
+}
+
+/* Fluid responsive breakdown adjustment for mobile screens */
+@media (max-width: 768px) {
+    .cinema-tv-wrapper {
+        padding: 8px;
+        border-radius: 12px;
+    }
+    .video-inner-border {
+        border-width: 1px;
+        border-radius: 8px;
+    }
+}
+</style>
 
 
 
