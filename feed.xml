@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Avnish Ahirwar - Official Updates</title>
+  <link>https://avnishahirwar.github.io/</link>
+  <description>Official RSS feed for Avnish Ahirwar's books, tech, and startup updates.</description>
+  <language>hi-IN</language>
+
+  <item>
+    <title>Flight 143: Khaufnak Pal Published</title>
+    <link>https://avnishahirwar.github.io/#book-store</link>
+    <description>Read the latest fiction book by Avnish Ahirwar.</description>
+    <pubDate>Thu, 04 Jul 2024 00:00:00 GMT</pubDate>
+  </item>
+
+</channel>
+</rss>
+
