@@ -497,6 +497,54 @@
             justify-content: center;
         }
 
+        /* Shop Grid */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .shop-card {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+        .shop-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+        }
+        .shop-card-badge {
+            background: var(--gold-gradient);
+            color: #000;
+            font-size: 7.5pt;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            align-self: center;
+            margin-bottom: 12px;
+        }
+        .shop-card-title {
+            font-size: 14pt;
+            color: #fff;
+            margin-bottom: 8px;
+            font-family: 'Cinzel', serif;
+        }
+        .shop-card-price {
+            font-size: 16pt;
+            color: var(--primary-gold);
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
         /* Smart Utilities Tools */
         .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .tool-box { background: rgba(0,0,0,0.4); padding: 30px 20px; border-radius: 12px; border: 1px dashed rgba(212, 175, 55, 0.4); text-align: center; }
@@ -686,15 +734,32 @@
             text-align: center;
             margin: 0 auto;
         }
-        .razorpay-embed-container {
-            background: rgba(0,0,0,0.5);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--primary-gold);
-            max-width: 450px;
-            margin: 20px auto 0 auto;
+
+        /* Google Reviews Card Styling */
+        .google-reviews-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+            max-width: 750px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .google-qr-img {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            border: 2px solid var(--primary-gold);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+            margin: 15px 0 25px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .google-qr-img:hover {
+            transform: scale(1.03);
         }
     </style>
 </head>
@@ -719,6 +784,7 @@
             <a href="#careers" class="nav-link">Careers</a>
             <a href="#tools" class="nav-link">Tools</a>
             <a href="#feedback" class="nav-link">Feedback</a>
+            <a href="#google-reviews" class="nav-link">Reviews</a>
             <a href="#contact-form" class="nav-link">Contact</a>
         </div>
     </nav>
@@ -745,7 +811,7 @@
             </div>
         </div>
 
-        <!-- 2. DIGITAL VCARD & BOOK SECTION (Updated Layout Side-By-Side) -->
+        <!-- 2. DIGITAL VCARD & BOOK SECTION -->
         <div class="side-by-side-grid">
             <div id="visiting-card" class="vcard">
                 <div>
@@ -972,16 +1038,56 @@
             </div>
         </section>
 
-        <!-- 7. SHOP SECTION -->
+        <!-- 7. SHOP SECTION (Upgraded E-Commerce Section) -->
         <section id="shop">
-            <h2>Shop Section</h2>
-            <p style="text-align: center; color: var(--text-muted); font-size: 10.5pt; margin-bottom: 10px;">Get your hands on smart tracking utilities to boost your productivity.</p>
-            <div class="razorpay-embed-container">
-                <h3 style="font-size: 15pt; color: #fff; margin-bottom: 5px; font-family:'Cinzel', serif;">Habit Tracker Booklet</h3>
-                <p style="color: var(--primary-gold); font-size: 10pt; font-weight:600; margin-bottom: 20px;">Premium Digital Edition</p>
-                <form>
-                    <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Q7v3W4ebzn4d5D" async> </script> 
-                </form>
+            <h2>Official Store</h2>
+            <p style="text-align: center; color: var(--text-muted); font-size: 10.5pt; margin-bottom: 25px;">Explore digital products, books, and tracking utilities designed to maximize your productivity.</p>
+            
+            <div class="shop-grid">
+                <!-- Product 1 -->
+                <div class="shop-card">
+                    <div>
+                        <span class="shop-card-badge">Best Seller</span>
+                        <h3 class="shop-card-title">Habit Tracker Booklet</h3>
+                        <p style="color: var(--text-muted); font-size: 9pt; margin-bottom: 15px;">Premium Digital Edition designed to build strong daily habits and boost focus.</p>
+                        <div class="shop-card-price">₹199</div>
+                    </div>
+                    <div>
+                        <form>
+                            <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Q7v3W4ebzn4d5D" async> </script> 
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="shop-card">
+                    <div>
+                        <span class="shop-card-badge">Digital Book</span>
+                        <h3 class="shop-card-title">Flight 143 (eBook)</h3>
+                        <p style="color: var(--text-muted); font-size: 9pt; margin-bottom: 15px;">Official eBook edition of Flight 143: Khaufnak Pal by Avnish Ahirwar.</p>
+                        <div class="shop-card-price">₹99</div>
+                    </div>
+                    <div>
+                        <a href="https://www.amazon.in/Flight-143-khaufanak-Hindi-Avnish-Ahirwar-ebook/dp/B0D8V1MSQH/" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center; border-radius: 8px;">
+                            <i class="fas fa-shopping-bag"></i> Buy Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="shop-card">
+                    <div>
+                        <span class="shop-card-badge">Paperback</span>
+                        <h3 class="shop-card-title">Flight 143 (Paperback)</h3>
+                        <p style="color: var(--text-muted); font-size: 9pt; margin-bottom: 15px;">Get a physical paperback copy delivered directly to your doorstep.</p>
+                        <div class="shop-card-price">₹250</div>
+                    </div>
+                    <div>
+                        <a href="https://www.amazon.in/Flight-143-Avnish-Ahirwar/dp/8119368061" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center; border-radius: 8px;">
+                            <i class="fab fa-amazon"></i> Buy on Amazon
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1084,7 +1190,31 @@
             </div>
         </section>
 
-        <!-- 11. CONNECT & SUBSCRIBE SECTION -->
+        <!-- 11. GOOGLE REVIEWS SECTION (Includes Check Us Out On Google Image) -->
+        <section id="google-reviews">
+            <h2>Customer Reviews</h2>
+            <div class="google-reviews-card">
+                <div style="color: #FFD700; font-size: 22pt; margin-bottom: 10px;">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <h3 style="color: #fff; margin-bottom: 10px; font-size: 14pt; font-weight: 600;">Check Us Out On Google</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 10pt; max-width: 600px; margin: 0 auto 15px auto;">
+                    Scan the QR code below or click the button to view our profile and share your valuable customer review on Google Maps.
+                </p>
+                
+                <!-- Google Badge Image Integrated Here -->
+                <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000415271.jpg" alt="Check us out on Google" class="google-qr-img">
+                </a>
+
+                <br>
+                <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 40px;">
+                    <i class="fab fa-google"></i> Write A Google Review
+                </a>
+            </div>
+        </section>
+
+        <!-- 12. CONNECT & SUBSCRIBE SECTION -->
         <section id="connect-newsletter">
             <h2>Connect & Subscribe</h2>
             <div class="connect-newsletter-box">
@@ -1104,7 +1234,7 @@
             </div>
         </section>
 
-        <!-- 12. CONTACT FORM -->
+        <!-- 13. CONTACT FORM -->
         <section id="contact-form">
             <h2>Get In Touch</h2>
             <div class="form-layout">
@@ -1127,23 +1257,6 @@
                     </div>
                     <button type="submit" class="submit-btn">Submit Details</button>
                 </form>
-            </div>
-        </section>
-
-        <!-- 13. GOOGLE REVIEWS SECTION -->
-        <section id="google-reviews">
-            <h2>Customer Reviews</h2>
-            <div style="text-align: center; padding: 40px 20px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; border: 1px dashed rgba(212, 175, 55, 0.3);">
-                <div style="color: #FFD700; font-size: 22pt; margin-bottom: 15px;">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <h3 style="color: #fff; margin-bottom: 10px; font-size: 13pt; font-weight: 600; text-align:center;">Your Opinion Matters To Us</h3>
-                <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 10.5pt; max-width: 600px; margin: 0 auto 25px auto;">
-                    We highly value your support and feedback. Click the button below to leave an official customer review on our Google Maps profile page.
-                </p>
-                <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 40px;">
-                    <i class="fab fa-google"></i> Write A Google Review
-                </a>
             </div>
         </section>
 
