@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://avnishahirwar.vercel.app/sitemap.xml
+Sitemap: https://avnishahirwar.github.io/sitemap.xml
