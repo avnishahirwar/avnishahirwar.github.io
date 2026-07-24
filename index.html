@@ -104,7 +104,7 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Left Vertical Sidebar Navigation */
+        /* Left Vertical Sidebar Navigation with Accordion Submenu Support */
         .sticky-navbar {
             position: fixed;
             top: 0;
@@ -150,24 +150,65 @@
             gap: 12px;
         }
 
+        /* Accordion Main Category Item */
+        .nav-category-item {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
         .nav-category-title {
-            font-size: 8pt;
+            font-size: 8.5pt;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--mag-gold);
-            margin-top: 10px;
-            margin-bottom: 4px;
             font-family: var(--font-tech);
             text-shadow: 0 0 5px var(--theme-glow);
             border-bottom: 1px dashed var(--mag-border-light);
-            padding-bottom: 3px;
+            padding: 10px 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 242, 254, 0.03);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-category-title:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: #fff;
+        }
+
+        .nav-category-title i.fa-chevron-down {
+            font-size: 7pt;
+            transition: transform 0.3s ease;
+        }
+
+        /* Submenu container toggled via click */
+        .nav-submenu {
+            display: none;
+            flex-direction: column;
+            padding: 6px 0 6px 10px;
+            gap: 6px;
+            border-left: 1px solid var(--mag-border);
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+
+        .nav-category-item.open .nav-submenu {
+            display: flex;
+        }
+
+        .nav-category-item.open .nav-category-title i.fa-chevron-down {
+            transform: rotate(180deg);
         }
 
         .nav-link {
             color: var(--mag-text-muted);
             text-decoration: none;
             font-family: var(--font-sans);
-            font-size: 8.5pt;
+            font-size: 8pt;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -180,7 +221,7 @@
         }
 
         .sub-link {
-            padding-left: 20px;
+            padding-left: 12px;
             font-size: 7.5pt;
             color: #829ab1;
         }
@@ -207,7 +248,7 @@
                 position: relative;
                 width: 100%;
                 height: auto;
-                max-height: 250px;
+                max-height: none;
                 border-right: none;
                 border-bottom: 1px solid var(--mag-border);
             }
@@ -1058,40 +1099,75 @@
         <div class="progress-bar" id="myBar"></div>
     </div>
 
-    <!-- Left Vertical Sidebar Navigation -->
+    <!-- Left Vertical Sidebar Navigation with Accordion Layout -->
     <nav class="sticky-navbar">
         <div class="nav-brand-title">Avnish Ahirwar</div>
         <div class="nav-container">
             <!-- 1. Home -->
-            <div class="nav-category-title">1. Home</div>
-            <a href="#hero-intro" class="nav-link sub-link">Home</a>
+            <div class="nav-category-item">
+                <div class="nav-category-title" onclick="toggleAccordion(this)">
+                    <span>1. Home</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="#hero-intro" class="nav-link sub-link">Home</a>
+                </div>
+            </div>
 
             <!-- 2. About -->
-            <div class="nav-category-title">2. About</div>
-            <a href="#visiting-card" class="nav-link sub-link">Digital Card</a>
-            <a href="#book-store" class="nav-link sub-link">Editorial Book</a>
-            <a href="#gallery" class="nav-link sub-link">Portfolio Gallery</a>
-            <a href="#highlights" class="nav-link sub-link">Highlights</a>
+            <div class="nav-category-item">
+                <div class="nav-category-title" onclick="toggleAccordion(this)">
+                    <span>2. About</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="#visiting-card" class="nav-link sub-link">Digital Card</a>
+                    <a href="#book-store" class="nav-link sub-link">Editorial Book</a>
+                    <a href="#gallery" class="nav-link sub-link">Portfolio Gallery</a>
+                    <a href="#highlights" class="nav-link sub-link">Highlights</a>
+                </div>
+            </div>
 
             <!-- 3. Services -->
-            <div class="nav-category-title">3. Services</div>
-            <a href="#services" class="nav-link sub-link">Professional Expertise</a>
-            <a href="#downloads" class="nav-link sub-link">App</a>
-            <a href="#shop" class="nav-link sub-link">Store</a>
-            <a href="#tools" class="nav-link sub-link">Tools</a>
-            <a href="#google-reviews" class="nav-link sub-link">Reviews</a>
-            <a href="#feedback" class="nav-link sub-link">Feedback</a>
+            <div class="nav-category-item">
+                <div class="nav-category-title" onclick="toggleAccordion(this)">
+                    <span>3. Services</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="#services" class="nav-link sub-link">Professional Expertise</a>
+                    <a href="#downloads" class="nav-link sub-link">App</a>
+                    <a href="#shop" class="nav-link sub-link">Store</a>
+                    <a href="#tools" class="nav-link sub-link">Tools</a>
+                    <a href="#google-reviews" class="nav-link sub-link">Reviews</a>
+                    <a href="#feedback" class="nav-link sub-link">Feedback</a>
+                </div>
+            </div>
 
             <!-- 4. Contact -->
-            <div class="nav-category-title">4. Contact</div>
-            <a href="#contact-form" class="nav-link sub-link">Get in Touch</a>
-            <a href="#google-reviews" class="nav-link sub-link">Locations</a>
-            <a href="#contact-form" class="nav-link sub-link">Contact Form</a>
-            <a href="#connect-newsletter" class="nav-link sub-link">Subscribe</a>
+            <div class="nav-category-item">
+                <div class="nav-category-title" onclick="toggleAccordion(this)">
+                    <span>4. Contact</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="#contact-form" class="nav-link sub-link">Get in Touch</a>
+                    <a href="#google-reviews" class="nav-link sub-link">Locations</a>
+                    <a href="#contact-form" class="nav-link sub-link">Contact Form</a>
+                    <a href="#connect-newsletter" class="nav-link sub-link">Subscribe</a>
+                </div>
+            </div>
 
             <!-- 5. Careers -->
-            <div class="nav-category-title">5. Careers</div>
-            <a href="#careers" class="nav-link sub-link">Careers Desk</a>
+            <div class="nav-category-item">
+                <div class="nav-category-title" onclick="toggleAccordion(this)">
+                    <span>5. Careers</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-submenu">
+                    <a href="#careers" class="nav-link sub-link">Careers Desk</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -1555,6 +1631,20 @@
     <div class="toast" id="shareToast">Copied To Clipboard</div>
 
     <script>
+        // =========================================================
+        // ACCORDION TOGGLE FUNCTION FOR SIDEBAR
+        // =========================================================
+        function toggleAccordion(element) {
+            const parentItem = element.parentElement;
+            // Optional: Close other open accordion items for a cleaner layout
+            document.querySelectorAll('.nav-category-item').forEach(item => {
+                if (item !== parentItem) {
+                    item.classList.remove('open');
+                }
+            });
+            parentItem.classList.toggle('open');
+        }
+
         // =========================================================
         // THREE.JS 3D MOTION BACKGROUND (FUTURISTIC LABORATORY AESTHETIC)
         // =========================================================
