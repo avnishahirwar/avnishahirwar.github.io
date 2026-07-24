@@ -69,9 +69,9 @@
             background-color: var(--mag-black);
             color: var(--mag-text-light);
             line-height: 1.7;
-            padding-top: 80px;
             letter-spacing: 0.3px;
             overflow-x: hidden;
+            display: flex;
         }
 
         /* 3D WebGL Motion Background Canvas */
@@ -104,38 +104,64 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Glassmorphism Sticky Navbar with Neon Glow Hover */
+        /* Left Vertical Sidebar Navigation */
         .sticky-navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            background: rgba(6, 8, 14, 0.82);
+            width: 280px;
+            height: 100vh;
+            background: rgba(6, 8, 14, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--mag-border);
+            border-right: 1px solid var(--mag-border);
             z-index: 9999;
-            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.2);
-            animation: slideDownNav 0.8s ease-out;
+            box-shadow: 6px 0 25px rgba(0, 242, 254, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: all 0.3s ease;
         }
 
-        @keyframes slideDownNav {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .sticky-navbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sticky-navbar::-webkit-scrollbar-thumb {
+            background: var(--mag-border);
+            border-radius: 4px;
+        }
+
+        .nav-brand-title {
+            padding: 25px 20px 15px 20px;
+            font-family: var(--font-title);
+            font-size: 14pt;
+            color: var(--mag-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--theme-glow);
+            border-bottom: 1px solid var(--mag-border-light);
+            text-align: center;
         }
 
         .nav-container {
-            max-width: 1300px;
-            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            padding: 18px 20px;
-            gap: 22px;
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
+            flex-direction: column;
+            padding: 20px;
+            gap: 12px;
         }
-        .nav-container::-webkit-scrollbar { display: none; }
+
+        .nav-category-title {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--mag-gold);
+            margin-top: 10px;
+            margin-bottom: 4px;
+            font-family: var(--font-tech);
+            text-shadow: 0 0 5px var(--theme-glow);
+            border-bottom: 1px dashed var(--mag-border-light);
+            padding-bottom: 3px;
+        }
 
         .nav-link {
             color: var(--mag-text-muted);
@@ -144,33 +170,52 @@
             font-size: 8.5pt;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            padding: 4px 0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: block;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--mag-gold);
-            box-shadow: 0 0 8px var(--mag-gold);
-            transition: width 0.3s ease;
+        .sub-link {
+            padding-left: 20px;
+            font-size: 7.5pt;
+            color: #829ab1;
         }
 
         .nav-link:hover, .nav-link.active {
             color: var(--mag-gold);
-            text-shadow: 0 0 10px var(--theme-glow);
-            transform: translateY(-2px);
+            background: rgba(0, 242, 254, 0.06);
+            text-shadow: 0 0 8px var(--theme-glow);
+            transform: translateX(4px);
         }
 
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
+        /* Main Content Layout offset for Sidebar */
+        .main-content-wrapper {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 40px;
+        }
+
+        @media (max-width: 968px) {
+            body {
+                flex-direction: column;
+            }
+            .sticky-navbar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 250px;
+                border-right: none;
+                border-bottom: 1px solid var(--mag-border);
+            }
+            .main-content-wrapper {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
         }
 
         .container {
@@ -231,7 +276,7 @@
             border: 1px solid var(--mag-border);
             border-radius: 18px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.7), inset 0 0 25px rgba(0, 242, 254, 0.06);
-            scroll-margin-top: 100px;
+            scroll-margin-top: 40px;
             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
             overflow: hidden;
@@ -1013,480 +1058,499 @@
         <div class="progress-bar" id="myBar"></div>
     </div>
 
-    <!-- Sticky Glassmorphism Navigation -->
+    <!-- Left Vertical Sidebar Navigation -->
     <nav class="sticky-navbar">
+        <div class="nav-brand-title">Avnish Ahirwar</div>
         <div class="nav-container">
-            <a href="#hero-intro" class="nav-link">Cover</a>
-            <a href="#visiting-card" class="nav-link">Digital Card</a>
-            <a href="#book-store" class="nav-link">Editorial Book</a>
-            <a href="#services" class="nav-link">Services</a>
-            <a href="#gallery" class="nav-link">Portfolio Gallery</a>
-            <a href="#highlights" class="nav-link">Highlights</a>
-            <a href="#downloads" class="nav-link">App</a>
-            <a href="#shop" class="nav-link">Store</a>
-            <a href="#careers" class="nav-link">Careers</a>
-            <a href="#tools" class="nav-link">Tools</a>
-            <a href="#feedback" class="nav-link">Feedback</a>
-            <a href="#google-reviews" class="nav-link">Reviews</a>
-            <a href="#contact-form" class="nav-link">Contact</a>
+            <!-- 1. Home -->
+            <div class="nav-category-title">1. Home</div>
+            <a href="#hero-intro" class="nav-link sub-link">Cover</a>
+
+            <!-- 2. About -->
+            <div class="nav-category-title">2. About</div>
+            <a href="#visiting-card" class="nav-link sub-link">Digital Card</a>
+            <a href="#book-store" class="nav-link sub-link">Editorial Book</a>
+            <a href="#gallery" class="nav-link sub-link">Portfolio Gallery</a>
+            <a href="#highlights" class="nav-link sub-link">Highlights</a>
+
+            <!-- 3. Services -->
+            <div class="nav-category-title">3. Services</div>
+            <a href="#services" class="nav-link sub-link">Professional Expertise</a>
+            <a href="#downloads" class="nav-link sub-link">App</a>
+            <a href="#shop" class="nav-link sub-link">Store</a>
+            <a href="#tools" class="nav-link sub-link">Tools</a>
+            <a href="#google-reviews" class="nav-link sub-link">Reviews</a>
+            <a href="#feedback" class="nav-link sub-link">Feedback</a>
+
+            <!-- 4. Contact -->
+            <div class="nav-category-title">4. Contact</div>
+            <a href="#contact-form" class="nav-link sub-link">Get in Touch</a>
+            <a href="#google-reviews" class="nav-link sub-link">Locations</a>
+            <a href="#contact-form" class="nav-link sub-link">Contact Form</a>
+            <a href="#connect-newsletter" class="nav-link sub-link">Subscribe</a>
+
+            <!-- 5. Careers -->
+            <div class="nav-category-title">5. Careers</div>
+            <a href="#careers" class="nav-link sub-link">Careers Desk</a>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="main-content-wrapper">
+        <div class="container">
 
-        <!-- HERO & INTRO SECTION (COVER EDITION) -->
-        <div class="hero-section" id="hero-intro">
-            <img src="https://6a47a0781e75414caa9769a7.imgix.net/DBMall.webp?w=400&auto=format&fit=crop&q=80" alt="Avnish Kumar Profile Photo" class="hero-profile-img">
-            <h1 class="hero-name">Avnish Ahirwar</h1>
-            <p class="hero-tagline">Author • Web Developer • Government Professional</p>
-            
-            <div class="hero-btn-container">
-                <a href="https://avnishtrends.setmore.com/?source=instagram" target="_blank" class="hero-primary-btn">
-                    <i class="fas fa-calendar-check"></i> Book Consultation
-                </a>
-                <a href="https://share.google/TpNKOjaFZUmWsGOFG" target="_blank" class="hero-secondary-btn">
-                    <i class="fab fa-google"></i> Knowledge Panel
-                </a>
-            </div>
-
-            <div class="intro-text-wrapper">
-                <p>My name is Avnish Ahirwar. I am an author, working professional, and web developer with a passion for innovation, technology, and continuous learning. I am the author of the book Flight 143: Khaufnak Pal, reflecting my interest in storytelling and creative writing. Currently, I am based in Bhopal, Madhya Pradesh, and serve at the Chief Minister's Office, Government of Madhya Pradesh. My primary responsibility is managing the online registration and application processing under the Chief Minister's Voluntary Grant Scheme, ensuring efficient and accurate service delivery. Beyond my professional life, I have a strong passion for traveling, discovering new destinations, and experiencing royal heritage, luxury lifestyles, and premium architecture. I believe that exploring different cultures and environments broadens perspective and inspires growth. My long-term vision is to become a successful entrepreneur by building my own company into a high-growth enterprise with a multi-crore turnover. I am committed to continuous self-improvement, leadership, innovation, and creating meaningful value through business and technology.</p>
-            </div>
-        </div>
-
-        <!-- DIGITAL VCARD & BOOK SECTION -->
-        <div class="side-by-side-grid">
-            <div id="visiting-card" class="vcard">
-                <div>
-                    <div class="vcard-header">
-                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/DBMall.webp?w=300&auto=format&fit=crop&q=80" alt="Avnish Kumar" class="vcard-profile-img">
-                        <h3 class="vcard-title">Avnish Ahirwar</h3>
-                        <p class="vcard-subtitle">Author & Entrepreneur</p>
-                    </div>
-
-                    <div class="info-side-by-side">
-                        <div class="vcard-body info-text-side">
-                            <p><i class="fas fa-phone-alt"></i> <a href="tel:+919589669893">+91-9589669893</a></p>
-                            <p><i class="fas fa-envelope"></i> <a href="mailto:avnishahirwar@zohomail.in">avnishahirwar@zohomail.in</a></p>
-                            <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/avnish_ahirwar" target="_blank">@avnish_ahirwar</a></p>
-                            <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/avnishahirwar415" target="_blank">avnishahirwar415</a></p>
-                            <p><i class="fas fa-map-marker-alt"></i> <a href="https://share.google/dXHiKlZQ5WI2ic75x" target="_blank">Bhopal, Madhya Pradesh</a></p>
-                        </div>
-                        <div class="vcard-qr-box">
-                            <p>Instagram</p>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/avnish_ahirwar" alt="Instagram QR" class="vcard-qr-img">
-                        </div>
-                    </div>
-                </div>
+            <!-- 1. HOME: COVER -->
+            <div class="hero-section" id="hero-intro">
+                <img src="https://6a47a0781e75414caa9769a7.imgix.net/DBMall.webp?w=400&auto=format&fit=crop&q=80" alt="Avnish Kumar Profile Photo" class="hero-profile-img">
+                <h1 class="hero-name">Avnish Ahirwar</h1>
+                <p class="hero-tagline">Author • Web Developer • Government Professional</p>
                 
-                <div>
-                    <button class="share-btn" onclick="shareVisitingCard()" style="background: linear-gradient(135deg, var(--mag-gold), #4facfe, #fff); background-size: 200% auto; color: #000; border: none; padding: 14px; font-weight: 700; width: 100%; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; font-size: 8.5pt; letter-spacing: 2px; border-radius: 30px; box-shadow: 0 0 15px var(--theme-glow); transition: 0.4s;"><i class="fas fa-share-alt"></i> Share Card Profile</button>
-                    
-                    <div class="vcard-actions-grid">
-                        <a href="#" class="action-card-btn" onclick="downloadVCard(event)">
-                            <i class="fas fa-user-plus"></i> Save Contact
-                        </a>
-                        <a href="https://www.instagram.com/avnish_ahirwar" target="_blank" class="action-card-btn">
-                            <i class="fab fa-instagram"></i> DM Insta
-                        </a>
-                        <a href="https://wa.me/919589669893" target="_blank" class="action-card-btn">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="tel:+919589669893" class="action-card-btn">
-                            <i class="fas fa-phone-alt"></i> Direct Call
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div id="book-store" class="book-card">
-                <div class="book-card-header">
-                    <h3 class="book-card-title">Flight 143: Khaufnak Pal</h3>
-                    <p class="book-card-subtitle">Literary Publication By Avnish Ahirwar</p>
-                </div>
-                
-                <div class="book-container">
-                    <div class="info-side-by-side">
-                        <div class="info-text-side" style="background: rgba(6, 8, 14, 0.65); padding: 16px; font-size: 8.5pt; text-align: left; border: 1px solid var(--mag-border-light); border-radius: 10px; line-height: 1.8; color: var(--mag-text-muted);">
-                            <strong style="color: var(--mag-gold); display: block; margin-bottom: 6px; font-family: var(--font-title); text-shadow: 0 0 6px var(--theme-glow);"><i class="fas fa-book-open"></i> BOOK METADATA:</strong>
-                            • Title: Flight 143: Khaufnak Pal<br>
-                            • Author: Avnish Ahirwar<br>
-                            • Genre: Fiction<br>
-                            • Date Published: 4 July 2024 <br>
-                            • ISBN: 9788119368068
-                            • Publisher: Authors Click Publishing
-                            • Award: Sahitya Sparsh Awards
-                        </div>
-                        <img src="https://flight143.simdif.com/images/public/sd_67839dd77767a.jpg" alt="Book Cover" class="book-image">
-                    </div>
-
-                    <div class="buy-links-grid">
-                        <a href="https://www.amazon.in/Flight-143-Avnish-Ahirwar/dp/8119368061" class="buy-btn" target="_blank"><i class="fab fa-amazon"></i> Amazon</a>
-                        <a href="https://www.flipkart.com/flight-143/p/itm5863bbb4fd43f?pid=9788119368068" class="buy-btn" target="_blank"><i class="fas fa-shopping-cart"></i> Flipkart</a>
-                        <a href="https://authorsclick.com/product/flight-143-khaufanak-pal/" class="buy-btn" target="_blank"><i class="fas fa-book"></i> Authors Click</a>
-                        <a href="https://www.amazon.in/Flight-143-khaufanak-Hindi-Avnish-Ahirwar-ebook/dp/B0D8V1MSQH/" class="buy-btn" target="_blank"><i class="fab fa-amazon"></i> Kindle</a>
-                        <a href="https://play.google.com/store/books/details?id=uVASEQAAQBAJ" class="buy-btn" target="_blank"><i class="fab fa-google-play"></i> Play Books</a>
-                        <a href="https://www.kobo.com/in/en/ebook/flight-143" class="buy-btn" target="_blank"><i class="fas fa-tablet-alt"></i> Kobo</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SERVICES SECTION -->
-        <section id="services">
-            <h2>Professional Expertise</h2>
-            <div class="services-wrapper">
-                <div class="service-card-box">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite;">💻</div>
-                        <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Web Architecture</h4>
-                        <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Tailored, high-performing digital experience platforms crafted with modern design standards.</p>
-                    </div>
-                    <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Inquire Now</a>
-                </div>
-                
-                <div class="service-card-box">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -1s;">🚀</div>
-                        <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Search Optimization</h4>
-                        <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Positioning brands at the top of organic search ecosystem with high authority positioning.</p>
-                    </div>
-                    <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Optimize Now</a>
-                </div>
-
-                <div class="service-card-box">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -2s;">📱</div>
-                        <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Android Ecosystem</h4>
-                        <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Minimalistic and lightweight native mobile applications for business enterprise workflows.</p>
-                    </div>
-                    <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Build App</a>
-                </div>
-
-                <div class="service-card-box">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -3s;">⚙️</div>
-                        <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">System Solutions</h4>
-                        <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Enterprise workflow automation tools and custom desktop operational solutions.</p>
-                    </div>
-                    <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Request Details</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- GALLERY SECTION -->
-        <section id="gallery">
-            <h2> Gallery</h2>
-            <div class="photo-grid">
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412345.jpg?w=500&auto=format&fit=max&q=60" alt="Dilip Suryavanshi">
-                    <div class="photo-title">Dilip Suryavanshi (MD, Dilip Buildcon Ltd)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412344.jpg?w=500&auto=format&fit=max&q=60" alt="Dr Mohan Yadav">
-                    <div class="photo-title">Dr Mohan Yadav (CM, Madhya Pradesh)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412391.jpg?w=500&auto=format&fit=max&q=60" alt="Shivraj Singh Chouhan">
-                    <div class="photo-title">Shivraj Singh Chouhan (Union Minister, Govt of India)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412349.jpg?w=500&auto=format&fit=max&q=60" alt="Kamal Chandra Bhanj Deo">
-                    <div class="photo-title">Kamal Chandra Bhanj Deo (Maharaja of Bastar)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000398743.jpg?w=500&auto=format&fit=max&q=60" alt="Er. Sanjeev Agrawal">
-                    <div class="photo-title">Er. Sanjeev Agrawal (CMD, The Sage Group)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412392.jpg?w=500&auto=format&fit=max&q=60" alt="Rohit Kapoor">
-                    <div class="photo-title">Rohit Kapoor (CEO, Food Marketplace at Swiggy)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000406257.jpg?w=500&auto=format&fit=max&q=60" alt="Shri Aruneshwar Saran Singh Deo">
-                    <div class="photo-title">Shri Aruneshwar Saran Singh Deo (Chairman, BDCA)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412360.jpg?w=500&auto=format&fit=max&q=60" alt="Sadhna Singh">
-                    <div class="photo-title">Sadhna Singh (Wife of Shri Shivraj Singh Chouhan)</div>
-                </div>
-                <div class="photo-box">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412369.jpg?w=500&auto=format&fit=max&q=60" alt="Ashwint Sharma">
-                    <div class="photo-title">Ashwint Sharma (Businessman)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- HIGHLIGHTS SECTION -->
-        <section id="highlights">
-            <h2>Featured Highlights</h2>
-            <div style="display: flex; justify-content: center; align-items: center; padding: 10px;">
-                <div style="position: relative; background: #000; border: 1px solid var(--mag-border); border-radius: 16px; width: 100%; max-width: 850px; aspect-ratio: 16 / 9; padding: 10px; box-shadow: 0 0 30px var(--theme-glow); transition: 0.4s;">
-                    <div style="position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 10px; background-color: #000;">
-                        <iframe 
-                            src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&controls=0&rel=0&showinfo=0&iv_load_policy=3" 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
-                            allow="autoplay; encrypted-media" 
-                            sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-presentation"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- DOWNLOADS SECTION -->
-        <section id="downloads">
-            <h2>Application Download</h2>
-            <div class="download-btn-group">
-                <div class="download-card">
-                    <h3 style="font-size: 14pt; margin-bottom: 12px; font-family: var(--font-editorial);"><i class="fas fa-mobile-alt"></i> Mobile Application</h3>
-                    <p style="color: var(--mag-text-muted); font-size: 9pt; margin-bottom: 20px;">Download our standalone Android application for full platform feature access.</p>
-                    <a href="https://avnishahirwar.github.io/apk.html" target="_blank" class="hero-primary-btn" style="padding: 12px 30px; font-size: 8pt;">
-                        <i class="fas fa-download"></i> Download Package
+                <div class="hero-btn-container">
+                    <a href="https://avnishtrends.setmore.com/?source=instagram" target="_blank" class="hero-primary-btn">
+                        <i class="fas fa-calendar-check"></i> Book Consultation
+                    </a>
+                    <a href="https://share.google/TpNKOjaFZUmWsGOFG" target="_blank" class="hero-secondary-btn">
+                        <i class="fab fa-google"></i> Knowledge Panel
                     </a>
                 </div>
-            </div>
-        </section>
 
-        <!-- SHOP SECTION -->
-        <section id="shop">
-            <h2> Store</h2>
-            <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Curated digital editions, publications, and productivity systems.</p>
-            
-            <div class="shop-grid">
-                <!-- Product 1 -->
-                <div class="shop-card">
+                <div class="intro-text-wrapper">
+                    <p>My name is Avnish Ahirwar. I am an author, working professional, and web developer with a passion for innovation, technology, and continuous learning. I am the author of the book Flight 143: Khaufnak Pal, reflecting my interest in storytelling and creative writing. Currently, I am based in Bhopal, Madhya Pradesh, and serve at the Chief Minister's Office, Government of Madhya Pradesh. My primary responsibility is managing the online registration and application processing under the Chief Minister's Voluntary Grant Scheme, ensuring efficient and accurate service delivery. Beyond my professional life, I have a strong passion for traveling, discovering new destinations, and experiencing royal heritage, luxury lifestyles, and premium architecture. I believe that exploring different cultures and environments broadens perspective and inspires growth. My long-term vision is to become a successful entrepreneur by building my own company into a high-growth enterprise with a multi-crore turnover. I am committed to continuous self-improvement, leadership, innovation, and creating meaningful value through business and technology.</p>
+                </div>
+            </div>
+
+            <!-- 2. ABOUT: DIGITAL CARD & EDITORIAL BOOK -->
+            <div class="side-by-side-grid">
+                <div id="visiting-card" class="vcard">
                     <div>
-                        <span class="shop-card-badge">Bestseller</span>
-                        <h3 class="shop-card-title">Habit Tracker System</h3>
-                        <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Digital edition crafted to build habits and maximize strategic focus.</p>
-                        <div class="shop-card-price">₹199</div>
+                        <div class="vcard-header">
+                            <img src="https://6a47a0781e75414caa9769a7.imgix.net/DBMall.webp?w=300&auto=format&fit=crop&q=80" alt="Avnish Kumar" class="vcard-profile-img">
+                            <h3 class="vcard-title">Avnish Ahirwar</h3>
+                            <p class="vcard-subtitle">Author & Entrepreneur</p>
+                        </div>
+
+                        <div class="info-side-by-side">
+                            <div class="vcard-body info-text-side">
+                                <p><i class="fas fa-phone-alt"></i> <a href="tel:+919589669893">+91-9589669893</a></p>
+                                <p><i class="fas fa-envelope"></i> <a href="mailto:avnishahirwar@zohomail.in">avnishahirwar@zohomail.in</a></p>
+                                <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/avnish_ahirwar" target="_blank">@avnish_ahirwar</a></p>
+                                <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/avnishahirwar415" target="_blank">avnishahirwar415</a></p>
+                                <p><i class="fas fa-map-marker-alt"></i> <a href="https://share.google/dXHiKlZQ5WI2ic75x" target="_blank">Bhopal, Madhya Pradesh</a></p>
+                            </div>
+                            <div class="vcard-qr-box">
+                                <p>Instagram</p>
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/avnish_ahirwar" alt="Instagram QR" class="vcard-qr-img">
+                            </div>
+                        </div>
                     </div>
+                    
                     <div>
-                        <form>
-                            <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Q7v3W4ebzn4d5D" async> </script> 
-                        </form>
+                        <button class="share-btn" onclick="shareVisitingCard()" style="background: linear-gradient(135deg, var(--mag-gold), #4facfe, #fff); background-size: 200% auto; color: #000; border: none; padding: 14px; font-weight: 700; width: 100%; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; text-transform: uppercase; font-size: 8.5pt; letter-spacing: 2px; border-radius: 30px; box-shadow: 0 0 15px var(--theme-glow); transition: 0.4s;"><i class="fas fa-share-alt"></i> Share Card Profile</button>
+                        
+                        <div class="vcard-actions-grid">
+                            <a href="#" class="action-card-btn" onclick="downloadVCard(event)">
+                                <i class="fas fa-user-plus"></i> Save Contact
+                            </a>
+                            <a href="https://www.instagram.com/avnish_ahirwar" target="_blank" class="action-card-btn">
+                                <i class="fab fa-instagram"></i> DM Insta
+                            </a>
+                            <a href="https://wa.me/919589669893" target="_blank" class="action-card-btn">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="tel:+919589669893" class="action-card-btn">
+                                <i class="fas fa-phone-alt"></i> Direct Call
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
-                <div class="shop-card">
-                    <div>
-                        <span class="shop-card-badge">E-Book</span>
-                        <h3 class="shop-card-title">Flight 143 (eBook)</h3>
-                        <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Digital edition of Flight 143: Khaufnak Pal by Avnish Ahirwar.</p>
-                        <div class="shop-card-price">₹99</div>
+                <div id="book-store" class="book-card">
+                    <div class="book-card-header">
+                        <h3 class="book-card-title">Flight 143: Khaufnak Pal</h3>
+                        <p class="book-card-subtitle">Literary Publication By Avnish Ahirwar</p>
                     </div>
-                    <div>
-                        <a href="https://www.amazon.in/Flight-143-khaufanak-Hindi-Avnish-Ahirwar-ebook/dp/B0D8V1MSQH/" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center;">
-                            <i class="fas fa-shopping-bag"></i> Acquire eBook
+                    
+                    <div class="book-container">
+                        <div class="info-side-by-side">
+                            <div class="info-text-side" style="background: rgba(6, 8, 14, 0.65); padding: 16px; font-size: 8.5pt; text-align: left; border: 1px solid var(--mag-border-light); border-radius: 10px; line-height: 1.8; color: var(--mag-text-muted);">
+                                <strong style="color: var(--mag-gold); display: block; margin-bottom: 6px; font-family: var(--font-title); text-shadow: 0 0 6px var(--theme-glow);"><i class="fas fa-book-open"></i> BOOK METADATA:</strong>
+                                • Title: Flight 143: Khaufnak Pal<br>
+                                • Author: Avnish Ahirwar<br>
+                                • Genre: Fiction<br>
+                                • Date Published: 4 July 2024 <br>
+                                • ISBN: 9788119368068
+                                • Publisher: Authors Click Publishing
+                                • Award: Sahitya Sparsh Awards
+                            </div>
+                            <img src="https://flight143.simdif.com/images/public/sd_67839dd77767a.jpg" alt="Book Cover" class="book-image">
+                        </div>
+
+                        <div class="buy-links-grid">
+                            <a href="https://www.amazon.in/Flight-143-Avnish-Ahirwar/dp/8119368061" class="buy-btn" target="_blank"><i class="fab fa-amazon"></i> Amazon</a>
+                            <a href="https://www.flipkart.com/flight-143/p/itm5863bbb4fd43f?pid=9788119368068" class="buy-btn" target="_blank"><i class="fas fa-shopping-cart"></i> Flipkart</a>
+                            <a href="https://authorsclick.com/product/flight-143-khaufanak-pal/" class="buy-btn" target="_blank"><i class="fas fa-book"></i> Authors Click</a>
+                            <a href="https://www.amazon.in/Flight-143-khaufanak-Hindi-Avnish-Ahirwar-ebook/dp/B0D8V1MSQH/" class="buy-btn" target="_blank"><i class="fab fa-amazon"></i> Kindle</a>
+                            <a href="https://play.google.com/store/books/details?id=uVASEQAAQBAJ" class="buy-btn" target="_blank"><i class="fab fa-google-play"></i> Play Books</a>
+                            <a href="https://www.kobo.com/in/en/ebook/flight-143" class="buy-btn" target="_blank"><i class="fas fa-tablet-alt"></i> Kobo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ABOUT: PORTFOLIO GALLERY -->
+            <section id="gallery">
+                <h2>Portfolio Gallery</h2>
+                <div class="photo-grid">
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412345.jpg?w=500&auto=format&fit=max&q=60" alt="Dilip Suryavanshi">
+                        <div class="photo-title">Dilip Suryavanshi (MD, Dilip Buildcon Ltd)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412344.jpg?w=500&auto=format&fit=max&q=60" alt="Dr Mohan Yadav">
+                        <div class="photo-title">Dr Mohan Yadav (CM, Madhya Pradesh)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412391.jpg?w=500&auto=format&fit=max&q=60" alt="Shivraj Singh Chouhan">
+                        <div class="photo-title">Shivraj Singh Chouhan (Union Minister, Govt of India)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412349.jpg?w=500&auto=format&fit=max&q=60" alt="Kamal Chandra Bhanj Deo">
+                        <div class="photo-title">Kamal Chandra Bhanj Deo (Maharaja of Bastar)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000398743.jpg?w=500&auto=format&fit=max&q=60" alt="Er. Sanjeev Agrawal">
+                        <div class="photo-title">Er. Sanjeev Agrawal (CMD, The Sage Group)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412392.jpg?w=500&auto=format&fit=max&q=60" alt="Rohit Kapoor">
+                        <div class="photo-title">Rohit Kapoor (CEO, Food Marketplace at Swiggy)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000406257.jpg?w=500&auto=format&fit=max&q=60" alt="Shri Aruneshwar Saran Singh Deo">
+                        <div class="photo-title">Shri Aruneshwar Saran Singh Deo (Chairman, BDCA)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412360.jpg?w=500&auto=format&fit=max&q=60" alt="Sadhna Singh">
+                        <div class="photo-title">Sadhna Singh (Wife of Shri Shivraj Singh Chouhan)</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000412369.jpg?w=500&auto=format&fit=max&q=60" alt="Ashwint Sharma">
+                        <div class="photo-title">Ashwint Sharma (Businessman)</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. ABOUT: HIGHLIGHTS -->
+            <section id="highlights">
+                <h2>Highlights</h2>
+                <div style="display: flex; justify-content: center; align-items: center; padding: 10px;">
+                    <div style="position: relative; background: #000; border: 1px solid var(--mag-border); border-radius: 16px; width: 100%; max-width: 850px; aspect-ratio: 16 / 9; padding: 10px; box-shadow: 0 0 30px var(--theme-glow); transition: 0.4s;">
+                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 10px; background-color: #000;">
+                            <iframe 
+                                src="https://www.youtube.com/embed/QFK_mKjowfU?autoplay=1&mute=1&loop=1&playlist=QFK_mKjowfU&playsinline=1&controls=0&rel=0&showinfo=0&iv_load_policy=3" 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                                allow="autoplay; encrypted-media" 
+                                sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-presentation"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SERVICES: PROFESSIONAL EXPERTISE -->
+            <section id="services">
+                <h2>Professional Expertise</h2>
+                <div class="services-wrapper">
+                    <div class="service-card-box">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite;">💻</div>
+                            <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Web Architecture</h4>
+                            <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Tailored, high-performing digital experience platforms crafted with modern design standards.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Inquire Now</a>
+                    </div>
+                    
+                    <div class="service-card-box">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -1s;">🚀</div>
+                            <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Search Optimization</h4>
+                            <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Positioning brands at the top of organic search ecosystem with high authority positioning.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Optimize Now</a>
+                    </div>
+
+                    <div class="service-card-box">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -2s;">📱</div>
+                            <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Android Ecosystem</h4>
+                            <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Minimalistic and lightweight native mobile applications for business enterprise workflows.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Build App</a>
+                    </div>
+
+                    <div class="service-card-box">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.3rem; margin-bottom: 15px; color: var(--mag-gold); text-shadow: 0 0 12px var(--theme-glow); animation: float3D 4s ease-in-out infinite; animation-delay: -3s;">⚙️</div>
+                            <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">System Solutions</h4>
+                            <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Enterprise workflow automation tools and custom desktop operational solutions.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Request Details</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SERVICES: APP DOWNLOADS -->
+            <section id="downloads">
+                <h2>App</h2>
+                <div class="download-btn-group">
+                    <div class="download-card">
+                        <h3 style="font-size: 14pt; margin-bottom: 12px; font-family: var(--font-editorial);"><i class="fas fa-mobile-alt"></i> Mobile Application</h3>
+                        <p style="color: var(--mag-text-muted); font-size: 9pt; margin-bottom: 20px;">Download our standalone Android application for full platform feature access.</p>
+                        <a href="https://avnishahirwar.github.io/apk.html" target="_blank" class="hero-primary-btn" style="padding: 12px 30px; font-size: 8pt;">
+                            <i class="fas fa-download"></i> Download Package
                         </a>
                     </div>
                 </div>
+            </section>
 
-                <!-- Product 3 -->
-                <div class="shop-card">
-                    <div>
-                        <span class="shop-card-badge">Hardcover/Paperback</span>
-                        <h3 class="shop-card-title">Flight 143 (Paperback)</h3>
-                        <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Physical copy dispatched directly to your location.</p>
-                        <div class="shop-card-price">₹250</div>
+            <!-- 3. SERVICES: STORE -->
+            <section id="shop">
+                <h2>Store</h2>
+                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Curated digital editions, publications, and productivity systems.</p>
+                
+                <div class="shop-grid">
+                    <!-- Product 1 -->
+                    <div class="shop-card">
+                        <div>
+                            <span class="shop-card-badge">Bestseller</span>
+                            <h3 class="shop-card-title">Habit Tracker System</h3>
+                            <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Digital edition crafted to build habits and maximize strategic focus.</p>
+                            <div class="shop-card-price">₹199</div>
+                        </div>
+                        <div>
+                            <form>
+                                <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Q7v3W4ebzn4d5D" async> </script> 
+                            </form>
+                        </div>
                     </div>
-                    <div>
-                        <a href="https://www.amazon.in/Flight-143-Avnish-Ahirwar/dp/8119368061" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center;">
-                            <i class="fab fa-amazon"></i> Order Hardcopy
-                        </a>
+
+                    <!-- Product 2 -->
+                    <div class="shop-card">
+                        <div>
+                            <span class="shop-card-badge">E-Book</span>
+                            <h3 class="shop-card-title">Flight 143 (eBook)</h3>
+                            <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Digital edition of Flight 143: Khaufnak Pal by Avnish Ahirwar.</p>
+                            <div class="shop-card-price">₹99</div>
+                        </div>
+                        <div>
+                            <a href="https://www.amazon.in/Flight-143-khaufanak-Hindi-Avnish-Ahirwar-ebook/dp/B0D8V1MSQH/" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center;">
+                                <i class="fas fa-shopping-bag"></i> Acquire eBook
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="shop-card">
+                        <div>
+                            <span class="shop-card-badge">Hardcover/Paperback</span>
+                            <h3 class="shop-card-title">Flight 143 (Paperback)</h3>
+                            <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Physical copy dispatched directly to your location.</p>
+                            <div class="shop-card-price">₹250</div>
+                        </div>
+                        <div>
+                            <a href="https://www.amazon.in/Flight-143-Avnish-Ahirwar/dp/8119368061" target="_blank" class="hero-primary-btn" style="width: 100%; justify-content: center;">
+                                <i class="fab fa-amazon"></i> Order Hardcopy
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- CAREERS SECTION -->
-        <section id="careers">
-            <h2>Career Desk</h2>
-            <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Collaborate with our creative engineering workflows.</p>
-            <div class="form-layout">
-                <form action="https://formspree.io/f/xyyaqwrq" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label>Candidate Full Name</label>
-                        <input type="text" name="Candidate_Name" placeholder="Enter full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email ID</label>
-                        <input type="email" name="Candidate_Email" placeholder="Enter email address" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Curriculum Vitae (CV)</label>
+            <!-- 3. SERVICES: TOOLS -->
+            <section id="tools">
+                <h2>Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-box">
+                        <h3 style="font-family: var(--font-editorial);"><i class="fas fa-file-pdf"></i> Image To PDF</h3>
+                        <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Convert image assets to printable PDF formats instantly.</p>
                         <div class="file-input-wrapper">
-                            <div class="custom-file-btn" id="cv-file-label" style="width:100%; text-align:center;">Select Document File</div>
-                            <input type="file" name="uploaded_cv" id="cvInput" accept=".pdf,.doc,.docx" required onchange="updateFileName('cvInput', 'cv-file-label')">
+                            <div class="custom-file-btn" id="img-label">Select Image Asset</div>
+                            <input type="file" id="imageInput" accept="image/*" onchange="updateFileName('imageInput', 'img-label')">
                         </div>
-                        <p style="font-size: 7.5pt; color: var(--mag-text-muted); margin-top: 5px;">* Acceptable formats: PDF, DOC, DOCX. Max 5MB.</p>
+                        <button class="action-btn" onclick="convertImgToPdf()"><i class="fas fa-cog"></i> Generate PDF</button>
                     </div>
-                    <input type="hidden" name="_subject" value="New Career Submission - Editorial Portal">
-                    <button type="submit" class="submit-btn"><i class="fas fa-cloud-upload-alt"></i> Submit Application</button>
-                </form>
-            </div>
-        </section>
 
-        <!-- SMART UTILITIES TOOLS -->
-        <section id="tools">
-            <h2>Smart Utilities Tools</h2>
-            <div class="tools-grid">
-                <div class="tool-box">
-                    <h3 style="font-family: var(--font-editorial);"><i class="fas fa-file-pdf"></i> Image To PDF</h3>
-                    <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Convert image assets to printable PDF formats instantly.</p>
-                    <div class="file-input-wrapper">
-                        <div class="custom-file-btn" id="img-label">Select Image Asset</div>
-                        <input type="file" id="imageInput" accept="image/*" onchange="updateFileName('imageInput', 'img-label')">
-                    </div>
-                    <button class="action-btn" onclick="convertImgToPdf()"><i class="fas fa-cog"></i> Generate PDF</button>
-                </div>
-
-                <div class="tool-box">
-                    <h3 style="font-family: var(--font-editorial);"><i class="fas fa-file-pdf"></i> Docs To PDF</h3>
-                    <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Transform document files (.doc/.docx) into standard PDF documents.</p>
-                    <div class="file-input-wrapper">
-                        <div class="custom-file-btn" id="docs-label">Select Document File</div>
-                        <input type="file" id="docsInput" accept=".doc,.docx" onchange="updateFileName('docsInput', 'docs-label')">
-                    </div>
-                    <button class="action-btn" onclick="convertDocsToPdf()"><i class="fas fa-sync"></i> Transform File</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- FEEDBACK SECTION -->
-        <section id="feedback">
-            <h2>Feedback</h2>
-            <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Share your experience to refine our digital utilities.</p>
-            <div class="form-layout">
-                <form action="https://formspree.io/f/xyyaqwrq" method="POST">
-                    <div class="form-group">
-                        <label>Your Name</label>
-                        <input type="text" name="feedback_name" placeholder="Enter name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Your Email</label>
-                        <input type="email" name="feedback_email" placeholder="Enter email address" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select name="feedback_category">
-                            <option value="General">General Feedback</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Android Development">Android Development</option>
-                            <option value="Software Development">Software Development</option>
-                            <option value="SEO Optimization">SEO Optimization</option>
-                            <option value="Book / Publication">Book / Publication</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label style="text-align: center;">Rating</label>
-                        <div class="star-rating">
-                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
-                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
-                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
-                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
-                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                    <div class="tool-box">
+                        <h3 style="font-family: var(--font-editorial);"><i class="fas fa-file-pdf"></i> Docs To PDF</h3>
+                        <p style="color: var(--mag-text-muted); font-size: 8.5pt; margin-bottom: 15px;">Transform document files (.doc/.docx) into standard PDF documents.</p>
+                        <div class="file-input-wrapper">
+                            <div class="custom-file-btn" id="docs-label">Select Document File</div>
+                            <input type="file" id="docsInput" accept=".doc,.docx" onchange="updateFileName('docsInput', 'docs-label')">
                         </div>
+                        <button class="action-btn" onclick="convertDocsToPdf()"><i class="fas fa-sync"></i> Transform File</button>
                     </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea name="feedback_message" rows="4" placeholder="Write feedback here..." required></textarea>
-                    </div>
-                    <input type="hidden" name="_subject" value="New Editorial Feedback - Avnish Ahirwar Portal">
-                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- GOOGLE REVIEWS SECTION -->
-        <section id="google-reviews">
-            <h2>Google Index Review</h2>
-            <div class="google-reviews-card">
-                <div style="color: var(--mag-gold); font-size: 18pt; margin-bottom: 10px; text-shadow: 0 0 10px var(--theme-glow);">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-                <h3 style="color: #fff; margin-bottom: 10px; font-size: 16pt; font-family: var(--font-editorial);">Check Profile On Google</h3>
-                <p style="color: var(--mag-text-muted); margin-bottom: 20px; font-size: 9pt; max-width: 600px; margin: 0 auto 20px auto;">
-                    Scan the code below or proceed via button link to read official client reviews or post feedback.
-                </p>
-                
-                <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-                    <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000415271.jpg" alt="Check us out on Google" class="google-qr-img">
-                </a>
+            </section>
 
-                <br>
-                <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 14px 40px;">
-                    <i class="fab fa-google"></i> Write Google Review
-                </a>
-            </div>
-        </section>
+            <!-- 3. SERVICES: REVIEWS -->
+            <section id="google-reviews">
+                <h2>Reviews</h2>
+                <div class="google-reviews-card">
+                    <div style="color: var(--mag-gold); font-size: 18pt; margin-bottom: 10px; text-shadow: 0 0 10px var(--theme-glow);">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h3 style="color: #fff; margin-bottom: 10px; font-size: 16pt; font-family: var(--font-editorial);">Check Profile On Google</h3>
+                    <p style="color: var(--mag-text-muted); margin-bottom: 20px; font-size: 9pt; max-width: 600px; margin: 0 auto 20px auto;">
+                        Scan the code below or proceed via button link to read official client reviews or post feedback.
+                    </p>
+                    
+                    <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                        <img src="https://6a47a0781e75414caa9769a7.imgix.net/sandbox/1000415271.jpg" alt="Check us out on Google" class="google-qr-img">
+                    </a>
 
-        <!-- CONNECT & SUBSCRIBE SECTION -->
-        <section id="connect-newsletter">
-            <h2>Connect & Subscribe</h2>
-            <div class="connect-newsletter-box">
-                <div class="social-icons-container">
-                    <a href="https://wa.me/919589669893" class="social-icon-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.instagram.com/avnish_ahirwar" class="social-icon-link" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/avnishahirwar415" class="social-icon-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://youtube.com/@avnishahirwar415" class="social-icon-link" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.facebook.com/avnishahirwar4" class="social-icon-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://avnishahirwar415.blogspot.com" class="social-icon-link" target="_blank"><i class="fas fa-blog"></i></a>
+                    <br>
+                    <a href="https://www.google.com/maps/place/Aviation/@23.2268476,77.4037219,17z/data=!4m8!3m7!1s0x6ec8853d7b728351:0x29e8c97b4c99ec0e!8m2!3d23.2268476!4d77.4037219!9m1!1b1!16s%2Fg%2F11w4lmw5m7?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="submit-btn" style="text-decoration: none; display: inline-block; width: auto; padding: 14px 40px;">
+                        <i class="fab fa-google"></i> Write Google Review
+                    </a>
                 </div>
-                
-                <form action="https://formspree.io/f/xyyaqwrq" method="POST" class="inline-newsletter">
-                    <input type="email" name="email" placeholder="ENTER EMAIL ADDRESS" required>
-                    <button type="submit"><i class="fas fa-paper-plane"></i> Join</button>
-                </form>
-            </div>
-        </section>
+            </section>
 
-        <!-- CONTACT FORM -->
-        <section id="contact-form">
-            <h2>Get In Touch</h2>
-            <div class="form-layout">
-                <form action="https://formspree.io/f/xyyaqwrq" method="POST">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="name" placeholder="Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile Number</label>
-                        <input type="tel" name="phone" placeholder="Phone Number" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email ID</label>
-                        <input type="email" name="email" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea name="message" rows="4" placeholder="Write message..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
-        </section>
+            <!-- 3. SERVICES: FEEDBACK -->
+            <section id="feedback">
+                <h2>Feedback</h2>
+                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Share your experience to refine our digital utilities.</p>
+                <div class="form-layout">
+                    <form action="https://formspree.io/f/xyyaqwrq" method="POST">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" name="feedback_name" placeholder="Enter name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Your Email</label>
+                            <input type="email" name="feedback_email" placeholder="Enter email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="feedback_category">
+                                <option value="General">General Feedback</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Android Development">Android Development</option>
+                                <option value="Software Development">Software Development</option>
+                                <option value="SEO Optimization">SEO Optimization</option>
+                                <option value="Book / Publication">Book / Publication</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: center;">Rating</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="feedback_message" rows="4" placeholder="Write feedback here..." required></textarea>
+                        </div>
+                        <input type="hidden" name="_subject" value="New Editorial Feedback - Avnish Ahirwar Portal">
+                        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+                    </form>
+                </div>
+            </section>
 
+            <!-- 4. CONTACT: GET IN TOUCH / CONTACT FORM & SUBSCRIBE -->
+            <section id="contact-form">
+                <h2>Get in Touch</h2>
+                <div class="form-layout">
+                    <form action="https://formspree.io/f/xyyaqwrq" method="POST">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email ID</label>
+                            <input type="email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="message" rows="4" placeholder="Write message..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="connect-newsletter">
+                <h2>Subscribe</h2>
+                <div class="connect-newsletter-box">
+                    <div class="social-icons-container">
+                        <a href="https://wa.me/919589669893" class="social-icon-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/avnish_ahirwar" class="social-icon-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/avnishahirwar415" class="social-icon-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://youtube.com/@avnishahirwar415" class="social-icon-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com/avnishahirwar4" class="social-icon-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://avnishahirwar415.blogspot.com" class="social-icon-link" target="_blank"><i class="fas fa-blog"></i></a>
+                    </div>
+                    
+                    <form action="https://formspree.io/f/xyyaqwrq" method="POST" class="inline-newsletter">
+                        <input type="email" name="email" placeholder="ENTER EMAIL ADDRESS" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Join</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 5. CAREERS: CAREERS DESK -->
+            <section id="careers">
+                <h2>Careers Desk</h2>
+                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Collaborate with our creative engineering workflows.</p>
+                <div class="form-layout">
+                    <form action="https://formspree.io/f/xyyaqwrq" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Candidate Full Name</label>
+                            <input type="text" name="Candidate_Name" placeholder="Enter full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email ID</label>
+                            <input type="email" name="Candidate_Email" placeholder="Enter email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Curriculum Vitae (CV)</label>
+                            <div class="file-input-wrapper">
+                                <div class="custom-file-btn" id="cv-file-label" style="width:100%; text-align:center;">Select Document File</div>
+                                <input type="file" name="uploaded_cv" id="cvInput" accept=".pdf,.doc,.docx" required onchange="updateFileName('cvInput', 'cv-file-label')">
+                            </div>
+                            <p style="font-size: 7.5pt; color: var(--mag-text-muted); margin-top: 5px;">* Acceptable formats: PDF, DOC, DOCX. Max 5MB.</p>
+                        </div>
+                        <input type="hidden" name="_subject" value="New Career Submission - Editorial Portal">
+                        <button type="submit" class="submit-btn"><i class="fas fa-cloud-upload-alt"></i> Submit Application</button>
+                    </form>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- FOOTER SECTION -->
+        <footer class="luxury-footer">
+            <div class="footer-logo">AVNISH AHIRWAR</div>
+            <div class="footer-links-grid">
+                <a href="#hero-intro" class="footer-link-item">Cover</a>
+                <a href="#visiting-card" class="footer-link-item">Digital Card</a>
+                <a href="#book-store" class="footer-link-item">Publication</a>
+                <a href="#" class="footer-link-item" onclick="alert('Privacy Policy: User data is completely secure and protected.')">Privacy Policy</a>
+                <a href="#" class="footer-link-item" onclick="alert('Terms of Service: Usage governed by high digital standards.')">Terms of Service</a>
+                <a href="https://avnishahirwar.github.io/sitemap.xml" target="_blank" class="footer-link-item">Sitemap</a>
+            </div>
+            <div class="copyright-text">
+                © 2026 AVNISH AHIRWAR. ALL RIGHTS RESERVED.
+            </div>
+        </footer>
     </div>
-
-    <!-- FOOTER SECTION -->
-    <footer class="luxury-footer">
-        <div class="footer-logo">AVNISH AHIRWAR</div>
-        <div class="footer-links-grid">
-            <a href="#hero-intro" class="footer-link-item">Cover</a>
-            <a href="#visiting-card" class="footer-link-item">Digital Card</a>
-            <a href="#book-store" class="footer-link-item">Publication</a>
-            <a href="#" class="footer-link-item" onclick="alert('Privacy Policy: User data is completely secure and protected.')">Privacy Policy</a>
-            <a href="#" class="footer-link-item" onclick="alert('Terms of Service: Usage governed by high digital standards.')">Terms of Service</a>
-            <a href="https://avnishahirwar.github.io/sitemap.xml" target="_blank" class="footer-link-item">Sitemap</a>
-        </div>
-        <div class="copyright-text">
-            © 2026 AVNISH AHIRWAR. ALL RIGHTS RESERVED.
-        </div>
-    </footer>
 
     <div class="toast" id="shareToast">Copied To Clipboard</div>
 
