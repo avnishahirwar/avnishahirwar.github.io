@@ -1,6 +1,7 @@
 ---
 title: Exclusive Dubai Real Estate Investment Showcase 2026
-date: 1–2 August 2026
+date: 2026-08-01
+day_name: Sturday
 location: Jehan Numa Palace, Bhopal, Madhya Pradesh, India
 link: https://www.facebook.com/share/1CqCCKnPGu/
 image: /assets/uploads/1000416765.jpg
