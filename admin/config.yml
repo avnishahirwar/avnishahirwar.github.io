@@ -12,10 +12,11 @@ collections:
     create: true
     fields:
       - {label: "Event Name", name: "title", widget: "string"}
-      - {label: "Event Date", name: "date", widget: "string"}
+      - {label: "Event Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", dateFormat: "YYYY-MM-DD", timeFormat: false, hint: "तारीख चुनें (दिन स्वतः आ जाएगा)"}
+      - {label: "Day Name", name: "day_name", widget: "string", hint: "जैसे: Sunday, Monday आदि"}
       - {label: "Location", name: "location", widget: "string"}
       - {label: "Registration Link", name: "link", widget: "string"}
-      - {label: "Event Image", name: "image", widget: "image"}
+      - {label: "Event Image", name: "image", widget: "image", choose_url: false}
       - {label: "Image Display Mode", name: "image_fit", widget: "select", options: ["Cover (Crop to fill)", "Contain (Show full image)"], default: "Contain (Show full image)", hint: "Select 'Contain' to ensure the full image is visible without cropping."}
       - {label: "Enable Share Button", name: "enable_share", widget: "boolean", default: true, hint: "Toggle on to show the section sharing option on the frontend."}
       - {label: "Description", name: "description", widget: "text"}
