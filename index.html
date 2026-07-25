@@ -749,31 +749,46 @@
             box-shadow: 0 18px 35px rgba(0,0,0,0.7), 0 0 22px var(--theme-glow);
         }
 
-        /* Events Section Grid & Cards */
+        /* Events Section Grid & Ad-like Cards */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
 
-        .event-card {
-            background: rgba(18, 25, 40, 0.5);
-            backdrop-filter: blur(18px);
-            border: 1px solid var(--mag-border);
-            border-radius: 16px;
-            padding: 30px;
+        .event-ad-card {
+            background: linear-gradient(135deg, rgba(18, 25, 40, 0.8), rgba(6, 8, 14, 0.9));
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--mag-gold);
+            border-radius: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px var(--theme-glow);
         }
 
-        .event-card:hover {
-            border-color: var(--mag-gold);
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 25px var(--theme-glow);
+        .event-ad-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 35px var(--mag-gold);
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--mag-gold);
+            color: #000;
+            font-size: 7pt;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 10px var(--theme-glow);
         }
 
         .event-date-badge {
@@ -817,6 +832,38 @@
 
         .event-meta i {
             color: var(--mag-gold);
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .event-share-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--mag-border);
+            color: var(--mag-text-light);
+            padding: 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 8.5pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .event-share-btn:hover {
+            border-color: var(--mag-gold);
+            color: var(--mag-gold);
+            background: rgba(0, 242, 254, 0.1);
+            box-shadow: 0 0 15px var(--theme-glow);
         }
 
         /* Modeling Photo Gallery with Parallax Zoom */
@@ -992,6 +1039,9 @@
             box-shadow: 0 0 15px var(--theme-glow);
             animation: btnGradientMove 4s ease infinite;
             width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
         .action-btn:hover { 
             transform: translateY(-3px) scale(1.03);
@@ -1500,7 +1550,7 @@
                             <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Web Architecture</h4>
                             <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Tailored, high-performing digital experience platforms crafted with modern design standards.</p>
                         </div>
-                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Inquire Now</a>
+                        <a href="#contact-form" class="action-btn">Inquire Now</a>
                     </div>
                     
                     <div class="service-card-box">
@@ -1509,7 +1559,7 @@
                             <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Search Optimization</h4>
                             <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Positioning brands at the top of organic search ecosystem with high authority positioning.</p>
                         </div>
-                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Optimize Now</a>
+                        <a href="#contact-form" class="action-btn">Optimize Now</a>
                     </div>
 
                     <div class="service-card-box">
@@ -1518,7 +1568,7 @@
                             <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">Android Ecosystem</h4>
                             <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Minimalistic and lightweight native mobile applications for business enterprise workflows.</p>
                         </div>
-                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Build App</a>
+                        <a href="#contact-form" class="action-btn">Build App</a>
                     </div>
 
                     <div class="service-card-box">
@@ -1527,18 +1577,18 @@
                             <h4 style="font-size: 1.2rem; color: #ffffff; margin-bottom: 12px; font-family: var(--font-editorial);">System Solutions</h4>
                             <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Enterprise workflow automation tools and custom desktop operational solutions.</p>
                         </div>
-                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Request Details</a>
+                        <a href="#contact-form" class="action-btn">Request Details</a>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. EVENTS & MEETUPS (Fully in English) -->
+            <!-- 4. Events & Meetups (Ad-Style & Shareable) -->
             <section id="events-section">
-                <h2>Events & Meetups</h2>
-                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Join our upcoming community gatherings, seminars, and networking meetups.</p>
+                <h2>Featured Events & Meetups</h2>
+                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Join our exclusive community gatherings, seminars, and networking sessions.</p>
                 
                 <div class="events-grid" id="events-container">
-                    <!-- Dynamic Events will be loaded here via JavaScript -->
+                    <!-- Dynamic Event Ads will be loaded here via JavaScript -->
                 </div>
             </section>
 
@@ -1562,16 +1612,40 @@
                       const yamlData = content.split('---')[1];
                       const data = jsyaml.load(yamlData);
 
+                      // सही फॉर्मेट में डेट और डे सेट करना (बिना India Standard Time के)
+                      let formattedDateString = data.date;
+                      if(data.date) {
+                          const parsedDate = new Date(data.date);
+                          if(!isNaN(parsedDate)) {
+                              const options = { day: '2-digit', month: 'short', year: 'numeric', weekday: 'long' };
+                              formattedDateString = parsedDate.toLocaleDateString('en-US', options);
+                          }
+                      }
+
+                      const eventTitle = data.title || "Exclusive Event";
+                      const eventDesc = data.description || "Join us for this special networking event.";
+                      const eventLocation = data.location || "Bhopal, MP";
+                      const eventImage = data.image ? data.image : 'https://6a47a0781e75414caa9769a7.imgix.net/DBMall.webp?w=400&auto=format&fit=crop&q=80';
+                      const eventLink = data.link ? data.link : '#contact-form';
+
                       const card = `
-                        <div class="event-card">
+                        <div class="event-ad-card">
+                            <span class="ad-badge">AD / EVENT</span>
                             <div>
-                                <span class="event-date-badge"><i class="fas fa-calendar-alt"></i> ${data.date}</span>
-                                <h3 class="event-title">${data.title}</h3>
-                                <div class="event-meta"><i class="fas fa-map-marker-alt"></i> ${data.location}</div>
-                                ${data.image ? `<img src="${data.image}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--mag-border);">` : ''}
-                                <p class="event-desc">${data.description}</p>
+                                <span class="event-date-badge"><i class="fas fa-calendar-alt"></i> ${formattedDateString}</span>
+                                <h3 class="event-title">${eventTitle}</h3>
+                                <div class="event-meta"><i class="fas fa-map-marker-alt"></i> ${eventLocation}</div>
+                                <img src="${eventImage}" alt="${eventTitle}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--mag-border);">
+                                <p class="event-desc">${eventDesc}</p>
                             </div>
-                            ${data.link ? `<a href="${data.link}" target="_blank" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Register Now</a>` : ''}
+                            <div>
+                                <a href="${eventLink}" target="_blank" class="action-btn" style="margin-bottom: 10px;">Register / Join Now</a>
+                                <div class="event-actions">
+                                    <button class="event-share-btn" onclick="shareEventItem('${eventTitle}', '${formattedDateString}', '${eventLink}')">
+                                        <i class="fas fa-share-alt"></i> Share Ad
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                       `;
                       container.innerHTML += card;
@@ -1581,6 +1655,20 @@
                   console.error('Events load error:', err);
                   container.innerHTML = '<p style="text-align: center; color: var(--mag-text-muted);">Stay tuned for upcoming events and meetups!</p>';
                 }
+              }
+
+              function shareEventItem(title, date, link) {
+                  const shareText = `📢 FEATURED EVENT AD:\n*${title}*\n📅 Date: ${date}\n🔗 Link: ${link}\n\nJoin through Avnish Ahirwar Portal!`;
+                  const toast = document.getElementById('shareToast');
+                  if (navigator.share) {
+                      navigator.share({
+                          title: title,
+                          text: shareText,
+                          url: link
+                      }).catch(() => copyToClipboardFallback(shareText, toast));
+                  } else {
+                      copyToClipboardFallback(shareText, toast);
+                  }
               }
 
               loadCmsEvents();
