@@ -1,14 +1,14 @@
 backend:
   name: git-gateway
-  branch: main # आपकी मुख्य गिट ब्रांच (जैसे main या master)
+  branch: main
 
-media_folder: "assets/uploads" # यहाँ एडमिन पैनल से अपलोड की गई इमेज ऑटोमैटिकली सेव होगी[span_1](start_span)[span_1](end_span)
+media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
   - name: "events"
     label: "Events & Meetups"
-    folder: "_data/events" # यहाँ हर इवेंट की फाइल सेव होगी
+    folder: "_data/events"
     create: true
     fields:
       - {label: "Event Name", name: "title", widget: "string"}
