@@ -4,6 +4,8 @@ date: 1–2 August 2026
 location: Jehan Numa Palace, Bhopal, Madhya Pradesh, India
 link: https://www.facebook.com/share/1CqCCKnPGu/
 image: /assets/uploads/1000416765.jpg
+image_fit: Contain (Show full image)
+enable_share: true
 description: >-
   🏡 Exclusive Dubai Real Estate Investment Event – Indore & Bhopal 🇦🇪
 
