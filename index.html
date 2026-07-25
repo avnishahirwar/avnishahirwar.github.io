@@ -749,6 +749,76 @@
             box-shadow: 0 18px 35px rgba(0,0,0,0.7), 0 0 22px var(--theme-glow);
         }
 
+        /* Events Section Grid & Cards */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background: rgba(18, 25, 40, 0.5);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--mag-border);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        .event-card:hover {
+            border-color: var(--mag-gold);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 25px var(--theme-glow);
+        }
+
+        .event-date-badge {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--mag-border);
+            color: var(--mag-gold);
+            font-size: 8pt;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            align-self: flex-start;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px var(--theme-glow);
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 12px;
+            font-family: var(--font-editorial);
+            text-shadow: 0 0 8px rgba(255,255,255,0.2);
+        }
+
+        .event-desc {
+            color: var(--mag-text-muted);
+            font-size: 9pt;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .event-meta {
+            font-size: 8.5pt;
+            color: var(--mag-text-light);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-meta i {
+            color: var(--mag-gold);
+        }
+
         /* Modeling Photo Gallery with Parallax Zoom */
         .photo-grid {
             display: grid;
@@ -1209,6 +1279,7 @@
                 </div>
                 <div class="nav-submenu">
                     <a href="#services" class="nav-link sub-link" onclick="closeMobileSidebar()">Professional Expertise</a>
+                    <a href="#events" class="nav-link sub-link" onclick="closeMobileSidebar()">Events & Meetups</a>
                     <a href="#downloads" class="nav-link sub-link" onclick="closeMobileSidebar()">App</a>
                     <a href="#shop" class="nav-link sub-link" onclick="closeMobileSidebar()">Store</a>
                     <a href="#tools" class="nav-link sub-link" onclick="closeMobileSidebar()">Tools</a>
@@ -1444,6 +1515,47 @@
                             <p style="font-size: 8.5pt; color: var(--mag-text-muted); line-height: 1.6; margin-bottom: 20px;">Enterprise workflow automation tools and custom desktop operational solutions.</p>
                         </div>
                         <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Request Details</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SERVICES: EVENTS & MEETUPS SECTION (NEWLY ADDED) -->
+            <section id="events">
+                <h2>Events & Meetups</h2>
+                <p style="text-align: center; color: var(--mag-text-muted); font-size: 9.5pt; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Join our upcoming interactive literary workshops, tech webinars, and professional networking sessions.</p>
+                
+                <div class="events-grid">
+                    <!-- Event 1 -->
+                    <div class="event-card">
+                        <div>
+                            <span class="event-date-badge"><i class="fas fa-calendar-alt"></i> August 15, 2026</span>
+                            <h3 class="event-title">Author Meet & Book Reading</h3>
+                            <div class="event-meta"><i class="fas fa-map-marker-alt"></i> Bhopal, Madhya Pradesh</div>
+                            <p class="event-desc">An exclusive live reading session and open discussion regarding the creative inspirations behind 'Flight 143: Khaufnak Pal'.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Reserve Seat</a>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="event-card">
+                        <div>
+                            <span class="event-date-badge"><i class="fas fa-calendar-alt"></i> September 05, 2026</span>
+                            <h3 class="event-title">Next-Gen Web Architecture Webinar</h3>
+                            <div class="event-meta"><i class="fas fa-video"></i> Online Virtual Stream</div>
+                            <p class="event-desc">Masterclass on building responsive, secure, and modern 3D glassmorphic web portals utilizing cutting-edge frontend stacks.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Register Online</a>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="event-card">
+                        <div>
+                            <span class="event-date-badge"><i class="fas fa-calendar-alt"></i> October 10, 2026</span>
+                            <h3 class="event-title">Startup & Entrepreneurship Summit</h3>
+                            <div class="event-meta"><i class="fas fa-map-marker-alt"></i> Indore, Madhya Pradesh</div>
+                            <p class="event-desc">A high-impact networking gathering discussing business scalability, digital presence optimization, and corporate leadership.</p>
+                        </div>
+                        <a href="#contact-form" class="action-btn" style="text-decoration: none; display: block; text-align: center;">Book Ticket</a>
                     </div>
                 </div>
             </section>
