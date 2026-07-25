@@ -16,5 +16,6 @@ collections:
       - {label: "Location", name: "location", widget: "string"}
       - {label: "Registration Link", name: "link", widget: "string"}
       - {label: "Event Image", name: "image", widget: "image"}
+      - {label: "Image Display Mode", name: "image_fit", widget: "select", options: ["Cover (Crop to fill)", "Contain (Show full image)"], default: "Contain (Show full image)", hint: "Select 'Contain' to ensure the full image is visible without cropping."}
+      - {label: "Enable Share Button", name: "enable_share", widget: "boolean", default: true, hint: "Toggle on to show the section sharing option on the frontend."}
       - {label: "Description", name: "description", widget: "text"}
-
