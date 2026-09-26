@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVNISH LIVE ROUTE</title>
+    <title>AVNISH LIVE ROUTE - Satellite View</title>
 
-    <!-- Leaflet CSS for Interactive OpenStreetMap -->
+    <!-- Leaflet CSS for Interactive Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
@@ -27,7 +27,7 @@
 
         #avnishRouteApp {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 20px auto;
             padding: 10px;
         }
@@ -135,32 +135,35 @@
         /* CONTENT GRID */
         .ar-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 15px;
             padding: 15px;
             background: #f7f7f7;
         }
 
-        /* MAP CONTAINER */
+        /* SATELLITE MAP CONTAINER */
         .ar-map-container {
-            min-height: 450px;
+            width: 100%;
+            min-height: 500px;
+            height: 60vh;
             border-radius: 18px;
             overflow: hidden;
             position: relative;
-            background: #dfe5ea;
+            background: #222;
             border: 1px solid #ddd;
+            box-shadow: 0 4px 14px rgba(0,0,0,.1);
         }
 
         #arMap {
             width: 100%;
             height: 100%;
-            min-height: 450px;
             z-index: 1;
         }
 
         /* DESTINATIONS & CARDS */
         .ar-results {
             min-width: 0;
+            margin-top: 10px;
         }
 
         .ar-results-title {
@@ -171,8 +174,8 @@
 
         .ar-card {
             background: #fff;
-            padding: 17px;
-            margin-bottom: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
             border-radius: 16px;
             border: 1px solid #e8e8e8;
             box-shadow: 0 4px 14px rgba(0,0,0,.05);
@@ -199,29 +202,47 @@
         }
 
         .ar-name {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 900;
         }
 
-        .ar-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 13px;
+        .ar-travel-modes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 14px;
         }
 
-        .ar-badge {
-            background: #f1f3f5;
-            padding: 8px 10px;
-            border-radius: 8px;
+        .ar-mode-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .ar-mode-icon {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .ar-mode-title {
             font-size: 12px;
             font-weight: 700;
+            color: #555;
+        }
+
+        .ar-mode-time {
+            font-size: 14px;
+            font-weight: 800;
+            color: #111;
+            margin-top: 2px;
         }
 
         .ar-route {
             display: block;
             width: 100%;
-            margin-top: 13px;
+            margin-top: 14px;
             padding: 12px;
             background: #111;
             color: #fff !important;
@@ -335,21 +356,26 @@
                 font-size: 12px;
             }
 
-            .ar-content {
-                grid-template-columns: 1fr;
-            }
-
             .ar-map-container {
-                min-height: 300px;
-                order: 2;
+                min-height: 350px;
+                height: 50vh;
             }
 
-            #arMap {
-                min-height: 300px;
+            .ar-travel-modes {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 6px;
             }
 
-            .ar-results {
-                order: 1;
+            .ar-mode-card {
+                padding: 8px 4px;
+            }
+
+            .ar-mode-title {
+                font-size: 10px;
+            }
+
+            .ar-mode-time {
+                font-size: 12px;
             }
 
             .ar-footer {
@@ -366,7 +392,7 @@
     <div class="ar-header">
         <div>
             <div class="ar-logo">AVNISH LIVE ROUTE</div>
-            <div class="ar-subtitle">Live Location → Route → Distance → Time</div>
+            <div class="ar-subtitle">Satellite Map • Live Location • Multi-Mode Travel</div>
             <div class="ar-live" id="arLiveStatus">● GPS Waiting</div>
         </div>
         <button class="ar-main-btn" onclick="startGPS()">📍 मेरी Location</button>
@@ -391,7 +417,7 @@
 
     <!-- MAIN CONTENT -->
     <div class="ar-content">
-        <!-- LIVE INTERACTIVE MAP -->
+        <!-- FULL SATELLITE MAP -->
         <div class="ar-map-container">
             <div id="arMap"></div>
         </div>
@@ -428,7 +454,7 @@
 
 </div>
 
-<!-- Leaflet JS Library for Interactive Maps -->
+<!-- Leaflet JS Library -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
@@ -459,13 +485,19 @@
     const search = document.getElementById("arSearch");
     const savedList = document.getElementById("arSavedList");
 
-    /* INITIALIZE INTERACTIVE MAP */
+    /* INITIALIZE SATELLITE MAP */
     function initMap() {
-        map = L.map('arMap').setView([23.2599, 77.4126], 12);
+        map = L.map('arMap').setView([23.2599, 77.4126], 13);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // Esri World Imagery Satellite Tile Layer
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        }).addTo(map);
+
+        // Add Labels Layer over Satellite Map for Place Names & Roads
+        L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19
         }).addTo(map);
     }
 
@@ -481,7 +513,7 @@
                 userMarker.setLatLng([currentLat, currentLng]);
             } else {
                 userMarker = L.circleMarker([currentLat, currentLng], {
-                    radius: 9,
+                    radius: 10,
                     fillColor: "#1683ff",
                     color: "#ffffff",
                     weight: 3,
@@ -517,15 +549,26 @@
         return km.toFixed(1) + " km";
     }
 
-    function estimatedTime(km) {
-        const speed = 25;
-        let minutes = Math.round((km / speed) * 60);
-        if (minutes < 1) minutes = 1;
-        return minutes + " min";
+    /* TIME ESTIMATES FOR WALKING, BIKE, CAR */
+    function getTimeEstimates(km) {
+        // Approximate Speed in km/h
+        const walkSpeed = 5;
+        const bikeSpeed = 25;
+        const carSpeed = 35;
+
+        let walkMin = Math.round((km / walkSpeed) * 60);
+        let bikeMin = Math.round((km / bikeSpeed) * 60);
+        let carMin = Math.round((km / carSpeed) * 60);
+
+        return {
+            walk: walkMin < 1 ? "1 min" : (walkMin >= 60 ? Math.floor(walkMin/60) + "h " + (walkMin%60) + "m" : walkMin + " min"),
+            bike: bikeMin < 1 ? "1 min" : (bikeMin >= 60 ? Math.floor(bikeMin/60) + "h " + (bikeMin%60) + "m" : bikeMin + " min"),
+            car: carMin < 1 ? "1 min" : (carMin >= 60 ? Math.floor(carMin/60) + "h " + (carMin%60) + "m" : carMin + " min")
+        };
     }
 
     function getGoogleMapsRoute(lat, lng) {
-        return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(currentLat + ',' + currentLng)}&destination=${encodeURIComponent(lat + ',' + lng)}&travelmode=driving`;
+        return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(currentLat + ',' + currentLng)}&destination=${encodeURIComponent(lat + ',' + lng)}`;
     }
 
     /* DISPLAY RESULTS */
@@ -553,6 +596,7 @@
 
         data.forEach((place, index) => {
             const routeURL = getGoogleMapsRoute(place.lat, place.lng);
+            const time = getTimeEstimates(place.distance);
             const card = document.createElement("div");
             card.className = "ar-card";
 
@@ -561,12 +605,31 @@
                     <div class="ar-rank">${index + 1}</div>
                     <div class="ar-name">${place.name}</div>
                 </div>
-                <div class="ar-info">
-                    <div class="ar-badge">📏 ${formatDistance(place.distance)}</div>
-                    <div class="ar-badge">⏱️ लगभग ${estimatedTime(place.distance)}</div>
+
+                <div style="margin-top: 10px; font-weight: 700; color: #555; font-size: 13px;">
+                    📏 कुल सीधी दूरी: ${formatDistance(place.distance)}
                 </div>
+
+                <div class="ar-travel-modes">
+                    <div class="ar-mode-card">
+                        <div class="ar-mode-icon">🚶</div>
+                        <div class="ar-mode-title">पैदल</div>
+                        <div class="ar-mode-time">${time.walk}</div>
+                    </div>
+                    <div class="ar-mode-card">
+                        <div class="ar-mode-icon">🏍️</div>
+                        <div class="ar-mode-title">बाइक</div>
+                        <div class="ar-mode-time">${time.bike}</div>
+                    </div>
+                    <div class="ar-mode-card">
+                        <div class="ar-mode-icon">🚗</div>
+                        <div class="ar-mode-title">कार</div>
+                        <div class="ar-mode-time">${time.car}</div>
+                    </div>
+                </div>
+
                 <a href="${routeURL}" target="_blank" rel="noopener noreferrer" class="ar-route">
-                    🗺️ वास्तविक Driving Route देखें
+                    🗺️ Google Maps पर लाइव Route देखें
                 </a>
             `;
             results.appendChild(card);
@@ -597,7 +660,6 @@
         } else if (error.code === 2) {
             status.innerHTML = "❌ Location Unavailable — डिवाइस का GPS/Location सर्विस चालू करें।";
         } else if (error.code === 3) {
-            // Retry with low accuracy if high accuracy timed out
             status.innerHTML = "⚠️ High Accuracy GPS Timeout — Low-Accuracy Network/Wi-Fi Location से प्रयास कर रहे हैं...";
             navigator.geolocation.getCurrentPosition(gpsSuccess, finalError, {
                 enableHighAccuracy: false,
@@ -627,7 +689,6 @@
 
         status.innerHTML = "📡 GPS Location प्राप्त की जा रही है...";
 
-        // Initial fetch with fallback mechanism
         navigator.geolocation.getCurrentPosition(gpsSuccess, gpsError, {
             enableHighAccuracy: true,
             timeout: 30000,
