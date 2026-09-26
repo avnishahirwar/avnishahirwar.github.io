@@ -3,142 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360° Advance Street View Map</title>
+    <title>High-Resolution Satellite Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body, html {
             height: 100%;
             width: 100%;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
         }
-
-        /* Container Layout */
-        #app-container {
-            display: flex;
-            flex-direction: column;
+        #map {
             height: 100vh;
             width: 100vw;
         }
-
-        /* Top 360° Street View Window */
-        #pano {
-            flex: 1;
-            width: 100%;
-            height: 50%;
-        }
-
-        /* Bottom Interactive Map Window */
-        #map {
-            flex: 1;
-            width: 100%;
-            height: 50%;
-            border-top: 2px solid #ccc;
-        }
-
-        /* Information Overlay Box */
-        #info-card {
+        .controls {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: #ffffff;
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            z-index: 10;
-            max-width: 320px;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
         }
-
-        #info-card h3 {
-            font-size: 18px;
-            color: #1a73e8;
-            margin-bottom: 5px;
+        .controls h3 {
+            margin-bottom: 8px;
+            font-size: 16px;
         }
-
-        #info-card p {
+        .controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 14px;
-            color: #5f6368;
+            transition: background 0.2s;
+        }
+        .controls button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
-    <div id="app-container">
-        <!-- 360 Degree Street View Container -->
-        <div id="pano"></div>
-
-        <!-- 2D Map View Container -->
-        <div id="map"></div>
+    <div class="controls">
+        <h3>सैटेलाइट मैप (High Clarity)</h3>
+        <button onclick="locateUser()">मेरी करंट लोकेशन दिखाएं</button>
     </div>
 
-    <!-- Info Overlay Box -->
-    <div id="info-card">
-        <h3 id="location-title">Tulsi Nagar</h3>
-        <p id="location-address">Bhopal, Madhya Pradesh</p>
-    </div>
+    <div id="map"></div>
 
-    <!-- Google Maps JS API Scripts -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
-        function initMap() {
-            // शुरुआती लोकेशन (भोपाल - तुलसी नगर का निर्देशांक)
-            const initialLocation = { lat: 23.2330, lng: 77.4270 };
+        // 1. डिफॉल्ट मैप इनिशियलाइजेशन (सुरुआत में दिल्ली की लोकेशन)
+        const map = L.map('map').setView([28.6139, 77.2090], 18);
 
-            // 1. Initialize Map
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: initialLocation,
-                zoom: 17,
-                streetViewControl: false, // कस्टम स्ट्रीट व्यू सिंक का उपयोग करने के लिए
-                mapTypeControl: false
-            });
+        // 2. Esri World Imagery (उच्च स्पष्टता वाली सैटेलाइट इमेजरी)
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+            maxZoom: 19
+        }).addTo(map);
 
-            // 2. Initialize Street View Panorama
-            const panorama = new google.maps.StreetViewPanorama(
-                document.getElementById("pano"),
+        // 3. सड़कों और बिल्डिंग्स के नाम/लेबल की ओवरले परत
+        const labelsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            maxZoom: 19,
+            subdomains: 'abcd'
+        }).addTo(map);
+
+        let userMarker;
+
+        // 4. यूजर की करंट लोकेशन ट्रैक करने का फ़ंक्शन
+        function locateUser() {
+            if (!navigator.geolocation) {
+                alert("आपके ब्राउज़र में जियोलोकेशन समर्थित नहीं है।");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    // मैप को यूजर की सटीक लोकेशन पर जूम करें (Zoom level 18 clear buildings दिखाता है)
+                    map.setView([lat, lng], 18);
+
+                    // यदि मार्कर पहले से मौजूद है, तो उसे अपडेट करें
+                    if (userMarker) {
+                        userMarker.setLatLng([lat, lng]);
+                    } else {
+                        userMarker = L.marker([lat, lng]).addTo(map);
+                    }
+
+                    userMarker.bindPopup("<b>आप यहाँ हैं!</b>").openPopup();
+                },
+                (error) => {
+                    alert("आपकी लोकेशन प्राप्त करने में असमर्थ। कृपया लोकेशन (GPS) अनुमति चालू करें।");
+                },
                 {
-                    position: initialLocation,
-                    pov: {
-                        heading: 165,
-                        pitch: 0
-                    },
-                    zoom: 1,
-                    addressControl: false
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
                 }
             );
-
-            // मैप और पैनोरमा को लिंक करें
-            map.setStreetView(panorama);
-
-            // स्ट्रीट व्यू मार्कर जोड़ें
-            const marker = new google.maps.Marker({
-                position: initialLocation,
-                map: map,
-                title: "Home",
-                draggable: true
-            });
-
-            // मार्कर को ड्रैग करने पर स्ट्रीट व्यू को अपडेट करें
-            marker.addListener("dragend", function (event) {
-                const newPos = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-                panorama.setPosition(newPos);
-            });
-
-            // स्ट्रीट व्यू बदलने पर मैप और मार्कर अपडेट करें
-            panorama.addListener("position_changed", () => {
-                const pos = panorama.getPosition();
-                map.setCenter(pos);
-                marker.setPosition(pos);
-            });
         }
-    </script>
-    
-    <!-- अपनी Google Maps API Key यहाँ डालें -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+
+        // पेज लोड होते ही लोकेशन फेच करने का प्रयास करें
+        locateUser();
     </script>
 </body>
 </html>
