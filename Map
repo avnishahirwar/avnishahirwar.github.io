@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVNISH LIVE ROUTE</title>
+
+    <!-- Leaflet CSS for Interactive OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        /* =========================================================
+           AVNISH LIVE ROUTE - STYLES
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f3f5f7;
+            color: #111;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #avnishRouteApp {
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        /* HEADER */
+        .ar-header {
+            background: #111;
+            color: #fff;
+            padding: 22px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ar-logo {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .ar-subtitle {
+            margin-top: 5px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .ar-live {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #4cff91;
+        }
+
+        .ar-main-btn {
+            border: 0;
+            background: #fff;
+            color: #111;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .ar-main-btn:hover {
+            background: #ddd;
+        }
+
+        /* CURRENT LOCATION */
+        .ar-current {
+            background: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ar-blue-dot {
+            width: 17px;
+            height: 17px;
+            background: #1683ff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 6px #e0efff;
+            flex-shrink: 0;
+        }
+
+        .ar-current-title {
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .ar-current-location {
+            margin-top: 5px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* STATUS */
+        .ar-status {
+            background: #fff;
+            padding: 12px 20px;
+            font-size: 13px;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* SEARCH */
+        .ar-search {
+            background: #fff;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ar-search input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* CONTENT GRID */
+        .ar-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            background: #f7f7f7;
+        }
+
+        /* MAP CONTAINER */
+        .ar-map-container {
+            min-height: 450px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            background: #dfe5ea;
+            border: 1px solid #ddd;
+        }
+
+        #arMap {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+            z-index: 1;
+        }
+
+        /* DESTINATIONS & CARDS */
+        .ar-results {
+            min-width: 0;
+        }
+
+        .ar-results-title {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .ar-card {
+            background: #fff;
+            padding: 17px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 4px 14px rgba(0,0,0,.05);
+        }
+
+        .ar-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ar-rank {
+            width: 32px;
+            height: 32px;
+            background: #111;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .ar-name {
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .ar-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 13px;
+        }
+
+        .ar-badge {
+            background: #f1f3f5;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ar-route {
+            display: block;
+            width: 100%;
+            margin-top: 13px;
+            padding: 12px;
+            background: #111;
+            color: #fff !important;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .ar-route:hover {
+            background: #333;
+        }
+
+        /* LOCATION MANAGER */
+        .ar-manager {
+            background: #fff;
+            margin-top: 15px;
+            padding: 20px;
+            border-radius: 18px;
+        }
+
+        .ar-manager-title {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .ar-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .ar-add {
+            width: 100%;
+            padding: 13px;
+            background: #111;
+            color: #fff;
+            border: 0;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .ar-saved {
+            margin-top: 15px;
+        }
+
+        .ar-saved-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f7f7f7;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .ar-delete {
+            border: 0;
+            background: #ffe5e5;
+            color: #c00;
+            padding: 7px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .ar-empty {
+            background: #fff;
+            padding: 30px 15px;
+            text-align: center;
+            border-radius: 15px;
+            color: #777;
+        }
+
+        /* FOOTER */
+        .ar-footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            font-size: 11px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media(max-width: 750px) {
+            #avnishRouteApp {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ar-header {
+                border-radius: 0;
+                padding: 18px;
+                align-items: flex-start;
+            }
+
+            .ar-logo {
+                font-size: 20px;
+            }
+
+            .ar-main-btn {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .ar-content {
+                grid-template-columns: 1fr;
+            }
+
+            .ar-map-container {
+                min-height: 300px;
+                order: 2;
+            }
+
+            #arMap {
+                min-height: 300px;
+            }
+
+            .ar-results {
+                order: 1;
+            }
+
+            .ar-footer {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="avnishRouteApp">
+
+    <!-- HEADER -->
+    <div class="ar-header">
+        <div>
+            <div class="ar-logo">AVNISH LIVE ROUTE</div>
+            <div class="ar-subtitle">Live Location → Route → Distance → Time</div>
+            <div class="ar-live" id="arLiveStatus">● GPS Waiting</div>
+        </div>
+        <button class="ar-main-btn" onclick="startGPS()">📍 मेरी Location</button>
+    </div>
+
+    <!-- CURRENT LOCATION -->
+    <div class="ar-current">
+        <div class="ar-blue-dot"></div>
+        <div>
+            <div class="ar-current-title">Current Location</div>
+            <div class="ar-current-location" id="arCurrentLocation">Location प्राप्त की जा रही है...</div>
+        </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="ar-status" id="arStatus">📡 GPS Location प्राप्त की जा रही है...</div>
+
+    <!-- SEARCH -->
+    <div class="ar-search">
+        <input type="text" id="arSearch" placeholder="🔎 Destination खोजें...">
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="ar-content">
+        <!-- LIVE INTERACTIVE MAP -->
+        <div class="ar-map-container">
+            <div id="arMap"></div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="ar-results">
+            <div class="ar-results-title">📍 Nearest Destinations</div>
+            <div id="arResults">
+                <div class="ar-empty">आपकी location मिलने के बाद destinations यहाँ दिखाई देंगी।</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOCATION MANAGER -->
+    <div class="ar-manager">
+        <div class="ar-manager-title">➕ नई Destination जोड़ें</div>
+        
+        <input type="text" id="arName" class="ar-input" placeholder="Location Name">
+        <input type="number" step="any" id="arLat" class="ar-input" placeholder="Latitude">
+        <input type="number" step="any" id="arLng" class="ar-input" placeholder="Longitude">
+        
+        <button class="ar-add" onclick="addLocation()">+ Location Save करें</button>
+
+        <div class="ar-saved">
+            <div class="ar-manager-title" style="font-size:15px;">Saved Locations</div>
+            <div id="arSavedList"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ar-footer">
+        AVNISH LIVE ROUTE • GPS Based Destination Finder
+    </div>
+
+</div>
+
+<!-- Leaflet JS Library for Interactive Maps -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    /* =========================================================
+       AVNISH LIVE ROUTE - JAVASCRIPT
+    ========================================================= */
+
+    let locations = [
+        { name: "New Market, Bhopal", lat: 23.2329, lng: 77.4340 },
+        { name: "MP Nagar, Bhopal", lat: 23.2332, lng: 77.4345 },
+        { name: "Karond, Bhopal", lat: 23.3072, lng: 77.4098 }
+    ];
+
+    let currentLat = null;
+    let currentLng = null;
+    let watchID = null;
+
+    // Map Variables
+    let map = null;
+    let userMarker = null;
+    let destinationMarkers = [];
+
+    // DOM Elements
+    const currentLocation = document.getElementById("arCurrentLocation");
+    const status = document.getElementById("arStatus");
+    const liveStatus = document.getElementById("arLiveStatus");
+    const results = document.getElementById("arResults");
+    const search = document.getElementById("arSearch");
+    const savedList = document.getElementById("arSavedList");
+
+    /* INITIALIZE INTERACTIVE MAP */
+    function initMap() {
+        map = L.map('arMap').setView([23.2599, 77.4126], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+    }
+
+    /* UPDATE MAP MARKERS */
+    function updateMap(destinations) {
+        if (!map) return;
+
+        destinationMarkers.forEach(m => map.removeLayer(m));
+        destinationMarkers = [];
+
+        if (currentLat !== null && currentLng !== null) {
+            if (userMarker) {
+                userMarker.setLatLng([currentLat, currentLng]);
+            } else {
+                userMarker = L.circleMarker([currentLat, currentLng], {
+                    radius: 9,
+                    fillColor: "#1683ff",
+                    color: "#ffffff",
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup("<b>आप यहाँ हैं</b>").openPopup();
+            }
+            map.setView([currentLat, currentLng], 13);
+        }
+
+        destinations.forEach(place => {
+            let marker = L.marker([place.lat, place.lng])
+                .addTo(map)
+                .bindPopup(`<b>${place.name}</b><br>दूरी: ${formatDistance(place.distance)}`);
+            destinationMarkers.push(marker);
+        });
+    }
+
+    /* HAVERSINE DISTANCE */
+    function distanceKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    function formatDistance(km) {
+        if (km < 1) return Math.round(km * 1000) + " m";
+        return km.toFixed(1) + " km";
+    }
+
+    function estimatedTime(km) {
+        const speed = 25;
+        let minutes = Math.round((km / speed) * 60);
+        if (minutes < 1) minutes = 1;
+        return minutes + " min";
+    }
+
+    function getGoogleMapsRoute(lat, lng) {
+        return `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(currentLat + ',' + currentLng)}&destination=${encodeURIComponent(lat + ',' + lng)}&travelmode=driving`;
+    }
+
+    /* DISPLAY RESULTS */
+    function showResults() {
+        if (currentLat === null || currentLng === null) return;
+
+        const keyword = search.value.toLowerCase().trim();
+
+        let data = locations
+            .filter(place => place.name.toLowerCase().includes(keyword))
+            .map(place => {
+                const distance = distanceKm(currentLat, currentLng, place.lat, place.lng);
+                return { ...place, distance: distance };
+            });
+
+        data.sort((a, b) => a.distance - b.distance);
+
+        results.innerHTML = "";
+
+        if (data.length === 0) {
+            results.innerHTML = `<div class="ar-empty">कोई destination नहीं मिली।</div>`;
+            updateMap([]);
+            return;
+        }
+
+        data.forEach((place, index) => {
+            const routeURL = getGoogleMapsRoute(place.lat, place.lng);
+            const card = document.createElement("div");
+            card.className = "ar-card";
+
+            card.innerHTML = `
+                <div class="ar-card-top">
+                    <div class="ar-rank">${index + 1}</div>
+                    <div class="ar-name">${place.name}</div>
+                </div>
+                <div class="ar-info">
+                    <div class="ar-badge">📏 ${formatDistance(place.distance)}</div>
+                    <div class="ar-badge">⏱️ लगभग ${estimatedTime(place.distance)}</div>
+                </div>
+                <a href="${routeURL}" target="_blank" rel="noopener noreferrer" class="ar-route">
+                    🗺️ वास्तविक Driving Route देखें
+                </a>
+            `;
+            results.appendChild(card);
+        });
+
+        updateMap(data);
+    }
+
+    /* GPS SUCCESS */
+    function gpsSuccess(position) {
+        currentLat = position.coords.latitude;
+        currentLng = position.coords.longitude;
+        const accuracy = Math.round(position.coords.accuracy);
+
+        currentLocation.innerHTML = `GPS Active • ${currentLat.toFixed(6)}, ${currentLng.toFixed(6)}`;
+        status.innerHTML = `✅ Live Location Active • Accuracy लगभग ${accuracy} m • Nearest → Farthest`;
+        liveStatus.innerHTML = "● LIVE GPS";
+
+        showResults();
+    }
+
+    /* GPS ERROR & FALLBACK */
+    function gpsError(error) {
+        liveStatus.innerHTML = "● GPS ERROR";
+
+        if (error.code === 1) {
+            status.innerHTML = "❌ Location Permission Denied — ब्राउज़र सेटिंग्स में Location Permission Allow करें।";
+        } else if (error.code === 2) {
+            status.innerHTML = "❌ Location Unavailable — डिवाइस का GPS/Location सर्विस चालू करें।";
+        } else if (error.code === 3) {
+            // Retry with low accuracy if high accuracy timed out
+            status.innerHTML = "⚠️ High Accuracy GPS Timeout — Low-Accuracy Network/Wi-Fi Location से प्रयास कर रहे हैं...";
+            navigator.geolocation.getCurrentPosition(gpsSuccess, finalError, {
+                enableHighAccuracy: false,
+                timeout: 15000,
+                maximumAge: 0
+            });
+        } else {
+            status.innerHTML = "❌ Location प्राप्त नहीं हो सकी।";
+        }
+    }
+
+    function finalError() {
+        status.innerHTML = "❌ Location प्राप्त करने में विफलता। कृपया सुनिश्चित करें कि डिवाइस में GPS ऑन है।";
+    }
+
+    /* START GPS & TRACKING */
+    function startGPS() {
+        if (window.location.protocol === 'file:') {
+            status.innerHTML = "⚠️ **चेतावनी**: Geolocation Local Files (`file://`) में काम नहीं करता। कृपया इसे GitHub Pages / Live Server पर खोलें।";
+            return;
+        }
+
+        if (!navigator.geolocation) {
+            status.innerHTML = "❌ यह browser GPS support नहीं करता।";
+            return;
+        }
+
+        status.innerHTML = "📡 GPS Location प्राप्त की जा रही है...";
+
+        // Initial fetch with fallback mechanism
+        navigator.geolocation.getCurrentPosition(gpsSuccess, gpsError, {
+            enableHighAccuracy: true,
+            timeout: 30000,
+            maximumAge: 0
+        });
+
+        startLiveTracking();
+    }
+
+    function startLiveTracking() {
+        if (!navigator.geolocation) return;
+        if (watchID !== null) navigator.geolocation.clearWatch(watchID);
+
+        watchID = navigator.geolocation.watchPosition(gpsSuccess, function(){}, {
+            enableHighAccuracy: false,
+            timeout: 30000,
+            maximumAge: 10000
+        });
+    }
+
+    /* LOCATION MANAGER */
+    function addLocation() {
+        const name = document.getElementById("arName").value.trim();
+        const lat = parseFloat(document.getElementById("arLat").value);
+        const lng = parseFloat(document.getElementById("arLng").value);
+
+        if (!name) { alert("Location Name डालें।"); return; }
+        if (isNaN(lat) || isNaN(lng)) { alert("Valid Latitude और Longitude डालें।"); return; }
+
+        locations.push({ name: name, lat: lat, lng: lng });
+
+        document.getElementById("arName").value = "";
+        document.getElementById("arLat").value = "";
+        document.getElementById("arLng").value = "";
+
+        saveLocations();
+        showSavedLocations();
+        showResults();
+
+        alert("✅ Location Save हो गई।");
+    }
+
+    function deleteLocation(index) {
+        if (!confirm("क्या आप इस location को हटाना चाहते हैं?")) return;
+        locations.splice(index, 1);
+        saveLocations();
+        showSavedLocations();
+        showResults();
+    }
+
+    function showSavedLocations() {
+        savedList.innerHTML = "";
+        if (locations.length === 0) {
+            savedList.innerHTML = `<div class="ar-empty">कोई saved location नहीं है।</div>`;
+            return;
+        }
+
+        locations.forEach((place, index) => {
+            const item = document.createElement("div");
+            item.className = "ar-saved-item";
+            item.innerHTML = `
+                <span>📍 ${place.name}</span>
+                <button class="ar-delete" onclick="deleteLocation(${index})">🗑️ Delete</button>
+            `;
+            savedList.appendChild(item);
+        });
+    }
+
+    /* LOCAL STORAGE */
+    function saveLocations() {
+        try { localStorage.setItem("avnishLiveLocations", JSON.stringify(locations)); } 
+        catch (e) { console.log(e); }
+    }
+
+    function loadLocations() {
+        try {
+            const saved = localStorage.getItem("avnishLiveLocations");
+            if (saved) locations = JSON.parse(saved);
+        } catch (e) { console.log(e); }
+    }
+
+    /* EVENT LISTENERS & INITIALIZATION */
+    search.addEventListener("input", showResults);
+
+    window.onload = function() {
+        initMap();
+        loadLocations();
+        showSavedLocations();
+        startGPS();
+    };
+</script>
+
+</body>
+</html>
