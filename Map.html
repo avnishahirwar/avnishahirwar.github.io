@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>High Precision Live Satellite Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* फुल स्क्रीन मैप लेआउट */
+        #map {
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        /* मैप पर ऊपर स्थिति देखने के लिए एक छोटा कार्ड */
+        .status-card {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        /* यूजर लोकेशन मार्कर कस्टम स्टाइल */
+        .user-marker-icon {
+            background-color: #007bff;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+            width: 18px !important;
+            height: 18px !important;
+            margin-left: -9px !important;
+            margin-top: -9px !important;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="status-card" id="status">आपकी लोकेशन की खोज की जा रही है...</div>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // 1. मैप की शुरुआत (डिफ़ॉल्ट सेंटर और ज़ूम लेवल)
+        const map = L.map('map', {
+            zoomControl: false, // कस्टम लुक के लिए डिफॉल्ट जूम हटाया
+            attributionControl: false
+        }).setView([20.5937, 78.9629], 5); // शुरुआत में इंडिया का व्यू
+
+        // ज़ूम कंट्रोलर को दाईं तरफ नीचे शिफ्ट किया
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // 2. हाई-क्वालिटी सैटलाइट लेयर (Esri World Imagery)
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            maxNativeZoom: 18
+        }).addTo(map);
+
+        // 3. स्ट्रीट / रोड लेयर (स्विच करने के लिए)
+        const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        });
+
+        // 4. लेयर कंट्रोल (Satellite & Street View)
+        const baseMaps = {
+            "सैटलाइट व्यू (HD)": satelliteLayer,
+            "स्ट्रीट व्यू": streetLayer
+        };
+        L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+
+        // कस्टम यूजर लोकेशन मार्कर आइकॉन
+        const userIcon = L.divIcon({
+            className: 'user-marker-icon'
+        });
+
+        let userMarker = null;
+        let accuracyCircle = null;
+        let firstLoad = true;
+
+        // 5. हाई-प्रिसिजन लाइव GPS ट्रैकिंग
+        if ('geolocation' in navigator) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    const userCoords = [lat, lng];
+
+                    // स्थिति को हमेशा मैप के सेंटर (बीच) में सेट करें
+                    map.setView(userCoords, 18, {
+                        animate: true,
+                        pan: { duration: 1 }
+                    });
+
+                    // यदि मार्कर पहले से है तो अपडेट करें, नहीं तो नया बनाएं
+                    if (!userMarker) {
+                        userMarker = L.marker(userCoords, { icon: userIcon }).addTo(map);
+                        accuracyCircle = L.circle(userCoords, {
+                            radius: accuracy,
+                            color: '#007bff',
+                            fillColor: '#007bff',
+                            fillOpacity: 0.15,
+                            weight: 1
+                        }).addTo(map);
+                    } else {
+                        userMarker.setLatLng(userCoords);
+                        accuracyCircle.setLatLng(userCoords);
+                        accuracyCircle.setRadius(accuracy);
+                    }
+
+                    // स्थिति की जानकारी अपडेट करें
+                    document.getElementById('status').innerText = `आप सेंटर में हैं | सटीक दूरी: ±${Math.round(accuracy)} मीटर`;
+                },
+                (error) => {
+                    console.error("GPS Error: ", error);
+                    let errMsg = "लोकेशन प्राप्त करने में असमर्थ।";
+                    if (error.code === error.PERMISSION_DENIED) {
+                        errMsg = "कृपया ब्राउज़र में लोकेशन (GPS) अनुमति चालू करें।";
+                    }
+                    document.getElementById('status').innerText = errMsg;
+                },
+                {
+                    enableHighAccuracy: true, // हाई एक्यूरेसी सेंसर (GPS) का उपयोग करें
+                    maximumAge: 0,            // पुराना कैश डेटा न लें
+                    timeout: 10000            // 10 सेकंड का टाइमआउट
+                }
+            );
+        } else {
+            document.getElementById('status').innerText = "आपका डिवाइस Geolocation सपोर्ट नहीं करता।";
+        }
+    </script>
+</body>
+</html>
