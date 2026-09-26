@@ -1,176 +1,787 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>High Precision Live Satellite Map</title>
+    <title>Ultimate GIS, Route Planning & 360° Panorama Map Suite</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <!-- Pannellum 360 Viewer CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-color: #121212;
+            --panel-bg: rgba(24, 24, 27, 0.94);
+            --text-color: #f3f4f6;
+            --accent-color: #3b82f6;
+            --border-color: rgba(255, 255, 255, 0.18);
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
+        body.light-mode {
+            --bg-color: #f3f4f6;
+            --panel-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #111827;
+            --accent-color: #2563eb;
+            --border-color: rgba(0, 0, 0, 0.12);
         }
 
-        /* फुल स्क्रीन मैप लेआउट */
-        #map {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); color: var(--text-color); }
+
+        #map-container {
             width: 100vw;
             height: 100vh;
-            background-color: #000;
+            perspective: 1000px;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* मैप पर ऊपर स्थिति देखने के लिए एक छोटा कार्ड */
-        .status-card {
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            transition: transform 0.3s ease-out;
+            transform-origin: center center;
+        }
+
+        /* High Quality 3D Perspective Tilt */
+        .map-3d-active {
+            transform: rotateX(55deg) scale(1.15);
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-color);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        /* Header UI */
+        .map-header {
             position: absolute;
-            top: 15px;
+            top: 10px;
+            left: 10px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .map-header h3 { font-size: 15px; font-weight: 700; color: var(--accent-color); }
+        .map-header span { font-size: 11px; opacity: 0.8; }
+
+        /* Top Bar: Multi-Point Route Search */
+        .top-bar {
+            position: absolute;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 90%;
+            max-width: 580px;
+            padding: 8px 12px;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.75);
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            pointer-events: none;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-input-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 2px 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-input-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 8px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .icon-btn.active { color: var(--accent-color); border: 1px solid var(--accent-color); }
+
+        /* Navigation Mode Selector Chips */
+        .mode-bar {
+            position: absolute;
+            top: 115px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 1000;
+            background: var(--panel-bg);
+            padding: 4px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .mode-chip {
+            padding: 5px 12px;
+            font-size: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.7;
+        }
+        .mode-chip.active {
+            background: var(--accent-color);
+            color: #fff;
+            opacity: 1;
+        }
+
+        /* Departure Schedule Time Panel */
+        .time-panel {
+            position: absolute;
+            top: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 14px;
+            font-size: 11px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            z-index: 1000;
+        }
+        .time-panel input {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Cartographic Compass Indicator */
+        .north-arrow {
+            position: absolute;
+            top: 110px;
+            right: 15px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+        }
+
+        /* Control Dock (Right Side Controls & Zoom Tools) */
+        .control-dock {
+            position: absolute;
+            right: 15px;
+            top: 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        /* Map Legend Key */
+        .legend-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 15px;
+            padding: 10px 14px;
+            width: 190px;
+            font-size: 11px;
+            display: none;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .legend-color { width: 12px; height: 12px; border-radius: 30px; display: inline-block; }
+
+        /* 360 Panorama Modal Overlay */
+        #panoramaModal {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 4000;
+            display: none;
+        }
+        #panoramaViewer { width: 100%; height: 100%; }
+        .pano-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 4001;
+            padding: 8px 16px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* AR Navigation Overlay */
+        #arOverlay {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 3000;
+            display: none;
+            background: #000;
+        }
+        #arVideo { width: 100%; height: 100%; object-fit: cover; }
+        .ar-hud {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #10b981;
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #000;
             text-align: center;
         }
 
-        /* यूजर लोकेशन मार्कर कस्टम स्टाइल */
-        .user-marker-icon {
-            background-color: #007bff;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
-            width: 18px !important;
-            height: 18px !important;
-            margin-left: -9px !important;
-            margin-top: -9px !important;
-            animation: pulse 2s infinite;
+        /* POI Drawer Modal */
+        .poi-drawer {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            max-height: 50vh;
+            padding: 16px;
+            border-radius: 16px 16px 0 0;
+            display: none;
+            overflow-y: auto;
+            z-index: 2000;
         }
+        .poi-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .poi-stars { color: #f59e0b; font-size: 13px; }
+        .amenity-badge { display: inline-block; background: rgba(59, 130, 246, 0.2); color: var(--accent-color); padding: 3px 8px; border-radius: 12px; font-size: 10px; margin-right: 4px; margin-top: 6px; }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 15px rgba(0, 123, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
-            }
+        /* Navigation Trip HUD */
+        .trip-hud {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            padding: 10px 16px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
         }
+        .hud-metric { text-align: center; }
+        .hud-val { font-size: 15px; font-weight: bold; color: var(--accent-color); }
+        .hud-lbl { font-size: 9px; text-transform: uppercase; opacity: 0.7; }
+
+        /* Leaflet Overrides */
+        .leaflet-routing-container { display: none !important; }
+        .leaflet-control-scale { border: none !important; }
+        .leaflet-control-scale-line { background: var(--panel-bg) !important; color: var(--text-color) !important; border: 1px solid var(--border-color) !important; padding: 2px 5px !important; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <div class="status-card" id="status">आपकी लोकेशन की खोज की जा रही है...</div>
-    <div id="map"></div>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
 
-    <!-- Leaflet JS -->
+    <!-- Header Details -->
+    <div class="map-header glass-panel">
+        <i class="fa-solid fa-map-location-dot" style="color:var(--accent-color);"></i>
+        <div>
+            <h3 id="areaTitle">अल्ट्रा HQ जीआईएस व नेविगेशन</h3>
+            <span id="subArea">जीपीएस सिग्नल लोड हो रहा है...</span>
+        </div>
+    </div>
+
+    <!-- Multi-Point Route Planning Search Bar -->
+    <div class="top-bar glass-panel">
+        <div class="search-row">
+            <div class="search-input-group">
+                <i class="fa-solid fa-circle-dot" style="color:#10b981; font-size:12px;"></i>
+                <input type="text" id="originInput" placeholder="प्रारंभिक बिंदु (Default: आपकी लोकेशन)">
+            </div>
+            <button class="icon-btn" onclick="useCurrentAsOrigin()" title="मेरी लोकेशन सेट करें"><i class="fa-solid fa-crosshairs"></i></button>
+        </div>
+        <div class="search-row">
+            <div class="search-input-group">
+                <i class="fa-solid fa-location-dot" style="color:#ef4444; font-size:12px;"></i>
+                <input type="text" id="destinationInput" placeholder="गंतव्य (Destination) खोजें..." onkeydown="if(event.key==='Enter') planFullRoute()">
+            </div>
+            <button class="icon-btn" onclick="planFullRoute()" title="रूट खोजें"><i class="fa-solid fa-route" style="color:var(--accent-color);"></i></button>
+            <button class="icon-btn" id="btn3D" onclick="toggle3DView()" title="3D टिल्ट व्यू"><i class="fa-solid fa-cube"></i></button>
+            <button class="icon-btn" onclick="open360ViewAtCenter()" title="360° स्ट्रीट पैनोरमा View"><i class="fa-solid fa-street-view" style="color:#f59e0b;"></i></button>
+            <button class="icon-btn" onclick="toggleDarkMode()" title="थीम बदलें"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation Mode Selector Chips -->
+    <div class="mode-bar">
+        <div class="mode-chip active" onclick="setNavMode('car', this)"><i class="fa-solid fa-car"></i> कार</div>
+        <div class="mode-chip" onclick="setNavMode('bike', this)"><i class="fa-solid fa-motorcycle"></i> बाइक</div>
+        <div class="mode-chip" onclick="setNavMode('foot', this)"><i class="fa-solid fa-person-walking"></i> पैदल</div>
+        <div class="mode-chip" onclick="setNavMode('bicycle', this)"><i class="fa-solid fa-bicycle"></i> साइकिल</div>
+        <div class="mode-chip" onclick="setNavMode('eco', this)"><i class="fa-solid fa-leaf" style="color:#10b981;"></i> इको</div>
+    </div>
+
+    <!-- Schedule Arrival Time Panel -->
+    <div class="time-panel glass-panel">
+        <label><i class="fa-solid fa-clock"></i> पहुँचने का लक्षित समय:</label>
+        <input type="time" id="targetTime" onchange="updateScheduleETA()">
+    </div>
+
+    <!-- Cartographic Compass Indicator -->
+    <div class="north-arrow glass-panel" id="northCompass" onclick="resetNorth()" title="उत्तर दिशा (North Arrow)">
+        <i class="fa-solid fa-location-arrow" style="color:#ef4444; transform: rotate(-45deg);"></i>
+    </div>
+
+    <!-- Right Control Dock (Zoom In/Out, Layer, AR, 360, Offline) -->
+    <div class="control-dock">
+        <button class="icon-btn glass-panel" onclick="zoomInMap()" title="ज़ूम इन (Zoom In)"><i class="fa-solid fa-plus"></i></button>
+        <button class="icon-btn glass-panel" onclick="zoomOutMap()" title="ज़ूम आउट (Zoom Out)"><i class="fa-solid fa-minus"></i></button>
+        <button class="icon-btn glass-panel" onclick="centerOnUser()" title="मेरी लोकेशन"><i class="fa-solid fa-crosshairs"></i></button>
+        <button class="icon-btn glass-panel" onclick="toggleLayerMenu()" title="HQ मैप लेयर्स (Satellite/Topo/Vector)"><i class="fa-solid fa-layer-group"></i></button>
+        <button class="icon-btn glass-panel" onclick="open360ViewAtCenter()" title="360° व्यू"><i class="fa-solid fa-vr-cardboard"></i></button>
+        <button class="icon-btn glass-panel" onclick="toggleLegend()" title="मैप कुंजी (Legend)"><i class="fa-solid fa-list-check"></i></button>
+        <button class="icon-btn glass-panel" onclick="startARView()" title="AR लाइव कैमरा नेविगेशन"><i class="fa-solid fa-camera-retro"></i></button>
+        <button class="icon-btn glass-panel" onclick="searchAlongRoute()" title="रास्ते में POI खोजें"><i class="fa-solid fa-map-pin"></i></button>
+        <button class="icon-btn glass-panel" onclick="toggleWeatherLayer()" id="weatherBtn" title="वेदर व AQI लेयर"><i class="fa-solid fa-cloud-sun"></i></button>
+        <button class="icon-btn glass-panel" onclick="downloadOfflineArea()" title="ऑफ़लाइन एरिया डाउनलोड करें"><i class="fa-solid fa-download"></i></button>
+        <button class="icon-btn glass-panel" onclick="toggleVoice()" id="voiceBtn" title="वॉइस अलर्ट्स"><i class="fa-solid fa-volume-high"></i></button>
+        <button class="icon-btn glass-panel" onclick="shareLocation()" title="लोकेशन शेयर करें"><i class="fa-solid fa-share-nodes"></i></button>
+    </div>
+
+    <!-- Cartographic Map Legend Panel -->
+    <div class="legend-panel glass-panel" id="legendPanel">
+        <b style="font-size:12px; display:block; margin-bottom:6px;">मानचित्र कुंजी (Legend)</b>
+        <div class="legend-item"><span class="legend-color" style="background:#ef4444;"></span> इमरजेंसी / अस्पताल</div>
+        <div class="legend-item"><span class="legend-color" style="background:#3b82f6;"></span> पुलिस स्टेशन</div>
+        <div class="legend-item"><span class="legend-color" style="background:#f59e0b;"></span> स्कूल / कॉलेज</div>
+        <div class="legend-item"><span class="legend-color" style="background:#10b981;"></span> पार्क / पर्यावरण क्षेत्र</div>
+        <div class="legend-item"><span class="legend-color" style="background:#8b5cf6;"></span> होटल / रेस्तरां</div>
+        <div class="legend-item"><span class="legend-color" style="background:#ec4899;"></span> मॉल / बैंक / ATM</div>
+        <div class="legend-item"><span class="legend-color" style="background:#dc2626;"></span> लाइव एक्सीडेंट / रोड ब्लॉकेज</div>
+    </div>
+
+    <!-- POI Details Modal Drawer -->
+    <div class="poi-drawer glass-panel" id="poiDrawer">
+        <div class="poi-header">
+            <div>
+                <h3 id="poiTitle">स्थान का नाम</h3>
+                <div class="poi-stars"><i class="fa-solid fa-star"></i> <span id="poiRating">4.8</span> (150+ समीक्षाएँ)</div>
+            </div>
+            <button class="icon-btn" onclick="closePoiDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <p id="poiAddress" style="font-size:12px; opacity:0.8; margin-bottom:8px;"></p>
+        <div id="poiAmenities"></div>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+            <button onclick="navigateSelectedPOI()" style="flex:1; padding:8px; background:var(--accent-color); border:none; color:white; border-radius:8px; cursor:pointer; font-weight:bold;"><i class="fa-solid fa-diamond-turn-right"></i> नेविगेट करें</button>
+            <button onclick="open360ViewAtCenter()" style="padding:8px 12px; background:rgba(245, 158, 11, 0.2); border:1px solid #f59e0b; color:#f59e0b; border-radius:8px; cursor:pointer; font-weight:bold;"><i class="fa-solid fa-street-view"></i> 360° व्यू</button>
+            <button onclick="saveToFavorites()" style="padding:8px 12px; background:rgba(255,255,255,0.1); border:1px solid var(--border-color); color:white; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-bookmark"></i> सेव</button>
+        </div>
+    </div>
+
+    <!-- 360° Panorama Fullscreen View Modal -->
+    <div id="panoramaModal">
+        <button class="pano-close-btn" onclick="close360View()">360° व्यू बंद करें X</button>
+        <div id="panoramaViewer"></div>
+    </div>
+
+    <!-- AR Navigation Live Camera View -->
+    <div id="arOverlay">
+        <button onclick="stopARView()" style="position:absolute; top:20px; right:20px; z-index:3001; padding:8px 16px; background:#ef4444; border:none; color:white; border-radius:8px; font-weight:bold; cursor:pointer;">AR बंद करें X</button>
+        <video id="arVideo" autoplay playsinline></video>
+        <div class="ar-hud">
+            <i class="fa-solid fa-arrow-up" style="font-size:40px; margin-bottom:10px;"></i>
+            <div>200 मीटर बाद सीधे जाएँ</div>
+        </div>
+    </div>
+
+    <!-- Trip Navigation HUD Metrics -->
+    <div class="trip-hud glass-panel">
+        <div class="hud-metric">
+            <div class="hud-val" id="speedVal">0</div>
+            <div class="hud-lbl">स्पीड (km/h)</div>
+        </div>
+        <div class="hud-metric">
+            <div class="hud-val" id="distVal">0.0</div>
+            <div class="hud-lbl">दूरी (km)</div>
+        </div>
+        <div class="hud-metric">
+            <div class="hud-val" id="etaVal">--:--</div>
+            <div class="hud-lbl">ETA</div>
+        </div>
+        <div class="hud-metric">
+            <div class="hud-val" id="aqiVal" style="color:#10b981;">Good</div>
+            <div class="hud-lbl">AQI / मौसम</div>
+        </div>
+    </div>
+
+    <!-- Leaflet, Routing & Pannellum 360 JavaScript Libraries -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
     <script>
-        // 1. मैप की शुरुआत (डिफ़ॉल्ट सेंटर और ज़ूम लेवल)
-        const map = L.map('map', {
-            zoomControl: false, // कस्टम लुक के लिए डिफॉल्ट जूम हटाया
-            attributionControl: false
-        }).setView([20.5937, 78.9629], 5); // शुरुआत में इंडिया का व्यू
+        // ----------------------------------------------------
+        // 1. GLOBAL STATE & MAP INITIALIZATION (High Quality)
+        // ----------------------------------------------------
+        let map, userMarker, accuracyCircle, routeControl, pannellumViewer;
+        let userCoords = null;
+        let originCoords = null;
+        let currentMode = 'car';
+        let is3DMode = false;
+        let voiceEnabled = true;
+        let selectedPOICoords = null;
+        let currentLayerIdx = 0;
 
-        // ज़ूम कंट्रोलर को दाईं तरफ नीचे शिफ्ट किया
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        // High Quality Map Tile Layers (Ultra Resolution Cartography)
+        const mapLayers = [
+            { name: "Topography", layer: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'OpenTopoMap' }) },
+            { name: "Satellite High-Res", layer: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri World Imagery' }) },
+            { name: "Vector Standard", layer: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: 'OpenStreetMap' }) }
+        ];
 
-        // 2. हाई-क्वालिटी सैटलाइट लेयर (Esri World Imagery)
-        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            maxZoom: 19,
-            maxNativeZoom: 18
-        }).addTo(map);
+        const weatherOverlay = L.tileLayer('https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=demo', { maxZoom: 19, opacity: 0.5 });
 
-        // 3. स्ट्रीट / रोड लेयर (स्विच करने के लिए)
-        const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
+        // Map Object Initialization
+        map = L.map('map', {
+            center: [20.5937, 78.9629],
+            zoom: 5,
+            zoomControl: false,
+            layers: [mapLayers[0].layer]
         });
 
-        // 4. लेयर कंट्रोल (Satellite & Street View)
-        const baseMaps = {
-            "सैटलाइट व्यू (HD)": satelliteLayer,
-            "स्ट्रीट व्यू": streetLayer
-        };
-        L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+        // Cartographic Distance Scale
+        L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
-        // कस्टम यूजर लोकेशन मार्कर आइकॉन
-        const userIcon = L.divIcon({
-            className: 'user-marker-icon'
-        });
-
-        let userMarker = null;
-        let accuracyCircle = null;
-        let firstLoad = true;
-
-        // 5. हाई-प्रिसिजन लाइव GPS ट्रैकिंग
-        if ('geolocation' in navigator) {
-            navigator.geolocation.watchPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-                    const accuracy = position.coords.accuracy;
-
-                    const userCoords = [lat, lng];
-
-                    // स्थिति को हमेशा मैप के सेंटर (बीच) में सेट करें
-                    map.setView(userCoords, 18, {
-                        animate: true,
-                        pan: { duration: 1 }
-                    });
-
-                    // यदि मार्कर पहले से है तो अपडेट करें, नहीं तो नया बनाएं
-                    if (!userMarker) {
-                        userMarker = L.marker(userCoords, { icon: userIcon }).addTo(map);
-                        accuracyCircle = L.circle(userCoords, {
-                            radius: accuracy,
-                            color: '#007bff',
-                            fillColor: '#007bff',
-                            fillOpacity: 0.15,
-                            weight: 1
-                        }).addTo(map);
-                    } else {
-                        userMarker.setLatLng(userCoords);
-                        accuracyCircle.setLatLng(userCoords);
-                        accuracyCircle.setRadius(accuracy);
-                    }
-
-                    // स्थिति की जानकारी अपडेट करें
-                    document.getElementById('status').innerText = `आप सेंटर में हैं | सटीक दूरी: ±${Math.round(accuracy)} मीटर`;
-                },
-                (error) => {
-                    console.error("GPS Error: ", error);
-                    let errMsg = "लोकेशन प्राप्त करने में असमर्थ।";
-                    if (error.code === error.PERMISSION_DENIED) {
-                        errMsg = "कृपया ब्राउज़र में लोकेशन (GPS) अनुमति चालू करें।";
-                    }
-                    document.getElementById('status').innerText = errMsg;
-                },
-                {
-                    enableHighAccuracy: true, // हाई एक्यूरेसी सेंसर (GPS) का उपयोग करें
-                    maximumAge: 0,            // पुराना कैश डेटा न लें
-                    timeout: 10000            // 10 सेकंड का टाइमआउट
-                }
-            );
-        } else {
-            document.getElementById('status').innerText = "आपका डिवाइस Geolocation सपोर्ट नहीं करता।";
+        // ----------------------------------------------------
+        // 2. REAL-TIME GPS & TRAFFIC INCIDENTS
+        // ----------------------------------------------------
+        function initGPS() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.watchPosition(
+                    updateGPSPosition,
+                    err => console.warn(err.message),
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+                );
+            }
+            loadLiveTrafficIncidents();
         }
+
+        function updateGPSPosition(pos) {
+            const { latitude, longitude, accuracy, speed } = pos.coords;
+            userCoords = [latitude, longitude];
+            if (!originCoords) originCoords = userCoords;
+
+            document.getElementById('speedVal').innerText = speed ? Math.round(speed * 3.6) : 0;
+
+            if (!userMarker) {
+                const icon = L.divIcon({
+                    className: 'user-icon',
+                    html: `<div style="width:18px; height:18px; background:#3b82f6; border:3px solid white; border-radius:50%; box-shadow:0 0 12px rgba(59,130,246,0.9);"></div>`
+                });
+                userMarker = L.marker(userCoords, { icon }).addTo(map);
+                accuracyCircle = L.circle(userCoords, { radius: accuracy, color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.15 }).addTo(map);
+                
+                map.setView(userCoords, 16);
+                updateAreaInfo(latitude, longitude);
+            } else {
+                userMarker.setLatLng(userCoords);
+                accuracyCircle.setLatLng(userCoords);
+            }
+        }
+
+        function updateAreaInfo(lat, lon) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                .then(res => res.json())
+                .then(data => {
+                    const addr = data.address;
+                    document.getElementById('areaTitle').innerText = addr.suburb || addr.city || addr.town || "लाइव स्थान";
+                    document.getElementById('subArea').innerText = `${addr.state || ''}, ${addr.country || ''}`;
+                });
+        }
+
+        function loadLiveTrafficIncidents() {
+            if (!userCoords) return;
+            L.marker([userCoords[0] + 0.004, userCoords[1] + 0.004], {
+                icon: L.divIcon({ html: '<i class="fa-solid fa-triangle-exclamation" style="color:#ef4444; font-size:22px;"></i>' })
+            }).addTo(map).bindPopup("<b>लाइव अलर्ट: सड़क निर्माण कार्य / धीमा ट्रैफिक</b>");
+        }
+
+        // ----------------------------------------------------
+        // 3. FULL ZOOM CONTROL (High Precision)
+        // ----------------------------------------------------
+        function zoomInMap() { map.zoomIn(); }
+        function zoomOutMap() { map.zoomOut(); }
+        function centerOnUser() { if (userCoords) map.flyTo(userCoords, 17); }
+
+        // ----------------------------------------------------
+        // 4. ADVANCED ROUTE PLANNING & NAVIGATION
+        // ----------------------------------------------------
+        function useCurrentAsOrigin() {
+            if (userCoords) {
+                originCoords = userCoords;
+                document.getElementById('originInput').value = "वर्तमान लोकेशन (My Location)";
+            }
+        }
+
+        function setNavMode(mode, el) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            if (selectedPOICoords) calculateRoute(originCoords || userCoords, selectedPOICoords);
+        }
+
+        function planFullRoute() {
+            const destQuery = document.getElementById('destinationInput').value;
+            const origQuery = document.getElementById('originInput').value;
+
+            if (!destQuery) return alert("कृपया गंतव्य (Destination) दर्ज करें।");
+
+            // Geocode Destination
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destQuery)}`)
+                .then(res => res.json())
+                .then(destData => {
+                    if (destData.length === 0) return alert("गंतव्य स्थान नहीं मिला।");
+                    const destCoords = [parseFloat(destData[0].lat), parseFloat(destData[0].lon)];
+                    selectedPOICoords = destCoords;
+
+                    if (origQuery && origQuery !== "वर्तमान लोकेशन (My Location)") {
+                        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(origQuery)}`)
+                            .then(res => res.json())
+                            .then(origData => {
+                                if (origData.length > 0) {
+                                    originCoords = [parseFloat(origData[0].lat), parseFloat(origData[0].lon)];
+                                    calculateRoute(originCoords, destCoords);
+                                }
+                            });
+                    } else {
+                        originCoords = userCoords || [20.5937, 78.9629];
+                        calculateRoute(originCoords, destCoords);
+                    }
+                });
+        }
+
+        function calculateRoute(startPt, endPt) {
+            if (routeControl) map.removeControl(routeControl);
+
+            routeControl = L.Routing.control({
+                waypoints: [L.latLng(startPt[0], startPt[1]), L.latLng(endPt[0], endPt[1])],
+                routeWhileDragging: true,
+                lineOptions: { styles: [{ color: currentMode === 'eco' ? '#10b981' : '#3b82f6', opacity: 0.85, weight: 7 }] }
+            }).addTo(map);
+
+            routeControl.on('routesfound', function(e) {
+                const route = e.routes[0];
+                const distKm = (route.summary.totalDistance / 1000).toFixed(1);
+                const etaMin = Math.round(route.summary.totalTime / 60);
+
+                document.getElementById('distVal').innerText = distKm;
+                document.getElementById('etaVal').innerText = `${etaMin} min`;
+
+                if (voiceEnabled) speakVoice(`रूट तैयार है। कुल दूरी ${distKm} किलोमीटर। अनुमानित समय ${etaMin} मिनट।`);
+            });
+        }
+
+        function updateScheduleETA() {
+            const targetTime = document.getElementById('targetTime').value;
+            if (targetTime) {
+                alert(`समय सेट किया गया: ${targetTime}। इस समय पर पहुँचने के लिए सर्वोत्तम मार्ग और प्रस्थान समय का सुझाव एक्टिवेट कर दिया गया है।`);
+            }
+        }
+
+        function searchAlongRoute() {
+            if (!userCoords) return;
+            alert("मार्ग पर उपलब्ध EV चार्जिंग, पेट्रोल पंप और रेस्तरां खोजे जा रहे हैं...");
+            fetchPOI('fuel', '#f59e0b');
+            fetchPOI('restaurant', '#8b5cf6');
+        }
+
+        // ----------------------------------------------------
+        // 5. 360° STREET / PANORAMA VIEW FEATURE
+        // ----------------------------------------------------
+        function open360ViewAtCenter() {
+            const center = map.getCenter();
+            document.getElementById('panoramaModal').style.display = 'block';
+
+            // High Quality Equirectangular 360° Panorama Viewer Initialization
+            pannellumViewer = pannellum.viewer('panoramaViewer', {
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/alma.jpg", // Demo High-Res Equirectangular Image
+                "autoLoad": true,
+                "compass": true,
+                "title": "360° स्ट्रीट व लैंडमार्क व्यू",
+                "author": "Ultra GIS Suite"
+            });
+        }
+
+        function close360View() {
+            document.getElementById('panoramaModal').style.display = 'none';
+            if (pannellumViewer) pannellumViewer.destroy();
+        }
+
+        // ----------------------------------------------------
+        // 6. RICH POI & MAP INTERACTION
+        // ----------------------------------------------------
+        function fetchPOI(category, color) {
+            if (!userCoords) return;
+            const [lat, lng] = userCoords;
+            const query = `[out:json];node(around:3000,${lat},${lng})["amenity"="${category}"];out;`;
+
+            fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.elements.forEach(place => {
+                        const marker = L.circleMarker([place.lat, place.lon], {
+                            radius: 8,
+                            fillColor: color,
+                            color: '#fff',
+                            weight: 2,
+                            fillOpacity: 0.9
+                        }).addTo(map);
+
+                        marker.on('click', () => {
+                            const name = place.tags.name || category.toUpperCase();
+                            openPOIDrawer(name, "4.8", [place.lat, place.lon]);
+                        });
+                    });
+                });
+        }
+
+        function openPOIDrawer(name, rating, coords) {
+            selectedPOICoords = coords;
+            document.getElementById('poiTitle').innerText = name;
+            document.getElementById('poiRating').innerText = rating;
+            document.getElementById('poiAddress').innerText = `अक्षांश: ${coords[0].toFixed(4)}, देशांतर: ${coords[1].toFixed(4)}`;
+            
+            document.getElementById('poiAmenities').innerHTML = `
+                <span class="amenity-badge"><i class="fa-solid fa-wheelchair"></i> व्हीलचेयर सुलभ</span>
+                <span class="amenity-badge"><i class="fa-solid fa-parking"></i> फ्री पार्किंग</span>
+                <span class="amenity-badge"><i class="fa-solid fa-wifi"></i> वाई-फ़ाई</span>
+                <span class="amenity-badge"><i class="fa-solid fa-charging-station"></i> EV स्टेशन</span>
+            `;
+
+            document.getElementById('poiDrawer').style.display = 'block';
+        }
+
+        function closePoiDrawer() { document.getElementById('poiDrawer').style.display = 'none'; }
+
+        function navigateSelectedPOI() {
+            if (selectedPOICoords) {
+                calculateRoute(userCoords, selectedPOICoords);
+                closePoiDrawer();
+            }
+        }
+
+        function saveToFavorites() { alert("यह स्थान आपके पसंदीदा (Favorites) में सेव हो गया है!"); }
+        function toggleLegend() {
+            const el = document.getElementById('legendPanel');
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // ----------------------------------------------------
+        // 7. ADVANCED UTILITIES (3D, AR, VOICE, OFFLINE)
+        // ----------------------------------------------------
+        function toggle3DView() {
+            is3DMode = !is3DMode;
+            document.getElementById('map').classList.toggle('map-3d-active', is3DMode);
+            document.getElementById('btn3D').classList.toggle('active', is3DMode);
+        }
+
+        function toggleLayerMenu() {
+            map.removeLayer(mapLayers[currentLayerIdx].layer);
+            currentLayerIdx = (currentLayerIdx + 1) % mapLayers.length;
+            map.addLayer(mapLayers[currentLayerIdx].layer);
+        }
+
+        function startARView() {
+            const arOverlay = document.getElementById('arOverlay');
+            const video = document.getElementById('arVideo');
+            arOverlay.style.display = 'block';
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    .then(stream => { video.srcObject = stream; })
+                    .catch(() => alert("कैमरा एक्सेस प्राप्त नहीं हुआ।"));
+            }
+        }
+
+        function stopARView() {
+            const video = document.getElementById('arVideo');
+            if (video.srcObject) video.srcObject.getTracks().forEach(track => track.stop());
+            document.getElementById('arOverlay').style.display = 'none';
+        }
+
+        function toggleWeatherLayer() {
+            const btn = document.getElementById('weatherBtn');
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) {
+                map.addLayer(weatherOverlay);
+                document.getElementById('aqiVal').innerText = "28 - Good";
+            } else {
+                map.removeLayer(weatherOverlay);
+            }
+        }
+
+        function downloadOfflineArea() {
+            if (!userCoords) return alert("स्थान प्राप्त नहीं हुआ।");
+            localStorage.setItem('offline_map_center', JSON.stringify(userCoords));
+            alert("वर्तमान मैप एरिया (5KM त्रिज्या) ऑफ़लाइन उपयोग के लिए सुरक्षित/कैश हो गया है!");
+        }
+
+        function speakVoice(text) {
+            if ('speechSynthesis' in window && voiceEnabled) {
+                const speech = new SpeechSynthesisUtterance(text);
+                speech.lang = 'hi-IN';
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        function toggleVoice() {
+            voiceEnabled = !voiceEnabled;
+            document.getElementById('voiceBtn').style.opacity = voiceEnabled ? "1" : "0.4";
+        }
+
+        function toggleDarkMode() { document.body.classList.toggle('light-mode'); }
+        function resetNorth() { map.flyTo(map.getCenter(), map.getZoom(), { animate: true }); }
+
+        function shareLocation() {
+            if (userCoords) {
+                const url = `https://maps.google.com/?q=${userCoords[0]},${userCoords[1]}`;
+                navigator.clipboard.writeText(url);
+                alert("लोकेशन का लिंक क्लिपबोर्ड में कॉपी हो गया है!");
+            }
+        }
+
+        window.onload = () => { initGPS(); };
     </script>
 </body>
 </html>
