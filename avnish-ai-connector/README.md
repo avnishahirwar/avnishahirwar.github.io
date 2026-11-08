@@ -13,7 +13,7 @@ A read-only Model Context Protocol (MCP) service for public information publishe
 - Resource requests have an 8-second timeout and a 20,000-byte response limit.
 - Unknown URL paths return 404; the health endpoint accepts GET and HEAD only.
 - No database, account tokens, private data access, or write operations.
-- Automated local HTTP smoke tests cover health GET/HEAD, method restrictions, security headers, and unknown-route handling.
+- Automated local HTTP smoke tests cover health GET/HEAD, method restrictions, security headers, and 404 routing.
 
 ## Architecture and security boundary
 
@@ -60,16 +60,20 @@ Connect it to the local Streamable HTTP endpoint. The Inspector test is a manual
 
 The workflow at `.github/workflows/avnish-ai-connector.yml` runs dependency installation, TypeScript validation, Wrangler's dry-run build, and local Worker HTTP smoke tests for connector changes and pull requests targeting `main`. Run the same full check locally with `npm run validate`.
 
-## Deployment prerequisites
+## Deployment status
 
-Deployment is intentionally not automated from GitHub. Before deployment:
-1. The account owner creates and verifies a Cloudflare account and reviews the applicable terms.
-2. The account owner selects the hosting account and confirms the intended public endpoint.
-3. The code owner completes the local MCP Inspector smoke test.
-4. OAuth architecture and identity-provider choice are agreed before any private or write capabilities are added.
-5. Production secrets, if later required, are entered directly into the hosting provider's secret manager and never committed to Git.
+- Cloudflare Git integration reported a successful feature-branch preview deployment for commit `cf7ac4cd8e1d306be69c9cd5690f8244826b3861` on 2026-11-08.
+- Branch preview: [https://feat-avnish-ai-mcp-scaffold-avnishahirwar.avnishahirwar.workers.dev](https://feat-avnish-ai-mcp-scaffold-avnishahirwar.avnishahirwar.workers.dev).
+- Commit preview: [https://36247f8b-avnishahirwar.avnishahirwar.workers.dev](https://36247f8b-avnishahirwar.avnishahirwar.workers.dev).
+- GitHub Actions run #33 passed TypeScript validation, Wrangler dry-run build, and local Worker HTTP smoke tests.
+- These results confirm preview deployment/build and automated local checks; they do **not** confirm a live MCP Inspector handshake or production release.
+- The pull request remains Draft and is not merged to `main`.
 
-After those prerequisites, deploy from this directory using the account owner's authenticated Cloudflare session:
+## Security and deployment prerequisites
+
+The public endpoint exposes only public website information. Do not add private data or write capabilities until authentication, per-user authorization, explicit consent, audit logging, abuse controls, and data-retention rules have been implemented and reviewed.
+
+For a manual deployment from an authorized Cloudflare session:
 
 ```bash
 npx wrangler login
@@ -80,17 +84,17 @@ Never send passwords, one-time codes, API tokens, OAuth secrets, or recovery cod
 
 ## Validation status
 
-- GitHub Actions: the earlier typecheck and Wrangler dry-run build passed; the first run after adding HTTP smoke tests was cancelled during rapid branch updates, so the expanded checks still need a clean run.
-- Automated HTTP smoke tests: added; pending first CI execution.
-- MCP Inspector: pending local interactive test.
-- Cloudflare: the connected Git integration successfully built a feature-branch Worker preview for commit `dbca0c1`; this is a preview build, not a merge to `main` or proof of production release.
-- OAuth: design prerequisite documented; not configured.
-- Database and write tools: intentionally out of scope for this public read-only release.
+- TypeScript validation: passed in GitHub Actions run #33.
+- Wrangler dry-run build: passed in GitHub Actions run #33.
+- Local Worker HTTP smoke tests: passed in GitHub Actions run #33.
+- Cloudflare feature-branch preview deployment: reported successful for commit `cf7ac4c`.
+- MCP Inspector handshake and live tool invocation: pending.
+- OAuth authorization server, provider apps, credentials, token vault, and live social account authorization: not implemented.
+- Database, private analytics, inbox, publishing, and write tools: intentionally out of scope for this read-only release.
 
 ## Next phases
 
-1. Run local health and MCP Inspector smoke tests.
-2. Select and configure an OAuth identity provider with the account owner.
-3. Implement and test OAuth 2.1 authorization and scoped permissions.
-4. Add only those external account integrations whose providers support approved APIs and whose account owners authorize them.
-5. Add database-backed capabilities only with explicit consent, data minimization, retention controls, and audit logging.
+1. Complete an MCP Inspector handshake and invoke all five tools against the preview endpoint.
+2. Design and implement OAuth 2.1 authorization, consent, token validation, revocation, and scoped permissions.
+3. Add provider adapters one at a time, read-only first, only where official APIs and account authorization permit.
+4. Add database-backed capabilities only with explicit consent, data minimization, retention controls, and audit logging.
