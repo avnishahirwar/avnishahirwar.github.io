@@ -160,3 +160,16 @@ No payment or social account is considered connected merely because this plan ex
 - The two session indexes `idx_sessions_user_id` and `idx_sessions_expires_at` were also executed successfully.
 - This verifies the schema objects exist in the selected D1 database. It does not verify Worker runtime connectivity, auth flows, token encryption implementation, or application-level authorization.
 - Important migration bookkeeping: because the SQL was executed manually in Studio rather than through Wrangler migrations, do not assume Wrangler's migration history records `0001_initial_schema.sql` as applied. Before any future Wrangler migration apply, inspect migration history and reconcile safely; the migration SQL uses `IF NOT EXISTS` for the created tables/indexes.
+
+
+## Authentication backend implementation checkpoint — 2026-11-08
+
+- Added `src/auth.ts` with D1-backed API routes for registration, email verification, login, logout, current-user profile, forgot-password, and reset-password.
+- Password storage uses PBKDF2-HMAC-SHA-256 (310,000 iterations) with per-password random salts. Session and one-time email tokens are random opaque values; only SHA-256 hashes are stored in D1.
+- Login requires a verified email and enabled account. Password reset invalidates existing sessions. Mutating routes enforce an exact Origin allowlist and per-IP rate limits.
+- Added `migrations/0002_authentication.sql` to add `users.password_hash`, `auth_tokens`, and `auth_rate_limits`.
+- Routed `/api/auth/*` requests from the Worker entrypoint to the authentication handler.
+- Added `AUTHENTICATION-SETUP.md` documenting endpoints, migration instructions, required Cloudflare Worker configuration and release blockers.
+- Not yet live: the additive migration must be applied once to `avnish-ai-db-dev`; Resend sender/domain and Worker secrets (`APP_ORIGIN`, `RESEND_API_KEY`, `EMAIL_FROM`) must be configured; the static website UI still needs wiring; session cookie behavior across GitHub Pages and workers.dev requires same-site hosting or browser verification.
+- No credentials were added to source control. No production deployment or real user onboarding was enabled.
+- Validation is pending: the latest GitHub combined status currently reports Vercel preview as pending; no GitHub Actions run was returned for the latest commit at this checkpoint.
