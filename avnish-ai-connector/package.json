@@ -9,7 +9,8 @@
     "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit",
     "build": "wrangler deploy --dry-run",
-    "validate": "npm run typecheck && npm run build"
+    "validate": "npm run typecheck && npm run build && npm run smoke",
+    "smoke": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.4.0",
