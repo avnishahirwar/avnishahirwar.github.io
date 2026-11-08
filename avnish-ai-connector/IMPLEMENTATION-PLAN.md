@@ -125,3 +125,12 @@ Use free tiers only, disable paid add-ons, configure usage alerts where availabl
 6. Add publishing and paid subscriptions only after security tests, provider approvals, owner authorization and separate release approval.
 
 No payment or social account is considered connected merely because this plan exists.
+## Integration verification checkpoint — 2026-11-08
+
+- Metricool connector was successfully queried during development. One Metricool brand was returned with Instagram, YouTube, Facebook, Pinterest, Bluesky and Google Business Profile network identifiers. This verifies a Metricool brand connection exists, but does not yet verify every network's analytics or publishing permissions.
+- No posts were created, edited, scheduled, or published during this verification.
+- Cloudflare D1 cannot be provisioned or bound through the currently available connected tools. The user-created database's UUID is still required to configure the Worker binding; the migration must only be applied after verifying the target development database.
+- No Razorpay connector was found in plugin discovery. Razorpay must be integrated through its official server-side API; no test credentials are currently available, so checkout cannot yet be exercised.
+- No direct Cloudflare management or Razorpay merchant connector is available in the connected tool inventory. Do not claim those accounts are configured.
+- Direct social OAuth remains unimplemented pending a stable callback hostname, provider app registrations, provider-specific scopes, and account-owner consent.
+- Login/registration and dashboard backend are not yet implemented. Do not accept real customer data until authentication, session security, tenant isolation and deletion controls pass tests.
