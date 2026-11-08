@@ -1,7 +1,7 @@
 # AVNISH AI — Global Product Strategy
 
 ## Positioning
-AVNISH AI is a bilingual (Hindi and English) AI-assisted business operations platform. Its first product is an enquiry-to-customer workflow assistant for small, enquiry-driven businesses.
+AVNISH AI is a bilingual (Hindi and English), privacy-conscious AI platform intended to make useful technology understandable and accessible across income levels and organisation sizes. The long-term audience includes individuals, families, learners, creators, professionals, small businesses, growing teams, and large organisations. The first shipped product remains a focused enquiry workflow assistant for small, enquiry-driven businesses. Broad audience ambition does not mean every audience-specific service is available at launch.
 
 Tagline: Intelligence. Automation. Growth.
 
@@ -11,8 +11,29 @@ Hybrid:
 2. Subscription SaaS after workflows are validated.
 3. Additional AI products only after the core product has repeatable adoption.
 
-## Initial customer segment
-Start with independent hotels, resorts, and other small service businesses that receive frequent enquiries. Expand to adjacent verticals only after customer evidence supports the move.
+## Audience strategy and initial market wedge
+
+### Long-term audience
+Design the product to be understandable, accessible, and useful to:
+- Individuals and families seeking practical everyday assistance.
+- Students and lifelong learners seeking explanations and language support.
+- Creators and professionals seeking productivity and content workflows.
+- Small/local businesses seeking affordable operations tools.
+- Growing teams and larger organisations seeking governed workflows and integrations.
+
+### Initial market wedge
+Do not attempt to build every product for every audience at once. Start with independent hotels, resorts, and other small service businesses that receive frequent enquiries. This creates one measurable first use case. Add consumer, learning, creator, and enterprise modules only after discovery, safety review, demand validation, and delivery capacity exist.
+
+## Platform architecture vision
+
+A single brand and account experience may eventually offer separate modules for everyday assistance, learning, creator productivity, and business operations. Each module must have a clear user problem, privacy boundary, transparent free/paid limits, and measurable value. Do not bundle unrelated features just to claim universal coverage.
+
+Accessibility principles:
+- Plain-language onboarding and bilingual Hindi/English experiences.
+- A genuinely useful free entry tier if sustainable; no hidden charges or misleading free-trial claims.
+- Low-bandwidth, mobile-first design and accessible interfaces.
+- Paid tiers based on additional usage, collaboration, support, or advanced controls—not exclusion from basic dignity or essential information.
+- Clear eligibility, age-appropriate design, data controls, and guardian/authorized-adult involvement where legally required.
 
 ## Core product: AVNISH AI Business Desk
 MVP capabilities:
@@ -74,3 +95,8 @@ These are test hypotheses only and must be validated with actual buyers and deli
 
 ## Brand direction
 Use Midnight Navy (#172943), Champagne Gold (#D9C68F), Intelligence Blue (#4A91C7), Cloud White (#F5F7FA), Growth Green (#29A477), and AI Violet (#7956B5). Keep layouts accessible, responsive, and clear in both Hindi and English.
+
+
+## Universal access principle
+
+The brand should welcome users regardless of income or net worth. Do not market the product as essential to every human being or promise universal outcomes. Build for diverse needs through research and accessibility testing. A free tier is a product and operating-cost decision; define quotas, privacy protections, and support limits before launch. Never monetize sensitive personal data or use manipulative urgency.
