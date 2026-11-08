@@ -143,3 +143,11 @@ No payment or social account is considered connected merely because this plan ex
 - This is a repository configuration change only. The SQL migration has **not** been applied to Cloudflare, and no tables have been created yet.
 - The connected tool inventory does not include Cloudflare D1 execution/management or a Cloudflare CLI session. The next required step is to run `npx wrangler d1 migrations apply avnish-ai-db-dev --remote` from the connector project in an authenticated Cloudflare environment, after confirming the selected account and database are the development target.
 - Do not run the migration against production. After applying it, verify the expected tables in the D1 dashboard before implementing authentication or accepting any customer data.
+
+
+## Read-only analytics verification — 2026-11-08
+
+- Metricool brand access was rechecked successfully for the connected brand. Read-only analytics metric catalogs were retrieved for Instagram and YouTube.
+- Instagram analytics data was retrieved for 2026-10-09 through 2026-11-08. The returned latest dated row (2026-11-07) included 1,062 followers, 488 views, 153 reach, and 25 total feed-content interactions; other metrics were sparse/null in the returned rows and should not be interpreted as zero unless the connector explicitly returns zero.
+- YouTube analytics data was retrieved for the same date window. The latest dated row (2026-11-08) reported 65 subscribers; selected views and interaction metrics were returned as zero for that row. Historical rows include video-view values. These are Metricool-reported values, not independently verified native-platform totals.
+- This confirms read-only Metricool analytics retrieval for the connected brand. It does not establish that AVNISH AI's own dashboard backend is implemented or that direct OAuth is active. No content was published or modified.
