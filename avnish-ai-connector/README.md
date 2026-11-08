@@ -12,7 +12,7 @@ A read-only Model Context Protocol (MCP) service for public information publishe
 - Fixed resource allowlist: `robots.txt`, `sitemap.xml`, and `feed.xml`.
 - Resource requests have an 8-second timeout and a 20,000-byte response limit.
 - Unknown URL paths return 404; the health endpoint accepts GET and HEAD only.
-- No database, account tokens, private data access, or write operations.
+- No database, account tokens, private data access, or write operations.\n- Automated local HTTP smoke tests cover health GET/HEAD, method restrictions, security headers, and unknown-route handling.
 
 ## Architecture and security boundary
 
@@ -57,7 +57,7 @@ Connect it to the local Streamable HTTP endpoint. The Inspector test is a manual
 
 ## GitHub Actions
 
-The workflow at `.github/workflows/avnish-ai-connector.yml` runs dependency installation, TypeScript validation, and Wrangler's dry-run build for connector changes and pull requests targeting `main`.
+The workflow at `.github/workflows/avnish-ai-connector.yml` runs dependency installation, TypeScript validation, Wrangler's dry-run build, and local Worker HTTP smoke tests for connector changes and pull requests targeting `main`. Run the same full check locally with `npm run validate`.
 
 ## Deployment prerequisites
 
