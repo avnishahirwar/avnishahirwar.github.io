@@ -134,3 +134,12 @@ No payment or social account is considered connected merely because this plan ex
 - No direct Cloudflare management or Razorpay merchant connector is available in the connected tool inventory. Do not claim those accounts are configured.
 - Direct social OAuth remains unimplemented pending a stable callback hostname, provider app registrations, provider-specific scopes, and account-owner consent.
 - Login/registration and dashboard backend are not yet implemented. Do not accept real customer data until authentication, session security, tenant isolation and deletion controls pass tests.
+
+
+## D1 binding checkpoint — 2026-11-08
+
+- The user supplied the development D1 database ID for `avnish-ai-db-dev`.
+- `wrangler.jsonc` now contains a D1 binding named `DB`, pointing to that database ID, with migrations configured from `migrations/`.
+- This is a repository configuration change only. The SQL migration has **not** been applied to Cloudflare, and no tables have been created yet.
+- The connected tool inventory does not include Cloudflare D1 execution/management or a Cloudflare CLI session. The next required step is to run `npx wrangler d1 migrations apply avnish-ai-db-dev --remote` from the connector project in an authenticated Cloudflare environment, after confirming the selected account and database are the development target.
+- Do not run the migration against production. After applying it, verify the expected tables in the D1 dashboard before implementing authentication or accepting any customer data.
