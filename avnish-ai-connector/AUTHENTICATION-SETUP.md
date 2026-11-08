@@ -56,3 +56,35 @@ The current frontend is on GitHub Pages and the API is on a separate `workers.de
 - Configure same-site API hosting or test cookie behavior on supported browsers.
 - Add integration tests, review rate limiting and session revocation, and perform security review.
 - No production deployment or real user onboarding is enabled.
+
+
+## Razorpay subscriptions — Test Mode only
+
+The feature branch now contains a server-side subscription flow in `src/billing.ts`:
+
+- `POST /api/billing/create-subscription`: requires a verified signed-in user, creates/caches the Razorpay monthly or annual plan, then creates a pending subscription.
+- `POST /api/billing/verify-subscription`: verifies the Checkout HMAC signature. This does **not** grant Pro access.
+- `POST /api/billing/webhook`: verifies `X-Razorpay-Signature`, deduplicates events by `x-razorpay-event-id`, and updates subscription state only from provider webhook events.
+
+Pricing configured in code:
+- `pro_monthly`: ₹299 / month (29,900 paise).
+- `pro_annual`: ₹2,999 / year (299,900 paise).
+
+The Worker refuses to call Razorpay unless `RAZORPAY_KEY_ID` begins with `rzp_test_`. Live keys are deliberately rejected.
+
+### Additional Worker secrets / variables
+
+- `RAZORPAY_KEY_ID`: Razorpay **Test** Key ID (not a live key).
+- `RAZORPAY_KEY_SECRET`: Razorpay **Test** Key Secret, stored only as a Worker secret.
+- `RAZORPAY_WEBHOOK_SECRET`: webhook signing secret configured in the Razorpay Test Dashboard.
+- `APP_ORIGIN`: exact browser origin allowed to call the Worker.
+
+Never paste any of these values into chat or commit them. Configure webhook URL as the Worker endpoint `/api/billing/webhook` and subscribe to `subscription.activated`, `subscription.charged`, `subscription.halted`, `subscription.cancelled`, and `subscription.completed`.
+
+### Additive D1 migration
+
+Apply `migrations/0003_billing.sql` exactly once to **avnish-ai-db-dev**. It creates `billing_plans` and `billing_events`; it does not alter existing customer data. Do not rerun if both tables already exist. Because earlier schema changes were applied manually in D1 Studio, do not run the entire Wrangler migration history blindly.
+
+### Not yet enabled for real customers
+
+The static website has not yet been wired to the billing endpoints or to a verified sign-in UI. Authentication also needs a same-site API origin/reverse proxy: GitHub Pages and `workers.dev` are different sites, and browser third-party-cookie restrictions can block the session cookie. The checkout flow must remain a sandbox test until the site/API origin, email verification, D1 migration, webhook delivery, duplicate-event handling, cancellation/refund lifecycle, and full end-to-end tests are verified. Do not accept live payments.
