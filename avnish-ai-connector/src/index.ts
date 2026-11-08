@@ -1,6 +1,7 @@
 import { createMcpHandler } from "agents/mcp/server";
 import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
+import { handleAuthRequest, type AuthEnv } from "./auth";
 
 const SITE_URL = "https://avnishahirwar.github.io/";
 const MAX_RESOURCE_BYTES = 20_000;
@@ -184,7 +185,9 @@ function createServer() {
 const mcpHandler = createMcpHandler(createServer);
 
 export default {
-  async fetch(request: Request, env: Parameters<typeof mcpHandler>[1], ctx: Parameters<typeof mcpHandler>[2]) {
+  async fetch(request: Request, env: AuthEnv & Parameters<typeof mcpHandler>[1], ctx: Parameters<typeof mcpHandler>[2]) {
+    const authResponse = await handleAuthRequest(request, env);
+    if (authResponse) return authResponse;
     const url = new URL(request.url);
 
     if (url.pathname === "/" && (request.method === "GET" || request.method === "HEAD")) {
