@@ -202,10 +202,14 @@ export async function handleAuthRequest(request: Request, env: AuthEnv): Promise
       const email = body.email.trim().toLowerCase();
       const user = await env.DB.prepare("SELECT id FROM users WHERE email=? AND disabled_at IS NULL").bind(email).first<{id:string}>();
       if (user && env.RESEND_API_KEY && env.EMAIL_FROM && getOrigin(env)) {
-        const token = randomToken();
-        await env.DB.prepare("INSERT INTO auth_tokens(id,user_id,token_hash,purpose,expires_at) VALUES(?,?,?,?,?)").bind(uuid(), user.id, await sha256(token), "reset_password", new Date(Date.now()+TOKEN_MINUTES*60_000).toISOString()).run();
-        const link = `${getOrigin(env)}/avnish-ai/?auth=reset&token=${encodeURIComponent(token)}`;
-        await sendEmail(env, email, "Reset your AVNISH AI password", `<div style="font-family:Arial,sans-serif;line-height:1.6"><h2>AVNISH AI</h2><p>Use this link to reset your password.</p><p><a href="${link}">Reset password</a></p><p>This link expires in 30 minutes. Ignore this message if you did not request it.</p></div>`);
+        try {
+          const token = randomToken();
+          await env.DB.prepare("INSERT INTO auth_tokens(id,user_id,token_hash,purpose,expires_at) VALUES(?,?,?,?,?)").bind(uuid(), user.id, await sha256(token), "reset_password", new Date(Date.now()+TOKEN_MINUTES*60_000).toISOString()).run();
+          const link = `${getOrigin(env)}/avnish-ai/?auth=reset&token=${encodeURIComponent(token)}`;
+          await sendEmail(env, email, "Reset your AVNISH AI password", `<div style="font-family:Arial,sans-serif;line-height:1.6"><h2>AVNISH AI</h2><p>Use this link to reset your password.</p><p><a href="${link}">Reset password</a></p><p>This link expires in 30 minutes. Ignore this message if you did not request it.</p></div>`);
+        } catch {
+          // Keep the same public response to avoid account enumeration.
+        }
       }
       return withCors(json({ message: "If the account exists, reset instructions will be sent." }), request, env);
     }
