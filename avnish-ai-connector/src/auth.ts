@@ -111,17 +111,6 @@ async function sendEmail(env: AuthEnv, to: string, subject: string, html: string
   });
   if (!response.ok) throw new Error("Email provider rejected the message.");
 }
-async function issueToken(env: AuthEnv, userId: string, purpose: "verify_email" | "reset_password", path: string, subject: string, intro: string) {
-  const token = randomToken();
-  const tokenHash = await sha256(token);
-  const id = uuid();
-  const expires = new Date(Date.now() + TOKEN_MINUTES * 60_000).toISOString();
-  await env.DB.prepare("INSERT INTO auth_tokens(id,user_id,token_hash,purpose,expires_at) VALUES(?,?,?,?,?)").bind(id, userId, tokenHash, purpose, expires).run();
-  const base = getOrigin(env);
-  const link = `${base}${path}?token=${encodeURIComponent(token)}`;
-  const html = `<div style="font-family:Arial,sans-serif;line-height:1.6"><h2>AVNISH AI</h2><p>${intro}</p><p><a href="${link}">Continue to AVNISH AI</a></p><p>This link expires in 30 minutes. If you did not request this, you can ignore this email.</p></div>`;
-  await sendEmail(env, "", subject, html).catch(async error => { throw error; });
-}
 async function createSession(env: AuthEnv, userId: string) {
   const raw = randomToken();
   const now = new Date();
@@ -162,7 +151,7 @@ export async function handleAuthRequest(request: Request, env: AuthEnv): Promise
       try {
         const token = randomToken();
         await env.DB.prepare("INSERT INTO auth_tokens(id,user_id,token_hash,purpose,expires_at) VALUES(?,?,?,?,?)").bind(uuid(), id, await sha256(token), "verify_email", new Date(Date.now()+TOKEN_MINUTES*60_000).toISOString()).run();
-        const link = `${getOrigin(env)}?auth=verify&token=${encodeURIComponent(token)}`;
+        const link = `${getOrigin(env)}/avnish-ai/?auth=verify&token=${encodeURIComponent(token)}`;
         await sendEmail(env, email, "Verify your AVNISH AI email", `<div style="font-family:Arial,sans-serif;line-height:1.6"><h2>AVNISH AI</h2><p>Verify your email address to finish registration.</p><p><a href="${link}">Verify email</a></p><p>This link expires in 30 minutes. Ignore this message if you did not create the account.</p></div>`);
       } catch {
         await env.DB.prepare("DELETE FROM users WHERE id=?").bind(id).run();
@@ -215,7 +204,7 @@ export async function handleAuthRequest(request: Request, env: AuthEnv): Promise
       if (user && env.RESEND_API_KEY && env.EMAIL_FROM && getOrigin(env)) {
         const token = randomToken();
         await env.DB.prepare("INSERT INTO auth_tokens(id,user_id,token_hash,purpose,expires_at) VALUES(?,?,?,?,?)").bind(uuid(), user.id, await sha256(token), "reset_password", new Date(Date.now()+TOKEN_MINUTES*60_000).toISOString()).run();
-        const link = `${getOrigin(env)}?auth=reset&token=${encodeURIComponent(token)}`;
+        const link = `${getOrigin(env)}/avnish-ai/?auth=reset&token=${encodeURIComponent(token)}`;
         await sendEmail(env, email, "Reset your AVNISH AI password", `<div style="font-family:Arial,sans-serif;line-height:1.6"><h2>AVNISH AI</h2><p>Use this link to reset your password.</p><p><a href="${link}">Reset password</a></p><p>This link expires in 30 minutes. Ignore this message if you did not request it.</p></div>`);
       }
       return withCors(json({ message: "If the account exists, reset instructions will be sent." }), request, env);
