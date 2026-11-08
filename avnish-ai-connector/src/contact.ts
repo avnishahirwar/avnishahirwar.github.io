@@ -33,7 +33,7 @@ export async function handleContactRequest(request: Request, env: ContactEnv): P
     const email = clean(body.email, 254).toLowerCase();
     const topic = clean(body.topic, 40);
     const message = clean(body.message, 2000);
-    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !["Feedback","Report a problem","Business enquiry","Partnership"].includes(topic) || message.length < 5) {
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !["Feedback","Report a problem","Business enquiry","Partnership","Hotel Pilot / Demo"].includes(topic) || message.length < 5) {
       return response({ error: "Please enter a valid name, email, enquiry type and message (at least 5 characters)." }, 400, origin);
     }
     const id = crypto.randomUUID();
