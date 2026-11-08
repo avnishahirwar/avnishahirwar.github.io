@@ -106,18 +106,58 @@ let lang='en';
 const fmt=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
 function val(id){const el=document.getElementById(id);return el?Number(el.value):NaN}
 function show(id,msg){const el=document.getElementById(id);if(el)el.textContent=msg}
-function calcGST(){const a=val('gstAmount'),r=val('gstRate'),m=document.getElementById('gstMode')?.value;if(!Number.isFinite(a)||a<=0||!Number.isFinite(r)||r<0){show('gstResult','कृपया सही राशि और GST दर भरें। / Enter a valid amount and GST rate.');return}const base=m==='exclusive'?a:a/(1+r/100),tax=m==='exclusive'?a*r/100:a-base;show('gstResult','Base: '+fmt(base)+' · GST: '+fmt(tax)+' · Total: '+fmt(base+tax))}
-function calcEMI(){const p=val('loan'),annual=val('rate'),y=val('years');if(!Number.isFinite(p)||p<=0||!Number.isFinite(annual)||annual<0||!Number.isFinite(y)||y<=0){show('emiResult','कृपया सही लोन राशि, ब्याज दर और अवधि भरें। / Enter valid loan, rate and tenure.');return}const n=y*12,r=annual/1200,emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1),total=emi*n;show('emiResult','Monthly EMI: '+fmt(emi)+' · Total payment: '+fmt(total)+' · Interest: '+fmt(total-p))}
-function calcProfit(){const c=val('cost'),s=val('selling');if(!Number.isFinite(c)||!Number.isFinite(s)||c<=0||s<0){show('profitResult','कृपया सही लागत और बिक्री मूल्य भरें। / Enter valid cost and selling price.');return}const p=s-c,margin=s?100*p/s:0,markup=100*p/c;show('profitResult','Profit: '+fmt(p)+' · Margin: '+margin.toFixed(2)+'% · Markup: '+markup.toFixed(2)+'%')}
-function calcDiscount(){const p=val('original'),d=val('discount');if(!Number.isFinite(p)||!Number.isFinite(d)||p<=0||d<0||d>100){show('discountResult','कृपया सही कीमत और 0–100% डिस्काउंट भरें। / Enter valid price and discount (0–100%).');return}const cut=p*d/100;show('discountResult','You save: '+fmt(cut)+' · Final price: '+fmt(p-cut))}
-
-// Expose calculator functions for compatibility and bind buttons directly.
-// Direct listeners avoid reliance on inline-handler/global-scope behaviour in browsers.
+function calcGST(){
+ const a=val('gstAmount'),r=val('gstRate'),m=document.getElementById('gstMode')?.value;
+ if(!Number.isFinite(a)||a<=0||!Number.isFinite(r)||r<0||r>100){show('gstResult','राशि 0 से अधिक और GST दर 0–100% रखें। / Enter amount > 0 and GST rate from 0–100%.');return}
+ const base=m==='exclusive'?a:a/(1+r/100),tax=m==='exclusive'?a*r/100:a-base,total=base+tax;
+ show('gstResult','Base: '+fmt(base)+' · GST: '+fmt(tax)+' · Total: '+fmt(total));
+}
+function calcEMI(){
+ const p=val('loan'),annual=val('rate'),y=val('years);
+ if(!Number.isFinite(p)||p<=0||!Number.isFinite(annual)||annual<0||annual>100||!Number.isFinite(y)||y<=0||y>50){show('emiResult','लोन राशि 0 से अधिक, ब्याज 0–100% और अवधि 0–50 वर्ष रखें।');return}
+ const n=y*12,r=annual/1200,emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1),total=emi*n;
+ if(!Number.isFinite(emi)||!Number.isFinite(total)){show('emiResult','इन मानों से गणना संभव नहीं है। कृपया जाँचें।');return}
+ show('emiResult','Monthly EMI: '+fmt(emi)+' · Total payment: '+fmt(total)+' · Interest: '+fmt(total-p));
+}
+function calcProfit(){
+ const c=val('cost'),s=val('selling);
+ if(!Number.isFinite(c)||!Number.isFinite(s)||c<=0||s<0){show('profitResult','लागत 0 से अधिक और बिक्री मूल्य 0 या अधिक रखें।');return}
+ const p=s-c,margin=s?100*p/s:0,markup=100*p/c;
+ show('profitResult','Profit: '+fmt(p)+' · Margin: '+margin.toFixed(2)+'% · Markup: '+markup.toFixed(2)+'%');
+}
+function calcDiscount(){
+ const p=val('original'),d=val('discount');
+ if(!Number.isFinite(p)||!Number.isFinite(d)||p<=0||d<0||d>100){show('discountResult','मूल कीमत 0 से अधिक और डिस्काउंट 0–100% रखें।');return}
+ const cut=p*d/100;
+ show('discountResult','You save: '+fmt(cut)+' · Final price: '+fmt(p-cut));
+}
 window.calcGST=calcGST;window.calcEMI=calcEMI;window.calcProfit=calcProfit;window.calcDiscount=calcDiscount;
-// Assign both the DOM click property and listener for broad browser compatibility.
-const calculatorActions = [['calcGSTButton',calcGST],['calcEMIButton',calcEMI],['calcProfitButton',calcProfit],['calcDiscountButton',calcDiscount]];
-calculatorActions.forEach(([id,action])=>{const button=document.getElementById(id);if(button){button.type='button';button.onclick=action;button.addEventListener('click',action);}});
 
+// One reliable event path: buttons calculate on tap; fields recalculate as values change.
+const calculatorConfig=[
+ {button:'calcGSTButton',result:'gstResult',inputs:['gstAmount','gstRate','gstMode'],run:calcGST},
+ {button:'calcEMIButton',result:'emiResult',inputs:['loan','rate','years'],run:calcEMI},
+ {button:'calcProfitButton',result:'profitResult',inputs:['cost','selling'],run:calcProfit},
+ {button:'calcDiscountButton',result:'discountResult',inputs:['original','discount'],run:calcDiscount}
+];
+calculatorConfig.forEach(config=>{
+ const button=document.getElementById(config.button);
+ if(button){button.type='button';button.onclick=config.run;}
+ config.inputs.forEach(id=>{
+  const input=document.getElementById(id);
+  if(!input)return;
+  const autoCalculate=()=>{
+   const complete=config.inputs.every(inputId=>{
+    const field=document.getElementById(inputId);
+    return field && String(field.value).trim()!=='';
+   });
+   if(complete)config.run();
+   else show(config.result,'सभी जरूरी मान भरें — परिणाम अपने-आप दिखाई देगा।');
+  };
+  input.addEventListener('input',autoCalculate);
+  input.addEventListener('change',autoCalculate);
+ });
+});
 
 document.querySelectorAll('[data-subscribe]').forEach(button=>button.addEventListener('click',()=>{const plan=button.dataset.subscribe==='annual'?'Pro Annual — ₹2,999/year':'Pro Monthly — ₹299/month';const notice=document.getElementById('subscriptionNotice');notice.textContent=plan+' selected. Secure online checkout is being prepared; no payment has been taken. Free tools remain available.';}));
 document.getElementById('contactForm').addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,button=document.getElementById('contactSubmit'),status=document.getElementById('contactStatus');if(!form.reportValidity())return;const payload={name:document.getElementById('contactName').value.trim(),email:document.getElementById('contactEmail').value.trim(),topic:document.getElementById('contactTopic').value,businessType:document.getElementById('businessType').value,businessSector:document.getElementById('businessSector').value,message:document.getElementById('contactMessage').value.trim()};button.disabled=true;button.textContent='Submitting…';status.textContent='Submitting your enquiry securely…';try{const response=await fetch('https://avnishahirwar.avnishahirwar.workers.dev/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const result=await response.json().catch(()=>({}));if(!response.ok||!result.success)throw new Error(result.error||'Submission failed. Please try again.');status.textContent='Thank you. Your enquiry has been received. Reference: '+result.reference+(result.emailNotified?' · Notification sent.':' · Email notification is pending, but your enquiry is saved.');form.reset();}catch(error){status.textContent=(error&&error.message)||'Could not submit. Please check your connection and try again.';}finally{button.disabled=false;button.textContent='Submit enquiry';}});\ndocument.getElementById('lang').addEventListener('click',()=>{lang=lang==='en'?'hi':'en';document.documentElement.lang=lang;document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+lang);if(v!==null)el.textContent=v});document.getElementById('lang').textContent=lang==='en'?'हिन्दी':'English'});
