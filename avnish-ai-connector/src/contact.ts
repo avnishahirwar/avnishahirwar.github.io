@@ -32,18 +32,20 @@ export async function handleContactRequest(request: Request, env: ContactEnv): P
     const name = clean(body.name, 80);
     const email = clean(body.email, 254).toLowerCase();
     const topic = clean(body.topic, 40);
+    const businessType = clean(body.businessType, 60);
+    const businessSector = clean(body.businessSector, 60);
     const message = clean(body.message, 2000);
-    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !["Feedback","Report a problem","Business enquiry","Partnership","Hotel Pilot / Demo"].includes(topic) || message.length < 5) {
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !["Feedback","Report a problem","Business enquiry","Partnership","Hotel Pilot / Demo"].includes(topic) || !businessType || !businessSector || message.length < 5) {
       return response({ error: "Please enter a valid name, email, enquiry type and message (at least 5 characters)." }, 400, origin);
     }
     const id = crypto.randomUUID();
-    await env.DB.prepare("INSERT INTO enquiries (id, name, email, topic, message, status) VALUES (?, ?, ?, ?, ?, 'new')")
-      .bind(id, name, email, topic, message).run();
+    await env.DB.prepare("INSERT INTO enquiries (id, name, email, topic, business_type, business_sector, message, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'new')")
+      .bind(id, name, email, topic, businessType, businessSector, message).run();
     let emailNotified = false;
     if (env.RESEND_API_KEY && env.EMAIL_FROM) {
       try {
         const notifyTo = env.CONTACT_NOTIFY_EMAIL || "avnishahirwar415@gmail.com";
-        const html = `<h2>New AVNISH AI enquiry</h2><p><b>Reference:</b> ${id}</p><p><b>Name:</b> ${escapeHtml(name)}</p><p><b>Email:</b> ${escapeHtml(email)}</p><p><b>Type:</b> ${escapeHtml(topic)}</p><p><b>Message:</b><br>${escapeHtml(message).replace(/\n/g,"<br>")}</p>`;
+        const html = `<h2>New AVNISH AI enquiry</h2><p><b>Reference:</b> ${id}</p><p><b>Name:</b> ${escapeHtml(name)}</p><p><b>Email:</b> ${escapeHtml(email)}</p><p><b>Type:</b> ${escapeHtml(topic)}</p><p><b>Business:</b> ${escapeHtml(businessType)}</p><p><b>Sector:</b> ${escapeHtml(businessSector)}</p><p><b>Message:</b><br>${escapeHtml(message).replace(/\n/g,"<br>")}</p>`;
         const sent = await fetch("https://api.resend.com/emails", {
           method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
           body: JSON.stringify({ from: env.EMAIL_FROM, to: [notifyTo], reply_to: email, subject: `AVNISH AI enquiry: ${topic}`, html })
