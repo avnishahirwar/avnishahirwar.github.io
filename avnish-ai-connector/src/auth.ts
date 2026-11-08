@@ -118,7 +118,7 @@ async function createSession(env: AuthEnv, userId: string) {
   await env.DB.prepare("INSERT INTO sessions(id,user_id,token_hash,expires_at) VALUES(?,?,?,?)").bind(uuid(), userId, await sha256(raw), expires).run();
   return { raw, expires };
 }
-async function currentUser(env: AuthEnv, request: Request) {
+export async function currentUser(env: AuthEnv, request: Request) {
   const raw = cookieValue(request, "av_session");
   if (!raw) return null;
   const now = new Date().toISOString();
