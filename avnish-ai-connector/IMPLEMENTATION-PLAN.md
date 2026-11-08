@@ -94,3 +94,34 @@ The custom domain is intentionally deferred. Use the current `workers.dev` previ
 ## Zero-cost operating rule
 
 Use free tiers only, disable paid add-ons, configure usage alerts where available, and stop/disable features rather than silently upgrading when a quota is reached. Free-tier availability and quotas can change. No service should be described as permanently free.
+
+
+## Selected integrations (approved direction: 2026-11-08)
+
+### Payment provider: Razorpay
+
+- Selected provider: Razorpay. Do not add Stripe checkout or Stripe-specific code to the customer-facing payment flow unless the owner changes this decision.
+- Implementation sequence: (1) build a provider-neutral server-side payment interface, (2) add Razorpay order creation and hosted Checkout in test mode, (3) verify payment signatures server-side, (4) add idempotent signed webhook processing, (5) persist only Razorpay order/payment/subscription references and normalized status in D1, (6) test success, failure, duplicate webhook, refund/cancellation and subscription lifecycle cases.
+- The browser must never decide that payment succeeded. The backend must verify the provider response/webhook before granting a paid plan.
+- Never store card numbers, CVV, UPI PIN, OTP, raw API keys, or payment credentials in D1, source control, browser storage, or chat. Razorpay Key Secret and webhook secret belong only in Cloudflare Worker secrets configured by the authorized merchant owner.
+- Keep live mode disabled. Test mode can be implemented only after secure backend configuration. Live merchant onboarding, KYC, bank settlement, pricing/tax/refund terms and production activation require the legally eligible adult business owner and separate explicit approval.
+- Razorpay has no confirmed first-party ChatGPT connector in the current plugin discovery. Use its official API/documentation from the server-side Worker; do not pretend a Razorpay connector is installed.
+
+### Social integrations: Metricool + direct provider OAuth ("Both")
+
+- Metricool is the selected management/analytics route and is already available in the connected app inventory. Use it for supported connected brands, analytics, planning and publishing workflows after the account owner completes Metricool's own account authorization.
+- Direct OAuth is a separate AVNISH AI product integration. Build provider-specific authorization-code flows with PKCE where supported, strict state validation, exact HTTPS callback URLs, minimal scopes, encrypted tokens, revocation/disconnect and audit events.
+- Initial direct-OAuth order: Meta (Instagram/Facebook/Threads) as one developer-app family where supported; Google/YouTube; LinkedIn; X; Pinterest. Start read-only. Add publishing only after provider approval and explicit per-action user confirmation.
+- Metricool authorization does not automatically authorize AVNISH AI to access the same social accounts directly, and direct OAuth does not automatically connect those accounts to Metricool. The account owner must authorize each service independently.
+- Do not collect social passwords, OTPs, recovery codes, or app secrets in chat. App credentials must be entered into Cloudflare Worker secrets by the authorized account owner.
+
+### Work sequencing for the selected choices
+
+1. Complete D1 binding and apply the existing migration to the user's actual development database.
+2. Implement and test server-side login/session security and tenant isolation before storing customer records.
+3. Add Razorpay test-mode server endpoints and signed webhook verification; keep live mode off.
+4. Complete Metricool connection and verify which brands/platform actions are actually available to the authorized account.
+5. Implement direct OAuth one provider family at a time, beginning with read-only access.
+6. Add publishing and paid subscriptions only after security tests, provider approvals, owner authorization and separate release approval.
+
+No payment or social account is considered connected merely because this plan exists.
