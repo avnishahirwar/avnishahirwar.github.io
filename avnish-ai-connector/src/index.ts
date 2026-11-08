@@ -3,6 +3,8 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 const SITE_URL = "https://avnishahirwar.github.io/";
+const MAX_RESOURCE_BYTES = 20_000;
+const RESOURCE_FETCH_TIMEOUT_MS = 8_000;
 
 const publicSections = [
   { id: "book-store", label: "Book Store / Publications" },
@@ -28,6 +30,41 @@ function asText(value: unknown) {
   return {
     content: [{ type: "text" as const, text: JSON.stringify(value, null, 2) }]
   };
+}
+
+async function readLimitedText(response: Response, maxBytes: number) {
+  if (!response.body) return "";
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let totalBytes = 0;
+  let output = "";
+  let truncated = false;
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const remaining = maxBytes - totalBytes;
+      if (value.byteLength > remaining) {
+        if (remaining > 0) {
+          output += decoder.decode(value.subarray(0, remaining), { stream: true });
+        }
+        truncated = true;
+        await reader.cancel();
+        break;
+      }
+
+      totalBytes += value.byteLength;
+      output += decoder.decode(value, { stream: true });
+    }
+    output += decoder.decode();
+  } finally {
+    reader.releaseLock();
+  }
+
+  return truncated ? output + "\\n[Truncated at " + maxBytes + " bytes]" : output;
 }
 
 function createServer() {
@@ -85,26 +122,27 @@ function createServer() {
       }
     },
     async ({ resource }) => {
-      const response = await fetch(new URL(resource, SITE_URL), {
-        headers: { Accept: "text/plain, application/xml, application/rss+xml" }
-      });
+      try {
+        const response = await fetch(new URL(resource, SITE_URL), {
+          headers: { Accept: "text/plain, application/xml, application/rss+xml" },
+          signal: AbortSignal.timeout(RESOURCE_FETCH_TIMEOUT_MS)
+        });
 
-      if (!response.ok) {
+        if (!response.ok) {
+          return {
+            isError: true,
+            content: [{ type: "text" as const, text: `Could not fetch ${resource}: HTTP ${response.status}` }]
+          };
+        }
+
+        const body = await readLimitedText(response, MAX_RESOURCE_BYTES);
+        return { content: [{ type: "text" as const, text: body }] };
+      } catch {
         return {
           isError: true,
-          content: [{ type: "text" as const, text: `Could not fetch ${resource}: HTTP ${response.status}` }]
+          content: [{ type: "text" as const, text: `Could not fetch ${resource}: request failed or timed out` }]
         };
       }
-
-      const body = await response.text();
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: body.slice(0, 20000)
-          }
-        ]
-      };
     }
   );
 
@@ -120,9 +158,10 @@ function createServer() {
       asText({
         connector: "Avnish AI",
         version: "0.1.0",
-        stage: "read-only scaffold",
+        stage: "read-only public-data connector",
         transport: "Streamable HTTP",
         endpoint: "/mcp",
+        healthEndpoint: "/health",
         availableTools: [
           "get_public_site_profile",
           "list_public_site_sections",
@@ -132,6 +171,7 @@ function createServer() {
         ],
         writeActionsEnabled: false,
         authenticationConfigured: false,
+        authenticationMode: "public read-only only; OAuth required before private or write access",
         databaseConfigured: false,
         note:
           "This first release exposes public website information only. Enquiries, bookings, content changes, analytics and other private or write operations must wait for authenticated access, a database, consent rules and deployment configuration."
@@ -141,8 +181,44 @@ function createServer() {
   return server;
 }
 
-const handler = createMcpHandler(createServer);
+const mcpHandler = createMcpHandler(createServer);
 
 export default {
-  fetch: handler
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/health") {
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return new Response("Method Not Allowed", {
+          status: 405,
+          headers: { Allow: "GET, HEAD" }
+        });
+      }
+
+      return Response.json(
+        {
+          status: "ok",
+          service: "avnish-ai-connector",
+          version: "0.2.0",
+          mode: "read-only-public-data",
+          mcpEndpoint: "/mcp"
+        },
+        {
+          headers: {
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff"
+          }
+        }
+      );
+    }
+
+    if (url.pathname !== "/mcp") {
+      return new Response("Not Found", {
+        status: 404,
+        headers: { "X-Content-Type-Options": "nosniff" }
+      });
+    }
+
+    return mcpHandler(request, env, ctx);
+  }
 };
