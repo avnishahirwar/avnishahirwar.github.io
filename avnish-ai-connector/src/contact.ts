@@ -6,7 +6,7 @@ const allowedOrigins = new Set([
   "https://avnishahirwar-az3akne5j-avnis.vercel.app"
 ]);
 function response(data: unknown, status: number, origin: string) {
-  return Response.json(data, { status, headers: {
+  return new Response(status === 204 ? null : JSON.stringify(data), { status, headers: { "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
     "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type", "Vary": "Origin"
