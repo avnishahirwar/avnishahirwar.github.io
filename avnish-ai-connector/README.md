@@ -80,10 +80,10 @@ Never send passwords, one-time codes, API tokens, OAuth secrets, or recovery cod
 
 ## Validation status
 
-- GitHub Actions: previous typecheck and Wrangler dry-run build passed; the expanded smoke-test workflow is awaiting its first result.
+- GitHub Actions: the earlier typecheck and Wrangler dry-run build passed; the first run after adding HTTP smoke tests was cancelled during rapid branch updates, so the expanded checks still need a clean run.
 - Automated HTTP smoke tests: added; pending first CI execution.
 - MCP Inspector: pending local interactive test.
-- Cloudflare deployment: pending account setup and owner approval.
+- Cloudflare: the connected Git integration successfully built a feature-branch Worker preview for commit `dbca0c1`; this is a preview build, not a merge to `main` or proof of production release.
 - OAuth: design prerequisite documented; not configured.
 - Database and write tools: intentionally out of scope for this public read-only release.
 
