@@ -79,7 +79,8 @@ Never send passwords, one-time codes, API tokens, OAuth secrets, or recovery cod
 
 ## Validation status
 
-- GitHub Actions: TypeScript typecheck and Wrangler dry-run build passed for the current CI run.
+- GitHub Actions: previous typecheck and Wrangler dry-run build passed; the expanded smoke-test workflow is awaiting its first result.
+- Automated HTTP smoke tests: added; pending first CI execution.
 - MCP Inspector: pending local interactive test.
 - Cloudflare deployment: pending account setup and owner approval.
 - OAuth: design prerequisite documented; not configured.
