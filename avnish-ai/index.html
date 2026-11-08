@@ -113,14 +113,14 @@ function calcGST(){
  show('gstResult','Base: '+fmt(base)+' · GST: '+fmt(tax)+' · Total: '+fmt(total));
 }
 function calcEMI(){
- const p=val('loan'),annual=val('rate'),y=val('years);
+ const p=val('loan'),annual=val('rate'),y=val('years');
  if(!Number.isFinite(p)||p<=0||!Number.isFinite(annual)||annual<0||annual>100||!Number.isFinite(y)||y<=0||y>50){show('emiResult','लोन राशि 0 से अधिक, ब्याज 0–100% और अवधि 0–50 वर्ष रखें।');return}
  const n=y*12,r=annual/1200,emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1),total=emi*n;
  if(!Number.isFinite(emi)||!Number.isFinite(total)){show('emiResult','इन मानों से गणना संभव नहीं है। कृपया जाँचें।');return}
  show('emiResult','Monthly EMI: '+fmt(emi)+' · Total payment: '+fmt(total)+' · Interest: '+fmt(total-p));
 }
 function calcProfit(){
- const c=val('cost'),s=val('selling);
+ const c=val('cost'),s=val('selling');
  if(!Number.isFinite(c)||!Number.isFinite(s)||c<=0||s<0){show('profitResult','लागत 0 से अधिक और बिक्री मूल्य 0 या अधिक रखें।');return}
  const p=s-c,margin=s?100*p/s:0,markup=100*p/c;
  show('profitResult','Profit: '+fmt(p)+' · Margin: '+margin.toFixed(2)+'% · Markup: '+markup.toFixed(2)+'%');
