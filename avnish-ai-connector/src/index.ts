@@ -64,13 +64,13 @@ async function readLimitedText(response: Response, maxBytes: number) {
     reader.releaseLock();
   }
 
-  return truncated ? output + "\\n[Truncated at " + maxBytes + " bytes]" : output;
+  return truncated ? output + "\n[Truncated at " + maxBytes + " bytes]" : output;
 }
 
 function createServer() {
   const server = new McpServer({
     name: "avnish-ai-connector",
-    version: "0.1.0"
+    version: "0.2.0"
   });
 
   server.registerTool(
@@ -157,7 +157,7 @@ function createServer() {
     async () =>
       asText({
         connector: "Avnish AI",
-        version: "0.1.0",
+        version: "0.2.0",
         stage: "read-only public-data connector",
         transport: "Streamable HTTP",
         endpoint: "/mcp",
@@ -184,7 +184,7 @@ function createServer() {
 const mcpHandler = createMcpHandler(createServer);
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
+  async fetch(request: Request, env: Parameters<typeof mcpHandler>[1], ctx: Parameters<typeof mcpHandler>[2]) {
     const url = new URL(request.url);
 
     if (url.pathname === "/health") {
