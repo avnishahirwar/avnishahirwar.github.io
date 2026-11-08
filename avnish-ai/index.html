@@ -133,7 +133,8 @@ window.calcGST=calcGST;window.calcEMI=calcEMI;window.calcDiscount=calcDiscount;w
 const calculatorConfig=[
  {button:'calcGSTButton',result:'gstResult',inputs:['gstAmount','gstRate','gstMode'],run:calcGST},
  {button:'calcEMIButton',result:'emiResult',inputs:['loan','rate','years'],run:calcEMI},
- {button:'calcDiscountButton',result:'discountResult',inputs:['original','discount'],run:calcDiscount},\n {button:'calcFDButton',result:'fdResult',inputs:['fdPrincipal','fdRate','fdYears','fdFrequency'],run:calcFD}
+ {button:'calcDiscountButton',result:'discountResult',inputs:['original','discount'],run:calcDiscount},
+ {button:'calcFDButton',result:'fdResult',inputs:['fdPrincipal','fdRate','fdYears','fdFrequency'],run:calcFD}
 ];
 calculatorConfig.forEach(config=>{
  const button=document.getElementById(config.button);
