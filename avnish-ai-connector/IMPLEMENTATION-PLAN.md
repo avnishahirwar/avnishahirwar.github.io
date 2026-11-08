@@ -173,3 +173,11 @@ No payment or social account is considered connected merely because this plan ex
 - Not yet live: the additive migration must be applied once to `avnish-ai-db-dev`; Resend sender/domain and Worker secrets (`APP_ORIGIN`, `RESEND_API_KEY`, `EMAIL_FROM`) must be configured; the static website UI still needs wiring; session cookie behavior across GitHub Pages and workers.dev requires same-site hosting or browser verification.
 - No credentials were added to source control. No production deployment or real user onboarding was enabled.
 - Validation is pending: the latest GitHub combined status currently reports Vercel preview as pending; no GitHub Actions run was returned for the latest commit at this checkpoint.
+
+
+## Authentication schema migration manually applied — 2026-11-08
+
+- User screenshot confirms Cloudflare D1 Studio reports `Executed 1/1` for the batch creating `auth_tokens`, index `idx_auth_tokens_user_purpose`, and `auth_rate_limits`.
+- Earlier screenshot confirms `users.password_hash` was added successfully.
+- Therefore the additive authentication schema objects appear present in `avnish-ai-db-dev`. This is manual D1 Studio execution; Wrangler migration history still needs reconciliation.
+- Next validation must inspect `PRAGMA table_info(users)`, `sqlite_master` for `auth_tokens` and `auth_rate_limits`, then bind the D1 database to the Worker and configure email delivery before endpoint testing.
