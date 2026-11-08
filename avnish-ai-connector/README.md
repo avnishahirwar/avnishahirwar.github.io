@@ -12,7 +12,8 @@ A read-only Model Context Protocol (MCP) service for public information publishe
 - Fixed resource allowlist: `robots.txt`, `sitemap.xml`, and `feed.xml`.
 - Resource requests have an 8-second timeout and a 20,000-byte response limit.
 - Unknown URL paths return 404; the health endpoint accepts GET and HEAD only.
-- No database, account tokens, private data access, or write operations.\n- Automated local HTTP smoke tests cover health GET/HEAD, method restrictions, security headers, and unknown-route handling.
+- No database, account tokens, private data access, or write operations.
+- Automated local HTTP smoke tests cover health GET/HEAD, method restrictions, security headers, and unknown-route handling.
 
 ## Architecture and security boundary
 
