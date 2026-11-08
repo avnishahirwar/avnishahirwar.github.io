@@ -7,5 +7,13 @@
   "workers_dev": true,
   "observability": {
     "enabled": true
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "avnish-ai-db-dev",
+      "database_id": "165d6a0a-0168-406a-8806-893537054fa6",
+      "migrations_dir": "migrations"
+    }
+  ]
 }
