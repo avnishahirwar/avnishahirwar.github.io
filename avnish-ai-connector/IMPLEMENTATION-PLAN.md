@@ -151,3 +151,12 @@ No payment or social account is considered connected merely because this plan ex
 - Instagram analytics data was retrieved for 2026-10-09 through 2026-11-08. The returned latest dated row (2026-11-07) included 1,062 followers, 488 views, 153 reach, and 25 total feed-content interactions; other metrics were sparse/null in the returned rows and should not be interpreted as zero unless the connector explicitly returns zero.
 - YouTube analytics data was retrieved for the same date window. The latest dated row (2026-11-08) reported 65 subscribers; selected views and interaction metrics were returned as zero for that row. Historical rows include video-view values. These are Metricool-reported values, not independently verified native-platform totals.
 - This confirms read-only Metricool analytics retrieval for the connected brand. It does not establish that AVNISH AI's own dashboard backend is implemented or that direct OAuth is active. No content was published or modified.
+
+
+## Development D1 schema manually provisioned — 2026-11-08
+
+- User executed the SQL statements in the Cloudflare D1 Studio for database `avnish-ai-db-dev`.
+- The user-provided verification screenshot shows these eight application tables: `audit_events`, `customers`, `invoices`, `oauth_credentials`, `sessions`, `social_accounts`, `subscriptions`, and `users`. Cloudflare's internal `_cf_KV` table is platform-managed and not an application table.
+- The two session indexes `idx_sessions_user_id` and `idx_sessions_expires_at` were also executed successfully.
+- This verifies the schema objects exist in the selected D1 database. It does not verify Worker runtime connectivity, auth flows, token encryption implementation, or application-level authorization.
+- Important migration bookkeeping: because the SQL was executed manually in Studio rather than through Wrangler migrations, do not assume Wrangler's migration history records `0001_initial_schema.sql` as applied. Before any future Wrangler migration apply, inspect migration history and reconcile safely; the migration SQL uses `IF NOT EXISTS` for the created tables/indexes.
