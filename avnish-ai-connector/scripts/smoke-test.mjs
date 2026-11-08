@@ -71,6 +71,14 @@ async function stopWorker() {
 try {
   await waitForServer();
 
+  const root = await request("/");
+  const rootPayload = await root.json();
+  assert(root.status === 200, `GET / returned ${root.status}`);
+  assert(rootPayload.service === "avnish-ai-connector", "Unexpected root service name");
+  assert(rootPayload.endpoints?.health === "/health", "Root response must advertise health endpoint");
+  assert(rootPayload.endpoints?.mcp === "/mcp", "Root response must advertise MCP endpoint");
+  assert(root.headers.get("cache-control") === "no-store", "Root response must not be cached");
+
   const health = await request("/health");
   const payload = await health.json();
   assert(health.status === 200, `GET /health returned ${health.status}`);
