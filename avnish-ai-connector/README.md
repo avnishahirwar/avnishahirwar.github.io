@@ -1,67 +1,94 @@
 # Avnish AI Connector
 
-A first, read-only MCP server scaffold for the public Avnish Ahirwar website.
+Version: **0.2.0**
 
-## Current scope
+A read-only Model Context Protocol (MCP) service for public information published on the Avnish Ahirwar website.
 
-- Public website profile metadata
-- Public website section list
-- Public social links already published on the site
-- Fixed public resources: `robots.txt`, `sitemap.xml`, and `feed.xml`
-- Connector capability/status information
+## Current release
 
-The server does **not** currently read private accounts, inboxes, analytics dashboards, customer records, or unpublished content. It does not create enquiries, bookings, posts, or other records. It does not publish or delete content.
+- MCP transport: Streamable HTTP at `/mcp`.
+- Health check: `GET /health`.
+- Five read-only tools for public website metadata, public sections, published social links, fixed public resources, and connector capabilities.
+- Fixed resource allowlist: `robots.txt`, `sitemap.xml`, and `feed.xml`.
+- Resource requests have an 8-second timeout and a 20,000-byte response limit.
+- Unknown URL paths return 404; the health endpoint accepts GET and HEAD only.
+- No database, account tokens, private data access, or write operations.
 
-## Architecture
+## Architecture and security boundary
 
-- Website remains on GitHub Pages.
-- This MCP server runs separately as a Cloudflare Worker.
-- Remote MCP transport: Streamable HTTP at `/mcp`.
-- The initial tools are read-only and do not require a database.
-- Future write tools require authentication, explicit user consent, validation, audit logging, and a persistent database.
+The existing portfolio remains hosted separately on GitHub Pages. This Worker is an independent service.
+
+The current MCP endpoint is intentionally **public and read-only**. Anyone who can reach a deployed endpoint can call the public-information tools. Do not add private user data, account integrations, customer records, inbox access, publishing, bookings, payments, or write tools until OAuth authentication, per-user authorization, explicit consent, audit logging, abuse controls, and a data-retention policy have been implemented and reviewed.
+
+For a future authenticated MCP release, use the OAuth 2.1 authorization flow documented by Cloudflare Workers OAuth Provider. The authorization server and MCP resource server must be configured and deployed together. Identity-provider registration, redirect URLs, scopes, consent screens, and production secrets require the account owner to configure them; they are not fabricated or committed here.
+
+## Tools
+
+| Tool | Purpose |
+| --- | --- |
+| `get_public_site_profile` | Basic public website profile |
+| `list_public_site_sections` | Public website section list |
+| `get_public_social_links` | Social links already published on the website |
+| `get_public_site_resource` | Read one of the three fixed public resources |
+| `get_connector_capabilities` | Connector version, endpoints, and security boundaries |
 
 ## Local development
 
-Requirements: Node.js 20+ and a Cloudflare account for deployment.
+Requirements: Node.js 20 or newer.
 
 ```bash
 cd avnish-ai-connector
 npm install
+npm run validate
 npm run dev
 ```
 
-The local MCP endpoint is normally `http://localhost:8787/mcp`.
+Local endpoints:
+- Health: `http://localhost:8787/health`
+- MCP: `http://localhost:8787/mcp`
 
-Use MCP Inspector to test the tools:
+To inspect MCP tools locally, start the Worker with `npm run dev`, then launch the MCP Inspector in a separate terminal:
 
 ```bash
 npx @modelcontextprotocol/inspector@latest
 ```
 
-Connect the Inspector to the local `/mcp` endpoint and list tools.
+Connect it to the local Streamable HTTP endpoint. The Inspector test is a manual local verification step; it is not represented as completed by the GitHub CI build.
 
-## Deployment
+## GitHub Actions
 
-After reviewing the code and configuring your Cloudflare account:
+The workflow at `.github/workflows/avnish-ai-connector.yml` runs dependency installation, TypeScript validation, and Wrangler's dry-run build for connector changes and pull requests targeting `main`.
+
+## Deployment prerequisites
+
+Deployment is intentionally not automated from GitHub. Before deployment:
+1. The account owner creates and verifies a Cloudflare account and reviews the applicable terms.
+2. The account owner selects the hosting account and confirms the intended public endpoint.
+3. The code owner completes the local MCP Inspector smoke test.
+4. OAuth architecture and identity-provider choice are agreed before any private or write capabilities are added.
+5. Production secrets, if later required, are entered directly into the hosting provider's secret manager and never committed to Git.
+
+After those prerequisites, deploy from this directory using the account owner's authenticated Cloudflare session:
 
 ```bash
 npx wrangler login
 npm run deploy
 ```
 
-The Worker will be available on your Cloudflare `workers.dev` subdomain. The deployed endpoint will end in `/mcp`.
+Never send passwords, one-time codes, API tokens, OAuth secrets, or recovery codes in chat or commit them to this repository.
 
-Do not add API keys, OAuth client secrets, database credentials, or access tokens to this repository. Configure secrets with Cloudflare Worker secrets.
+## Validation status
+
+- GitHub Actions: TypeScript typecheck and Wrangler dry-run build passed for the current CI run.
+- MCP Inspector: pending local interactive test.
+- Cloudflare deployment: pending account setup and owner approval.
+- OAuth: design prerequisite documented; not configured.
+- Database and write tools: intentionally out of scope for this public read-only release.
 
 ## Next phases
 
-1. Deploy and test the read-only MCP endpoint.
-2. Add OAuth authentication and per-user authorization.
-3. Provision a database (Cloudflare D1 or Supabase) for enquiries and booking requests.
-4. Add write tools only after authentication and consent checks are in place.
-5. Integrate supported private analytics and content providers separately.
-6. Add privacy notice, retention policy, rate limits, spam controls and audit logs.
-
-## Important
-
-This is a scaffold, not a deployed production connector. No changes have been made to the existing website files or the `main` branch.
+1. Run local health and MCP Inspector smoke tests.
+2. Select and configure an OAuth identity provider with the account owner.
+3. Implement and test OAuth 2.1 authorization and scoped permissions.
+4. Add only those external account integrations whose providers support approved APIs and whose account owners authorize them.
+5. Add database-backed capabilities only with explicit consent, data minimization, retention controls, and audit logging.
