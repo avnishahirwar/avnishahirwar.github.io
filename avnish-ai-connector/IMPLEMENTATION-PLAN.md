@@ -4,8 +4,10 @@ Status: architecture plan only. No customer data, provider tokens, payment crede
 
 ## Decisions
 
-- Database: managed PostgreSQL (Neon) as the proposed alternative to D1/Supabase.
-- Runtime/API: Cloudflare Worker, connected to PostgreSQL through Cloudflare Hyperdrive.
+- Database: Cloudflare D1 (SQLite) on the Workers Free plan as the zero-monthly-cost starting point. A starter migration is provided at `migrations/0001_initial_schema.sql`.
+- Runtime/API: Cloudflare Worker + native D1 binding; no separate database vendor or Hyperdrive is needed for the initial version.
+- Hosting: use the existing `workers.dev` hostname for non-production testing. The custom domain can be attached later; do not register production OAuth callbacks until the final domain and HTTPS hostname exist.
+- Cost boundary: Cloudflare Workers Free currently includes up to 100,000 requests/day; D1 Free currently includes 5 million rows read/day, 100,000 rows written/day, and 5 GB total storage. These are quotas, not an unlimited/free-forever guarantee; requests may fail after limits are reached.
 - Authentication: server-side session authentication (Better Auth or equivalent) with verified email, secure HttpOnly cookies, CSRF protection, rate limiting, and explicit account recovery.
 - Social integrations: OAuth 2.0 / provider-specific authorization-code flows, implemented one provider at a time, read-only scopes first.
 - MCP: keep the existing public MCP endpoint read-only. Add a separate authenticated MCP resource server only after OAuth 2.1 authorization, consent, scope enforcement, token validation, revocation, and audit logging are tested.
@@ -71,8 +73,8 @@ Keep plan display and invoice/quotation preview separate from real payment colle
 ## Release gates
 
 1. Adult owner confirms legal entity/business details and approved API hostname outside chat.
-2. Create the Neon project and production/non-production database separation.
-3. Configure Worker-to-Postgres connectivity with Hyperdrive and secrets in provider dashboards.
+2. Create a D1 database in the adult account owner's Cloudflare dashboard and apply `migrations/0001_initial_schema.sql`.
+3. Add the D1 database binding to `wrangler.jsonc` using the real database ID from Cloudflare; keep development and production databases separate. Store encryption keys and OAuth secrets only in Worker secrets/managed secret storage.
 4. Implement and test login, email verification, session expiry, CSRF, rate limits, account deletion, and tenant isolation.
 5. Complete manual MCP Inspector handshake and invoke each existing read-only tool.
 6. Register one provider app at a time; test read-only authorization with a designated test account.
@@ -82,4 +84,13 @@ Keep plan display and invoice/quotation preview separate from real payment colle
 
 ## Current status
 
-This document is a design/implementation checklist only. It does not claim that Neon, OAuth apps, customer login, payments, subscriptions, Search Console, or live social connections are active. The existing feature-branch MCP connector remains public and read-only; production is not changed.
+This document and the D1 migration are preparation artifacts only. They do not claim that a D1 database has been provisioned, OAuth apps, customer login, payments, subscriptions, Search Console, or live social connections are active. The existing feature-branch MCP connector remains public and read-only; production is not changed.
+
+
+## No-custom-domain phase
+
+The custom domain is intentionally deferred. Use the current `workers.dev` preview only for safe public endpoint checks and non-production development. Do not promise provider OAuth callbacks will be accepted on a preview hostname; each provider's current redirect URI rules must be checked in its developer console. Production callbacks, canonical URLs, and Search Console submission wait until the final domain is purchased and attached.
+
+## Zero-cost operating rule
+
+Use free tiers only, disable paid add-ons, configure usage alerts where available, and stop/disable features rather than silently upgrading when a quota is reached. Free-tier availability and quotas can change. No service should be described as permanently free.
