@@ -187,6 +187,27 @@ export default {
   async fetch(request: Request, env: Parameters<typeof mcpHandler>[1], ctx: Parameters<typeof mcpHandler>[2]) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/" && (request.method === "GET" || request.method === "HEAD")) {
+      return Response.json(
+        {
+          service: "avnish-ai-connector",
+          status: "available",
+          version: "0.2.0",
+          endpoints: {
+            health: "/health",
+            mcp: "/mcp"
+          },
+          note: "The MCP endpoint requires an MCP-compatible client; opening it as a normal webpage is not a complete MCP test."
+        },
+        {
+          headers: {
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff"
+          }
+        }
+      );
+    }
+
     if (url.pathname === "/health") {
       if (request.method !== "GET" && request.method !== "HEAD") {
         return new Response("Method Not Allowed", {
