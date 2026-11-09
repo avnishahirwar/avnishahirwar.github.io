@@ -10,7 +10,7 @@
 <main class="wrap"><h1>My Dashboard</h1><p class="muted" id="identity">Loading account…</p><div id="notice" class="status" role="status">Checking your account and plan…</div>
 <section class="grid"><article class="card"><h2>Current plan</h2><div class="value" id="plan">Free</div><p class="muted" id="planStatus">No active paid subscription found.</p></article>
 <article class="card"><h2>Premium access</h2><div class="value" id="premium">Not active</div><p class="muted">Premium features are enabled only by verified subscription entitlements.</p></article>
-<article class="card"><h2>API credits</h2><div class="value" id="credits">0</div><p class="muted">Credits are shown when the billing ledger is activated.</p></article></section>
+<article class="card"><h2>API usage</h2><div class="value" id="credits">Not active</div><p class="muted">Usage metering and credit balances are not enabled yet.</p></article></section>
 <section class="card" style="margin-top:16px"><h2>My subscriptions</h2><div id="subscriptions" class="muted">Loading…</div></section>
 <section class="card" style="margin-top:16px"><h2>My feature access</h2><div id="entitlements" class="muted">Loading…</div></section>
 <p style="margin-top:22px"><a class="btn" href="/calculator/pricing.html">View subscription plans</a></p>
@@ -33,7 +33,7 @@ const latest=subs.data?.find(s=>["active","authenticated","created","pending"].i
 const plan=plans.data?.find(p=>p.code===latest?.plan_code);
 $("plan").textContent=plan?.name||"Free";$("planStatus").textContent=latest?("Subscription status: "+latest.status):"No active paid subscription found.";
 $("premium").textContent=(ents.data||[]).some(e=>e.enabled&&(!e.valid_until||new Date(e.valid_until)>new Date()))?"Available":"Not active";
-$("credits").textContent=plan?.api_credits_per_cycle??"0";
+$("credits").textContent="Not active";
 const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
 $("entitlements").innerHTML=ents.data?.length?'<ul class="list">'+ents.data.map(e=>'<li>'+esc(e.feature_code)+': '+(e.enabled?"Enabled":"Disabled")+(e.quota!==null?" · quota "+e.quota:"")+'</li>').join("")+'</ul>':'No premium entitlements currently assigned.';
 $("notice").textContent="Signed in successfully. Billing and premium access are read-only until payment verification and entitlement automation are enabled.";
