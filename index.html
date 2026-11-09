@@ -26,7 +26,7 @@
 <meta property="og:title" content="Free Online Calculators | Friendly Calculator">
 <meta property="og:description" content="Friendly Calculator offers free online GST, EMI, FD, SIP, tax and everyday calculators with quick, practical estimates for India. No sign-up required.">
 <meta property="og:url" content="https://friendlycalculator.in/">
-<meta property="og:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.svg"><meta property="og:image:type" content="image/svg+xml"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.svg"><meta property="og:image:type" content="image/svg+xml"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.svg">
 <meta name="twitter:title" content="Free Online Calculators | Friendly Calculator">
@@ -140,7 +140,7 @@
 .ad-slot ins.adsbygoogle{display:block;max-width:100%;overflow:hidden}
 .hero-box h2{font-size:1.2rem;line-height:1.35}
 @media(max-width:640px){.ad-slot:not([hidden]){margin:24px auto;padding:14px;min-height:100px}}
-</style>
+\n/* Mobile navigation: wrap every link instead of clipping the final item. */\n@media(max-width:800px){.nav{height:auto;min-height:74px;flex-wrap:wrap;align-items:center;padding:14px 0}.navlinks{display:flex;order:3;width:100%;overflow:visible;overflow-x:visible;flex-wrap:wrap;white-space:normal;gap:8px 14px;padding:8px 0}.navlinks a{white-space:normal;overflow-wrap:anywhere;font-size:.82rem;line-height:1.35}.lang{margin-left:auto;flex:none}}\n</style>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are the Friendly Calculator calculators free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The calculators on this page are free to use and do not require an account."}},{"@type":"Question","name":"Are my calculator values uploaded?","acceptedAnswer":{"@type":"Answer","text":"The main browser calculators process the values you enter on your device. Contact and API enquiry forms send only the information you submit."}},{"@type":"Question","name":"Can I use these results for tax or financial decisions?","acceptedAnswer":{"@type":"Answer","text":"Use results as estimates only. Tax rules, bank terms and individual circumstances can change the final amount. Verify important decisions with the relevant authority or a qualified professional."}},{"@type":"Question","name":"How can a business integrate a calculator?","acceptedAnswer":{"@type":"Answer","text":"Review the API documentation and submit an access enquiry. API access is limited and subject to approval."}}]}</script>
 </head>
@@ -459,6 +459,7 @@ async function submitEnquiry(form){
     if(!response.ok||!result.ok)throw new Error(result.error||'Submission failed');
     status.textContent='Thank you. Your enquiry has been submitted successfully.';
     status.style.color='#187451';
+    if(typeof gtag==='function')gtag('event','enquiry_submit_success',{form_id:form.id,enquiry_type:form.id==='contactForm'?document.getElementById('contactTopic').value:form.id});
     form.reset();
   }catch(error){
     status.textContent=(error&&error.message==='Failed to fetch')?'Could not connect. Please email avnishahirwar415@gmail.com.':(error.message||'Could not submit. Please email avnishahirwar415@gmail.com.');
@@ -493,7 +494,18 @@ calculatorSearch.addEventListener('input',filterCalculators);
 calculatorCategory.addEventListener('change',filterCalculators);
 
 document.querySelectorAll('[data-business-enquiry]').forEach(link=>link.addEventListener('click',()=>{const topic=document.getElementById('contactTopic');if(topic)topic.value=link.getAttribute('data-business-enquiry');}));
-document.getElementById('lang').addEventListener('click',()=>{lang=lang==='en'?'hi':'en';document.documentElement.lang=lang;document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+lang);if(v!==null)el.textContent=v});document.getElementById('lang').textContent=lang==='en'?'हिन्दी':'English'});
+const fcTranslations={
+'Home':'होम','All Calculators':'सभी कैलकुलेटर','About':'परिचय','Methodology':'कार्यप्रणाली','API':'एपीआई','Business':'व्यवसाय','Pricing':'मूल्य निर्धारण','Contact':'संपर्क','Business Models':'व्यवसाय मॉडल','Privacy Policy':'गोपनीयता नीति','Terms':'नियम एवं शर्तें','All Pages':'सभी पेज','Methodology & Sources':'कार्यप्रणाली और स्रोत','B2B API':'व्यावसायिक एपीआई',
+'Free Online Calculators':'मुफ़्त ऑनलाइन कैलकुलेटर','Free online calculators for everyday use':'रोज़मर्रा के उपयोग के लिए मुफ़्त ऑनलाइन कैलकुलेटर','Search calculators':'कैलकुलेटर खोजें','All calculators':'सभी कैलकुलेटर','Showing':'दिखाए जा रहे हैं','Quick answers':'त्वरित उत्तर','Help & FAQ':'सहायता और सामान्य प्रश्न',
+'GST Calculator':'जीएसटी कैलकुलेटर','Loan EMI Calculator':'लोन ईएमआई कैलकुलेटर','Discount Calculator':'छूट कैलकुलेटर','FD Calculator':'एफडी कैलकुलेटर','PF Calculator':'पीएफ कैलकुलेटर','Savings Interest Calculator':'बचत ब्याज कैलकुलेटर','Salary Calculator':'वेतन कैलकुलेटर','SIP Calculator':'एसआईपी कैलकुलेटर','Inflation Calculator':'महंगाई कैलकुलेटर','BMI Calculator':'बीएमआई कैलकुलेटर','Fuel Cost Calculator':'ईंधन खर्च कैलकुलेटर','Income Tax Calculator':'आयकर कैलकुलेटर','Age Calculator':'आयु कैलकुलेटर','Electricity Bill Calculator':'बिजली बिल कैलकुलेटर','TDS Calculator on Salary':'वेतन पर टीडीएस कैलकुलेटर','Profit & Loss Calculator':'लाभ और हानि कैलकुलेटर',
+'Your name':'आपका नाम','Email address':'ईमेल पता','Enquiry type':'पूछताछ का प्रकार','Message':'संदेश','Send Message':'संदेश भेजें','General enquiry':'सामान्य पूछताछ','Website support':'वेबसाइट सहायता','Business partnership':'व्यावसायिक साझेदारी','Advertising / Sponsorship':'विज्ञापन / प्रायोजन',
+'Calculate BMI':'बीएमआई की गणना करें','Calculate GST':'जीएसटी की गणना करें','Calculate EMI':'ईएमआई की गणना करें','Calculate Discount':'छूट की गणना करें','Calculate FD':'एफडी की गणना करें','Calculate SIP':'एसआईपी की गणना करें','Calculate Age':'आयु की गणना करें','Calculate Fuel Cost':'ईंधन खर्च की गणना करें'
+};
+function fcTranslateNode(node,toHindi){
+ if(node.nodeType===Node.TEXT_NODE){const raw=node.nodeValue,trim=raw.trim();if(!trim)return;const translated=fcTranslations[trim];if(toHindi&&translated)node.nodeValue=raw.replace(trim,translated);else if(!toHindi){const reverse=Object.entries(fcTranslations).find(([,hi])=>hi===trim);if(reverse)node.nodeValue=raw.replace(trim,reverse[0]);}}
+ else if(node.nodeType===Node.ELEMENT_NODE&&!['SCRIPT','STYLE','INPUT','TEXTAREA','SELECT','OPTION'].includes(node.tagName)){if(node.hasAttribute('data-en')||node.hasAttribute('data-hi'))return;[...node.childNodes].forEach(child=>fcTranslateNode(child,toHindi));}
+}
+document.getElementById('lang').addEventListener('click',()=>{lang=lang==='en'?'hi':'en';document.documentElement.lang=lang;document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+lang);if(v!==null)el.textContent=v});fcTranslateNode(document.body,lang==='hi');document.getElementById('lang').textContent=lang==='en'?'हिन्दी':'English';if(typeof gtag==='function')gtag('event','language_change',{language:lang});});
 
 // Accessible standard calculator keypad.
 (()=>{
