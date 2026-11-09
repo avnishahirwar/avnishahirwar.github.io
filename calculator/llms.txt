@@ -7,6 +7,7 @@
 
 ## Information
 - https://avnishahirwar.github.io/calculator/about.html — About AVNISH AI
+- https://avnishahirwar.github.io/calculator/business.html — advertising, affiliate partnerships, subscriptions, API, white-label, widgets and business services
 - https://avnishahirwar.github.io/calculator/api.html — Limited calculator API documentation and access request
 - https://avnishahirwar.github.io/calculator/privacy.html — Privacy policy
 - https://avnishahirwar.github.io/calculator/terms.html — Terms of use
@@ -15,3 +16,8 @@
 - Browser calculators process entered values locally unless a visitor submits an enquiry form.
 - Calculator outputs are estimates, not professional tax, legal, accounting, lending, or investment advice.
 - API access is limited and requires approval.
+
+## Commercial services
+- Proposed revenue streams include display/direct advertising, sponsorships, affiliate partnerships, premium subscriptions, calculator API, white-label licensing, embeddable widgets, custom development, consent-based referrals, paid listings, downloadable reports and templates, implementation services, mobile apps and learning content.
+- Professional (₹199/month) and Business (₹999/month) are indicative proposed prices only; subscriptions and payment checkout are not active.
+- API access is subject to manual review. Advertising and affiliate programmes require approval. Personal data is not sold as a list.
