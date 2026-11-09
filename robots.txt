@@ -3,4 +3,4 @@ Allow: /
 Disallow: /avnish-ai/admin.html
 
 Sitemap: https://avnishahirwar.github.io/sitemap.xml
-Sitemap: https://avnishahirwar.vercel.app/avnish-ai/sitemap.xml
+Sitemap: https://avnishahirwar.github.io/avnish-ai/sitemap.xml
