@@ -76,7 +76,7 @@ Content-Type: application/json</code></pre></div>
 <tr><td>429</td><td>Per-key requests-per-minute limit reached.</td></tr>
 <tr><td>500 / 503</td><td>Temporary service or backend configuration issue.</td></tr>
 </tbody></table></div>
-<p>Each API key has an assigned per-minute request limit. Keys can be revoked. Do not assume unlimited availability; the service is subject to free-tier platform quotas and operational limits.</p>
+<p>Each API key must include the <code>calculators:read</code> scope and has an assigned per-minute request limit. Requests without this scope are rejected with HTTP 403. Keys can be revoked. Do not assume unlimited availability; the service is subject to free-tier platform quotas and operational limits.</p>
 
 <h2>Request access</h2>
 <p>Tell us about your application and expected usage. Never include a password, OTP, existing API key or other secret in the enquiry.</p>
