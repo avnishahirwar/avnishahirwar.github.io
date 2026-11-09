@@ -1,5 +1,5 @@
 User-agent: *
-Allow: /
+Allow: /\nDisallow: /avnish-ai/admin.html
 
 Sitemap: https://avnishahirwar.github.io/sitemap.xml
 Sitemap: https://avnishahirwar.vercel.app/avnish-ai/sitemap.xml
