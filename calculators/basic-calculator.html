@@ -43,7 +43,8 @@ h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;letter-spacing:-.04em;margi
 .hint{font-size:.78rem;color:#b8c6d5;margin:13px 2px 0}.content{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:24px}.content p,.content li{color:var(--muted)}.formula{background:#eef3f8;border-radius:10px;padding:13px;font-weight:700;color:#253b52}.cta{display:inline-block;background:var(--navy);color:#fff;padding:11px 16px;border-radius:9px;text-decoration:none;font-weight:800}.footer{background:#0b1928;color:#bdc9d4;padding:24px 0;font-size:.85rem}
 @media(max-width:540px){.nav{padding:12px 0;align-items:flex-start;flex-direction:column;justify-content:center}.nav a:not(.brand){font-size:.82rem}.calculator{padding:14px}.key{min-height:54px}.content{padding:18px}}
 </style>
-<style id="fc-shared-brand">.fc-header{background:#101c2c;color:#fff}.fc-shell{width:min(1120px,92%);margin:auto}.fc-nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.fc-brand{font-weight:900;letter-spacing:.13em;text-decoration:none;color:#fff;white-space:nowrap}.fc-brand b{color:#d8bd82}.fc-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.fc-links a{color:#dce5ed;text-decoration:none;font-size:.9rem;font-weight:650}.fc-links a:hover{color:#d8bd82}.fc-footer{background:#0b1928;color:#bdc9d4;padding:28px 0;margin-top:36px}.fc-footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.fc-footer a{color:#e7d5a9;text-decoration:none}.fc-footer-links{display:flex;gap:16px;flex-wrap:wrap}.fc-footer small{color:#9baaba}@media(max-width:760px){.fc-nav{padding:15px 0;align-items:flex-start;flex-direction:column;gap:12px}.fc-links{gap:10px 15px}.fc-footer-inner{flex-direction:column}}</style></head>
+<style id="fc-shared-brand">.fc-header{background:#101c2c;color:#fff}.fc-shell{width:min(1120px,92%);margin:auto}.fc-nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.fc-brand{font-weight:900;letter-spacing:.13em;text-decoration:none;color:#fff;white-space:nowrap}.fc-brand b{color:#d8bd82}.fc-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.fc-links a{color:#dce5ed;text-decoration:none;font-size:.9rem;font-weight:650}.fc-links a:hover{color:#d8bd82}.fc-footer{background:#0b1928;color:#bdc9d4;padding:28px 0;margin-top:36px}.fc-footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.fc-footer a{color:#e7d5a9;text-decoration:none}.fc-footer-links{display:flex;gap:16px;flex-wrap:wrap}.fc-footer small{color:#9baaba}@media(max-width:760px){.fc-nav{padding:15px 0;align-items:flex-start;flex-direction:column;gap:12px}.fc-links{gap:10px 15px}.fc-footer-inner{flex-direction:column}}</style><link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
 <body>
 <header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#tools">All Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a></nav></div></header>
 <main class="wrap">
@@ -124,6 +125,14 @@ h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;letter-spacing:-.04em;margi
  document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey)return;if(/^[0-9]$/.test(event.key)){digit(event.key);event.preventDefault();}else if(event.key==='.'){action('decimal');event.preventDefault();}else if(['+','-','*','/'].includes(event.key)){choose(({'+':'+','-':'−','*':'×','/':'÷'})[event.key]);event.preventDefault();}else if(event.key==='Enter'||event.key==='='){action('equals');event.preventDefault();}else if(event.key==='Escape'){clear();event.preventDefault();}else if(event.key==='Backspace'){action('back');event.preventDefault();}else if(event.key==='%'){action('percent');event.preventDefault();}});
  paint();
 })();
+</script>
+<script>
+// GA4 calculator engagement event. Input values are never sent.
+document.addEventListener('click',function(event){
+  const button=event.target.closest('button');
+  if(!button||typeof gtag!=='function')return;
+  gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:button.id||button.getAttribute('aria-label')||'calculate'});
+});
 </script>
 </body>
 </html>
