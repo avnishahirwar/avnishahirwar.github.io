@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101c2c">
+<title>My Account | Friendly Calculator</title>
+<style>
+:root{--navy:#101c2c;--gold:#d8bd82;--ink:#172638;--muted:#667587;--line:#e0e5ea}
+*{box-sizing:border-box}body{margin:0;background:#f4f6f8;color:var(--ink);font:16px/1.6 system-ui,sans-serif}.top{background:var(--navy);color:#fff;padding:18px 0}.wrap{width:min(1050px,92%);margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:900;letter-spacing:.12em}.brand b{color:var(--gold)}a{color:inherit}.btn{border:0;border-radius:8px;padding:10px 14px;background:var(--navy);color:#fff;font:inherit;font-weight:750;cursor:pointer;text-decoration:none}.btn.light{background:#e9eef2;color:var(--navy)}main{padding:34px 0 60px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}.card h2{font-size:1rem;margin:0 0 10px}.value{font-size:1.5rem;font-weight:850}.list{padding-left:18px;color:var(--muted)}.status{padding:12px;background:#fff;border:1px solid var(--line);border-radius:10px;margin:18px 0}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}@media(max-width:700px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}}
+</style></head><body>
+<header class="top"><div class="wrap nav"><div class="brand">FRIENDLY <b>CALCULATOR</b></div><div><a href="/" style="margin-right:14px">Calculators</a><button id="logout" class="btn light">Sign out</button></div></div></header>
+<main class="wrap"><h1>My Dashboard</h1><p class="muted" id="identity">Loading account…</p><div id="notice" class="status" role="status">Checking your account and plan…</div>
+<section class="grid"><article class="card"><h2>Current plan</h2><div class="value" id="plan">Free</div><p class="muted" id="planStatus">No active paid subscription found.</p></article>
+<article class="card"><h2>Premium access</h2><div class="value" id="premium">Not active</div><p class="muted">Premium features are enabled only by verified subscription entitlements.</p></article>
+<article class="card"><h2>API usage</h2><div class="value" id="credits">Not active</div><p class="muted">Usage metering and credit balances are not enabled yet.</p></article></section>
+<section class="card" style="margin-top:16px"><h2>My subscriptions</h2><div id="subscriptions" class="muted">Loading…</div></section>
+<section class="card" style="margin-top:16px"><h2>My feature access</h2><div id="entitlements" class="muted">Loading…</div></section>
+<p style="margin-top:22px"><a class="btn" href="/calculator/pricing.html">View subscription plans</a></p>
+</main>
+<script type="module">
+import { supabase } from "./auth.js";
+const $=id=>document.getElementById(id);
+$("logout").addEventListener("click",async()=>{await supabase.auth.signOut();location.href="/calculator/login.html";});
+const {data:{session}}=await supabase.auth.getSession();
+if(!session){location.href="/calculator/login.html";}else{
+$("identity").textContent=session.user.email||"Signed in";
+const [subs,ents,plans]=await Promise.all([
+supabase.from("user_subscriptions").select("id,plan_code,status,current_start,current_end,cancel_at_cycle_end,created_at").order("created_at",{ascending:false}).limit(10),
+supabase.from("feature_entitlements").select("feature_code,enabled,quota,valid_until").order("feature_code"),
+supabase.from("subscription_plans").select("code,name,api_credits_per_cycle").eq("active",true)
+]);
+if(subs.error||ents.error||plans.error){$("notice").textContent="Account loaded, but billing data could not be read. Please try again later.";console.error(subs.error,ents.error,plans.error);}
+else{
+const latest=subs.data?.find(s=>["active","authenticated","created","pending"].includes(s.status))||null;
+const plan=plans.data?.find(p=>p.code===latest?.plan_code);
+$("plan").textContent=plan?.name||"Free";$("planStatus").textContent=latest?("Subscription status: "+latest.status):"No active paid subscription found.";
+$("premium").textContent=(ents.data||[]).some(e=>e.enabled&&(!e.valid_until||new Date(e.valid_until)>new Date()))?"Available":"Not active";
+$("credits").textContent="Not active";
+const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
+$("entitlements").innerHTML=ents.data?.length?'<ul class="list">'+ents.data.map(e=>'<li>'+esc(e.feature_code)+': '+(e.enabled?"Enabled":"Disabled")+(e.quota!==null?" · quota "+e.quota:"")+'</li>').join("")+'</ul>':'No premium entitlements currently assigned.';
+$("notice").textContent="Signed in successfully. Billing and premium access are read-only until payment verification and entitlement automation are enabled.";
+}}
+</script></body></html>
