@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /calculator/admin.html
+Disallow: /tests/
 
 Sitemap: https://friendlycalculator.in/sitemap.xml
