@@ -34,8 +34,8 @@ const plan=plans.data?.find(p=>p.code===latest?.plan_code);
 $("plan").textContent=plan?.name||"Free";$("planStatus").textContent=latest?("Subscription status: "+latest.status):"No active paid subscription found.";
 $("premium").textContent=(ents.data||[]).some(e=>e.enabled&&(!e.valid_until||new Date(e.valid_until)>new Date()))?"Available":"Not active";
 $("credits").textContent=plan?.api_credits_per_cycle??"0";
-$("subscriptions").innerHTML=subs.data?.length?'<table><thead><tr><th>Plan</th><th>Status</th><th>Period end</th></tr></thead><tbody>'+subs.data.map(s=>'<tr><td>'+String(s.plan_code).replaceAll("_"," ")+'</td><td>'+String(s.status)+'</td><td>'+(s.current_end?new Date(s.current_end).toLocaleDateString():"—")+'</td></tr>').join("")+'</tbody></table>':'No subscription history yet.';
-$("entitlements").innerHTML=ents.data?.length?'<ul class="list">'+ents.data.map(e=>'<li>'+String(e.feature_code)+': '+(e.enabled?"Enabled":"Disabled")+(e.quota!==null?" · quota "+e.quota:"")+'</li>').join("")+'</ul>':'No premium entitlements currently assigned.';
+const esc=v=>String(v??"").replace(/[&<>"\']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","\'":"&#39;"}[c]));\n$("subscriptions").innerHTML=subs.data?.length?'<table><thead><tr><th>Plan</th><th>Status</th><th>Period end</th></tr></thead><tbody>'+subs.data.map(s=>'<tr><td>'+esc(s.plan_code).replaceAll("_"," ")+'</td><td>'+esc(s.status)+'</td><td>'+(s.current_end?new Date(s.current_end).toLocaleDateString():"—")+'</td></tr>').join("")+'</tbody></table>':'No subscription history yet.';
+$("entitlements").innerHTML=ents.data?.length?'<ul class="list">'+ents.data.map(e=>'<li>'+esc(e.feature_code)+': '+(e.enabled?"Enabled":"Disabled")+(e.quota!==null?" · quota "+e.quota:"")+'</li>').join("")+'</ul>':'No premium entitlements currently assigned.';
 $("notice").textContent="Signed in successfully. Billing and premium access are read-only until payment verification and entitlement automation are enabled.";
 }}
 </script></body></html>
