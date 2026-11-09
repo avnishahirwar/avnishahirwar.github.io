@@ -1,26 +1,90 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Free Online Basic Calculator – Add, Subtract, Multiply & Divide | Friendly Calculator</title>
-<meta name="description" content="Use Friendly Calculator's free online basic calculator for addition, subtraction, multiplication, division, percentages and decimals. Simple keypad, instant results and mobile-friendly design.">
+<meta name="description" content="Use Friendly Calculator's free online basic calculator for addition, subtraction, multiplication, division, percentages and decimals. Working keypad, keyboard support and instant results.">
 <link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html">
-<meta property="og:title" content="Free Online Basic Calculator | Friendly Calculator"><meta property="og:description" content="A simple online calculator for everyday arithmetic."><meta property="og:type" content="website"><meta property="og:url" content="https://friendlycalculator.in/calculators/basic-calculator.html">
 <meta name="robots" content="index,follow">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Free Online Basic Calculator","url":"https://friendlycalculator.in/calculators/basic-calculator.html","description":"Guide to using a basic online calculator for everyday arithmetic."}</script>
+<meta name="theme-color" content="#101c2c">
+<meta property="og:title" content="Free Online Basic Calculator | Friendly Calculator">
+<meta property="og:description" content="A working online calculator for everyday arithmetic, percentages and decimals.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://friendlycalculator.in/calculators/basic-calculator.html">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Free Online Basic Calculator","url":"https://friendlycalculator.in/calculators/basic-calculator.html","description":"A free working online calculator for everyday arithmetic."},{"@type":"WebApplication","name":"Friendly Calculator – Basic Calculator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}]}
+</script>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:#17283d;font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:850px;margin:auto;padding:28px 20px}.brand{font-weight:800;color:#183653;text-decoration:none}.hero,.content{background:#fff;border:1px solid #dce4eb;border-radius:16px;padding:25px;margin:18px 0}.eyebrow{color:#55718e;font-weight:800;font-size:.78rem;letter-spacing:.08em}h1,h2{line-height:1.2;color:#142c45}h1{font-size:clamp(2rem,5vw,3rem)}h2{margin-top:28px;font-size:1.35rem}a{color:#155a91}.cta{display:inline-block;background:#173a5b;color:#fff;padding:11px 17px;border-radius:9px;text-decoration:none;font-weight:700}.formula{background:#eef3f8;border-radius:10px;padding:13px;font-weight:700}.muted{color:#5b6d7f}
+:root{color-scheme:light;--navy:#101c2c;--navy2:#1b3047;--gold:#d8bd82;--ink:#172638;--muted:#667587;--line:#e0e5ea;--paper:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{width:min(960px,92%);margin:auto}.top{background:var(--navy);color:#fff}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:900;letter-spacing:.12em;text-decoration:none}.brand b{color:var(--gold)}.nav a:not(.brand){color:#dce5ed;text-decoration:none;font-size:.9rem}
+main{padding:36px 0 64px}.eyebrow{color:#92733d;font-size:.75rem;letter-spacing:.15em;font-weight:850;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;letter-spacing:-.04em;margin:8px 0 12px}h2{font-size:1.45rem;line-height:1.2;margin:28px 0 10px}.intro{max-width:740px;color:var(--muted)}
+.calculator{width:min(440px,100%);margin:28px auto;background:linear-gradient(145deg,#101a2b,#20344c);color:#fff;border:1px solid #31445d;border-radius:22px;padding:18px;box-shadow:0 18px 44px #0b172a24}
+.calc-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.calc-heading h2{margin:0;font-size:1.05rem;color:#fff}.pill{background:#e8d7ad;color:#253348;border-radius:99px;padding:4px 10px;font-size:.7rem;font-weight:850;letter-spacing:.08em}
+.screen{background:#07111f;border:1px solid #29384b;border-radius:13px;padding:15px;margin-bottom:13px;min-height:94px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.expression{font-size:.85rem;color:#aab7c8;min-height:22px;text-align:right;overflow-wrap:anywhere}.display{font:750 clamp(1.8rem,8vw,2.35rem)/1.25 ui-monospace,SFMono-Regular,Consolas,monospace;text-align:right;overflow-wrap:anywhere;min-height:45px}
+.keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.key{min-height:58px;border:1px solid #34445b;border-radius:12px;background:#1c2a3e;color:#f8fafc;font:750 1.08rem system-ui;cursor:pointer;touch-action:manipulation}
+.key:hover{filter:brightness(1.16)}.key:active{transform:scale(.97)}.key:focus-visible{outline:3px solid #f1d38f;outline-offset:2px}.key.operator{background:#263d59;color:#d5e6f8}.key.utility{background:#35445a}.key.clear{background:#8d4650;border-color:#8d4650}.key.equals{background:var(--gold);border-color:var(--gold);color:#142033}.key.zero{grid-column:span 2}
+.hint{font-size:.78rem;color:#b8c6d5;margin:13px 2px 0}.content{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:24px}.content p,.content li{color:var(--muted)}.formula{background:#eef3f8;border-radius:10px;padding:13px;font-weight:700;color:#253b52}.cta{display:inline-block;background:var(--navy);color:#fff;padding:11px 16px;border-radius:9px;text-decoration:none;font-weight:800}.footer{background:#0b1928;color:#bdc9d4;padding:24px 0;font-size:.85rem}
+@media(max-width:540px){.nav{padding:12px 0;align-items:flex-start;flex-direction:column;justify-content:center}.nav a:not(.brand){font-size:.82rem}.calculator{padding:14px}.key{min-height:54px}.content{padding:18px}}
 </style>
 </head>
-<body><main class="wrap">
-<a class="brand" href="/">Friendly Calculator</a>
-<header class="hero"><span class="eyebrow">FREE ONLINE TOOL</span><h1>Basic Calculator</h1><p>Perform everyday arithmetic with a simple on-screen calculator. Add, subtract, multiply, divide, work with decimals and calculate percentages.</p><a class="cta" href="/#basic-calculator">Open the basic calculator</a></header>
+<body>
+<header class="top"><div class="wrap nav"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a><a href="/#tools">All calculators</a></div></header>
+<main class="wrap">
+<div class="eyebrow">FREE ONLINE TOOL</div>
+<h1>Basic Calculator</h1>
+<p class="intro">A real, interactive calculator for everyday arithmetic. Use the on-screen keypad or your keyboard to add, subtract, multiply, divide and calculate percentages. It works in your browser without an account.</p>
+<section class="calculator" aria-label="Basic calculator">
+<div class="calc-heading"><h2>Calculator</h2><span class="pill">STANDARD</span></div>
+<div class="screen" aria-live="polite" aria-atomic="true"><div class="expression" id="expression"></div><output class="display" id="display">0</output></div>
+<div class="keys" id="keys">
+<button class="key clear" type="button" data-action="clear" aria-label="All clear">AC</button>
+<button class="key utility" type="button" data-action="back" aria-label="Backspace">⌫</button>
+<button class="key utility" type="button" data-action="percent" aria-label="Percent">%</button>
+<button class="key operator" type="button" data-op="÷" aria-label="Divide">÷</button>
+<button class="key" type="button" data-digit="7">7</button><button class="key" type="button" data-digit="8">8</button><button class="key" type="button" data-digit="9">9</button><button class="key operator" type="button" data-op="×" aria-label="Multiply">×</button>
+<button class="key" type="button" data-digit="4">4</button><button class="key" type="button" data-digit="5">5</button><button class="key" type="button" data-digit="6">6</button><button class="key operator" type="button" data-op="−" aria-label="Subtract">−</button>
+<button class="key" type="button" data-digit="1">1</button><button class="key" type="button" data-digit="2">2</button><button class="key" type="button" data-digit="3">3</button><button class="key operator" type="button" data-op="+" aria-label="Add">+</button>
+<button class="key utility" type="button" data-action="sign" aria-label="Change sign">±</button><button class="key zero" type="button" data-digit="0">0</button><button class="key" type="button" data-action="decimal" aria-label="Decimal point">.</button><button class="key equals" type="button" data-action="equals" aria-label="Equals">=</button>
+</div>
+<p class="hint">Keyboard: 0–9, +, −, *, /, %, Enter, Backspace and Escape.</p>
+</section>
 <article class="content">
-<h2>What can this calculator do?</h2><ul><li>Addition (+) and subtraction (−)</li><li>Multiplication (×) and division (÷)</li><li>Decimal calculations</li><li>Percentage conversion</li><li>Change a number between positive and negative</li><li>Clear the display and correct the current entry</li></ul>
-<h2>How to use the calculator</h2><ol><li>Open the <a href="/#basic-calculator">basic calculator</a>.</li><li>Enter a number using the keypad.</li><li>Select an arithmetic operator.</li><li>Enter the next number and press equals.</li><li>Use AC to reset the calculator for a new calculation.</li></ol>
-<h2>Basic arithmetic formulas</h2><p class="formula">Addition: a + b<br>Subtraction: a − b<br>Multiplication: a × b<br>Division: a ÷ b (b must not be zero)</p>
-<h2>Percentage button</h2><p>The percentage key converts the displayed value to its decimal equivalent. For example, 25% becomes 0.25. To find 25% of 200, enter 200 × 25% and then equals.</p>
-<h2>Accuracy and limitations</h2><p>This is a standard arithmetic calculator for everyday calculations. Results are calculated using JavaScript number arithmetic and displayed with practical precision. For tax, lending, investment, accounting or other regulated decisions, verify figures with the relevant official source or a qualified professional.</p>
-<h2>Explore other calculators</h2><p>Use the <a href="/">Friendly Calculator home page</a> for GST, EMI, FD, discount, savings, salary, SIP, inflation, fuel, tax, age and other calculators.</p>
-<p class="muted">Friendly Calculator · Smart Calculations. Made Simple.</p>
-</article></main></body></html>
+<h2>How to use this calculator</h2>
+<ol><li>Enter a number using the keypad or your keyboard.</li><li>Choose an arithmetic operator.</li><li>Enter the next number and press equals.</li><li>Use AC to reset or Backspace to correct the current number.</li></ol>
+<h2>Supported calculations</h2>
+<ul><li>Addition (+), subtraction (−), multiplication (×) and division (÷).</li><li>Decimal numbers and positive/negative values.</li><li>Percentage conversion. For example, 25% becomes 0.25.</li><li>Keyboard and touch-screen input.</li></ul>
+<h2>Basic arithmetic formulas</h2>
+<p class="formula">Addition: a + b<br>Subtraction: a − b<br>Multiplication: a × b<br>Division: a ÷ b (b must not be zero)</p>
+<h2>Accuracy and limitations</h2>
+<p>Results use JavaScript number arithmetic and are displayed with practical precision. The calculator is intended for everyday arithmetic. For tax, lending, investment, accounting or regulated decisions, verify figures with the relevant official source or a qualified professional.</p>
+<h2>Explore more tools</h2>
+<p>Find GST, loan EMI, FD, discount, savings, salary, SIP, inflation, fuel, tax, age and business calculators on Friendly Calculator.</p>
+<a class="cta" href="/#tools">Explore all calculators</a>
+</article>
+</main>
+<footer class="footer"><div class="wrap">Friendly Calculator · Smart Calculations. Made Simple.</div></footer>
+<script>
+(()=>{
+ const display=document.getElementById('display');
+ const expression=document.getElementById('expression');
+ const keys=document.getElementById('keys');
+ let current='0',stored=null,operator=null,replace=true,lastExpression='';
+ const paint=()=>{display.textContent=current;expression.textContent=lastExpression||(stored===null?'':String(stored)+' '+operator);};
+ const value=()=>Number(current);
+ const clear=()=>{current='0';stored=null;operator=null;replace=true;lastExpression='';paint();};
+ const digit=d=>{if(current==='Error')clear();if(replace){current=d;replace=false;}else if(current.replace('-','').length<16)current=current==='0'?d:current+d;lastExpression='';paint();};
+ const solve=()=>{if(operator===null||stored===null)return;const a=stored,b=value();let result=operator==='+'?a+b:operator==='−'?a-b:operator==='×'?a*b:b===0?NaN:a/b;if(!Number.isFinite(result)){current='Error';stored=null;operator=null;replace=true;lastExpression='Cannot divide by zero';paint();return;}lastExpression=String(a)+' '+operator+' '+String(b)+' =';current=String(Number(result.toPrecision(12)));stored=null;operator=null;replace=true;paint();};
+ const choose=op=>{if(current==='Error')return;if(operator!==null&&!replace)solve();stored=value();operator=op;replace=true;lastExpression='';paint();};
+ const action=a=>{if(a==='clear')clear();else if(a==='back'){if(!replace&&current!=='Error'){current=current.length>1?current.slice(0,-1):'0';if(current==='-')current='0';paint();}}else if(a==='equals')solve();else if(a==='decimal'){if(current==='Error')clear();if(replace){current='0.';replace=false;}else if(!current.includes('.'))current+='.';lastExpression='';paint();}else if(a==='sign'){if(current!=='0'&&current!=='Error')current=String(-value());paint();}else if(a==='percent'){if(current!=='Error')current=String(value()/100);replace=true;paint();}};
+ keys.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;if(button.dataset.digit!==undefined)digit(button.dataset.digit);else if(button.dataset.op)choose(button.dataset.op);else if(button.dataset.action)action(button.dataset.action);});
+ document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey)return;if(/^[0-9]$/.test(event.key)){digit(event.key);event.preventDefault();}else if(event.key==='.'){action('decimal');event.preventDefault();}else if(['+','-','*','/'].includes(event.key)){choose(({'+':'+','-':'−','*':'×','/':'÷'})[event.key]);event.preventDefault();}else if(event.key==='Enter'||event.key==='='){action('equals');event.preventDefault();}else if(event.key==='Escape'){clear();event.preventDefault();}else if(event.key==='Backspace'){action('back');event.preventDefault();}else if(event.key==='%'){action('percent');event.preventDefault();}});
+ paint();
+})();
+</script>
+</body>
+</html>
