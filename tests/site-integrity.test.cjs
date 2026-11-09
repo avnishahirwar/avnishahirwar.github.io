@@ -29,7 +29,7 @@ test('every public sitemap page loads the AdSense publisher script exactly once'
     const file = localFile(url);
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
-    const count = (html.match(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) || []).length;
+    const count = (html.match(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g) || []).length;
     if (count !== 1) failures.push(url + ' (found ' + count + ')');
   }
   assert.deepEqual(failures, [], 'AdSense loader must appear exactly once: ' + failures.join(', '));
