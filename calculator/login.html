@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101c2c">
+<title>Account Access | Friendly Calculator</title>
+<style>
+:root{--navy:#101c2c;--gold:#d8bd82;--ink:#172638;--muted:#667587;--line:#e0e5ea}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f4f6f8;color:var(--ink);font:16px/1.6 system-ui,sans-serif;display:grid;place-items:center;padding:20px}
+main{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 18px 55px #10203312}
+.brand{font-weight:900;letter-spacing:.12em;color:var(--navy)}.brand b{color:#a98a4f}
+h1{margin:22px 0 4px;font-size:1.8rem}.muted{color:var(--muted)}label{display:block;font-weight:700;margin:14px 0 6px}input{width:100%;padding:13px;border:1px solid #cbd4dd;border-radius:9px;font:inherit}button{width:100%;padding:13px;border:0;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;font:inherit;cursor:pointer;margin-top:14px}.secondary{background:#eef2f5;color:var(--navy)}.switch{display:flex;gap:8px;margin:18px 0}.switch button{margin:0}.switch button[aria-pressed=true]{background:var(--gold);color:var(--navy)}#message{padding:12px;border-radius:9px;background:#f2f5f7;margin-top:14px;min-height:46px}.links{display:flex;justify-content:space-between;margin-top:18px;font-size:.9rem}a{color:#294d70}
+</style></head><body><main>
+<div class="brand">FRIENDLY <b>CALCULATOR</b></div><h1 id="heading">Welcome back</h1><p class="muted">Sign in or create an account to access your personal workspace.</p>
+<div class="switch"><button id="signinTab" type="button" aria-pressed="true">Sign in</button><button id="signupTab" class="secondary" type="button" aria-pressed="false">Create account</button></div>
+<form id="authForm"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" required>
+<label for="password">Password</label><input id="password" type="password" minlength="8" autocomplete="current-password" required>
+<button id="submit" type="submit">Sign in</button></form>
+<div id="message" role="status" aria-live="polite">Email confirmation may be required after registration.</div>
+<div class="links"><a href="/calculator/pricing.html">View plans</a><a href="/">Back to calculators</a></div>
+</main>
+<script type="module">
+import { supabase } from "./auth.js";
+let mode="signin";
+const $=id=>document.getElementById(id);
+function setMode(next){mode=next;$("heading").textContent=next==="signin"?"Welcome back":"Create your account";$("submit").textContent=next==="signin"?"Sign in":"Create account";$("signinTab").setAttribute("aria-pressed",String(next==="signin"));$("signupTab").setAttribute("aria-pressed",String(next==="signup"));$("password").autocomplete=next==="signin"?"current-password":"new-password";$("message").textContent=next==="signin"?"Sign in with your email and password.":"Use an email address you can verify. A confirmation email may be sent."}
+$("signinTab").addEventListener("click",()=>setMode("signin"));$("signupTab").addEventListener("click",()=>setMode("signup"));
+$("authForm").addEventListener("submit",async e=>{e.preventDefault();$("submit").disabled=true;$("message").textContent="Please wait…";
+const email=$("email").value.trim(),password=$("password").value;
+try{if(mode==="signup"){const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/calculator/dashboard.html"}});if(error)throw error;$("message").textContent=data.session?"Account created. Opening your dashboard…":"Account created. Check your email to confirm your address, then sign in.";if(data.session)location.href="/calculator/dashboard.html";}
+else{const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;location.href="/calculator/dashboard.html";}}
+catch(err){$("message").textContent=err.message||"Unable to complete account request.";}finally{$("submit").disabled=false;}});
+const {data:{session}}=await supabase.auth.getSession();if(session)location.href="/calculator/dashboard.html";
+</script></body></html>
