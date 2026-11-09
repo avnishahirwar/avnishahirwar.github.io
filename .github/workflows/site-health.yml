@@ -1,0 +1,23 @@
+name: Site health and link checks
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  site-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate sitemap, metadata and local links
+        run: node --test tests/site-integrity.test.cjs
+      - name: Validate calculator formulas
+        run: node --test tests/calculator-formulas.test.cjs
