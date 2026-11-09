@@ -1,69 +1,32 @@
-# AVNISH AI
+# Friendly Calculator
 
-> Free online calculators for everyday personal and small-business calculations in India.
+> Free browser-based calculators for everyday personal and small-business calculations, with a focus on practical use in India.
 
 ## Main tool
-- https://avnishahirwar.github.io/calculator/ — GST, loan EMI, fixed deposit, discount, EPF/PF, savings interest, salary, SIP, inflation, BMI, fuel cost, income-tax estimate, age, electricity bill, salary TDS estimate, and profit/loss calculators.
+- https://friendlycalculator.in/ — GST, loan EMI, fixed deposit, discount, EPF/PF, savings interest, salary, SIP, inflation, BMI, fuel cost, income-tax estimate, age, electricity bill, salary TDS estimate, and profit/loss calculators.
 
 ## Information
-- https://avnishahirwar.github.io/calculator/about.html — About AVNISH AI
-- https://avnishahirwar.github.io/calculator/business.html — advertising, affiliate partnerships, subscriptions, API, white-label, widgets and business services
-- https://avnishahirwar.github.io/calculator/api.html — Limited calculator API documentation and access request
-- https://avnishahirwar.github.io/calculator/privacy.html — Privacy policy
-- https://avnishahirwar.github.io/calculator/terms.html — Terms of use
+- https://friendlycalculator.in/calculator/about.html — About Friendly Calculator
+- https://friendlycalculator.in/calculator/business.html — business models and partnership information
+- https://friendlycalculator.in/calculator/api.html — limited calculator API documentation and access request
+- https://friendlycalculator.in/calculator/privacy.html — privacy policy
+- https://friendlycalculator.in/calculator/terms.html — terms of use
 
 ## Important
-- Browser calculators process entered values locally unless a visitor submits an enquiry form.
-- Calculator outputs are estimates, not professional tax, legal, accounting, lending, or investment advice.
-- API access is limited and requires approval.
+- The primary calculator tools are designed to process entered values locally in the browser.
+- Enquiry forms transmit only the information a visitor chooses to submit.
+- Calculator outputs are estimates, not professional tax, legal, accounting, lending, investment, or medical advice.
+- API access is limited, requires manual approval, and currently covers GST, EMI, FD, discount, and profit/loss calculations.
+- API keys must be kept private and used only from server-side applications.
 
 ## Commercial services
-- Proposed revenue streams include display/direct advertising, sponsorships, affiliate partnerships, premium subscriptions, calculator API, white-label licensing, embeddable widgets, custom development, consent-based referrals, paid listings, downloadable reports and templates, implementation services, mobile apps and learning content.
-- Professional (₹199/month) and Business (₹999/month) are indicative proposed prices only; subscriptions and payment checkout are not active.
-- API access is subject to manual review. Advertising and affiliate programmes require approval. Personal data is not sold as a list.
+- Potential revenue streams include approved display/direct advertising, sponsorships, disclosed affiliate partnerships, consent-based partner introductions, proposed premium subscriptions, calculator API, white-label licensing, embeddable widgets, custom development, and digital reports/templates.
+- Proposed prices and revenue models are indicative only. Subscription checkout, automated billing, and several premium services are not active.
+- Advertising and affiliate programmes require third-party approval. No rankings, traffic, commissions, RPMs, or earnings are guaranteed.
+- Personal information is not sold as a lead list. Partner introductions require explicit consent.
 
-## Business models and commercial enquiries
-- https://avnishahirwar.github.io/calculator/#business-models — advertising and sponsorship, affiliate/referral partnerships, proposed premium subscriptions, calculator API access, white-label and enterprise licensing, embeddable widgets, custom calculator development, digital reports and templates, business implementation support, featured listings, consent-based referrals, and future app/learning products.
-- Commercial services are enquiry-led and subject to review and written terms. No paid checkout, automated subscription billing, or active affiliate programme is currently enabled.
-- Proposed plan prices are indicative only and are not active offers or payment requests.
-- Visitors can submit business enquiries through the website contact form. Personal information is not sold as a lead list.
-
-## Monetisation roadmap
-- Potential channels: approved display ad networks, disclosed contextual affiliate referrals, consent-based partner introductions, proposed premium tools, B2B API and licensing, sponsored content and eventual digital asset sale.
-- Ad-network eligibility, RPMs, commissions, traffic thresholds, search rankings and asset valuations vary and are not guaranteed.
-- Financial-product referrals are for eligible adults only and must use appropriately authorised partners. Visitor data is not sold as a list; partner introductions require explicit consent.
-- Hindi and English content should be original, useful and intent-led; avoid duplicated doorway pages or guaranteed-ranking claims.
-
-- Additional proposed models: opt-in newsletter/email resources (separate marketing consent and unsubscribe required), a hybrid free-tools + approved ads + disclosed affiliate + validated premium model, and a product roadmap for Indian finance, salary, tax, real-estate, business and education calculators. These features are proposed and are not claimed to be live unless separately announced.
-
-## Additional hybrid monetisation and growth models
-- Proposed email newsletter and downloadable planner resources require explicit opt-in, clear purpose/frequency and an unsubscribe method; email capture is not currently active.
-- Hybrid strategy: free core calculators, approved non-intrusive ads, disclosed contextual affiliate links, consent-based partner introductions, then validated premium and B2B features.
-- Potential India-focused calculator backlog: CAGR, compound interest, PPF, retirement, HRA, break-even, profit margin, rent-vs-buy, rental yield, gratuity and leave encashment. These are future ideas, not currently live tools unless listed in the calculator inventory.
-- Growth should be measured using privacy-conscious analytics and original Hindi/English content. No fixed traffic, ranking or revenue outcome is guaranteed.
-
-## Extended calculator monetisation models
-- Potential ad placements: page header/footer, sidebar and clearly separated post-result slots. Do not interrupt calculator inputs or place ads between inputs and results; prioritise page speed and user experience.
-- Proposed freemium features: PDF/Excel exports, saved history, multi-scenario comparisons, advanced assumptions, project folders and ad-free experience.
-- Proposed paid reports: loan amortisation, retirement scenarios, tax estimates, construction estimates and business profitability. Indicative test range ₹29–₹299; no report store or checkout is active.
-- Proposed subscriptions: Pro ₹99–₹299/month; Business ₹999–₹4,999/month; Enterprise custom. These are illustrative ranges only and are not active offers.
-- Other future channels: sponsored calculator pages, labelled educational sponsorships, expert introductions, digital templates, membership resources, shareable results, API/widget usage pricing and white-label licensing.
-- Do not sell paid backlinks or manipulate search rankings. Sponsored links and content must be labelled. Do not share lead information without explicit consent. Do not collect sensitive financial credentials, identity documents or health records in general forms.
-- Financial-product referrals and consultations are for eligible adults only and must use appropriately authorised providers. Health content must not promote supplements or unverified medical claims.
-- These features are proposed unless specifically described as live elsewhere; checkout, paid reports, membership and expert booking are not active.
-
-## Stacked monetisation strategy
-- Combine free, accurate calculators with restrained approved display ads, clearly disclosed context-matched affiliate resources, consent-based partner introductions, validated premium features, developer API access, sponsorship and white-label licensing.
-- Protect UX: do not place ads between calculator inputs and results; avoid intrusive overlays and deceptive native ads; prioritise page speed, accessibility and result visibility.
-- Long-tail SEO should answer specific user tasks with original content, transparent formulas, assumptions, worked examples and limitations.
-- International examples such as US$6–$10/month for premium or US$29/month for API are conceptual benchmarks only, not active offers or validated prices. Existing INR plan prices are proposals only.
-- Third-party website income claims are not verified forecasts for this website. No RPM, commission, conversion, ranking or revenue is guaranteed.
-- Paid tiers, bulk processing, API billing, sponsorship inventory and lead-sharing workflows are not active unless separately confirmed as launched.
-
-## Additional ad network and affiliate options
-- Ad networks to evaluate subject to current eligibility and approval: Google AdSense, Media.net, PropellerAds, Ezoic and Raptive. Native-ad providers such as Taboola or Outbrain require separate eligibility review and clear ad labelling.
-- Affiliate brands/networks to research, not confirmed partnerships: Amazon Associates, Flipkart, BankBazaar, Policybazaar, Hostinger, Namecheap, Canva and Notion. Disclose every commercial relationship and check current programme availability and terms.
-- Potential additional products: annual premium plans, niche calculator packs, advanced amortisation/tax reports, bulk processing, co-branded tools and optional quote requests. These are not active unless separately stated.
-- Google Search Console and accurate structured data can support search monitoring and eligibility, but neither guarantees indexing, rich results or rankings. Prioritise fast mobile pages and original content.
-- Daily visitor thresholds do not guarantee income. Actual revenue depends on audience, geography, advertiser demand, viewability, conversion, policy compliance and costs.
-- Never share quote-request or lead information without explicit consent. Health content must not promote supplements or diagnose. Financial-product referrals are for eligible adults and authorised providers only.
+## Search and content
+- Canonical homepage: https://friendlycalculator.in/
+- Sitemap: https://friendlycalculator.in/sitemap.xml
+- Robots policy: https://friendlycalculator.in/robots.txt
+- Content should be original, accurate, current, useful to visitors, and clear about calculation assumptions and limitations.
