@@ -217,7 +217,7 @@ function calcTDS(){
  const gross=val('tdsSalary'),deductions=val('tdsDeductions'),paid=val('tdsPaid'),months=val('tdsMonths'),regime=document.getElementById('tdsRegime').value,resident=document.getElementById('tdsResident').value==='resident',ageGroup=document.getElementById('tdsAgeGroup').value;
  if(!Number.isFinite(gross)||gross<0||gross>50000000||!Number.isFinite(deductions)||deductions<0||deductions>gross||!Number.isFinite(paid)||paid<0||paid>50000000||!Number.isInteger(months)||months<1||months>12){show('tdsResult','Enter valid salary, deductions, TDS already deducted and 1–12 remaining months.');return}
  const taxable=Math.max(0,gross-(regime==='new'?75000:50000)-(regime==='old'?deductions:0));
- const result=taxWithSurcharge(taxable,regime,resident),cess=(result.incomeTax+result.surcharge)*.04,annualTax=result.incomeTax+result.surcharge+cess,balance=Math.max(0,annualTax-paid),monthly=balance/months,excess=Math.max(0,paid-annualTax);
+ const result=taxWithSurcharge(taxable,regime,resident,ageGroup),cess=(result.incomeTax+result.surcharge)*.04,annualTax=result.incomeTax+result.surcharge+cess,balance=Math.max(0,annualTax-paid),monthly=balance/months,excess=Math.max(0,paid-annualTax);
  show('tdsResult','Taxable salary: '+fmt(taxable)+' · Income tax: '+fmt(result.incomeTax)+' · Surcharge: '+fmt(result.surcharge)+' · Cess: '+fmt(cess)+' · Estimated annual tax: '+fmt(annualTax)+' · TDS already deducted: '+fmt(paid)+' · Remaining TDS: '+fmt(balance)+' · Suggested monthly TDS for '+months+' month(s): '+fmt(monthly)+(excess>0?' · Excess deducted: '+fmt(excess):''));
  renderChart('tdsChart','Estimated annual tax composition',[{label:'Income tax',value:result.incomeTax,color:'#245b8f'},{label:'Surcharge',value:result.surcharge,color:'#187451'},{label:'Cess',value:cess,color:'#d8a441'}]);
 }
@@ -318,7 +318,7 @@ async function submitEnquiry(form){
     if(button){button.disabled=false;button.removeAttribute('aria-busy');}
   }
 }
-document.querySelectorAll('#contactForm,#advertiserForm,#apiForm').forEach(form=>{
+document.querySelectorAll('#contactForm,#apiForm').forEach(form=>{
   addFormProtection(form);
   form.addEventListener('submit',event=>{event.preventDefault();if(!form.reportValidity())return;submitEnquiry(form);});
 });
