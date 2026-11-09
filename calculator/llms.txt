@@ -27,3 +27,9 @@
 - Commercial services are enquiry-led and subject to review and written terms. No paid checkout, automated subscription billing, or active affiliate programme is currently enabled.
 - Proposed plan prices are indicative only and are not active offers or payment requests.
 - Visitors can submit business enquiries through the website contact form. Personal information is not sold as a lead list.
+
+## Monetisation roadmap
+- Potential channels: approved display ad networks, disclosed contextual affiliate referrals, consent-based partner introductions, proposed premium tools, B2B API and licensing, sponsored content and eventual digital asset sale.
+- Ad-network eligibility, RPMs, commissions, traffic thresholds, search rankings and asset valuations vary and are not guaranteed.
+- Financial-product referrals are for eligible adults only and must use appropriately authorised partners. Visitor data is not sold as a list; partner introductions require explicit consent.
+- Hindi and English content should be original, useful and intent-led; avoid duplicated doorway pages or guaranteed-ranking claims.
