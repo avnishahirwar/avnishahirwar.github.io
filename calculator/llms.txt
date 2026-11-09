@@ -41,3 +41,13 @@
 - Hybrid strategy: free core calculators, approved non-intrusive ads, disclosed contextual affiliate links, consent-based partner introductions, then validated premium and B2B features.
 - Potential India-focused calculator backlog: CAGR, compound interest, PPF, retirement, HRA, break-even, profit margin, rent-vs-buy, rental yield, gratuity and leave encashment. These are future ideas, not currently live tools unless listed in the calculator inventory.
 - Growth should be measured using privacy-conscious analytics and original Hindi/English content. No fixed traffic, ranking or revenue outcome is guaranteed.
+
+## Extended calculator monetisation models
+- Potential ad placements: page header/footer, sidebar and clearly separated post-result slots. Do not interrupt calculator inputs or place ads between inputs and results; prioritise page speed and user experience.
+- Proposed freemium features: PDF/Excel exports, saved history, multi-scenario comparisons, advanced assumptions, project folders and ad-free experience.
+- Proposed paid reports: loan amortisation, retirement scenarios, tax estimates, construction estimates and business profitability. Indicative test range ₹29–₹299; no report store or checkout is active.
+- Proposed subscriptions: Pro ₹99–₹299/month; Business ₹999–₹4,999/month; Enterprise custom. These are illustrative ranges only and are not active offers.
+- Other future channels: sponsored calculator pages, labelled educational sponsorships, expert introductions, digital templates, membership resources, shareable results, API/widget usage pricing and white-label licensing.
+- Do not sell paid backlinks or manipulate search rankings. Sponsored links and content must be labelled. Do not share lead information without explicit consent. Do not collect sensitive financial credentials, identity documents or health records in general forms.
+- Financial-product referrals and consultations are for eligible adults only and must use appropriately authorised providers. Health content must not promote supplements or unverified medical claims.
+- These features are proposed unless specifically described as live elsewhere; checkout, paid reports, membership and expert booking are not active.
