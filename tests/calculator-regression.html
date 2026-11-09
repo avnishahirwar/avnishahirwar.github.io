@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Friendly Calculator Regression Checks</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:850px;margin:28px auto;padding:0 16px;color:#172638}h1{line-height:1.2}.summary{padding:14px;border-radius:10px;background:#eef3f7;margin:16px 0}.pass{color:#176b4c}.fail{color:#a22}.pending{color:#6b5a25}li{padding:6px 0;border-bottom:1px solid #e5e9ed}small{color:#596b7c}</style></head>
+<body><h1>Friendly Calculator — Regression Checks</h1>
+<p>This private, no-index QA page runs sample calculations against the live homepage JavaScript in the same browser session. It is not a professional certification of tax or financial rules.</p>
+<div id="summary" class="summary">Loading calculator and running checks…</div><ol id="results"></ol>
+<iframe id="app" src="/" title="Calculator test instance" style="position:absolute;width:1px;height:1px;left:-10000px;border:0"></iframe>
+<script>
+const tests=[];
+function test(name,setup,run,expect,notExpect){tests.push({name,setup,run,expect,notExpect})}
+const set=(w,id,value)=>{const e=w.document.getElementById(id);if(!e)throw Error('Missing input '+id);e.value=String(value)};
+const result=(w,id)=>w.document.getElementById(id)?.textContent||'';
+test('GST inclusive / 18%',w=>{set(w,'gstAmount',11800);set(w,'gstRate',18);set(w,'gstMode','inclusive')},w=>w.calcGST(),'Base: ₹10,000','');
+test('EMI at 0% interest',w=>{set(w,'loan',120000);set(w,'rate',0);set(w,'years',1)},w=>w.calcEMI(),'Monthly EMI: ₹10,000','');
+test('Discount calculation',w=>{set(w,'original',1000);set(w,'discount',10)},w=>w.calcDiscount(),'Final price: ₹900','');
+test('FD monthly compounding',w=>{set(w,'fdPrincipal',10000);set(w,'fdRate',12);set(w,'fdYears',1);set(w,'fdFrequency',12)},w=>w.calcFD(),'Maturity value: ₹11,268.25','');
+test('PF projection at 0%',w=>{set(w,'pfMonthly',1000);set(w,'pfRate',0);set(w,'pfYears',1)},w=>w.calcPF(),'Estimated PF balance: ₹12,000','');
+test('Savings interest',w=>{set(w,'savBalance',10000);set(w,'savRate',3.65);set(w,'savDays',365)},w=>w.calcSavings(),'Estimated interest: ₹365','');
+test('Salary hourly estimate',w=>{set(w,'salaryMonthly',30000);set(w,'salaryDays',30);set(w,'salaryHours',8)},w=>w.calcSalary(),'Per Hour Salary: ₹125','');
+test('SIP projection at 0%',w=>{set(w,'sipMonthly',1000);set(w,'sipRate',0);set(w,'sipYears',1)},w=>w.calcSIP(),'Estimated future value: ₹12,000','');
+test('Inflation projection at 0%',w=>{set(w,'inflAmount',1000);set(w,'inflRate',0);set(w,'inflYears',1)},w=>w.calcInflation(),'Estimated future cost: ₹1,000','');
+test('BMI calculation (adult test data only)',w=>{set(w,'bmiAge',18);set(w,'bmiHeightUnit','cm');set(w,'bmiHeightCm',170);set(w,'bmiWeightUnit','kg');set(w,'bmiWeight',65)},w=>w.calcBMI(),'BMI: 22.5','');
+test('Fuel cost',w=>{set(w,'fuelDistance',100);set(w,'fuelMileage',20);set(w,'fuelPrice',100)},w=>w.calcFuel(),'Total fuel cost: ₹500','');
+test('Income tax zero-income boundary',w=>{set(w,'taxIncome',0);set(w,'taxDeductions',0);set(w,'taxRegime','new');set(w,'taxIncomeType','salary');set(w,'taxResident','resident');set(w,'taxAgeGroup','below60')},w=>w.calcTax(),'Estimated total tax: ₹0','');
+test('Age date difference',w=>{set(w,'ageDob','2000-01-01');set(w,'ageAsOf','2025-01-01')},w=>w.calcAge(),'Age: 25 years, 0 months, 0 days','');
+test('Electricity bill arithmetic',w=>{set(w,'electricityUnits',100);set(w,'electricityRate',5);set(w,'electricityFixed',50);set(w,'electricityOther',10)},w=>w.calcElectricity(),'Estimated bill: ₹560','');
+test('Salary TDS zero-income boundary',w=>{set(w,'tdsSalary',0);set(w,'tdsDeductions',0);set(w,'tdsPaid',0);set(w,'tdsMonths',12);set(w,'tdsRegime','new');set(w,'tdsResident','resident');set(w,'tdsAgeGroup','below60')},w=>w.calcTDS(),'Estimated annual tax: ₹0','');
+test('Profit calculation',w=>{set(w,'plCost',100);set(w,'plSelling',120)},w=>w.calcPL(),'PROFIT: ₹20','');
+test('Age rejects impossible calendar date',w=>{set(w,'ageDob','2000-02-31');set(w,'ageAsOf','2025-01-01')},w=>w.calcAge(),'valid calendar dates','Age:');
+document.getElementById('app').addEventListener('load',()=>{
+ try{
+  const w=document.getElementById('app').contentWindow;
+  const list=document.getElementById('results');let passed=0,failed=0;
+  for(const t of tests){let detail='';try{t.setup(w);t.run(w);detail=result(w,t.name.startsWith('Age')?'ageResult':({GST:'gstResult',EMI:'emiResult',Discount:'discountResult',FD:'fdResult',PF:'pfResult',Savings:'savResult',Salary:'salaryResult',SIP:'sipResult',Inflation:'inflationResult',BMI:'bmiResult',Fuel:'fuelResult',Income:'taxResult',Electricity:'electricityResult', 'Salary TDS':'tdsResult',Profit:'plResult'}[t.name.split(' ')[0]]||'ageResult'));const ok=detail.includes(t.expect)&&(!t.notExpect||!detail.includes(t.notExpect));if(ok)passed++;else failed++;const li=document.createElement('li');li.className=ok?'pass':'fail';li.textContent=(ok?'PASS — ':'FAIL — ')+t.name+(ok?'':' | '+detail);list.appendChild(li)}catch(e){failed++;const li=document.createElement('li');li.className='fail';li.textContent='FAIL — '+t.name+' | '+e.message;list.appendChild(li)}}
+  const summary=document.getElementById('summary');summary.className='summary '+(failed?'fail':'pass');summary.textContent=passed+' passed · '+failed+' failed · '+tests.length+' total';
+ }catch(e){document.getElementById('summary').textContent='Test runner error: '+e.message}
+},{once:true});
+</script></body></html>
