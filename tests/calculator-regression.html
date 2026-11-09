@@ -27,7 +27,7 @@ test('Age date difference',w=>{set(w,'ageDob','2000-01-01');set(w,'ageAsOf','202
 test('Electricity bill arithmetic',w=>{set(w,'electricityUnits',100);set(w,'electricityRate',5);set(w,'electricityFixed',50);set(w,'electricityOther',10)},w=>w.calcElectricity(),'Estimated bill: ₹560','');
 test('Salary TDS zero-income boundary',w=>{set(w,'tdsSalary',0);set(w,'tdsDeductions',0);set(w,'tdsPaid',0);set(w,'tdsMonths',12);set(w,'tdsRegime','new');set(w,'tdsResident','resident');set(w,'tdsAgeGroup','below60')},w=>w.calcTDS(),'Estimated annual tax: ₹0','');
 test('Profit calculation',w=>{set(w,'plCost',100);set(w,'plSelling',120)},w=>w.calcPL(),'PROFIT: ₹20','');
-test('Age rejects impossible calendar date',w=>{set(w,'ageDob','2000-02-31');set(w,'ageAsOf','2025-01-01')},w=>w.calcAge(),'valid calendar dates','Age:');
+test('Age rejects impossible calendar date',w=>{const e=w.document.getElementById('ageDob');Object.defineProperty(e,'value',{configurable:true,value:'2000-02-31'});set(w,'ageAsOf','2025-01-01')},w=>w.calcAge(),'valid calendar dates','Age:');
 document.getElementById('app').addEventListener('load',()=>{
  try{
   const w=document.getElementById('app').contentWindow;
