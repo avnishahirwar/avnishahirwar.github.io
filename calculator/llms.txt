@@ -51,3 +51,11 @@
 - Do not sell paid backlinks or manipulate search rankings. Sponsored links and content must be labelled. Do not share lead information without explicit consent. Do not collect sensitive financial credentials, identity documents or health records in general forms.
 - Financial-product referrals and consultations are for eligible adults only and must use appropriately authorised providers. Health content must not promote supplements or unverified medical claims.
 - These features are proposed unless specifically described as live elsewhere; checkout, paid reports, membership and expert booking are not active.
+
+## Stacked monetisation strategy
+- Combine free, accurate calculators with restrained approved display ads, clearly disclosed context-matched affiliate resources, consent-based partner introductions, validated premium features, developer API access, sponsorship and white-label licensing.
+- Protect UX: do not place ads between calculator inputs and results; avoid intrusive overlays and deceptive native ads; prioritise page speed, accessibility and result visibility.
+- Long-tail SEO should answer specific user tasks with original content, transparent formulas, assumptions, worked examples and limitations.
+- International examples such as US$6–$10/month for premium or US$29/month for API are conceptual benchmarks only, not active offers or validated prices. Existing INR plan prices are proposals only.
+- Third-party website income claims are not verified forecasts for this website. No RPM, commission, conversion, ranking or revenue is guaranteed.
+- Paid tiers, bulk processing, API billing, sponsorship inventory and lead-sharing workflows are not active unless separately confirmed as launched.
