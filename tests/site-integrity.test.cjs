@@ -23,6 +23,18 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.equal(new Set(urls).size, urls.length, 'Sitemap URLs must be unique');
 });
 
+test('every public sitemap page loads the AdSense publisher script exactly once', () => {
+  const failures = [];
+  for (const url of urls) {
+    const file = localFile(url);
+    if (!file || !fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, 'utf8');
+    const count = (html.match(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) || []).length;
+    if (count !== 1) failures.push(url + ' (found ' + count + ')');
+  }
+  assert.deepEqual(failures, [], 'AdSense loader must appear exactly once: ' + failures.join(', '));
+});
+
 test('every sitemap URL maps to a committed page', () => {
   const missing = urls.filter(url => {
     const file = localFile(url);
