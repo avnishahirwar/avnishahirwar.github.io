@@ -33,3 +33,5 @@
 - Ad-network eligibility, RPMs, commissions, traffic thresholds, search rankings and asset valuations vary and are not guaranteed.
 - Financial-product referrals are for eligible adults only and must use appropriately authorised partners. Visitor data is not sold as a list; partner introductions require explicit consent.
 - Hindi and English content should be original, useful and intent-led; avoid duplicated doorway pages or guaranteed-ranking claims.
+
+- Additional proposed models: opt-in newsletter/email resources (separate marketing consent and unsubscribe required), a hybrid free-tools + approved ads + disclosed affiliate + validated premium model, and a product roadmap for Indian finance, salary, tax, real-estate, business and education calculators. These features are proposed and are not claimed to be live unless separately announced.
