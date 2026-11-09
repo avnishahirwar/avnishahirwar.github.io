@@ -3,14 +3,14 @@
 ## Current release status
 This branch adds the initial INR plan catalogue, a public pricing page, and database tables for subscriptions, transactions, webhook deduplication, and feature entitlements. It deliberately does **not** enable checkout or paid entitlements.
 
-## Proposed catalogue
+## Approved INR catalogue
 - Free: ₹0
 - Starter: ₹99/month or ₹999/year
 - Professional: ₹199/month or ₹1,999/year
 - Business: ₹499/month or ₹4,999/year
-- Business API allowance: 1,000 credits per billing cycle (proposal; enforce only after usage accounting is implemented).
+- Business API allowance: 1,000 credits per billing cycle (planned allowance; not yet metered or available).
 
-Amounts in the database are paise. Annual prices are proposal values and require business approval before publishing as a binding offer.
+Amounts in the database are paise. Monthly and annual price points have been approved. The prices do not mean checkout or paid features are currently available.
 
 ## Required before any test checkout
 1. An authorised adult account owner/admin completes merchant onboarding and confirms eligibility for Razorpay Subscriptions.
