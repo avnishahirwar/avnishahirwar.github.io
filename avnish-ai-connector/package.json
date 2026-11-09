@@ -1,0 +1,24 @@
+{
+  "name": "avnish-ai-connector",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Read-only MCP connector for the Avnish Ahirwar public website",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "build": "wrangler deploy --dry-run",
+    "validate": "npm run typecheck && npm run build && npm run smoke",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "agents": "0.33.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "wrangler": "^4.45.0"
+  }
+}
