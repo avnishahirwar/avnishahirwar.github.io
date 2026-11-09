@@ -21,3 +21,9 @@
 - Proposed revenue streams include display/direct advertising, sponsorships, affiliate partnerships, premium subscriptions, calculator API, white-label licensing, embeddable widgets, custom development, consent-based referrals, paid listings, downloadable reports and templates, implementation services, mobile apps and learning content.
 - Professional (₹199/month) and Business (₹999/month) are indicative proposed prices only; subscriptions and payment checkout are not active.
 - API access is subject to manual review. Advertising and affiliate programmes require approval. Personal data is not sold as a list.
+
+## Business models and commercial enquiries
+- https://avnishahirwar.github.io/calculator/#business-models — advertising and sponsorship, affiliate/referral partnerships, proposed premium subscriptions, calculator API access, white-label and enterprise licensing, embeddable widgets, custom calculator development, digital reports and templates, business implementation support, featured listings, consent-based referrals, and future app/learning products.
+- Commercial services are enquiry-led and subject to review and written terms. No paid checkout, automated subscription billing, or active affiliate programme is currently enabled.
+- Proposed plan prices are indicative only and are not active offers or payment requests.
+- Visitors can submit business enquiries through the website contact form. Personal information is not sold as a lead list.
