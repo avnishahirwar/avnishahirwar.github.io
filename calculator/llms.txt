@@ -35,3 +35,9 @@
 - Hindi and English content should be original, useful and intent-led; avoid duplicated doorway pages or guaranteed-ranking claims.
 
 - Additional proposed models: opt-in newsletter/email resources (separate marketing consent and unsubscribe required), a hybrid free-tools + approved ads + disclosed affiliate + validated premium model, and a product roadmap for Indian finance, salary, tax, real-estate, business and education calculators. These features are proposed and are not claimed to be live unless separately announced.
+
+## Additional hybrid monetisation and growth models
+- Proposed email newsletter and downloadable planner resources require explicit opt-in, clear purpose/frequency and an unsubscribe method; email capture is not currently active.
+- Hybrid strategy: free core calculators, approved non-intrusive ads, disclosed contextual affiliate links, consent-based partner introductions, then validated premium and B2B features.
+- Potential India-focused calculator backlog: CAGR, compound interest, PPF, retirement, HRA, break-even, profit margin, rent-vs-buy, rental yield, gratuity and leave encashment. These are future ideas, not currently live tools unless listed in the calculator inventory.
+- Growth should be measured using privacy-conscious analytics and original Hindi/English content. No fixed traffic, ranking or revenue outcome is guaranteed.
