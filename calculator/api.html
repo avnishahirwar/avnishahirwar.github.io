@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="description" content="AVNISH AI calculator API documentation for approved integrations.">
+<link rel="canonical" href="https://avnishahirwar.github.io/calculator/api.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AVNISH AI">
+<meta property="og:title" content="AVNISH AI — Calculator API Documentation">
+<meta property="og:description" content="Documentation for approved GST, EMI, FD, discount and profit/loss calculator API integrations.">
+<meta property="og:url" content="https://avnishahirwar.github.io/calculator/api.html">
+<meta name="theme-color" content="#101c2c">
+<title>AVNISH AI — Calculator API Documentation</title>
+<style>
+:root{--navy:#101c2c;--gold:#d8bd82;--ink:#172638;--muted:#667587;--line:#e0e5ea;--paper:#f5f6f8;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{width:min(920px,92%);margin:auto}
+header{background:var(--navy);color:white;padding:20px 0}.brand{font-weight:900;letter-spacing:.13em}.brand b{color:var(--gold)}header a{color:#dce5ed;text-decoration:none}
+main{padding:40px 0 60px}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:8px 0 14px}h2{margin-top:34px;font-size:1.45rem}p{color:var(--muted)}.eyebrow{font-size:.75rem;letter-spacing:.14em;font-weight:850;color:#92733d;text-transform:uppercase}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}pre{background:#0c1928;color:#e7edf3;padding:16px;border-radius:10px;overflow:auto;font-size:.86rem;line-height:1.55}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.pill{display:inline-block;border-radius:99px;padding:4px 10px;background:#edf3ef;color:#187451;font-size:.78rem;font-weight:800}.warning{background:#fff8e8;border:1px solid #ead8a9;border-radius:12px;padding:14px;color:#5b4a28}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{font-size:.8rem;color:var(--muted)}.btn{display:inline-block;padding:11px 16px;border-radius:8px;background:var(--navy);color:white;text-decoration:none;font-weight:800}.footer{padding:24px 0;background:#0b1928;color:#bdc9d4}.footer a{color:#d8bd82}
+</style>
+</head>
+<body>
+<header><div class="wrap" style="display:flex;justify-content:space-between;gap:18px;align-items:center"><div class="brand">AVNISH <b>AI</b></div><a href="./">Back to calculators</a></div></header>
+<main class="wrap">
+<div class="eyebrow">Developer documentation</div>
+<h1>Calculator API</h1>
+<p>Integrate selected AVNISH AI calculators into an application using a server-side API key. Access is currently issued manually for approved enquiries.</p>
+<p><span class="pill">API gateway active</span> <span class="pill">HTTPS</span> <span class="pill">JSON</span></p>
+<div class="warning"><strong>Keep your API key private.</strong> Send requests from your own backend, never from browser JavaScript, public repositories or mobile app source code. Do not share API keys in support messages.</div>
+
+<h2>Endpoint</h2>
+<div class="panel"><p><strong>POST</strong></p><pre><code>https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api</code></pre><p>Required header:</p><pre><code>x-api-key: avsk_live_YOUR_PRIVATE_KEY
+Content-Type: application/json</code></pre></div>
+
+<h2>Available calculators</h2>
+<div class="panel table-wrap"><table><thead><tr><th>Calculator</th><th>Input fields</th></tr></thead><tbody>
+<tr><td><code>gst</code></td><td><code>amount</code>, <code>rate</code>, optional <code>mode</code> (<code>exclusive</code> or <code>inclusive</code>)</td></tr>
+<tr><td><code>emi</code></td><td><code>principal</code>, <code>annualRate</code>, <code>months</code></td></tr>
+<tr><td><code>fd</code></td><td><code>principal</code>, <code>annualRate</code>, <code>years</code>, optional <code>frequency</code> (1, 2, 4 or 12; default 4)</td></tr>
+<tr><td><code>discount</code></td><td><code>price</code>, <code>discountPercent</code></td></tr>
+<tr><td><code>profit-loss</code></td><td><code>costPrice</code>, <code>sellingPrice</code></td></tr>
+</tbody></table></div>
+
+<h2>Example request — EMI</h2>
+<pre><code>curl -X POST \
+  'https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: YOUR_PRIVATE_API_KEY' \
+  -d '{
+    "calculator": "emi",
+    "inputs": {
+      "principal": 500000,
+      "annualRate": 9.5,
+      "months": 60
+    }
+  }'</code></pre>
+
+<h2>Example response</h2>
+<pre><code>{
+  "ok": true,
+  "calculator": "emi",
+  "result": {
+    "monthlyEmi": 10501.0,
+    "totalPayment": 630060.0,
+    "totalInterest": 130060.0
+  }
+}</code></pre>
+<p class="small">The numbers above are illustrative. Actual responses depend on the submitted values.</p>
+
+<h2>Rate limits and errors</h2>
+<div class="panel table-wrap"><table><thead><tr><th>HTTP status</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>200</td><td>Request processed successfully.</td></tr>
+<tr><td>400</td><td>Invalid input or unsupported calculator.</td></tr>
+<tr><td>401</td><td>Missing, invalid, expired or revoked API key.</td></tr>
+<tr><td>429</td><td>Per-key requests-per-minute limit reached.</td></tr>
+<tr><td>500 / 503</td><td>Temporary service or backend configuration issue.</td></tr>
+</tbody></table></div>
+<p>Each API key has an assigned per-minute request limit. Keys can be revoked. Do not assume unlimited availability; the service is subject to free-tier platform quotas and operational limits.</p>
+
+<h2>Request access</h2>
+<p>Tell us about your application and expected usage. Never include a password, OTP, existing API key or other secret in the enquiry.</p>
+<a class="btn" href="./#api-access">Request API access</a>
+</main>
+<footer class="footer"><div class="wrap">AVNISH AI · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div></footer>
+</body></html>
