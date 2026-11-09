@@ -93,6 +93,22 @@
  .footer-links a{font-size:.84rem}
  .social-icon{width:40px;height:40px}
 }
+.toolgrid{grid-template-columns:1fr}
+.basic-calculator{max-width:440px;margin:0 auto 28px;background:#101a2b;border:1px solid #27364b;border-radius:22px;padding:18px;box-shadow:0 18px 44px #0b172a22;color:#fff}
+.basic-calculator .calc-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.basic-calculator .calc-heading h3{margin:0;color:#fff}
+.basic-calculator .calc-screen{background:#07111f;border:1px solid #29384b;border-radius:13px;padding:15px;margin-bottom:13px;min-height:90px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.basic-calculator .calc-expression{font-size:.85rem;color:#aab7c8;min-height:22px;text-align:right;overflow-wrap:anywhere}
+.basic-calculator .calc-display{font-size:2.1rem;line-height:1.25;font-weight:750;text-align:right;overflow-wrap:anywhere}
+.basic-calculator .calc-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.basic-calculator .calc-key{min-height:56px;border:1px solid #34445b;border-radius:12px;background:#1c2a3e;color:#f8fafc;font:700 1.05rem inherit;font-size:1.05rem;font-weight:750;cursor:pointer}
+.basic-calculator .calc-key:active{transform:scale(.97)}
+.basic-calculator .calc-key.operator{background:#263d59;color:#cfe4ff}
+.basic-calculator .calc-key.utility{background:#35445a;color:#fff}
+.basic-calculator .calc-key.equals{background:#d8a441;border-color:#d8a441;color:#142033}
+.basic-calculator .calc-key.zero{grid-column:span 2}
+.basic-calculator .calc-hint{font-size:.78rem;color:#aab7c8;margin:12px 2px 0}
+@media(max-width:540px){.basic-calculator{padding:14px}.basic-calculator .calc-key{min-height:52px}}
 </style>
 
 </head>
@@ -116,6 +132,23 @@
 <p id="calculatorSearchHelp" class="note">Tip: Search by the task you want to do. Select a category to narrow the list. You can also use the quick links below.</p>
 <p id="calculatorCount" class="note" role="status" aria-live="polite">Showing all 16 calculators.</p>
 <div class="calc-index" id="calculator-index" aria-label="Calculator quick navigation"><strong>Jump to a calculator</strong><div class="calc-index-links"><a href="#calc-gst-amount">1. GST Calculator</a><a href="#calc-loan">2. Loan EMI Calculator</a><a href="#calc-fd-principal">3. Fixed Deposit (FD) Calculator</a><a href="#calc-original">4. Discount Calculator</a><a href="#calc-pf-monthly">5. PF / EPF Calculator</a><a href="#calc-sav-balance">6. Bank Savings Account Interest Calculator</a><a href="#calc-salary-monthly">7. Salary Calculator</a><a href="#calc-sip-monthly">8. SIP Calculator</a><a href="#calc-infl-amount">9. Inflation Calculator</a><a href="#calc-bmi-age">10. BMI Calculator</a><a href="#calc-fuel-distance">11. Fuel Cost Calculator</a><a href="#calc-tax-regime">12. Basic Income Tax Calculator (India)</a><a href="#calc-age-dob">13. Age Calculator</a><a href="#calc-electricity-units">14. Electricity Bill Calculator</a><a href="#calc-tds-salary">15. TDS Calculator on Salary</a><a href="#calc-pl-cost">16. Profit & Loss Calculator</a></div>
+<section class="section" id="basic-calculator" aria-labelledby="basic-calculator-title">
+<div class="wrap">
+<div class="section-head"><span class="eyebrow">EVERYDAY TOOL</span><h2 id="basic-calculator-title">Basic Calculator</h2><p>Use the on-screen keypad for quick addition, subtraction, multiplication and division.</p></div>
+<div class="basic-calculator" role="group" aria-label="Basic calculator">
+<div class="calc-heading"><h3>Calculator</h3><span class="tag">STANDARD</span></div>
+<div class="calc-screen" aria-live="polite" aria-atomic="true"><div class="calc-expression" id="basicCalcExpression"></div><output class="calc-display" id="basicCalcDisplay">0</output></div>
+<div class="calc-keys">
+<button class="calc-key utility" type="button" data-calc-action="clear" aria-label="All clear">AC</button>
+<button class="calc-key utility" type="button" data-calc-action="sign" aria-label="Change sign">+/−</button>
+<button class="calc-key utility" type="button" data-calc-action="percent">%</button>
+<button class="calc-key operator" type="button" data-calc-op="÷">÷</button>
+<button class="calc-key" type="button" data-calc-digit="7">7</button><button class="calc-key" type="button" data-calc-digit="8">8</button><button class="calc-key" type="button" data-calc-digit="9">9</button><button class="calc-key operator" type="button" data-calc-op="×">×</button>
+<button class="calc-key" type="button" data-calc-digit="4">4</button><button class="calc-key" type="button" data-calc-digit="5">5</button><button class="calc-key" type="button" data-calc-digit="6">6</button><button class="calc-key operator" type="button" data-calc-op="−">−</button>
+<button class="calc-key" type="button" data-calc-digit="1">1</button><button class="calc-key" type="button" data-calc-digit="2">2</button><button class="calc-key" type="button" data-calc-digit="3">3</button><button class="calc-key operator" type="button" data-calc-op="+">+</button>
+<button class="calc-key utility zero" type="button" data-calc-digit="0">0</button><button class="calc-key" type="button" data-calc-action="decimal">.</button><button class="calc-key equals" type="button" data-calc-action="equals">=</button>
+</div><p class="calc-hint">Keyboard supported: 0–9, +, −, *, /, Enter, Backspace and Escape.</p>
+</div></div></section>
 <div class="toolgrid">
 <div class="tool" id="calc-gst-amount" data-category="business" style="order:1"><span class="tag">01 · GST</span><h3 data-en="GST Calculator" data-hi="GST कैलकुलेटर">GST Calculator</h3><p data-en="Calculate GST amount and total price, or extract GST from an inclusive price." data-hi="GST राशि और कुल कीमत निकालें या GST सहित कीमत से GST अलग करें।">Calculate GST amount and total price, or extract GST from an inclusive price.</p><p class="note"><a href="/calculators/gst-calculator.html">GST calculation guide →</a></p><div class="fields"><div class="field"><label data-en="Amount (₹)" data-hi="राशि (₹)">Amount (₹)</label><input id="gstAmount" type="number" min="0" placeholder="10000"></div><div class="field"><label data-en="GST rate" data-hi="GST दर">GST rate</label><select id="gstRate"><option value="0.25">0.25%</option><option value="3">3%</option><option value="5">5%</option><option value="18" selected>18%</option><option value="40">40%</option></select></div></div><div class="field" style="margin-top:10px"><label data-en="Price type" data-hi="कीमत का प्रकार">Price type</label><select id="gstMode"><option value="exclusive" selected>Add GST to amount</option><option value="inclusive">GST included in amount</option></select></div><button id="calcGSTButton" class="btn dark" type="button" data-en="Calculate GST" data-hi="GST निकालें">Calculate GST</button><div class="result" id="gstResult" aria-live="polite">Result will appear here.</div><div class="chart-breakdown" id="gstChart" aria-live="polite"></div></div>
 <div class="tool" id="calc-loan" data-category="finance" style="order:2"><span class="tag">02 · EMI</span><h3 data-en="Loan EMI Calculator" data-hi="लोन EMI कैलकुलेटर">Loan EMI Calculator</h3><p data-en="Estimate monthly instalment, total repayment and total interest." data-hi="मासिक किस्त, कुल भुगतान और कुल ब्याज का अनुमान लगाएँ।">Estimate monthly instalment, total repayment and total interest.</p><p class="note"><a href="/calculators/loan-emi-calculator.html">Loan EMI formula & guide →</a></p><div class="fields"><div class="field"><label data-en="Loan amount (₹)" data-hi="लोन राशि (₹)">Loan amount (₹)</label><input id="loan" type="number" min="0" placeholder="500000"></div><div class="field"><label data-en="Annual interest (%)" data-hi="वार्षिक ब्याज (%)">Annual interest (%)</label><input id="rate" type="number" min="0" step=".1" placeholder="9"></div><div class="field"><label data-en="Tenure (years)" data-hi="अवधि (वर्ष)">Tenure (years)</label><input id="years" type="number" min="0" step=".5" placeholder="5"></div></div><button id="calcEMIButton" class="btn dark" type="button" data-en="Calculate EMI" data-hi="EMI निकालें">Calculate EMI</button><div class="result" id="emiResult" aria-live="polite">Result will appear here.</div><div class="chart-breakdown" id="emiChart" aria-live="polite"></div></div>
@@ -429,5 +462,23 @@ calculatorCategory.addEventListener('change',filterCalculators);
 
 document.querySelectorAll('[data-business-enquiry]').forEach(link=>link.addEventListener('click',()=>{const topic=document.getElementById('contactTopic');if(topic)topic.value=link.getAttribute('data-business-enquiry');}));
 document.getElementById('lang').addEventListener('click',()=>{lang=lang==='en'?'hi':'en';document.documentElement.lang=lang;document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute('data-'+lang);if(v!==null)el.textContent=v});document.getElementById('lang').textContent=lang==='en'?'हिन्दी':'English'});
+
+// Accessible standard calculator keypad.
+(()=>{
+ const display=document.getElementById('basicCalcDisplay'),expression=document.getElementById('basicCalcExpression'),pad=document.querySelector('.basic-calculator');
+ if(!display||!expression||!pad)return;
+ let current='0',stored=null,operator=null,replace=true,justEvaluated=false;
+ const paint=()=>{display.textContent=current;expression.textContent=stored===null?'':String(stored)+' '+operator;};
+ const number=()=>Number(current);
+ const digit=d=>{if(replace){current=d;replace=false;}else if(current.replace('-','').length<15)current=current==='0'?d:current+d;justEvaluated=false;paint();};
+ const clear=()=>{current='0';stored=null;operator=null;replace=true;justEvaluated=false;paint();};
+ const choose=op=>{if(operator!==null&&!replace)solve(false);stored=number();operator=op;replace=true;justEvaluated=false;paint();};
+ const solve=(finish=true)=>{if(operator===null||stored===null)return;const a=stored,b=number();let result=operator==='+'?a+b:operator==='−'?a-b:operator==='×'?a*b: b===0?NaN:a/b;if(!Number.isFinite(result)){current='Error';stored=null;operator=null;replace=true;paint();return;}current=String(Number(result.toPrecision(12)));expression.textContent=String(a)+' '+operator+' '+String(b)+' =';stored=null;operator=null;replace=true;justEvaluated=true;paint();};
+ const action=a=>{if(a==='clear')clear();else if(a==='equals')solve();else if(a==='decimal'){if(replace){current='0.';replace=false;}else if(!current.includes('.'))current+='.';paint();}else if(a==='sign'){if(current!=='0'&&current!=='Error')current=String(-number());paint();}else if(a==='percent'){if(current!=='Error')current=String(number()/100);paint();}};
+ pad.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.calcDigit!==undefined)digit(b.dataset.calcDigit);else if(b.dataset.calcOp)choose(b.dataset.calcOp);else if(b.dataset.calcAction)action(b.dataset.calcAction);});
+ document.addEventListener('keydown',e=>{if(!document.activeElement||!pad.contains(document.activeElement))return;if(/^[0-9]$/.test(e.key)){digit(e.key);e.preventDefault();}else if(e.key==='.'){action('decimal');e.preventDefault();}else if(['+','-','*','/'].includes(e.key)){choose(({'+':'+','-':'−','*':'×','/':'÷'})[e.key]);e.preventDefault();}else if(e.key==='Enter'||e.key==='='){solve();e.preventDefault();}else if(e.key==='Escape'){clear();e.preventDefault();}else if(e.key==='Backspace'){current=current.length>1?current.slice(0,-1):'0';paint();e.preventDefault();}});
+ paint();
+})();
+
 </script>
 </body></html>
