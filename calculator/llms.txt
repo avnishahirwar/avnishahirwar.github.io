@@ -59,3 +59,11 @@
 - International examples such as US$6–$10/month for premium or US$29/month for API are conceptual benchmarks only, not active offers or validated prices. Existing INR plan prices are proposals only.
 - Third-party website income claims are not verified forecasts for this website. No RPM, commission, conversion, ranking or revenue is guaranteed.
 - Paid tiers, bulk processing, API billing, sponsorship inventory and lead-sharing workflows are not active unless separately confirmed as launched.
+
+## Additional ad network and affiliate options
+- Ad networks to evaluate subject to current eligibility and approval: Google AdSense, Media.net, PropellerAds, Ezoic and Raptive. Native-ad providers such as Taboola or Outbrain require separate eligibility review and clear ad labelling.
+- Affiliate brands/networks to research, not confirmed partnerships: Amazon Associates, Flipkart, BankBazaar, Policybazaar, Hostinger, Namecheap, Canva and Notion. Disclose every commercial relationship and check current programme availability and terms.
+- Potential additional products: annual premium plans, niche calculator packs, advanced amortisation/tax reports, bulk processing, co-branded tools and optional quote requests. These are not active unless separately stated.
+- Google Search Console and accurate structured data can support search monitoring and eligibility, but neither guarantees indexing, rich results or rankings. Prioritise fast mobile pages and original content.
+- Daily visitor thresholds do not guarantee income. Actual revenue depends on audience, geography, advertiser demand, viewability, conversion, policy compliance and costs.
+- Never share quote-request or lead information without explicit consent. Health content must not promote supplements or diagnose. Financial-product referrals are for eligible adults and authorised providers only.
