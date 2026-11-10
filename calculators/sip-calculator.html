@@ -26,7 +26,19 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head><body><header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#tools">All Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a></nav></div></header><main class="wrap">
 <nav class="foot"><a href="/">Home</a> / <a href="/#tools">All calculators</a> / SIP Calculator</nav>
-<header class="hero"><div class="eyebrow">Free online calculator · India</div><h1>SIP Calculator</h1><p>Estimate future value of regular monthly contributions using an assumed annual return and period.</p><p><a class="btn" href="/#calc-sip-monthly">Open SIP Calculator</a></p></header>
+<header class="hero"><div class="eyebrow">Free online calculator · India</div><h1>SIP Calculator</h1><p>Estimate future value of regular monthly contributions using an assumed annual return and period.</p><p>Use the calculator below on this page—no extra click is required.</p></header>
+<section class="panel" id="sip-tool">
+<h2>Calculate your SIP estimate</h2>
+<p>Enter a monthly contribution, an assumed annual return and an investment period. This is a hypothetical illustration, not a guaranteed return.</p>
+<div class="fields">
+<div class="field"><label for="sipMonthly">Monthly investment (₹)</label><input id="sipMonthly" type="number" min="1" max="10000000" step="100" value="2000"></div>
+<div class="field"><label for="sipRate">Assumed annual return (%)</label><input id="sipRate" type="number" min="0" max="50" step="0.1" value="12"></div>
+<div class="field"><label for="sipYears">Investment period (years)</label><input id="sipYears" type="number" min="1" max="50" step="1" value="10"></div>
+</div>
+<button class="btn" id="sipCalculate" type="button">Calculate SIP estimate</button>
+<div class="example" id="sipResult" role="status" aria-live="polite">Enter values and calculate your illustrative estimate.</div>
+<p class="note">Method: monthly compounding from the assumed annual rate, with contributions treated as made at the beginning of each month. Actual mutual-fund returns vary and may be negative.</p>
+</section>
 <section class="panel"><h2>What this calculator does</h2><p>Model the possible future value of regular contributions. A SIP is a contribution method, not a guaranteed-return product. Market-linked investments can lose value and actual returns vary.</p><h2>How to use it</h2><ol><li>Enter monthly contribution</li><li>assumed annual return</li><li>investment period</li><li>compare contributions and estimated value.</li></ol><a class="btn" href="/#calc-sip-monthly">Calculate now</a></section>
 <section class="panel"><h2>Formula and calculation method</h2><div class="formula">The calculator applies a periodic return derived from the annual assumption to recurring contributions. It assumes a steady rate only for illustration.</div><h3>Worked example</h3><div class="example">₹2,000 each month for 10 years means total contributions of ₹2,40,000 before any gains or losses. A selected return assumption changes only the hypothetical estimate.</div></section>
 <section class="panel"><h2>Important information</h2><p>Returns are not guaranteed. Fees, taxes, market movements and contribution timing affect actual outcomes. This is not investment advice.</p></section>
@@ -41,5 +53,8 @@ document.addEventListener('click',function(event){
   if(!button||typeof gtag!=='function')return;
   gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:button.id||button.getAttribute('aria-label')||'calculate'});
 });
+</script>
+<script>
+(()=>{const $=id=>document.getElementById(id);const fmt=n=>'₹'+n.toLocaleString('en-IN',{maximumFractionDigits:0});function calculate(){const p=Number($('sipMonthly').value),annual=Number($('sipRate').value),years=Number($('sipYears').value);if(!Number.isFinite(p)||p<=0||p>10000000||!Number.isFinite(annual)||annual<0||annual>50||!Number.isInteger(years)||years<1||years>50){$('sipResult').textContent='Enter a monthly amount above ₹0, annual return from 0–50% and a period from 1–50 years.';return}const n=years*12,i=annual/1200;const factor=i===0?n:((Math.pow(1+i,n)-1)/i)*(1+i);const invested=p*n,future=p*factor,gain=future-invested;if(!Number.isFinite(future)){$('sipResult').textContent='Unable to calculate. Check the entered values.';return}$('sipResult').textContent='Total contributions: '+fmt(invested)+' · Illustrative estimated value: '+fmt(future)+' · Illustrative gain: '+fmt(gain)}$('sipCalculate').addEventListener('click',calculate);['sipMonthly','sipRate','sipYears'].forEach(id=>$(id).addEventListener('input',calculate));calculate()})();
 </script>
 </body></html>
