@@ -14,6 +14,18 @@ const links=[
 ['Contact',r+'contact.html']
 ];
 const p=location.pathname;
+if(p.startsWith('/calculators/')){
+  const main=document.querySelector('main');
+  if(main){
+    const makeAd=()=>{const slot=document.createElement('aside');slot.className='fc-ad-reserved';slot.setAttribute('aria-label','Advertisement placement reserved');slot.dataset.adStatus='reserved';return slot};
+    const anchor=main.querySelector('.hero')||main.querySelector('h1');
+    if(anchor&&!main.querySelector('.fc-ad-reserved'))anchor.insertAdjacentElement('afterend',makeAd());
+    if(!main.querySelectorAll('.fc-ad-reserved').length||main.querySelectorAll('.fc-ad-reserved').length<2)main.appendChild(makeAd());
+  }
+  if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
+    const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
+  }
+}
 const h=document.createElement('header');h.className='fc-global-header';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home">FRIENDLY <b>CALCULATOR</b></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a class="fc-admin-link" href="'+r+'admin.html" rel="nofollow"'+(p===r+'admin.html'?' aria-current="page"':'')+'>Admin Dashboard</a>'+'</nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
