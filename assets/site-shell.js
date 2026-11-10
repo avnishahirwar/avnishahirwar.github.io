@@ -14,7 +14,7 @@ const links=[
 ['Contact',r+'contact.html']
 ];
 const p=location.pathname;
-const icon=document.querySelector('link[rel~="icon"]');if(!icon){const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';l.href='/favicon.svg';document.head.appendChild(l)}
+if(!document.querySelector('link[rel="icon"][type="image/png"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='192x192';l.href='/favicon-96.png';document.head.prepend(l)}if(!document.querySelector('link[rel="icon"][type="image/svg+xml"]')){const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';l.href='/favicon.svg';document.head.appendChild(l)}if(!document.querySelector('link[rel="apple-touch-icon"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href='/apple-touch-icon.png';document.head.appendChild(l)}
 
 if(p==='/'||p.startsWith('/calculators/')){
   const main=document.querySelector('main');
