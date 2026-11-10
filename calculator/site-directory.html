@@ -17,7 +17,8 @@ main{padding:28px 0 48px}.searchbar{display:flex;gap:10px;align-items:center;bac
 .no-results{display:none;color:var(--muted);padding:16px;background:#fff;border:1px solid var(--line);border-radius:10px}.muted{color:var(--muted)}footer{background:#0b1928;color:#c2ced9;padding:24px 0}footer .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}footer a{color:#e6d6b2;text-decoration:none;margin-right:14px;font-size:.87rem}
 @media(max-width:800px){.nav{align-items:flex-start;flex-direction:column;padding:12px 0;gap:8px}nav{width:100%;justify-content:flex-start;padding-bottom:5px}.grid{grid-template-columns:repeat(2,1fr)}.quickgrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.quickgrid{grid-template-columns:1fr 1fr}.hero{padding:30px 0}.section-head{align-items:flex-start;flex-direction:column}}
-</style><link rel="stylesheet" href="/assets/site-shell.css"></head><body>
+</style><link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+</head><body>
 <header><div class="wrap nav"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/site-directory.html" aria-current="page">All Calculators</a><a href="/calculator/business.html">Business</a><a href="/calculator/api.html">API</a><a href="/calculator/pricing.html">Plans</a><a href="/calculator/about.html">About</a><a href="/calculator/contact.html">Contact</a><a class="admin" href="/calculator/admin.html" rel="nofollow">Admin Login</a></nav></div></header>
 <section class="hero"><div class="wrap"><div class="eyebrow">One place · Every section</div><h1>Find what you need, faster.</h1><p>Browse all calculators, business services and website information from one organized directory. Search by tool name or topic.</p></div></section>
 <main class="wrap">
@@ -69,4 +70,5 @@ main{padding:28px 0 48px}.searchbar{display:flex;gap:10px;align-items:center;bac
 <footer><div class="wrap foot"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical calculators and business tools.</small></div><div><a href="/">Home</a><a href="/calculator/contact.html">Contact</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/admin.html" rel="nofollow">Admin Login</a></div><small>© 2026 Friendly Calculator</small></div></footer>
 <script>
 (()=>{const input=document.getElementById('siteSearch');const cards=[...document.querySelectorAll('[data-search]')];const no=document.getElementById('noResults');input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();let count=0;for(const card of cards){const hay=(card.textContent+' '+card.dataset.search).toLowerCase();const show=!q||hay.includes(q);card.hidden=!show;if(show&&card.classList.contains('card'))count++;}no.style.display=q&&count===0?'block':'none';});})();
-</script><script src="/assets/site-shell.js" defer></script></body></html>
+</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>
