@@ -49,16 +49,39 @@
       rows.forEach(([label,value,suffix])=>{const tr=document.createElement("tr"),name=document.createElement("th"),val=document.createElement("td");name.scope="row";name.textContent=label;val.textContent=typeof value==="string"?value:(suffix==="%"?Number(value).toFixed(2)+"%":money(value));tr.append(name,val);tbody.appendChild(tr)});
       table.appendChild(tbody);output.appendChild(table);
       const numeric=rows.filter(row=>typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0);
-      if(numeric.length>=2&&numeric.every(row=>!row[2])){
+      if(numeric.length>=1&&numeric.every(row=>!row[2])){
         const chart=document.createElement("section");chart.className="fc-result-chart";
-        const title=document.createElement("h3");title.textContent="Visual comparison";chart.appendChild(title);
-        const note=document.createElement("p");note.textContent="Bars use a shared relative scale to make the returned figures easier to scan.";chart.appendChild(note);
-        const max=Math.max(...numeric.map(row=>row[1]),1);
+        const title=document.createElement("h3");title.textContent=def.title==="BMI Calculator"?"BMI number visual (not a health classification)":"Result comparison chart";chart.appendChild(title);
+        const note=document.createElement("p");note.textContent=def.title==="BMI Calculator"?"The marker shows only the calculated number on a neutral 0–50 scale. It does not indicate a diagnosis or adult category.":"Bars use a shared relative scale; compare values only within this calculation.";chart.appendChild(note);
+        const max=def.title==="BMI Calculator"?50:Math.max(...numeric.map(row=>row[1]),1);
         numeric.forEach(([label,value])=>{const item=document.createElement("div");item.className="fc-chart-item";
           const top=document.createElement("div");top.className="fc-chart-label";const name=document.createElement("span"),amount=document.createElement("strong");name.textContent=label;amount.textContent=money(value);top.append(name,amount);
           const track=document.createElement("div");track.className="fc-chart-track";const bar=document.createElement("span");bar.className="fc-chart-bar";bar.style.width=Math.max(2,value/max*100)+"%";track.appendChild(bar);item.append(top,track);chart.appendChild(item)});
         output.appendChild(chart);
       }
+      const solution=document.createElement("section");solution.className="fc-calculation-solution";solution.style.cssText="margin-top:18px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px";
+      const solutionTitle=document.createElement("h3");solutionTitle.textContent="How this result was calculated";solution.appendChild(solutionTitle);
+      const explanations={
+        "loan emi calculator":"Monthly EMI uses the reducing-balance formula: P × r × (1+r)^n ÷ ((1+r)^n−1), where P is principal, r is monthly interest rate and n is the number of monthly payments. At 0% interest, principal is divided by the number of payments.",
+        "fixed deposit calculator":"Maturity = principal × (1 + annual rate ÷ compounding periods)^(compounding periods × years). This assumes the entered rate and compounding frequency remain unchanged.",
+        "sip calculator india":"The SIP estimate compounds regular monthly contributions at the assumed monthly rate. Contributions are treated as made at the beginning of each month; actual market returns are not fixed.",
+        "epf / pf calculator":"This is a simplified monthly-contribution projection using the entered annual rate divided by 12. It models the entered employee contribution only and does not reproduce the EPFO passbook's exact monthly interest-credit rules.",
+        "gst calculator":"For Add GST: GST = base amount × rate ÷ 100 and total = base + GST. For Remove GST: taxable value = inclusive amount ÷ (1 + rate ÷ 100), and GST is the difference.",
+        "income tax calculator india":"The estimate applies the configured tax slabs for the selected regime, then the simplified rebate and 4% cess shown in the result. It does not model every exemption, deduction, surcharge, special-rate income or individual tax circumstance.",
+        "salary tds calculator":"The tool estimates annual tax using its configured new-regime slabs, subtracts tax already paid, then divides the remaining estimate by payroll months remaining. Employer payroll calculations may differ.",
+        "bmi calculator":"BMI = weight in kilograms ÷ (height in metres × height in metres). This is a number-only screening calculation; it does not diagnose health. For people under 18, adult cut-offs must not be used.",
+        "salary calculator":"Daily estimate = monthly salary ÷ working days. Hourly estimate = monthly salary ÷ (working days × working hours per day).",
+        "savings account interest calculator":"Estimated interest = average balance × annual rate × days ÷ 365. This is a simple estimate; bank-specific daily balance and compounding rules may differ.",
+        "inflation calculator":"Future cost = current amount × (1 + annual inflation rate)^years. This is a scenario based on a constant assumed rate, not a forecast.",
+        "fuel cost calculator":"Fuel required = distance ÷ mileage. Estimated trip cost = fuel required × price per litre.",
+        "discount calculator":"Discount amount = original price × discount percentage ÷ 100. Final price = original price − discount amount.",
+        "age calculator":"The calculator compares the date of birth with the selected as-of date and subtracts calendar years, months and days, accounting for the length of each calendar month.",
+        "electricity bill calculator":"Energy charges = units consumed × rate per unit. Estimated bill = energy charges + fixed charges + other charges entered.",
+        "profit & loss calculator":"Profit or loss = selling price − cost price. Percentage = absolute profit/loss ÷ cost price × 100."
+      };
+      const explanation=document.createElement("p");explanation.textContent=explanations[key]||"The displayed result is calculated from the input values and assumptions shown above. Check each assumption before relying on the estimate.";solution.appendChild(explanation);
+      const steps=document.createElement("ol");rows.forEach(([label,value,suffix])=>{const li=document.createElement("li");li.textContent=label+": "+(typeof value==="string"?value:(suffix==="%"?Number(value).toFixed(2)+"%":money(value)));steps.appendChild(li)});solution.appendChild(steps);
+      output.appendChild(solution);
       output.style.display="block";if(typeof window.gtag==="function")window.gtag("event","calculator_used",{calculator_name:def.title,calculator_page:location.pathname})});
     panel.append(form,output);const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);
   }
