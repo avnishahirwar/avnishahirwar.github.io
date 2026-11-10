@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'favicon.svg'
+      - 'index.html'
       - '.github/workflows/generate-favicon.yml'
   workflow_dispatch:
 
