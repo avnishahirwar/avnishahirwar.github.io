@@ -59,6 +59,7 @@
           const track=document.createElement("div");track.className="fc-chart-track";const bar=document.createElement("span");bar.className="fc-chart-bar";bar.style.width=Math.max(2,value/max*100)+"%";track.appendChild(bar);item.append(top,track);chart.appendChild(item)});
         output.appendChild(chart);
       }
+      if(key==="age calculator"&&numeric.length===0){const match=String(rows[0]&&rows[0][1]||"").match(/(\\d+) years, (\\d+) months, (\\d+) days/);if(match){const chart=document.createElement("section");chart.className="fc-result-chart";const title=document.createElement("h3");title.textContent="Age breakdown";chart.appendChild(title);[["Years",match[1]],["Months",match[2]],["Days",match[3]]].forEach(([label,value])=>{const item=document.createElement("div");item.className="fc-chart-item";const top=document.createElement("div");top.className="fc-chart-label";const name=document.createElement("span"),amount=document.createElement("strong");name.textContent=label;amount.textContent=value;top.append(name,amount);item.appendChild(top);chart.appendChild(item)});output.appendChild(chart)}}
       const solution=document.createElement("section");solution.className="fc-calculation-solution";solution.style.cssText="margin-top:18px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px";
       const solutionTitle=document.createElement("h3");solutionTitle.textContent="How this result was calculated";solution.appendChild(solutionTitle);
       const explanations={
