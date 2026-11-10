@@ -80,7 +80,7 @@
         "electricity bill calculator":"Energy charges = units consumed × rate per unit. Estimated bill = energy charges + fixed charges + other charges entered.",
         "profit & loss calculator":"Profit or loss = selling price − cost price. Percentage = absolute profit/loss ÷ cost price × 100."
       };
-      const explanation=document.createElement("p");explanation.textContent=explanations[key]||"The displayed result is calculated from the input values and assumptions shown above. Check each assumption before relying on the estimate.";solution.appendChild(explanation);
+      const explanation=document.createElement("p");explanation.textContent=explanations[lookupKey]||"The displayed result is calculated from the input values and assumptions shown above. Check each assumption before relying on the estimate.";solution.appendChild(explanation);
       const steps=document.createElement("ol");rows.forEach(([label,value,suffix])=>{const li=document.createElement("li");li.textContent=label+": "+(typeof value==="string"?value:(suffix==="%"?Number(value).toFixed(2)+"%":money(value)));steps.appendChild(li)});solution.appendChild(steps);
       output.appendChild(solution);
       output.style.display="block";if(typeof window.gtag==="function")window.gtag("event","calculator_used",{calculator_name:def.title,calculator_page:location.pathname})});
