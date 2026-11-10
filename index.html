@@ -1,51 +1,106 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Free Online Calculators | Friendly Calculator</title>
-<meta name="description" content="Free online calculators for GST, loans, savings, tax, salary and everyday tasks. Search tools, enter your values and get clear estimates.">
-<meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="https://friendlycalculator.in/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="theme-color" content="#101c2c">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="Friendly Calculator — Free Online Calculators"><meta property="og:description" content="Find a calculator, enter your values and get a clear estimate."><meta property="og:url" content="https://friendlycalculator.in/"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.svg">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QVWQSEDRGL');</script>
+<meta name="description" content="Free online calculators for finance, tax, business and everyday use. Search a tool, enter your values and get a clear estimate.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Free Online Calculators | Friendly Calculator">
+<meta property="og:description" content="Free online calculators for finance, tax, business and everyday use.">
+<meta property="og:url" content="https://friendlycalculator.in/">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QVWQSEDRGL');</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/assets/site-shell.css">
 <style>
-:root{--navy:#101c2c;--gold:#d8bd82;--ink:#172638;--muted:#647487;--paper:#f5f7f9;--line:#e1e7ed}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:120px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit}.wrap{width:min(1120px,92%);margin:auto}
-.hero{background:linear-gradient(120deg,#101c2c,#233b55);color:#fff;padding:42px 0 34px}.eyebrow{color:var(--gold);font-size:.75rem;letter-spacing:.15em;font-weight:850;text-transform:uppercase}.hero h1{font-size:clamp(2rem,4.5vw,3.2rem);line-height:1.1;letter-spacing:-.035em;margin:9px 0}.hero p{color:#d2dce5;max-width:720px;margin:0}
-main{padding:26px 0 44px}.searchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:18px;box-shadow:0 5px 18px #10243a08}.searchbar input{width:100%;min-width:0;border:0;outline:0;font:inherit;color:var(--ink);background:transparent}.tool-count{color:var(--muted);font-size:.9rem;margin:0 0 14px}.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tool-card{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-decoration:none;transition:border-color .15s,transform .15s}.tool-card:hover{border-color:#c8ad75;transform:translateY(-1px)}.tool-card strong{display:block;font-size:1rem;margin-bottom:4px}.tool-card span{display:block;color:var(--muted);font-size:.88rem}.tool-card em{display:block;color:#174d72;font-style:normal;font-weight:800;font-size:.84rem;margin-top:12px}.no-results{display:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--muted)}
-@media(max-width:760px){.hero{padding:32px 0 28px}.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:480px){.tool-grid{grid-template-columns:1fr}.tool-card{padding:15px}}
+:root{--fc-blue:#174f82;--fc-blue-dark:#123d65;--fc-text:#202b36;--fc-muted:#64717d;--fc-border:#d9e0e6;--fc-bg:#f4f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--fc-bg);color:var(--fc-text);font:15px/1.55 Arial,Helvetica,sans-serif}
+a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underline}
+.page-wrap{width:min(1160px,94%);margin:0 auto}
+.home-intro{background:#fff;border-bottom:1px solid var(--fc-border);padding:22px 0 18px}
+.home-intro h1{font-size:clamp(1.65rem,3vw,2.25rem);line-height:1.2;margin:0 0 7px;color:#1c2b39}
+.home-intro p{margin:0;color:var(--fc-muted);max-width:780px}
+.home-main{padding:20px 0 40px}
+.search-panel{background:#fff;border:1px solid var(--fc-border);padding:14px;border-radius:5px;margin-bottom:18px}
+.search-panel label{display:block;font-weight:700;margin-bottom:7px}
+.search-row{display:flex;gap:8px}
+.search-row input{width:100%;min-width:0;padding:11px 12px;border:1px solid #aebbc7;border-radius:4px;font:inherit;background:#fff}
+.search-row button{border:0;border-radius:4px;background:var(--fc-blue);color:#fff;padding:0 20px;font-weight:700;cursor:pointer}
+.search-row button:hover{background:var(--fc-blue-dark)}
+.search-hint{font-size:.84rem;color:var(--fc-muted);margin:7px 0 0}
+.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.category{background:#fff;border:1px solid var(--fc-border);border-radius:5px;overflow:hidden}
+.category h2{font-size:1.1rem;margin:0;padding:11px 14px;background:#edf2f6;border-bottom:1px solid var(--fc-border);color:#24394c}
+.category-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;padding:12px 15px 15px}
+.calculator-link{display:block;padding:6px 0;border-bottom:1px dotted #e1e6eb;text-decoration:none;font-size:.94rem}
+.calculator-link::before{content:"›";font-weight:700;margin-right:7px;color:#718394}
+.calculator-link:hover{text-decoration:underline}
+.calculator-link[hidden]{display:none}
+.category-empty{display:none;padding:0 15px 14px;color:var(--fc-muted);font-size:.88rem}
+.no-results{display:none;background:#fff;border:1px solid var(--fc-border);padding:16px;margin-top:14px}
+.home-note{margin-top:18px;background:#fff;border:1px solid var(--fc-border);padding:14px 16px;border-radius:5px;color:var(--fc-muted);font-size:.88rem}
+.home-note strong{color:#34495b}
+@media(max-width:760px){.category-grid{grid-template-columns:1fr}.home-intro{padding:18px 0}.category-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.search-row{flex-direction:column}.search-row button{padding:10px}.category-links{grid-template-columns:1fr}}
 </style>
-<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
-</head><body>
-<section class="hero"><div class="wrap"><div class="eyebrow">Simple tools. Clear answers.</div><h1>Find your calculator. Get your answer.</h1><p>Search for the calculation you need, open the tool directly and enter your values. No need to browse through category pages.</p></div></section>
-<main class="wrap" id="calculator-tools">
-<label class="searchbar"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" placeholder="Search by calculator name or topic…" aria-label="Search calculators"></label>
-<p class="tool-count" id="toolCount">20 calculators and tools</p>
-<section class="tool-grid" id="toolGrid" aria-label="All calculators">
-<a class="tool-card" href="/calculators/gst-calculator.html" data-search="gst tax goods services invoice GST Calculator Add or remove GST from an amount."><strong>GST Calculator</strong><span>Add or remove GST from an amount.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/loan-emi-calculator.html" data-search="loan emi mortgage monthly instalment interest Loan EMI Calculator Estimate monthly instalments and interest."><strong>Loan EMI Calculator</strong><span>Estimate monthly instalments and interest.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/fd-calculator.html" data-search="fixed deposit fd maturity interest Fixed Deposit Calculator Estimate deposit maturity and interest."><strong>Fixed Deposit Calculator</strong><span>Estimate deposit maturity and interest.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/sip-calculator.html" data-search="sip mutual fund monthly investment projection SIP Calculator Illustrative monthly investment projection."><strong>SIP Calculator</strong><span>Illustrative monthly investment projection.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/ppf-calculator.html" data-search="ppf public provident fund PPF Calculator Estimate Public Provident Fund maturity."><strong>PPF Calculator</strong><span>Estimate Public Provident Fund maturity.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/epf-pf-calculator.html" data-search="epf pf provident fund employee EPF / PF Calculator Estimate provident fund accumulation."><strong>EPF / PF Calculator</strong><span>Estimate provident fund accumulation.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/savings-interest-calculator.html" data-search="savings bank interest account Savings Interest Calculator Estimate savings account interest."><strong>Savings Interest Calculator</strong><span>Estimate savings account interest.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/inflation-calculator.html" data-search="inflation future price cost Inflation Calculator Estimate future costs using an assumed rate."><strong>Inflation Calculator</strong><span>Estimate future costs using an assumed rate.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/income-tax-calculator.html" data-search="income tax india old new regime Income Tax Calculator Indicative income tax estimate."><strong>Income Tax Calculator</strong><span>Indicative income tax estimate.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/tds-calculator.html" data-search="tds tax deducted source salary TDS Calculator Estimate salary TDS under selected assumptions."><strong>TDS Calculator</strong><span>Estimate salary TDS under selected assumptions.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/hra-calculator.html" data-search="hra house rent exemption HRA Exemption Calculator Estimate eligible HRA exemption."><strong>HRA Exemption Calculator</strong><span>Estimate eligible HRA exemption.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/ctc-salary-calculator.html" data-search="ctc in hand salary take home CTC to In-Hand Salary Estimate take-home pay from CTC."><strong>CTC to In-Hand Salary</strong><span>Estimate take-home pay from CTC.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/salary-calculator.html" data-search="salary daily hourly pay Salary Calculator Convert pay to daily and hourly estimates."><strong>Salary Calculator</strong><span>Convert pay to daily and hourly estimates.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/profit-loss-calculator.html" data-search="profit loss margin business Profit & Loss Calculator Calculate profit, loss and percentage."><strong>Profit & Loss Calculator</strong><span>Calculate profit, loss and percentage.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/discount-calculator.html" data-search="discount sale price savings Discount Calculator Calculate savings and final selling price."><strong>Discount Calculator</strong><span>Calculate savings and final selling price.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/age-calculator.html" data-search="age date years months days Age Calculator Calculate age between two dates."><strong>Age Calculator</strong><span>Calculate age between two dates.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/electricity-bill-calculator.html" data-search="electricity bill units household power Electricity Bill Calculator Estimate household electricity charges."><strong>Electricity Bill Calculator</strong><span>Estimate household electricity charges.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/fuel-cost-calculator.html" data-search="fuel petrol diesel trip travel cost Fuel Cost Calculator Estimate trip fuel use and cost."><strong>Fuel Cost Calculator</strong><span>Estimate trip fuel use and cost.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/bmi-calculator.html" data-search="bmi body mass index adult BMI Calculator Adult BMI reference with limitations."><strong>BMI Calculator</strong><span>Adult BMI reference with limitations.</span><em>Open calculator →</em></a>
-<a class="tool-card" href="/calculators/basic-calculator.html" data-search="basic calculator arithmetic add subtract multiply divide Basic Calculator Basic arithmetic operations."><strong>Basic Calculator</strong><span>Basic arithmetic operations.</span><em>Open calculator →</em></a>
-</section><p class="no-results" id="noResults">No matching calculator found. Try another search term.</p>
+</head>
+<body>
+<section class="home-intro"><div class="page-wrap"><h1>Free Online Calculators</h1><p>Quick, practical calculators for finance, tax, business and everyday tasks. Choose a category or search directly for the tool you need.</p></div></section>
+<main class="page-wrap home-main">
+<section class="search-panel" aria-label="Search calculators">
+<label for="calculatorSearch">Search all calculators</label>
+<div class="search-row"><input id="calculatorSearch" type="search" placeholder="Example: loan EMI, GST, salary, age…" autocomplete="off"><button id="clearSearch" type="button">Clear</button></div>
+<p class="search-hint" id="searchCount">Browse all 20 calculators. Select a calculator to open its dedicated tool page.</p>
+</section>
+<div class="category-grid" id="categoryGrid">
+<section class="category" data-category="finance">
+<h2>Financial Calculators</h2><div class="category-links">
+<a class="calculator-link" href="/calculators/loan-emi-calculator.html" data-search="loan emi mortgage monthly installment interest repayment">Loan Calculator (EMI)</a>
+<a class="calculator-link" href="/calculators/fd-calculator.html" data-search="fixed deposit fd maturity interest bank deposit">Fixed Deposit Calculator</a>
+<a class="calculator-link" href="/calculators/sip-calculator.html" data-search="sip mutual fund monthly investment returns">SIP Calculator</a>
+<a class="calculator-link" href="/calculators/ppf-calculator.html" data-search="ppf public provident fund maturity">PPF Calculator</a>
+<a class="calculator-link" href="/calculators/epf-pf-calculator.html" data-search="epf pf employee provident fund">EPF / PF Calculator</a>
+<a class="calculator-link" href="/calculators/savings-interest-calculator.html" data-search="savings account bank interest">Savings Interest Calculator</a>
+<a class="calculator-link" href="/calculators/inflation-calculator.html" data-search="inflation future price purchasing power">Inflation Calculator</a>
+</div></section>
+<section class="category" data-category="tax">
+<h2>Tax & Salary Calculators</h2><div class="category-links">
+<a class="calculator-link" href="/calculators/gst-calculator.html" data-search="gst goods services tax inclusive exclusive invoice">GST Calculator</a>
+<a class="calculator-link" href="/calculators/income-tax-calculator.html" data-search="income tax india tax regime">Income Tax Calculator</a>
+<a class="calculator-link" href="/calculators/tds-calculator.html" data-search="tds tax deducted at source">TDS Calculator</a>
+<a class="calculator-link" href="/calculators/hra-calculator.html" data-search="hra house rent allowance exemption">HRA Exemption Calculator</a>
+<a class="calculator-link" href="/calculators/salary-calculator.html" data-search="salary monthly annual daily hourly">Salary Calculator</a>
+<a class="calculator-link" href="/calculators/ctc-salary-calculator.html" data-search="ctc in hand take home salary">CTC to In-Hand Salary</a>
+</div></section>
+<section class="category" data-category="business">
+<h2>Business & Commercial Calculators</h2><div class="category-links">
+<a class="calculator-link" href="/calculators/profit-loss-calculator.html" data-search="profit loss margin markup business">Profit & Loss Calculator</a>
+<a class="calculator-link" href="/calculators/discount-calculator.html" data-search="discount sale price savings percentage">Discount Calculator</a>
+<a class="calculator-link" href="/calculators/electricity-bill-calculator.html" data-search="electricity bill units energy power tariff">Electricity Bill Calculator</a>
+<a class="calculator-link" href="/calculators/fuel-cost-calculator.html" data-search="fuel cost petrol diesel trip mileage">Fuel Cost Calculator</a>
+</div></section>
+<section class="category" data-category="everyday">
+<h2>Math & Everyday Calculators</h2><div class="category-links">
+<a class="calculator-link" href="/calculators/basic-calculator.html" data-search="basic math arithmetic addition subtraction multiplication division">Basic Calculator</a>
+<a class="calculator-link" href="/calculators/age-calculator.html" data-search="age date years months days">Age Calculator</a>
+<a class="calculator-link" href="/calculators/bmi-calculator.html" data-search="bmi body mass index health">BMI Calculator</a>
+</div></section>
+</div>
+<p class="no-results" id="noResults">No matching calculator found. Try another search term.</p>
+<section class="home-note"><strong>About these tools:</strong> Calculators provide estimates based on the values and assumptions entered. Review each tool's method and limitations; verify important financial, tax or health decisions with the relevant official source or a qualified professional.</section>
 </main>
 <script>
-(()=>{const input=document.getElementById('toolSearch'),items=[...document.querySelectorAll('.tool-card')],count=document.getElementById('toolCount'),empty=document.getElementById('noResults');if(!input)return;input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();let n=0;items.forEach(card=>{const match=(card.textContent+' '+card.dataset.search).toLowerCase().includes(q);card.hidden=!match;if(match)n++});count.textContent=n+' matching calculator'+(n===1?'':'s');empty.style.display=n?'none':'block'});})();
+(()=>{'use strict';
+const input=document.getElementById('calculatorSearch'),links=[...document.querySelectorAll('.calculator-link')],cards=[...document.querySelectorAll('.category')],count=document.getElementById('searchCount'),empty=document.getElementById('noResults');
+function filter(){const q=input.value.trim().toLowerCase();let shown=0;cards.forEach(card=>{let inCard=0;card.querySelectorAll('.calculator-link').forEach(a=>{const ok=!q||(a.textContent+' '+a.dataset.search).toLowerCase().includes(q);a.hidden=!ok;if(ok){shown++;inCard++}});card.hidden=inCard===0;});empty.style.display=shown?'none':'block';count.textContent=q?shown+' matching calculator'+(shown===1?'':'s'):'Browse all '+links.length+' calculators. Select a calculator to open its dedicated tool page.';}
+input.addEventListener('input',filter);document.getElementById('clearSearch').addEventListener('click',()=>{input.value='';filter();input.focus()});
+})();
 </script>
-<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
 </body></html>
