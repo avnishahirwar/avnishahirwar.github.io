@@ -20,3 +20,24 @@ img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-wi
 @media(max-width:1100px){.fc-global-nav{width:94%;align-items:flex-start;gap:8px 14px;padding:11px 0}.fc-global-brand{width:100%;font-size:.98rem}.fc-global-links{width:100%;flex:1 1 100%;justify-content:flex-start;gap:4px 15px;border-top:1px solid #e6ebef;padding-top:8px}.fc-global-links a{font-size:.85rem;padding:6px 0}}
 @media(max-width:640px){.fc-global-nav{width:92%;gap:7px;padding:10px 0}.fc-global-brand{font-size:.9rem;letter-spacing:.035em}.fc-global-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:5px 12px;justify-content:flex-start;overflow:visible;max-height:none}.fc-global-links a{font-size:.82rem;padding:5px 0}.fc-global-links .fc-admin-link{padding:5px 8px}.fc-global-footer{padding:20px 0;margin-top:24px}.fc-global-footer-inner{width:92%;display:grid;grid-template-columns:1fr;gap:11px}.fc-global-footer-links{gap:7px 13px}.fc-global-footer-links a{font-size:.84rem}}
 @media(max-width:380px){.fc-global-links{gap:4px 10px}.fc-global-links a{font-size:.78rem}}
+
+/* Calculator result presentation — keep Friendly Calculator's existing navy/gold identity */
+.fc-result-table{width:100%;border-collapse:collapse;margin:10px 0 18px;background:#fff;font-size:.95rem}
+.fc-result-table caption{text-align:left;font-weight:800;color:#172638;padding:0 0 9px}
+.fc-result-table th,.fc-result-table td{padding:11px 12px;border:1px solid #e0e5ea;text-align:left}
+.fc-result-table thead th{background:#edf3f7;color:#172638}
+.fc-result-table tbody th{font-weight:650;color:#34495b;background:#fbfcfd}
+.fc-result-table td{text-align:right;font-weight:750;font-variant-numeric:tabular-nums}
+.fc-result-chart{margin-top:18px;padding:16px;background:#fff;border:1px solid #e0e5ea;border-radius:10px}
+.fc-result-chart h3{margin:0 0 5px;font-size:1.05rem;color:#172638}
+.fc-result-chart>p{margin:0 0 14px;color:#64717d;font-size:.82rem}
+.fc-chart-item{margin:12px 0}
+.fc-chart-label{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;margin-bottom:5px}
+.fc-chart-label strong{font-variant-numeric:tabular-nums;white-space:nowrap}
+.fc-chart-track{height:12px;background:#edf1f4;border-radius:20px;overflow:hidden}
+.fc-chart-bar{display:block;height:100%;background:linear-gradient(90deg,#101c2c,#d8bd82);border-radius:20px}
+.fc-ad-reserved{width:100%;min-height:96px;margin:18px 0;padding:10px;border:1px dashed #cbd4dc;border-radius:6px;background:#fafbfd;display:flex;align-items:center;justify-content:center;color:#84919d;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.fc-ad-reserved::before{content:"Advertisement"}
+.fc-ad-reserved[data-ad-status="filled"]{border:0;background:transparent;padding:0;min-height:0}
+.fc-ad-reserved[data-ad-status="filled"]::before{content:none}
+@media(max-width:600px){.fc-result-table{font-size:.88rem}.fc-result-table th,.fc-result-table td{padding:9px 8px}.fc-ad-reserved{min-height:84px;margin:14px 0}}
