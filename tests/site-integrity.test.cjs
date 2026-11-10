@@ -23,16 +23,20 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.equal(new Set(urls).size, urls.length, 'Sitemap URLs must be unique');
 });
 
-test('every public sitemap page loads the AdSense publisher script exactly once', () => {
+test('content pages load the AdSense publisher script exactly once; utility pages do not load it', () => {
+  // Ads belong on pages with substantial publisher content (home, calculators, methodology).
+  // Policy and utility pages (about, privacy, terms, API, contact, directory) stay ad-free.
+  const adFree = ['/calculator/about.html', '/calculator/privacy.html', '/calculator/terms.html', '/calculator/api.html', '/calculator/contact.html', '/calculator/site-directory.html'];
   const failures = [];
   for (const url of urls) {
     const file = localFile(url);
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const count = (html.match(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g) || []).length;
-    if (count !== 1) failures.push(url + ' (found ' + count + ')');
+    const expected = adFree.some(path => url.endsWith(path)) ? 0 : 1;
+    if (count !== expected) failures.push(url + ' (found ' + count + ', expected ' + expected + ')');
   }
-  assert.deepEqual(failures, [], 'AdSense loader must appear exactly once: ' + failures.join(', '));
+  assert.deepEqual(failures, [], 'Unexpected AdSense loader count: ' + failures.join(', '));
 });
 
 test('every sitemap URL maps to a committed page', () => {
