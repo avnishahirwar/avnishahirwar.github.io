@@ -59,7 +59,7 @@
           const track=document.createElement("div");track.className="fc-chart-track";const bar=document.createElement("span");bar.className="fc-chart-bar";bar.style.width=Math.max(2,value/max*100)+"%";track.appendChild(bar);item.append(top,track);chart.appendChild(item)});
         output.appendChild(chart);
       }
-      output.style.display="block";if(typeof window.gtag==="function")window.gtag("event","calculator_use",{calculator_name:def.title,calculator_page:location.pathname})});
+      output.style.display="block";if(typeof window.gtag==="function")window.gtag("event","calculator_used",{calculator_name:def.title,calculator_page:location.pathname})});
     panel.append(form,output);const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
