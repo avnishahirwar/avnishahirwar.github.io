@@ -1,0 +1,33 @@
+name: Generate Google-compatible favicons
+
+on:
+  push:
+    paths:
+      - 'favicon.svg'
+      - '.github/workflows/generate-favicon.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Generate PNG icons from the brand SVG
+        run: |
+          npm install --no-save sharp
+          node -e "const sharp=require('sharp');const fs=require('fs');const svg=fs.readFileSync('favicon.svg');Promise.all([sharp(svg).resize(96,96).png().toFile('favicon-96.png'),sharp(svg).resize(180,180).png().toFile('apple-touch-icon.png')]).then(()=>console.log('Favicon PNGs generated')).catch(e=>{console.error(e);process.exit(1)})"
+      - name: Commit generated icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add favicon-96.png apple-touch-icon.png
+          git diff --cached --quiet || git commit -m "Generate PNG favicons for Google Search"
+          git push
