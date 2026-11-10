@@ -28,6 +28,18 @@
 </head><body><header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a></nav></div></header><main class="wrap">
 <nav class="foot"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All calculators</a> / GST Calculator</nav>
 <header class="hero"><div class="eyebrow">Free online calculator · India</div><h1>GST Calculator India</h1><p>Calculate GST at 5%, 12%, 18% or 28%. Add GST to a base price or extract GST from an inclusive price.</p><p><a class="btn" href="#live-page-calculator">Open GST Calculator</a></p></header>
+<section class="panel" id="live-page-calculator" aria-labelledby="gst-live-title">
+<h2 id="gst-live-title">GST Calculator</h2>
+<p class="muted">Enter an amount, select the GST rate and choose whether GST should be added or extracted.</p>
+<form id="gst-live-form" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px">
+<label>Amount (₹)<input name="amount" type="number" min="0" step="0.01" value="10000" required style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"></label>
+<label>GST rate (%)<select name="rate" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>5</option><option>12</option><option selected>18</option><option>28</option></select></label>
+<label>Calculation<select name="mode" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>Add GST</option><option>Remove GST</option></select></label>
+<label>Supply type<select name="supply" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>Intra-state (CGST + SGST)</option><option>Inter-state (IGST)</option></select></label>
+<button class="btn" type="submit" style="border:0;cursor:pointer">Calculate GST</button>
+</form>
+<div id="gst-live-result" aria-live="polite" style="display:none;margin-top:18px"></div>
+</section>
 <section class="panel"><h2>What is a GST calculator?</h2><p>Use this GST calculator to estimate the tax component and final price. Choose whether the entered amount is before GST or already includes GST, then select the rate applicable to the goods or services. Verify classification and current rates before invoicing.</p><h2>How to use this GST calculator</h2><ol><li>Enter the amount</li><li>choose add/remove GST</li><li>select the rate</li><li>review taxable value, GST and total.</li></ol><a class="btn" href="#live-page-calculator">Calculate now</a></section>
 <section class="panel"><h2>Formula and calculation method</h2><div class="formula">GST on base amount = amount × rate ÷ 100. Total = amount + GST. For an inclusive price, taxable value = inclusive amount ÷ (1 + rate ÷ 100); GST = inclusive amount − taxable value.</div><h3>Worked example</h3><div class="example">A taxable value of ₹10,000 at 18% gives GST of ₹1,800 and a total of ₹11,800. If ₹11,800 already includes 18% GST, the embedded GST is ₹1,800.</div></section>
 <section class="panel"><h2>Important information</h2><p>GST is generally split into CGST and SGST for intra-state supplies, while IGST generally applies to inter-state supplies. This tool shows combined GST. Select a rate only after checking official classification guidance.</p></section>
@@ -45,6 +57,29 @@ document.addEventListener('click',function(event){
 });
 </script>
 
+<script>
+(function(){
+const form=document.getElementById('gst-live-form'),out=document.getElementById('gst-live-result');
+if(!form||!out)return;
+const money=n=>'₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+function calculate(e){
+e.preventDefault();const amount=Number(form.elements.amount.value),rate=Number(form.elements.rate.value),mode=form.elements.mode.value,supply=form.elements.supply.value;
+if(!Number.isFinite(amount)||amount<0){out.textContent='Please enter a valid non-negative amount.';out.style.display='block';return;}
+const round=n=>Math.round((n+Number.EPSILON)*100)/100;
+const base=mode==='Add GST'?round(amount):round(amount*100/(100+rate));
+const total=mode==='Add GST'?round(base+round(base*rate/100)):round(amount);
+const tax=round(total-base),intra=supply.startsWith('Intra'),cgst=intra?round(tax/2):0,sgst=intra?round(tax-cgst):0,igst=intra?0:tax;
+const rows=[['Taxable value',base],['Total GST',tax],...(intra?[['CGST',cgst],['SGST',sgst]]:[['IGST',igst]]),['Invoice total',total]];
+out.replaceChildren();const title=document.createElement('h3');title.textContent='Calculation result';out.appendChild(title);
+const table=document.createElement('table');table.className='fc-result-table';const body=document.createElement('tbody');
+rows.forEach(([label,value])=>{const tr=document.createElement('tr'),th=document.createElement('th'),td=document.createElement('td');th.textContent=label;td.textContent=money(value);tr.append(th,td);body.appendChild(tr)});table.appendChild(body);out.appendChild(table);
+const solution=document.createElement('section');solution.className='fc-calculation-solution';solution.style.cssText='margin-top:16px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px';
+const h=document.createElement('h3');h.textContent='How this result was calculated';const p=document.createElement('p');p.textContent=mode==='Add GST'?'GST = taxable value × rate ÷ 100. Invoice total = taxable value + GST.':'Taxable value = inclusive amount × 100 ÷ (100 + rate). GST = inclusive amount − taxable value.';const q=document.createElement('p');q.textContent=intra?'Intra-state supply: GST is split into CGST and SGST.':'Inter-state supply: GST is shown as IGST.';solution.append(h,p,q);out.appendChild(solution);
+const chart=document.createElement('section');chart.className='fc-result-chart';const ch=document.createElement('h3');ch.textContent='Result chart';chart.appendChild(ch);const max=Math.max(...rows.map(x=>x[1]),1);rows.forEach(([label,value])=>{const item=document.createElement('div');item.className='fc-chart-item';const line=document.createElement('div');line.className='fc-chart-label';const name=document.createElement('span'),amountText=document.createElement('strong');name.textContent=label;amountText.textContent=money(value);line.append(name,amountText);const track=document.createElement('div');track.className='fc-chart-track';const bar=document.createElement('span');bar.className='fc-chart-bar';bar.style.width=Math.max(2,value/max*100)+'%';track.appendChild(bar);item.append(line,track);chart.appendChild(item)});out.appendChild(chart);out.style.display='block';
+}
+form.addEventListener('submit',calculate);calculate(new Event('submit',{cancelable:true,preventDefault(){}}));
+})();
+</script>
 <script src="/assets/page-calculators.js" defer></script>
 <script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
 </body></html>
