@@ -47,4 +47,5 @@ main{padding:26px 0 44px}.searchbar{display:flex;align-items:center;gap:10px;bac
 <script>
 (()=>{const input=document.getElementById('toolSearch'),items=[...document.querySelectorAll('.tool-card')],count=document.getElementById('toolCount'),empty=document.getElementById('noResults');if(!input)return;input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();let n=0;items.forEach(card=>{const match=(card.textContent+' '+card.dataset.search).toLowerCase().includes(q);card.hidden=!match;if(match)n++});count.textContent=n+' matching calculator'+(n===1?'':'s');empty.style.display=n?'none':'block'});})();
 </script>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
 </body></html>
