@@ -1,21 +1,21 @@
-:root{--fc-shell-blue:#174f82;--fc-shell-blue-dark:#123d65;--fc-shell-ink:#243443;--fc-shell-muted:#64717d;--fc-shell-border:#d9e0e6}
+:root{--fc-shell-blue:#d8bd82;--fc-shell-blue-dark:#f0dfb5;--fc-shell-ink:#172638;--fc-shell-muted:#64717d;--fc-shell-border:#d9e0e6;--fc-navy:#101c2c;--fc-navy-deep:#0b1928;--fc-paper:#f5f6f8}
 *,*::before,*::after{box-sizing:border-box}
 html{width:100%;max-width:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-width:0;overflow-x:clip}
 img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-width:100%;overflow-x:auto}input,select,textarea,button{max-width:100%;font:inherit}input,select,textarea{min-width:0}table{max-width:100%}
-.fc-global-header{position:relative;top:0;z-index:1000;background:#fff;color:var(--fc-shell-ink);border-bottom:1px solid var(--fc-shell-border);box-shadow:0 1px 3px #172b3b0b}
+.fc-global-header{position:relative;top:0;z-index:1000;background:var(--fc-navy);color:#fff;border-bottom:1px solid #26384b;box-shadow:0 3px 14px #07132130}
 .fc-global-nav{width:min(1160px,94%);min-height:64px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:9px 0}
-.fc-global-brand{font-weight:900;letter-spacing:.045em;text-decoration:none;color:#263b4e;white-space:nowrap;font-size:1rem}
-.fc-global-brand b{color:var(--fc-shell-blue)}
+.fc-global-brand{font-weight:900;letter-spacing:.1em;text-decoration:none;color:#fff;white-space:nowrap;font-size:1rem}
+.fc-global-brand b{color:var(--fc-gold,#d8bd82)}
 .fc-global-links{display:flex;align-items:center;justify-content:flex-end;gap:4px clamp(10px,1.2vw,17px);flex-wrap:wrap;white-space:normal;min-width:0;flex:1}
-.fc-global-links a{color:var(--fc-shell-blue);text-decoration:none;font-size:.84rem;font-weight:650;padding:7px 0}
-.fc-global-links a:hover,.fc-global-links a[aria-current=page]{color:var(--fc-shell-blue-dark);text-decoration:underline}
+.fc-global-links a{color:#e3eaf0;text-decoration:none;font-size:.84rem;font-weight:650;padding:7px 0}
+.fc-global-links a:hover,.fc-global-links a[aria-current=page]{color:#d8bd82;text-decoration:underline}
 .fc-global-links .fc-admin-link{background:#edf3f8;color:var(--fc-shell-blue-dark);padding:7px 10px;border:1px solid #d5e1eb;border-radius:4px;font-weight:750}
-.fc-global-footer{background:#eef2f5;color:#596875;border-top:1px solid var(--fc-shell-border);padding:24px 0;margin-top:32px}
+.fc-global-footer{background:var(--fc-navy-deep);color:#bdc9d4;border-top:1px solid #26384b;padding:24px 0;margin-top:32px}
 .fc-global-footer-inner{width:min(1160px,94%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.fc-footer-intro{color:#34495b}.fc-global-footer-links{display:flex;gap:8px 16px;flex-wrap:wrap}
-.fc-global-footer a{color:var(--fc-shell-blue);text-decoration:none;font-size:.86rem}.fc-global-footer a:hover{text-decoration:underline}
-.fc-global-footer small{color:#71808d}
+.fc-footer-intro{color:#fff}.fc-global-footer-links{display:flex;gap:8px 16px;flex-wrap:wrap}
+.fc-global-footer a{color:#e6d6b2;text-decoration:none;font-size:.86rem}.fc-global-footer a:hover{text-decoration:underline}
+.fc-global-footer small{color:#9baaba}
 .ad-slot,.ad-break,.ad,.ad-placeholder,.adsense-placeholder,.advertisement,.ad-container,[data-ad-slot],[aria-label="Advertisement space"]{display:none!important;min-height:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important}
 @media(max-width:1100px){.fc-global-nav{width:94%;align-items:flex-start;gap:8px 14px;padding:11px 0}.fc-global-brand{width:100%;font-size:.98rem}.fc-global-links{width:100%;flex:1 1 100%;justify-content:flex-start;gap:4px 15px;border-top:1px solid #e6ebef;padding-top:8px}.fc-global-links a{font-size:.85rem;padding:6px 0}}
 @media(max-width:640px){.fc-global-nav{width:92%;gap:7px;padding:10px 0}.fc-global-brand{font-size:.9rem;letter-spacing:.035em}.fc-global-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:5px 12px;justify-content:flex-start;overflow:visible;max-height:none}.fc-global-links a{font-size:.82rem;padding:5px 0}.fc-global-links .fc-admin-link{padding:5px 8px}.fc-global-footer{padding:20px 0;margin-top:24px}.fc-global-footer-inner{width:92%;display:grid;grid-template-columns:1fr;gap:11px}.fc-global-footer-links{gap:7px 13px}.fc-global-footer-links a{font-size:.84rem}}
@@ -41,3 +41,22 @@ img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-wi
 .fc-ad-reserved[data-ad-status="filled"]{border:0;background:transparent;padding:0;min-height:0}
 .fc-ad-reserved[data-ad-status="filled"]::before{content:none}
 @media(max-width:600px){.fc-result-table{font-size:.88rem}.fc-result-table th,.fc-result-table td{padding:9px 8px}.fc-ad-reserved{min-height:84px;margin:14px 0}}
+
+/* Unified Friendly Calculator brand system across every page */
+html,body{background:var(--fc-paper);color:var(--fc-shell-ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+body{line-height:1.65}
+main{color:var(--fc-shell-ink)}
+main h1{color:#172638;letter-spacing:-.025em}
+main h2,main h3{color:#24384b}
+main p,main li{color:inherit}
+main :is(.panel,.content,.note,.card,.quick,.category,.search-panel,.searchbar,.section,.faq details,.example,.formula){border-color:#dfe5eb}
+main :is(.panel,.content,.note,.card,.quick,.category,.search-panel,.searchbar,.section,.faq details,.example){background:#fff}
+main :is(.btn,.cta,button[type="submit"],button.calc){background:var(--fc-navy);color:#fff;border-color:var(--fc-navy)}
+main :is(.btn,.cta,button[type="submit"],button.calc):hover{background:#20364e}
+main :is(.eyebrow,.crumb a,.card span){color:#8b6d32}
+main :is(.formula,.result,.search-hint){background:#edf2f6}
+main input,main select,main textarea{background:#fff;color:#172638;border:1px solid #cbd5df}
+main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafbfd;border-color:#cbd4dc;color:#84919d}
+.fc-result-chart{background:#fff}
+.fc-chart-bar{background:linear-gradient(90deg,#101c2c,#d8bd82)}
+@media(prefers-reduced-motion:no-preference){.fc-global-links a,.fc-global-footer a{transition:color .15s ease}}
