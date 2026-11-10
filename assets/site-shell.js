@@ -18,7 +18,7 @@ if(p==='/'||p.startsWith('/calculators/')){
   const main=document.querySelector('main');
   if(main){
     const makeAd=()=>{const slot=document.createElement('aside');slot.className='fc-ad-reserved';slot.setAttribute('aria-label','Advertisement placement reserved');slot.dataset.adStatus='reserved';return slot};
-    const anchor=main.querySelector('.hero')||main.querySelector('.home-intro')||main.querySelector('h1');
+    const anchor=main.querySelector('.hero')||main.querySelector('.search-panel')||main.querySelector('h1');
     if(anchor&&!main.querySelector('.fc-ad-reserved'))anchor.insertAdjacentElement('afterend',makeAd());
     if(main.querySelectorAll('.fc-ad-reserved').length<2)main.appendChild(makeAd());
   }
