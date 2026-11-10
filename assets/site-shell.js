@@ -16,16 +16,7 @@ const links=[
 const p=location.pathname;
 if(!document.querySelector('link[rel="icon"][type="image/png"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='192x192';l.href='/favicon-96.png';document.head.prepend(l)}if(!document.querySelector('link[rel="icon"][type="image/svg+xml"]')){const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';l.href='/favicon.svg';document.head.appendChild(l)}if(!document.querySelector('link[rel="apple-touch-icon"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href='/apple-touch-icon.png';document.head.appendChild(l)}
 
-if(p==='/'||p.startsWith('/calculators/')){
-  const main=document.querySelector('main');
-  if(main){
-    const makeAd=()=>{const slot=document.createElement('aside');slot.className='fc-ad-reserved';slot.setAttribute('aria-label','Advertisement placement reserved');slot.dataset.adStatus='reserved';return slot};
-    const anchor=main.querySelector('.hero')||main.querySelector('.search-panel')||main.querySelector('h1');
-    if(anchor&&!main.querySelector('.fc-ad-reserved'))anchor.insertAdjacentElement('afterend',makeAd());
-    if(main.querySelectorAll('.fc-ad-reserved').length<2)main.appendChild(makeAd());
-  }
-}
-if(p.startsWith('/calculators/')){
+// Ad placements stay absent until approved ad units are configured and serving.\nif(p.startsWith('/calculators/')){
   if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
   }
