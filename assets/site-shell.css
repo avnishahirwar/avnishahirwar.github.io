@@ -10,7 +10,7 @@ img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-wi
 .fc-global-links{display:flex;align-items:center;justify-content:flex-end;gap:4px clamp(10px,1.2vw,17px);flex-wrap:wrap;white-space:normal;min-width:0;flex:1}
 .fc-global-links a{color:#e3eaf0;text-decoration:none;font-size:.84rem;font-weight:650;padding:7px 0}
 .fc-global-links a:hover,.fc-global-links a[aria-current=page]{color:#d8bd82;text-decoration:underline}
-.fc-global-links .fc-admin-link{background:#edf3f8;color:var(--fc-shell-blue-dark);padding:7px 10px;border:1px solid #d5e1eb;border-radius:4px;font-weight:750}
+.fc-global-links .fc-admin-link{background:#d8bd82;color:#101c2c;padding:7px 10px;border:1px solid #d8bd82;border-radius:4px;font-weight:800}
 .fc-global-footer{background:var(--fc-navy-deep);color:#bdc9d4;border-top:1px solid #26384b;padding:24px 0;margin-top:32px}
 .fc-global-footer-inner{width:min(1160px,94%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .fc-footer-intro{color:#fff}.fc-global-footer-links{display:flex;gap:8px 16px;flex-wrap:wrap}
