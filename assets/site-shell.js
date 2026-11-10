@@ -14,14 +14,16 @@ const links=[
 ['Contact',r+'contact.html']
 ];
 const p=location.pathname;
-if(p.startsWith('/calculators/')){
+if(p==='/'||p.startsWith('/calculators/')){
   const main=document.querySelector('main');
   if(main){
     const makeAd=()=>{const slot=document.createElement('aside');slot.className='fc-ad-reserved';slot.setAttribute('aria-label','Advertisement placement reserved');slot.dataset.adStatus='reserved';return slot};
-    const anchor=main.querySelector('.hero')||main.querySelector('h1');
+    const anchor=main.querySelector('.hero')||main.querySelector('.home-intro')||main.querySelector('h1');
     if(anchor&&!main.querySelector('.fc-ad-reserved'))anchor.insertAdjacentElement('afterend',makeAd());
-    if(!main.querySelectorAll('.fc-ad-reserved').length||main.querySelectorAll('.fc-ad-reserved').length<2)main.appendChild(makeAd());
+    if(main.querySelectorAll('.fc-ad-reserved').length<2)main.appendChild(makeAd());
   }
+}
+if(p.startsWith('/calculators/')){
   if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
   }
