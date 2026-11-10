@@ -19,6 +19,7 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;
 .key-reveal{background:#fff8e8;border:1px solid #ead8a9;border-radius:10px;padding:14px;overflow-wrap:anywhere}.key-reveal code{font-weight:800}.small{font-size:.82rem}.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap}
 @media(max-width:750px){.grid{grid-template-columns:1fr}main{padding:22px 0}.panel{padding:16px}table{min-width:650px}}
 </style>
+<link rel="stylesheet" href="/assets/site-shell.css">
 </head>
 <body>
 <header><div class="wrap"><div class="brand">FRIENDLY <b>CALCULATOR</b> · ADMIN</div><a href="./" style="color:#dce5ed;text-decoration:none">Back to website</a></div></header>
@@ -84,4 +85,5 @@ $('keyForm').addEventListener('submit',async e=>{e.preventDefault();$('createKey
 $('copyKey').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('rawKey').textContent);$('copyKey').textContent='Copied'}catch(_){$('copyKey').textContent='Select and copy the key'}});
 (async()=>{const token=sessionStorage.getItem('avnish_admin_access');if(token){try{await enter(token)}catch(err){sessionStorage.removeItem('avnish_admin_access');status('loginStatus',err.message,true)}}})();
 </script>
+<script src="/assets/site-shell.js" defer></script>
 </body></html>
