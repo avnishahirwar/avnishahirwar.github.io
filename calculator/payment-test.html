@@ -13,6 +13,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,sans-serif}.wrap{width:min(720px,92%);margin:auto}header{background:var(--navy);color:#fff;padding:20px 0}header a{color:#fff;text-decoration:none}main{padding:42px 0}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin:18px 0}.eyebrow{color:#92733d;font-size:.75rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:8px 0 14px}.muted{color:var(--muted)}.warning{background:#fff8e8;border:1px solid #ead8a9;border-radius:12px;padding:14px;color:#5b4a28}.status{margin-top:16px;padding:12px;border-radius:10px;background:#eef2f6;min-height:48px}.btn{display:inline-flex;border:0;border-radius:9px;padding:13px 18px;background:var(--navy);color:#fff;font:700 1rem system-ui;cursor:pointer}.btn:disabled{opacity:.5;cursor:not-allowed}.footer{color:var(--muted);font-size:.85rem;padding:16px 0 40px}code{overflow-wrap:anywhere}
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link rel="stylesheet" href="/assets/site-shell.css">
 </head>
 <body>
 <header><div class="wrap"><a href="/">FRIENDLY CALCULATOR</a></div></header>
@@ -86,5 +87,6 @@ button.addEventListener("click",async()=>{
   finally{button.disabled=false;}
 });
 </script>
+<script src="/assets/site-shell.js" defer></script>
 </body>
 </html>
