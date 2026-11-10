@@ -32,7 +32,7 @@
   const money = n => "₹"+Number(n).toLocaleString("en-IN",{maximumFractionDigits:2});
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
-    const key=h1.textContent.trim().toLowerCase(), def=definitions[key]; if(!def||document.getElementById("live-page-calculator"))return;
+    const key=h1.textContent.trim().toLowerCase(), lookupKey=key==="gst calculator india"?"gst calculator":key, def=definitions[lookupKey]; if(!def||document.getElementById("live-page-calculator"))return;
     const panel=document.createElement("section"); panel.id="live-page-calculator";panel.className="panel";
     const heading=document.createElement("h2");heading.textContent="Use the "+def.title;panel.appendChild(heading);
     const form=document.createElement("form");form.noValidate=true;form.style.display="grid";form.style.gridTemplateColumns="repeat(auto-fit,minmax(210px,1fr))";form.style.gap="12px";
