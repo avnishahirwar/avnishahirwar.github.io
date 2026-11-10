@@ -1,12 +1,23 @@
 (()=>{'use strict';
 const r='/calculator/';
-const links=[['All Calculators',r+'site-directory.html'],['Finance',r+'finance-calculators.html'],['Tax',r+'tax-calculators.html'],['Business Tools',r+'business-calculators.html'],['Everyday',r+'everyday-calculators.html'],['For Business',r+'business.html'],['API',r+'api.html'],['Plans',r+'pricing.html'],['About',r+'about.html'],['Contact',r+'contact.html']];
+const links=[
+['All Calculators',r+'site-directory.html'],
+['Finance',r+'finance-calculators.html'],
+['Tax',r+'tax-calculators.html'],
+['Business Tools',r+'business-calculators.html'],
+['Everyday',r+'everyday-calculators.html'],
+['For Business',r+'business.html'],
+['API',r+'api.html'],
+['Plans',r+'pricing.html'],
+['About',r+'about.html'],
+['Contact',r+'contact.html']
+];
 const p=location.pathname;
 const h=document.createElement('header');h.className='fc-global-header';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home">FRIENDLY <b>CALCULATOR</b></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+(p===r+'admin.html'?'':'<a class="fc-admin-link" href="'+r+'admin.html" rel="nofollow">Admin Dashboard</a>')+'</nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical online calculators with clear estimates.</small></div><nav class="fc-global-footer-links" aria-label="Footer navigation"><a href="'+r+'site-directory.html">All Calculators</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'about.html">About</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a></nav><small>© 2026 Friendly Calculator</small></div>';
+f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical online calculators with clear estimates.</small></div><nav class="fc-global-footer-links" aria-label="Website pages"><a href="'+r+'site-directory.html">All Pages Directory</a><a href="'+r+'finance-calculators.html">Finance</a><a href="'+r+'tax-calculators.html">Tax</a><a href="'+r+'business-calculators.html">Business Tools</a><a href="'+r+'everyday-calculators.html">Everyday</a><a href="'+r+'business.html">For Business</a><a href="'+r+'api.html">API</a><a href="'+r+'pricing.html">Plans</a><a href="'+r+'premium-waitlist.html">Premium Waitlist</a><a href="'+r+'about.html">About</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a></nav><small>© 2026 Friendly Calculator</small></div>';
 const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length)fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());else document.body.append(f);
 document.querySelectorAll('a[href="/#tools"],a[href="/#calculators"],a[href="/#contact"],a[href="#tools"],a[href="#calculators"]').forEach(a=>a.href=/contact/.test(a.getAttribute('href'))?r+'contact.html':r+'site-directory.html');
 document.querySelectorAll('.ad-slot,.ad-break,.ad,.ad-placeholder,.adsense-placeholder,.advertisement,.ad-container,[data-ad-slot],[aria-label="Advertisement space"]').forEach(e=>e.remove());
