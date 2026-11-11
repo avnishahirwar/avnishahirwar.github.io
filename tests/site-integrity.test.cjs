@@ -174,11 +174,11 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
   assert.match(dashboard, /app_metadata\?\.role!==['"]admin['"]/);
 });
 
-test('About page catalogue count matches the twenty-four published calculator pages', () => {
+test('About page catalogue count matches the twenty-five published calculator pages', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (24 tools)'));
+  assert.ok(about.includes('Available calculators (25 tools)'));
   const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('-calculator.html'));
-  assert.equal(calculatorPages.length, 24);
+  assert.equal(calculatorPages.length, 25);
 });
 
 test('contact page has one consistent indexable robots directive', () => {
