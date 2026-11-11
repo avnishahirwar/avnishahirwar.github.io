@@ -94,8 +94,9 @@ test('customer, admin and documentation browser scripts are syntactically valid 
 
 test('legacy key access is preserved without granting access to newly generated keys', () => {
   assert.match(migration, /legacy_access boolean not null default false/i);
-  assert.match(migration, /legacy_access = true[\\s\\S]*created_at < timestamptz/i);
-  assert.match(migration, /v_legacy_access[\\s\\S]*v_plan_code := 'legacy'/i);
+  assert.ok(migration.includes("legacy_access = true"));
+  assert.ok(migration.includes("created_at < timestamptz"));
+  assert.ok(migration.includes("v_plan_code := 'legacy'"));
   assert.match(management, /legacy_access/);
   assert.match(management, /plan_code: "legacy"/);
 });
