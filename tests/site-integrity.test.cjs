@@ -23,24 +23,20 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.equal(new Set(urls).size, urls.length, 'Sitemap URLs must be unique');
 });
 
-test('monetized public pages load the AdSense publisher script exactly once', () => {
-  // Legal disclosures and the premium interest form intentionally do not load ads.
-  const noAdPages = new Set([
-    'https://friendlycalculator.in/calculator/disclaimer.html',
-    'https://friendlycalculator.in/calculator/premium-waitlist.html'
-  ]);
+test('only pages with active ad slots load the AdSense publisher script exactly once', () => {
+  // Ad spaces remain hidden until AdSense is approved and configured. Pages
+  // without an ad slot must not load the publisher script.
   const failures = [];
   for (const url of urls) {
-    if (noAdPages.has(url)) continue;
     const file = localFile(url);
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
-    const count = (html.match(/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/g) || []).length;
-    if (count !== 1) failures.push(url + ' (found ' + count + ')');
+    const hasAdSlot = /class=["'][^"']*(?:ad-slot|ad-placeholder|adsense-placeholder)[^"']*["']/i.test(html);
+    const count = (html.match(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) || []).length;
+    if (count !== (hasAdSlot ? 1 : 0)) failures.push(url + ' (ad slot: ' + hasAdSlot + ', loader count: ' + count + ')');
   }
-  assert.deepEqual(failures, [], 'AdSense loader must appear exactly once on monetized pages: ' + failures.join(', '));
+  assert.deepEqual(failures, [], 'AdSense loader must match actual ad-slot pages: ' + failures.join(', '));
 });
-
 test('every public sitemap page loads the shared site header and footer shell', () => {
   const failures = [];
   for (const url of urls) {
