@@ -41,66 +41,169 @@ main{padding:40px 0 60px}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;mar
 <body>
 <header class="site-header"><div class="site-nav-wrap site-nav"><a class="site-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="site-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/site-directory.html">Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></header>
 <main class="wrap">
-<div class="eyebrow">Developer documentation</div>
-<h1>Calculator API</h1>
-<p>Integrate selected Friendly Calculator calculators into an application using a server-side API key. Access is currently issued manually for approved enquiries.</p>
-<p><span class="pill">API gateway active</span> <span class="pill">HTTPS</span> <span class="pill">JSON</span></p>
-<div class="warning"><strong>Keep your API key private.</strong> Send requests from your own backend, never from browser JavaScript, public repositories or mobile app source code. Do not share API keys in support messages.</div>
+<div class="eyebrow">Developer documentation · v1</div>
+<h1>Friendly Calculator API</h1>
+<p>Use one secure JSON endpoint to run the same calculator models available on Friendly Calculator. Requests are processed on the server, validated and recorded against the API key's plan quota.</p>
+<p><span class="pill">20 calculators</span> <span class="pill">HTTPS</span> <span class="pill">JSON</span> <span class="pill">POST</span></p>
+<div class="warning"><strong>Keep your API key secret.</strong> Call this API from your own trusted server. Do not place an API key in public browser JavaScript, a mobile application package, a public repository or a shared screenshot. The dashboard's Try API tool is intended for private testing while signed in.</div>
+<p><a class="btn" href="/calculator/dashboard.html">Open Customer API Dashboard</a></p>
 
-<h2>Endpoint</h2>
-<div class="panel"><p><strong>POST</strong></p><pre><code>https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api</code></pre><p>Required header:</p><pre><code>x-api-key: avsk_live_YOUR_PRIVATE_KEY
-Content-Type: application/json</code></pre></div>
+<h2>1. Base URL and authentication</h2>
+<div class="panel">
+<p><strong>POST</strong> <code>https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api</code></p>
+<p>Required headers:</p>
+<pre><code>Content-Type: application/json
+x-api-key: avsk_live_YOUR_PRIVATE_KEY</code></pre>
+<p>All 20 calculators use this single endpoint. Select the calculator with the JSON <code>calculator</code> property. The key must be active, have the <code>calculators:read</code> scope and have API access enabled with remaining quota.</p>
+</div>
 
-<h2>Available calculators</h2>
-<div class="panel table-wrap"><table><thead><tr><th>Calculator</th><th>Input fields</th></tr></thead><tbody>
-<tr><td><code>gst</code></td><td><code>amount</code>, <code>rate</code>, optional <code>mode</code> (<code>exclusive</code> or <code>inclusive</code>)</td></tr>
-<tr><td><code>emi</code></td><td><code>principal</code>, <code>annualRate</code>, <code>months</code></td></tr>
-<tr><td><code>fd</code></td><td><code>principal</code>, <code>annualRate</code>, <code>years</code>, optional <code>frequency</code> (1, 2, 4 or 12; default 4)</td></tr>
-<tr><td><code>discount</code></td><td><code>price</code>, <code>discountPercent</code></td></tr>
-<tr><td><code>profit-loss</code></td><td><code>costPrice</code>, <code>sellingPrice</code></td></tr>
+<h2>2. Available calculators and inputs</h2>
+<div class="panel table-wrap"><table><thead><tr><th>Calculator</th><th>calculator value</th><th>Required inputs</th><th>Units / notes</th></tr></thead><tbody>
+<tr><td>GST</td><td><code>gst</code></td><td><code>amount</code>, <code>rate</code>, <code>mode</code>, <code>supply</code></td><td>INR; rate 0–100%; mode <code>add</code>/<code>remove</code>; supply <code>intra-state</code>/<code>inter-state</code></td></tr>
+<tr><td>Loan EMI</td><td><code>emi</code></td><td><code>principal</code>, <code>annualRate</code>, <code>years</code></td><td>Principal in INR; annual percentage; alternatively pass integer <code>months</code> (1–600)</td></tr>
+<tr><td>Fixed Deposit</td><td><code>fd</code></td><td><code>principal</code>, <code>annualRate</code>, <code>years</code>, <code>frequency</code></td><td>INR; annual percentage; frequency 1, 2, 4 or 12</td></tr>
+<tr><td>Discount</td><td><code>discount</code></td><td><code>price</code>, <code>discountPercent</code></td><td>INR; percentage 0–100</td></tr>
+<tr><td>Profit &amp; Loss</td><td><code>profit-loss</code></td><td><code>costPrice</code>, <code>sellingPrice</code></td><td>INR; cost price must be above zero</td></tr>
+<tr><td>Income Tax</td><td><code>income-tax</code></td><td><code>income</code>, <code>regime</code></td><td>Annual taxable income in INR; regime <code>new</code> or <code>old</code>; configured Tax Year 2026–27 estimate</td></tr>
+<tr><td>Salary TDS</td><td><code>salary-tds</code></td><td><code>income</code>, <code>paid</code>, <code>months</code></td><td>Annual taxable income and tax paid in INR; remaining payroll months 1–12</td></tr>
+<tr><td>BMI</td><td><code>bmi</code></td><td><code>height</code>, <code>weight</code></td><td>Height in cm; weight in kg; number-only result, not a diagnosis or age-specific health assessment</td></tr>
+<tr><td>EPF / PF</td><td><code>epf</code></td><td><code>monthly</code>, <code>rate</code>, <code>years</code></td><td>Monthly employee contribution in INR; annual percentage; years</td></tr>
+<tr><td>Savings Interest</td><td><code>savings-interest</code></td><td><code>principal</code>, <code>rate</code>, <code>days</code></td><td>INR; annual percentage; days 1–3650</td></tr>
+<tr><td>Salary</td><td><code>salary</code></td><td><code>monthly</code>, <code>days</code>, <code>hours</code></td><td>Monthly salary in INR; working days per month; working hours per day</td></tr>
+<tr><td>Inflation</td><td><code>inflation</code></td><td><code>amount</code>, <code>rate</code>, <code>years</code></td><td>INR; assumed annual inflation percentage; years</td></tr>
+<tr><td>Fuel Cost</td><td><code>fuel-cost</code></td><td><code>distance</code>, <code>mileage</code>, <code>price</code></td><td>Distance in km; mileage in km/litre; fuel price in INR/litre</td></tr>
+<tr><td>Age</td><td><code>age</code></td><td><code>dob</code>, <code>asof</code></td><td>Dates in <code>YYYY-MM-DD</code> format</td></tr>
+<tr><td>Electricity Bill</td><td><code>electricity</code></td><td><code>units</code>, <code>rate</code>, <code>fixed</code>, <code>other</code></td><td>Units in kWh; rate and charges in INR; fixed and other may be zero</td></tr>
+<tr><td>SIP</td><td><code>sip</code></td><td><code>monthly</code>, <code>rate</code>, <code>years</code></td><td>Monthly contribution in INR; assumed annual return percentage; whole years 1–50; contributions at month start</td></tr>
+<tr><td>PPF</td><td><code>ppf</code></td><td><code>yearlyDeposit</code>, <code>rate</code>, <code>years</code></td><td>Annual deposit INR 500–150,000; annual percentage; whole years 15–50; deposit at year start</td></tr>
+<tr><td>CTC to In-Hand Salary</td><td><code>ctc-salary</code></td><td><code>ctc</code>, <code>basicPercent</code>, <code>pfPercent</code>, <code>includeGratuity</code>, <code>professionalTaxMonthly</code>, <code>tdsMonthly</code></td><td>Annual CTC in INR; percentages; gratuity boolean; monthly deductions in INR</td></tr>
+<tr><td>HRA Exemption</td><td><code>hra</code></td><td><code>actualHraReceived</code>, <code>basicSalary</code>, <code>rentPaid</code>, <code>metro</code></td><td>INR for same period; metro is true/false; basic salary includes eligible DA where applicable</td></tr>
+<tr><td>Basic Calculator</td><td><code>basic</code></td><td><code>a</code>, <code>b</code>, <code>operation</code></td><td>Numbers; operation add, subtract, multiply, divide; percent uses <code>a</code> only</td></tr>
 </tbody></table></div>
 
-<h2>Example request — EMI</h2>
-<pre><code>curl -X POST \
-  'https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api' \
-  -H 'Content-Type: application/json' \
-  -H 'x-api-key: YOUR_PRIVATE_API_KEY' \
-  -d '{
-    "calculator": "emi",
-    "inputs": {
-      "principal": 500000,
-      "annualRate": 9.5,
-      "months": 60
-    }
-  }'</code></pre>
-
-<h2>Example response</h2>
-<pre><code>{
-  "ok": true,
-  "calculator": "emi",
-  "result": {
-    "monthlyEmi": 10501.0,
-    "totalPayment": 630060.0,
-    "totalInterest": 130060.0
+<h2>3. Request and response example</h2>
+<p>GST example request:</p>
+<div class="panel"><pre><code>{
+  "calculator": "gst",
+  "inputs": {
+    "amount": 10000,
+    "rate": 18,
+    "mode": "add",
+    "supply": "intra-state"
   }
 }</code></pre>
-<p class="small">The numbers above are illustrative. Actual responses depend on the submitted values.</p>
+<p>Example response:</p>
+<pre><code>{
+  "ok": true,
+  "calculator": "gst",
+  "result": {
+    "taxableAmount": 10000,
+    "gstAmount": 1800,
+    "totalAmount": 11800,
+    "rate": 18,
+    "mode": "add",
+    "supply": "intra-state",
+    "cgst": 900,
+    "sgst": 900
+  },
+  "usage": {
+    "plan": "business_monthly",
+    "quota": 1000,
+    "used": 1,
+    "remaining": 999,
+    "rate_limit_per_minute": 60
+  }
+}</code></pre>
+<p class="small">The example values illustrate the response structure. The actual <code>usage</code> fields are returned from the account's active plan and quota.</p></div>
 
-<h2>Rate limits and errors</h2>
-<div class="panel table-wrap"><table><thead><tr><th>HTTP status</th><th>Meaning</th></tr></thead><tbody>
-<tr><td>200</td><td>Request processed successfully.</td></tr>
-<tr><td>400</td><td>Invalid input or unsupported calculator.</td></tr>
-<tr><td>401</td><td>Missing, invalid, expired or revoked API key.</td></tr>
-<tr><td>429</td><td>Per-key requests-per-minute limit reached.</td></tr>
-<tr><td>500 / 503</td><td>Temporary service or backend configuration issue.</td></tr>
+<h2>4. Copy-ready integrations</h2>
+<div class="panel">
+<h3>cURL</h3>
+<pre><code id="curlExample">curl -X POST 'https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api' \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: YOUR_PRIVATE_API_KEY' \
+  -d '{"calculator":"emi","inputs":{"principal":500000,"annualRate":9,"years":5}}'</code></pre>
+<button class="copy-example" data-copy="curlExample" type="button">Copy cURL</button>
+<h3>JavaScript (Node.js server-side)</h3>
+<pre><code id="jsExample">const response = await fetch(
+  "https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.FRIENDLY_CALCULATOR_API_KEY
+    },
+    body: JSON.stringify({
+      calculator: "emi",
+      inputs: { principal: 500000, annualRate: 9, years: 5 }
+    })
+  }
+);
+const result = await response.json();
+if (!response.ok) throw new Error(result.error || "API request failed");
+console.log(result.result);</code></pre>
+<button class="copy-example" data-copy="jsExample" type="button">Copy JavaScript</button>
+<h3>Python</h3>
+<pre><code id="pythonExample">import os
+import requests
+
+response = requests.post(
+    "https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api",
+    headers={
+        "Content-Type": "application/json",
+        "x-api-key": os.environ["FRIENDLY_CALCULATOR_API_KEY"],
+    },
+    json={
+        "calculator": "emi",
+        "inputs": {"principal": 500000, "annualRate": 9, "years": 5},
+    },
+    timeout=20,
+)
+response.raise_for_status()
+print(response.json()["result"])</code></pre>
+<button class="copy-example" data-copy="pythonExample" type="button">Copy Python</button>
+<p class="small">Store <code>FRIENDLY_CALCULATOR_API_KEY</code> in your server's secret environment configuration. Do not hard-code it in client-side code.</p>
+</div>
+
+<h2>5. Usage limits</h2>
+<div class="panel">
+<ul>
+<li>Every calculator request uses the same API key and is subject to its per-minute rate limit.</li>
+<li>Monthly quota and rate limits are enforced by the server, not by dashboard controls.</li>
+<li>Valid-key requests that reach calculation processing count toward monthly quota, including invalid-input responses.</li>
+<li>Requests rejected for invalid keys, disabled API access, exhausted quota or rate limits do not consume monthly quota.</li>
+<li>Try API sends a real production request and counts toward quota and rate limits when it reaches processing.</li>
+<li>The Free plan currently has no API access by default. API access requires an enabled API plan or an administrator-granted quota. The Business plans in the existing plan catalogue include API access; subscription checkout is not currently active.</li>
+</ul>
+</div>
+
+<h2>6. HTTP status and error codes</h2>
+<div class="panel table-wrap"><table><thead><tr><th>HTTP</th><th>code</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>200</td><td>—</td><td>Calculation completed. JSON contains <code>ok</code>, <code>calculator</code>, <code>result</code> and usage details.</td></tr>
+<tr><td>400</td><td><code>INVALID_REQUEST_BODY</code>, <code>INVALID_INPUT</code></td><td>Malformed JSON, unsupported calculator or invalid/missing input.</td></tr>
+<tr><td>401</td><td><code>INVALID_API_KEY</code></td><td>Missing, invalid, expired or revoked key.</td></tr>
+<tr><td>403</td><td><code>API_ACCESS_DISABLED</code>, <code>INSUFFICIENT_SCOPE</code></td><td>API plan access is not enabled or key lacks the required scope.</td></tr>
+<tr><td>405</td><td><code>METHOD_NOT_ALLOWED</code></td><td>Only POST is supported for calculator requests.</td></tr>
+<tr><td>413 / 415</td><td><code>REQUEST_TOO_LARGE</code> / <code>UNSUPPORTED_MEDIA_TYPE</code></td><td>Request exceeds the size limit or is not JSON.</td></tr>
+<tr><td>429</td><td><code>QUOTA_OR_RATE_LIMIT_EXCEEDED</code></td><td>Monthly quota or per-minute limit reached. Check <code>Retry-After</code> when supplied.</td></tr>
+<tr><td>500 / 503</td><td><code>INTERNAL_ERROR</code></td><td>Temporary backend or service configuration issue.</td></tr>
 </tbody></table></div>
-<p>Each API key must include the <code>calculators:read</code> scope and has an assigned per-minute request limit. Requests without this scope are rejected with HTTP 403. Keys can be revoked. Do not assume unlimited availability; the service is subject to free-tier platform quotas and operational limits.</p>
 
-<h2>Request access</h2>
-<p>Tell us about your application and expected usage. Never include a password, OTP, existing API key or other secret in the enquiry.</p>
-<p><a class="btn" href="/calculator/dashboard.html">Open customer API dashboard</a></p>
-<a class="btn" href="/calculator/contact.html#business-enquiry">Request API access</a>
+<h2>7. Manage keys and test requests</h2>
+<p>Sign up or sign in to the Customer API Dashboard to create a key, copy it once, revoke unused keys, inspect usage and send a real test request. Keys are stored as SHA-256 hashes; the raw key is never retrievable after creation.</p>
+<p><a class="btn" href="/calculator/dashboard.html">Open Customer API Dashboard</a></p>
+<p>For business API access or a quota change, use the website's existing Business Enquiries contact route.</p>
 </main>
+<script>
+document.querySelectorAll('.copy-example').forEach(button=>{
+  button.addEventListener('click',async()=>{
+    const code=document.getElementById(button.dataset.copy);
+    if(!code)return;
+    try{await navigator.clipboard.writeText(code.textContent);button.textContent='Copied';}
+    catch(_){button.textContent='Select code to copy';}
+  });
+});
+</script>
 <footer class="site-footer"><div class="site-footer-inner"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="site-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></footer>
 <script src="/assets/site-chrome.js?v=1" defer></script>
 <script src="/assets/site-shell.js" defer></script></body></html>
