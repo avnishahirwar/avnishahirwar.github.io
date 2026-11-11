@@ -16,7 +16,8 @@ const links=[
 const p=location.pathname;
 if(!document.querySelector('link[rel="icon"][type="image/png"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='192x192';l.href='/favicon-96.png';document.head.prepend(l)}if(!document.querySelector('link[rel="icon"][type="image/svg+xml"]')){const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';l.href='/favicon.svg';document.head.appendChild(l)}if(!document.querySelector('link[rel="apple-touch-icon"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href='/apple-touch-icon.png';document.head.appendChild(l)}
 
-// Ad placements stay absent until approved ad units are configured and serving.\nif(p.startsWith('/calculators/')){
+// Ad placements stay absent until approved ad units are configured and serving.
+if(p.startsWith('/calculators/')){
   if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
   }
