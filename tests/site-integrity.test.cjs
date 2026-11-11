@@ -174,11 +174,14 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
   assert.match(dashboard, /app_metadata\?\.role!==['"]admin['"]/);
 });
 
-test('About page catalogue count matches the thirty published calculator pages', () => {
+test('About page catalogue matches every published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (30 tools)'));
-  const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html'));
-  assert.equal(calculatorPages.length, 30);
+  const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html')).sort();
+  const countMatch = about.match(/Available calculators \(\d+ tools\)/);
+  assert.ok(countMatch, 'About page must publish the calculator catalogue count');
+  assert.ok(about.includes('Available calculators (' + calculatorPages.length + ' tools)'));
+  const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
+  assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
 });
 
 test('contact page has one consistent indexable robots directive', () => {
