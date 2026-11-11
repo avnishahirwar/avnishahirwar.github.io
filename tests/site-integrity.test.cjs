@@ -177,7 +177,7 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
 test('About page catalogue count matches the thirty published calculator pages', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   assert.ok(about.includes('Available calculators (30 tools)'));
-  const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('-calculator.html'));
+  const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html'));
   assert.equal(calculatorPages.length, 30);
 });
 
