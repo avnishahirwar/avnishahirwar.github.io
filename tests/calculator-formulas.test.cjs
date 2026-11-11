@@ -140,3 +140,129 @@ test('production formulas handle zero-interest EMI and inclusive GST correctly',
   closeTo(gst.find(row => row[0] === 'Taxable value')[1], 10000, 0.001);
   closeTo(gst.find(row => row[0] === 'IGST')[1], 1800, 0.001);
 });
+
+
+// Dedicated calculator pages: execute their actual inline browser scripts with
+// a small DOM shim and verify the numeric values rendered into result tables.
+function makeTestDom(values = {}) {
+  class Node {
+    constructor(tag = 'div') {
+      this.tagName = tag.toUpperCase(); this.children = []; this.style = {};
+      this.dataset = {}; this.listeners = {}; this._text = ''; this.value = values[this.id] ?? '';
+    }
+    set textContent(value) { this._text = String(value); this.children = []; }
+    get textContent() { return this._text + this.children.map(child => child.textContent).join(''); }
+    append(...nodes) { this.children.push(...nodes); }
+    appendChild(node) { this.children.push(node); return node; }
+    replaceChildren(...nodes) { this.children = nodes; this._text = ''; }
+    addEventListener(name, fn) { this.listeners[name] = fn; }
+    insertAdjacentElement(_where, node) { this.children.push(node); }
+    closest(selector) { return selector === 'button' && this.tagName === 'BUTTON' ? this : null; }
+  }
+  const elements = new Map();
+  const get = id => {
+    if (!elements.has(id)) { const el = new Node(); el.id = id; el.value = values[id] ?? ''; elements.set(id, el); }
+    return elements.get(id);
+  };
+  const document = {
+    getElementById: get,
+    createElement: tag => new Node(tag),
+    addEventListener(name, fn) { this.listeners ??= {}; this.listeners[name] = fn; },
+    querySelector() { return get('calculator-root'); }
+  };
+  return { document, get, elements };
+}
+function inlineScripts(html) {
+  return [...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)]
+    .map(match => match[1]).filter(script => script.trim() && !script.trim().startsWith('{'));
+}
+function resultRows(element) {
+  const rows = [];
+  const visit = node => {
+    if (node.tagName === 'TR') {
+      const cells = node.children;
+      if (cells.length >= 2) rows.push([cells[0].textContent, cells[1].textContent]);
+    }
+    node.children.forEach(visit);
+  };
+  visit(element);
+  return rows;
+}
+function numericCurrency(text) {
+  return Number(String(text).replace(/[^0-9.-]/g, ''));
+}
+
+test('dedicated SIP page calculates the expected monthly annuity-due projection', () => {
+  const html = fs.readFileSync(new URL('../calculators/sip-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes("sipCalculate"));
+  assert.ok(script, 'SIP calculation script exists');
+  const dom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl });
+  const rows = resultRows(dom.get('sipResult'));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Total contributions')[1]), 240000, 0.1);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Illustrative estimated value')[1]), 464678.15, 0.2);
+});
+
+test('dedicated PPF page calculates beginning-of-year annual compounding', () => {
+  const html = fs.readFileSync(new URL('../calculators/ppf-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('function ppfCalc'));
+  assert.ok(script, 'PPF calculation function exists');
+  const dom = makeTestDom({ 'ppf-amt': '60000', 'ppf-rate': '7.1', 'ppf-years': '15' });
+  const context = { document: dom.document, Number, Math, alert() {} };
+  vm.runInNewContext(script + '\\nppfCalc();', context);
+  const rows = resultRows(dom.get('ppf-res'));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Maturity value')[1]), 1627283.69, 0.2);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Total deposited')[1]), 900000, 0.1);
+});
+
+test('dedicated CTC salary page calculates monthly take-home from entered deductions', () => {
+  const html = fs.readFileSync(new URL('../calculators/ctc-salary-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('function ctcCalc'));
+  assert.ok(script, 'CTC calculation function exists');
+  const dom = makeTestDom({
+    'ctc-amt': '1200000', 'ctc-basic': '40', 'ctc-pf': '12',
+    'ctc-grat': '1', 'ctc-pt': '200', 'ctc-tds': '3500'
+  });
+  vm.runInNewContext(script + '\\nctcCalc();', { document: dom.document, Number, Math, alert() {} });
+  const rows = resultRows(dom.get('ctc-res'));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Monthly take-home estimate')[1]), 84776, 1);
+});
+
+test('dedicated HRA page applies the lowest-of-three exemption rule', () => {
+  const html = fs.readFileSync(new URL('../calculators/hra-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('function hraCalc'));
+  assert.ok(script, 'HRA calculation function exists');
+  const dom = makeTestDom({
+    'hra-recd': '240000', 'hra-basic': '600000', 'hra-rent': '300000', 'hra-metro': '1'
+  });
+  vm.runInNewContext(script + '\\nhraCalc();', { document: dom.document, Number, Math, alert() {} });
+  const rows = resultRows(dom.get('hra-res'));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Exempted HRA')[1]), 240000, 0.1);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Taxable HRA')[1]), 0, 0.1);
+});
+
+test('dedicated basic calculator performs keypad arithmetic and rejects division by zero', () => {
+  const html = fs.readFileSync(new URL('../calculators/basic-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes("let current='0'"));
+  assert.ok(script, 'Basic calculator interaction script exists');
+  const dom = makeTestDom();
+  vm.runInNewContext(script, { document: dom.document, Number, Math });
+  const keys = dom.get('keys');
+  const click = keys.listeners.click;
+  assert.equal(typeof click, 'function', 'keypad click handler is registered');
+  const press = button => click({ target: { closest: () => button } });
+  press({ tagName: 'BUTTON', dataset: { digit: '1' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '2' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '5' } });
+  press({ tagName: 'BUTTON', dataset: { op: '+' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '7' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '5' } });
+  press({ tagName: 'BUTTON', dataset: { action: 'equals' } });
+  assert.equal(dom.get('display').textContent, '200');
+  press({ tagName: 'BUTTON', dataset: { action: 'clear' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '8' } });
+  press({ tagName: 'BUTTON', dataset: { op: '÷' } });
+  press({ tagName: 'BUTTON', dataset: { digit: '0' } });
+  press({ tagName: 'BUTTON', dataset: { action: 'equals' } });
+  assert.equal(dom.get('display').textContent, 'Error');
+});
