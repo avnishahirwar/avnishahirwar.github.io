@@ -37,6 +37,15 @@
 <details><summary>What happens when I divide by zero?</summary><p>The calculator displays a validation message because division by zero has no defined result.</p></details></section>
 <section class="panel"><h2>Related maths tools</h2><p><a href="/calculators/basic-calculator.html">Basic Calculator</a> · <a href="/calculators/date-difference-calculator.html">Date Difference Calculator</a> · <a href="/calculator/site-directory.html">Browse all calculators</a></p></section>
 <p class="muted">This tool uses exact integer arithmetic for the fraction operation and displays a rounded decimal to six places. Very large inputs may exceed JavaScript's safe integer range.</p>
+
+<section class="content" aria-label="Related calculators"><h2>Related calculators</h2><p>Continue with a related tool, compare a different calculation or browse the full calculator directory.</p><ul>
+<li><a href="/calculators/basic-calculator.html">Basic Calculator</a></li>
+<li><a href="/calculators/scientific-calculator.html">Scientific Calculator</a></li>
+<li><a href="/calculators/percentage-calculator.html">Percentage Calculator</a></li>
+<li><a href="/calculators/lcm-hcf-calculator.html">LCM and HCF Calculator</a></li>
+<li><a href="/calculators/square-root-calculator.html">Square Root Calculator</a></li>
+<li><a href="/calculator/site-directory.html">All Calculators</a></li>
+</ul><p><a href="/calculator/site-directory.html">Browse all calculators</a></p></section>
 </main>
 <script>
 (()=>{'use strict';const $=id=>document.getElementById(id);const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t}return a||1};const fmt=(n,d)=>{if(d<0){n=-n;d=-d}const g=gcd(n,d);n/=g;d/=g;return {n,d,text:n+'/'+d}};function calculate(){const n1=Number($('n1').value),d1=Number($('d1').value),n2=Number($('n2').value),d2=Number($('d2').value),op=$('op').value;const vals=[n1,d1,n2,d2];if(vals.some(v=>!Number.isSafeInteger(v))||d1===0||d2===0){$('status').textContent='Enter safe whole numbers and non-zero denominators.';return}if(op==='divide'&&n2===0){$('status').textContent='A fraction cannot be divided by zero. Enter a non-zero second numerator.';return}let n,d;if(op==='add'){n=n1*d2+n2*d1;d=d1*d2}else if(op==='subtract'){n=n1*d2-n2*d1;d=d1*d2}else if(op==='multiply'){n=n1*n2;d=d1*d2}else{n=n1*d2;d=d1*n2}if(!Number.isSafeInteger(n)||!Number.isSafeInteger(d)){ $('status').textContent='These values are too large for exact safe-integer arithmetic. Try smaller integers.';return}const r=fmt(n,d),whole=Math.trunc(r.n/r.d),rem=Math.abs(r.n%r.d),mixed=rem===0?String(whole):whole===0?r.text:whole+' '+rem+'/'+r.d;const dec=r.n/r.d;$('answer').textContent=r.text;$('mixed').textContent=mixed+'  (≈ '+dec.toFixed(6).replace(/0+$/,'').replace(/\.$/,'')+')';$('status').textContent='Calculation complete. The fraction is reduced using the greatest common divisor.';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});} $('calculate').addEventListener('click',calculate);['n1','d1','n2','d2','op'].forEach(id=>$(id).addEventListener('change',calculate));calculate();})();
