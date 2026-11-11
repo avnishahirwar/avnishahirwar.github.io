@@ -161,13 +161,13 @@ test('owner-designated permanent website features are protected from accidental 
  
 test('the shared public navigation does not expose the admin dashboard link', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.doesNotMatch(shell, /fc-admin-link|admin\\.html/);
+  assert.ok(!shell.includes('fc-admin-link') && !shell.includes('admin.html'));
   assert.ok(fs.existsSync(path.join(root, 'calculator/admin.html')), 'Admin dashboard page must remain preserved');
 });
 
 test('About page catalogue count matches the twenty published calculator pages', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.match(about, /Available calculators \\(20 tools\\)/);
+  assert.ok(about.includes('Available calculators (20 tools)'));
   const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('-calculator.html'));
   assert.equal(calculatorPages.length, 20);
 });
