@@ -31,6 +31,13 @@
     "profit & loss calculator": {title:"Profit & Loss Calculator",fields:[["cost","Cost price (₹)","number",1000],["selling","Selling price (₹)","number",1250]],calc:v=>{const diff=v.selling-v.cost;return [[diff>=0?"Profit":"Loss",Math.abs(diff)],["Percentage on cost",v.cost?Math.abs(diff)/v.cost*100:0,"%"]];}}
   };
   const money = n => "₹"+Number(n).toLocaleString("en-IN",{maximumFractionDigits:2});
+  const resultValue = (key,label,value,suffix) => {
+    if(typeof value==="string") return value;
+    if(suffix==="%") return Number(value).toFixed(2)+"%";
+    if(key==="bmi calculator" && label==="BMI (number only)") return Number(value).toFixed(2);
+    if(key==="fuel cost calculator" && label==="Fuel required (litres)") return Number(value).toFixed(2)+" litres";
+    return money(value);
+  };
   const formatResult = (value,unit) => typeof value==="string"?value:unit==="%"?Number(value).toFixed(2)+"%":unit==="number"?Number(value).toFixed(2):unit==="L"?Number(value).toFixed(2)+" L":money(value);
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
