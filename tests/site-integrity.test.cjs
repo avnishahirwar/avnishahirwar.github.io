@@ -157,3 +157,23 @@ test('owner-designated permanent website features are protected from accidental 
   assert.match(shell, /\.ad-placeholder/);
   assert.match(shell, /\.adsense-placeholder/);
 });
+
+ 
+test('the shared public navigation does not expose the admin dashboard link', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(!shell.includes('fc-admin-link') && !shell.includes('admin.html'));
+  assert.ok(fs.existsSync(path.join(root, 'calculator/admin.html')), 'Admin dashboard page must remain preserved');
+});
+
+test('About page catalogue count matches the twenty published calculator pages', () => {
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  assert.ok(about.includes('Available calculators (20 tools)'));
+  const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('-calculator.html'));
+  assert.equal(calculatorPages.length, 20);
+});
+
+test('contact page has one consistent indexable robots directive', () => {
+  const contact = fs.readFileSync(path.join(root, 'calculator/contact.html'), 'utf8');
+  assert.equal((contact.match(/<meta[^>]+name=["']robots["']/gi) || []).length, 1);
+  assert.doesNotMatch(contact, /name=["']googlebot["'][^>]+noindex/i);
+});

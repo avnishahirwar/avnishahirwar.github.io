@@ -1,5 +1,6 @@
 name: Site health and link checks
 on:
+  pull_request:
   push:
     branches: [main]
   schedule:

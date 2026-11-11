@@ -38,3 +38,10 @@ test('calculator usage analytics records calculator name and page without sendin
   assert.match(source, /calculator_name:def\.title/);
   assert.match(source, /calculator_page:location\.pathname/);
 });
+
+ 
+test('FD, EPF and Profit & Loss page titles resolve to live calculator definitions', () => {
+  assert.ok(source.includes('"/calculators/fd-calculator.html":"fixed deposit calculator"'));
+  assert.ok(source.includes('"/calculators/epf-pf-calculator.html":"epf / pf calculator"'));
+  assert.ok(source.includes('"/calculators/profit-loss-calculator.html":"profit & loss calculator"'));
+});
