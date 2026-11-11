@@ -266,3 +266,28 @@ test('dedicated basic calculator performs keypad arithmetic and rejects division
   press({ tagName: 'BUTTON', dataset: { action: 'equals' } });
   assert.equal(dom.get('display').textContent, 'Error');
 });
+
+
+test('dedicated Fraction Calculator simplifies exact fraction operations', () => {
+  const html = fs.readFileSync(new URL('../calculators/fraction-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes("const gcd="));
+  assert.ok(script, 'Fraction calculator script exists');
+  const dom = makeTestDom({ n1: '3', d1: '4', n2: '2', d2: '5', op: 'add' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl, location: { pathname: '/calculators/fraction-calculator.html' } });
+  assert.equal(dom.get('answer').textContent, '23/20');
+  assert.ok(dom.get('mixed').textContent.includes('1 3/20'));
+  dom.get('op').value = 'divide';
+  dom.get('n2').value = '0';
+  dom.get('calculate').listeners.click();
+  assert.match(dom.get('status').textContent, /cannot be divided by zero/i);
+});
+
+test('dedicated Compound Interest Calculator calculates quarterly compounding', () => {
+  const html = fs.readFileSync(new URL('../calculators/compound-interest-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('function calculate()'));
+  assert.ok(script, 'Compound interest calculation script exists');
+  const dom = makeTestDom({ principal: '100000', rate: '8', years: '5', frequency: '4' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl, location: { pathname: '/calculators/compound-interest-calculator.html' } });
+  closeTo(numericCurrency(dom.get('final').textContent), 148594.74, 0.1);
+  closeTo(numericCurrency(dom.get('interest').textContent), 48594.74, 0.1);
+});
