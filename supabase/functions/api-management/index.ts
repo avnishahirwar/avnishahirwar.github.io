@@ -173,20 +173,22 @@ async function dashboardData(admin: any, user: any) {
   };
 }
 async function adminDashboard(admin: any) {
-  const [usersResult, keysResult, accessResult, subsResult, usageResult] = await Promise.all([
+  const [usersResult, keysResult, accessResult, subsResult, usageResult, plansResult] = await Promise.all([
     admin.auth.admin.listUsers({ page: 1, perPage: 1000 }),
     admin.from("api_keys").select("id,owner_id,name,key_prefix,rate_limit_per_minute,created_at,expires_at,revoked_at,last_used_at").order("created_at", { ascending: false }).limit(1000),
     admin.from("api_customer_access").select("user_id,plan_code,enabled,monthly_quota,rate_limit_per_minute,valid_until,updated_at"),
-    admin.from("user_subscriptions").select("user_id,plan_code,status,current_start,current_end").eq("status", "active"),
-    admin.from("api_usage").select("id,api_key_id,endpoint,status_code,duration_ms,created_at").order("created_at", { ascending: false }).limit(100)
+    admin.from("user_subscriptions").select("user_id,plan_code,status,current_start,current_end,created_at").eq("status", "active"),
+    admin.from("api_usage").select("id,api_key_id,endpoint,status_code,duration_ms,created_at").order("created_at", { ascending: false }).limit(100),
+    admin.from("subscription_plans").select("code,name,billing_interval,api_credits_per_cycle,features,active")
   ]);
-  if (usersResult.error || keysResult.error || accessResult.error || subsResult.error || usageResult.error) {
+  if (usersResult.error || keysResult.error || accessResult.error || subsResult.error || usageResult.error || plansResult.error) {
     throw new Error("Could not load API administration data.");
   }
   const users = usersResult.data?.users || [];
   const userMap = new Map(users.map((u: any) => [u.id, u]));
   const accessMap = new Map((accessResult.data || []).map((a: any) => [a.user_id, a]));
   const subMap = new Map((subsResult.data || []).map((s: any) => [s.user_id, s]));
+  const planMap = new Map((plansResult.data || []).map((p: any) => [p.code, p]));
   const keyMap = new Map<string, any[]>();
   for (const key of keysResult.data || []) {
     const arr = keyMap.get(key.owner_id) || [];
@@ -202,15 +204,24 @@ async function adminDashboard(admin: any) {
     const u: any = userMap.get(id);
     const access: any = accessMap.get(id);
     const sub: any = subMap.get(id);
+    const plan: any = sub ? planMap.get(sub.plan_code) : null;
+    const subActive = Boolean(sub && plan?.active && plan.features?.api_access === true &&
+      Number(plan.api_credits_per_cycle) > 0 &&
+      (!sub.current_start || new Date(sub.current_start).getTime() <= Date.now()) &&
+      (!sub.current_end || new Date(sub.current_end).getTime() > Date.now()));
+    const subQuota = subActive
+      ? (plan.billing_interval === "yearly" ? Math.max(1, Math.ceil(Number(plan.api_credits_per_cycle) / 12)) : Number(plan.api_credits_per_cycle))
+      : 0;
     return {
       user_id: id,
       email: u?.email || "(email unavailable)",
       created_at: u?.created_at || null,
-      plan_code: access?.plan_code || sub?.plan_code || "free",
-      enabled: access ? Boolean(access.enabled) : Boolean(sub),
-      monthly_quota: access?.monthly_quota ?? 0,
+      plan_code: access?.plan_code || (subActive ? sub.plan_code : "free"),
+      enabled: access ? Boolean(access.enabled && access.monthly_quota > 0 &&
+        (!access.valid_until || new Date(access.valid_until).getTime() > Date.now())) : subActive,
+      monthly_quota: access?.monthly_quota ?? subQuota,
       rate_limit_per_minute: access?.rate_limit_per_minute ?? 60,
-      valid_until: access?.valid_until || null,
+      valid_until: access?.valid_until || sub?.current_end || null,
       keys: (keyMap.get(id) || []).length
     };
   }).sort((a, b) => String(a.email).localeCompare(String(b.email)));
