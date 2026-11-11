@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "project": "Friendly Calculator",
+  "domain": "friendlycalculator.in",
+  "createdAt": "2026-11-11",
+  "market": {
+    "country": "India",
+    "locationCode": 2356,
+    "languageCode": "en"
+  },
+  "source": "User-provided keyword and example-query list",
+  "savedToOpenSEO": {
+    "coreKeywords": 85,
+    "exampleQueries": 85,
+    "total": 170,
+    "projectId": "1370d932-6719-47d4-bfae-891d177ce083",
+    "note": "Saved phrases are not verified search-volume or ranking data."
+  },
+  "categories": {
+    "financeLoan": {
+      "keywords": [
+        "EMI Calculator",
+        "Home Loan EMI Calculator",
+        "Car Loan EMI Calculator",
+        "Personal Loan EMI Calculator",
+        "Bike Loan EMI Calculator",
+        "SIP Calculator",
+        "Mutual Fund SIP Calculator",
+        "Lumpsum Calculator",
+        "FD Calculator",
+        "RD Calculator",
+        "PPF Calculator",
+        "EPF Calculator",
+        "NPS Calculator",
+        "Compound Interest Calculator",
+        "Simple Interest Calculator",
+        "Income Tax Calculator",
+        "Salary Calculator",
+        "HRA Calculator",
+        "GST Calculator",
+        "Loan Eligibility Calculator",
+        "Credit Card EMI Calculator",
+        "Gold Loan Calculator",
+        "Business Loan Calculator",
+        "Education Loan Calculator",
+        "SWP Calculator",
+        "Retirement Calculator",
+        "Inflation Calculator",
+        "CAGR Calculator",
+        "SBI Home Loan EMI Calculator",
+        "Loan Against Property Calculator"
+      ],
+      "queries": [
+        "emi calculator home loan",
+        "home loan emi calculator 20 lakh 20 years",
+        "car loan emi calculator",
+        "personal loan emi calculator 5 lakh",
+        "bike loan emi calculator",
+        "sip calculator 5000 per month 10 years",
+        "mutual fund sip calculator monthly",
+        "lumpsum calculator 1 lakh 10 years",
+        "fd calculator 1 lakh 5 years",
+        "rd calculator 1000 per month",
+        "ppf calculator 150000 per year",
+        "epf calculator salary",
+        "nps calculator pension",
+        "compound interest calculator",
+        "simple interest calculator",
+        "income tax calculator 2026-27 new regime",
+        "salary calculator in hand salary",
+        "hra calculator exemption",
+        "gst calculator 18%",
+        "home loan eligibility calculator salary",
+        "credit card emi calculator",
+        "gold loan calculator per gram",
+        "business loan emi calculator",
+        "education loan emi calculator",
+        "swp calculator monthly withdrawal",
+        "retirement calculator corpus",
+        "inflation calculator 10 years",
+        "cagr calculator mutual fund",
+        "sbi home loan emi calculator",
+        "loan against property emi calculator"
+      ],
+      "existingPages": [
+        "loan-emi-calculator.html",
+        "sip-calculator.html",
+        "fd-calculator.html",
+        "ppf-calculator.html",
+        "epf-pf-calculator.html",
+        "income-tax-calculator.html",
+        "salary-calculator.html",
+        "hra-calculator.html",
+        "gst-calculator.html",
+        "inflation-calculator.html"
+      ],
+      "newCandidates": [
+        "RD",
+        "Lumpsum",
+        "NPS",
+        "Compound Interest",
+        "Simple Interest",
+        "Loan Eligibility",
+        "Credit Card EMI",
+        "Gold Loan",
+        "Business Loan",
+        "Education Loan",
+        "SWP",
+        "Retirement",
+        "CAGR",
+        "Loan Against Property"
+      ]
+    },
+    "dateTime": {
+      "keywords": [
+        "Age Calculator",
+        "Date of Birth Calculator",
+        "Age Difference Calculator",
+        "Birthday Calculator",
+        "Date Calculator",
+        "Days Between Dates Calculator",
+        "Working Days Calculator",
+        "Countdown Calculator",
+        "Time Calculator",
+        "Hours Calculator",
+        "Weeks Calculator",
+        "Retirement Age Calculator",
+        "School Admission Age Calculator",
+        "Sarkari Age Calculator"
+      ],
+      "queries": [
+        "age calculator date of birth",
+        "dob se age kaise nikale",
+        "age difference calculator couple",
+        "birthday me kitne din bache hai",
+        "date calculator add days",
+        "two dates ke beech kitne din",
+        "working days calculator month",
+        "countdown calculator exam",
+        "time calculator add hours minutes",
+        "hours calculator between two times",
+        "weeks between dates calculator",
+        "retirement age calculator govt",
+        "school admission age calculator",
+        "sarkari exam age calculator"
+      ],
+      "existingPages": [
+        "age-calculator.html"
+      ],
+      "newCandidates": [
+        "Date",
+        "Days Between Dates",
+        "Working Days",
+        "Countdown",
+        "Time",
+        "Hours",
+        "Weeks",
+        "Birthday Countdown",
+        "Retirement Age",
+        "School Admission Age",
+        "Sarkari Exam Age"
+      ]
+    },
+    "mathsEveryday": {
+      "keywords": [
+        "Percentage Calculator",
+        "Percentage Increase Calculator",
+        "Discount Calculator",
+        "Scientific Calculator",
+        "Normal Calculator",
+        "Fraction Calculator",
+        "Average Calculator",
+        "CGPA Calculator",
+        "Percentage to CGPA Calculator",
+        "Marks Percentage Calculator",
+        "Ratio Calculator",
+        "Square Root Calculator",
+        "Age in Days Calculator",
+        "Love Calculator",
+        "GPA Calculator"
+      ],
+      "queries": [
+        "percentage calculator 20% of 500",
+        "percentage increase calculator",
+        "discount calculator 30% off",
+        "scientific calculator online",
+        "calculator online",
+        "fraction calculator add subtract",
+        "average calculator marks",
+        "cgpa to percentage calculator",
+        "percentage to cgpa calculator",
+        "marks percentage calculator 10th",
+        "ratio calculator simplify",
+        "square root calculator",
+        "age in days calculator",
+        "love calculator by name",
+        "gpa calculator semester"
+      ],
+      "existingPages": [
+        "basic-calculator.html",
+        "discount-calculator.html"
+      ],
+      "newCandidates": [
+        "Scientific",
+        "Fraction",
+        "Average",
+        "CGPA",
+        "Percentage to CGPA",
+        "Marks Percentage",
+        "Ratio",
+        "Square Root",
+        "GPA"
+      ]
+    },
+    "unitConversion": {
+      "keywords": [
+        "Unit Converter",
+        "Length Converter",
+        "Weight Converter",
+        "Currency Converter",
+        "Area Converter",
+        "Temperature Converter",
+        "Speed Converter",
+        "Data Converter",
+        "Inches to Feet Calculator",
+        "Bigha to Acre Calculator"
+      ],
+      "queries": [
+        "unit converter kg to pound",
+        "cm to inch converter",
+        "kg to gram converter",
+        "dollar to rupees converter today",
+        "square feet to square meter calculator",
+        "celsius to fahrenheit converter",
+        "kmph to mph converter",
+        "mb to gb converter",
+        "inches to feet calculator",
+        "bigha to acre calculator MP"
+      ],
+      "existingPages": [],
+      "newCandidates": [
+        "Unit Converter (length, weight, temperature, speed, data)",
+        "Currency Converter (live exchange rate required)",
+        "Area Converter",
+        "Inches to Feet",
+        "Bigha to Acre (state-specific definitions)"
+      ]
+    },
+    "businessJob": {
+      "keywords": [
+        "Salary Hike Calculator",
+        "Gratuity Calculator",
+        "DA Calculator",
+        "Pension Calculator",
+        "Profit Margin Calculator",
+        "EMI vs Rent Calculator",
+        "Rent Calculator",
+        "Invoice Calculator",
+        "Typing Speed Calculator",
+        "CIBIL Score Calculator"
+      ],
+      "queries": [
+        "salary hike calculator percentage",
+        "gratuity calculator 10 years",
+        "da calculator govt employee",
+        "pension calculator central govt",
+        "profit margin calculator business",
+        "emi vs rent calculator which is better",
+        "rent calculator increase 10%",
+        "invoice calculator gst total",
+        "typing speed test calculator",
+        "cibil score calculator free"
+      ],
+      "existingPages": [
+        "salary-calculator.html",
+        "ctc-salary-calculator.html",
+        "profit-loss-calculator.html",
+        "electricity-bill-calculator.html"
+      ],
+      "newCandidates": [
+        "Salary Hike",
+        "Gratuity",
+        "DA",
+        "Pension",
+        "EMI vs Rent",
+        "Rent Increase",
+        "Invoice",
+        "Typing Speed"
+      ],
+      "specialHandling": [
+        "CIBIL scores cannot be reliably predicted from a simple public formula; provide an educational guide, not a score promise."
+      ]
+    },
+    "trending": {
+      "keywords": [
+        "Crypto Calculator",
+        "Gold Price Calculator",
+        "Silver Price Calculator",
+        "Petrol Mileage Calculator",
+        "Electricity Bill Calculator",
+        "YouTube Money Calculator"
+      ],
+      "queries": [
+        "bitcoin to inr calculator",
+        "gold price calculator today 10 gram",
+        "silver price calculator 1 kg",
+        "mileage calculator bike petrol",
+        "electricity bill calculator unit MP",
+        "youtube money calculator views"
+      ],
+      "existingPages": [
+        "fuel-cost-calculator.html",
+        "electricity-bill-calculator.html"
+      ],
+      "newCandidates": [
+        "Crypto Converter (live market data required)",
+        "Gold Price (live data required)",
+        "Silver Price (live data required)",
+        "YouTube Earnings Estimator (assumptions shown)"
+      ]
+    }
+  },
+  "excludedHealthBodyKeywords": [
+    "BMI Calculator",
+    "BMR Calculator",
+    "Calorie Calculator",
+    "Body Fat Calculator",
+    "Ideal Weight Calculator",
+    "Pregnancy Calculator",
+    "Ovulation Calculator",
+    "Period Calculator",
+    "Baby Weight Calculator",
+    "Water Intake Calculator",
+    "Protein Calculator",
+    "Blood Pressure Calculator",
+    "Diabetes Calculator",
+    "Biological Age Calculator",
+    "Target Heart Rate Calculator"
+  ],
+  "implementationRules": [
+    "Do not create duplicate doorway pages; map relevant terms to existing tools.",
+    "Build a new page only for a distinct calculation and user intent with a validated formula and unique useful content.",
+    "Show assumptions and limitations for loan eligibility, tax, pension, CIBIL and financial estimates.",
+    "Currency, crypto, gold and silver tools require reliable live data and a visible update timestamp.",
+    "Do not claim traffic share, search volume, rankings or revenue potential without measured evidence."
+  ],
+  "recommendedBuildOrder": [
+    "RD Calculator",
+    "Lumpsum Calculator",
+    "Compound Interest Calculator",
+    "Simple Interest Calculator",
+    "Date Calculator",
+    "Days Between Dates Calculator",
+    "Working Days Calculator",
+    "Scientific Calculator",
+    "CGPA Calculator",
+    "Fraction Calculator",
+    "Unit Converter",
+    "Gratuity Calculator",
+    "Salary Hike Calculator",
+    "NPS Calculator",
+    "CAGR Calculator"
+  ]
+}
