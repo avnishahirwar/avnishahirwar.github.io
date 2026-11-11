@@ -108,6 +108,7 @@ test('owner-designated permanent website features are protected from accidental 
     'calculator/premium-waitlist.html',
     'calculator/contact.html',
     'calculator/api.html',
+    'calculator/dashboard.html',
     'calculator/admin.html',
     'calculator/about.html',
     'calculator/privacy.html',
@@ -145,6 +146,11 @@ test('owner-designated permanent website features are protected from accidental 
   for (const model of permanentModels) {
     assert.ok(business.includes(model), 'Permanent business model missing: ' + model);
   }
+
+  const dashboard = fs.readFileSync(path.join(root, 'calculator/dashboard.html'), 'utf8');
+  assert.match(dashboard, /name="robots" content="noindex,nofollow"/i);
+  assert.match(dashboard, /Generate API key/i);
+  assert.match(dashboard, /Try API/i);
 
   assert.match(business, /Permanent catalogue policy/i);
   assert.match(contact, /Business Enquiries & Partnerships/i);
