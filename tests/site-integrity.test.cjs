@@ -31,7 +31,7 @@ test('only pages with active ad slots load the AdSense publisher script exactly 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const hasAdSlot = /class=["'][^"']*(?:ad-slot|ad-placeholder|adsense-placeholder)[^"']*["']/i.test(html);
-    const count = (html.match(/pagead2\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) || []).length;
+    const count = html.split('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').length - 1;
     if (count !== (hasAdSlot ? 1 : 0)) failures.push(url + ' (ad slot: ' + hasAdSlot + ', loader count: ' + count + ')');
   }
   assert.deepEqual(failures, [], 'AdSense loader must match actual ad-slot pages: ' + failures.join(', '));
