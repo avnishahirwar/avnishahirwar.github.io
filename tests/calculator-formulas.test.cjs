@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const vm = require('node:vm');
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -52,7 +53,7 @@ test('FD, EPF and Profit & Loss page titles resolve to live calculator definitio
 function loadFormulaDefinitions() {
   const wrapperEnd = source.lastIndexOf('})();');
   assert.ok(wrapperEnd >= 0, 'Formula engine IIFE should have a closing wrapper');
-  const instrumented = source.slice(0, wrapperEnd) + 'globalThis.__calculatorDefinitions = definitions;\\n' + source.slice(wrapperEnd);
+  const instrumented = source.slice(0, wrapperEnd) + 'globalThis.__calculatorDefinitions = definitions;\n' + source.slice(wrapperEnd);
   assert.notEqual(instrumented, source, 'Formula engine wrapper should be instrumentable');
   const sandbox = {
     document: { readyState: 'loading', addEventListener() {} },
