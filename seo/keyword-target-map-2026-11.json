@@ -1,0 +1,909 @@
+{
+  "site": "https://friendlycalculator.in/",
+  "created": "2026-11-11",
+  "note": "Mapping of 100 supplied keyword ideas to relevant published pages. Search volume and rankings are not asserted. Only published tools are indexable; items needing clinical, legal, tax or live-data review remain unpublished.",
+  "keywords": [
+    {
+      "keyword": "calculator",
+      "target": "/calculators/basic-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "कैलकुलेटर online",
+      "target": "/calculators/basic-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "free online calculator",
+      "target": "/calculators/basic-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "simple calculator",
+      "target": "/calculators/basic-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "scientific calculator online",
+      "target": "/calculators/scientific-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "percentage calculator",
+      "target": "/calculators/percentage-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "age calculator",
+      "target": "/calculators/age-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "date calculator",
+      "target": "/calculators/date-difference-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "bmi calculator",
+      "target": "/calculators/bmi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "calorie calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "emi calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "home loan emi calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "car loan emi calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "personal loan emi calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "loan calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "interest calculator",
+      "target": "/calculators/simple-interest-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "simple interest calculator",
+      "target": "/calculators/simple-interest-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "compound interest calculator",
+      "target": "/calculators/compound-interest-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "sip calculator",
+      "target": "/calculators/sip-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "lumpsum calculator",
+      "target": "/calculators/compound-interest-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "fd calculator",
+      "target": "/calculators/fd-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "rd calculator",
+      "target": "/calculators/rd-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "ppf calculator",
+      "target": "/calculators/ppf-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "epf calculator",
+      "target": "/calculators/epf-pf-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "nps calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "mutual fund calculator",
+      "target": "/calculators/sip-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "gst calculator",
+      "target": "/calculators/gst-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "income tax calculator",
+      "target": "/calculators/income-tax-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "tds calculator",
+      "target": "/calculators/tds-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "hra calculator",
+      "target": "/calculators/hra-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "salary calculator",
+      "target": "/calculators/salary-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "ctc to inhand salary calculator",
+      "target": "/calculators/ctc-salary-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "gratuity calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "retirement calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "inflation calculator",
+      "target": "/calculators/inflation-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "currency converter",
+      "target": null,
+      "status": "needs-live-rate-source"
+    },
+    {
+      "keyword": "discount calculator",
+      "target": "/calculators/discount-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "profit margin calculator",
+      "target": "/calculators/profit-loss-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "break even calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "roi calculator",
+      "target": "/calculators/roi-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "gst calculator online",
+      "target": "/calculators/gst-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "invoice gst calculator",
+      "target": "/calculators/gst-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "business loan calculator",
+      "target": "/calculators/loan-emi-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "depreciation calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "sales tax calculator",
+      "target": null,
+      "status": "jurisdiction-review"
+    },
+    {
+      "keyword": "bmi calculator in kg and cm",
+      "target": "/calculators/bmi-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "bmr calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "ideal weight calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "body fat calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "pregnancy calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "due date calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "ovulation calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "period calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "water intake calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "protein calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "heart rate calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "blood pressure average calculator",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "baby height predictor",
+      "target": null,
+      "status": "review-before-build"
+    },
+    {
+      "keyword": "gpa calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "cgpa to percentage calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "percentage to cgpa calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "marks percentage calculator",
+      "target": "/calculators/percentage-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "ssc marks calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "12th percentage calculator",
+      "target": "/calculators/percentage-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "grade calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "gpa to percentage converter",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "class 10 result percentage calculator",
+      "target": "/calculators/percentage-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "age calculator by date of birth",
+      "target": "/calculators/age-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "fraction calculator",
+      "target": "/calculators/fraction-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "algebra calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "square root calculator",
+      "target": "/calculators/square-root-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "cube root calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "lcm calculator",
+      "target": "/calculators/lcm-hcf-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "hcf calculator",
+      "target": "/calculators/lcm-hcf-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "average calculator",
+      "target": "/calculators/average-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "ratio calculator",
+      "target": "/calculators/ratio-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "probability calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "unit converter",
+      "target": "/calculators/unit-converter.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "kg to lbs converter",
+      "target": "/calculators/unit-converter.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "cm to feet converter",
+      "target": "/calculators/unit-converter.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "celsius to fahrenheit",
+      "target": "/calculators/unit-converter.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "km to miles converter",
+      "target": "/calculators/unit-converter.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "time calculator",
+      "target": "/calculators/work-hours-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "hours to minutes calculator",
+      "target": "/calculators/hours-to-minutes-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "days between dates calculator",
+      "target": "/calculators/date-difference-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "fuel cost calculator",
+      "target": "/calculators/fuel-cost-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "mileage calculator",
+      "target": "/calculators/mileage-calculator.html",
+      "status": "new"
+    },
+    {
+      "keyword": "electricity bill calculator",
+      "target": "/calculators/electricity-bill-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "paint area calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "construction cost calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "rent affordability calculator",
+      "target": null,
+      "status": "roadmap"
+    },
+    {
+      "keyword": "tip calculator",
+      "target": "/calculators/split-bill-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "split bill calculator",
+      "target": "/calculators/split-bill-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "love calculator",
+      "target": null,
+      "status": "not-priority"
+    },
+    {
+      "keyword": "lucky number calculator",
+      "target": null,
+      "status": "not-priority"
+    },
+    {
+      "keyword": "numerology calculator",
+      "target": null,
+      "status": "not-priority"
+    },
+    {
+      "keyword": "zodiac sign calculator by date of birth",
+      "target": null,
+      "status": "not-priority"
+    },
+    {
+      "keyword": "days until calculator (countdown)",
+      "target": "/calculators/date-difference-calculator.html",
+      "status": "related-existing"
+    },
+    {
+      "keyword": "work hours calculator",
+      "target": "/calculators/work-hours-calculator.html",
+      "status": "existing"
+    },
+    {
+      "keyword": "random number calculator",
+      "target": null,
+      "status": "roadmap"
+    }
+  ],
+  "pageTitleIdeas": [
+    {
+      "id": 1,
+      "title": "Free Online Calculator – Simple & Fast"
+    },
+    {
+      "id": 2,
+      "title": "Scientific Calculator Online Free"
+    },
+    {
+      "id": 3,
+      "title": "Percentage Calculator – जल्दी प्रतिशत निकालें"
+    },
+    {
+      "id": 4,
+      "title": "Age Calculator – अपनी सही उम्र जानें"
+    },
+    {
+      "id": 5,
+      "title": "Date of Birth se Age Calculator"
+    },
+    {
+      "id": 6,
+      "title": "BMI Calculator in Kg and CM"
+    },
+    {
+      "id": 7,
+      "title": "Calorie Calculator – रोज़ की कैलोरी जानें"
+    },
+    {
+      "id": 8,
+      "title": "EMI Calculator – मासिक किस्त कैलकुलेटर"
+    },
+    {
+      "id": 9,
+      "title": "Home Loan EMI Calculator Online"
+    },
+    {
+      "id": 10,
+      "title": "Car Loan EMI Calculator India"
+    },
+    {
+      "id": 11,
+      "title": "Personal Loan EMI Calculator"
+    },
+    {
+      "id": 12,
+      "title": "Simple Interest Calculator Online"
+    },
+    {
+      "id": 13,
+      "title": "Compound Interest Calculator Free"
+    },
+    {
+      "id": 14,
+      "title": "SIP Calculator – म्यूचुअल फंड रिटर्न"
+    },
+    {
+      "id": 15,
+      "title": "Lumpsum Investment Calculator"
+    },
+    {
+      "id": 16,
+      "title": "FD Calculator – ब्याज और मैच्योरिटी"
+    },
+    {
+      "id": 17,
+      "title": "RD Calculator Online"
+    },
+    {
+      "id": 18,
+      "title": "PPF Calculator – 15 साल का रिटर्न"
+    },
+    {
+      "id": 19,
+      "title": "EPF Calculator – PF बैलेंस जानें"
+    },
+    {
+      "id": 20,
+      "title": "NPS Calculator – पेंशन कैलकुलेटर"
+    },
+    {
+      "id": 21,
+      "title": "Mutual Fund Return Calculator"
+    },
+    {
+      "id": 22,
+      "title": "GST Calculator – GST जोड़ें या घटाएं"
+    },
+    {
+      "id": 23,
+      "title": "Income Tax Calculator 2026-27"
+    },
+    {
+      "id": 24,
+      "title": "TDS Calculator Online"
+    },
+    {
+      "id": 25,
+      "title": "HRA Exemption Calculator"
+    },
+    {
+      "id": 26,
+      "title": "Salary Calculator – In-Hand Salary जानें"
+    },
+    {
+      "id": 27,
+      "title": "CTC to In-Hand Salary Calculator"
+    },
+    {
+      "id": 28,
+      "title": "Gratuity Calculator India"
+    },
+    {
+      "id": 29,
+      "title": "Retirement Planning Calculator"
+    },
+    {
+      "id": 30,
+      "title": "Inflation Calculator – पैसे की असली वैल्यू"
+    },
+    {
+      "id": 31,
+      "title": "Currency Converter – Live Rates"
+    },
+    {
+      "id": 32,
+      "title": "Discount Calculator – छूट की बचत"
+    },
+    {
+      "id": 33,
+      "title": "Profit Margin Calculator"
+    },
+    {
+      "id": 34,
+      "title": "Break-Even Point Calculator"
+    },
+    {
+      "id": 35,
+      "title": "ROI Calculator – Return on Investment"
+    },
+    {
+      "id": 36,
+      "title": "Business Loan EMI Calculator"
+    },
+    {
+      "id": 37,
+      "title": "Depreciation Calculator"
+    },
+    {
+      "id": 38,
+      "title": "Sales Tax Calculator Online"
+    },
+    {
+      "id": 39,
+      "title": "BMR Calculator – Basal Metabolic Rate"
+    },
+    {
+      "id": 40,
+      "title": "Ideal Weight Calculator by Height"
+    },
+    {
+      "id": 41,
+      "title": "Body Fat Percentage Calculator"
+    },
+    {
+      "id": 42,
+      "title": "Pregnancy Due Date Calculator"
+    },
+    {
+      "id": 43,
+      "title": "Ovulation Calculator – fertile days"
+    },
+    {
+      "id": 44,
+      "title": "Period Tracker Calculator"
+    },
+    {
+      "id": 45,
+      "title": "Daily Water Intake Calculator"
+    },
+    {
+      "id": 46,
+      "title": "Protein Intake Calculator"
+    },
+    {
+      "id": 47,
+      "title": "Target Heart Rate Calculator"
+    },
+    {
+      "id": 48,
+      "title": "Blood Pressure Average Calculator"
+    },
+    {
+      "id": 49,
+      "title": "Baby Height Predictor"
+    },
+    {
+      "id": 50,
+      "title": "GPA Calculator Online"
+    },
+    {
+      "id": 51,
+      "title": "CGPA to Percentage Calculator"
+    },
+    {
+      "id": 52,
+      "title": "Percentage to CGPA Converter"
+    },
+    {
+      "id": 53,
+      "title": "Marks Percentage Calculator"
+    },
+    {
+      "id": 54,
+      "title": "12th Percentage Calculator"
+    },
+    {
+      "id": 55,
+      "title": "Grade Calculator – Final Grade"
+    },
+    {
+      "id": 56,
+      "title": "GPA to Percentage Converter"
+    },
+    {
+      "id": 57,
+      "title": "Class 10 Result Percentage Calculator"
+    },
+    {
+      "id": 58,
+      "title": "Fraction Calculator – जोड़, घटाना, गुणा, भाग"
+    },
+    {
+      "id": 59,
+      "title": "Algebra Calculator Online"
+    },
+    {
+      "id": 60,
+      "title": "Square Root Calculator"
+    },
+    {
+      "id": 61,
+      "title": "Cube Root Calculator"
+    },
+    {
+      "id": 62,
+      "title": "LCM Calculator Online"
+    },
+    {
+      "id": 63,
+      "title": "HCF Calculator Online"
+    },
+    {
+      "id": 64,
+      "title": "Average Calculator – औसत निकालें"
+    },
+    {
+      "id": 65,
+      "title": "Ratio Calculator Online"
+    },
+    {
+      "id": 66,
+      "title": "Probability Calculator"
+    },
+    {
+      "id": 67,
+      "title": "Unit Converter – सभी Units"
+    },
+    {
+      "id": 68,
+      "title": "Kg to Lbs Converter"
+    },
+    {
+      "id": 69,
+      "title": "CM to Feet Converter"
+    },
+    {
+      "id": 70,
+      "title": "Celsius to Fahrenheit Converter"
+    },
+    {
+      "id": 71,
+      "title": "KM to Miles Converter"
+    },
+    {
+      "id": 72,
+      "title": "Time Calculator – घंटे, मिनट, सेकंड"
+    },
+    {
+      "id": 73,
+      "title": "Hours to Minutes Calculator"
+    },
+    {
+      "id": 74,
+      "title": "Days Between Two Dates Calculator"
+    },
+    {
+      "id": 75,
+      "title": "Fuel Cost Calculator – Trip खर्चा"
+    },
+    {
+      "id": 76,
+      "title": "Mileage Calculator – Vehicle Average"
+    },
+    {
+      "id": 77,
+      "title": "Electricity Bill Calculator"
+    },
+    {
+      "id": 78,
+      "title": "Paint Area Calculator – कितना पेंट लगेगा"
+    },
+    {
+      "id": 79,
+      "title": "Construction Cost Calculator India"
+    },
+    {
+      "id": 80,
+      "title": "Rent Affordability Calculator"
+    },
+    {
+      "id": 81,
+      "title": "Tip Calculator – Restaurant Bill"
+    },
+    {
+      "id": 82,
+      "title": "Split Bill Calculator – दोस्तों के साथ"
+    },
+    {
+      "id": 83,
+      "title": "Love Calculator – Name se Love %"
+    },
+    {
+      "id": 84,
+      "title": "Lucky Number Calculator"
+    },
+    {
+      "id": 85,
+      "title": "Numerology Calculator by Name"
+    },
+    {
+      "id": 86,
+      "title": "Zodiac Sign Calculator by DOB"
+    },
+    {
+      "id": 87,
+      "title": "Days Until Calculator – Countdown"
+    },
+    {
+      "id": 88,
+      "title": "Work Hours Calculator – Timesheet"
+    },
+    {
+      "id": 89,
+      "title": "Random Number Generator"
+    },
+    {
+      "id": 90,
+      "title": "Percentage Increase/Decrease Calculator"
+    },
+    {
+      "id": 91,
+      "title": "GPA Calculator for College Students"
+    },
+    {
+      "id": 92,
+      "title": "Square Footage Calculator"
+    },
+    {
+      "id": 93,
+      "title": "Mortgage Calculator USA"
+    },
+    {
+      "id": 94,
+      "title": "Annuity Calculator Online"
+    },
+    {
+      "id": 95,
+      "title": "CAGR Calculator – Growth Rate"
+    },
+    {
+      "id": 96,
+      "title": "Net Salary Calculator India"
+    },
+    {
+      "id": 97,
+      "title": "Hourly to Salary Calculator"
+    },
+    {
+      "id": 98,
+      "title": "Overtime Pay Calculator"
+    },
+    {
+      "id": 99,
+      "title": "Loan Eligibility Calculator"
+    },
+    {
+      "id": 100,
+      "title": "All-in-One Calculator Hub – सभी कैलकुलेटर एक जगह"
+    }
+  ]
+}
