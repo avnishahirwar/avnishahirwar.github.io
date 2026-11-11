@@ -56,11 +56,10 @@ function loadFormulaDefinitions() {
   const instrumented = source.slice(0, wrapperEnd) + 'globalThis.__calculatorDefinitions = definitions;\n' + source.slice(wrapperEnd);
   assert.notEqual(instrumented, source, 'Formula engine wrapper should be instrumentable');
   const sandbox = {
-    document: { readyState: 'loading', addEventListener() {} },
-    globalThis: {}
+    document: { readyState: 'loading', addEventListener() {} }
   };
   vm.runInNewContext(instrumented, sandbox, { timeout: 1000 });
-  return sandbox.globalThis.__calculatorDefinitions;
+  return sandbox.__calculatorDefinitions;
 }
 
 function closeTo(actual, expectedValue, tolerance = 0.02) {
