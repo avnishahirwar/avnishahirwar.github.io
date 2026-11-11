@@ -1,0 +1,248 @@
+{
+  "site": "https://friendlycalculator.in/",
+  "market": "India-first; English keyword candidates",
+  "created": "2026-11-11",
+  "methodology": "100 page-mapped keyword candidates based on existing calculator inventory and public search-intent patterns. These are not verified Search Console queries or guaranteed monthly search volumes. Validate and reprioritize using Google Search Console and Keyword Planner as impressions accrue.",
+  "groups": [
+    {
+      "page": "GST Calculator",
+      "url": "/calculators/gst-calculator.html",
+      "primary": "gst calculator",
+      "secondary": [
+        "gst calculator online",
+        "gst calculator India",
+        "reverse GST calculator",
+        "GST calculation formula"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Loan EMI Calculator",
+      "url": "/calculators/loan-emi-calculator.html",
+      "primary": "loan EMI calculator",
+      "secondary": [
+        "home loan EMI calculator",
+        "personal loan EMI calculator",
+        "car loan EMI calculator",
+        "EMI calculator with interest"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Discount Calculator",
+      "url": "/calculators/discount-calculator.html",
+      "primary": "discount calculator",
+      "secondary": [
+        "percentage discount calculator",
+        "sale price calculator",
+        "discount amount calculator",
+        "calculate discount online"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Fixed Deposit Calculator",
+      "url": "/calculators/fd-calculator.html",
+      "primary": "FD calculator",
+      "secondary": [
+        "fixed deposit calculator",
+        "FD maturity calculator",
+        "fixed deposit interest calculator",
+        "bank FD return calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "EPF Calculator",
+      "url": "/calculators/epf-pf-calculator.html",
+      "primary": "EPF calculator",
+      "secondary": [
+        "PF calculator",
+        "EPF interest calculator",
+        "provident fund calculator India",
+        "employee PF contribution calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Savings Interest Calculator",
+      "url": "/calculators/savings-interest-calculator.html",
+      "primary": "savings account interest calculator",
+      "secondary": [
+        "bank interest calculator",
+        "savings interest calculator",
+        "daily balance interest calculator",
+        "savings account interest calculation"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Salary Calculator",
+      "url": "/calculators/salary-calculator.html",
+      "primary": "salary calculator",
+      "secondary": [
+        "monthly salary calculator",
+        "annual salary calculator",
+        "hourly salary calculator",
+        "salary per day calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "SIP Calculator",
+      "url": "/calculators/sip-calculator.html",
+      "primary": "SIP calculator",
+      "secondary": [
+        "SIP returns calculator",
+        "mutual fund SIP calculator",
+        "monthly SIP calculator",
+        "SIP maturity calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Inflation Calculator",
+      "url": "/calculators/inflation-calculator.html",
+      "primary": "inflation calculator",
+      "secondary": [
+        "India inflation calculator",
+        "future value of money calculator",
+        "purchasing power calculator",
+        "inflation rate calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "BMI Calculator",
+      "url": "/calculators/bmi-calculator.html",
+      "primary": "BMI calculator",
+      "secondary": [
+        "BMI calculator India",
+        "body mass index calculator",
+        "BMI calculator for adults",
+        "calculate BMI online"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Fuel Cost Calculator",
+      "url": "/calculators/fuel-cost-calculator.html",
+      "primary": "fuel cost calculator",
+      "secondary": [
+        "trip fuel cost calculator",
+        "petrol cost calculator",
+        "diesel cost calculator",
+        "mileage fuel calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Income Tax Calculator",
+      "url": "/calculators/income-tax-calculator.html",
+      "primary": "income tax calculator",
+      "secondary": [
+        "income tax calculator India",
+        "new tax regime calculator",
+        "old vs new tax regime calculator",
+        "income tax estimate FY 2026-27"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Profit and Loss Calculator",
+      "url": "/calculators/profit-loss-calculator.html",
+      "primary": "profit and loss calculator",
+      "secondary": [
+        "profit percentage calculator",
+        "loss percentage calculator",
+        "selling price calculator",
+        "cost price and selling price calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "TDS Calculator",
+      "url": "/calculators/tds-calculator.html",
+      "primary": "TDS calculator",
+      "secondary": [
+        "TDS calculator India",
+        "tax deducted at source calculator",
+        "salary TDS calculator",
+        "TDS amount calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Age Calculator",
+      "url": "/calculators/age-calculator.html",
+      "primary": "age calculator",
+      "secondary": [
+        "date of birth calculator",
+        "age in years months days calculator",
+        "exact age calculator",
+        "calculate age online"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Electricity Bill Calculator",
+      "url": "/calculators/electricity-bill-calculator.html",
+      "primary": "electricity bill calculator",
+      "secondary": [
+        "electricity bill calculator India",
+        "electricity unit calculator",
+        "power consumption cost calculator",
+        "electricity cost calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "Basic Calculator",
+      "url": "/calculators/basic-calculator.html",
+      "primary": "online calculator",
+      "secondary": [
+        "basic calculator online",
+        "free online calculator",
+        "simple calculator",
+        "math calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "PPF Calculator",
+      "url": "/calculators/ppf-calculator.html",
+      "primary": "PPF calculator",
+      "secondary": [
+        "PPF maturity calculator",
+        "public provident fund calculator",
+        "PPF interest calculator",
+        "PPF investment calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "CTC to In-Hand Salary Calculator",
+      "url": "/calculators/ctc-salary-calculator.html",
+      "primary": "CTC to in hand salary calculator",
+      "secondary": [
+        "in hand salary calculator",
+        "CTC calculator India",
+        "take home salary calculator",
+        "salary after PF and tax calculator"
+      ],
+      "intent": "calculator / informational"
+    },
+    {
+      "page": "HRA Calculator",
+      "url": "/calculators/hra-calculator.html",
+      "primary": "HRA calculator",
+      "secondary": [
+        "HRA exemption calculator",
+        "HRA calculator India",
+        "house rent allowance calculator",
+        "HRA tax exemption calculator"
+      ],
+      "intent": "calculator / informational"
+    }
+  ]
+}
