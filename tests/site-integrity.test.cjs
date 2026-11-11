@@ -41,6 +41,27 @@ test('monetized public pages load the AdSense publisher script exactly once', ()
   assert.deepEqual(failures, [], 'AdSense loader must appear exactly once on monetized pages: ' + failures.join(', '));
 });
 
+test('every public sitemap page loads the shared site header and footer shell', () => {
+  const failures = [];
+  for (const url of urls) {
+    const file = localFile(url);
+    if (!file || !fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, 'utf8');
+    if (!html.includes('/assets/site-shell.js')) failures.push(url + ' (shared shell script)');
+    if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
+  }
+  assert.deepEqual(failures, [], 'Public pages must use the shared header/footer: ' + failures.join(', '));
+});
+
+test('shared shell provides keyboard skip navigation and visible focus styles', () => {
+  const shellJs = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const shellCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shellJs, /fc-skip-link/);
+  assert.match(shellJs, /fc-main-content/);
+  assert.match(shellCss, /\.fc-skip-link:focus/);
+  assert.match(shellCss, /:focus-visible/);
+});
+
 test('every sitemap URL maps to a committed page', () => {
   const missing = urls.filter(url => {
     const file = localFile(url);
