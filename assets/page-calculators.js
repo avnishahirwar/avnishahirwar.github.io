@@ -48,7 +48,7 @@
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
     const key=h1.textContent.trim().toLowerCase();
-    const pageAliases={"/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
+    const pageAliases={"/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
     const lookupKey=pageAliases[location.pathname]||(key==="gst calculator india"?"gst calculator":key);
     const def=definitions[lookupKey]; if(!def||document.getElementById("live-page-calculator"))return;
     const panel=document.createElement("section"); panel.id="live-page-calculator";panel.className="panel";
