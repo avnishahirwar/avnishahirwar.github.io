@@ -84,9 +84,9 @@ test('quota reservation is serialized per key and RPC functions are service-role
 
 test('customer, admin and documentation browser scripts are syntactically valid JavaScript', () => {
   for (const [name, html] of [['customer dashboard', customer], ['admin dashboard', admin], ['API docs', docs]]) {
-    const scripts = [...html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/gi)]
+    const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
       .map(match => match[1].trim())
-      .filter(code => code && !code.startsWith('{') && !/application\\/ld\\+json/i.test(code));
+      .filter(code => code && !code.startsWith('{') && !/application\/ld\+json/i.test(code));
     assert.ok(scripts.length > 0, name + ' should contain a browser script');
     for (const code of scripts) assert.doesNotThrow(() => new vm.Script(code), name + ' script should parse');
   }
