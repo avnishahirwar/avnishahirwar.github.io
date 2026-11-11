@@ -291,3 +291,27 @@ test('dedicated Compound Interest Calculator calculates quarterly compounding', 
   closeTo(numericCurrency(dom.get('final').textContent), 148594.74, 0.1);
   closeTo(numericCurrency(dom.get('interest').textContent), 48594.74, 0.1);
 });
+
+
+test('dedicated Percentage Calculator calculates percentage of a value and percentage change', () => {
+  const html = fs.readFileSync(new URL('../calculators/percentage-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes("function setMode(next)"));
+  assert.ok(script, 'Percentage calculator script exists');
+  const elements = new Map();
+  const make = (id, value = '') => {
+    const el = { id, value, hidden: false, dataset: {}, attrs: {}, listeners: {},
+      setAttribute(k,v){this.attrs[k]=v;}, addEventListener(k,fn){this.listeners[k]=fn;} };
+    elements.set(id, el); return el;
+  };
+  ['percent','base','part','whole','old','new','valueA','valueB'].forEach(id => make(id, ({percent:'10',base:'50000',part:'250',whole:'1000',old:'200',new:'350',valueA:'200',valueB:'350'})[id]));
+  ['mode-of','mode-is','mode-change','mode-difference'].forEach(id => make(id));
+  const buttons=['of','is','change','difference'].map(mode => {const b=make('tab-'+mode);b.dataset.mode=mode;return b;});
+  const calc=make('calculate'),result=make('result'),label=make('resultLabel'),explain=make('explain'),status=make('status');
+  const inputs=['percent','base','part','whole','old','new','valueA','valueB'].map(id=>elements.get(id));
+  const document={getElementById:id=>elements.get(id),querySelectorAll:s=>s==='[data-mode]'?buttons:s==='.mode'?['mode-of','mode-is','mode-change','mode-difference'].map(id=>elements.get(id)):inputs};
+  vm.runInNewContext(script,{document,Number,Math,Intl,location:{pathname:'/calculators/percentage-calculator.html'}});
+  assert.equal(result.textContent,'5,000');
+  buttons.find(b=>b.dataset.mode==='change').listeners.click();
+  assert.equal(result.textContent,'75%');
+  assert.match(label.textContent,/Percentage change/);
+});
