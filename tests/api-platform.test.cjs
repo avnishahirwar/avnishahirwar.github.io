@@ -11,7 +11,10 @@ const customer = fs.readFileSync(path.join(root, 'calculator/dashboard.html'), '
 const admin = fs.readFileSync(path.join(root, 'calculator/admin.html'), 'utf8');
 const secondaryAdmin = fs.readFileSync(path.join(root, 'avnish-ai/admin.html'), 'utf8');
 const docs = fs.readFileSync(path.join(root, 'calculator/api.html'), 'utf8');
-const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111040104_customer_api_quota_management.sql'), 'utf8');
+const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111040834_customer_api_quota_management.sql'), 'utf8');
+const legacyMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041646_grandfather_existing_api_keys.sql'), 'utf8');
+const guardMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041933_guard_customer_api_key_mutations.sql'), 'utf8');
+const revokeMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111042639_revoke_direct_api_table_access.sql'), 'utf8');
 
 const calculators = [
   'gst', 'emi', 'fd', 'discount', 'profit-loss', 'income-tax', 'salary-tds',
@@ -84,7 +87,7 @@ test('quota reservation is serialized per key and RPC functions are service-role
 });
 
 test('customer, admin and documentation browser scripts are syntactically valid JavaScript', () => {
-  for (const [name, html] of [['customer dashboard', customer], ['admin dashboard', admin], ['API docs', docs]]) {
+  for (const [name, html] of [['customer dashboard', customer], ['admin dashboard', admin], ['secondary admin dashboard', secondaryAdmin], ['API docs', docs]]) {
     const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
       .map(match => match[1].trim())
       .filter(code => code && !code.startsWith('{') && !/application\/ld\+json/i.test(code));
@@ -94,10 +97,10 @@ test('customer, admin and documentation browser scripts are syntactically valid 
 });
 
 test('legacy key access is preserved without granting access to newly generated keys', () => {
-  assert.match(migration, /legacy_access boolean not null default false/i);
-  assert.ok(migration.includes("legacy_access = true"));
-  assert.ok(migration.includes("created_at < timestamptz"));
-  assert.ok(migration.includes("v_plan_code := 'legacy'"));
+  assert.match(legacyMigration, /legacy_access boolean not null default false/i);
+  assert.ok(legacyMigration.includes("legacy_access = true"));
+  assert.ok(legacyMigration.includes("created_at < timestamptz"));
+  assert.ok(legacyMigration.includes("v_plan_code := 'legacy'"));
   assert.match(management, /legacy_access/);
   assert.match(management, /plan_code: "legacy"/);
 });
@@ -107,4 +110,16 @@ test('secondary admin interface also uses server-side API management', () => {
   assert.match(secondaryAdmin, /admin-dashboard/);
   assert.match(secondaryAdmin, /admin-revoke-key/);
   assert.doesNotMatch(secondaryAdmin, /\/rest\/v1\/api_keys|\/rest\/v1\/api_usage/);
+});
+
+test('customer key mutations cannot elevate scopes or rate limits', () => {
+  assert.match(guardMigration, /new\.rate_limit_per_minute := 60/);
+  assert.match(guardMigration, /new\.legacy_access := false/);
+  assert.match(guardMigration, /API key security fields can only be changed by an administrator/);
+  assert.match(guardMigration, /old\.revoked_at is not null/);
+});
+
+test('browser roles cannot directly access API key hashes or usage history', () => {
+  assert.match(revokeMigration, /revoke all privileges on table public\.api_keys from anon, authenticated/i);
+  assert.match(revokeMigration, /revoke all privileges on table public\.api_usage from anon, authenticated/i);
 });
