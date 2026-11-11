@@ -9,6 +9,7 @@ const api = fs.readFileSync(path.join(root, 'supabase/functions/calculator-api/i
 const management = fs.readFileSync(path.join(root, 'supabase/functions/api-management/index.ts'), 'utf8');
 const customer = fs.readFileSync(path.join(root, 'calculator/dashboard.html'), 'utf8');
 const admin = fs.readFileSync(path.join(root, 'calculator/admin.html'), 'utf8');
+const secondaryAdmin = fs.readFileSync(path.join(root, 'avnish-ai/admin.html'), 'utf8');
 const docs = fs.readFileSync(path.join(root, 'calculator/api.html'), 'utf8');
 const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111040104_customer_api_quota_management.sql'), 'utf8');
 
@@ -99,4 +100,11 @@ test('legacy key access is preserved without granting access to newly generated 
   assert.ok(migration.includes("v_plan_code := 'legacy'"));
   assert.match(management, /legacy_access/);
   assert.match(management, /plan_code: "legacy"/);
+});
+
+test('secondary admin interface also uses server-side API management', () => {
+  assert.match(secondaryAdmin, /functions\/v1\/api-management/);
+  assert.match(secondaryAdmin, /admin-dashboard/);
+  assert.match(secondaryAdmin, /admin-revoke-key/);
+  assert.doesNotMatch(secondaryAdmin, /\/rest\/v1\/api_keys|\/rest\/v1\/api_usage/);
 });
