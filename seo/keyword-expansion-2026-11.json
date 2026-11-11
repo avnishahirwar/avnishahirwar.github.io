@@ -1,0 +1,614 @@
+{
+  "site": "https://friendlycalculator.in/",
+  "title": "User-provided 100-keyword expansion list",
+  "date": "2026-11-11",
+  "note": "These are user-supplied keyword ideas, not verified high-volume Google queries. No search-volume or ranking claim is made. Only map a keyword to an existing page when the calculator actually supports the described calculation. Google does not use the meta keywords tag for ranking; use relevant page titles, headings, useful explanations, and internal links instead.",
+  "summary": {
+    "total": 100,
+    "existingPageCandidates": 23,
+    "newCalculatorOrToolRequired": 73,
+    "excludedForHealthBodyImageSafety": 4
+  },
+  "keywords": [
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "SIP Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/sip-calculator.html"
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Compound Interest Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Mutual Fund Returns Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "FD Calculator (Fixed Deposit)",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/fd-calculator.html"
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "PPF Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/ppf-calculator.html"
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "RD Calculator (Recurring Deposit)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Lumpsum Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "SWP Calculator (Systematic Withdrawal Plan)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Simple Interest Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Inflation Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/inflation-calculator.html"
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Retirement Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "NPS Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Gratuity Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "EPF Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/epf-pf-calculator.html"
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Sukanya Samriddhi Yojana Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "CAGR Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Dividend Yield Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Stock Average Price Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Crypto Profit Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Finance & Investment Calculators",
+      "keyword": "Wealth Accumulation Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Home Loan EMI Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/loan-emi-calculator.html"
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Personal Loan EMI Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/loan-emi-calculator.html"
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Car Loan EMI Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/loan-emi-calculator.html"
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Loan Prepayment Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Loan Balance Transfer Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Mortgage Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Education Loan EMI Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Business Loan Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Credit Card Payoff Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Loans & EMI Calculators",
+      "keyword": "Amortization Schedule Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Income Tax Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/income-tax-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "In Hand Salary Calculator / Take Home Salary Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/ctc-salary-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "GST Calculator Online",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/gst-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Old vs New Tax Regime Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/income-tax-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "HRA Exemption Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/hra-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "TDS Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/tds-calculator.html"
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Capital Gains Tax Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Advance Tax Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Freelance Tax Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Tax & Salary Calculators",
+      "keyword": "Overtime Pay Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "BMI Calculator (Body Mass Index)",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/bmi-calculator.html"
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Calorie Deficit Calculator",
+      "implementation": "excluded_health_body_ideal_keyword",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "BMR Calculator (Basal Metabolic Rate)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Body Fat Percentage Calculator",
+      "implementation": "excluded_health_body_ideal_keyword",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Ideal Weight Calculator",
+      "implementation": "excluded_health_body_ideal_keyword",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Daily Water Intake Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Pregnancy Due Date Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Ovulation Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Macro Calculator for Weight Loss",
+      "implementation": "excluded_health_body_ideal_keyword",
+      "targetPage": null
+    },
+    {
+      "category": "Health, Fitness & Lifestyle Calculators",
+      "keyword": "Target Heart Rate Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Percentage Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/basic-calculator.html"
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Percentage Increase / Decrease Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/basic-calculator.html"
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Fraction Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Scientific Calculator Online",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Square Root Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "LCM and HCF Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Standard Deviation Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Mean Median Mode Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Ratio and Proportion Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Area and Perimeter Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Volume Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Pythagorean Theorem Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Matrix Multiplication Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Quadratic Equation Solver",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Math & Academic Calculators",
+      "keyword": "Probability Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Unit Converter Online",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Currency Converter (USD to INR / EUR to USD)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Square Feet to Square Yards / Acre / Bigha Converter",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Celsius to Fahrenheit Converter",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Kilogram to Pound Converter",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Kilometer to Miles Converter",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Data Storage Converter (MB to GB / GB to TB)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Speed Converter (km/h to mph)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Time Zone Converter",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Unit & Currency Converters",
+      "keyword": "Fuel Mileage Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/fuel-cost-calculator.html"
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Profit Margin Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Break Even Point Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Markup Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Discount Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/discount-calculator.html"
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "ROI Calculator (Return on Investment)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Customer Lifetime Value (LTV) Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "ROAS Calculator (Return on Ad Spend)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Amazon Seller Fee Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "Hourly Rate to Annual Salary Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/salary-calculator.html"
+    },
+    {
+      "category": "Business & E-Commerce Calculators",
+      "keyword": "E-Commerce Conversion Rate Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Age Calculator by Date of Birth",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/age-calculator.html"
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Date Difference Calculator (Days between dates)",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Time Duration Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Days Countdown Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Working Days / Business Days Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Leap Year Checker",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Day of the Week Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Electricity Bill Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/electricity-bill-calculator.html"
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Solar Panel ROI Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Trip Fuel Cost Calculator",
+      "implementation": "existing_page_candidate",
+      "targetPage": "calculators/fuel-cost-calculator.html"
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Word Count and Character Counter Tool",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Password Generator Tool",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "QR Code Generator Tool",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "JSON Formatter and Validator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    },
+    {
+      "category": "Date, Time & Utility Tools",
+      "keyword": "Aspect Ratio Calculator",
+      "implementation": "new_calculator_or_tool_required",
+      "targetPage": null
+    }
+  ]
+}
