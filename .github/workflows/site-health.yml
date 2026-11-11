@@ -26,4 +26,4 @@ jobs:
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
       - name: Check shared JavaScript syntax
-        run: node --check assets/site-shell.js && node --check assets/page-calculators.js
+        run: node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js
