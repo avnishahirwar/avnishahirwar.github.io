@@ -43,4 +43,26 @@ document.querySelectorAll('.faq').forEach(e=>{const t=e.textContent||'';if(t.inc
 document.querySelectorAll('script[type="application/ld+json"]').forEach(s=>{try{const j=JSON.parse(s.textContent);if(j['@type']==='FAQPage'&&Array.isArray(j.mainEntity)&&j.mainEntity.some(q=>q.name==='How accurate is this calculator?'))s.remove()}catch(_){}});
 document.querySelectorAll('p').forEach(e=>{const t=(e.textContent||'').trim();if(t.startsWith('Results are estimates based on entered values and assumptions. They are not professional advice.'))e.remove()});
 }
+document.addEventListener('click',event=>{
+  const button=event.target.closest('button');
+  if(!button||!p.startsWith('/calculators/'))return;
+  const label=(button.textContent||'').trim();
+  const isCalculate=/calculate/i.test(label)||(p.endsWith('/basic-calculator.html')&&label==='=');
+  if(!isCalculate||typeof window.gtag!=='function')return;
+  window.gtag('event','calculator_calculate',{
+    calculator_name:(document.querySelector('h1')?.textContent||'Calculator').trim(),
+    calculator_path:p,
+    control_label:label
+  });
+});
+document.addEventListener('change',event=>{
+  const field=event.target;
+  if(!field||field.id!=='calculatorSearch'||!field.value.trim()||typeof window.gtag!=='function')return;
+  const count=Number((document.getElementById('searchCount')?.textContent||'').match(/\d+/)?.[0]||0);
+  window.gtag('event','calculator_search',{
+    search_term_length:field.value.trim().length,
+    results_count:count
+  });
+});
+
 })();
