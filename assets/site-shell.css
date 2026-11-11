@@ -3,6 +3,9 @@
 html{width:100%;max-width:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-width:0;overflow-x:clip}
 img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-width:100%;overflow-x:auto}input,select,textarea,button{max-width:100%;font:inherit}input,select,textarea{min-width:0}table{max-width:100%}
+.fc-skip-link{position:absolute;left:12px;top:-60px;z-index:2000;padding:10px 14px;border-radius:6px;background:#fff;color:#101c2c;border:2px solid #d8bd82;font-weight:800;text-decoration:none;box-shadow:0 4px 16px #07132130}
+.fc-skip-link:focus{top:10px;outline:3px solid #d8bd82;outline-offset:3px}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid #b58b3d;outline-offset:3px}
 .fc-global-header{position:relative;top:0;z-index:1000;background:var(--fc-navy);color:#fff;border-bottom:1px solid #26384b;box-shadow:0 3px 14px #07132130}
 .fc-global-nav{width:min(1160px,94%);min-height:64px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:9px 0}
 .fc-global-brand{display:inline-flex;align-items:center;gap:9px;font-weight:900;letter-spacing:.1em;text-decoration:none;color:#fff;white-space:nowrap;font-size:1rem}.fc-brand-mark{display:block;width:34px;height:34px;flex:0 0 34px;border-radius:8px}.fc-footer-mark{display:inline-block;width:30px;height:30px;vertical-align:middle;margin-right:9px;border-radius:7px}
