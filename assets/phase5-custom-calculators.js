@@ -1,0 +1,22 @@
+(()=>{'use strict';
+const tool=document.querySelector('[data-tool]')?.dataset.tool;
+const $=id=>document.getElementById(id);
+if(tool==='xirr'){
+ const npv=(rate,flows,base)=>flows.reduce((sum,f)=>sum+f.amount/Math.pow(1+rate,(f.date-base)/86400000/365),0);
+ function solve(){const flows=[];for(let i=0;i<5;i++){const d=$('d'+i).value,a=$('a'+i).value;if(d&&a!==''){const date=new Date(d+'T00:00:00Z').getTime(),amount=Number(a);if(!Number.isFinite(date)||!Number.isFinite(amount)){$('result').textContent='Check each entered date and amount.';return;}flows.push({date,amount});}}
+ if(flows.length<2||!flows.some(x=>x.amount<0)||!flows.some(x=>x.amount>0)){$('result').textContent='Enter at least two dated cash flows, including one negative investment and one positive receipt.';return;}
+ flows.sort((a,b)=>a.date-b.date);const base=flows[0].date;let lo=-0.9999,hi=10,flo=npv(lo,flows,base),fhi=npv(hi,flows,base);
+ if(!Number.isFinite(flo)||!Number.isFinite(fhi)||flo*fhi>0){$('result').textContent='A single XIRR root could not be bracketed for these cash flows. Check signs and dates; non-conventional cash flows may have multiple or no real solutions.';return;}
+ for(let k=0;k<180;k++){const mid=(lo+hi)/2,fmid=npv(mid,flows,base);if(!Number.isFinite(fmid))break;if(Math.abs(fmid)<1e-7){lo=hi=mid;break;}if(flo*fmid<=0){hi=mid;fhi=fmid;}else{lo=mid;flo=fmid;}}
+ const r=(lo+hi)/2;$('result').innerHTML='<div class="result-row"><span>Estimated XIRR</span><strong>'+((r*100).toFixed(4))+'%</strong></div><div class="result-row"><span>Cash flows used</span><strong>'+flows.length+'</strong></div><div class="result-row"><span>First cash-flow date</span><strong>'+new Date(base).toISOString().slice(0,10)+'</strong></div><div class="result-row"><span>Last cash-flow date</span><strong>'+new Date(flows[flows.length-1].date).toISOString().slice(0,10)+'</strong></div><p class="small">Illustrative annualised return; fees, taxes and cash-flow classification are not validated.</p>';}
+ $('calc').addEventListener('click',solve);solve();
+}
+if(tool==='age-difference'){
+ function calc(){const a=$('dob1').value,b=$('dob2').value;if(!a||!b){$('result').textContent='Enter both dates.';return;}let start=new Date(a+'T00:00:00Z'),end=new Date(b+'T00:00:00Z');if(isNaN(start)||isNaN(end)){$('result').textContent='Enter valid dates.';return;}if(start>end)[start,end]=[end,start];let y=end.getUTCFullYear()-start.getUTCFullYear(),m=end.getUTCMonth()-start.getUTCMonth(),d=end.getUTCDate()-start.getUTCDate();if(d<0){m--;const prev=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth(),0));d+=prev.getUTCDate();}if(m<0){y--;m+=12;}const days=(end-start)/86400000;$('result').innerHTML='<div class="result-row"><span>Age difference</span><strong>'+y+' years, '+m+' months, '+d+' days</strong></div><div class="result-row"><span>Total calendar days</span><strong>'+days.toLocaleString('en-IN')+'</strong></div>';}
+ $('calc').addEventListener('click',calc);calc();
+}
+if(tool==='working-days'){
+ function calc(){const a=$('start').value,b=$('end').value;if(!a||!b||a>b){$('result').textContent='Enter a valid start date that is on or before the end date.';return;}const start=new Date(a+'T00:00:00Z'),end=new Date(b+'T00:00:00Z');if((end-start)/86400000>3660){$('result').textContent='Please choose a date range of ten years or less.';return;}const holidays=new Set($('holidays').value.split(/[\s,;]+/).map(x=>x.trim()).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)));let weekdays=0,excluded=0;for(let t=start.getTime();t<=end.getTime();t+=86400000){const d=new Date(t),day=d.getUTCDay(),key=d.toISOString().slice(0,10);if(day===0||day===6)continue;if(holidays.has(key)){excluded++;continue;}weekdays++;}$('result').innerHTML='<div class="result-row"><span>Working days</span><strong>'+weekdays+'</strong></div><div class="result-row"><span>Custom holidays excluded on weekdays</span><strong>'+excluded+'</strong></div><div class="result-row"><span>Calendar days in selected range</span><strong>'+((end-start)/86400000+1)+'</strong></div><p class="small">Saturday and Sunday are excluded. Enter the holidays that apply to your organisation or region; no official holiday calendar is fetched.</p>';}
+ $('calc').addEventListener('click',calc);calc();
+}
+})();
