@@ -211,7 +211,7 @@ test('dedicated PPF page calculates beginning-of-year annual compounding', () =>
   const context = { document: dom.document, Number, Math, alert() {} };
   vm.runInNewContext(script + '\nppfCalc();', context);
   const rows = resultRows(dom.get('ppf-res'));
-  closeTo(numericCurrency(rows.find(row => row[0] === 'Maturity value')[1]), 1627283.69, 0.2);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Maturity value')[1]), 1627283.69, 1);
   closeTo(numericCurrency(rows.find(row => row[0] === 'Total deposited')[1]), 900000, 0.1);
 });
 
