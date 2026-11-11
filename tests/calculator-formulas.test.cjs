@@ -315,3 +315,31 @@ test('dedicated Percentage Calculator calculates percentage of a value and perce
   assert.equal(result.textContent,'75%');
   assert.match(label.textContent,/Percentage change/);
 });
+
+
+test('scientific calculator parser evaluates arithmetic, functions and angle modes without dynamic code execution', () => {
+  const source = fs.readFileSync(new URL('../assets/scientific-calculator.js', 'file://' + __filename), 'utf8');
+  const sandbox = { window: {}, document: { addEventListener() {} }, Math, Number };
+  vm.runInNewContext(source, sandbox, { timeout: 1000 });
+  const evaluate = sandbox.window.FCScientific.evaluate;
+  closeTo(evaluate('sin(30)+sqrt(16)', 'deg'), 4.5, 1e-10);
+  closeTo(evaluate('log(1000)+ln(e)', 'deg'), 4, 1e-10);
+  closeTo(evaluate('2^3^2', 'deg'), 512, 1e-10);
+  closeTo(evaluate('sin(pi/2)', 'rad'), 1, 1e-10);
+  assert.throws(() => evaluate('window.alert(1)'), /Unsupported character|Unknown function/);
+  assert.throws(() => evaluate('sqrt(-1)'), /outside the supported real-number domain/);
+});
+
+test('dedicated LCM and HCF calculator returns correct common factors and multiples', () => {
+  const html = fs.readFileSync(new URL('../calculators/lcm-hcf-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('const gcd='));
+  assert.ok(script, 'LCM and HCF calculation script exists');
+  const dom = makeTestDom({ numbers: '12, 18, 30' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math });
+  assert.equal(dom.get('hcf').textContent, '6');
+  assert.equal(dom.get('lcm').textContent, '180');
+  dom.get('numbers').value = '8, 12';
+  dom.get('calculate').listeners.click();
+  assert.equal(dom.get('hcf').textContent, '4');
+  assert.equal(dom.get('lcm').textContent, '24');
+});
