@@ -4,8 +4,10 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const allowedOrigins = new Set(["https://friendlycalculator.in", "https://www.friendlycalculator.in"]);
 function cors(req: Request) {
   const origin = req.headers.get("origin") || "";
+  const previewOrigin = /^https:\/\/deploy-preview-\d+--avnishahirwar\.netlify\.app$/.test(origin);
+  const allowed = allowedOrigins.has(origin) || previewOrigin;
   return {
-    "Access-Control-Allow-Origin": allowedOrigins.has(origin) ? origin : "https://friendlycalculator.in",
+    "Access-Control-Allow-Origin": allowed ? origin : "https://friendlycalculator.in",
     "Access-Control-Allow-Headers": "authorization, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Vary": "Origin",
