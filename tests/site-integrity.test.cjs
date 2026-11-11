@@ -99,3 +99,61 @@ test('local links in public pages do not point to missing files', () => {
   }
   assert.deepEqual(failures, [], 'Broken local links: ' + failures.join(', '));
 });
+
+
+test('owner-designated permanent website features are protected from accidental removal', () => {
+  const requiredFiles = [
+    'calculator/business.html',
+    'calculator/pricing.html',
+    'calculator/premium-waitlist.html',
+    'calculator/contact.html',
+    'calculator/api.html',
+    'calculator/admin.html',
+    'calculator/about.html',
+    'calculator/privacy.html',
+    'calculator/terms.html',
+    'calculator/disclaimer.html',
+    'sitemap.xml',
+    'robots.txt',
+    'ads.txt'
+  ];
+  for (const file of requiredFiles) {
+    assert.ok(fs.existsSync(path.join(root, file)), 'Permanent website asset missing: ' + file);
+  }
+
+  const business = fs.readFileSync(path.join(root, 'calculator/business.html'), 'utf8');
+  const contact = fs.readFileSync(path.join(root, 'calculator/contact.html'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+
+  const permanentModels = [
+    'Business Dashboard & SaaS Workspaces', 'Embed-as-a-Service', 'Automated Business Reports',
+    'API Usage Packages', 'Digital Business Templates', 'Category Sponsorship',
+    'Enterprise Integration', 'White-label SaaS Platform', 'Consent-based Lead Generation',
+    'Expert & Professional Referrals', 'Paid Membership & Productivity Benefits',
+    'Strategic Licensing & Platform Exit', 'Accountant & CA Practice Tools',
+    'HR, Payroll & Employer Workflows', 'Bank, NBFC & Fintech Calculator Partnerships',
+    'Real Estate & Property Tools', 'E-commerce Pricing & Margin Tools',
+    'Agency & Consultant Reseller Programme', 'Developer Integration & Implementation Fees',
+    'Priority Support & Service-Level Plans', 'Schools, Colleges & Training Licences',
+    'Energy, Solar & Utility Calculator Solutions', 'Construction & Contractor Estimators',
+    'Travel, Fuel & Fleet Cost Tools', 'Insurance Estimation & Referral Partnerships',
+    'Privacy-safe Aggregate Usage Insights', 'Publisher & Media Calculator Syndication',
+    'Contextual Merchant Referrals', 'Sponsored Tools & Co-branded Campaigns',
+    'Multi-location Franchise Licences', 'Supplier & Distributor Calculator Portals',
+    'Onboarding, Training & Workshops'
+  ];
+  for (const model of permanentModels) {
+    assert.ok(business.includes(model), 'Permanent business model missing: ' + model);
+  }
+
+  assert.match(business, /Permanent catalogue policy/i);
+  assert.match(contact, /Business Enquiries & Partnerships/i);
+  assert.match(contact, /Custom calculator development/i);
+  assert.match(shell, /instagram\.com\/avnish_ahirwar/);
+  assert.match(shell, /linkedin\.com\/in\/avnishahirwar415/);
+  assert.match(shell, /mailto:avnishahirwar415@gmail\.com/);
+  assert.doesNotMatch(shell, /About, trust & policies/i);
+  assert.match(shell, /\\.ad-slot/);
+  assert.match(shell, /\\.ad-placeholder/);
+  assert.match(shell, /\\.adsense-placeholder/);
+});
