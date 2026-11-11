@@ -53,8 +53,8 @@
       const tbody=document.createElement("tbody");
       rows.forEach(([label,value,suffix])=>{const tr=document.createElement("tr"),name=document.createElement("th"),val=document.createElement("td");name.scope="row";name.textContent=label;val.textContent=formatResult(value,suffix);tr.append(name,val);tbody.appendChild(tr)});
       table.appendChild(tbody);output.appendChild(table);
-      const numeric=rows.filter(row=>typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0&&!row[2]);
-      if(numeric.length>=1&&numeric.every(row=>!row[2])){
+      const numeric=rows.filter(row=>typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0&&(!row[2]||row[2]==="number"||row[2]==="L"));
+      if(numeric.length>=1){
         const chart=document.createElement("section");chart.className="fc-result-chart";
         const title=document.createElement("h3");title.textContent=def.title==="BMI Calculator"?"BMI number visual (not a health classification)":"Result comparison chart";chart.appendChild(title);
         const note=document.createElement("p");note.textContent=def.title==="BMI Calculator"?"The marker shows only the calculated number on a neutral 0–50 scale. It does not indicate a diagnosis or adult category.":"Bars use a shared relative scale; compare values only within this calculation.";chart.appendChild(note);
