@@ -60,7 +60,7 @@
       const tbody=document.createElement("tbody");
       rows.forEach(([label,value,suffix])=>{const tr=document.createElement("tr"),name=document.createElement("th"),val=document.createElement("td");name.scope="row";name.textContent=label;val.textContent=formatResult(value,suffix);tr.append(name,val);tbody.appendChild(tr)});
       table.appendChild(tbody);output.appendChild(table);
-      const numeric=rows.filter(row=>typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0&&(!row[2]||row[2]==="number"||row[2]==="L"));
+      const numeric=lookupKey==="fuel cost calculator"?[]:rows.filter(row=>typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0&&!row[2]);if(lookupKey==="bmi calculator")numeric.push(...rows.filter(row=>row[2]==="number"&&typeof row[1]==="number"&&Number.isFinite(row[1])&&row[1]>=0));
       if(numeric.length>=1){
         const chart=document.createElement("section");chart.className="fc-result-chart";
         const title=document.createElement("h3");title.textContent=def.title==="BMI Calculator"?"BMI number visual (not a health classification)":"Result comparison chart";chart.appendChild(title);
