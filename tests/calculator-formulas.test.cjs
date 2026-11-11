@@ -209,7 +209,7 @@ test('dedicated PPF page calculates beginning-of-year annual compounding', () =>
   assert.ok(script, 'PPF calculation function exists');
   const dom = makeTestDom({ 'ppf-amt': '60000', 'ppf-rate': '7.1', 'ppf-years': '15' });
   const context = { document: dom.document, Number, Math, alert() {} };
-  vm.runInNewContext(script + '\\nppfCalc();', context);
+  vm.runInNewContext(script + '\nppfCalc();', context);
   const rows = resultRows(dom.get('ppf-res'));
   closeTo(numericCurrency(rows.find(row => row[0] === 'Maturity value')[1]), 1627283.69, 0.2);
   closeTo(numericCurrency(rows.find(row => row[0] === 'Total deposited')[1]), 900000, 0.1);
@@ -223,7 +223,7 @@ test('dedicated CTC salary page calculates monthly take-home from entered deduct
     'ctc-amt': '1200000', 'ctc-basic': '40', 'ctc-pf': '12',
     'ctc-grat': '1', 'ctc-pt': '200', 'ctc-tds': '3500'
   });
-  vm.runInNewContext(script + '\\nctcCalc();', { document: dom.document, Number, Math, alert() {} });
+  vm.runInNewContext(script + '\nctcCalc();', { document: dom.document, Number, Math, alert() {} });
   const rows = resultRows(dom.get('ctc-res'));
   closeTo(numericCurrency(rows.find(row => row[0] === 'Monthly take-home estimate')[1]), 84776, 1);
 });
@@ -235,7 +235,7 @@ test('dedicated HRA page applies the lowest-of-three exemption rule', () => {
   const dom = makeTestDom({
     'hra-recd': '240000', 'hra-basic': '600000', 'hra-rent': '300000', 'hra-metro': '1'
   });
-  vm.runInNewContext(script + '\\nhraCalc();', { document: dom.document, Number, Math, alert() {} });
+  vm.runInNewContext(script + '\nhraCalc();', { document: dom.document, Number, Math, alert() {} });
   const rows = resultRows(dom.get('hra-res'));
   closeTo(numericCurrency(rows.find(row => row[0] === 'Exempted HRA')[1]), 240000, 0.1);
   closeTo(numericCurrency(rows.find(row => row[0] === 'Taxable HRA')[1]), 0, 0.1);
