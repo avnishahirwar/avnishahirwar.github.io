@@ -21,6 +21,11 @@ if(!document.querySelector('link[rel="icon"][type="image/png"]')){const l=docume
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
   }
 }
+const main=document.querySelector('main,[role="main"]');
+if(main&&!main.id)main.id='fc-main-content';
+if(main&&!document.querySelector('.fc-skip-link')){
+  const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent='Skip to main content';document.body.prepend(skip);
+}
 const h=document.createElement('header');h.className='fc-global-header';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/favicon.svg" width="34" height="34" alt="" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a class="fc-admin-link" href="'+r+'admin.html" rel="nofollow"'+(p===r+'admin.html'?' aria-current="page"':'')+'>Admin</a>'+'</nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
