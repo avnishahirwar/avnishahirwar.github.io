@@ -165,10 +165,13 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
-test('the shared public navigation does not expose the admin dashboard link', () => {
+test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(!shell.includes('fc-admin-link') && !shell.includes('admin.html'));
+  assert.ok(shell.includes("['Admin',r+'admin.html']"));
+  assert.equal((shell.match(/\['Admin',r\+'admin\.html'\]/g) || []).length, 1);
   assert.ok(fs.existsSync(path.join(root, 'calculator/admin.html')), 'Admin dashboard page must remain preserved');
+  const dashboard = fs.readFileSync(path.join(root, 'calculator/admin.html'), 'utf8');
+  assert.match(dashboard, /app_metadata\?\.role!==['"]admin['"]/);
 });
 
 test('About page catalogue count matches the twenty published calculator pages', () => {

@@ -11,7 +11,8 @@ const links=[
 ['API',r+'api.html'],
 ['Plans',r+'pricing.html'],
 ['About',r+'about.html'],
-['Contact',r+'contact.html']
+['Contact',r+'contact.html'],
+['Admin',r+'admin.html']
 ];
 const p=location.pathname;
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
