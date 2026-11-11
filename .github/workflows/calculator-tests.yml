@@ -15,4 +15,4 @@ jobs:
         with:
           node-version: 22
       - name: Run calculator regression tests
-        run: node --test tests/calculator-formulas.test.cjs
+        run: node --test tests/calculator-formulas.test.cjs tests/api-platform.test.cjs
