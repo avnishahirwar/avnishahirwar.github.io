@@ -173,7 +173,7 @@ print(response.json()["result"])</code></pre>
 <li>Valid-key requests that reach calculation processing count toward monthly quota, including invalid-input responses.</li>
 <li>Requests rejected for invalid keys, disabled API access, exhausted quota or rate limits do not consume monthly quota.</li>
 <li>Try API sends a real production request and counts toward quota and rate limits when it reaches processing.</li>
-<li>The Free plan currently has no API access by default. API access requires an enabled API plan or an administrator-granted quota. The Business plans in the existing plan catalogue include API access; subscription checkout is not currently active.</li>
+<li>The Free plan includes 50 API requests per calendar month for signed-in customers. The quota is enforced server-side and shared across all API keys on the same account; it resets at the start of each calendar month.</li>
 <li>API keys issued before the new plan gate are grandfathered with a high compatibility ceiling and their existing per-minute limit. Newly generated keys follow the current plan and quota rules.</li>
 </ul>
 </div>
