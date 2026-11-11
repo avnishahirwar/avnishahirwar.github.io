@@ -107,7 +107,7 @@ test('production formula functions return correct numeric results for every shar
       ['Estimated contributions', 432000], ['Illustrative accumulated value', 1093788.39], ['Illustrative interest', 661788.39]
     ]],
     ['income tax calculator india', { income: 1200000, regime: 'New regime — Tax Year 2026–27' }, [
-      ['Tax before rebate', 60000], ['Indicative rebate', 60000], ['Estimated tax including cess', 0]
+      ['Tax before rebate', 60000], ['Section 87A rebate (if eligible)', 60000], ['Estimated tax including cess', 0]
     ]],
     ['salary tds calculator', { income: 900000, paid: 0, months: 6 }, [
       ['Indicative annual tax incl. cess', 0], ['Estimated balance', 0], ['Indicative monthly TDS', 0]
