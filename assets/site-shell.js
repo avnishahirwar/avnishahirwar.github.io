@@ -58,7 +58,7 @@ document.addEventListener('click',event=>{
 document.addEventListener('change',event=>{
   const field=event.target;
   if(!field||field.id!=='calculatorSearch'||!field.value.trim()||typeof window.gtag!=='function')return;
-  const count=Number((document.getElementById('searchCount')?.textContent||'').match(/\\d+/)?.[0]||0);
+  const count=Number((document.getElementById('searchCount')?.textContent||'').match(/\d+/)?.[0]||0);
   window.gtag('event','calculator_search',{
     search_term_length:field.value.trim().length,
     results_count:count
