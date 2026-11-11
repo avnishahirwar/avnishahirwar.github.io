@@ -1,5 +1,6 @@
 (() => {
   "use strict";
+  const localDateString = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-");
   const definitions = {
 
     "income tax calculator india": {title:"Income Tax Calculator (Tax Year 2026–27)",fields:[["income","Annual taxable income before tax (₹)","number",1200000],["regime","Tax regime","select",["New regime — Tax Year 2026–27","Old regime — individual below 60"]]],calc:v=>{
@@ -29,7 +30,6 @@
     "electricity bill calculator": {title:"Electricity Bill Calculator",fields:[["units","Units consumed (kWh)","number",200],["rate","Rate per unit (₹)","number",7],["fixed","Fixed charges (₹)","number",100],["other","Other charges (₹)","number",0]],calc:v=>[["Energy charges",v.units*v.rate],["Estimated bill",v.units*v.rate+v.fixed+v.other]]},
     "profit & loss calculator": {title:"Profit & Loss Calculator",fields:[["cost","Cost price (₹)","number",1000],["selling","Selling price (₹)","number",1250]],calc:v=>{const diff=v.selling-v.cost;return [[diff>=0?"Profit":"Loss",Math.abs(diff)],["Percentage on cost",v.cost?Math.abs(diff)/v.cost*100:0,"%"]];}}
   };
-  const localDateString = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-");
   const money = n => "₹"+Number(n).toLocaleString("en-IN",{maximumFractionDigits:2});
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
