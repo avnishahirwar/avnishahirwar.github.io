@@ -173,7 +173,7 @@ function makeTestDom(values = {}) {
   return { document, get, elements };
 }
 function inlineScripts(html) {
-  return [...html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi)]
+  return [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
     .map(match => match[1]).filter(script => script.trim() && !script.trim().startsWith('{'));
 }
 function resultRows(element) {
