@@ -74,7 +74,7 @@ function calculate(calculator: string, input: Record<string, unknown>) {
     const base = remove ? round(amount * 100 / (100 + rate)) : round(amount);
     const total = remove ? round(amount) : round(base + round(base * rate / 100));
     const tax = round(total - base);
-    const intra = !["inter","inter-state","igst"].includes(supply);
+    const intra = !(supply.startsWith("inter") || supply.startsWith("igst"));
     const cgst = intra ? round(tax / 2) : 0;
     const sgst = intra ? round(tax - cgst) : 0;
     return {
@@ -157,7 +157,7 @@ function calculate(calculator: string, input: Record<string, unknown>) {
   if (calculator === "income-tax") {
     const income = num(input, "income", "taxableIncome");
     const regime = str(input, "regime") || "New regime";
-    if (!(income >= 0 && income <= limit) || !["new regime","new regime — tax year 2026–27","old regime","old regime — individual below 60"].includes(regime.toLowerCase())) {
+    if (!(income >= 0 && income <= limit) || !["new","old","new regime","new regime — tax year 2026–27","old regime","old regime — individual below 60"].includes(regime.toLowerCase())) {
       throw new Error("Income tax requires non-negative annual taxable income and regime 'new' or 'old'.");
     }
     const tax = taxEstimate(income, regime);
