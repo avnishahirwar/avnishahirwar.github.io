@@ -186,3 +186,12 @@ test('contact page has one consistent indexable robots directive', () => {
   assert.equal((contact.match(/<meta[^>]+name=["']robots["']/gi) || []).length, 1);
   assert.doesNotMatch(contact, /name=["']googlebot["'][^>]+noindex/i);
 });
+
+
+test('GA4 records calculator actions and privacy-safe search metadata', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /calculator_calculate/);
+  assert.match(shell, /calculator_search/);
+  assert.match(shell, /search_term_length/);
+  assert.doesNotMatch(shell, /search_term:\s*field\.value/);
+});
