@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 const api = fs.readFileSync(path.join(root, 'supabase/functions/calculator-api/index.ts'), 'utf8');
@@ -79,4 +80,14 @@ test('quota reservation is serialized per key and RPC functions are service-role
   assert.match(migration, /revoke all on function public\.reserve_api_request[\s\S]*from public, anon, authenticated/i);
   assert.match(migration, /grant execute on function public\.reserve_api_request[\s\S]*to service_role/i);
   assert.match(migration, /api_customer_access enable row level security/i);
+});
+
+test('customer, admin and documentation browser scripts are syntactically valid JavaScript', () => {
+  for (const [name, html] of [['customer dashboard', customer], ['admin dashboard', admin], ['API docs', docs]]) {
+    const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
+      .map(match => match[1].trim())
+      .filter(code => code && !code.startsWith('{') && !/application\/ld\+json/i.test(code));
+    assert.ok(scripts.length > 0, name + ' should contain a browser script');
+    for (const code of scripts) assert.doesNotThrow(() => new vm.Script(code), name + ' script should parse');
+  }
 });
