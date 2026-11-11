@@ -153,7 +153,7 @@ test('owner-designated permanent website features are protected from accidental 
   assert.match(shell, /linkedin\.com\/in\/avnishahirwar415/);
   assert.match(shell, /mailto:avnishahirwar415@gmail\.com/);
   assert.doesNotMatch(shell, /About, trust & policies/i);
-  assert.match(shell, /\\.ad-slot/);
-  assert.match(shell, /\\.ad-placeholder/);
-  assert.match(shell, /\\.adsense-placeholder/);
+  assert.match(shell, /\.ad-slot/);
+  assert.match(shell, /\.ad-placeholder/);
+  assert.match(shell, /\.adsense-placeholder/);
 });
