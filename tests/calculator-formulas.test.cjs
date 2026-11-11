@@ -50,7 +50,9 @@ test('FD, EPF and Profit & Loss page titles resolve to live calculator definitio
 // Execute the production formula definitions in an isolated VM. The page boot
 // listener is stubbed so tests exercise the real calc functions without a DOM.
 function loadFormulaDefinitions() {
-  const instrumented = source.replace(/\\}\\)\\(\\);\\s*$/, 'globalThis.__calculatorDefinitions = definitions;\\n})();');
+  const wrapperEnd = source.lastIndexOf('})();');
+  assert.ok(wrapperEnd >= 0, 'Formula engine IIFE should have a closing wrapper');
+  const instrumented = source.slice(0, wrapperEnd) + 'globalThis.__calculatorDefinitions = definitions;\\n' + source.slice(wrapperEnd);
   assert.notEqual(instrumented, source, 'Formula engine wrapper should be instrumentable');
   const sandbox = {
     document: { readyState: 'loading', addEventListener() {} },
