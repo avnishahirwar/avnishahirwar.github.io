@@ -177,10 +177,10 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
 test('About page catalogue matches every published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const calculatorPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html')).sort();
-  const countMatch = about.match(/Available calculators \\(\\d+ tools\\)/);
+  const countMatch = about.match(/Available calculators \(\d+ tools\)/);
   assert.ok(countMatch, 'About page must publish the calculator catalogue count');
   assert.ok(about.includes('Available calculators (' + calculatorPages.length + ' tools)'));
-  const linkedPages = [...about.matchAll(/<li><a href="\\/calculators\\/([^"]+)"\\>/g)].map(match => match[1]).sort();
+  const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
 });
 
