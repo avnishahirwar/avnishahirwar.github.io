@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 1,
+  "project": "Friendly Calculator",
+  "domain": "friendlycalculator.in",
+  "createdAt": "2026-11-11",
+  "market": {
+    "country": "India",
+    "locationCode": 2356,
+    "languageCode": "en"
+  },
+  "source": "User-provided keyword list",
+  "openSEO": {
+    "saved": 82,
+    "projectId": "1370d932-6719-47d4-bfae-891d177ce083",
+    "note": "Saved phrases are not verified search-volume or ranking data; duplicates are deduplicated by OpenSEO."
+  },
+  "keywordCount": 82,
+  "keywords": [
+    "age calculator",
+    "age calculator by date of birth",
+    "how old am I",
+    "age calculator in years months days",
+    "date difference calculator",
+    "days between two dates",
+    "calculate my exact age",
+    "age calculator online free",
+    "date of birth to age converter",
+    "how many days until my birthday",
+    "calculator online free",
+    "simple calculator online",
+    "scientific calculator online",
+    "percentage calculator",
+    "percentage increase calculator",
+    "EMI calculator",
+    "home loan EMI calculator",
+    "car loan EMI calculator",
+    "personal loan EMI calculator",
+    "loan interest calculator",
+    "simple interest calculator",
+    "compound interest calculator",
+    "SIP calculator",
+    "mutual fund SIP returns calculator",
+    "FD calculator",
+    "RD calculator",
+    "PPF calculator",
+    "NPS calculator",
+    "income tax calculator India",
+    "GST calculator",
+    "GST inclusive and exclusive calculator",
+    "take home salary calculator",
+    "compound interest yearly calculator",
+    "lumpsum investment calculator",
+    "retirement corpus calculator",
+    "EMI vs SIP comparison",
+    "loan prepayment calculator",
+    "credit card interest calculator",
+    "savings account interest calculator",
+    "recurring deposit maturity calculator",
+    "inflation calculator India",
+    "future value calculator",
+    "investment growth calculator",
+    "percentage calculator online",
+    "average calculator",
+    "ratio calculator",
+    "fraction calculator",
+    "decimal to fraction calculator",
+    "square root calculator",
+    "cube root calculator",
+    "exponent calculator",
+    "logarithm calculator",
+    "trigonometry calculator",
+    "area calculator",
+    "circle area calculator",
+    "triangle area calculator",
+    "volume calculator",
+    "CGPA to percentage calculator",
+    "percentage to CGPA calculator",
+    "HRA exemption calculator",
+    "TDS calculator",
+    "gratuity calculator",
+    "salary hike calculator",
+    "marks percentage calculator",
+    "discount calculator",
+    "profit and loss calculator",
+    "markup calculator",
+    "margin calculator",
+    "break even calculator",
+    "invoice total calculator",
+    "cm to feet converter",
+    "kg to pounds calculator",
+    "celsius to fahrenheit calculator",
+    "inches to cm converter",
+    "km to miles converter",
+    "unit converter online",
+    "currency converter calculator",
+    "time zone converter calculator",
+    "tip calculator",
+    "fuel cost calculator",
+    "mileage calculator",
+    "love percentage calculator"
+  ],
+  "groups": {
+    "ageDate": {
+      "terms": [
+        "age calculator",
+        "age calculator by date of birth",
+        "how old am I",
+        "age calculator in years months days",
+        "date difference calculator",
+        "days between two dates",
+        "calculate my exact age",
+        "age calculator online free",
+        "date of birth to age converter",
+        "how many days until my birthday"
+      ],
+      "existing": [
+        "calculators/age-calculator.html"
+      ],
+      "new": [
+        "Date Difference Calculator (created in this batch)"
+      ]
+    },
+    "basicMath": {
+      "terms": [
+        "calculator online free",
+        "simple calculator online",
+        "scientific calculator online",
+        "percentage calculator",
+        "percentage increase calculator",
+        "percentage calculator online",
+        "average calculator",
+        "ratio calculator",
+        "fraction calculator",
+        "decimal to fraction calculator",
+        "square root calculator",
+        "cube root calculator",
+        "exponent calculator",
+        "logarithm calculator",
+        "trigonometry calculator",
+        "area calculator",
+        "circle area calculator",
+        "triangle area calculator",
+        "volume calculator",
+        "CGPA to percentage calculator",
+        "percentage to CGPA calculator"
+      ],
+      "existing": [
+        "calculators/basic-calculator.html",
+        "calculators/discount-calculator.html"
+      ],
+      "new": [
+        "Scientific Calculator",
+        "Fraction Calculator",
+        "Average Calculator",
+        "Ratio Calculator",
+        "Square Root / Cube Root Calculator",
+        "Exponent and Logarithm Calculator",
+        "Trigonometry Calculator",
+        "Area and Volume Calculator"
+      ]
+    },
+    "financeLoan": {
+      "terms": [
+        "EMI calculator",
+        "home loan EMI calculator",
+        "car loan EMI calculator",
+        "personal loan EMI calculator",
+        "loan interest calculator",
+        "simple interest calculator",
+        "compound interest calculator",
+        "SIP calculator",
+        "mutual fund SIP returns calculator",
+        "FD calculator",
+        "RD calculator",
+        "PPF calculator",
+        "NPS calculator",
+        "income tax calculator India",
+        "GST calculator",
+        "GST inclusive and exclusive calculator",
+        "take home salary calculator"
+      ],
+      "existing": [
+        "calculators/loan-emi-calculator.html",
+        "calculators/fd-calculator.html",
+        "calculators/rd-calculator.html",
+        "calculators/sip-calculator.html",
+        "calculators/ppf-calculator.html",
+        "calculators/epf-pf-calculator.html",
+        "calculators/income-tax-calculator.html",
+        "calculators/gst-calculator.html",
+        "calculators/salary-calculator.html"
+      ],
+      "new": [
+        "Loan Prepayment Calculator",
+        "Credit Card Interest Calculator",
+        "Lumpsum Calculator",
+        "Compound Interest Calculator",
+        "Simple Interest Calculator",
+        "NPS Calculator",
+        "Retirement Corpus Calculator",
+        "EMI vs SIP Comparison"
+      ]
+    },
+    "investmentSavings": {
+      "terms": [
+        "compound interest yearly calculator",
+        "lumpsum investment calculator",
+        "retirement corpus calculator",
+        "EMI vs SIP comparison",
+        "loan prepayment calculator",
+        "credit card interest calculator",
+        "savings account interest calculator",
+        "recurring deposit maturity calculator",
+        "inflation calculator India",
+        "future value calculator",
+        "investment growth calculator"
+      ],
+      "existing": [
+        "calculators/savings-interest-calculator.html",
+        "calculators/inflation-calculator.html",
+        "calculators/rd-calculator.html",
+        "calculators/sip-calculator.html"
+      ],
+      "new": [
+        "Future Value Calculator",
+        "Investment Growth Calculator"
+      ]
+    },
+    "taxBusiness": {
+      "terms": [
+        "HRA exemption calculator",
+        "TDS calculator",
+        "gratuity calculator",
+        "salary hike calculator",
+        "marks percentage calculator",
+        "discount calculator",
+        "profit and loss calculator",
+        "markup calculator",
+        "margin calculator",
+        "break even calculator",
+        "invoice total calculator"
+      ],
+      "existing": [
+        "calculators/hra-calculator.html",
+        "calculators/tds-calculator.html",
+        "calculators/discount-calculator.html",
+        "calculators/profit-loss-calculator.html"
+      ],
+      "new": [
+        "Gratuity Calculator",
+        "Salary Hike Calculator",
+        "Break-even Calculator",
+        "Invoice Total Calculator"
+      ]
+    },
+    "conversion": {
+      "terms": [
+        "cm to feet converter",
+        "kg to pounds calculator",
+        "celsius to fahrenheit calculator",
+        "inches to cm converter",
+        "km to miles converter",
+        "unit converter online",
+        "currency converter calculator",
+        "time zone converter calculator"
+      ],
+      "existing": [
+        "calculators/fuel-cost-calculator.html"
+      ],
+      "new": [
+        "Unit Converter",
+        "Currency Converter (live exchange source required)",
+        "Time Zone Converter"
+      ]
+    },
+    "dailyUse": {
+      "terms": [
+        "tip calculator",
+        "fuel cost calculator",
+        "mileage calculator",
+        "love percentage calculator"
+      ],
+      "existing": [
+        "calculators/fuel-cost-calculator.html"
+      ],
+      "new": [
+        "Tip Calculator",
+        "Love Percentage Calculator"
+      ]
+    }
+  },
+  "excludedTerms": {
+    "count": 18,
+    "reason": "Health, body-measurement, calorie, weight-target and reproductive/medical calculators are excluded from this SEO expansion.",
+    "terms": [
+      "BMI calculator",
+      "BMI calculator for men",
+      "BMI calculator for women",
+      "ideal weight calculator",
+      "body fat percentage calculator",
+      "BMR calculator",
+      "calorie calculator",
+      "daily calorie intake calculator",
+      "TDEE calculator",
+      "protein intake calculator",
+      "water intake calculator",
+      "pregnancy due date calculator",
+      "ovulation calculator",
+      "period calculator",
+      "baby growth percentile calculator",
+      "heart rate zone calculator",
+      "macro calculator",
+      "pregnancy weeks calculator"
+    ]
+  },
+  "implementationRules": [
+    "Map relevant queries to existing tools when functionality matches; avoid duplicate doorway pages.",
+    "A new page needs a distinct calculation, validated formula, unique explanatory content and internal links.",
+    "Financial projections must state assumptions and are not bank, tax or investment advice.",
+    "Currency and time-zone conversion require reliable live data sources and visible update times.",
+    "Do not assert search volume, high traffic, rankings or revenue without measured evidence."
+  ],
+  "nextBuildPriority": [
+    "Scientific Calculator",
+    "Fraction Calculator",
+    "Unit Converter",
+    "Compound Interest Calculator",
+    "Lumpsum Calculator",
+    "Loan Prepayment Calculator",
+    "Gratuity Calculator",
+    "Break-even Calculator",
+    "Time Zone Converter"
+  ]
+}
