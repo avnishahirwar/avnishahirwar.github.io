@@ -109,6 +109,19 @@ async function accessForUser(admin: any, userId: string) {
       rate_limit_per_minute: 60, valid_until: entitlement.valid_until, source: "entitlement"
     };
   }
+  const { data: legacyKeys, error: legacyError } = await admin.from("api_keys")
+    .select("rate_limit_per_minute,expires_at")
+    .eq("owner_id", userId).eq("legacy_access", true).is("revoked_at", null);
+  if (legacyError) throw legacyError;
+  const activeLegacy = (legacyKeys || []).filter((key: any) =>
+    !key.expires_at || new Date(key.expires_at).getTime() > Date.now());
+  if (activeLegacy.length) {
+    return {
+      enabled: true, plan_code: "legacy", monthly_quota: 10000000,
+      rate_limit_per_minute: Math.min(...activeLegacy.map((key: any) => Number(key.rate_limit_per_minute) || 60)),
+      valid_until: null, source: "grandfathered"
+    };
+  }
   return {
     enabled: false, plan_code: "free", monthly_quota: 0,
     rate_limit_per_minute: 60, valid_until: null, source: "none"
@@ -177,7 +190,7 @@ async function dashboardData(admin: any, user: any) {
 async function adminDashboard(admin: any) {
   const [usersResult, keysResult, accessResult, subsResult, usageResult, plansResult] = await Promise.all([
     admin.auth.admin.listUsers({ page: 1, perPage: 1000 }),
-    admin.from("api_keys").select("id,owner_id,name,key_prefix,rate_limit_per_minute,created_at,expires_at,revoked_at,last_used_at").order("created_at", { ascending: false }).limit(1000),
+    admin.from("api_keys").select("id,owner_id,name,key_prefix,rate_limit_per_minute,legacy_access,created_at,expires_at,revoked_at,last_used_at").order("created_at", { ascending: false }).limit(1000),
     admin.from("api_customer_access").select("user_id,plan_code,enabled,monthly_quota,rate_limit_per_minute,valid_until,updated_at"),
     admin.from("user_subscriptions").select("user_id,plan_code,status,current_start,current_end,created_at").eq("status", "active"),
     admin.from("api_usage").select("id,api_key_id,endpoint,status_code,duration_ms,created_at").order("created_at", { ascending: false }).limit(100),
@@ -214,15 +227,22 @@ async function adminDashboard(admin: any) {
     const subQuota = subActive
       ? (plan.billing_interval === "yearly" ? Math.max(1, Math.ceil(Number(plan.api_credits_per_cycle) / 12)) : Number(plan.api_credits_per_cycle))
       : 0;
+    const activeLegacy = (keyMap.get(id) || []).filter((key: any) =>
+      key.legacy_access && !key.revoked_at &&
+      (!key.expires_at || new Date(key.expires_at).getTime() > Date.now()));
+    const legacyQuota = activeLegacy.length ? 10000000 : 0;
+    const legacyRpm = activeLegacy.length
+      ? Math.min(...activeLegacy.map((key: any) => Number(key.rate_limit_per_minute) || 60))
+      : 60;
     return {
       user_id: id,
       email: u?.email || "(email unavailable)",
       created_at: u?.created_at || null,
-      plan_code: access?.plan_code || (subActive ? sub.plan_code : "free"),
+      plan_code: access?.plan_code || (subActive ? sub.plan_code : (legacyQuota ? "legacy" : "free")),
       enabled: access ? Boolean(access.enabled && access.monthly_quota > 0 &&
-        (!access.valid_until || new Date(access.valid_until).getTime() > Date.now())) : subActive,
-      monthly_quota: access?.monthly_quota ?? subQuota,
-      rate_limit_per_minute: access?.rate_limit_per_minute ?? 60,
+        (!access.valid_until || new Date(access.valid_until).getTime() > Date.now())) : (subActive || legacyQuota > 0),
+      monthly_quota: access?.monthly_quota ?? (subQuota || legacyQuota),
+      rate_limit_per_minute: access?.rate_limit_per_minute ?? legacyRpm,
       valid_until: access?.valid_until || sub?.current_end || null,
       keys: (keyMap.get(id) || []).length
     };
