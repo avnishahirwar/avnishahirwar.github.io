@@ -308,10 +308,14 @@ Deno.serve(async (req: Request) => {
       const { data: target, error: targetError } = await admin.auth.admin.getUserById(userId);
       if (targetError || !target?.user) return reply(req, { error: "Customer account was not found.", code: "USER_NOT_FOUND" }, 404);
       const validUntil = clean(body.valid_until, 40);
+      const validDate = validUntil ? new Date(validUntil) : null;
+      if (validDate && !Number.isFinite(validDate.getTime())) {
+        return reply(req, { error: "Access expiry must be a valid date and time.", code: "INVALID_EXPIRY" }, 400);
+      }
       const payload = {
         user_id: userId, plan_code: planCode, enabled, monthly_quota: quota,
         rate_limit_per_minute: rpm,
-        valid_until: validUntil ? new Date(validUntil).toISOString() : null,
+        valid_until: validDate ? validDate.toISOString() : null,
         updated_by: auth.user.id, updated_at: new Date().toISOString()
       };
       const { error } = await admin.from("api_customer_access").upsert(payload, { onConflict: "user_id" });
