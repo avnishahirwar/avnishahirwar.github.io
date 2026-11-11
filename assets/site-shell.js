@@ -2,6 +2,7 @@
 const r='/calculator/';
 const links=[
 ['Home','/'],
+['Log In',r+'dashboard.html'],
 ['All Calculators',r+'site-directory.html'],
 ['Finance',r+'finance-calculators.html'],
 ['Tax',r+'tax-calculators.html'],
@@ -10,7 +11,6 @@ const links=[
 ['For Business',r+'business.html'],
 ['API',r+'api.html'],
 ['Plans',r+'pricing.html'],
-['Log In',r+'dashboard.html'],
 ['About',r+'about.html'],
 ['Contact',r+'contact.html'],
 ['Admin',r+'admin.html']
