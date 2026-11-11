@@ -3,12 +3,12 @@
   const localDateString = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-");
   const definitions = {
 
-    "income tax calculator india": {title:"Income Tax Calculator (Tax Year 2026–27)",fields:[["income","Annual taxable income before tax (₹)","number",1200000],["regime","Tax regime","select",["New regime — Tax Year 2026–27","Old regime — individual below 60"]]],calc:v=>{
+    "income tax calculator india": {title:"Income Tax Calculator (Tax Year 2026–27)",fields:[["income","Annual taxable income (₹)","number",1200000],["regime","Tax regime","select",["New regime — Tax Year 2026–27","Old regime — individual below 60"]],["residency","Section 87A rebate eligibility","select",["Resident individual","Non-resident / not eligible"]]],calc:v=>{
       const slabs=v.regime.startsWith("New")?[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]]:[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]];
       let prev=0,tax=0;for(const [cap,rate] of slabs){const slice=Math.max(0,Math.min(v.income,cap)-prev);tax+=slice*rate;prev=cap;if(v.income<=cap)break;}
-      let rebate=0;if(v.regime.startsWith("New")){rebate=v.income<=1200000?Math.min(tax,60000):Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)));}else if(v.income<=500000){rebate=Math.min(tax,12500);}
+      const eligible=v.residency==="Resident individual";let rebate=0;if(eligible&&v.regime.startsWith("New")){rebate=v.income<=1200000?Math.min(tax,60000):Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)));}else if(eligible&&v.income<=500000){rebate=Math.min(tax,12500);}
       const after=Math.max(0,tax-rebate),cess=after*.04,total=after+cess;
-      return [["Taxable income",v.income],["Tax before rebate",tax],["Indicative rebate",rebate],["Health & education cess (4%)",cess],["Estimated tax including cess",total]];
+      return [["Taxable income",v.income],["Tax before rebate",tax],["Section 87A rebate (if eligible)",rebate],["Health & education cess (4%)",cess],["Estimated tax including cess",total]];
     }},
     "salary tds calculator": {title:"Salary TDS Calculator (indicative)",fields:[["income","Annual taxable income (₹)","number",900000],["paid","TDS / tax already paid (₹)","number",0],["months","Payroll months remaining","number",6]],calc:v=>{
       const slabs=[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]];
@@ -72,7 +72,7 @@
         "sip calculator india":"The SIP estimate compounds regular monthly contributions at the assumed monthly rate. Contributions are treated as made at the beginning of each month; actual market returns are not fixed.",
         "epf / pf calculator":"This is a simplified monthly-contribution projection using the entered annual rate divided by 12. It models the entered employee contribution only and does not reproduce the EPFO passbook's exact monthly interest-credit rules.",
         "gst calculator":"For Add GST: GST = taxable value × rate ÷ 100; invoice total = taxable value + GST. For Remove GST: taxable value = inclusive amount × 100 ÷ (100 + rate); embedded GST = inclusive amount − taxable value. Intra-state supplies are shown as CGST and SGST (split equally, with rounding to paise); inter-state supplies are shown as IGST. The calculator does not decide the legally applicable rate or place of supply.",
-        "income tax calculator india":"The estimate applies configured slabs, the section 87A rebate including marginal relief around the ₹12 lakh new-regime threshold, and 4% cess. It does not model every exemption, deduction, surcharge, special-rate income or individual tax circumstance.",
+        "income tax calculator india":"The estimate applies the selected simplified slab schedule, checks resident-individual eligibility before applying the Section 87A rebate (including a basic marginal-relief adjustment around the ₹12 lakh new-regime threshold), and adds 4% cess. It does not calculate deductions from gross salary or model surcharge, special-rate income or every personal tax circumstance.",
         "salary tds calculator":"The tool estimates annual tax using configured new-regime slabs and section 87A marginal relief around ₹12 lakh, adds 4% cess, subtracts tax already paid, then divides the remaining estimate by payroll months. It is not a full payroll computation.",
         "bmi calculator":"BMI = weight in kilograms ÷ (height in metres × height in metres). This is a number-only screening calculation; it does not diagnose health. For people under 18, adult cut-offs must not be used.",
         "salary calculator":"Daily estimate = monthly salary ÷ working days. Hourly estimate = monthly salary ÷ (working days × working hours per day).",
