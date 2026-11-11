@@ -41,7 +41,7 @@ test('calculator usage analytics records calculator name and page without sendin
 
  
 test('FD, EPF and Profit & Loss page titles resolve to live calculator definitions', () => {
-  assert.match(source, /"\\/calculators\\/fd-calculator\\.html":"fixed deposit calculator"/);
-  assert.match(source, /"\\/calculators\\/epf-pf-calculator\\.html":"epf \\/ pf calculator"/);
-  assert.match(source, /"\\/calculators\\/profit-loss-calculator\\.html":"profit & loss calculator"/);
+  assert.ok(source.includes('"/calculators/fd-calculator.html":"fixed deposit calculator"'));
+  assert.ok(source.includes('"/calculators/epf-pf-calculator.html":"epf / pf calculator"'));
+  assert.ok(source.includes('"/calculators/profit-loss-calculator.html":"profit & loss calculator"'));
 });
