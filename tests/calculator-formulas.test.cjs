@@ -106,7 +106,7 @@ test('production formula functions return correct numeric results for every shar
     ['epf / pf calculator', { monthly: 1800, rate: 8.25, years: 20 }, [
       ['Estimated contributions', 432000], ['Illustrative accumulated value', 1093788.39], ['Illustrative interest', 661788.39]
     ]],
-    ['income tax calculator india', { income: 1200000, regime: 'New regime — Tax Year 2026–27' }, [
+    ['income tax calculator india', { income: 1200000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
       ['Tax before rebate', 60000], ['Section 87A rebate (if eligible)', 60000], ['Estimated tax including cess', 0]
     ]],
     ['salary tds calculator', { income: 900000, paid: 0, months: 6 }, [
