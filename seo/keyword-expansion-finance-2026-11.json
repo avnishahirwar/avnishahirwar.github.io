@@ -1,0 +1,655 @@
+{
+  "site": "https://friendlycalculator.in/",
+  "date": "2026-11-11",
+  "title": "User-provided calculator keyword expansion — batch 2",
+  "note": "User-supplied keyword candidates, not verified search-volume data. Existing-page mappings are limited to calculations supported by the current tool. New-tool candidates must be implemented as useful, tested calculators before publishing dedicated pages. Do not create thin doorway pages or keyword-stuffed copy.",
+  "priority20": [
+    "emi calculator",
+    "home loan emi calculator",
+    "car loan emi calculator",
+    "personal loan emi calculator",
+    "sip calculator",
+    "fd calculator",
+    "rd calculator",
+    "ppf calculator",
+    "gst calculator",
+    "income tax calculator",
+    "salary calculator",
+    "ctc to in hand salary calculator",
+    "hra calculator",
+    "pf calculator",
+    "gratuity calculator",
+    "age calculator",
+    "bmi calculator",
+    "percentage calculator",
+    "discount calculator",
+    "fuel cost calculator"
+  ],
+  "summary": {
+    "received": 100,
+    "savedToOpenSEO": 96,
+    "existingPageMappings": 53,
+    "newToolCandidates": 43,
+    "excludedForTeenHealthSafety": 4
+  },
+  "excluded": [
+    {
+      "keyword": "bmr calculator",
+      "reason": "Not added to the site's keyword targeting because calorie/energy restriction and ideal-weight framing can encourage unhealthy body or eating behaviours for teen audiences."
+    },
+    {
+      "keyword": "calorie calculator",
+      "reason": "Not added to the site's keyword targeting because calorie/energy restriction and ideal-weight framing can encourage unhealthy body or eating behaviours for teen audiences."
+    },
+    {
+      "keyword": "tdee calculator",
+      "reason": "Not added to the site's keyword targeting because calorie/energy restriction and ideal-weight framing can encourage unhealthy body or eating behaviours for teen audiences."
+    },
+    {
+      "keyword": "ideal weight calculator",
+      "reason": "Not added to the site's keyword targeting because calorie/energy restriction and ideal-weight framing can encourage unhealthy body or eating behaviours for teen audiences."
+    }
+  ],
+  "keywords": [
+    {
+      "category": "Loans & EMI",
+      "keyword": "emi calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "home loan emi calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "car loan emi calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "personal loan emi calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "education loan emi calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan emi calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan interest calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan prepayment calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan eligibility calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "loan affordability calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "mortgage calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "mortgage payment calculator",
+      "targetPage": "calculators/loan-emi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Loans & EMI",
+      "keyword": "interest rate calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "simple interest calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "compound interest calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "sip calculator",
+      "targetPage": "calculators/sip-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "sip return calculator",
+      "targetPage": "calculators/sip-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "sip calculator online",
+      "targetPage": "calculators/sip-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "mutual fund calculator",
+      "targetPage": "calculators/sip-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "lumpsum calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "cagr calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "xirr calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "investment return calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "investment growth calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "fd calculator",
+      "targetPage": "calculators/fd-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "fixed deposit calculator",
+      "targetPage": "calculators/fd-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "rd calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "recurring deposit calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "ppf calculator",
+      "targetPage": "calculators/ppf-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "epf calculator",
+      "targetPage": "calculators/epf-pf-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "nps calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "retirement calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "retirement savings calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "retirement planning calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "child education calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "future value calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "present value calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "annuity calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "inflation calculator",
+      "targetPage": "calculators/inflation-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "stock profit calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "stock average calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "dividend yield calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "crypto profit calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "crypto investment calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "gold investment calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Interest & Investment",
+      "keyword": "silver investment calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "income tax calculator",
+      "targetPage": "calculators/income-tax-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "income tax calculator india",
+      "targetPage": "calculators/income-tax-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "new tax regime calculator",
+      "targetPage": "calculators/income-tax-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "old tax regime calculator",
+      "targetPage": "calculators/income-tax-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "tax calculator",
+      "targetPage": "calculators/income-tax-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "tds calculator",
+      "targetPage": "calculators/tds-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "hra exemption calculator",
+      "targetPage": "calculators/hra-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "hra calculator",
+      "targetPage": "calculators/hra-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "salary calculator",
+      "targetPage": "calculators/salary-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "salary calculator india",
+      "targetPage": "calculators/salary-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "ctc to in hand salary calculator",
+      "targetPage": "calculators/ctc-salary-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "take home salary calculator",
+      "targetPage": "calculators/ctc-salary-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "in hand salary calculator",
+      "targetPage": "calculators/ctc-salary-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "pf calculator",
+      "targetPage": "calculators/epf-pf-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "gratuity calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "leave encashment calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "notice period salary calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "freelancer tax calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Tax & Salary",
+      "keyword": "advance tax calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst calculator india",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst calculator online",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst amount calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst inclusive calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "gst exclusive calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "cgst sgst calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "igst calculator",
+      "targetPage": "calculators/gst-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "sales tax calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "profit margin calculator",
+      "targetPage": "calculators/profit-loss-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "markup calculator",
+      "targetPage": "calculators/profit-loss-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "break even calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "roi calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "roas calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "discount calculator",
+      "targetPage": "calculators/discount-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "GST & Business",
+      "keyword": "discount percentage calculator",
+      "targetPage": "calculators/discount-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "percentage calculator",
+      "targetPage": "calculators/basic-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "percentage increase calculator",
+      "targetPage": "calculators/basic-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "percentage decrease calculator",
+      "targetPage": "calculators/basic-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "age calculator",
+      "targetPage": "calculators/age-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "date difference calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "days between dates calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "age difference calculator",
+      "targetPage": "calculators/age-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Math, Date & Daily Use",
+      "keyword": "unit converter calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "bmi calculator",
+      "targetPage": "calculators/bmi-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "bmr calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "calorie calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "tdee calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "ideal weight calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "pregnancy due date calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "ovulation calculator",
+      "targetPage": null,
+      "implementation": "new_tool_required"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "fuel cost calculator",
+      "targetPage": "calculators/fuel-cost-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "mileage calculator",
+      "targetPage": "calculators/fuel-cost-calculator.html",
+      "implementation": "existing_page"
+    },
+    {
+      "category": "Health & Other",
+      "keyword": "electricity bill calculator",
+      "targetPage": "calculators/electricity-bill-calculator.html",
+      "implementation": "existing_page"
+    }
+  ]
+}
