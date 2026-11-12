@@ -10,7 +10,20 @@ const links=hi?[
 ['Home','/'],['Log In',r+'dashboard.html'],['All Calculators',r+'site-directory.html'],['Finance',r+'finance-calculators.html'],['Tax',r+'tax-calculators.html'],['Business Tools',r+'business-calculators.html'],['Everyday',r+'everyday-calculators.html'],['For Business',r+'business.html'],['API',r+'api.html'],['Plans',r+'pricing.html'],['About',r+'about.html'],['Contact',r+'contact.html'],['Admin',r+'admin.html']
 ];
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
-if(!document.querySelector('link[rel="icon"][type="image/png"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='192x192';l.href='/favicon-96.png';document.head.prepend(l)}if(!document.querySelector('link[rel="icon"][type="image/svg+xml"]')){const l=document.createElement('link');l.rel='icon';l.type='image/svg+xml';l.href='/favicon.svg';document.head.appendChild(l)}if(!document.querySelector('link[rel="apple-touch-icon"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href='/apple-touch-icon.png';document.head.appendChild(l)}
+// One PNG favicon, one theme colour and one share-preview image across the site.
+document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]').forEach(node=>node.remove());
+const favicon=document.createElement('link');favicon.rel='icon';favicon.type='image/png';favicon.sizes='96x96';favicon.href='/favicon-96.png';document.head.appendChild(favicon);
+if(!document.querySelector('link[rel="apple-touch-icon"]')){const apple=document.createElement('link');apple.rel='apple-touch-icon';apple.sizes='180x180';apple.href='/apple-touch-icon.png';document.head.appendChild(apple);}
+const themeMeta=document.querySelector('meta[name="theme-color" i]')||document.head.appendChild(document.createElement('meta'));
+themeMeta.name='theme-color';themeMeta.content='#101c2c';
+const setMeta=(selector,attr,value)=>{let node=document.head.querySelector(selector);if(!node){node=document.createElement('meta');const key=selector.match(/\[(property|name)=["']([^"']+)["']\]/);if(key)node.setAttribute(key[1],key[2]);document.head.appendChild(node);}node.setAttribute(attr,value);};
+setMeta('meta[property="og:image"]','content','https://friendlycalculator.in/og-friendly-calculator.png');
+setMeta('meta[property="og:image:type"]','content','image/png');
+setMeta('meta[property="og:image:width"]','content','1200');
+setMeta('meta[property="og:image:height"]','content','630');
+setMeta('meta[name="twitter:card"]','content','summary_large_image');
+setMeta('meta[name="twitter:image"]','content','https://friendlycalculator.in/og-friendly-calculator.png');
+
 
 // Ad placements stay absent until approved ad units are configured and serving.
 if(p.startsWith('/calculators/')){
@@ -25,17 +38,43 @@ if(main&&!document.querySelector('.fc-skip-link')){
 }
 const h=document.createElement('header');h.className='fc-global-header';
 const languageHref=hi?'/':'/hi/index.html'; const languageLabel=hi?'English':'हिन्दी';
-h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+(hi?'/hi/index.html':'/')+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/favicon.svg" width="34" height="34" alt="" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n==='Log In'?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'<a href="'+languageHref+'" lang="'+(hi?'en':'hi')+'">'+languageLabel+'</a></nav></div>';
+h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+(hi?'/hi/index.html':'/')+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/favicon-96.png" width="34" height="34" alt="" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n==='Log In'?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'<a href="'+languageHref+'" lang="'+(hi?'en':'hi')+'">'+languageLabel+'</a></nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/favicon.svg" width="30" height="30" alt="" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical online calculators with clear estimates.</small></div><nav class="fc-global-footer-links" aria-label="Website pages"><a href="/">Home</a><a href="'+r+'site-directory.html">All Pages Directory</a><a href="'+r+'finance-calculators.html">Finance</a><a href="'+r+'tax-calculators.html">Tax</a><a href="'+r+'business-calculators.html">Business Tools</a><a href="'+r+'everyday-calculators.html">Everyday</a><a href="'+r+'business.html">For Business</a><a href="'+r+'api.html">API</a><a href="'+r+'pricing.html">Plans</a><a href="'+r+'premium-waitlist.html">Premium Waitlist</a><a href="'+r+'about.html">About</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a><a href="'+languageHref+'" lang="'+(hi?'en':'hi')+'">'+languageLabel+'</a></nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>';
+f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/favicon-96.png" width="30" height="30" alt="" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Website pages"><a href="/">Home</a><a href="'+r+'site-directory.html">All Pages Directory</a><a href="'+r+'finance-calculators.html">Finance</a><a href="'+r+'tax-calculators.html">Tax</a><a href="'+r+'business-calculators.html">Business Tools</a><a href="'+r+'everyday-calculators.html">Everyday</a><a href="'+r+'business.html">For Business</a><a href="'+r+'api.html">API</a><a href="'+r+'pricing.html">Plans</a><a href="'+r+'premium-waitlist.html">Premium Waitlist</a><a href="'+r+'about.html">About</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a><a href="'+languageHref+'" lang="'+(hi?'en':'hi')+'">'+languageLabel+'</a></nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>';
 const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length)fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());else document.body.append(f);
 document.querySelectorAll('a[href="/#tools"],a[href="/#calculators"],a[href="/#contact"],a[href="#tools"],a[href="#calculators"]').forEach(a=>a.href=/contact/.test(a.getAttribute('href'))?r+'contact.html':r+'site-directory.html');
-if(p.startsWith('/calculators/')){document.querySelectorAll('a[href^="/#calc-"]').forEach(a=>{const section=document.getElementById('live-page-calculator');if(section)a.href='#live-page-calculator';else{const control=document.querySelector('main form,main input,main select,main button');if(control){const target=control.closest('section')||control.parentElement;if(target){if(!target.id)target.id='fc-calculator';a.href='#'+target.id;}}}});}
+if(p.startsWith('/calculators/')){document.querySelectorAll('a[href^="/#calc-"]').forEach(a=>{const target=document.getElementById('live-page-calculator')||document.getElementById('sip-tool');if(target){a.href='#'+target.id;return;}const control=document.querySelector('main form,main input,main select,main button');if(control){const section=control.closest('section')||control.parentElement;if(section){if(!section.id)section.id='fc-calculator';a.href='#'+section.id;}}});}
 document.querySelectorAll('.ad-slot,.ad-break,.ad,.ad-placeholder,.adsense-placeholder,.advertisement,.ad-container,[data-ad-slot],[aria-label="Advertisement space"]').forEach(e=>e.remove());
 if(p.startsWith('/calculators/')){
-document.querySelectorAll('.faq').forEach(e=>{const t=e.textContent||'';if(t.includes('How accurate is this calculator?')&&t.includes('Does this replace professional advice?'))e.remove()});
-document.querySelectorAll('script[type="application/ld+json"]').forEach(s=>{try{const j=JSON.parse(s.textContent);if(j['@type']==='FAQPage'&&Array.isArray(j.mainEntity)&&j.mainEntity.some(q=>q.name==='How accurate is this calculator?'))s.remove()}catch(_){}});
+const genericFaqs=new Set(['how accurate is this calculator?','does this replace professional advice?']);
+document.querySelectorAll('.faq').forEach(section=>{
+  section.querySelectorAll('details').forEach(item=>{
+    const question=(item.querySelector('summary')?.textContent||'').trim().toLowerCase();
+    if(genericFaqs.has(question))item.remove();
+  });
+  if(!section.querySelector('details'))section.remove();
+});
+document.querySelectorAll('script[type="application/ld+json"]').forEach(script=>{
+  try{
+    const data=JSON.parse(script.textContent);
+    if(data['@type']==='FAQPage'&&Array.isArray(data.mainEntity)&&data.mainEntity.some(item=>genericFaqs.has(String(item.name||'').trim().toLowerCase())))script.remove();
+  }catch(_){}
+});
+document.querySelectorAll('h2').forEach(heading=>{
+  if(!/how to use/i.test(heading.textContent||''))return;
+  const list=heading.nextElementSibling;
+  if(!list||list.tagName!=='OL')return;
+  [...list.children].forEach(item=>{
+    let value=(item.textContent||'').trim();
+    if(!value)return;
+    if(!/^(enter|choose|select|set|review|compare|press|click|calculate|read|check|use|provide|add|subtract|type|pick|open|adjust|confirm|start)/i.test(value)){
+      value=/^(assumed|annual|expected|interest|return|rate|investment|loan|principal|period|tenure|duration|amount|height|weight|unit|date|time|quantity|price|fuel|distance|working|number)/i.test(value)?'Enter the '+value:'Enter '+value;
+    }
+    value=value.charAt(0).toUpperCase()+value.slice(1).replace(/[.\s]*$/,'.');
+    item.textContent=value;
+  });
+});
 document.querySelectorAll('p').forEach(e=>{const t=(e.textContent||'').trim();if(t.startsWith('Results are estimates based on entered values and assumptions. They are not professional advice.'))e.remove()});
 }
 document.addEventListener('click',event=>{
