@@ -216,10 +216,25 @@ test('shared shell routes homepage calculator hash links to the current tool', (
   assert.ok(shell.includes('Practical tools for everyday calculations.'));
 });
 
-test('homepage Organization logo uses the shared PNG favicon asset', () => {
+test('brand images are crawlable, descriptive and included in the image sitemap', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('"logo":"https://friendlycalculator.in/favicon-96.png"'));
-  assert.ok(!homepage.includes('"logo":"https://friendlycalculator.in/favicon.svg"'));
+  const hindi = fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const logo = fs.readFileSync(path.join(root, 'assets/friendly-calculator-logo.svg'), 'utf8');
+  const image = fs.readFileSync(path.join(root, 'assets/friendly-calculator-brand-illustration.svg'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(homepage.includes('"logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg"'));
+  assert.ok(hindi.includes('"logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg"'));
+  assert.ok(logo.includes('width="512"') && logo.includes('height="512"'));
+  assert.ok(image.includes('width="1200"') && image.includes('height="630"'));
+  for (const html of [homepage, hindi, about, directory]) {
+    assert.ok(html.includes('src="/assets/friendly-calculator-brand-illustration.svg"') && /<img[^>]+alt="[^"]+"/.test(html));
+  }
+  assert.match(shell, /alt="Friendly Calculator logo"/);
+  assert.equal(shell.split('src="/assets/friendly-calculator-logo.svg"').length - 1, 2);
+  assert.ok(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
+  assert.equal(sitemap.split('<image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc>').length - 1, 4);
 });
 
 test('shared shell removes repeated generic interactive-calculator prompts', () => {
