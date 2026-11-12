@@ -348,7 +348,7 @@ test('every public sitemap page has a valid favicon reference and matching asset
     const relativePage = path.relative(root, file).split(path.sep).join('/');
     const iconLinks = [...html.matchAll(/<link\b[^>]*>/gi)]
       .map(match => match[0])
-      .filter(tag => /\brel=["'][^"']*(?:^|\s)(?:icon|shortcut icon)(?:\s|$)[^"']*["']/i.test(tag));
+      .filter(tag => /\brel=["'][^"']*\bicon\b[^"']*["']/i.test(tag));
     if (!iconLinks.length) {
       failures.push(relativePage + ' (missing rel=icon link)');
       continue;
