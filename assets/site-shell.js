@@ -97,7 +97,7 @@ if(languageSelect){
     if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
     if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
     const calcMatch=p.match(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\/calculators\/([^/]+)$/)||p.match(/^\/calculators\/([^/]+)$/);
-    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html','sip-calculator.html','fd-calculator.html','gst-calculator.html','loan-emi-calculator.html','percentage-calculator.html','discount-calculator.html','age-calculator.html','date-difference-calculator.html','fuel-cost-calculator.html']);
+    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html','sip-calculator.html','fd-calculator.html','gst-calculator.html','loan-emi-calculator.html','percentage-calculator.html','discount-calculator.html','age-calculator.html','date-difference-calculator.html','fuel-cost-calculator.html','basic-calculator.html','scientific-calculator.html','circle-area-calculator.html']);
     if(calcMatch&&translatedSlugs.has(calcMatch[1])){location.href=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];return;}
     const destination=localeRoutes[p];
     if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
