@@ -257,3 +257,11 @@ test('homepage uses the same navy brand color as the shared site shell', () => {
   assert.ok(homepage.includes('--fc-blue:#101c2c;--fc-blue-dark:#20364e;'));
   assert.ok(homepage.includes('name="theme-color" content="#101c2c"'));
 });
+
+
+test('language switch only navigates to calculator translations that exist', () => {
+  const shell = fs.readFileSync(new URL('../assets/site-shell.js', 'file://' + __filename), 'utf8');
+  assert.match(shell, /translatedSlugsByLocale/);
+  assert.match(shell, /translatedSlugsByLocale\[next\]\?\.has\(calcMatch\[1\]\)/);
+  assert.match(shell, /if\(notice\)/);
+});
