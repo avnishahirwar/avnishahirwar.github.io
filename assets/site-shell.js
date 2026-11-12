@@ -66,8 +66,11 @@ ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத
 const nav=chrome[currentLocale]||chrome.en;
 links.splice(0,links.length,[nav.home,localeHome[currentLocale]],[nav.login,r+'dashboard.html'],[nav.all,r+'site-directory.html'],[nav.finance,r+'finance-calculators.html'],[nav.tax,r+'tax-calculators.html'],[nav.business,r+'business-calculators.html'],[nav.everyday,r+'everyday-calculators.html'],[nav.forBusiness,r+'business.html'],[nav.api,r+'api.html'],[nav.plans,r+'pricing.html'],[nav.about,currentLocale==='hi'?'/hi/about.html':r+'about.html'],[nav.contact,currentLocale==='hi'?'/hi/contact.html':r+'contact.html'],[nav.admin,r+'admin.html']);
 const localizedCalcPrefix=currentLocale==='en'?'/calculators/':'/'+currentLocale+'/calculators/';
-links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html','loan-emi-calculator.html','percentage-calculator.html','discount-calculator.html']);
+links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html']);
 links.splice(6,0,['Loan EMI',localizedCalcPrefix+'loan-emi-calculator.html'],['Percentage',localizedCalcPrefix+'percentage-calculator.html'],['Discount',localizedCalcPrefix+'discount-calculator.html']);
+const everydayLabels={en:['Age','Date Difference','Fuel Cost'],hi:['आयु','तिथि अंतर','ईंधन लागत'],es:['Edad','Diferencia de fechas','Combustible'],fr:['Âge','Différence de dates','Carburant'],pt:['Idade','Diferença de datas','Combustível'],ar:['العمر','فرق التواريخ','الوقود'],id:['Usia','Selisih tanggal','Bahan bakar'],bn:['বয়স','তারিখের পার্থক্য','জ্বালানি'],ta:['வயது','தேதி வித்தியாசம்','எரிபொருள்']};
+const everyday=everydayLabels[currentLocale]||everydayLabels.en;
+links.splice(9,0,[everyday[0],localizedCalcPrefix+'age-calculator.html'],[everyday[1],localizedCalcPrefix+'date-difference-calculator.html'],[everyday[2],localizedCalcPrefix+'fuel-cost-calculator.html']);
 
 
 const languageHref='#fc-language-select';
@@ -90,7 +93,7 @@ if(languageSelect){
     if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
     if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
     const calcMatch=p.match(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\/calculators\/([^/]+)$/)||p.match(/^\/calculators\/([^/]+)$/);
-    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html','sip-calculator.html','fd-calculator.html','gst-calculator.html']);
+    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html','sip-calculator.html','fd-calculator.html','gst-calculator.html','loan-emi-calculator.html','percentage-calculator.html','discount-calculator.html','age-calculator.html','date-difference-calculator.html','fuel-cost-calculator.html']);
     if(calcMatch&&translatedSlugs.has(calcMatch[1])){location.href=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];return;}
     const destination=localeRoutes[p];
     if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
