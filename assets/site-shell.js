@@ -89,19 +89,19 @@ document.querySelectorAll('h2').forEach(heading=>{
   const existing=[...list.children];
   if(existing.length===1){
     const raw=(existing[0].textContent||'').trim();
-    const markers=[...raw.matchAll(new RegExp('(?:^|\\\\s)(\\\\d{1,2})\\\\.\\\\s+','g'))];
+    const markers=[...raw.matchAll(/(?:^| )([0-9]{1,2})[.] +/g)];
     if(markers.length>=2&&markers[0][1]==='1'&&markers.every((m,i)=>Number(m[1])===i+1)){
-      const parts=raw.split(new RegExp('(?:^|\\\\s)\\\\d{1,2}\\\\.\\\\s+','g')).filter(Boolean);
+      const parts=raw.split(/(?:^| )[0-9]{1,2}[.] +/g).filter(Boolean);
       list.replaceChildren(...parts.map(part=>{const li=document.createElement('li');li.textContent=part.trim();return li;}));
     }
   }
   [...list.children].forEach(item=>{
-    let value=(item.textContent||'').trim().replace(new RegExp('^\\\\d{1,2}\\\\.\\\\s*'),'');
+    let value=(item.textContent||'').trim().replace(/^[0-9]{1,2}[.] +/,'');
     if(!value)return;
     if(!/^(enter|choose|select|set|review|compare|press|click|calculate|read|check|use|provide|add|subtract|type|pick|open|adjust|confirm|start|measure)/i.test(value)){
       value=/^(assumed|annual|expected|interest|return|rate|investment|loan|principal|period|tenure|duration|amount|height|weight|unit|date|time|quantity|price|fuel|distance|working|number|monthly|yearly|total)/i.test(value)?'Enter the '+value:'Enter '+value;
     }
-    value=value.charAt(0).toUpperCase()+value.slice(1).replace(new RegExp('[.\\\\s]*$'),' .').replace(/ \.\s*$/,'.');
+    value=value.charAt(0).toUpperCase()+value.slice(1).replace(/[. ]+$/,'')+'.';
     item.textContent=value;
   });
 });
