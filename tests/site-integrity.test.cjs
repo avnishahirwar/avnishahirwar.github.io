@@ -193,3 +193,52 @@ test('GA4 records calculator actions and privacy-safe search metadata', () => {
   assert.match(shell, /search_term_length/);
   assert.doesNotMatch(shell, /search_term:\s*field\.value/);
 });
+
+test('calculator directory matches the sitemap and keeps business services separate', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const sitemapCalculatorUrls = urls.filter(url => new URL(url).pathname.startsWith('/calculators/'));
+  const directoryCalculatorUrls = [...directory.matchAll(/href="\/calculators\/([^"]+)"/g)].map(m => 'https://friendlycalculator.in/calculators/' + m[1]);
+  assert.equal(new Set(directoryCalculatorUrls).size, directoryCalculatorUrls.length, 'Directory calculator links must be unique');
+  assert.deepEqual([...directoryCalculatorUrls].sort(), sitemapCalculatorUrls.sort(), 'Directory and sitemap calculator catalogues must match');
+  const services = directory.indexOf('<h2>Business & developer services</h2>');
+  const trust = directory.indexOf('<h2>About, trust & policies</h2>');
+  assert.ok(services > directory.indexOf('<h2>Date, time and work calculators</h2>'), 'Business services should follow calculator categories');
+  assert.ok(services < trust, 'Business services should appear before trust and policy links');
+  const section = directory.slice(services, directory.indexOf('</section>', services));
+  assert.equal((section.match(/class="card"/g) || []).length, 4, 'Business services section should contain only four service links');
+  assert.ok(!directory.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'), 'Directory should not load an ad script without an ad unit');
+});
+
+test('shared shell routes homepage calculator hash links to the current tool', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('getLocalCalculatorTarget'));
+  assert.ok(shell.includes('scrollIntoView'));
+  assert.ok(shell.includes('Practical tools for everyday calculations.'));
+});
+
+test('homepage Organization logo uses the shared PNG favicon asset', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(homepage.includes('"logo":"https://friendlycalculator.in/favicon-96.png"'));
+  assert.ok(!homepage.includes('"logo":"https://friendlycalculator.in/favicon.svg"'));
+});
+
+test('shared shell removes repeated generic interactive-calculator prompts', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('open the interactive calculator'));
+});
+
+test('SIP and BMI calls to action point to on-page calculator targets', () => {
+  const sip = fs.readFileSync(path.join(root, 'calculators/sip-calculator.html'), 'utf8');
+  const bmi = fs.readFileSync(path.join(root, 'calculators/bmi-calculator.html'), 'utf8');
+  const pageCalculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
+  assert.ok(sip.includes('href="#sip-tool"') && sip.includes('id="sip-tool"'));
+  assert.ok(bmi.includes('href="#live-page-calculator"'));
+  assert.ok(pageCalculators.includes('"/calculators/bmi-calculator.html":"bmi calculator"'));
+  assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
+});
+
+test('homepage uses the same navy brand color as the shared site shell', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(homepage.includes('--fc-blue:#101c2c;--fc-blue-dark:#20364e;'));
+  assert.ok(homepage.includes('name="theme-color" content="#101c2c"'));
+});
