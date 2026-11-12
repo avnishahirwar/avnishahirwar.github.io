@@ -346,16 +346,16 @@ test('every public sitemap page has a valid favicon reference and matching asset
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const relativePage = path.relative(root, file).split(path.sep).join('/');
-    const iconLinks = [...html.matchAll(/<link\\b[^>]*>/gi)]
+    const iconLinks = [...html.matchAll(/<link\b[^>]*>/gi)]
       .map(match => match[0])
-      .filter(tag => /\\brel=["'][^"']*(?:^|\\s)(?:icon|shortcut icon)(?:\\s|$)[^"']*["']/i.test(tag));
+      .filter(tag => /\brel=["'][^"']*(?:^|\s)(?:icon|shortcut icon)(?:\s|$)[^"']*["']/i.test(tag));
     if (!iconLinks.length) {
       failures.push(relativePage + ' (missing rel=icon link)');
       continue;
     }
     for (const tag of iconLinks) {
-      const href = (tag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
-      const type = (tag.match(/\\btype=["']([^"']+)["']/i) || [])[1];
+      const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+      const type = (tag.match(/\btype=["']([^"']+)["']/i) || [])[1];
       if (!href) {
         failures.push(relativePage + ' (icon link missing href)');
         continue;
