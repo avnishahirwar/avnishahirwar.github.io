@@ -304,3 +304,32 @@ test('Investment Calculator is present, linked, indexed in sitemap and backed by
  assert.ok(sitemap.includes('https://friendlycalculator.in/calculators/investment-calculator.html'));
  assert.match(extra,/case'investment':/);
 });
+
+
+test('language switcher covers every calculator page that exists in each locale', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const readList = name => {
+    const match = shell.match(new RegExp('const ' + name + '=\\[([^\\]]*)\\]'));
+    assert.ok(match, 'Expected ' + name + ' in shared language switcher');
+    return [...match[1].matchAll(/'([^']+)'/g)].map(item => item[1]);
+  };
+  const shared = readList('sharedTranslatedSlugs');
+  const hindiOnly = readList('hindiOnlySlugs');
+  const otherOnly = readList('otherLocaleOnlySlugs');
+  const expected = {
+    en: [...shared, ...hindiOnly, ...otherOnly],
+    hi: [...shared, ...hindiOnly],
+    es: [...shared, ...otherOnly],
+    fr: [...shared, ...otherOnly],
+    pt: [...shared, ...otherOnly],
+    ar: [...shared, ...otherOnly],
+    id: [...shared, ...otherOnly],
+    bn: [...shared, ...otherOnly],
+    ta: [...shared, ...otherOnly]
+  };
+  for (const [locale, slugs] of Object.entries(expected)) {
+    const directory = path.join(root, locale, 'calculators');
+    const actual = fs.readdirSync(directory).filter(file => file.endsWith('.html')).sort();
+    assert.deepEqual([...new Set(slugs)].sort(), actual, locale + ' language-switcher allowlist must match existing translated calculator files');
+  }
+});
