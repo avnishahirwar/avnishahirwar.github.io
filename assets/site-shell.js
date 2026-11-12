@@ -16,7 +16,7 @@ const favicon=document.createElement('link');favicon.rel='icon';favicon.type='im
 if(!document.querySelector('link[rel="apple-touch-icon"]')){const apple=document.createElement('link');apple.rel='apple-touch-icon';apple.sizes='180x180';apple.href='/apple-touch-icon.png';document.head.appendChild(apple);}
 const themeMeta=document.querySelector('meta[name="theme-color" i]')||document.head.appendChild(document.createElement('meta'));
 themeMeta.name='theme-color';themeMeta.content='#101c2c';
-const setMeta=(selector,attr,value)=>{let node=document.head.querySelector(selector);if(!node){node=document.createElement('meta');document.head.appendChild(node);}node.setAttribute(attr,value);};
+const setMeta=(selector,attr,value)=>{let node=document.head.querySelector(selector);if(!node){node=document.createElement('meta');const key=selector.match(/\[(property|name)=["']([^"']+)["']\]/);if(key)node.setAttribute(key[1],key[2]);document.head.appendChild(node);}node.setAttribute(attr,value);};
 setMeta('meta[property="og:image"]','content','https://friendlycalculator.in/og-friendly-calculator.png');
 setMeta('meta[property="og:image:type"]','content','image/png');
 setMeta('meta[property="og:image:width"]','content','1200');
