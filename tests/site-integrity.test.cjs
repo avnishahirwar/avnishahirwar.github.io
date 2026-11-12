@@ -405,3 +405,24 @@ test('Hindi RD calculator is localized and linked from the English alternate', (
   const english = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   assert.ok(english.includes('hreflang="hi"'));
 });
+
+
+test('Salary calculator guide is localized, linked and indexed in all nine supported languages', () => {
+  const locales = ['en','hi','es','fr','pt','ar','id','bn','ta'];
+  for (const locale of locales) {
+    const url = locale === 'en' ? 'https://friendlycalculator.in/calculators/salary-calculator.html' : 'https://friendlycalculator.in/' + locale + '/calculators/salary-calculator.html';
+    const file = localFile(url);
+    assert.ok(file && fs.existsSync(file), 'Missing localized salary page: ' + locale);
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.ok(html.includes('rel="canonical"'));
+    assert.ok(html.includes('hreflang="x-default"'));
+    for (const alternate of locales) assert.ok(html.includes('hreflang="' + alternate + '"'), 'Missing hreflang ' + alternate + ': ' + locale);
+    assert.ok(html.includes('working days') || html.includes('कार्यदिवस') || html.includes('días laborables') || html.includes('jours ouvrés') || html.includes('dias úteis') || html.includes('أيام العمل') || html.includes('hari kerja') || html.includes('কর্মদিবস') || html.includes('வேலை நாட்கள்'));
+    assert.ok(html.includes('/assets/site-shell.js'));
+    assert.ok(html.includes('href="/#calc-salary-monthly"'), 'Salary CTA must target the existing calculator: ' + locale);
+    assert.ok(!html.includes('index.html#calc-salary-monthly'), 'Do not link to a missing locale calculator anchor: ' + locale);
+  }
+  const arabic = fs.readFileSync(path.join(root, 'ar/calculators/salary-calculator.html'), 'utf8');
+  assert.match(arabic, /<html lang="ar" dir="rtl">/);
+});
