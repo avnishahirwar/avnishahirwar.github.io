@@ -52,6 +52,12 @@ jobs:
               " | " + (((.audits["total-blocking-time"].numericValue // 0) | round) | tostring) +
               " |"
             ' "lighthouse-results/$name.json" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "Top optimization opportunities ($name):"
+            jq -r '[.audits[] | select(.details.type == "opportunity" and (.details.overallSavingsMs // 0) > 0) | {title: .title, ms: ((.details.overallSavingsMs // 0) | round)}] | sort_by(.ms) | reverse | .[:5][] | "- " + .title + " (" + (.ms | tostring) + " ms saved)"' "lighthouse-results/$name.json"
+            echo "Layout-shift elements ($name):"
+            jq -r '(.audits["layout-shift-elements"].details.items // [])[:5][] | "- " + (.node.selector // "unknown") + " — " + (.node.snippet // "") + " (score " + ((.score // 0) | tostring) + ")"' "lighthouse-results/$name.json"
+            echo "LCP element ($name):"
+            jq -r '.audits["largest-contentful-paint-element"].details.items[0].node.snippet // "not reported"' "lighthouse-results/$name.json"
           done <<'URLS'
           homepage|https://friendlycalculator.in/
           directory|https://friendlycalculator.in/calculator/site-directory.html
