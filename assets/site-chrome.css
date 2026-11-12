@@ -11,3 +11,14 @@
 .fc-footer-links a{color:#e5d5ad;text-decoration:none;font-size:.88rem}.fc-site-footer small{display:block;color:#9eacba;margin-top:12px}
 .ad-slot,.ad-placeholder,.advertisement,.ad-container,[data-ad-slot]{display:none!important;min-height:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important}
 @media(max-width:760px){.fc-nav-wrap{align-items:flex-start;flex-direction:column;gap:4px;padding:12px 0}.fc-nav{width:100%;gap:16px;padding:7px 0}.fc-nav a{font-size:.84rem}.fc-site-footer{padding:22px 0}.fc-footer-wrap{display:block}.fc-footer-links{margin-top:12px}}
+/* Accessible, responsive form styles for shared calculator modules. */
+#extraForm{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;align-items:end;margin:14px 0}
+#extraForm .field{display:grid;gap:6px;font-weight:650;color:var(--ink,#172638)}
+#extraForm input{width:100%;min-width:0;padding:11px 12px;border:1px solid #b9c5cf;border-radius:8px;font:inherit;background:#fff;color:inherit}
+#extraForm input:focus-visible,#extraForm button:focus-visible{outline:3px solid #d8bd82;outline-offset:2px}
+#extraForm button{border:0;border-radius:9px;background:#101c2c;color:#fff;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer;min-height:44px}
+#extraResult{display:grid;gap:8px;margin-top:14px}
+#extraResult .result-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:11px 13px;border-radius:9px;background:#edf3f7}
+#extraResult .result-row strong{text-align:right;overflow-wrap:anywhere}
+#extraResult .small{grid-column:1/-1;color:#596b7c;font-size:.9rem;margin:6px 0 0}
+@media(max-width:600px){#extraResult .result-row{flex-direction:column;gap:3px}#extraResult .result-row strong{text-align:left}}
