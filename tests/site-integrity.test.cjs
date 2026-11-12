@@ -374,3 +374,17 @@ test('every public sitemap page has a valid favicon reference and matching asset
   }
   assert.deepEqual(failures, [], 'Favicon issues: ' + failures.join('; '));
 });
+
+
+test('homepage structured data and copy accurately describe all supported languages', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const supportedLanguages = ['English', 'Hindi', 'Spanish', 'French', 'Portuguese', 'Arabic', 'Indonesian', 'Bengali', 'Tamil'];
+  const availableLanguage = homepage.match(/\"availableLanguage\":\[([^\]]+)\]/);
+  assert.ok(availableLanguage, 'Homepage ContactPoint must declare available languages');
+  for (const language of supportedLanguages) {
+    assert.ok(availableLanguage[1].includes('"' + language + '"'), 'ContactPoint must include ' + language);
+  }
+  assert.match(homepage, /as a multilingual platform/i);
+  assert.match(homepage, /Use the language selector to choose from the available languages/i);
+  assert.doesNotMatch(homepage, /as a bilingual platform/i);
+});
