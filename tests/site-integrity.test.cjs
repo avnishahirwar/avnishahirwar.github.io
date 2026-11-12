@@ -420,6 +420,8 @@ test('Salary calculator guide is localized, linked and indexed in all nine suppo
     for (const alternate of locales) assert.ok(html.includes('hreflang="' + alternate + '"'), 'Missing hreflang ' + alternate + ': ' + locale);
     assert.ok(html.includes('working days') || html.includes('कार्यदिवस') || html.includes('días laborables') || html.includes('jours ouvrés') || html.includes('dias úteis') || html.includes('أيام العمل') || html.includes('hari kerja') || html.includes('কর্মদিবস') || html.includes('வேலை நாட்கள்'));
     assert.ok(html.includes('/assets/site-shell.js'));
+    assert.ok(html.includes('href="/#calc-salary-monthly"'), 'Salary CTA must target the existing calculator: ' + locale);
+    assert.ok(!html.includes('index.html#calc-salary-monthly'), 'Do not link to a missing locale calculator anchor: ' + locale);
   }
   const arabic = fs.readFileSync(path.join(root, 'ar/calculators/salary-calculator.html'), 'utf8');
   assert.match(arabic, /<html lang="ar" dir="rtl">/);
