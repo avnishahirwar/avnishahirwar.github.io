@@ -65,6 +65,9 @@ ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத
 };
 const nav=chrome[currentLocale]||chrome.en;
 links.splice(0,links.length,[nav.home,localeHome[currentLocale]],[nav.login,r+'dashboard.html'],[nav.all,r+'site-directory.html'],[nav.finance,r+'finance-calculators.html'],[nav.tax,r+'tax-calculators.html'],[nav.business,r+'business-calculators.html'],[nav.everyday,r+'everyday-calculators.html'],[nav.forBusiness,r+'business.html'],[nav.api,r+'api.html'],[nav.plans,r+'pricing.html'],[nav.about,currentLocale==='hi'?'/hi/about.html':r+'about.html'],[nav.contact,currentLocale==='hi'?'/hi/contact.html':r+'contact.html'],[nav.admin,r+'admin.html']);
+const localizedCalcPrefix=currentLocale==='en'?'/calculators/':'/'+currentLocale+'/calculators/';
+links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html']);
+
 
 const languageHref='#fc-language-select';
 const languageLabel=nav.change;
@@ -86,7 +89,7 @@ if(languageSelect){
     if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
     if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
     const calcMatch=p.match(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\/calculators\/([^/]+)$/)||p.match(/^\/calculators\/([^/]+)$/);
-    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html']);
+    const translatedSlugs=new Set(['compound-interest-calculator.html','cagr-calculator.html','roi-calculator.html','sip-calculator.html','fd-calculator.html','gst-calculator.html']);
     if(calcMatch&&translatedSlugs.has(calcMatch[1])){location.href=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];return;}
     const destination=localeRoutes[p];
     if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
