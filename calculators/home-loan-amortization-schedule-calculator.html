@@ -16,6 +16,86 @@ body{margin:0;background:#f5f6f8;color:#172638;font:16px/1.7 system-ui,-apple-sy
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:image" content="website"></head>
 <body><main class="fc-wrap"><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Home Loan Amortization Schedule Calculator</nav>
 <header class="fc-hero"><p class="fc-muted">FRIENDLY CALCULATOR · FREE ONLINE TOOL</p><h1>Home Loan Amortization Schedule Calculator</h1><p class="fc-muted">Generate a month-by-month home loan amortization schedule with principal, interest, EMI and remaining balance. Enter your own values to see an estimate and review the calculation assumptions.</p></header>
+<section class="fc-content" aria-labelledby="amortization-form-title"><h2 id="amortization-form-title">Calculate your home loan amortization schedule</h2>
+<form id="amortization-form" class="amortization-form">
+<label for="amort-principal">Loan amount (₹)<input id="amort-principal" type="number" min="1" max="1000000000000" step="any" value="5000000" required></label>
+<label for="amort-rate">Annual interest rate (%)<input id="amort-rate" type="number" min="0" max="100" step="0.01" value="8.5" required></label>
+<label for="amort-years">Loan tenure (years)<input id="amort-years" type="number" min="1" max="50" step="1" value="20" required></label>
+<button type="submit">Calculate schedule</button>
+</form>
+<p id="amort-status" role="status" aria-live="polite" class="fc-muted">Enter your loan assumptions and calculate to view the monthly breakdown.</p>
+<div id="amortization-results" hidden>
+<div class="amortization-summary" aria-live="polite">
+<div><span>Monthly EMI</span><strong id="amort-emi">—</strong></div>
+<div><span>Total interest</span><strong id="amort-interest">—</strong></div>
+<div><span>Total repayment</span><strong id="amort-total">—</strong></div>
+</div>
+<div class="amortization-table-wrap"><table class="amortization-table"><caption>Monthly home loan amortization schedule</caption><thead><tr><th scope="col">Month</th><th scope="col">Opening balance</th><th scope="col">EMI</th><th scope="col">Principal</th><th scope="col">Interest</th><th scope="col">Closing balance</th></tr></thead><tbody id="amortization-table-body"></tbody></table></div>
+</div>
+<p class="fc-muted">This estimate assumes a fixed annual rate, monthly reducing-balance interest and equal monthly instalments. It excludes fees, insurance, taxes, rate resets, prepayments and lender-specific rounding.</p></section>
+<style>
+.amortization-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;align-items:end}
+.amortization-form label{display:grid;gap:6px;font-weight:650}
+.amortization-form input{width:100%;min-width:0;padding:11px 12px;border:1px solid #b9c5cf;border-radius:8px;font:inherit}
+.amortization-form button{min-height:44px;border:0;border-radius:9px;background:#101c2c;color:#fff;padding:11px 16px;font:inherit;font-weight:750;cursor:pointer}
+.amortization-form :focus-visible{outline:3px solid #d8bd82;outline-offset:2px}
+.amortization-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.amortization-summary>div{display:grid;gap:4px;background:#edf3f7;border-radius:10px;padding:14px}
+.amortization-summary span{color:#596b7c;font-size:.9rem}
+.amortization-summary strong{font-size:1.15rem;overflow-wrap:anywhere}
+.amortization-table-wrap{max-width:100%;overflow:auto;border:1px solid #e0e5ea;border-radius:10px}
+.amortization-table{width:100%;border-collapse:collapse;min-width:720px;font-variant-numeric:tabular-nums}
+.amortization-table caption{text-align:left;font-weight:700;padding:12px}
+.amortization-table th,.amortization-table td{padding:10px 12px;border-top:1px solid #e0e5ea;text-align:right;white-space:nowrap}
+.amortization-table th:first-child,.amortization-table td:first-child{text-align:left}
+.amortization-table thead{background:#edf3f7}
+@media(max-width:620px){.amortization-form{grid-template-columns:1fr}}
+</style>
+<script>
+(()=>{'use strict';
+const form=document.getElementById('amortization-form');
+if(!form)return;
+const status=document.getElementById('amort-status');
+const results=document.getElementById('amortization-results');
+const body=document.getElementById('amortization-table-body');
+const money=new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',minimumFractionDigits:2,maximumFractionDigits:2});
+const show=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=money.format(value);};
+form.addEventListener('submit',event=>{
+ event.preventDefault();
+ const principal=Number(document.getElementById('amort-principal').value);
+ const annualRate=Number(document.getElementById('amort-rate').value);
+ const years=Number(document.getElementById('amort-years').value);
+ const months=Math.round(years*12);
+ if(!Number.isFinite(principal)||principal<=0||principal>1e12||!Number.isFinite(annualRate)||annualRate<0||annualRate>100||!Number.isFinite(years)||years<=0||years>50||months<1){
+  status.textContent='Enter a positive loan amount, a rate from 0 to 100%, and a tenure from 1 to 50 years.';
+  results.hidden=true;return;
+ }
+ const monthlyRate=annualRate/1200;
+ const emi=monthlyRate===0?principal/months:principal*monthlyRate/(1-Math.pow(1+monthlyRate,-months));
+ let balance=principal,totalInterest=0,totalPaid=0;
+ const rows=document.createDocumentFragment();
+ for(let month=1;month<=months&&balance>0.005;month++){
+  const opening=balance;
+  const interest=opening*monthlyRate;
+  const principalPaid=Math.min(opening,Math.max(0,emi-interest));
+  const payment=principalPaid+interest;
+  balance=Math.max(0,opening-principalPaid);
+  totalInterest+=interest;totalPaid+=payment;
+  const tr=document.createElement('tr');
+  [String(month),money.format(opening),money.format(payment),money.format(principalPaid),money.format(interest),money.format(balance)].forEach(value=>{
+   const td=document.createElement('td');td.textContent=value;tr.appendChild(td);
+  });
+  rows.appendChild(tr);
+ }
+ body.replaceChildren(rows);
+ show('amort-emi',emi);show('amort-interest',totalInterest);show('amort-total',totalPaid);
+ results.hidden=false;
+ status.textContent='Schedule calculated for '+months+' monthly instalments. Values are estimates based on the assumptions entered.';
+ if(typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
+});
+form.requestSubmit();
+})();
+</script>
 <section class="fc-content"><h2>How to use this calculator</h2><p>Enter the requested values and select Calculate. Results are computed in your browser from the values you provide. Check the assumptions and verify important financial decisions with the relevant official source or qualified professional.</p><p><strong>Important:</strong> This tool provides an estimate for educational and planning purposes. It does not guarantee a lender's offer, tax treatment, market return or professional assessment.</p></section>
 <section class="fc-content"><h2>Formula and methodology</h2><p>The calculator displays the formula-based result using the inputs shown above. Values are rounded for display; intermediate calculations retain decimal precision where practical.</p></section>
 <section class="fc-content"><h2>Frequently asked questions</h2><details><summary>Are the results guaranteed?</summary><p>No. Results are estimates based on the values and assumptions entered. Actual terms, charges and outcomes may differ.</p></details><details><summary>Are my values sent to a server?</summary><p>The calculation runs in your browser. Do not enter personal account numbers, passwords or other sensitive information.</p></details></section>
