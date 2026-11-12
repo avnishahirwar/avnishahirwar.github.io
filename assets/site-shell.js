@@ -106,6 +106,7 @@ document.querySelectorAll('h2').forEach(heading=>{
   });
 });
 document.querySelectorAll('p').forEach(e=>{const t=(e.textContent||'').trim();if(t.startsWith('Results are estimates based on entered values and assumptions. They are not professional advice.'))e.remove()});
+document.querySelectorAll('p').forEach(e=>{if(/^open the interactive calculator\\b/i.test((e.textContent||'').trim()))e.remove()});
 }
 document.addEventListener('click',event=>{
   const button=event.target.closest('button');

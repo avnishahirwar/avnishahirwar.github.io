@@ -221,3 +221,24 @@ test('homepage Organization logo uses the shared PNG favicon asset', () => {
   assert.ok(homepage.includes('"logo":"https://friendlycalculator.in/favicon-96.png"'));
   assert.ok(!homepage.includes('"logo":"https://friendlycalculator.in/favicon.svg"'));
 });
+
+test('shared shell removes repeated generic interactive-calculator prompts', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('open the interactive calculator'));
+});
+
+test('SIP and BMI calls to action point to on-page calculator targets', () => {
+  const sip = fs.readFileSync(path.join(root, 'calculators/sip-calculator.html'), 'utf8');
+  const bmi = fs.readFileSync(path.join(root, 'calculators/bmi-calculator.html'), 'utf8');
+  const pageCalculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
+  assert.ok(sip.includes('href="#sip-tool"') && sip.includes('id="sip-tool"'));
+  assert.ok(bmi.includes('href="#live-page-calculator"'));
+  assert.ok(pageCalculators.includes('"/calculators/bmi-calculator.html":"bmi calculator"'));
+  assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
+});
+
+test('homepage uses the same navy brand color as the shared site shell', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(homepage.includes('--fc-blue:#101c2c;--fc-blue-dark:#20364e;'));
+  assert.ok(homepage.includes('name="theme-color" content="#101c2c"'));
+});
