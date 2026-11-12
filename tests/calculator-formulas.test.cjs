@@ -398,7 +398,7 @@ test('new Interest Rate Calculator solves a known fixed monthly rate', () => {
   const dom = runDedicatedPageCalculator('calculators/interest-rate-calculator.html', {
     principal: String(principal), payment: String(payment), months: String(months)
   });
-  assert.match(dom.get('result').innerHTML, /6\.000%/);
+  assert.match(dom.get('result').innerHTML, /annual nominal rate: 6(?:\.0+)?%/i);
   assert.match(dom.get('result').innerHTML, /Effective annual rate/);
 });
 
