@@ -328,7 +328,7 @@ test('language switcher covers every calculator page that exists in each locale'
     ta: [...shared, ...otherOnly]
   };
   for (const [locale, slugs] of Object.entries(expected)) {
-    const directory = path.join(root, locale, 'calculators');
+    const directory = path.join(root, locale === 'en' ? 'calculators' : path.join(locale, 'calculators'));
     const actual = fs.readdirSync(directory).filter(file => file.endsWith('.html')).sort();
     assert.deepEqual([...new Set(slugs)].sort(), actual, locale + ' language-switcher allowlist must match existing translated calculator files');
   }
