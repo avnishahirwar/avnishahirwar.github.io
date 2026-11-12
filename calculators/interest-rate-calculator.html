@@ -25,15 +25,7 @@
 <section class="panel faq"><h2>Frequently asked questions</h2><details><summary>Is the result the lender’s APR?</summary><p>No. It is an implied rate based only on the loan amount, payment and term. Fees, insurance and other charges are not included.</p></details><details><summary>Why might my lender’s rate differ?</summary><p>Lenders may use different payment dates, rounding, fees, compounding conventions or repayment structures.</p></details></section>
 </main><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
 <script>
-(()=>{'use strict';const form=document.getElementById('calc-form'),out=document.getElementById('result');const fmt=(n,d=2)=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:d});const err=m=>{out.innerHTML='<span class="error"></span>';out.querySelector('.error').textContent=m;};const p=Number(document.getElementById('principal').value),pay=Number(document.getElementById('payment').value),n=Number(document.getElementById('months').value);
-if(!Number.isFinite(p)||p<=0||!Number.isFinite(pay)||pay<=0||!Number.isInteger(n)||n<1||n>600){err('Enter a positive loan amount and payment, and 1 to 600 monthly payments.');return;}
-const zero=p/n;if(pay+1e-9<zero){err('The monthly payment is too low to repay the principal within this term, even at 0% interest.');return;}
-if(Math.abs(pay-zero)<1e-8){out.textContent='Estimated annual nominal interest rate: 0.00%. The payment equals principal divided by the number of payments.';return;}
-const pmt=r=>p*r/(1-Math.pow(1+r,-n));let lo=0,hi=1;
-if(pmt(hi)<pay){err('The implied rate is above the calculator’s supported search range.');return;}
-for(let i=0;i<120;i++){const mid=(lo+hi)/2;if(pmt(mid)>pay)hi=mid;else lo=mid;}
-const monthly=(lo+hi)/2,annual=monthly*12*100,eff=(Math.pow(1+monthly,12)-1)*100;
-out.innerHTML='<strong>Estimated annual nominal rate: '+fmt(annual,3)+'%</strong><ul><li>Monthly rate: '+fmt(monthly*100,4)+'%</li><li>Effective annual rate: '+fmt(eff,3)+'%</li><li>Total scheduled payments: '+fmt(pay*n)+'</li><li>Total interest estimate: '+fmt(pay*n-p)+'</li></ul><p class="muted">This reverse estimate assumes a fixed-rate loan with equal monthly payments and no fees.</p>';
+(()=>{'use strict';const form=document.getElementById('calc-form'),out=document.getElementById('result');const fmt=(n,d=2)=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:d});const err=m=>{out.innerHTML='<span class="error"></span>';out.querySelector('.error').textContent=m;};
 form.addEventListener('submit',e=>{e.preventDefault();try{const p=Number(document.getElementById('principal').value),pay=Number(document.getElementById('payment').value),n=Number(document.getElementById('months').value);
 if(!Number.isFinite(p)||p<=0||!Number.isFinite(pay)||pay<=0||!Number.isInteger(n)||n<1||n>600){err('Enter a positive loan amount and payment, and 1 to 600 monthly payments.');return;}
 const zero=p/n;if(pay+1e-9<zero){err('The monthly payment is too low to repay the principal within this term, even at 0% interest.');return;}
