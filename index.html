@@ -60,6 +60,15 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 .home-note strong{color:#34495b}
 @media(max-width:760px){.category-grid{grid-template-columns:1fr}.home-intro{padding:18px 0}.category-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.search-row{flex-direction:column}.search-row button{padding:10px}.category-links{grid-template-columns:1fr}}
+
+.home-category-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 20px}
+.home-category-index a{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 13px;border:1px solid var(--fc-border);border-radius:6px;background:#fff;text-decoration:none;color:#24394c;font-size:.9rem}
+.home-category-index a:hover{border-color:var(--fc-blue);text-decoration:underline}
+.home-category-index a span,.category-count{font-size:.78rem;color:var(--fc-muted);font-weight:500;white-space:nowrap}
+.category h2{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.category-empty{display:none}
+@media(max-width:760px){.home-category-index{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.home-category-index{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@type":"Person","name":"Avnish Ahirwar","url":"https://friendlycalculator.in/calculator/about.html"},"email":"avnishahirwar415@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar415@gmail.com","availableLanguage":["English","Hindi"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar415"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"}]}</script>
 
@@ -70,204 +79,263 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <section class="search-panel" aria-label="Search calculators">
 <label for="calculatorSearch">Search all calculators</label>
 <div class="search-row"><input id="calculatorSearch" type="search" placeholder="Example: loan EMI, GST, salary, age…" autocomplete="off"><button id="clearSearch" type="button">Clear</button></div>
-<p class="search-hint" id="searchCount">Browse all 186 calculators. Select a calculator to open its dedicated tool page.</p>
+<p class="search-hint" id="searchCount">Browse all 186 calculators across 11 categories. Select a category or search by calculator name and topic.</p>
 </section>
+<nav class="home-category-index" aria-label="Calculator categories">
+<a href="#home-savings-investments"><strong>Savings, Investment &amp; Retirement</strong><span>37 calculators</span></a>
+<a href="#home-loans-credit"><strong>Loans, EMI &amp; Credit</strong><span>27 calculators</span></a>
+<a href="#home-tax-payroll"><strong>Tax, Salary &amp; Payroll</strong><span>23 calculators</span></a>
+<a href="#home-business-operations"><strong>Business, Sales &amp; Operations</strong><span>16 calculators</span></a>
+<a href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics</strong><span>28 calculators</span></a>
+<a href="#home-geometry-construction"><strong>Geometry, Measurement &amp; Construction</strong><span>12 calculators</span></a>
+<a href="#home-date-time-work"><strong>Date, Time &amp; Work</strong><span>13 calculators</span></a>
+<a href="#home-converters-technology"><strong>Converters, Data &amp; Technology</strong><span>10 calculators</span></a>
+<a href="#home-home-travel"><strong>Home, Travel &amp; Everyday Costs</strong><span>8 calculators</span></a>
+<a href="#home-education-learning"><strong>Education &amp; Academic Tools</strong><span>4 calculators</span></a>
+<a href="#home-health-family"><strong>Health, Fitness &amp; Family</strong><span>8 calculators</span></a>
+</nav>
 <div class="category-grid" id="categoryGrid">
-<section class="category" data-category="finance">
-<h2>Financial Calculators</h2><div class="category-links">
-<a class="calculator-link" href="/calculators/loan-emi-calculator.html" data-search="emi calculator home loan car personal interest mortgage payment monthly installment repayment EMI business">Loan Calculator (EMI)</a>
-<a class="calculator-link" href="/calculators/compound-interest-calculator.html" data-search="compound interest calculator formula yearly quarterly monthly compounding future value principal lumpsum">Compound Interest Calculator</a>
-<a class="calculator-link" href="/calculators/rd-calculator.html" data-search="rd calculator recurring deposit monthly maturity instalment">RD Calculator</a>
-<a class="calculator-link" href="/calculators/fd-calculator.html" data-search="fd calculator fixed deposit maturity interest bank return">Fixed Deposit Calculator</a>
-<a class="calculator-link" href="/calculators/sip-calculator.html" data-search="sip calculator return online mutual fund monthly investment returns SIP estimate">SIP Calculator</a>
-<a class="calculator-link" href="/calculators/ppf-calculator.html" data-search="ppf public provident fund maturity PPF interest calculator">PPF Calculator</a>
-<a class="calculator-link" href="/calculators/epf-pf-calculator.html" data-search="epf calculator pf employee provident fund PF contribution">EPF / PF Calculator</a>
-<a class="calculator-link" href="/calculators/savings-interest-calculator.html" data-search="savings account bank interest">Savings Interest Calculator</a>
-<a class="calculator-link" href="/calculators/gratuity-calculator.html" data-search="gratuity calculator india estimate employee gratuity eligible wages years service">Gratuity Calculator</a>
-<a class="calculator-link" href="/calculators/nps-calculator.html" data-search="NPS national pension system retirement corpus annuity calculator india">NPS Calculator</a>
-<a class="calculator-link" href="/calculators/dividend-yield-calculator.html" data-search="dividend yield calculator annual dividend income share price yield">Dividend Yield Calculator</a>
-<a class="calculator-link" href="/calculators/inflation-calculator.html" data-search="inflation future price purchasing power value of money calculator">Inflation Calculator</a>
-<a class="calculator-link" href="/calculators/simple-interest-calculator.html" data-search="simple interest calculator calculate interest, total and maturity amount using principal, annual rate time. free with formula example.">Simple Interest Calculator</a>
-<a class="calculator-link" href="/calculators/cagr-calculator.html" data-search="cagr calculator cagr calculator calculate compound annual growth rate (cagr) from beginning value, ending value and number of years with a clear formula and example.">CAGR Calculator</a>
-<a class="calculator-link" href="/calculators/lumpsum-investment-calculator.html" data-search="lumpsum investment calculator project the value of a one-time investment.">Lumpsum Investment Calculator</a>
-<a class="calculator-link" href="/calculators/step-up-sip-calculator.html" data-search="step-up sip calculator model annual increases in monthly contributions.">Step-up SIP Calculator</a>
-<a class="calculator-link" href="/calculators/sip-goal-calculator.html" data-search="sip goal calculator estimate the monthly sip needed for a target.">SIP Goal Calculator</a>
-<a class="calculator-link" href="/calculators/sip-delay-cost-calculator.html" data-search="sip delay cost calculator compare starting a sip now versus later.">SIP Delay Cost Calculator</a>
-<a class="calculator-link" href="/calculators/swp-calculator.html" data-search="swp calculator estimate withdrawals and remaining balance.">SWP Calculator</a>
-<a class="calculator-link" href="/calculators/stp-calculator.html" data-search="stp calculator model transfers between source and destination funds.">STP Calculator</a>
-<a class="calculator-link" href="/calculators/absolute-return-calculator.html" data-search="absolute return calculator calculate total gain or loss and return percentage.">Absolute Return Calculator</a>
-<a class="calculator-link" href="/calculators/real-return-calculator.html" data-search="real return calculator estimate inflation-adjusted investment return.">Real Return Calculator</a>
-<a class="calculator-link" href="/calculators/retirement-corpus-calculator.html" data-search="retirement corpus calculator project savings and contributions until retirement.">Retirement Corpus Calculator</a>
-<a class="calculator-link" href="/calculators/fire-calculator.html" data-search="fire calculator estimate an illustrative financial independence target.">FIRE Calculator</a>
-<a class="calculator-link" href="/calculators/retirement-withdrawal-calculator.html" data-search="retirement withdrawal calculator estimate how long a corpus may last.">Retirement Withdrawal Calculator</a>
-<a class="calculator-link" href="/calculators/portfolio-allocation-calculator.html" data-search="portfolio allocation calculator review asset values and portfolio percentages.">Portfolio Allocation Calculator</a>
-<a class="calculator-link" href="/calculators/kvp-calculator.html" data-search="kisan vikas patra calculator illustrate kvp maturity using selected scheme duration.">Kisan Vikas Patra Calculator</a>
-<a class="calculator-link" href="/calculators/ssy-calculator.html" data-search="sukanya samriddhi yojana calculator">Sukanya Samriddhi Yojana Calculator</a>
-<a class="calculator-link" href="/calculators/scss-calculator.html" data-search="senior citizens savings scheme calculator">Senior Citizens Savings Scheme Calculator</a>
-<a class="calculator-link" href="/calculators/post-office-mis-calculator.html" data-search="post office monthly income scheme calculator">Post Office Monthly Income Scheme Calculator</a>
-<a class="calculator-link" href="/calculators/nsc-calculator.html" data-search="national savings certificate calculator">National Savings Certificate Calculator</a>
-<a class="calculator-link" href="/calculators/child-education-calculator.html" data-search="child education cost calculator">Child Education Cost Calculator</a>
-<a class="calculator-link" href="/calculators/marriage-cost-calculator.html" data-search="marriage cost calculator">Marriage Cost Calculator</a>
-<a class="calculator-link" href="/calculators/home-loan-eligibility-calculator.html" data-search="home loan eligibility calculator">Home Loan Eligibility Calculator</a>
-<a class="calculator-link" href="/calculators/loan-prepayment-calculator.html" data-search="loan prepayment calculator">Loan Prepayment Calculator</a>
-<a class="calculator-link" href="/calculators/credit-card-emi-calculator.html" data-search="credit card emi calculator">Credit Card EMI Calculator</a>
-<a class="calculator-link" href="/calculators/credit-card-payoff-calculator.html" data-search="credit card payoff calculator">Credit Card Payoff Calculator</a>
-<a class="calculator-link" href="/calculators/stock-average-calculator.html" data-search="stock average calculator">Stock Average Calculator</a>
-<a class="calculator-link" href="/calculators/brokerage-calculator.html" data-search="brokerage calculator">Brokerage Calculator</a>
-<a class="calculator-link" href="/calculators/currency-converter-calculator.html" data-search="currency converter calculator">Currency Converter Calculator</a>
-<a class="calculator-link" href="/calculators/business-loan-emi-calculator.html" data-search="business loan emi calculator">Business Loan EMI Calculator</a><a class="calculator-link" href="/calculators/xirr-calculator.html" data-search="xirr calculator estimate an annualised return from dated cash flows.">XIRR Calculator</a>
-<a class="calculator-link" href="/calculators/eps-pension-calculator.html" data-search="eps pension calculator illustrative pension estimate from pensionable salary and service.">EPS Pension Calculator</a>
-<a class="calculator-link" href="/calculators/lease-vs-buy-car-calculator.html" data-search="lease vs buy car calculator compare estimated lease and purchase cash costs.">Lease vs Buy Car Calculator</a>
-<a class="calculator-link" href="/calculators/rent-vs-buy-home-calculator.html" data-search="rent vs buy home calculator compare estimated renting and buying cash costs.">Rent vs Buy Home Calculator</a>
-<a class="calculator-link" href="/calculators/balance-transfer-savings-calculator.html" data-search="balance transfer savings calculator compare repayments and transfer fees.">Balance Transfer Savings Calculator</a>
-<a class="calculator-link" href="/calculators/loan-prepayment-vs-investment-calculator.html" data-search="loan prepayment vs investment calculator compare interest saved with a projected investment gain.">Loan Prepayment vs Investment Calculator</a>
-<a class="calculator-link" href="/calculators/credit-card-minimum-due-calculator.html" data-search="credit card minimum due calculator estimate a minimum due from user-entered card terms.">Credit Card Minimum Due Calculator</a>
-<a class="calculator-link" href="/calculators/credit-utilization-calculator.html" data-search="credit utilization calculator calculate balance as a share of available credit.">Credit Utilization Calculator</a>
-<a class="calculator-link" href="/calculators/car-loan-calculator.html" data-search="car loan calculator finance loan interest return estimate">Car Loan Calculator</a>
-<a class="calculator-link" href="/calculators/bike-loan-calculator.html" data-search="bike loan calculator finance loan interest return estimate">Bike Loan Calculator</a>
-<a class="calculator-link" href="/calculators/education-loan-calculator.html" data-search="education loan calculator finance loan interest return estimate">Education Loan Calculator</a>
-<a class="calculator-link" href="/calculators/gold-loan-calculator.html" data-search="gold loan calculator finance loan interest return estimate">Gold Loan Calculator</a>
-<a class="calculator-link" href="/calculators/personal-loan-eligibility-calculator.html" data-search="personal loan eligibility calculator finance loan interest return estimate">Personal Loan Eligibility Calculator</a>
-<a class="calculator-link" href="/calculators/loan-against-property-calculator.html" data-search="loan against property calculator finance loan interest return estimate">Loan Against Property Calculator</a>
-<a class="calculator-link" href="/calculators/mutual-fund-return-calculator.html" data-search="mutual fund return calculator finance loan interest return estimate">Mutual Fund Return Calculator</a>
-<a class="calculator-link" href="/calculators/debt-snowball-calculator.html" data-search="debt snowball calculator finance loan interest return estimate">Debt Snowball Calculator</a>
-<a class="calculator-link" href="/calculators/emi-vs-lump-sum-calculator.html" data-search="emi vs lump sum calculator finance loan interest return estimate">EMI vs Lump Sum Calculator</a>
-<a class="calculator-link" href="/calculators/fd-rd-sip-comparison-calculator.html" data-search="fd vs rd vs sip comparison calculator finance loan interest return estimate">FD vs RD vs SIP Comparison Calculator</a>
-<a class="calculator-link" href="/calculators/home-loan-amortization-schedule-calculator.html" data-search="home loan amortization schedule calculator EMI interest principal repayment">Home Loan Amortization Schedule Calculator</a>
-<a class="calculator-link" href="/calculators/loan-comparison-calculator.html" data-search="loan comparison calculator compare EMI interest">Loan Comparison Calculator</a>
-<a class="calculator-link" href="/calculators/loan-to-value-calculator.html" data-search="loan to value LTV property loan calculator">Loan-to-Value Calculator</a>
-<a class="calculator-link" href="/calculators/credit-card-interest-calculator.html" data-search="credit card interest calculator outstanding balance interest">Credit Card Interest Calculator</a>
-<a class="calculator-link" href="/calculators/payment-calculator.html" data-search="payment calculator monthly weekly biweekly payment schedule estimate">Payment Calculator</a>
-<a class="calculator-link" href="/calculators/investment-calculator.html" data-search="investment calculator estimate future value and growth of a one-time investment">Investment Calculator</a>
-<a class="calculator-link" href="/calculators/mortgage-calculator.html" data-search="mortgage calculator estimate principal interest monthly home mortgage payments">Mortgage Calculator</a>
-<a class="calculator-link" href="/calculators/interest-rate-calculator.html" data-search="interest rate calculator solve the implied annual interest rate from loan amount payment and term">Interest Rate Calculator</a>
-</div></section>
-<section class="category" data-category="tax">
-<h2>Tax & Salary Calculators</h2><div class="category-links">
-<a class="calculator-link" href="/calculators/gst-calculator.html" data-search="gst calculator india online amount inclusive exclusive cgst sgst igst goods services tax invoice GST and">GST Calculator</a>
-<a class="calculator-link" href="/calculators/income-tax-calculator.html" data-search="income tax calculator india new regime old vs estimate India">Income Tax Calculator</a>
-<a class="calculator-link" href="/calculators/tds-calculator.html" data-search="tds tax deducted at source TDS calculator">TDS Calculator</a>
-<a class="calculator-link" href="/calculators/hra-calculator.html" data-search="hra calculator exemption house rent allowance HRA">HRA Exemption Calculator</a>
-<a class="calculator-link" href="/calculators/salary-calculator.html" data-search="salary calculator india monthly annual daily hourly rate to">Salary Calculator</a>
-<a class="calculator-link" href="/calculators/ctc-salary-calculator.html" data-search="ctc to in hand salary calculator take home CTC inhand">CTC to In-Hand Salary</a>
-<a class="calculator-link" href="/calculators/capital-gains-tax-calculator.html" data-search="capital gains tax estimator">Capital Gains Tax Estimator</a>
-<a class="calculator-link" href="/calculators/professional-tax-calculator.html" data-search="professional tax calculator">Professional Tax Calculator</a>
-<a class="calculator-link" href="/calculators/advance-tax-calculator.html" data-search="advance tax planner">Advance Tax Planner</a>
-<a class="calculator-link" href="/calculators/leave-encashment-calculator.html" data-search="leave encashment calculator">Leave Encashment Calculator</a>
-<a class="calculator-link" href="/calculators/bonus-calculator.html" data-search="bonus calculator">Bonus Calculator</a>
-<a class="calculator-link" href="/calculators/freelancer-tax-calculator.html" data-search="freelancer tax estimator">Freelancer Tax Estimator</a>
-<a class="calculator-link" href="/calculators/gst-late-fee-calculator.html" data-search="gst late fee estimator">GST Late Fee Estimator</a>
-<a class="calculator-link" href="/calculators/gst-interest-calculator.html" data-search="gst interest estimator">GST Interest Estimator</a>
-<a class="calculator-link" href="/calculators/gst-input-tax-credit-calculator.html" data-search="gst input tax credit calculator">GST Input Tax Credit Calculator</a>
-<a class="calculator-link" href="/calculators/reverse-charge-gst-calculator.html" data-search="reverse charge gst calculator">Reverse Charge GST Calculator</a>
-<a class="calculator-link" href="/calculators/gst-on-rent-calculator.html" data-search="gst on rent estimator">GST on Rent Estimator</a><a class="calculator-link" href="/calculators/salary-hike-calculator.html" data-search="salary hike increment percentage salary increase">Salary Hike Calculator</a>
-<a class="calculator-link" href="/calculators/sales-tax-calculator.html" data-search="sales tax calculator tax rate purchase price">Sales Tax Calculator</a>
-</div></section>
-<section class="category" data-category="business">
-<h2>Business & Commercial Calculators</h2><div class="category-links">
-<a class="calculator-link" href="/calculators/profit-loss-calculator.html" data-search="profit margin calculator markup loss business">Profit & Loss Calculator</a>
-<a class="calculator-link" href="/calculators/discount-calculator.html" data-search="discount calculator percentage sale price savings">Discount Calculator</a>
-<a class="calculator-link" href="/calculators/electricity-bill-calculator.html" data-search="electricity bill units energy power tariff calculator consumed">Electricity Bill Calculator</a>
-<a class="calculator-link" href="/calculators/fuel-cost-calculator.html" data-search="fuel cost calculator mileage petrol diesel trip">Fuel Cost Calculator</a>
-<a class="calculator-link" href="/calculators/markup-margin-calculator.html" data-search="business markup margin calculator selling price cost gross margin markup percentage">Business Markup &amp; Margin Calculator</a>
-<a class="calculator-link" href="/calculators/break-even-calculator.html" data-search="break even point calculator fixed costs variable costs contribution units sales revenue">Break-Even Point Calculator</a>
-<a class="calculator-link" href="/calculators/roi-calculator.html" data-search="roi calculator calculate return on investment (roi), net gain or loss and percentage from an initial investment, current value additional income.">ROI Calculator</a>
-<a class="calculator-link" href="/calculators/mileage-calculator.html" data-search="mileage calculator calculate vehicle or fuel efficiency in kilometres per litre from distance travelled and used.">Mileage Calculator</a>
-<a class="calculator-link" href="/calculators/payback-period-calculator.html" data-search="payback period calculator">Payback Period Calculator</a>
-<a class="calculator-link" href="/calculators/invoice-calculator.html" data-search="invoice calculator">Invoice Calculator</a>
-<a class="calculator-link" href="/calculators/salary-slip-calculator.html" data-search="salary slip calculator">Salary Slip Calculator</a>
-<a class="calculator-link" href="/calculators/working-capital-calculator.html" data-search="working capital calculator">Working Capital Calculator</a>
-<a class="calculator-link" href="/calculators/inventory-turnover-calculator.html" data-search="inventory turnover calculator">Inventory Turnover Calculator</a>
-<a class="calculator-link" href="/calculators/bulk-discount-calculator.html" data-search="bulk discount calculator">Bulk Discount Calculator</a>
-<a class="calculator-link" href="/calculators/freelancer-rate-calculator.html" data-search="freelancer hourly rate calculator">Freelancer Hourly Rate Calculator</a>
-<a class="calculator-link" href="/calculators/upi-charges-calculator.html" data-search="upi transaction cost estimator">UPI Transaction Cost Estimator</a><a class="calculator-link" href="/calculators/burn-rate-runway-calculator.html" data-search="burn rate & runway calculator estimate monthly net cash burn and cash runway.">Burn Rate & Runway Calculator</a>
-<a class="calculator-link" href="/calculators/commission-calculator.html" data-search="commission calculator sales commission rate">Commission Calculator</a>
-<a class="calculator-link" href="/calculators/cogs-calculator.html" data-search="cost of goods sold COGS calculator inventory">COGS Calculator</a>
-<a class="calculator-link" href="/calculators/unit-price-comparison-calculator.html" data-search="unit price comparison cost per unit">Unit Price Comparison Calculator</a>
-<a class="calculator-link" href="/calculators/property-price-per-sq-ft-calculator.html" data-search="property price per square foot area rate">Property Price per Sq Ft Calculator</a>
-<a class="calculator-link" href="/calculators/cash-flow-calculator.html" data-search="cash flow calculator income expenses">Cash Flow Calculator</a>
-</div></section>
-<section class="category" data-category="everyday">
-<h2>Math & Everyday Calculators</h2><div class="category-links">
-<a class="calculator-link" href="/calculators/water-intake-calculator.html" data-search="water intake estimator hydration daily fluid estimate">Water Intake Estimator</a>
-<a class="calculator-link" href="/calculators/pace-calculator.html" data-search="running pace calculator time distance pace speed">Pace Calculator</a>
-<a class="calculator-link" href="/calculators/heart-rate-zones-calculator.html" data-search="heart rate zones calculator age based training zones estimate">Heart Rate Zones Calculator</a>
-<a class="calculator-link" href="/calculators/pregnancy-due-date-calculator.html" data-search="pregnancy due date calculator estimated due date from last menstrual period conception">Pregnancy Due Date Calculator</a>
-<a class="calculator-link" href="/calculators/cgpa-to-percentage-calculator.html" data-search="CGPA to percentage calculator grade point average conversion multiplier">CGPA to Percentage Calculator</a>
-<a class="calculator-link" href="/calculators/gpa-calculator.html" data-search="GPA calculator credit weighted grade point average">GPA Calculator</a>
-<a class="calculator-link" href="/calculators/quadratic-polynomial-solver.html" data-search="quadratic equation polynomial solver roots complex numbers">Quadratic Equation Solver</a>
-<a class="calculator-link" href="/calculators/matrix-determinant-calculator.html" data-search="3x3 matrix determinant calculator mathematics">Matrix Determinant Calculator</a>
-<a class="calculator-link" href="/calculators/statistics-calculator.html" data-search="statistics calculator mean median mode range standard deviation">Statistics Calculator</a>
-<a class="calculator-link" href="/calculators/data-storage-bandwidth-calculator.html" data-search="data storage bandwidth calculator transfer time bytes bits MB GB TB">Data Storage &amp; Bandwidth Calculator</a>
-<a class="calculator-link" href="/calculators/password-strength-checker.html" data-search="password strength checker generator local browser privacy">Password Strength Checker &amp; Generator</a>
-<a class="calculator-link" href="/calculators/basic-calculator.html" data-search="basic calculator arithmetic addition subtraction multiplication division math कैलकुलेटर online free simple">Basic Calculator</a>
-<a class="calculator-link" href="/calculators/scientific-calculator.html" data-search="scientific calculator online free advanced math trigonometry sine cosine tangent logarithm log ln square root power algebra">Scientific Calculator</a>
-<a class="calculator-link" href="/calculators/lcm-hcf-calculator.html" data-search="lcm hcf calculator and greatest common divisor gcd least multiple math factors">LCM &amp; HCF Calculator</a>
-<a class="calculator-link" href="/calculators/unit-converter.html" data-search="unit converter length weight mass temperature volume speed kg to lbs cm feet celsius fahrenheit km miles conversion">Unit Converter</a>
-<a class="calculator-link" href="/calculators/work-hours-calculator.html" data-search="work hours calculator working shift duration timesheet break overnight time">Work Hours Calculator</a>
-<a class="calculator-link" href="/calculators/split-bill-calculator.html" data-search="split bill calculator splitting restaurant tip divide group expense equal share">Split Bill Calculator</a>
-<a class="calculator-link" href="/calculators/percentage-calculator.html" data-search="percentage calculator increase decrease of a number change difference marks 12th class 10 result">Percentage Calculator</a>
-<a class="calculator-link" href="/calculators/fraction-calculator.html" data-search="fraction calculator add subtract multiply divide fractions simplify decimal to">Fraction Calculator</a>
-<a class="calculator-link" href="/calculators/date-difference-calculator.html" data-search="date difference calculator days between two dates elapsed weeks calendar duration until (countdown)">Date Difference Calculator</a>
-<a class="calculator-link" href="/calculators/age-calculator.html" data-search="age calculator difference date of birth years months days by">Age Calculator</a>
-<a class="calculator-link" href="/calculators/bmi-calculator.html" data-search="bmi body mass index health BMI calculator in kg and cm">BMI Calculator</a>
-<a class="calculator-link" href="/calculators/average-calculator.html" data-search="average calculator find the arithmetic (mean), sum and count of numbers. enter values separated by commas, spaces or new lines.">Average Calculator</a>
-<a class="calculator-link" href="/calculators/ratio-calculator.html" data-search="ratio calculator simplify a two-number to its lowest whole-number form and view the equivalent relationship.">Ratio Calculator</a>
-<a class="calculator-link" href="/calculators/square-root-calculator.html" data-search="square root calculator calculate the principal of a non-negative number and verify it by squaring result.">Square Root Calculator</a>
-<a class="calculator-link" href="/calculators/hours-to-minutes-calculator.html" data-search="hours to minutes calculator convert and additional into total decimal with a quick time conversion calculator.">Hours to Minutes Calculator</a>
-<a class="calculator-link" href="/calculators/sleep-debt-calculator.html" data-search="sleep debt calculator estimate a sleep-duration shortfall over a selected period.">Sleep Debt Calculator</a>
-<a class="calculator-link" href="/calculators/electricity-bill-slab-calculator.html" data-search="electricity bill slab calculator estimate a progressive bill from custom unit slabs and rates.">Electricity Bill Slab Calculator</a>
-<a class="calculator-link" href="/calculators/age-difference-calculator.html" data-search="age difference calculator calculate the calendar age gap between two dates.">Age Difference Calculator</a>
-<a class="calculator-link" href="/calculators/working-days-calculator.html" data-search="working days calculator count weekdays, excluding optional custom holidays.">Working Days Calculator</a>
-<a class="calculator-link" href="/calculators/land-unit-converter-calculator.html" data-search="land unit converter (bigha, guntha & cent) convert land area using local unit conversion factors.">Land Unit Converter (Bigha, Guntha & Cent)</a>
-<a class="calculator-link" href="/calculators/permutation-calculator.html" data-search="permutation calculator math number formula">Permutation Calculator</a>
-<a class="calculator-link" href="/calculators/combination-calculator.html" data-search="combination calculator math number formula">Combination Calculator</a>
-<a class="calculator-link" href="/calculators/probability-calculator.html" data-search="probability calculator math number formula">Probability Calculator</a>
-<a class="calculator-link" href="/calculators/prime-number-checker.html" data-search="prime number checker math number formula">Prime Number Checker</a>
-<a class="calculator-link" href="/calculators/prime-factorization-calculator.html" data-search="prime factorization calculator math number formula">Prime Factorization Calculator</a>
-<a class="calculator-link" href="/calculators/factorial-calculator.html" data-search="factorial calculator math number formula">Factorial Calculator</a>
-<a class="calculator-link" href="/calculators/modulo-calculator.html" data-search="modulo calculator math number formula">Modulo Calculator</a>
-<a class="calculator-link" href="/calculators/rounding-calculator.html" data-search="rounding calculator math number formula">Rounding Calculator</a>
-<a class="calculator-link" href="/calculators/significant-figures-calculator.html" data-search="significant figures calculator math number formula">Significant Figures Calculator</a>
-<a class="calculator-link" href="/calculators/scientific-notation-converter.html" data-search="scientific notation converter math number formula">Scientific Notation Converter</a>
-<a class="calculator-link" href="/calculators/pythagoras-calculator.html" data-search="pythagoras calculator geometry area volume perimeter triangle circle">Pythagoras Calculator</a>
-<a class="calculator-link" href="/calculators/triangle-area-calculator.html" data-search="triangle area calculator geometry area volume perimeter triangle circle">Triangle Area Calculator</a>
-<a class="calculator-link" href="/calculators/triangle-angle-calculator.html" data-search="triangle angle calculator geometry area volume perimeter triangle circle">Triangle Angle Calculator</a>
-<a class="calculator-link" href="/calculators/circle-area-calculator.html" data-search="circle area calculator geometry area volume perimeter triangle circle">Circle Area Calculator</a>
-<a class="calculator-link" href="/calculators/circle-circumference-calculator.html" data-search="circle circumference calculator geometry area volume perimeter triangle circle">Circle Circumference Calculator</a>
-<a class="calculator-link" href="/calculators/rectangle-area-calculator.html" data-search="rectangle area calculator geometry area volume perimeter triangle circle">Rectangle Area Calculator</a>
-<a class="calculator-link" href="/calculators/square-area-calculator.html" data-search="square area calculator geometry area volume perimeter triangle circle">Square Area Calculator</a>
-<a class="calculator-link" href="/calculators/volume-calculator.html" data-search="volume calculator geometry area volume perimeter triangle circle">Volume Calculator</a>
-<a class="calculator-link" href="/calculators/surface-area-calculator.html" data-search="surface area calculator geometry area volume perimeter triangle circle">Surface Area Calculator</a>
-<a class="calculator-link" href="/calculators/perimeter-calculator.html" data-search="perimeter calculator geometry area volume perimeter triangle circle">Perimeter Calculator</a>
-<a class="calculator-link" href="/calculators/roman-numeral-converter.html" data-search="roman numeral converter number conversion math sequence">Roman Numeral Converter</a>
-<a class="calculator-link" href="/calculators/binary-converter.html" data-search="binary converter number conversion math sequence">Binary Converter</a>
-<a class="calculator-link" href="/calculators/hex-converter.html" data-search="hex converter number conversion math sequence">Hex Converter</a>
-<a class="calculator-link" href="/calculators/octal-converter.html" data-search="octal converter number conversion math sequence">Octal Converter</a>
-<a class="calculator-link" href="/calculators/decimal-to-fraction-calculator.html" data-search="decimal to fraction calculator number conversion math sequence">Decimal to Fraction Calculator</a>
-<a class="calculator-link" href="/calculators/mixed-number-calculator.html" data-search="mixed number calculator number conversion math sequence">Mixed Number Calculator</a>
-<a class="calculator-link" href="/calculators/arithmetic-progression-calculator.html" data-search="arithmetic progression calculator number conversion math sequence">Arithmetic Progression Calculator</a>
-<a class="calculator-link" href="/calculators/geometric-progression-calculator.html" data-search="geometric progression calculator number conversion math sequence">Geometric Progression Calculator</a>
-<a class="calculator-link" href="/calculators/number-to-words-indian-format.html" data-search="number to words (indian format) number conversion math sequence">Number to Words (Indian Format)</a>
-<a class="calculator-link" href="/calculators/long-division-calculator.html" data-search="long division calculator number conversion math sequence">Long Division Calculator</a>
-<a class="calculator-link" href="/calculators/add-days-to-date-calculator.html" data-search="add days to date calculator date time duration">Add Days to Date Calculator</a>
-<a class="calculator-link" href="/calculators/subtract-days-from-date-calculator.html" data-search="subtract days from date calculator date time duration">Subtract Days from Date Calculator</a>
-<a class="calculator-link" href="/calculators/time-zone-converter.html" data-search="time zone converter date time duration">Time Zone Converter</a>
-<a class="calculator-link" href="/calculators/seconds-to-hours-calculator.html" data-search="seconds to hours calculator date time duration">Seconds to Hours Calculator</a>
-<a class="calculator-link" href="/calculators/minutes-to-hours-calculator.html" data-search="minutes to hours calculator date time duration">Minutes to Hours Calculator</a>
-<a class="calculator-link" href="/calculators/overtime-pay-calculator.html" data-search="overtime pay calculator date time duration">Overtime Pay Calculator</a>
-<a class="calculator-link" href="/calculators/countdown-calculator.html" data-search="countdown calculator date time duration">Countdown Calculator</a>
-<a class="calculator-link" href="/calculators/retirement-date-calculator.html" data-search="retirement date calculator date time duration">Retirement Date Calculator</a>
-<a class="calculator-link" href="/calculators/pay-day-calculator.html" data-search="pay day calculator date time duration">Pay Day Calculator</a>
-<a class="calculator-link" href="/calculators/steps-to-km-calculator.html" data-search="steps to km calculator date time duration">Steps to Km Calculator</a>
-<a class="calculator-link" href="/calculators/tip-calculator.html" data-search="tip calculator gratuity bill split">Tip Calculator</a>
-<a class="calculator-link" href="/calculators/pregnancy-calculator.html" data-search="pregnancy calculator estimate gestational age and due date from dates; informational only">Pregnancy Calculator</a>
-<a class="calculator-link" href="/calculators/pregnancy-conception-calculator.html" data-search="pregnancy conception calculator estimate a conception date from an expected due date; informational only">Pregnancy Conception Calculator</a>
-<a class="calculator-link" href="/calculators/random-number-generator.html" data-search="random number generator generate a random number within a chosen range">Random Number Generator</a>
-<a class="calculator-link" href="/calculators/grade-calculator.html" data-search="grade calculator calculate marks percentage and grade from scores">Grade Calculator</a>
-<a class="calculator-link" href="/calculators/concrete-calculator.html" data-search="concrete calculator estimate concrete volume for slab footing or column dimensions">Concrete Calculator</a>
-<a class="calculator-link" href="/calculators/subnet-calculator.html" data-search="subnet calculator IPv4 CIDR network address usable hosts and broadcast address">Subnet Calculator</a>
-</div></section>
+<section class="category" id="home-savings-investments" data-category="savings-investments" aria-labelledby="heading-savings-investments">
+<h2 id="heading-savings-investments">Savings, Investment &amp; Retirement <span class="category-count">37 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/compound-interest-calculator.html" data-search="compound interest compounding future value principal" title="Estimate compound growth for a one-time principal.">Compound Interest Calculator</a>
+<a class="calculator-link" href="/calculators/rd-calculator.html" data-search="rd recurring deposit monthly instalment maturity interest" title="Estimate recurring deposit maturity and interest.">RD Calculator</a>
+<a class="calculator-link" href="/calculators/fd-calculator.html" data-search="fixed deposit fd maturity interest" title="Estimate deposit maturity and interest.">Fixed Deposit Calculator</a>
+<a class="calculator-link" href="/calculators/sip-calculator.html" data-search="sip mutual fund monthly investment projection" title="Illustrative monthly investment projection.">SIP Calculator</a>
+<a class="calculator-link" href="/calculators/ppf-calculator.html" data-search="ppf public provident fund" title="Estimate Public Provident Fund maturity.">PPF Calculator</a>
+<a class="calculator-link" href="/calculators/epf-pf-calculator.html" data-search="epf pf provident fund employee" title="Estimate provident fund accumulation.">EPF / PF Calculator</a>
+<a class="calculator-link" href="/calculators/savings-interest-calculator.html" data-search="savings bank interest account" title="Estimate savings account interest.">Savings Interest Calculator</a>
+<a class="calculator-link" href="/calculators/inflation-calculator.html" data-search="inflation future price cost" title="Estimate future costs using an assumed rate.">Inflation Calculator</a>
+<a class="calculator-link" href="/calculators/simple-interest-calculator.html" data-search="simple interest calculator simple interest calculator calculate simple interest, total interest and maturity amount using principal, annual rate and time. free simple interest calculator with formula and example." title="Estimate simple interest on a principal amount using an annual interest rate and a time period. The tool shows interest earned and the total amount before any fees, taxes or contractual adjustments.">Simple Interest Calculator</a>
+<a class="calculator-link" href="/calculators/roi-calculator.html" data-search="roi calculator roi calculator calculate return on investment (roi), net gain or loss and percentage return from an initial investment, current value and additional income." title="Calculate a simple return on investment from the original cost, current value and any additional income received. Use it to compare scenarios on a consistent basis.">ROI Calculator</a>
+<a class="calculator-link" href="/calculators/cagr-calculator.html" data-search="cagr calculator cagr calculator calculate compound annual growth rate (cagr) from beginning value, ending value and number of years with a clear formula and example." title="Estimate the compound annual growth rate between a beginning value and an ending value over a stated period. CAGR expresses a smoothed annual growth rate; it does not show the actual path taken between the two values.">CAGR Calculator</a>
+<a class="calculator-link" href="/calculators/lumpsum-investment-calculator.html" data-search="lumpsum investment calculator project the value of a one-time investment." title="Project the value of a one-time investment.">Lumpsum Investment Calculator</a>
+<a class="calculator-link" href="/calculators/step-up-sip-calculator.html" data-search="step-up sip calculator model annual increases in monthly contributions." title="Model annual increases in monthly contributions.">Step-up SIP Calculator</a>
+<a class="calculator-link" href="/calculators/sip-goal-calculator.html" data-search="sip goal calculator estimate the monthly sip needed for a target." title="Estimate the monthly SIP needed for a target.">SIP Goal Calculator</a>
+<a class="calculator-link" href="/calculators/sip-delay-cost-calculator.html" data-search="sip delay cost calculator compare starting a sip now versus later." title="Compare starting a SIP now versus later.">SIP Delay Cost Calculator</a>
+<a class="calculator-link" href="/calculators/swp-calculator.html" data-search="swp calculator estimate withdrawals and remaining balance." title="Estimate withdrawals and remaining balance.">SWP Calculator</a>
+<a class="calculator-link" href="/calculators/stp-calculator.html" data-search="stp calculator model transfers between source and destination funds." title="Model transfers between source and destination funds.">STP Calculator</a>
+<a class="calculator-link" href="/calculators/absolute-return-calculator.html" data-search="absolute return calculator calculate total gain or loss and return percentage." title="Calculate total gain or loss and return percentage.">Absolute Return Calculator</a>
+<a class="calculator-link" href="/calculators/real-return-calculator.html" data-search="real return calculator estimate inflation-adjusted investment return." title="Estimate inflation-adjusted investment return.">Real Return Calculator</a>
+<a class="calculator-link" href="/calculators/retirement-corpus-calculator.html" data-search="retirement corpus calculator project savings and contributions until retirement." title="Project savings and contributions until retirement.">Retirement Corpus Calculator</a>
+<a class="calculator-link" href="/calculators/fire-calculator.html" data-search="fire calculator estimate an illustrative financial independence target." title="Estimate an illustrative financial independence target.">FIRE Calculator</a>
+<a class="calculator-link" href="/calculators/retirement-withdrawal-calculator.html" data-search="retirement withdrawal calculator estimate how long a corpus may last." title="Estimate how long a corpus may last.">Retirement Withdrawal Calculator</a>
+<a class="calculator-link" href="/calculators/portfolio-allocation-calculator.html" data-search="portfolio allocation calculator review asset values and portfolio percentages." title="Review asset values and portfolio percentages.">Portfolio Allocation Calculator</a>
+<a class="calculator-link" href="/calculators/kvp-calculator.html" data-search="kisan vikas patra calculator illustrate kvp maturity using selected scheme duration." title="Illustrate KVP maturity using selected scheme duration.">Kisan Vikas Patra Calculator</a>
+<a class="calculator-link" href="/calculators/nps-calculator.html" data-search="nps calculator project nps corpus and annuity allocation." title="Project NPS corpus and annuity allocation.">NPS Calculator</a>
+<a class="calculator-link" href="/calculators/dividend-yield-calculator.html" data-search="dividend yield calculator calculate dividend yield and annual income." title="Calculate dividend yield and annual income.">Dividend Yield Calculator</a>
+<a class="calculator-link" href="/calculators/ssy-calculator.html" data-search="sukanya samriddhi yojana calculator" title="Project Sukanya Samriddhi account maturity from deposits, interest and tenure.">Sukanya Samriddhi Yojana Calculator</a>
+<a class="calculator-link" href="/calculators/scss-calculator.html" data-search="senior citizens savings scheme calculator" title="Estimate Senior Citizens Savings Scheme interest payouts and maturity.">Senior Citizens Savings Scheme Calculator</a>
+<a class="calculator-link" href="/calculators/post-office-mis-calculator.html" data-search="post office monthly income scheme calculator" title="Estimate monthly interest income from a Post Office MIS deposit.">Post Office Monthly Income Scheme Calculator</a>
+<a class="calculator-link" href="/calculators/nsc-calculator.html" data-search="national savings certificate calculator" title="Project NSC maturity value and interest for a selected investment term.">National Savings Certificate Calculator</a>
+<a class="calculator-link" href="/calculators/stock-average-calculator.html" data-search="stock average calculator" title="Calculate the weighted average purchase price across stock lots.">Stock Average Calculator</a>
+<a class="calculator-link" href="/calculators/brokerage-calculator.html" data-search="brokerage calculator" title="Estimate brokerage and transaction charges for a trade.">Brokerage Calculator</a>
+<a class="calculator-link" href="/calculators/xirr-calculator.html" data-search="xirr calculator estimate an annualised return from dated cash flows." title="Estimate an annualised return from dated cash flows.">XIRR Calculator</a>
+<a class="calculator-link" href="/calculators/eps-pension-calculator.html" data-search="eps pension calculator illustrative pension estimate from pensionable salary and service." title="Illustrative pension estimate from pensionable salary and service.">EPS Pension Calculator</a>
+<a class="calculator-link" href="/calculators/investment-calculator.html" data-search="investment calculator future value monthly contributions assumed return" title="Project an initial amount plus monthly contributions using an assumed return.">Investment Calculator</a>
+<a class="calculator-link" href="/calculators/mutual-fund-return-calculator.html" data-search="mutual fund return calculator project an illustrative lump-sum and monthly contribution value." title="Project an illustrative lump-sum and monthly contribution value.">Mutual Fund Return Calculator</a>
+<a class="calculator-link" href="/calculators/fd-rd-sip-comparison-calculator.html" data-search="fd vs rd vs sip comparison calculator compare illustrative deposit and investment scenarios." title="Compare illustrative deposit and investment scenarios.">FD vs RD vs SIP Comparison Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-loans-credit" data-category="loans-credit" aria-labelledby="heading-loans-credit">
+<h2 id="heading-loans-credit">Loans, EMI &amp; Credit <span class="category-count">27 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/loan-emi-calculator.html" data-search="loan emi mortgage monthly instalment interest" title="Estimate monthly instalments and interest.">Loan EMI Calculator</a>
+<a class="calculator-link" href="/calculators/payment-calculator.html" data-search="payment calculator monthly biweekly weekly instalment purchase finance" title="Estimate monthly, biweekly or weekly purchase-financing payments.">Payment Calculator</a>
+<a class="calculator-link" href="/calculators/home-loan-eligibility-calculator.html" data-search="home loan eligibility calculator" title="Estimate an indicative home-loan amount from income and existing obligations.">Home Loan Eligibility Calculator</a>
+<a class="calculator-link" href="/calculators/loan-prepayment-calculator.html" data-search="home loan prepayment calculator loan prepayment lump sum prepayment extra monthly payment" title="Estimate how a one-time principal payment and extra monthly payments affect loan payoff time and interest.">Home Loan &amp;amp; Loan Prepayment Calculator</a>
+<a class="calculator-link" href="/calculators/credit-card-emi-calculator.html" data-search="credit card emi calculator" title="Estimate the EMI and total cost of converting a card balance to instalments.">Credit Card EMI Calculator</a>
+<a class="calculator-link" href="/calculators/credit-card-payoff-calculator.html" data-search="credit card payoff calculator" title="Estimate the time and interest needed to clear a credit-card balance.">Credit Card Payoff Calculator</a>
+<a class="calculator-link" href="/calculators/business-loan-emi-calculator.html" data-search="business loan emi calculator" title="Estimate monthly instalments and total interest for a business loan.">Business Loan EMI Calculator</a>
+<a class="calculator-link" href="/calculators/lease-vs-buy-car-calculator.html" data-search="lease vs buy car calculator compare estimated lease and purchase cash costs." title="Compare estimated lease and purchase cash costs.">Lease vs Buy Car Calculator</a>
+<a class="calculator-link" href="/calculators/rent-vs-buy-home-calculator.html" data-search="rent vs buy home calculator compare estimated renting and buying cash costs." title="Compare estimated renting and buying cash costs.">Rent vs Buy Home Calculator</a>
+<a class="calculator-link" href="/calculators/balance-transfer-savings-calculator.html" data-search="balance transfer savings calculator compare repayments and transfer fees." title="Compare repayments and transfer fees.">Balance Transfer Savings Calculator</a>
+<a class="calculator-link" href="/calculators/loan-prepayment-vs-investment-calculator.html" data-search="loan prepayment vs investment calculator compare interest saved with a projected investment gain." title="Compare interest saved with a projected investment gain.">Loan Prepayment vs Investment Calculator</a>
+<a class="calculator-link" href="/calculators/credit-card-minimum-due-calculator.html" data-search="credit card minimum due calculator estimate a minimum due from user-entered card terms." title="Estimate a minimum due from user-entered card terms.">Credit Card Minimum Due Calculator</a>
+<a class="calculator-link" href="/calculators/credit-utilization-calculator.html" data-search="credit utilization calculator calculate balance as a share of available credit." title="Calculate balance as a share of available credit.">Credit Utilization Calculator</a>
+<a class="calculator-link" href="/calculators/home-loan-amortization-schedule-calculator.html" data-search="home loan amortization schedule calculator month-by-month principal, interest and balance schedule." title="Month-by-month principal, interest and balance schedule.">Home Loan Amortization Schedule Calculator</a>
+<a class="calculator-link" href="/calculators/loan-comparison-calculator.html" data-search="loan comparison calculator compare emi, interest and total repayment." title="Compare EMI, interest and total repayment.">Loan Comparison Calculator</a>
+<a class="calculator-link" href="/calculators/loan-to-value-calculator.html" data-search="loan-to-value calculator calculate loan amount as a share of asset value." title="Calculate loan amount as a share of asset value.">Loan-to-Value Calculator</a>
+<a class="calculator-link" href="/calculators/credit-card-interest-calculator.html" data-search="credit card interest calculator estimate simple interest by apr and days." title="Estimate simple interest by APR and days.">Credit Card Interest Calculator</a>
+<a class="calculator-link" href="/calculators/mortgage-calculator.html" data-search="mortgage calculator home loan monthly payment property tax insurance" title="Estimate home-loan payments plus property tax, insurance and monthly maintenance.">Mortgage Calculator</a>
+<a class="calculator-link" href="/calculators/car-loan-calculator.html" data-search="car loan calculator estimate car loan emi and total interest." title="Estimate car loan EMI and total interest.">Car Loan Calculator</a>
+<a class="calculator-link" href="/calculators/bike-loan-calculator.html" data-search="bike loan calculator estimate two-wheeler loan emi and repayment." title="Estimate two-wheeler loan EMI and repayment.">Bike Loan Calculator</a>
+<a class="calculator-link" href="/calculators/education-loan-calculator.html" data-search="education loan calculator estimate education-loan emi after a simplified moratorium." title="Estimate education-loan EMI after a simplified moratorium.">Education Loan Calculator</a>
+<a class="calculator-link" href="/calculators/gold-loan-calculator.html" data-search="gold loan calculator compare bullet-interest and emi repayment estimates." title="Compare bullet-interest and EMI repayment estimates.">Gold Loan Calculator</a>
+<a class="calculator-link" href="/calculators/personal-loan-eligibility-calculator.html" data-search="personal loan eligibility calculator estimate emi capacity using income and obligations." title="Estimate EMI capacity using income and obligations.">Personal Loan Eligibility Calculator</a>
+<a class="calculator-link" href="/calculators/loan-against-property-calculator.html" data-search="loan against property calculator estimate secured-loan emi and total interest." title="Estimate secured-loan EMI and total interest.">Loan Against Property Calculator</a>
+<a class="calculator-link" href="/calculators/debt-snowball-calculator.html" data-search="debt snowball calculator order debt balances from smallest to largest." title="Order debt balances from smallest to largest.">Debt Snowball Calculator</a>
+<a class="calculator-link" href="/calculators/emi-vs-lump-sum-calculator.html" data-search="emi vs lump sum calculator compare upfront purchase cost with financed cash payments." title="Compare upfront purchase cost with financed cash payments.">EMI vs Lump Sum Calculator</a>
+<a class="calculator-link" href="/calculators/interest-rate-calculator.html" data-search="interest rate calculator estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term." title="Estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term.">Interest Rate Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-tax-payroll" data-category="tax-payroll" aria-labelledby="heading-tax-payroll">
+<h2 id="heading-tax-payroll">Tax, Salary &amp; Payroll <span class="category-count">23 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/gst-calculator.html" data-search="gst tax goods services invoice" title="Add or remove GST from an amount.">GST Calculator</a>
+<a class="calculator-link" href="/calculators/income-tax-calculator.html" data-search="income tax india old new regime" title="Indicative income tax estimate.">Income Tax Calculator</a>
+<a class="calculator-link" href="/calculators/tds-calculator.html" data-search="tds tax deducted source salary" title="Estimate salary TDS under selected assumptions.">TDS Calculator</a>
+<a class="calculator-link" href="/calculators/hra-calculator.html" data-search="hra house rent exemption" title="Estimate eligible HRA exemption.">HRA Exemption Calculator</a>
+<a class="calculator-link" href="/calculators/ctc-salary-calculator.html" data-search="ctc in hand salary take home" title="Estimate take-home pay from CTC.">CTC to In-Hand Salary</a>
+<a class="calculator-link" href="/calculators/salary-calculator.html" data-search="salary daily hourly pay" title="Convert pay to daily and hourly estimates.">Salary Calculator</a>
+<a class="calculator-link" href="/calculators/gratuity-calculator.html" data-search="gratuity calculator estimate gratuity using eligible wages and service years." title="Estimate gratuity using eligible wages and service years.">Gratuity Calculator</a>
+<a class="calculator-link" href="/calculators/capital-gains-tax-calculator.html" data-search="capital gains tax estimator" title="Estimate capital-gains tax from the transaction details and tax assumptions entered.">Capital Gains Tax Estimator</a>
+<a class="calculator-link" href="/calculators/professional-tax-calculator.html" data-search="professional tax calculator" title="Estimate professional tax from the selected state and salary details.">Professional Tax Calculator</a>
+<a class="calculator-link" href="/calculators/advance-tax-calculator.html" data-search="advance tax planner" title="Plan advance-tax instalments from an estimated annual tax liability.">Advance Tax Planner</a>
+<a class="calculator-link" href="/calculators/leave-encashment-calculator.html" data-search="leave encashment calculator" title="Estimate leave encashment from salary details and eligible leave days.">Leave Encashment Calculator</a>
+<a class="calculator-link" href="/calculators/bonus-calculator.html" data-search="bonus calculator" title="Estimate a bonus amount using the percentage or calculation method entered.">Bonus Calculator</a>
+<a class="calculator-link" href="/calculators/freelancer-tax-calculator.html" data-search="freelancer tax estimator" title="Estimate taxable income and tax from freelance earnings and deductions.">Freelancer Tax Estimator</a>
+<a class="calculator-link" href="/calculators/gst-late-fee-calculator.html" data-search="gst late fee estimator" title="Estimate GST late fees from the return delay and applicable rate entered.">GST Late Fee Estimator</a>
+<a class="calculator-link" href="/calculators/gst-interest-calculator.html" data-search="gst interest estimator" title="Estimate interest on delayed GST payment using the rate and delay period.">GST Interest Estimator</a>
+<a class="calculator-link" href="/calculators/gst-input-tax-credit-calculator.html" data-search="gst input tax credit calculator" title="Estimate input tax credit from eligible purchase GST amounts.">GST Input Tax Credit Calculator</a>
+<a class="calculator-link" href="/calculators/reverse-charge-gst-calculator.html" data-search="reverse charge gst calculator" title="Estimate GST payable under the reverse-charge assumptions entered.">Reverse Charge GST Calculator</a>
+<a class="calculator-link" href="/calculators/gst-on-rent-calculator.html" data-search="gst on rent estimator" title="Estimate GST on rental charges using the entered rent and rate.">GST on Rent Estimator</a>
+<a class="calculator-link" href="/calculators/salary-slip-calculator.html" data-search="salary slip calculator" title="Build a sample salary breakdown from earnings, allowances and deductions.">Salary Slip Calculator</a>
+<a class="calculator-link" href="/calculators/sales-tax-calculator.html" data-search="sales tax calculator estimate sales tax and total." title="Estimate sales tax and total.">Sales Tax Calculator</a>
+<a class="calculator-link" href="/calculators/salary-hike-calculator.html" data-search="salary hike calculator estimate revised annual and monthly gross pay." title="Estimate revised annual and monthly gross pay.">Salary Hike Calculator</a>
+<a class="calculator-link" href="/calculators/overtime-pay-calculator.html" data-search="overtime pay calculator estimate gross pay from regular and overtime hours." title="Estimate gross pay from regular and overtime hours.">Overtime Pay Calculator</a>
+<a class="calculator-link" href="/calculators/pay-day-calculator.html" data-search="pay day calculator estimate the next payday from a pay frequency." title="Estimate the next payday from a pay frequency.">Pay Day Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-business-operations" data-category="business-operations" aria-labelledby="heading-business-operations">
+<h2 id="heading-business-operations">Business, Sales &amp; Operations <span class="category-count">16 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/profit-loss-calculator.html" data-search="profit loss margin business" title="Calculate profit, loss and percentage.">Profit &amp; Loss Calculator</a>
+<a class="calculator-link" href="/calculators/discount-calculator.html" data-search="discount sale price savings" title="Calculate savings and final selling price.">Discount Calculator</a>
+<a class="calculator-link" href="/calculators/markup-margin-calculator.html" data-search="business markup &amp; margin calculator calculate unit markup and gross margin." title="Calculate unit markup and gross margin.">Business Markup &amp; Margin Calculator</a>
+<a class="calculator-link" href="/calculators/break-even-calculator.html" data-search="break-even point calculator estimate break-even units and sales revenue." title="Estimate break-even units and sales revenue.">Break-Even Point Calculator</a>
+<a class="calculator-link" href="/calculators/payback-period-calculator.html" data-search="payback period calculator" title="Estimate how long an investment takes to recover its initial cost.">Payback Period Calculator</a>
+<a class="calculator-link" href="/calculators/invoice-calculator.html" data-search="invoice calculator" title="Calculate invoice totals from line items, discounts and tax.">Invoice Calculator</a>
+<a class="calculator-link" href="/calculators/working-capital-calculator.html" data-search="working capital calculator" title="Estimate short-term working-capital needs from current assets and liabilities.">Working Capital Calculator</a>
+<a class="calculator-link" href="/calculators/inventory-turnover-calculator.html" data-search="inventory turnover calculator" title="Calculate inventory turnover from cost of goods sold and average inventory.">Inventory Turnover Calculator</a>
+<a class="calculator-link" href="/calculators/bulk-discount-calculator.html" data-search="bulk discount calculator" title="Calculate bulk-order savings and the effective price per unit.">Bulk Discount Calculator</a>
+<a class="calculator-link" href="/calculators/freelancer-rate-calculator.html" data-search="freelancer hourly rate calculator" title="Estimate an hourly rate from target income, billable hours and expenses.">Freelancer Hourly Rate Calculator</a>
+<a class="calculator-link" href="/calculators/upi-charges-calculator.html" data-search="upi transaction cost estimator" title="Estimate payment-processing costs from transaction volume and fee assumptions.">UPI Transaction Cost Estimator</a>
+<a class="calculator-link" href="/calculators/burn-rate-runway-calculator.html" data-search="burn rate &amp; runway calculator estimate monthly net cash burn and cash runway." title="Estimate monthly net cash burn and cash runway.">Burn Rate &amp; Runway Calculator</a>
+<a class="calculator-link" href="/calculators/commission-calculator.html" data-search="commission calculator calculate commission from sales and rate." title="Calculate commission from sales and rate.">Commission Calculator</a>
+<a class="calculator-link" href="/calculators/cogs-calculator.html" data-search="cogs calculator calculate cost of goods sold." title="Calculate cost of goods sold.">COGS Calculator</a>
+<a class="calculator-link" href="/calculators/unit-price-comparison-calculator.html" data-search="unit price comparison calculator compare package cost per unit." title="Compare package cost per unit.">Unit Price Comparison Calculator</a>
+<a class="calculator-link" href="/calculators/cash-flow-calculator.html" data-search="cash flow calculator calculate net cash flow and closing cash." title="Calculate net cash flow and closing cash.">Cash Flow Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-math-statistics" data-category="math-statistics" aria-labelledby="heading-math-statistics">
+<h2 id="heading-math-statistics">Mathematics, Numbers &amp; Statistics <span class="category-count">28 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/basic-calculator.html" data-search="basic calculator arithmetic add subtract multiply divide" title="Basic arithmetic operations.">Basic Calculator</a>
+<a class="calculator-link" href="/calculators/scientific-calculator.html" data-search="scientific calculator online free advanced math trigonometry logarithm square root powers" title="Trigonometry, roots, logarithms and powers.">Scientific Calculator</a>
+<a class="calculator-link" href="/calculators/lcm-hcf-calculator.html" data-search="lcm hcf calculator lcm and hcf gcd least common multiple highest common factor" title="Find common multiples and factors for whole numbers.">LCM &amp;amp; HCF Calculator</a>
+<a class="calculator-link" href="/calculators/percentage-calculator.html" data-search="percentage calculator percentage increase decrease percentage of a number percentage difference" title="Find percentages, increase, decrease and percentage difference.">Percentage Calculator</a>
+<a class="calculator-link" href="/calculators/fraction-calculator.html" data-search="fraction calculator add subtract multiply divide simplify fractions" title="Add, subtract, multiply, divide and simplify fractions.">Fraction Calculator</a>
+<a class="calculator-link" href="/calculators/average-calculator.html" data-search="average calculator average calculator find the arithmetic average (mean), sum and count of numbers. enter values separated by commas, spaces or new lines." title="Find the arithmetic mean of a list of numbers. The calculator also displays the total sum and number of valid values so you can check the calculation.">Average Calculator</a>
+<a class="calculator-link" href="/calculators/ratio-calculator.html" data-search="ratio calculator ratio calculator simplify a two-number ratio to its lowest whole-number form and view the equivalent ratio relationship." title="Simplify a ratio between two non-negative values by dividing both sides by their greatest common divisor. The result is shown in its lowest whole-number form when the inputs are integers.">Ratio Calculator</a>
+<a class="calculator-link" href="/calculators/square-root-calculator.html" data-search="square root calculator square root calculator calculate the principal square root of a non-negative number and verify it by squaring the result." title="Calculate the principal square root of a non-negative number. The result is the non-negative value that, when multiplied by itself, gives the input.">Square Root Calculator</a>
+<a class="calculator-link" href="/calculators/quadratic-polynomial-solver.html" data-search="quadratic equation solver solve quadratic equations and complex roots." title="Solve quadratic equations and complex roots.">Quadratic Equation Solver</a>
+<a class="calculator-link" href="/calculators/matrix-determinant-calculator.html" data-search="matrix determinant calculator calculate a 3×3 matrix determinant." title="Calculate a 3×3 matrix determinant.">Matrix Determinant Calculator</a>
+<a class="calculator-link" href="/calculators/statistics-calculator.html" data-search="statistics calculator calculate mean, median, mode and standard deviation." title="Calculate mean, median, mode and standard deviation.">Statistics Calculator</a>
+<a class="calculator-link" href="/calculators/permutation-calculator.html" data-search="permutation calculator count ordered selections from distinct items." title="Count ordered selections from distinct items.">Permutation Calculator</a>
+<a class="calculator-link" href="/calculators/combination-calculator.html" data-search="combination calculator count unordered groups selected from distinct items." title="Count unordered groups selected from distinct items.">Combination Calculator</a>
+<a class="calculator-link" href="/calculators/probability-calculator.html" data-search="probability calculator calculate basic probability for equally likely outcomes." title="Calculate basic probability for equally likely outcomes.">Probability Calculator</a>
+<a class="calculator-link" href="/calculators/prime-number-checker.html" data-search="prime number checker check whether a whole number is prime or composite." title="Check whether a whole number is prime or composite.">Prime Number Checker</a>
+<a class="calculator-link" href="/calculators/prime-factorization-calculator.html" data-search="prime factorization calculator express an integer as a product of prime factors." title="Express an integer as a product of prime factors.">Prime Factorization Calculator</a>
+<a class="calculator-link" href="/calculators/factorial-calculator.html" data-search="factorial calculator calculate n factorial for a non-negative integer." title="Calculate n factorial for a non-negative integer.">Factorial Calculator</a>
+<a class="calculator-link" href="/calculators/modulo-calculator.html" data-search="modulo calculator find the remainder after division by a non-zero divisor." title="Find the remainder after division by a non-zero divisor.">Modulo Calculator</a>
+<a class="calculator-link" href="/calculators/rounding-calculator.html" data-search="rounding calculator round a number using nearest, floor or ceiling rules." title="Round a number using nearest, floor or ceiling rules.">Rounding Calculator</a>
+<a class="calculator-link" href="/calculators/significant-figures-calculator.html" data-search="significant figures calculator round a value to a chosen significant-figure count." title="Round a value to a chosen significant-figure count.">Significant Figures Calculator</a>
+<a class="calculator-link" href="/calculators/scientific-notation-converter.html" data-search="scientific notation converter convert values to normalized scientific notation." title="Convert values to normalized scientific notation.">Scientific Notation Converter</a>
+<a class="calculator-link" href="/calculators/decimal-to-fraction-calculator.html" data-search="decimal to fraction calculator approximate a decimal as a simplified fraction." title="Approximate a decimal as a simplified fraction.">Decimal to Fraction Calculator</a>
+<a class="calculator-link" href="/calculators/mixed-number-calculator.html" data-search="mixed number calculator convert an improper fraction to a mixed number." title="Convert an improper fraction to a mixed number.">Mixed Number Calculator</a>
+<a class="calculator-link" href="/calculators/arithmetic-progression-calculator.html" data-search="arithmetic progression calculator calculate the nth term and sum of an arithmetic sequence." title="Calculate the nth term and sum of an arithmetic sequence.">Arithmetic Progression Calculator</a>
+<a class="calculator-link" href="/calculators/geometric-progression-calculator.html" data-search="geometric progression calculator calculate the nth term and sum of a geometric sequence." title="Calculate the nth term and sum of a geometric sequence.">Geometric Progression Calculator</a>
+<a class="calculator-link" href="/calculators/number-to-words-indian-format.html" data-search="number to words (indian format) spell out whole numbers using indian place values." title="Spell out whole numbers using Indian place values.">Number to Words (Indian Format)</a>
+<a class="calculator-link" href="/calculators/long-division-calculator.html" data-search="long division calculator show quotient and remainder for a division calculation." title="Show quotient and remainder for a division calculation.">Long Division Calculator</a>
+<a class="calculator-link" href="/calculators/random-number-generator.html" data-search="random number generator generate random whole numbers within a chosen range for classroom exercises, sampling and software testing." title="Generate random whole numbers within a chosen range for classroom exercises, sampling and software testing.">Random Number Generator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-geometry-construction" data-category="geometry-construction" aria-labelledby="heading-geometry-construction">
+<h2 id="heading-geometry-construction">Geometry, Measurement &amp; Construction <span class="category-count">12 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/property-price-per-sq-ft-calculator.html" data-search="property price per sq ft calculator estimate price per square foot." title="Estimate price per square foot.">Property Price per Sq Ft Calculator</a>
+<a class="calculator-link" href="/calculators/pythagoras-calculator.html" data-search="pythagoras calculator calculate a missing side in a right-angled triangle." title="Calculate a missing side in a right-angled triangle.">Pythagoras Calculator</a>
+<a class="calculator-link" href="/calculators/triangle-area-calculator.html" data-search="triangle area calculator calculate area using base-height or heron's formula." title="Calculate area using base-height or Heron's formula.">Triangle Area Calculator</a>
+<a class="calculator-link" href="/calculators/triangle-angle-calculator.html" data-search="triangle angle calculator find interior angles from three side lengths." title="Find interior angles from three side lengths.">Triangle Angle Calculator</a>
+<a class="calculator-link" href="/calculators/circle-area-calculator.html" data-search="circle area calculator calculate circle area from radius or diameter." title="Calculate circle area from radius or diameter.">Circle Area Calculator</a>
+<a class="calculator-link" href="/calculators/circle-circumference-calculator.html" data-search="circle circumference calculator calculate the boundary length of a circle." title="Calculate the boundary length of a circle.">Circle Circumference Calculator</a>
+<a class="calculator-link" href="/calculators/rectangle-area-calculator.html" data-search="rectangle area calculator calculate rectangle area and perimeter." title="Calculate rectangle area and perimeter.">Rectangle Area Calculator</a>
+<a class="calculator-link" href="/calculators/square-area-calculator.html" data-search="square area calculator calculate square area, perimeter and diagonal." title="Calculate square area, perimeter and diagonal.">Square Area Calculator</a>
+<a class="calculator-link" href="/calculators/volume-calculator.html" data-search="volume calculator calculate volume for cube, cuboid, cylinder or sphere." title="Calculate volume for cube, cuboid, cylinder or sphere.">Volume Calculator</a>
+<a class="calculator-link" href="/calculators/surface-area-calculator.html" data-search="surface area calculator calculate total surface area for common solids." title="Calculate total surface area for common solids.">Surface Area Calculator</a>
+<a class="calculator-link" href="/calculators/perimeter-calculator.html" data-search="perimeter calculator calculate the boundary length of common shapes." title="Calculate the boundary length of common shapes.">Perimeter Calculator</a>
+<a class="calculator-link" href="/calculators/concrete-calculator.html" data-search="concrete calculator estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio." title="Estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio.">Concrete Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-date-time-work" data-category="date-time-work" aria-labelledby="heading-date-time-work">
+<h2 id="heading-date-time-work">Date, Time &amp; Work <span class="category-count">13 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/date-difference-calculator.html" data-search="date difference days between two dates elapsed calendar days weeks" title="Count days, weeks and calendar time between dates.">Date Difference Calculator</a>
+<a class="calculator-link" href="/calculators/age-calculator.html" data-search="age date years months days" title="Calculate age on a selected date using the date of birth you enter.">Age Calculator</a>
+<a class="calculator-link" href="/calculators/work-hours-calculator.html" data-search="work hours calculator working hours shift duration timesheet breaks overnight" title="Calculate shift duration and subtract unpaid breaks.">Work Hours Calculator</a>
+<a class="calculator-link" href="/calculators/hours-to-minutes-calculator.html" data-search="hours to minutes calculator hours to minutes calculator convert hours and additional minutes into total minutes and decimal hours with a quick time conversion calculator." title="Convert a duration entered in hours and minutes into total minutes and decimal hours. This is useful for basic time calculations and timesheet checks.">Hours to Minutes Calculator</a>
+<a class="calculator-link" href="/calculators/age-difference-calculator.html" data-search="age difference calculator calculate the calendar age gap between two dates." title="Compare two dates and calculate the calendar gap in years, months and days.">Age Difference Calculator</a>
+<a class="calculator-link" href="/calculators/working-days-calculator.html" data-search="working days calculator count weekdays, excluding optional custom holidays." title="Count weekdays, excluding optional custom holidays.">Working Days Calculator</a>
+<a class="calculator-link" href="/calculators/add-days-to-date-calculator.html" data-search="add days to date calculator add calendar days to a selected date." title="Add calendar days to a selected date.">Add Days to Date Calculator</a>
+<a class="calculator-link" href="/calculators/subtract-days-from-date-calculator.html" data-search="subtract days from date calculator subtract calendar days from a selected date." title="Subtract calendar days from a selected date.">Subtract Days from Date Calculator</a>
+<a class="calculator-link" href="/calculators/time-zone-converter.html" data-search="time zone converter convert a time using entered utc offsets." title="Convert a time using entered UTC offsets.">Time Zone Converter</a>
+<a class="calculator-link" href="/calculators/seconds-to-hours-calculator.html" data-search="seconds to hours calculator convert seconds into hours and minutes." title="Convert seconds into hours and minutes.">Seconds to Hours Calculator</a>
+<a class="calculator-link" href="/calculators/minutes-to-hours-calculator.html" data-search="minutes to hours calculator convert minutes into decimal and whole hours." title="Convert minutes into decimal and whole hours.">Minutes to Hours Calculator</a>
+<a class="calculator-link" href="/calculators/countdown-calculator.html" data-search="countdown calculator count calendar days until a target date." title="Count calendar days until a target date.">Countdown Calculator</a>
+<a class="calculator-link" href="/calculators/retirement-date-calculator.html" data-search="retirement date calculator estimate a target date from a birth date and age." title="Estimate a target date from a birth date and age.">Retirement Date Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-converters-technology" data-category="converters-technology" aria-labelledby="heading-converters-technology">
+<h2 id="heading-converters-technology">Converters, Data &amp; Technology <span class="category-count">10 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/unit-converter.html" data-search="unit converter length weight mass temperature volume speed kg lbs cm feet celsius fahrenheit km miles" title="Convert length, weight, temperature, volume and speed.">Unit Converter</a>
+<a class="calculator-link" href="/calculators/data-storage-bandwidth-calculator.html" data-search="data storage &amp; bandwidth calculator convert data sizes and estimate transfer time." title="Convert data sizes and estimate transfer time.">Data Storage &amp; Bandwidth Calculator</a>
+<a class="calculator-link" href="/calculators/password-strength-checker.html" data-search="password strength checker &amp; generator check password characteristics locally and generate passwords." title="Check password characteristics locally and generate passwords.">Password Strength Checker &amp; Generator</a>
+<a class="calculator-link" href="/calculators/currency-converter-calculator.html" data-search="currency converter calculator" title="Convert between currencies using the exchange rate you enter.">Currency Converter Calculator</a>
+<a class="calculator-link" href="/calculators/land-unit-converter-calculator.html" data-search="land unit converter (bigha, guntha &amp; cent) convert land area using local unit conversion factors." title="Convert land area using local unit conversion factors.">Land Unit Converter (Bigha, Guntha &amp; Cent)</a>
+<a class="calculator-link" href="/calculators/roman-numeral-converter.html" data-search="roman numeral converter convert whole numbers to standard roman numerals." title="Convert whole numbers to standard Roman numerals.">Roman Numeral Converter</a>
+<a class="calculator-link" href="/calculators/binary-converter.html" data-search="binary converter convert decimal integers to binary notation." title="Convert decimal integers to binary notation.">Binary Converter</a>
+<a class="calculator-link" href="/calculators/hex-converter.html" data-search="hex converter convert decimal integers to hexadecimal notation." title="Convert decimal integers to hexadecimal notation.">Hex Converter</a>
+<a class="calculator-link" href="/calculators/octal-converter.html" data-search="octal converter convert decimal integers to octal notation." title="Convert decimal integers to octal notation.">Octal Converter</a>
+<a class="calculator-link" href="/calculators/subnet-calculator.html" data-search="subnet calculator calculate ipv4 network address, subnet mask, broadcast address and host range from an ip address and cidr prefix." title="Calculate IPv4 network address, subnet mask, broadcast address and host range from an IP address and CIDR prefix.">Subnet Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-home-travel" data-category="home-travel" aria-labelledby="heading-home-travel">
+<h2 id="heading-home-travel">Home, Travel &amp; Everyday Costs <span class="category-count">8 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/electricity-bill-calculator.html" data-search="electricity bill units household power" title="Estimate a bill from total units consumed and a single per-unit rate.">Electricity Bill Calculator</a>
+<a class="calculator-link" href="/calculators/fuel-cost-calculator.html" data-search="fuel petrol diesel trip travel cost" title="Estimate trip fuel use and total cost from distance, vehicle mileage and fuel price.">Fuel Cost Calculator</a>
+<a class="calculator-link" href="/calculators/split-bill-calculator.html" data-search="split bill calculator bill splitting restaurant tip group expense equal share" title="Divide a group bill and include an optional tip.">Split Bill Calculator</a>
+<a class="calculator-link" href="/calculators/mileage-calculator.html" data-search="mileage calculator mileage calculator calculate vehicle mileage or fuel efficiency in kilometres per litre from distance travelled and fuel used." title="Calculate vehicle efficiency from distance travelled and fuel consumed.">Mileage Calculator</a>
+<a class="calculator-link" href="/calculators/marriage-cost-calculator.html" data-search="marriage cost calculator" title="Estimate a future event budget after applying an inflation assumption.">Marriage Cost Calculator</a>
+<a class="calculator-link" href="/calculators/electricity-bill-slab-calculator.html" data-search="electricity bill slab calculator estimate a progressive bill from custom unit slabs and rates." title="Calculate a tiered bill using slab-wise consumption and the rates entered for each slab.">Electricity Bill Slab Calculator</a>
+<a class="calculator-link" href="/calculators/tip-calculator.html" data-search="tip calculator calculate tip and split a bill." title="Calculate tip and split a bill.">Tip Calculator</a>
+<a class="calculator-link" href="/calculators/steps-to-km-calculator.html" data-search="steps to km calculator estimate distance from steps and entered step length." title="Estimate distance from steps and entered step length.">Steps to Km Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-education-learning" data-category="education-learning" aria-labelledby="heading-education-learning">
+<h2 id="heading-education-learning">Education &amp; Academic Tools <span class="category-count">4 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/cgpa-to-percentage-calculator.html" data-search="cgpa to percentage calculator convert cgpa using an institution multiplier." title="Convert CGPA using an institution multiplier.">CGPA to Percentage Calculator</a>
+<a class="calculator-link" href="/calculators/gpa-calculator.html" data-search="gpa calculator calculate credit-weighted gpa." title="Calculate credit-weighted GPA.">GPA Calculator</a>
+<a class="calculator-link" href="/calculators/child-education-calculator.html" data-search="child education cost calculator" title="Project a future education target using current cost, inflation and years.">Child Education Cost Calculator</a>
+<a class="calculator-link" href="/calculators/grade-calculator.html" data-search="grade calculator calculate a course percentage and a configurable letter grade from points earned and points possible." title="Calculate a course percentage and a configurable letter grade from points earned and points possible.">Grade Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
+<section class="category" id="home-health-family" data-category="health-family" aria-labelledby="heading-health-family">
+<h2 id="heading-health-family">Health, Fitness &amp; Family <span class="category-count">8 calculators</span></h2>
+<div class="category-links">
+<a class="calculator-link" href="/calculators/bmi-calculator.html" data-search="bmi body mass index adult" title="Adult BMI reference with limitations.">BMI Calculator</a>
+<a class="calculator-link" href="/calculators/water-intake-calculator.html" data-search="water intake estimator estimate daily fluid intake from body weight." title="Estimate daily fluid intake from body weight.">Water Intake Estimator</a>
+<a class="calculator-link" href="/calculators/pace-calculator.html" data-search="pace calculator calculate running pace and speed." title="Calculate running pace and speed.">Pace Calculator</a>
+<a class="calculator-link" href="/calculators/heart-rate-zones-calculator.html" data-search="heart rate zones calculator estimate broad age-based heart rate zones." title="Estimate broad age-based heart rate zones.">Heart Rate Zones Calculator</a>
+<a class="calculator-link" href="/calculators/pregnancy-due-date-calculator.html" data-search="pregnancy due date calculator estimate a due date from a reference date." title="Estimate a due date from a reference date.">Pregnancy Due Date Calculator</a>
+<a class="calculator-link" href="/calculators/sleep-debt-calculator.html" data-search="sleep debt calculator estimate a sleep-duration shortfall over a selected period." title="Estimate a sleep-duration shortfall over a selected period.">Sleep Debt Calculator</a>
+<a class="calculator-link" href="/calculators/pregnancy-calculator.html" data-search="pregnancy calculator estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period." title="Estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period.">Pregnancy Calculator</a>
+<a class="calculator-link" href="/calculators/pregnancy-conception-calculator.html" data-search="pregnancy conception calculator estimate an approximate conception date from an estimated due date for pregnancy date-planning information." title="Estimate an approximate conception date from an estimated due date for pregnancy date-planning information.">Pregnancy Conception Calculator</a>
+</div><p class="category-empty">No matching calculators in this category.</p>
+</section>
 </div>
 <p class="no-results" id="noResults">No matching calculator found. Try another search term.</p>
 <section class="home-note" aria-labelledby="what-is-friendly-calculator"><h2 id="what-is-friendly-calculator">What Is Friendly Calculator?</h2><p><strong>Friendly Calculator</strong> is an online calculator platform created by Avnish Ahirwar. It brings practical, browser-based calculation tools together in one place, helping people understand everyday numbers without having to install a separate app for each task. The platform focuses on useful calculations for India, alongside general-purpose maths, measurement, date and time tools.</p><p>Visitors can explore calculators for personal finance, loans and savings estimates, income tax and salary, GST, small-business calculations, mathematics, unit conversions and everyday planning. Each calculator has its own page so users can review the required inputs, calculation method and important limitations before relying on an estimate.</p><p>Friendly Calculator is an independent information and calculation website. It is not a bank, lender, investment platform, government department or professional advisory service. Results depend on the values and assumptions entered and should be checked against current official rules or provider information when making important decisions.</p></section><section class="home-note" style="margin-top:22px"><h2>How Friendly Calculator helps you</h2><p>Friendly Calculator is a collection of browser-based tools for common calculations in personal finance, Indian tax and salary planning, small-business arithmetic and everyday tasks. Each tool is designed around a specific question: estimate a loan instalment, compare a savings scenario, separate tax from a price, understand a discount, or estimate the cost of a journey. Choose the closest calculator above and read its instructions before entering values.</p><h3>Use a calculator in three steps</h3><ol><li>Choose the calculator that matches your question and check the units shown beside each input.</li><li>Enter your own figures. Where a rate or assumption is required, use a current figure from the relevant bank, employer, government department, utility provider or other authoritative source.</li><li>Review the result, formula and limitations on the calculator page. Change one input at a time to compare scenarios and keep a note of the assumptions used.</li></ol><h3>What the results mean</h3><p>Calculator outputs are estimates based on the values entered and the method described on each tool page. They are not bank offers, tax assessments, investment recommendations, medical diagnoses or guarantees of future outcomes. Actual results can differ because of fees, rounding, changing rates, eligibility rules, local tariffs and individual circumstances. Do not rely on an estimate alone for a financial, tax, health or legal decision.</p><h3>Our calculation approach</h3><p>We aim to explain the formula, define important inputs, provide a worked example and identify material exclusions for each calculator. Where official rules or rates matter, check the relevant government or provider source because these can change. Read our <a href="/calculator/methodology.html">calculation methodology</a> for an overview of how the tools work, and visit the individual calculator page for its specific assumptions.</p><h3>About the website</h3><p>Friendly Calculator is organised into four collections: finance, tax and salary, business and commercial, and everyday calculations. The directory links to dedicated tool pages so visitors can review the instructions and limitations before using a calculator. Learn more about the project on the <a href="/calculator/about.html">About page</a>, or contact us with a correction, accessibility issue or suggestion through the <a href="/calculator/contact.html">Contact page</a>.</p></section>
