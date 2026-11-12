@@ -343,3 +343,17 @@ test('dedicated LCM and HCF calculator returns correct common factors and multip
   assert.equal(dom.get('hcf').textContent, '4');
   assert.equal(dom.get('lcm').textContent, '24');
 });
+
+
+test('Date Difference Calculator clamps leap-day anniversaries to the target month end', () => {
+  const html = fs.readFileSync(new URL('../calculators/date-difference-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('const addMonths='));
+  assert.ok(script, 'Date difference calculator script exists');
+  const dom = makeTestDom({ start: '2024-02-29', end: '2025-02-28' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Date, Intl, location: { pathname: '/calculators/date-difference-calculator.html' } });
+  assert.equal(dom.get('calendar').textContent, '1 years, 0 months, 0 days');
+  dom.get('start').value = '2025-02-28';
+  dom.get('end').value = '2024-02-29';
+  dom.get('end').listeners.change();
+  assert.equal(dom.get('calendar').textContent, '1 years, 0 months, 0 days');
+});
