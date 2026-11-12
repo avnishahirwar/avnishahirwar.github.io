@@ -375,3 +375,79 @@ test('dedicated Payment Calculator supports monthly schedules and zero-interest 
   rows = resultRows(dom.get('paymentResult'));
   closeTo(numericCurrency(rows.find(row => row[0] === 'Regular payment')[1]), 800000 / 60, 0.02);
 });
+
+
+function runDedicatedPageCalculator(path, values) {
+  const html = fs.readFileSync(new URL('../' + path, 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).at(-1);
+  assert.ok(script, 'Expected an inline calculator script in ' + path);
+  const dom = makeTestDom(values);
+  vm.runInNewContext(script, {
+    document: dom.document, Number, Math, Intl, Date, Uint32Array,
+    crypto: require('node:crypto').webcrypto,
+    window: {}, location: { pathname: '/' + path }
+  }, { timeout: 1000 });
+  assert.ok(dom.get('calc-form').listeners.submit, 'Expected form submit handler in ' + path);
+  dom.get('calc-form').listeners.submit({ preventDefault() {} });
+  return dom;
+}
+
+test('new Interest Rate Calculator solves a known fixed monthly rate', () => {
+  const principal = 100000, monthlyRate = 0.005, months = 60;
+  const payment = principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
+  const dom = runDedicatedPageCalculator('calculators/interest-rate-calculator.html', {
+    principal: String(principal), payment: String(payment), months: String(months)
+  });
+  assert.match(dom.get('result').innerHTML, /6\.000%/);
+  assert.match(dom.get('result').innerHTML, /Effective annual rate/);
+});
+
+test('new Pregnancy Calculator estimates gestational age and due date from fixed UTC dates', () => {
+  const dom = runDedicatedPageCalculator('calculators/pregnancy-calculator.html', {
+    lmp: '2026-01-01', today: '2026-02-12'
+  });
+  assert.match(dom.get('result').innerHTML, /6 weeks and 0 days/);
+  assert.match(dom.get('result').innerHTML, /8 October 2026/);
+});
+
+test('new Pregnancy Conception Calculator labels the conception date as approximate', () => {
+  const dom = runDedicatedPageCalculator('calculators/pregnancy-conception-calculator.html', {
+    due: '2026-10-08'
+  });
+  assert.match(dom.get('result').innerHTML, /15 January 2026/);
+  assert.match(dom.get('result').innerHTML, /rough estimate/);
+});
+
+test('new Random Number Generator supports a single-value range and count', () => {
+  const dom = runDedicatedPageCalculator('calculators/random-number-generator.html', {
+    min: '7', max: '7', count: '3'
+  });
+  assert.match(dom.get('result').innerHTML, /Generated 3 numbers/);
+  assert.match(dom.get('result').innerHTML, /not for security-sensitive key generation/);
+});
+
+test('new Grade Calculator applies the configurable ten-point grade bands', () => {
+  const dom = runDedicatedPageCalculator('calculators/grade-calculator.html', {
+    earned: '85', possible: '100', top: '90'
+  });
+  assert.match(dom.get('result').innerHTML, /Course percentage: 85%/);
+  assert.match(dom.get('result').innerHTML, /Letter grade: B/);
+});
+
+test('new Concrete Calculator estimates slab volume and mix quantities', () => {
+  const dom = runDedicatedPageCalculator('calculators/concrete-calculator.html', {
+    length: '4', width: '3', thickness: '100', cement: '1', sand: '2', aggregate: '4'
+  });
+  assert.match(dom.get('result').innerHTML, /Wet concrete volume: 1\.2 m³/);
+  assert.match(dom.get('result').innerHTML, /7\.6 bags of 50 kg/);
+  assert.match(dom.get('result').innerHTML, /qualified engineer/);
+});
+
+test('new Subnet Calculator calculates the expected IPv4 /24 network', () => {
+  const dom = runDedicatedPageCalculator('calculators/subnet-calculator.html', {
+    ip: '192.168.1.130', prefix: '24'
+  });
+  assert.match(dom.get('result').innerHTML, /Network: 192\.168\.1\.0\/24/);
+  assert.match(dom.get('result').innerHTML, /Broadcast address: 192\.168\.1\.255/);
+  assert.match(dom.get('result').innerHTML, /Usable host addresses: 254/);
+});
