@@ -51,7 +51,7 @@ jobs:
               " | " + (((.audits["cumulative-layout-shift"].numericValue // 0) * 1000 | round) / 1000 | tostring) +
               " | " + (((.audits["total-blocking-time"].numericValue // 0) | round) | tostring) +
               " |"
-            ' "lighthouse-results/$name.json" >> "$GITHUB_STEP_SUMMARY"
+            ' "lighthouse-results/$name.json" | tee -a "$GITHUB_STEP_SUMMARY"
           done <<'URLS'
           homepage|https://friendlycalculator.in/
           directory|https://friendlycalculator.in/calculator/site-directory.html
