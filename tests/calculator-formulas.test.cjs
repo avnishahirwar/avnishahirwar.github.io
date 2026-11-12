@@ -357,3 +357,21 @@ test('Date Difference Calculator clamps leap-day anniversaries to the target mon
   dom.get('end').listeners.change();
   assert.equal(dom.get('calendar').textContent, '1 years, 0 months, 0 days');
 });
+
+test('dedicated Payment Calculator supports monthly schedules and zero-interest payments', () => {
+  const html = fs.readFileSync(new URL('../calculators/payment-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes("const form=$('paymentForm')"));
+  assert.ok(script, 'Payment calculator script exists');
+  const dom = makeTestDom({ purchasePrice: '1000000', downPayment: '200000', fees: '0', apr: '9', years: '5', frequency: '12' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl, window: {}, location: { pathname: '/calculators/payment-calculator.html' } });
+  dom.get('paymentForm').listeners.submit({ preventDefault() {} });
+  let rows = resultRows(dom.get('paymentResult'));
+  const expectedPayment = 800000 * (0.09 / 12) / (1 - Math.pow(1 + 0.09 / 12, -60));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Regular payment')[1]), expectedPayment, 0.02);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Amount financed')[1]), 800000, 0.02);
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Total scheduled payments')[1]), expectedPayment * 60, 0.2);
+  dom.get('apr').value = '0';
+  dom.get('paymentForm').listeners.submit({ preventDefault() {} });
+  rows = resultRows(dom.get('paymentResult'));
+  closeTo(numericCurrency(rows.find(row => row[0] === 'Regular payment')[1]), 800000 / 60, 0.02);
+});
