@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mortgage Calculator | Friendly Calculator</title>
+<meta name="description" content="Estimate your monthly mortgage or home-loan payment, including principal, interest, annual property tax, home insurance and monthly maintenance.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculators/mortgage-calculator.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Mortgage Calculator | Friendly Calculator">
+<meta property="og:description" content="Estimate monthly home-loan payments with principal, interest, property tax, insurance and maintenance.">
+<meta property="og:url" content="https://friendlycalculator.in/calculators/mortgage-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.png">
+<meta name="twitter:card" content="summary_large_image">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QVWQSEDRGL');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Mortgage Calculator","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://friendlycalculator.in/calculators/mortgage-calculator.html","description":"Estimate monthly home-loan payments including principal, interest, property tax, insurance and maintenance."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"All Calculators","item":"https://friendlycalculator.in/calculator/site-directory.html"},{"@type":"ListItem","position":3,"name":"Mortgage Calculator","item":"https://friendlycalculator.in/calculators/mortgage-calculator.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does this mortgage calculator include?","acceptedAnswer":{"@type":"Answer","text":"It estimates principal and interest, then adds the monthly share of annual property tax and home insurance plus any monthly maintenance entered."}},{"@type":"Question","name":"Is the estimate a lender quote?","acceptedAnswer":{"@type":"Answer","text":"No. It is an illustration based on the inputs supplied. Lender fees, registration charges, stamp duty, insurance conditions and changing rates are not included unless entered separately."}},{"@type":"Question","name":"Can I use it for an Indian home loan?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enter amounts in rupees and the annual rate and term quoted to you. The estimate assumes a fixed rate and equal monthly instalments."}}]}</script>
+<style>
+:root{--n:#101c2c;--g:#d8bd82;--i:#172638;--m:#667587;--l:#e0e5ea;--p:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--p);color:var(--i);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{width:min(920px,92%);margin:28px auto 56px}nav{font-size:.9rem;color:var(--m)}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12;margin:.3em 0}.muted{color:var(--m)}
+.panel{background:#fff;border:1px solid var(--l);border-radius:16px;padding:22px;margin:20px 0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.field{display:grid;gap:6px;font-weight:650}.field input{width:100%;min-width:0;padding:11px 12px;border:1px solid #b9c5cf;border-radius:8px;font:inherit}
+.field span{font-size:.92rem}.field small{font-size:.8rem;color:var(--m);font-weight:400}
+button{border:0;border-radius:9px;background:var(--n);color:#fff;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.actions{margin-top:16px}.result{margin-top:16px;padding:16px;border-radius:10px;background:#edf3f7;overflow-wrap:anywhere}.result strong{font-size:1.2rem}
+.result ul{padding-left:20px}.error{color:#a32626;font-weight:650}.formula{padding:14px;background:#edf3f7;border-radius:10px;overflow-wrap:anywhere}
+.faq details{border-top:1px solid var(--l);padding:12px 0}.faq summary{font-weight:700;cursor:pointer}
+@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Mortgage Calculator</nav>
+<header>
+<p class="muted">FRIENDLY CALCULATOR · FREE ONLINE TOOL</p>
+<h1>Mortgage Calculator</h1>
+<p class="muted">Estimate a monthly home-loan payment from the property price, down payment, interest rate and term. Add property tax, home insurance and society maintenance for a broader monthly housing-cost estimate.</p>
+</header>
+
+<section class="panel">
+<h2>Mortgage payment calculator</h2>
+<form id="mortgage-form">
+<div class="fields">
+<label class="field"><span>Home price (₹)</span><input id="home-price" type="number" min="1" max="5000000000" step="any" value="8000000" required></label>
+<label class="field"><span>Down payment (₹)</span><input id="down-payment" type="number" min="0" max="5000000000" step="any" value="1600000" required></label>
+<label class="field"><span>Annual interest rate (%)</span><input id="interest-rate" type="number" min="0" max="50" step="0.01" value="8.5" required></label>
+<label class="field"><span>Loan term (years)</span><input id="loan-term" type="number" min="1" max="50" step="1" value="20" required></label>
+<label class="field"><span>Annual property tax (₹)</span><input id="property-tax" type="number" min="0" max="100000000" step="any" value="20000"><small>Enter 0 if not applicable.</small></label>
+<label class="field"><span>Annual home insurance (₹)</span><input id="home-insurance" type="number" min="0" max="100000000" step="any" value="12000"><small>Enter 0 if not applicable.</small></label>
+<label class="field"><span>Monthly maintenance / society charges (₹)</span><input id="maintenance" type="number" min="0" max="10000000" step="any" value="2500"><small>Optional monthly housing cost.</small></label>
+</div>
+<div class="actions"><button type="submit">Calculate mortgage payment</button></div>
+</form>
+<div id="mortgage-result" class="result" role="status" aria-live="polite">Enter your property and loan details, then calculate your estimated monthly payment.</div>
+</section>
+
+<section class="panel">
+<h2>What does the mortgage calculator estimate?</h2>
+<p>A mortgage is a loan secured against property. A typical home-loan instalment pays down part of the borrowed principal and covers interest charged on the outstanding balance. This calculator estimates that principal-and-interest payment for a fixed annual rate and equal monthly instalments.</p>
+<p>It can also include annual property tax, annual home insurance and a monthly maintenance or housing-society charge. Those costs are converted into monthly amounts and added to the loan instalment. This gives a broader planning estimate instead of showing the loan EMI alone.</p>
+<p>For an India-focused estimate, enter the property price and down payment in Indian rupees. The calculator does not assume a lender's eligibility rules, stamp duty, registration costs or a specific bank's interest rate. Use the rate and term from the offer you are evaluating.</p>
+</section>
+
+<section class="panel">
+<h2>Mortgage payment formula</h2>
+<p>The principal-and-interest component uses the standard fixed-rate amortising loan formula:</p>
+<div class="formula"><strong>Monthly payment = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</strong></div>
+<ul>
+<li><strong>P</strong> is the home price minus the down payment.</li>
+<li><strong>r</strong> is the monthly interest rate, calculated as the annual rate divided by 1,200.</li>
+<li><strong>n</strong> is the total number of monthly payments, calculated as loan years multiplied by 12.</li>
+</ul>
+<p>When the interest rate is 0%, the principal is divided evenly across the monthly payments. The monthly housing-cost estimate then adds annual property tax divided by 12, annual home insurance divided by 12 and the monthly maintenance amount entered.</p>
+</section>
+
+<section class="panel">
+<h2>Worked example</h2>
+<p>Suppose a property costs ₹80,00,000 and the down payment is ₹16,00,000. The loan principal is ₹64,00,000. At an illustrative fixed annual rate of 8.5% over 20 years, the estimated principal-and-interest instalment is about ₹55,541 per month.</p>
+<p>If annual property tax is ₹20,000, annual home insurance is ₹12,000 and monthly society maintenance is ₹2,500, the estimated total monthly housing cost is about ₹60,707. Actual amounts depend on the lender's schedule, property charges and insurance terms.</p>
+</section>
+
+<section class="panel">
+<h2>How to use the mortgage calculator</h2>
+<ol>
+<li>Enter the property's purchase price and the down payment you plan to make.</li>
+<li>Enter the annual interest rate and loan term. Use the rate and tenure from the lender's current offer where available.</li>
+<li>Add annual property tax and home insurance if you want them included in the monthly estimate.</li>
+<li>Add monthly maintenance or society charges, or leave the field at zero.</li>
+<li>Select Calculate mortgage payment and review the loan amount, monthly instalment, monthly cost components and estimated total interest.</li>
+</ol>
+<p>Try changing the down payment, rate or term to compare scenarios. A longer term may reduce the monthly instalment while increasing total interest. A larger down payment reduces the amount borrowed, but keep enough funds for other purchase costs and a suitable emergency reserve.</p>
+</section>
+
+<section class="panel">
+<h2>What is not included?</h2>
+<p>This estimate does not include lender processing fees, stamp duty, registration, legal or valuation charges, repairs, utilities, furnishings, mortgage protection, private mortgage insurance or variable-rate changes. Some lenders collect taxes and insurance separately; others may include them in an escrow-style monthly payment. Enter only costs that apply to your situation and avoid counting the same charge twice.</p>
+<p>The result is an educational estimate, not a loan approval, rate offer, affordability decision or financial recommendation. Confirm the repayment schedule and all charges directly with the lender and relevant property professionals before making a commitment.</p>
+</section>
+
+<section class="panel faq">
+<h2>Frequently asked questions</h2>
+<details><summary>Can I use this for an Indian home loan?</summary><p>Yes. Enter the property price, down payment and loan costs in rupees. The calculation uses a fixed annual rate and equal monthly instalments, so compare it with the lender's repayment schedule.</p></details>
+<details><summary>Does the monthly total include property tax and insurance?</summary><p>Yes, if you enter those amounts. The calculator divides each annual amount by 12 and adds it to the principal-and-interest instalment and monthly maintenance.</p></details>
+<details><summary>Is this the same as a loan EMI calculator?</summary><p>The principal-and-interest formula is similar. This mortgage calculator also starts from a property price and down payment and can include property tax, home insurance and monthly society charges.</p></details>
+<details><summary>Will my actual EMI stay the same?</summary><p>Only if the loan's rate, repayment structure and payment schedule stay the same. Floating-rate changes, fees, prepayments and lender-specific rounding can change the actual schedule.</p></details>
+</section>
+<p class="muted">Calculations run in your browser. Do not enter passwords, bank account numbers or other sensitive information.</p>
+</main>
+<script src="/assets/site-shell.js" defer></script>
+<script src="/assets/site-chrome.js?v=1" defer></script>
+<script src="/assets/mortgage-calculator.js" defer></script>
+<script>
+(()=>{'use strict';
+const form=document.getElementById('mortgage-form');
+const output=document.getElementById('mortgage-result');
+const money=value=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);
+form.addEventListener('submit',event=>{
+  event.preventDefault();
+  try{
+    const result=window.FCMortgage.calculateMortgage({
+      homePrice:document.getElementById('home-price').value,
+      downPayment:document.getElementById('down-payment').value,
+      annualInterestRate:document.getElementById('interest-rate').value,
+      termYears:document.getElementById('loan-term').value,
+      annualPropertyTax:document.getElementById('property-tax').value||0,
+      annualHomeInsurance:document.getElementById('home-insurance').value||0,
+      monthlyMaintenance:document.getElementById('maintenance').value||0
+    });
+    output.replaceChildren();
+    const heading=document.createElement('strong');
+    heading.textContent='Estimated monthly housing cost: '+money(result.monthlyTotal);
+    const list=document.createElement('ul');
+    const rows=[
+      ['Loan amount',money(result.loanAmount)],
+      ['Monthly principal and interest',money(result.monthlyPrincipalAndInterest)],
+      ['Monthly property tax',money(result.monthlyPropertyTax)],
+      ['Monthly home insurance',money(result.monthlyHomeInsurance)],
+      ['Monthly maintenance / society charges',money(result.monthlyMaintenance)],
+      ['Total principal and interest over the term',money(result.totalPrincipalAndInterest)],
+      ['Estimated total interest',money(result.totalInterest)]
+    ];
+    for(const [label,value] of rows){
+      const item=document.createElement('li');
+      item.textContent=label+': '+value;
+      list.appendChild(item);
+    }
+    const note=document.createElement('p');
+    note.className='muted';
+    note.textContent='Illustrative fixed-rate estimate. Fees, taxes or charges not entered above are excluded.';
+    output.append(heading,list,note);
+    if(typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
+  }catch(error){
+    output.replaceChildren();
+    const message=document.createElement('span');
+    message.className='error';
+    message.textContent=error instanceof Error?error.message:'Please check the entered values and try again.';
+    output.appendChild(message);
+  }
+});
+})();
+</script>
+</body>
+</html>

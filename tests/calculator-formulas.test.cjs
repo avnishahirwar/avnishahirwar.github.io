@@ -451,3 +451,45 @@ test('new Subnet Calculator calculates the expected IPv4 /24 network', () => {
   assert.match(dom.get('result').innerHTML, /Broadcast address: 192\.168\.1\.255/);
   assert.match(dom.get('result').innerHTML, /Usable host addresses: 254/);
 });
+
+const { calculateMortgage } = require('../assets/mortgage-calculator.js');
+
+test('mortgage calculator includes principal, interest, property tax, insurance and maintenance', () => {
+  const result = calculateMortgage({
+    homePrice: 8000000,
+    downPayment: 1600000,
+    annualInterestRate: 8.5,
+    termYears: 20,
+    annualPropertyTax: 20000,
+    annualHomeInsurance: 12000,
+    monthlyMaintenance: 2500
+  });
+  closeTo(result.loanAmount, 6400000, 0.001);
+  closeTo(result.monthlyPrincipalAndInterest, 55540.6869354, 0.001);
+  closeTo(result.monthlyPropertyTax, 1666.6666667, 0.001);
+  closeTo(result.monthlyHomeInsurance, 1000, 0.001);
+  closeTo(result.monthlyTotal, 60707.3536021, 0.001);
+  closeTo(result.totalInterest, 6929764.8644946, 0.01);
+});
+
+test('mortgage calculator handles 0% interest and rejects invalid loan assumptions', () => {
+  const zeroRate = calculateMortgage({
+    homePrice: 1000000, downPayment: 200000, annualInterestRate: 0,
+    termYears: 10, annualPropertyTax: 12000, annualHomeInsurance: 6000,
+    monthlyMaintenance: 500
+  });
+  closeTo(zeroRate.monthlyPrincipalAndInterest, 800000 / 120, 0.001);
+  closeTo(zeroRate.monthlyTotal, 8666.6666667, 0.001);
+  assert.throws(() => calculateMortgage({
+    homePrice: 1000000, downPayment: 1000001, annualInterestRate: 8,
+    termYears: 20
+  }), /Down payment/);
+  assert.throws(() => calculateMortgage({
+    homePrice: 1000000, downPayment: 100000, annualInterestRate: 8,
+    termYears: 0
+  }), /Loan term/);
+  assert.throws(() => calculateMortgage({
+    homePrice: 1000000, downPayment: 100000, annualInterestRate: 8,
+    termYears: 20, annualPropertyTax: -1
+  }), /cannot be negative/);
+});
