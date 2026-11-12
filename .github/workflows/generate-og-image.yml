@@ -49,31 +49,29 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
           for path in Path('.').rglob('*.html'):
               if any(part.startswith('.') for part in path.parts):
                   continue
-              text = path.read_text(encoding='utf-8')
-              if 'og:image' not in text:
+              original = path.read_text(encoding='utf-8')
+              if 'og:image' not in original:
                   continue
-              text = re.sub(
-                  r'(<meta property="og:image" content="https://friendlycalculator[.]in/[^"]+)\\.svg(">)',
-                  r'\\g<1>.png\\g<2>',
-                  text
-              )
-              text = re.sub(
-                  r'(<meta name="twitter:image" content="https://friendlycalculator[.]in/[^"]+)\\.svg(">)',
-                  r'\\g<1>.png\\g<2>',
-                  text
-              )
-              text = re.sub(r'<meta property="og:image:type" content="image/svg[+]xml">', '<meta property="og:image:type" content="image/png">', text)
+              updated = []
+              for line in original.splitlines():
+                  if '<meta property="og:image"' in line or '<meta name="twitter:image"' in line:
+                      line = line.replace('.svg"', '.png"')
+                  if 'property="og:image:type"' in line:
+                      line = line.replace('image/svg+xml', 'image/png')
+                  updated.append(line)
+              text = '\n'.join(updated)
               if 'og:image:width' not in text:
                   text = text.replace('</head>', '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></head>')
               if 'twitter:image' not in text:
-                  match = re.search(r'<meta property="og:image" content="([^"]+)"', text)
-                  if match:
-                      text = text.replace('</head>', f'<meta name="twitter:image" content="{match.group(1)}"></head>')
-              path.write_text(text, encoding='utf-8')
+                  for line in updated:
+                      if '<meta property="og:image"' in line:
+                          url = line.split('content="', 1)[1].split('"', 1)[0]
+                          text = text.replace('</head>', f'<meta name="twitter:image" content="{url}"></head>')
+                          break
+              path.write_text(text + '\n', encoding='utf-8')
           PY
 
       - name: Commit generated PNG and metadata
