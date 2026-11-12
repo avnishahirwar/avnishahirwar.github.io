@@ -570,3 +570,31 @@ test('home-loan prepayment calculator shows zero savings when no extra payment i
   assert.equal(extraResultNumber(dom.output.innerHTML, 'Estimated interest saved'), 0);
   assert.match(dom.output.innerHTML, /Time saved/);
 });
+
+
+test('dedicated Minutes to Hours calculator converts fractional minutes and validates the range', () => {
+  const html = fs.readFileSync(new URL('../calculators/minutes-to-hours-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('const hours=n/60'));
+  assert.ok(script, 'Minutes to Hours calculation script exists');
+  const dom = makeTestDom({ duration: '150' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl, location: { pathname: '/calculators/minutes-to-hours-calculator.html' } });
+  assert.match(dom.get('result').textContent, /2\.5/);
+  assert.match(dom.get('result').textContent, /2 h 30 min/);
+  dom.get('duration').value = '-1';
+  dom.get('calculate').listeners.click();
+  assert.match(dom.get('error').textContent, /valid number of minutes/i);
+});
+
+test('dedicated Seconds to Hours calculator converts long durations and validates the range', () => {
+  const html = fs.readFileSync(new URL('../calculators/seconds-to-hours-calculator.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('const hours=n/3600'));
+  assert.ok(script, 'Seconds to Hours calculation script exists');
+  const dom = makeTestDom({ duration: '7200' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl, location: { pathname: '/calculators/seconds-to-hours-calculator.html' } });
+  assert.match(dom.get('result').textContent, /2/);
+  assert.match(dom.get('result').textContent, /120/);
+  assert.match(dom.get('result').textContent, /2 h 0 min 0 s/);
+  dom.get('duration').value = '-1';
+  dom.get('calculate').listeners.click();
+  assert.match(dom.get('error').textContent, /valid number of seconds/i);
+});
