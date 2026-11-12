@@ -70,10 +70,14 @@ links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localiz
 links.splice(6,0,['Loan EMI',localizedCalcPrefix+'loan-emi-calculator.html'],['Percentage',localizedCalcPrefix+'percentage-calculator.html'],['Discount',localizedCalcPrefix+'discount-calculator.html']);
 const everydayLabels={en:['Age','Date Difference','Fuel Cost'],hi:['आयु','तिथि अंतर','ईंधन लागत'],es:['Edad','Diferencia de fechas','Combustible'],fr:['Âge','Différence de dates','Carburant'],pt:['Idade','Diferença de datas','Combustível'],ar:['العمر','فرق التواريخ','الوقود'],id:['Usia','Selisih tanggal','Bahan bakar'],bn:['বয়স','তারিখের পার্থক্য','জ্বালানি'],ta:['வயது','தேதி வித்தியாசம்','எரிபொருள்']};
 const everyday=everydayLabels[currentLocale]||everydayLabels.en;
-links.splice(9,0,[everyday[0],localizedCalcPrefix+'age-calculator.html'],[everyday[1],localizedCalcPrefix+'date-difference-calculator.html'],[everyday[2],localizedCalcPrefix+'fuel-cost-calculator.html','basic-calculator.html','scientific-calculator.html','circle-area-calculator.html']);
+links.splice(9,0,[everyday[0],localizedCalcPrefix+'age-calculator.html'],[everyday[1],localizedCalcPrefix+'date-difference-calculator.html'],[everyday[2],localizedCalcPrefix+'fuel-cost-calculator.html','basic-calculator.html','scientific-calculator.html','circle-area-calculator.html','average-calculator.html','ratio-calculator.html','simple-interest-calculator.html']);
 const mathLabels={en:['Basic','Scientific','Circle Area'],hi:['बेसिक','साइंटिफिक','वृत्त क्षेत्रफल'],es:['Básica','Científica','Área del círculo'],fr:['Base','Scientifique','Aire du cercle'],pt:['Básica','Científica','Área do círculo'],ar:['أساسية','علمية','مساحة الدائرة'],id:['Dasar','Ilmiah','Luas lingkaran'],bn:['সাধারণ','বৈজ্ঞানিক','বৃত্তের ক্ষেত্রফল'],ta:['அடிப்படை','அறிவியல்','வட்டப் பரப்பளவு']};
 const math=mathLabels[currentLocale]||mathLabels.en;
 links.splice(12,0,[math[0],localizedCalcPrefix+'basic-calculator.html'],[math[1],localizedCalcPrefix+'scientific-calculator.html'],[math[2],localizedCalcPrefix+'circle-area-calculator.html']);
+const financeLabels={en:['Average','Ratio','Simple Interest'],hi:['औसत','अनुपात','साधारण ब्याज'],es:['Promedio','Proporción','Interés simple'],fr:['Moyenne','Ratio','Intérêt simple'],pt:['Média','Razão','Juros simples'],ar:['المتوسط','النسبة','الفائدة البسيطة'],id:['Rata-rata','Rasio','Bunga sederhana'],bn:['গড়','অনুপাত','সরল সুদ'],ta:['சராசரி','விகிதம்','தனிவட்டி']};
+const finance=financeLabels[currentLocale]||financeLabels.en;
+links.splice(15,0,[finance[0],localizedCalcPrefix+'average-calculator.html'],[finance[1],localizedCalcPrefix+'ratio-calculator.html'],[finance[2],localizedCalcPrefix+'simple-interest-calculator.html']);
+
 
 
 
