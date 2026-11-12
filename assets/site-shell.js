@@ -37,11 +37,11 @@ if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent='Skip to main content';document.body.prepend(skip);
 }
 const h=document.createElement('header');h.className='fc-global-header';
-const languageHref=hi?'/':'/hi/index.html'; const languageLabel=hi?'English':'हिन्दी';
+const localeNames={en:'English',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
+const localeHome={en:'/',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html'};
 const localeRoutes={'/':'/hi/index.html','/calculator/about.html':'/hi/about.html','/calculator/methodology.html':'/hi/methodology.html','/calculator/contact.html':'/hi/contact.html','/hi/index.html':'/','/hi/about.html':'/calculator/about.html','/hi/methodology.html':'/calculator/methodology.html','/hi/contact.html':'/calculator/contact.html'};
-const locales=[['en','English','Available'],['hi','हिन्दी','Available'],['es','Español','Coming soon'],['fr','Français','Coming soon'],['pt','Português','Coming soon'],['ar','العربية','Coming soon'],['id','Bahasa Indonesia','Coming soon'],['bn','বাংলা','Coming soon'],['ta','தமிழ்','Coming soon']];
-const currentLocale=hi?'hi':'en';
-const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+(hi?'भाषा':'Language')+'</span><select id="fc-language-select" aria-label="Choose website language">'+locales.map(([code,name,status])=>'<option value="'+code+'"'+(code===currentLocale?' selected':'')+(status!=='Available'?' disabled':'')+'>'+name+(status!=='Available'?' — '+status:'')+'</option>').join('')+'</select></label>';
+const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+(hi?'भाषा':currentLocale==='ar'?'اللغة':'Language')+'</span><select id="fc-language-select" aria-label="Choose website language">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'"'+(code===currentLocale?' selected':'')+'>'+name+'</option>').join('')+'</select></label>';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+(hi?'/hi/index.html':'/')+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n==='Log In'?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
 const f=document.createElement('footer');f.className='fc-global-footer';
@@ -51,33 +51,21 @@ const languageSelect=document.getElementById('fc-language-select');
 if(languageSelect){
   languageSelect.addEventListener('change',()=>{
     const next=languageSelect.value;
-    if(next!=='en'&&next!=='hi'){languageSelect.value=currentLocale;return;}
+    if(!localeHome[next])return;
     try{localStorage.setItem('fc-language-preference',next)}catch(_){}
-    const destination=localeRoutes[p];
     if(next===currentLocale)return;
-    if(destination){location.href=destination;return;}
-    if(next==='hi'){
-      try{sessionStorage.setItem('fc-language-notice','This page is not translated into Hindi yet. The Hindi homepage will open.')}catch(_){}
-      location.href='/hi/index.html';
-    }else{
-      try{sessionStorage.setItem('fc-language-notice','This page is not available in English yet. The English homepage will open.')}catch(_){}
-      location.href='/';
-    }
+    if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
+    if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
+    const destination=localeRoutes[p];
+    if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
+    try{sessionStorage.setItem('fc-language-notice','This page is not yet translated in the selected language. Opening the available language homepage.')}catch(_){}
+    location.href=localeHome[next];
   });
 }
-try{
-  const saved=localStorage.getItem('fc-language-preference');
-  if(saved&&saved!==currentLocale&&localeRoutes[p]){
-    // Respect the visitor's saved choice only on pages with a reviewed equivalent.
-    const notice=sessionStorage.getItem('fc-language-auto-redirected');
-    if(!notice){sessionStorage.setItem('fc-language-auto-redirected','1');location.replace(localeRoutes[p]);}
-  }
-}catch(_){}
 try{
   const notice=sessionStorage.getItem('fc-language-notice');
   if(notice){sessionStorage.removeItem('fc-language-notice');const n=document.createElement('p');n.className='fc-language-notice';n.setAttribute('role','status');n.textContent=notice;const target=document.querySelector('main')||document.body;target.prepend(n);}
 }catch(_){}
-
 document.querySelectorAll('a[href="/#tools"],a[href="/#calculators"],a[href="/#contact"],a[href="#tools"],a[href="#calculators"]').forEach(a=>a.href=/contact/.test(a.getAttribute('href'))?r+'contact.html':r+'site-directory.html');
 if(p.startsWith('/calculators/')){
   const getLocalCalculatorTarget=()=>document.getElementById('sip-tool')||document.getElementById('live-page-calculator')||document.querySelector('main form,main input,main select,main button')?.closest('section');
