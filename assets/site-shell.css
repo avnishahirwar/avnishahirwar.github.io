@@ -70,3 +70,14 @@ main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafb
 .fc-social-link svg{width:19px;height:19px;display:block}
 .fc-social-link:hover,.fc-social-link:focus-visible{background:#d8bd82;border-color:#d8bd82;color:#101c2c!important;outline-offset:3px}
 @media(max-width:640px){.fc-social-links{gap:12px}.fc-social-link{width:40px;height:40px}}
+
+
+/* Compact sharing controls on individual calculator pages */
+.fc-share-panel{margin:28px 0 8px;padding:18px 20px;border:1px solid #dfe5eb;border-radius:12px;background:#fff}
+.fc-share-panel h2{margin:0 0 4px;font-size:1.12rem;color:#172638}
+.fc-share-panel p{margin:0 0 13px;color:#64717d;font-size:.92rem}
+.fc-share-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fc-share-link,.fc-share-copy{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 13px;border:1px solid #cbd5df;border-radius:7px;background:#f8fafb;color:#172638;text-decoration:none;font-size:.88rem;font-weight:700;cursor:pointer}
+.fc-share-link:hover,.fc-share-copy:hover{background:#edf2f6;border-color:#9eacb9}
+.fc-share-link:focus-visible,.fc-share-copy:focus-visible{outline:3px solid #b58b3d;outline-offset:3px}
+@media(max-width:600px){.fc-share-panel{padding:15px}.fc-share-actions{gap:7px}.fc-share-link,.fc-share-copy{flex:1 1 auto;min-height:40px;padding:8px 10px}}
