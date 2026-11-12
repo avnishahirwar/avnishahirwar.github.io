@@ -286,3 +286,21 @@ test('home-loan prepayment page explains both lump-sum and recurring extra payme
   assert.ok(page.includes('extra monthly payments'));
   assert.ok(directory.includes('Home Loan &amp; Loan Prepayment Calculator'));
 });
+
+
+test('Investment Calculator is present, linked, indexed in sitemap and backed by a unique formula',()=>{
+ const extra=fs.readFileSync(path.join(root,'assets/extra-calculators.js'),'utf8');
+ const directory=fs.readFileSync(path.join(root,'calculator/site-directory.html'),'utf8');
+ const finance=fs.readFileSync(path.join(root,'calculator/finance-calculators.html'),'utf8');
+ const about=fs.readFileSync(path.join(root,'calculator/about.html'),'utf8');
+ const page=fs.readFileSync(path.join(root,'calculators/investment-calculator.html'),'utf8');
+ assert.ok(page.includes('data-calc="investment-calculator">'));
+ assert.ok(page.includes('<title>Investment Calculator | Friendly Calculator</title>'));
+ assert.ok(page.includes('rel="canonical"'));
+ assert.ok(extra.includes('"slug":"investment-calculator"'));
+ assert.ok(directory.includes('/calculators/investment-calculator.html'));
+ assert.ok(finance.includes('/calculators/investment-calculator.html'));
+ assert.ok(about.includes('/calculators/investment-calculator.html'));
+ assert.ok(sitemap.includes('https://friendlycalculator.in/calculators/investment-calculator.html'));
+ assert.match(extra,/case'investment':/);
+});
