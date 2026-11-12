@@ -1,5 +1,13 @@
 (()=>{'use strict';
 // Privacy-first analytics: GA4 is the only configured analytics provider.
+// Ensure localized pages also report to the same Friendly Calculator GA4 stream.
+if(typeof window.gtag!=='function'){
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=function(){window.dataLayer.push(arguments)};
+  window.gtag('js',new Date());window.gtag('config','G-QVWQSEDRGL');
+  const gaScript=document.createElement('script');gaScript.async=true;gaScript.src='https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL';document.head.appendChild(gaScript);
+}
+
 
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
@@ -26,7 +34,7 @@ setMeta('meta[name="twitter:image"]','content','https://friendlycalculator.in/og
 
 
 // Ad placements stay absent until approved ad units are configured and serving.
-if(p.includes('/calculators/compound-interest-calculator.html')&&p.split('/').length>4){document.getElementById('v3')?.closest('label')?.remove();}
+if(p.includes('/calculators/compound-interest-calculator.html')&&p.split('/').length>3){document.getElementById('v3')?.closest('label')?.remove();}
 if(p.startsWith('/calculators/')){
   if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
