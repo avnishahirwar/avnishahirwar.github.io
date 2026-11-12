@@ -440,7 +440,14 @@ test('EPF and PPF calculators are localized and discoverable in all nine support
       assert.ok(html.includes('rel="canonical"'));
       assert.ok(html.includes('hreflang="x-default"'));
       for (const alternate of locales) assert.ok(html.includes('hreflang="' + alternate + '"'), 'Missing hreflang ' + alternate + ' on ' + locale + '/' + slug);
-      assert.ok(html.includes('id="calculate"') && html.includes('id="result"'), 'Calculator controls missing on ' + locale + '/' + slug);
+      if (locale === 'en' && slug === 'epf-pf-calculator.html') {
+        const engine = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
+        assert.ok(engine.includes('"/calculators/epf-pf-calculator.html":"epf / pf calculator"'), 'English EPF page must load its shared calculator definition');
+      } else if (locale === 'en' && slug === 'ppf-calculator.html') {
+        assert.ok(html.includes('id="ppf-btn"') && html.includes('id="ppf-res"'), 'English PPF controls must remain present');
+      } else {
+        assert.ok(html.includes('id="calculate"') && html.includes('id="result"'), 'Calculator controls missing on ' + locale + '/' + slug);
+      }
       assert.ok(html.includes('/assets/site-shell.js'));
       assert.ok(sitemap.includes(url), 'Missing sitemap URL: ' + url);
     }
