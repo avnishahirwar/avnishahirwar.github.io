@@ -338,3 +338,39 @@ test('language switcher covers every calculator page that exists in each locale'
     }
   }
 });
+
+test('every public sitemap page has a valid favicon reference and matching asset MIME type', () => {
+  const failures = [];
+  const shellJs = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const shellNormalizesFavicons = shellJs.includes('ensureFavicon') &&
+    shellJs.includes("link.href='/favicon-96.png'") &&
+    shellJs.includes("icon.type='image/png'") &&
+    shellJs.includes("icon.type='image/svg+xml'");
+  for (const url of urls) {
+    const file = localFile(url);
+    if (!file || !fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, 'utf8');
+    const relativePage = path.relative(root, file).split(path.sep).join('/');
+    const iconLinks = [...html.matchAll(/<link\b[^>]*>/gi)]
+      .map(match => match[0])
+      .filter(tag => /\brel=["'][^"']*\bicon\b[^"']*["']/i.test(tag));
+    if (!iconLinks.length) {
+      if (!html.includes('/assets/site-shell.js') || !shellNormalizesFavicons) {
+        failures.push(relativePage + ' (no favicon link or shared-shell fallback)');
+      }
+      continue;
+    }
+    for (const tag of iconLinks) {
+      const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+      if (!href) {
+        failures.push(relativePage + ' (icon link missing href)');
+        continue;
+      }
+      const target = localFile(href, relativePage);
+      if (!target || !fs.existsSync(target)) {
+        failures.push(relativePage + ' -> missing icon asset ' + href);
+      }
+    }
+  }
+  assert.deepEqual(failures, [], 'Favicon issues: ' + failures.join('; '));
+});
