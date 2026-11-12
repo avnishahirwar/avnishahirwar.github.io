@@ -1,18 +1,5 @@
 (()=>{'use strict';
-// Yandex Metrica — counter 114200164. Loaded once across pages using this shared shell.
-if(!window.__fcYandexMetricaLoaded){
-  window.__fcYandexMetricaLoaded=true;
-  (function(m,e,t,r,i,k,a){
-    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r)return;}
-    k=e.createElement(t);a=e.getElementsByTagName(t)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
-  })(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=114200164','ym');
-  ym(114200164,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
-  const fallback=document.createElement('noscript');
-  fallback.innerHTML='<div><img src="https://mc.yandex.ru/watch/114200164" style="position:absolute;left:-9999px" alt=""></div>';
-  document.body.appendChild(fallback);
-}
+// Privacy-first analytics: GA4 is the only configured analytics provider.
 
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
