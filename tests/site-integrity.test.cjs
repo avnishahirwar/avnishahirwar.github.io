@@ -232,7 +232,7 @@ test('brand images are crawlable, descriptive and included in the image sitemap'
     assert.ok(html.includes('src="/assets/friendly-calculator-brand-illustration.svg"') && /<img[^>]+alt="[^"]+"/.test(html));
   }
   assert.match(shell, /alt="Friendly Calculator logo"/);
-  assert.equal((shell.match(/src="\\/assets\\/friendly-calculator-logo\\.svg"/g) || []).length, 2);
+  assert.equal(shell.split('src="/assets/friendly-calculator-logo.svg"').length - 1, 2);
   assert.ok(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
   assert.equal(sitemap.split('<image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc>').length - 1, 4);
 });
