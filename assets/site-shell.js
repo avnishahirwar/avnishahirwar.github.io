@@ -66,7 +66,8 @@ ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத
 const nav=chrome[currentLocale]||chrome.en;
 links.splice(0,links.length,[nav.home,localeHome[currentLocale]],[nav.login,r+'dashboard.html'],[nav.all,r+'site-directory.html'],[nav.finance,r+'finance-calculators.html'],[nav.tax,r+'tax-calculators.html'],[nav.business,r+'business-calculators.html'],[nav.everyday,r+'everyday-calculators.html'],[nav.forBusiness,r+'business.html'],[nav.api,r+'api.html'],[nav.plans,r+'pricing.html'],[nav.about,currentLocale==='hi'?'/hi/about.html':r+'about.html'],[nav.contact,currentLocale==='hi'?'/hi/contact.html':r+'contact.html'],[nav.admin,r+'admin.html']);
 const localizedCalcPrefix=currentLocale==='en'?'/calculators/':'/'+currentLocale+'/calculators/';
-links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html']);
+links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html','loan-emi-calculator.html','percentage-calculator.html','discount-calculator.html']);
+links.splice(6,0,['Loan EMI',localizedCalcPrefix+'loan-emi-calculator.html'],['Percentage',localizedCalcPrefix+'percentage-calculator.html'],['Discount',localizedCalcPrefix+'discount-calculator.html']);
 
 
 const languageHref='#fc-language-select';
