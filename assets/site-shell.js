@@ -114,23 +114,21 @@ if(languageSelect){
     if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
     if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
     const calcMatch=p.match(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\/calculators\/([^/]+)$/)||p.match(/^\/calculators\/([^/]+)$/);
-    // Keep this allowlist aligned with calculator files that actually exist in each locale.
-    // The language selector should open an equivalent translated tool when available, not only for the first few pages.
-    const sharedTranslatedSlugs=['absolute-return-calculator.html','age-calculator.html','age-difference-calculator.html','average-calculator.html','basic-calculator.html','bike-loan-calculator.html','cagr-calculator.html','car-loan-calculator.html','circle-area-calculator.html','compound-interest-calculator.html','date-difference-calculator.html','discount-calculator.html','fd-calculator.html','gold-loan-calculator.html','gst-calculator.html','home-loan-amortization-schedule-calculator.html','loan-against-property-calculator.html','loan-emi-calculator.html','percentage-calculator.html','personal-loan-eligibility-calculator.html','ratio-calculator.html','roi-calculator.html','scientific-calculator.html','simple-interest-calculator.html','sip-calculator.html','add-days-to-date-calculator.html','arithmetic-progression-calculator.html','binary-converter.html','advance-tax-calculator.html','brokerage-calculator.html','break-even-calculator.html','currency-converter-calculator.html','bonus-calculator.html','professional-tax-calculator.html','factorial-calculator.html','geometric-progression-calculator.html','combination-calculator.html','hours-to-minutes-calculator.html','fraction-calculator.html','payment-calculator.html'];
-    const hindiOnlySlugs=['gratuity-calculator.html','nps-calculator.html','profit-loss-calculator.html'];
-    const otherLocaleOnlySlugs=['fuel-cost-calculator.html'];
-    const translatedSlugsByLocale={
-      en:new Set([...sharedTranslatedSlugs,...hindiOnlySlugs,...otherLocaleOnlySlugs]),
-      hi:new Set([...sharedTranslatedSlugs,...hindiOnlySlugs]),
-      es:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      fr:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      pt:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      ar:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      id:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      bn:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs]),
-      ta:new Set([...sharedTranslatedSlugs,...otherLocaleOnlySlugs])
-    };
-    if(calcMatch&&((next==='en'&&translatedSlugsByLocale.en?.has(calcMatch[1]))||translatedSlugsByLocale[next]?.has(calcMatch[1]))){location.href=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];return;}
+    // Resolve calculator destinations against the actual static files instead of a
+    // manually maintained slug allowlist. This keeps newly translated pages usable
+    // as soon as they are added to a locale folder.
+    if(calcMatch){
+      const target=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];
+      fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
+        if(response.ok){location.href=target;return;}
+        try{sessionStorage.setItem('fc-language-notice','This calculator is not available in the selected language yet. Opening that language homepage.')}catch(_){}
+        location.href=localeHome[next];
+      }).catch(()=>{
+        try{sessionStorage.setItem('fc-language-notice','The translated calculator could not be checked. Opening that language homepage.')}catch(_){}
+        location.href=localeHome[next];
+      });
+      return;
+    }
     const destination=localeRoutes[p];
     if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
     try{sessionStorage.setItem('fc-language-notice','This page is not yet translated in the selected language. Opening the available language homepage.')}catch(_){}

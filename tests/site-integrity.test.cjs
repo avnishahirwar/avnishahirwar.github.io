@@ -259,11 +259,11 @@ test('homepage uses the same navy brand color as the shared site shell', () => {
 });
 
 
-test('language switch only navigates to calculator translations that exist', () => {
+test('language switch checks the selected locale calculator file before navigating', () => {
   const shell = fs.readFileSync(new URL('../assets/site-shell.js', 'file://' + __filename), 'utf8');
-  assert.match(shell, /translatedSlugsByLocale/);
-  assert.match(shell, /translatedSlugsByLocale\[next\]\?\.has\(calcMatch\[1\]\)/);
-  assert.match(shell, /if\(notice\)/);
+  assert.match(shell, /fetch\(target,\{method:'HEAD',cache:'no-store'\}\)/);
+  assert.match(shell, /if\(response\.ok\)\{location\.href=target/);
+  assert.match(shell, /fc-language-notice/);
 });
 
 
@@ -306,36 +306,16 @@ test('Investment Calculator is present, linked, indexed in sitemap and backed by
 });
 
 
-test('language switcher covers every calculator page that exists in each locale', () => {
+test('language switcher dynamically checks existing locale calculator pages without a stale slug allowlist', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const readList = name => {
-    const match = shell.match(new RegExp('const ' + name + '=\\[([^\\]]*)\\]'));
-    assert.ok(match, 'Expected ' + name + ' in shared language switcher');
-    return [...match[1].matchAll(/'([^']+)'/g)].map(item => item[1]);
-  };
-  const shared = readList('sharedTranslatedSlugs');
-  const hindiOnly = readList('hindiOnlySlugs');
-  const otherOnly = readList('otherLocaleOnlySlugs');
-  const expected = {
-    en: [...shared, ...hindiOnly, ...otherOnly],
-    hi: [...shared, ...hindiOnly],
-    es: [...shared, ...otherOnly],
-    fr: [...shared, ...otherOnly],
-    pt: [...shared, ...otherOnly],
-    ar: [...shared, ...otherOnly],
-    id: [...shared, ...otherOnly],
-    bn: [...shared, ...otherOnly],
-    ta: [...shared, ...otherOnly]
-  };
-  for (const [locale, slugs] of Object.entries(expected)) {
-    const directory = path.join(root, locale === 'en' ? 'calculators' : path.join(locale, 'calculators'));
-    const actual = new Set(fs.readdirSync(directory).filter(file => file.endsWith('.html')));
-    for (const slug of new Set(slugs)) {
-      assert.ok(actual.has(slug), locale + ' language-switcher points to a missing calculator: ' + slug);
-    }
-    if (locale !== 'en') {
-      assert.deepEqual([...new Set(slugs)].sort(), [...actual].sort(), locale + ' allowlist must include every translated calculator file');
-    }
+  assert.ok(shell.includes("fetch(target,{method:'HEAD',cache:'no-store'})"));
+  assert.doesNotMatch(shell, /sharedTranslatedSlugs|hindiOnlySlugs|otherLocaleOnlySlugs/);
+  for (const locale of ['hi','es','fr','pt','ar','id','bn','ta']) {
+    const directory = path.join(root, locale, 'calculators');
+    assert.ok(fs.existsSync(directory), 'Missing locale calculator directory: ' + locale);
+    const files = fs.readdirSync(directory).filter(file => file.endsWith('.html'));
+    assert.ok(files.length > 0, 'Locale has no translated calculators: ' + locale);
+    for (const file of files) assert.ok(fs.existsSync(path.join(directory, file)), 'Missing translated calculator: ' + locale + '/' + file);
   }
 });
 
@@ -387,4 +367,27 @@ test('homepage structured data and copy accurately describe all supported langua
   assert.match(homepage, /as a multilingual platform/i);
   assert.match(homepage, /Use the language selector to choose from the available languages/i);
   assert.doesNotMatch(homepage, /as a bilingual platform/i);
+});
+
+test('mortgage calculator is fully localized and discoverable in all nine supported languages', () => {
+  const locales = ['en','hi','es','fr','pt','ar','id','bn','ta'];
+  const base = 'https://friendlycalculator.in';
+  const slug = '/calculators/mortgage-calculator.html';
+  for (const locale of locales) {
+    const url = locale === 'en' ? base + slug : base + '/' + locale + slug;
+    const file = localFile(url);
+    assert.ok(file && fs.existsSync(file), 'Missing localized mortgage page: ' + locale);
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.ok(html.includes('rel="canonical"'), 'Missing self-canonical: ' + locale);
+    assert.ok(html.includes('hreflang="x-default"'), 'Missing x-default hreflang: ' + locale);
+    for (const alternate of locales) assert.ok(html.includes('hreflang="' + alternate + '"'), 'Missing ' + alternate + ' hreflang on ' + locale);
+    for (const id of ['home-price','down-payment','interest-rate','loan-term','property-tax','home-insurance','maintenance','mortgage-result']) {
+      assert.ok(html.includes('id="' + id + '"'), 'Missing calculator control ' + id + ' on ' + locale);
+    }
+    assert.ok(html.includes('/assets/mortgage-calculator.js'), 'Missing shared calculation engine: ' + locale);
+    assert.ok(html.includes('/assets/site-shell.js'), 'Missing shared language/navigation shell: ' + locale);
+  }
+  const arabic = fs.readFileSync(path.join(root, 'ar/calculators/mortgage-calculator.html'), 'utf8');
+  assert.match(arabic, /<html lang="ar" dir="rtl">/);
 });
