@@ -427,6 +427,7 @@ test('Salary calculator guide is localized, linked and indexed in all nine suppo
   assert.match(arabic, /<html lang="ar" dir="rtl">/);
 });
 
+// Every localized calculator page must publish reciprocal hreflang and x-default metadata.
 test('EPF and PPF calculators are localized and discoverable in all nine supported languages', () => {
   const locales = ['en','hi','es','fr','pt','ar','id','bn','ta'];
   const slugs = ['epf-pf-calculator.html','ppf-calculator.html'];
