@@ -306,36 +306,16 @@ test('Investment Calculator is present, linked, indexed in sitemap and backed by
 });
 
 
-test('language switcher covers every calculator page that exists in each locale', () => {
+test('language switcher dynamically checks existing locale calculator pages without a stale slug allowlist', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const readList = name => {
-    const match = shell.match(new RegExp('const ' + name + '=\\[([^\\]]*)\\]'));
-    assert.ok(match, 'Expected ' + name + ' in shared language switcher');
-    return [...match[1].matchAll(/'([^']+)'/g)].map(item => item[1]);
-  };
-  const shared = readList('sharedTranslatedSlugs');
-  const hindiOnly = readList('hindiOnlySlugs');
-  const otherOnly = readList('otherLocaleOnlySlugs');
-  const expected = {
-    en: [...shared, ...hindiOnly, ...otherOnly],
-    hi: [...shared, ...hindiOnly],
-    es: [...shared, ...otherOnly],
-    fr: [...shared, ...otherOnly],
-    pt: [...shared, ...otherOnly],
-    ar: [...shared, ...otherOnly],
-    id: [...shared, ...otherOnly],
-    bn: [...shared, ...otherOnly],
-    ta: [...shared, ...otherOnly]
-  };
-  for (const [locale, slugs] of Object.entries(expected)) {
-    const directory = path.join(root, locale === 'en' ? 'calculators' : path.join(locale, 'calculators'));
-    const actual = new Set(fs.readdirSync(directory).filter(file => file.endsWith('.html')));
-    for (const slug of new Set(slugs)) {
-      assert.ok(actual.has(slug), locale + ' language-switcher points to a missing calculator: ' + slug);
-    }
-    if (locale !== 'en') {
-      assert.deepEqual([...new Set(slugs)].sort(), [...actual].sort(), locale + ' allowlist must include every translated calculator file');
-    }
+  assert.match(shell, /fetch\\(target,\\{method:'HEAD',cache:'no-store'\\}\\)/);
+  assert.doesNotMatch(shell, /sharedTranslatedSlugs|hindiOnlySlugs|otherLocaleOnlySlugs/);
+  for (const locale of ['hi','es','fr','pt','ar','id','bn','ta']) {
+    const directory = path.join(root, locale, 'calculators');
+    assert.ok(fs.existsSync(directory), 'Missing locale calculator directory: ' + locale);
+    const files = fs.readdirSync(directory).filter(file => file.endsWith('.html'));
+    assert.ok(files.length > 0, 'Locale has no translated calculators: ' + locale);
+    for (const file of files) assert.ok(fs.existsSync(path.join(directory, file)), 'Missing translated calculator: ' + locale + '/' + file);
   }
 });
 
