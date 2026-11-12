@@ -229,11 +229,11 @@ test('brand images are crawlable, descriptive and included in the image sitemap'
   assert.ok(logo.includes('width="512"') && logo.includes('height="512"'));
   assert.ok(image.includes('width="1200"') && image.includes('height="630"'));
   for (const html of [homepage, hindi, about, directory]) {
-    assert.match(html, /<img[^>]+src="\\/assets\\/friendly-calculator-brand-illustration\\.svg"[^>]+alt="[^"]+"/);
+    assert.ok(html.includes('src="/assets/friendly-calculator-brand-illustration.svg"') && /<img[^>]+alt="[^"]+"/.test(html));
   }
   assert.match(shell, /alt="Friendly Calculator logo"/);
-  assert.match(sitemap, /xmlns:image="http:\\/\\/www\\.google\\.com\\/schemas\\/sitemap-image\\/1\\.1"/);
-  assert.equal((sitemap.match(/<image:loc>https:\\/\\/friendlycalculator\\.in\\/assets\\/friendly-calculator-brand-illustration\\.svg<\\/image:loc>/g) || []).length, 4);
+  assert.ok(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
+  assert.equal(sitemap.split('<image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc>').length - 1, 4);
 });
 
 test('shared shell removes repeated generic interactive-calculator prompts', () => {
