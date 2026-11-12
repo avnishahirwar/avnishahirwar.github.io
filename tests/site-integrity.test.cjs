@@ -391,3 +391,17 @@ test('mortgage calculator is fully localized and discoverable in all nine suppor
   const arabic = fs.readFileSync(path.join(root, 'ar/calculators/mortgage-calculator.html'), 'utf8');
   assert.match(arabic, /<html lang="ar" dir="rtl">/);
 });
+
+
+test('Hindi RD calculator is localized and linked from the English alternate', () => {
+  const file = path.join(root, 'hi/calculators/rd-calculator.html');
+  assert.ok(fs.existsSync(file));
+  const html = fs.readFileSync(file, 'utf8');
+  assert.match(html, /<html lang="hi">/);
+  assert.ok(html.includes('rel="canonical"') && html.includes('hreflang="en"') && html.includes('hreflang="x-default"'));
+  for (const id of ['monthly','rate','years','months','calculate','invested','interest','maturity']) assert.ok(html.includes('id="' + id + '"'));
+  assert.ok(html.includes('Math.pow(1+quarterly,1/3)-1'));
+  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/rd-calculator.html'));
+  const english = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
+  assert.ok(english.includes('hreflang="hi"'));
+});
