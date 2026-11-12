@@ -1,0 +1,71 @@
+name: Lighthouse and Core Web Vitals (lab)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/lighthouse.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Lighthouse mobile audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify Chrome
+        run: google-chrome --version
+
+      - name: Run Lighthouse against production pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lighthouse-results
+          printf '| Page | Performance | Accessibility | Best Practices | SEO | LCP (s) | CLS | TBT (ms) |\n' >> "$GITHUB_STEP_SUMMARY"
+          printf '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n' >> "$GITHUB_STEP_SUMMARY"
+          while IFS='|' read -r name url; do
+            echo "Auditing $url"
+            npx --yes lighthouse@12 "$url" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="lighthouse-results/$name.json" \
+              --quiet
+            jq -r --arg name "$name" '
+              "| " + $name +
+              " | " + (((.categories.performance.score // 0) * 100 | round) | tostring) +
+              " | " + (((.categories.accessibility.score // 0) * 100 | round) | tostring) +
+              " | " + (((.categories["best-practices"].score // 0) * 100 | round) | tostring) +
+              " | " + (((.categories.seo.score // 0) * 100 | round) | tostring) +
+              " | " + (((.audits["largest-contentful-paint"].numericValue // 0) / 1000 * 100 | round) / 100 | tostring) +
+              " | " + (((.audits["cumulative-layout-shift"].numericValue // 0) * 1000 | round) / 1000 | tostring) +
+              " | " + (((.audits["total-blocking-time"].numericValue // 0) | round) | tostring) +
+              " |"
+            ' "lighthouse-results/$name.json" >> "$GITHUB_STEP_SUMMARY"
+          done <<'URLS'
+          homepage|https://friendlycalculator.in/
+          directory|https://friendlycalculator.in/calculator/site-directory.html
+          gst-calculator|https://friendlycalculator.in/calculators/gst-calculator.html
+          loan-emi|https://friendlycalculator.in/calculators/loan-emi-calculator.html
+          minutes-to-hours|https://friendlycalculator.in/calculators/minutes-to-hours-calculator.html
+          URLS
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Lab data is not field Core Web Vitals. Total Blocking Time (TBT) is a lab diagnostic, not field Interaction to Next Paint (INP). Field CWV should be checked separately in Search Console / CrUX." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: friendly-calculator-lighthouse
+          path: lighthouse-results/*.json
+          retention-days: 7
