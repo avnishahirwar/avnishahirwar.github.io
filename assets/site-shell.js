@@ -58,4 +58,38 @@ document.addEventListener('change',event=>{
   });
 });
 
+// Give visitors simple, non-intrusive ways to share useful calculator pages.
+if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel')){
+  const shareUrl=location.href.split('#')[0];
+  const shareTitle=(document.querySelector('h1')?.textContent||document.title||'Friendly Calculator').trim();
+  const encodedUrl=encodeURIComponent(shareUrl);
+  const encodedText=encodeURIComponent(shareTitle+' — Friendly Calculator');
+  const shareItems=[
+    ['WhatsApp','https://wa.me/?text='+encodedText+'%20'+encodedUrl],
+    ['Facebook','https://www.facebook.com/sharer/sharer.php?u='+encodedUrl],
+    ['X','https://twitter.com/intent/tweet?text='+encodedText+'&url='+encodedUrl],
+    ['Telegram','https://t.me/share/url?url='+encodedUrl+'&text='+encodedText],
+    ['LinkedIn','https://www.linkedin.com/sharing/share-offsite/?url='+encodedUrl],
+    ['Email','mailto:?subject='+encodedText+'&body='+encodedUrl]
+  ];
+  const panel=document.createElement('section');
+  panel.className='fc-share-panel';
+  panel.setAttribute('aria-label','Share this calculator');
+  const heading=document.createElement('h2');heading.textContent='Share this calculator';
+  const intro=document.createElement('p');intro.textContent='Found this tool useful? Share the calculator page with someone who may need it.';
+  const actions=document.createElement('div');actions.className='fc-share-actions';
+  shareItems.forEach(([label,href])=>{
+    const a=document.createElement('a');a.className='fc-share-link';a.href=href;a.textContent=label;
+    if(!href.startsWith('mailto:')){a.target='_blank';a.rel='noopener noreferrer'}
+    a.addEventListener('click',()=>{if(typeof window.gtag==='function')window.gtag('event','share_click',{method:label,content_type:'calculator',item_id:p})});
+    actions.append(a);
+  });
+  const copy=document.createElement('button');copy.className='fc-share-copy';copy.type='button';copy.textContent='Copy link';
+  copy.addEventListener('click',async()=>{
+    try{await navigator.clipboard.writeText(shareUrl);copy.textContent='Link copied';if(typeof window.gtag==='function')window.gtag('event','share_click',{method:'copy_link',content_type:'calculator',item_id:p});}
+    catch(_){copy.textContent='Copy unavailable';}
+  });
+  actions.append(copy);panel.append(heading,intro,actions);main.append(panel);
+}
+
 })();
