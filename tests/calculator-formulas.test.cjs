@@ -493,3 +493,80 @@ test('mortgage calculator handles 0% interest and rejects invalid loan assumptio
     termYears: 20, annualPropertyTax: -1
   }), /cannot be negative/);
 });
+
+
+function runExtraCalculator(slug, values) {
+  const source = fs.readFileSync(new URL('../assets/extra-calculators.js', 'file://' + __filename), 'utf8');
+  const fields = new Map(Object.entries(values).map(([id, value]) => [id, { value: String(value) }]));
+  const listeners = {};
+  const form = { innerHTML: '', addEventListener(name, fn) { listeners[name] = fn; } };
+  const output = { innerHTML: '', textContent: '' };
+  const root = { dataset: { calc: slug } };
+  const document = {
+    querySelector: () => root,
+    getElementById: id => id === 'extraForm' ? form : id === 'extraResult' ? output : fields.get(id) || { value: '' }
+  };
+  vm.runInNewContext(source, {
+    document, location: { pathname: '/calculators/' + slug + '.html' },
+    Number, Math, Intl, Date
+  }, { timeout: 1000 });
+  return { output, submit: listeners.submit, form };
+}
+
+function extraResultNumber(html, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = html.match(new RegExp('<span>' + escaped + '</span><strong>₹([0-9,]+(?:\\.[0-9]+)?)</strong>'));
+  assert.ok(match, 'Missing currency result row: ' + label);
+  return Number(match[1].replace(/,/g, ''));
+}
+
+test('SSY maturity calculator models 15 annual deposits and maturity after 21 years', () => {
+  const deposit = 100000, rate = 8.2 / 100;
+  const expected = deposit * Math.pow(1 + rate, 7) * (Math.pow(1 + rate, 15) - 1) / rate;
+  const dom = runExtraCalculator('ssy-calculator', { annualDeposit: deposit, rate: 8.2 });
+  const html = dom.output.innerHTML;
+  closeTo(extraResultNumber(html, 'Total deposits'), deposit * 15, 0.01);
+  closeTo(extraResultNumber(html, 'Estimated maturity after 21 years'), expected, 0.1);
+  assert.match(html, /Contribution period/);
+  assert.match(html, /15 years/);
+  assert.match(html, /21 years/);
+});
+
+test('SSY maturity calculator rejects annual deposits outside scheme limits or increments', () => {
+  const dom = runExtraCalculator('ssy-calculator', { annualDeposit: 150001, rate: 8.2 });
+  assert.match(dom.output.textContent, /₹250 to ₹1,50,000/);
+});
+
+test('home-loan prepayment calculator compares baseline and revised amortization', () => {
+  const balance = 2500000, annualRate = 8.5, emi = 25000, oneTime = 100000, extra = 5000;
+  const monthly = annualRate / 1200;
+  const simulate = (principal, payment) => {
+    let remaining = principal, months = 0, interest = 0;
+    while (remaining > 0.01 && months < 1200) {
+      const charge = remaining * monthly;
+      interest += charge;
+      remaining = Math.max(0, remaining + charge - payment);
+      months++;
+    }
+    return { months, interest };
+  };
+  const baseline = simulate(balance, emi);
+  const revised = simulate(balance - oneTime, emi + extra);
+  const dom = runExtraCalculator('loan-prepayment-calculator', {
+    balance, rate: annualRate, emi, oneTime, extra
+  });
+  const html = dom.output.innerHTML;
+  assert.match(html, /Original payoff time/);
+  assert.match(html, /Revised payoff time/);
+  assert.ok(extraResultNumber(html, 'Estimated interest saved') > 0);
+  closeTo(extraResultNumber(html, 'Interest without prepayment'), baseline.interest, 0.1);
+  closeTo(extraResultNumber(html, 'Interest after prepayment'), revised.interest, 0.1);
+});
+
+test('home-loan prepayment calculator shows zero savings when no extra payment is made', () => {
+  const dom = runExtraCalculator('loan-prepayment-calculator', {
+    balance: 100000, rate: 0, emi: 10000, oneTime: 0, extra: 0
+  });
+  assert.equal(extraResultNumber(dom.output.innerHTML, 'Estimated interest saved'), 0);
+  assert.match(dom.output.innerHTML, /Time saved/);
+});

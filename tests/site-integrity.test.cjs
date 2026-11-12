@@ -265,3 +265,24 @@ test('language switch only navigates to calculator translations that exist', () 
   assert.match(shell, /translatedSlugsByLocale\[next\]\?\.has\(calcMatch\[1\]\)/);
   assert.match(shell, /if\(notice\)/);
 });
+
+
+test('SSY maturity page documents the official 15-year deposit and 21-year maturity model', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/ssy-calculator.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/extra-calculators.js'), 'utf8');
+  assert.match(page, /Sukanya Samriddhi Yojana \(SSY\) Maturity Calculator/);
+  assert.ok(page.includes('up to 15 years'));
+  assert.ok(page.includes('21 years from account opening'));
+  assert.ok(page.includes('indiapost.gov.in/banking-services/savings'));
+  assert.ok(engine.includes('"kind":"ssy"'));
+  assert.ok(engine.includes('"def":8.2'));
+});
+
+test('home-loan prepayment page explains both lump-sum and recurring extra payments', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/loan-prepayment-calculator.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  assert.match(page, /Home Loan &amp; Loan Prepayment Calculator/);
+  assert.ok(page.includes('one-time lump-sum prepayment'));
+  assert.ok(page.includes('extra monthly payments'));
+  assert.ok(directory.includes('Home Loan &amp; Loan Prepayment Calculator'));
+});
