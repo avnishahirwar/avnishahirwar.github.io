@@ -426,3 +426,31 @@ test('Salary calculator guide is localized, linked and indexed in all nine suppo
   const arabic = fs.readFileSync(path.join(root, 'ar/calculators/salary-calculator.html'), 'utf8');
   assert.match(arabic, /<html lang="ar" dir="rtl">/);
 });
+
+test('EPF and PPF calculators are localized and discoverable in all nine supported languages', () => {
+  const locales = ['en','hi','es','fr','pt','ar','id','bn','ta'];
+  const slugs = ['epf-pf-calculator.html','ppf-calculator.html'];
+  for (const slug of slugs) {
+    for (const locale of locales) {
+      const url = locale === 'en' ? 'https://friendlycalculator.in/calculators/' + slug : 'https://friendlycalculator.in/' + locale + '/calculators/' + slug;
+      const file = localFile(url);
+      assert.ok(file && fs.existsSync(file), 'Missing localized ' + slug + ': ' + locale);
+      const html = fs.readFileSync(file, 'utf8');
+      assert.match(html, new RegExp('<html lang="' + locale + '"'));
+      assert.ok(html.includes('rel="canonical"'));
+      assert.ok(html.includes('hreflang="x-default"'));
+      for (const alternate of locales) assert.ok(html.includes('hreflang="' + alternate + '"'), 'Missing hreflang ' + alternate + ' on ' + locale + '/' + slug);
+      assert.ok(html.includes('id="calculate"') && html.includes('id="result"'), 'Calculator controls missing on ' + locale + '/' + slug);
+      assert.ok(html.includes('/assets/site-shell.js'));
+      assert.ok(sitemap.includes(url), 'Missing sitemap URL: ' + url);
+    }
+  }
+  const epfHindi = fs.readFileSync(path.join(root, 'hi/calculators/epf-pf-calculator.html'), 'utf8');
+  assert.ok(epfHindi.includes('Math.pow(1+r,n)-1)/r'), 'EPF monthly contribution formula must be preserved');
+  const ppfHindi = fs.readFileSync(path.join(root, 'hi/calculators/ppf-calculator.html'), 'utf8');
+  assert.ok(ppfHindi.includes('fv=(fv+p)*(1+r)'), 'PPF annual beginning-of-year compounding formula must be preserved');
+  const arabicEpf = fs.readFileSync(path.join(root, 'ar/calculators/epf-pf-calculator.html'), 'utf8');
+  const arabicPpf = fs.readFileSync(path.join(root, 'ar/calculators/ppf-calculator.html'), 'utf8');
+  assert.match(arabicEpf, /<html lang="ar" dir="rtl">/);
+  assert.match(arabicPpf, /<html lang="ar" dir="rtl">/);
+});
