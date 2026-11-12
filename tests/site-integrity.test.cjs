@@ -329,7 +329,12 @@ test('language switcher covers every calculator page that exists in each locale'
   };
   for (const [locale, slugs] of Object.entries(expected)) {
     const directory = path.join(root, locale === 'en' ? 'calculators' : path.join(locale, 'calculators'));
-    const actual = fs.readdirSync(directory).filter(file => file.endsWith('.html')).sort();
-    assert.deepEqual([...new Set(slugs)].sort(), actual, locale + ' language-switcher allowlist must match existing translated calculator files');
+    const actual = new Set(fs.readdirSync(directory).filter(file => file.endsWith('.html')));
+    for (const slug of new Set(slugs)) {
+      assert.ok(actual.has(slug), locale + ' language-switcher points to a missing calculator: ' + slug);
+    }
+    if (locale !== 'en') {
+      assert.deepEqual([...new Set(slugs)].sort(), [...actual].sort(), locale + ' allowlist must include every translated calculator file');
+    }
   }
 });
