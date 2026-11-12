@@ -129,6 +129,20 @@ test('production formula functions return correct numeric results for every shar
   }
 });
 
+test('fixed deposit defaults to quarterly compounding and distinguishes nominal rate from effective yield', () => {
+  const defs = loadFormulaDefinitions();
+  const fd = defs['fixed deposit calculator'];
+  const rows = fd.calc({ principal: 350000, rate: 6.5, years: 1, frequency: '4' });
+  const annual = fd.calc({ principal: 350000, rate: 6.5, years: 1, frequency: '1' });
+  closeTo(rows.find(row => row[0] === 'Maturity value')[1], 373310.563077, 0.01);
+  closeTo(rows.find(row => row[0] === 'Estimated interest')[1], 23310.563077, 0.01);
+  closeTo(rows.find(row => row[0] === 'Effective annual yield')[1], 6.660160879, 0.00001);
+  assert.equal(rows.find(row => row[0] === 'Compounding frequency')[1], 'Quarterly');
+  closeTo(annual.find(row => row[0] === 'Maturity value')[1], 372750, 0.01);
+  assert.match(source, /\["frequency","Compounding frequency \(times per year\)","select",\["4","1","2","12"\]\]/);
+  assert.match(source, /Quarterly \(4 times\/year\)/);
+});
+
 test('production formulas handle zero-interest EMI and inclusive GST correctly', () => {
   const defs = loadFormulaDefinitions();
   const emi = defs['loan emi calculator'].calc({ principal: 120000, rate: 0, years: 2 });
