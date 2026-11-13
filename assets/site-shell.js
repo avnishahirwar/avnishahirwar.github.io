@@ -60,6 +60,14 @@ if(p.startsWith('/calculators/')){
   }
 }
 const main=document.querySelector('main,[role="main"]');
+const embedMode=new URLSearchParams(location.search).get('embed')==='1';
+if(embedMode){
+  document.body.classList.add('fc-embed-mode');
+  const embedStyle=document.createElement('style');
+  embedStyle.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools{display:none!important}body.fc-embed-mode main{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}';
+  document.head.append(embedStyle);
+}
+
 if(main&&!main.id)main.id='fc-main-content';
 if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent='Skip to main content';document.body.prepend(skip);
@@ -287,9 +295,9 @@ if(p.startsWith('/calculators/')&&main){
     });
     actions.append(print,png);
     const code=document.createElement('textarea');code.readOnly=true;code.setAttribute('aria-label','Calculator embed code');
-    const embedUrl=location.href.split('#')[0]+(location.href.includes('?')?'&':'?')+'embed=1';
+    const embedUrl=location.origin+'/embed/?src='+encodeURIComponent(p);
     const title=(main.querySelector('h1')?.textContent||'Friendly Calculator').trim();
-    code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in/" rel="noopener">Friendly Calculator</a></p>';
+    code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0" referrerpolicy="strict-origin-when-cross-origin"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in/" rel="noopener">Friendly Calculator</a></p>';
     const copy=document.createElement('button');copy.type='button';copy.textContent='Copy embed code';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);copy.textContent='Embed code copied';}catch(_){code.focus();code.select();copy.textContent='Select and copy the code';}});
     actions.append(copy);panel.append(h,intro,actions,code);main.append(panel);
   }
