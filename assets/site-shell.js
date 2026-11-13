@@ -45,11 +45,7 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
 const r='/calculator/';
-const links=hi?[
-['होम','/hi/index.html'],['लॉग इन',r+'dashboard.html'],['सभी कैलकुलेटर',r+'site-directory.html'],['वित्त',r+'finance-calculators.html'],['टैक्स',r+'tax-calculators.html'],['बिज़नेस',r+'business-calculators.html'],['रोज़मर्रा',r+'everyday-calculators.html'],['बिज़नेस सेवाएँ',r+'business.html'],['ब्लॉग','/hi/blog/'],['एम्बेड','/embed/'],['API',r+'api.html'],['प्लान',r+'pricing.html'],['हमारे बारे में','/hi/about.html'],['संपर्क','/hi/contact.html'],['एडमिन',r+'admin.html']
-]:[
-['Home','/'],['Log In',r+'dashboard.html'],['All Calculators',r+'site-directory.html'],['Finance',r+'finance-calculators.html'],['Tax',r+'tax-calculators.html'],['Business Tools',r+'business-calculators.html'],['Everyday',r+'everyday-calculators.html'],['Blog','/blog/'],['About',r+'about.html'],['Contact',r+'contact.html'],['Admin',r+'admin.html']
-];
+const links=[];
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
 // One PNG favicon, one theme colour and one share-preview image across the site.
 document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]').forEach(node=>node.remove());
@@ -116,26 +112,30 @@ bn:{home:'হোম',login:'লগ ইন',all:'সব ক্যালকুল�
 ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத்து கணிப்பான்கள்',finance:'நிதி',tax:'வரி',business:'வணிகக் கருவிகள்',everyday:'அன்றாடம்',blog:'வலைப்பதிவு',embed:'உட்பொதி',forBusiness:'வணிகங்களுக்கு',api:'API',plans:'திட்டங்கள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு',admin:'நிர்வாகம்',language:'மொழி',choose:'இணையதள மொழியைத் தேர்ந்தெடுக்கவும்',change:'மொழியை மாற்று',footer:['முகப்பு','பட்டியல்','நிதி','வரி','வணிகம்','அன்றாடம்','வணிகங்களுக்கு','API','திட்டங்கள்','பிரீமியம் பட்டியல்','எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','தொடர்பு']}
 };
 const nav=chrome[currentLocale]||chrome.en;
-links.splice(0,links.length,[nav.home,localeHome[currentLocale]],[nav.login,r+'dashboard.html'],[nav.all,r+'site-directory.html'],[nav.finance,r+'finance-calculators.html'],[nav.tax,r+'tax-calculators.html'],[nav.business,r+'business-calculators.html'],[nav.everyday,r+'everyday-calculators.html'],[nav.blog,'/blog/'],[nav.embed,'/embed/'],[nav.about,currentLocale==='hi'?'/hi/about.html':r+'about.html'],[nav.contact,currentLocale==='hi'?'/hi/contact.html':r+'contact.html'],[nav.admin,r+'admin.html']);
-const localizedCalcPrefix=currentLocale==='en'?'/calculators/':'/'+currentLocale+'/calculators/';
-links.splice(3,0,['SIP',localizedCalcPrefix+'sip-calculator.html'],['FD',localizedCalcPrefix+'fd-calculator.html'],['GST',localizedCalcPrefix+'gst-calculator.html']);
-links.splice(6,0,['Loan EMI',localizedCalcPrefix+'loan-emi-calculator.html'],['Percentage',localizedCalcPrefix+'percentage-calculator.html'],['Discount',localizedCalcPrefix+'discount-calculator.html']);
-const loanToolsLabels={en:'Loan Calculators',hi:'ऋण कैलकुलेटर',es:'Calculadoras de préstamos',fr:'Calculatrices de prêt',pt:'Calculadoras de empréstimos',ar:'حاسبات القروض',id:'Kalkulator pinjaman',bn:'ঋণ ক্যালকুলেটর',ta:'கடன் கணிப்பான்கள்'};
-links.splice(9,0,[loanToolsLabels[currentLocale]||loanToolsLabels.en,'/calculator/loan-calculators.html']);
-const everydayLabels={en:['Age','Date Difference','Fuel Cost'],hi:['आयु','तिथि अंतर','ईंधन लागत'],es:['Edad','Diferencia de fechas','Combustible'],fr:['Âge','Différence de dates','Carburant'],pt:['Idade','Diferença de datas','Combustível'],ar:['العمر','فرق التواريخ','الوقود'],id:['Usia','Selisih tanggal','Bahan bakar'],bn:['বয়স','তারিখের পার্থক্য','জ্বালানি'],ta:['வயது','தேதி வித்தியாசம்','எரிபொருள்']};
-const everyday=everydayLabels[currentLocale]||everydayLabels.en;
-links.splice(9,0,[everyday[0],localizedCalcPrefix+'age-calculator.html'],[everyday[1],localizedCalcPrefix+'date-difference-calculator.html'],[everyday[2],localizedCalcPrefix+'fuel-cost-calculator.html','car-loan-calculator.html','bike-loan-calculator.html','gold-loan-calculator.html','loan-against-property-calculator.html','personal-loan-eligibility-calculator.html','home-loan-amortization-schedule-calculator.html']);
-
-
-const languageHref='#fc-language-select';
-const languageLabel=nav.change;
-const localeRoutes={'/':'/hi/index.html','/calculator/about.html':'/hi/about.html','/calculator/methodology.html':'/hi/methodology.html','/calculator/contact.html':'/hi/contact.html','/hi/index.html':'/','/hi/about.html':'/calculator/about.html','/hi/methodology.html':'/calculator/methodology.html','/hi/contact.html':'/calculator/contact.html'};
-const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+nav.language+'</span><select id="fc-language-select" aria-label="'+nav.choose+'">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'"'+(code===currentLocale?' selected':'')+'>'+name+'</option>').join('')+'</select></label>';
-h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n==='Log In'?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div>';
+const links=[
+  ['Home',localeHome[currentLocale]],
+  ['Business Tools',r+'business-calculators.html'],
+  ['Finance',r+'finance-calculators.html'],
+  ['Tax',r+'tax-calculators.html'],
+  ['Everyday',r+'everyday-calculators.html'],
+  ['All Calculators',r+'site-directory.html'],
+  ['Blog','/blog/'],
+  ['Login',r+'dashboard.html']
+];
+const languageControl='<label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="'+nav.choose+'">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'"'+(code===currentLocale?' selected':'')+'>'+name+'</option>').join('')+'</select></label>';
+h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n==='Login'?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div>';
 const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.replaceWith(h);else document.body.prepend(h);
+const footerLinks=[
+  ['About',currentLocale==='hi'?'/hi/about.html':r+'about.html'],
+  ['Methodology',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html'],
+  ['Privacy',r+'privacy.html'],
+  ['Terms',r+'terms.html'],
+  ['Disclaimer',r+'disclaimer.html'],
+  ['Embed','/embed/'],
+  ['Contact',currentLocale==='hi'?'/hi/contact.html':r+'contact.html']
+];
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Website pages"><a href="/">Home</a><a href="'+r+'site-directory.html">All Pages Directory</a><a href="'+r+'finance-calculators.html">Finance</a><a href="'+r+'tax-calculators.html">Tax</a><a href="'+r+'business-calculators.html">Business Tools</a><a href="'+r+'everyday-calculators.html">Everyday</a><a href="/blog/">Blog</a><a href="'+r+'about.html">About</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a><a href="'+languageHref+'" lang="'+currentLocale+'">'+languageLabel+'</a><a href="/embed/">Embed a calculator</a></nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>';
-const footerLabelIndexes=[0,1,2,3,4,5,null,10,11,12,13,14,15];f.querySelectorAll('.fc-global-footer-links a').forEach((a,i)=>{if(i===6)a.textContent=nav.blog;else if(nav.footer[footerLabelIndexes[i]])a.textContent=nav.footer[footerLabelIndexes[i]];});
+f.innerHTML='<div class="fc-global-footer-inner"><nav class="fc-global-footer-links" aria-label="Footer navigation">'+footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav></div>';
 const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length)fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());else document.body.append(f);
 const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
