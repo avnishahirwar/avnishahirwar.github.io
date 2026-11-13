@@ -37,3 +37,18 @@ test('Embed wrapper allowlists calculator paths and shows attribution', () => {
   assert.match(shell, /location\.origin\+'\/embed\/\?src='/);
   assert.match(shell, /fc-embed-mode/);
 });
+
+test('Rent vs Buy Home Calculator accounts for loan tenure and outstanding balance', () => {
+  const html = read('calculators/rent-vs-buy-home-calculator.html');
+  const js = read('assets/extra-calculators.js');
+  assert.match(html, /id="formula"/);
+  assert.match(html, /id="worked-example"/);
+  assert.match(html, /Frequently asked questions/);
+  assert.match(html, /"@type":"SoftwareApplication"/);
+  assert.match(html, /"@type":"FAQPage"/);
+  assert.match(js, /"id":"tenure","label":"Home-loan tenure \(years\)"/);
+  assert.match(js, /case'rentbuy':\{const months=Math\.round\(v\.years\*12\),loanMonths=Math\.round\(v\.tenure\*12\)/);
+  assert.match(js, /Estimated remaining home-loan balance/);
+  assert.match(js, /const equity=v\.resale-remaining/);
+  assert.match(js, /Rent cost minus buy cost/);
+});
