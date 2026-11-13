@@ -375,4 +375,14 @@ if(p.startsWith('/calculators/')&&main){
   }
 }
 
+// Free local calculator finder. No external AI API or visitor prompt storage.
+if(!document.querySelector('script[data-fc-free-assistant]')){
+  const assistantScript=document.createElement('script');
+  assistantScript.src='/assets/friendly-ai-assistant.js';
+  assistantScript.defer=true;
+  assistantScript.dataset.fcFreeAssistant='true';
+  document.head.appendChild(assistantScript);
+}
+
+
 })();
