@@ -709,7 +709,7 @@ test('localized income-tax pages do not expose the retired simplified calculator
     const html = fs.readFileSync(new URL('../' + locale + '/calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
     assert.match(html, /id="localized-tax-review-note"/, locale + ' has a review notice');
     assert.match(html, /calculators\/income-tax-calculator\.html/, locale + ' links to the reviewed English model');
-    assert.match(html, /aria-hidden="true"/, locale + ' hides the old calculator panels');
+    assert.ok((html.match(/aria-hidden="true"/g) || []).length >= 3, locale + ' hides the old form, result and legacy explanation panels');
     assert.doesNotMatch(html, /function run\(\)/, locale + ' no longer executes the retired simplified model');
   }
 });
