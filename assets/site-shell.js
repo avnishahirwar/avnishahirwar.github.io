@@ -18,6 +18,17 @@ const ensureFavicon=()=>{
   }
 };
 ensureFavicon();
+// Google Tag Manager container: loaded once on every page using this shared shell.
+// Keep the existing direct GA4 configuration below; do not add a second GA4 tag
+// inside GTM unless the direct GA4 installation is deliberately migrated.
+window.dataLayer=window.dataLayer||[];
+if(!window.__fcGtmContainerLoaded){
+  window.__fcGtmContainerLoaded=true;
+  const gtmScript=document.createElement('script');
+  gtmScript.async=true;
+  gtmScript.src='https://www.googletagmanager.com/gtm.js?id=GTM-MGJQH4DB';
+  document.head.appendChild(gtmScript);
+}
 // Privacy-first analytics: GA4 is the only configured analytics provider.
 // Ensure localized pages also report to the same Friendly Calculator GA4 stream.
 if(typeof window.gtag!=='function'){
