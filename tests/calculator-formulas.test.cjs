@@ -710,6 +710,8 @@ test('Hindi Income Tax uses its reviewed localized model while other translated 
   assert.match(hindi, /id="tax-results"/);
   assert.match(hindi, /function calculate\(\)/);
   assert.doesNotMatch(hindi, /localized-tax-review-note/);
+  assert.match(hindi, /memo-2026\.pdf/, 'Hindi tax model links to the official Finance Bill 2026 memorandum');
+  assert.match(hindi, /incometax\.gov\.in/, 'Hindi tax model links to the Income Tax Department');
   for (const locale of ['es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta']) {
     const html = fs.readFileSync(new URL('../' + locale + '/calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
     assert.match(html, /id="localized-tax-review-note"/, locale + ' has a review notice');
