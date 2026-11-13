@@ -388,7 +388,7 @@ if(p.startsWith('/calculators/')&&main){
 // WebApplication is a schema.org subtype of SoftwareApplication. Do not invent ratings or reviews.
 function injectCalculatorApplicationSchema(){
   const pathname=window.location.pathname;
-  if(!/\\/calculators\\/[^/]+\\.html$/i.test(pathname))return;
+  if(!pathname.includes('/calculators/')||!pathname.toLowerCase().endsWith('.html'))return;
   const hasApplicationSchema=[...document.querySelectorAll('script[type="application/ld+json"]')].some(node=>{
     try{
       const visit=value=>{
@@ -402,13 +402,13 @@ function injectCalculatorApplicationSchema(){
   });
   if(hasApplicationSchema)return;
   const canonical=document.querySelector('link[rel="canonical"]')?.href||window.location.href.split('#')[0];
-  const heading=document.querySelector('main h1,h1')?.textContent?.trim()||document.title.replace(/\\s*[|–-]\\s*Friendly Calculator.*$/,'').trim();
+  const heading=document.querySelector('main h1,h1')?.textContent?.trim()||document.title.split(' | Friendly Calculator')[0].trim();
   const description=document.querySelector('meta[name="description"]')?.content?.trim();
   const key=pathname.toLowerCase();
   let applicationCategory='UtilitiesApplication';
-  if(/loan|emi|mortgage|gst|tax|salary|\\bfd\\b|\\brd\\b|\\bsip\\b|ppf|nps|interest|investment|gratuity|tds|hra|finance|credit|savings/.test(key))applicationCategory='FinanceApplication';
-  else if(/gpa|cgpa|grade|education|math|algebra|fraction|percentage/.test(key))applicationCategory='EducationalApplication';
-  else if(/bmi|health|calorie|heart-rate|water-intake|pregnancy/.test(key))applicationCategory='HealthApplication';
+  if(['loan','emi','mortgage','gst','tax','salary','fd-','rd-','sip-','ppf','nps','interest','investment','gratuity','tds','hra','finance','credit','savings'].some(token=>key.includes(token)))applicationCategory='FinanceApplication';
+  else if(['gpa','cgpa','grade','education','math','algebra','fraction','percentage'].some(token=>key.includes(token)))applicationCategory='EducationalApplication';
+  else if(['bmi','health','calorie','heart-rate','water-intake','pregnancy'].some(token=>key.includes(token)))applicationCategory='HealthApplication';
   const application={
     '@context':'https://schema.org',
     '@type':'WebApplication',
