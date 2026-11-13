@@ -302,27 +302,39 @@ if(p.startsWith('/calculators/')&&main){
   if(!main.querySelector('#printResult')&&!main.querySelector('.fc-export-panel')){
     const panel=document.createElement('section');panel.className='fc-export-panel';
     const h=document.createElement('h2');h.textContent='Export and embed this calculator';
-    const intro=document.createElement('p');intro.textContent='Print or save the result as a PDF, download a shareable result image, or embed this calculator with its attribution link.';
+    const intro=document.createElement('p');intro.textContent='Copy, share, print or download your calculated result. Screenshots are allowed. Please retain the Friendly Calculator attribution when sharing results.';
     const actions=document.createElement('div');actions.className='fc-tool-actions';
-    const print=document.createElement('button');print.type='button';print.textContent='Print / Save as PDF';print.addEventListener('click',()=>window.print());
-    const png=document.createElement('button');png.type='button';png.textContent='Download result image';png.addEventListener('click',()=>{
+    const resultNode=()=>main.querySelector('#live-page-calculator [aria-live="polite"],#extraResult,.results,.result,[aria-live="polite"],#result,#resultBox,.calculator-result,.result-box,.output');
+    const resultText=()=>{const node=resultNode();const value=(node?.innerText||'').trim();return value||'No calculated result is available yet. Enter values and calculate first.';};
+    const copyText=async value=>{
+      try{await navigator.clipboard.writeText(value);return true;}catch(_){
+        const field=document.createElement('textarea');field.value=value;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();
+        let copied=false;try{copied=document.execCommand('copy')}catch(__){}field.remove();return copied;
+      }
+    };
+    const copyResult=document.createElement('button');copyResult.type='button';copyResult.textContent='Copy Result';
+    copyResult.addEventListener('click',async()=>{const text=resultText();if(text.startsWith('No calculated result')){copyResult.textContent='Calculate first';return;}const ok=await copyText((main.querySelector('h1')?.textContent||document.title).trim()+'\n'+text+'\nSource: '+location.href.split('#')[0]);copyResult.textContent=ok?'Result copied':'Copy unavailable';});
+    const shareResult=document.createElement('button');shareResult.type='button';shareResult.textContent='Share Result';
+    shareResult.addEventListener('click',async()=>{const text=resultText();if(text.startsWith('No calculated result')){shareResult.textContent='Calculate first';return;}const title=(main.querySelector('h1')?.textContent||document.title).trim();const shareData={title:title+' — Friendly Calculator',text:text+'\nSource: '+location.href.split('#')[0],url:location.href.split('#')[0]};try{if(navigator.share){await navigator.share(shareData);shareResult.textContent='Shared';}else{const ok=await copyText(shareData.title+'\n'+shareData.text);shareResult.textContent=ok?'Share text copied':'Share unavailable';}}catch(error){if(error?.name!=='AbortError')shareResult.textContent='Share unavailable';}});
+    const print=document.createElement('button');print.type='button';print.textContent='Print Result / Save PDF';print.addEventListener('click',()=>window.print());
+    const png=document.createElement('button');png.type='button';png.textContent='Download Result (PNG)';png.addEventListener('click',()=>{
       const title=(main.querySelector('h1')?.textContent||document.title).trim();
-      const result=main.querySelector('#extraResult,.results,.result,[aria-live="polite"]');
+      const result=resultNode();
       const lines=(result?.innerText||'Enter values and calculate to create a result image.').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);
       const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=720;const ctx=canvas.getContext('2d');
       ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,1200,720);ctx.fillStyle='#101c2c';ctx.font='bold 38px Arial';ctx.fillText('Friendly Calculator',64,76);
       ctx.font='bold 28px Arial';ctx.fillText(title.slice(0,58),64,132);ctx.fillStyle='#526273';ctx.font='18px Arial';ctx.fillText('Illustrative result · '+new Date().toLocaleDateString('en-IN'),64,170);
       let y=225;ctx.font='20px Arial';for(const line of lines){if(y>630)break;ctx.fillStyle='#fff';ctx.fillRect(64,y-30,1072,54);ctx.fillStyle='#26384a';ctx.fillText(line.slice(0,90),84,y+5);y+=66;}
       ctx.fillStyle='#526273';ctx.font='15px Arial';ctx.fillText('Check inputs, assumptions and official terms before relying on this estimate.',64,684);
-      canvas.toBlob(blob=>{if(!blob)return;const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download='friendly-calculator-result.png';a.click();URL.revokeObjectURL(url);},'image/png');
+      canvas.toBlob(blob=>{if(!blob)return;const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download='friendly-calculator-result.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');
     });
-    actions.append(print,png);
+    actions.append(copyResult,shareResult,print,png);
     const code=document.createElement('textarea');code.readOnly=true;code.setAttribute('aria-label','Calculator embed code');
     const embedUrl=location.origin+'/embed/?src='+encodeURIComponent(p);
     const title=(main.querySelector('h1')?.textContent||'Friendly Calculator').trim();
     code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0" referrerpolicy="strict-origin-when-cross-origin"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in/" rel="noopener">Friendly Calculator</a></p>';
     const copy=document.createElement('button');copy.type='button';copy.textContent='Copy embed code';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);copy.textContent='Embed code copied';}catch(_){code.focus();code.select();copy.textContent='Select and copy the code';}});
-    actions.append(copy);panel.append(h,intro,actions,code);main.append(panel);
+    actions.append(copy);const rights=document.createElement('p');rights.className='fc-content-rights';rights.textContent='© Friendly Calculator. You may save and share your own calculation results with attribution. Republishing website text, design or bulk-copying content without permission is not allowed.';panel.append(h,intro,actions,code,rights);main.append(panel);
   }
   const extraForm=main.querySelector('#extraForm'),extraResult=main.querySelector('#extraResult');
   if(extraForm&&extraResult&&!main.querySelector('.fc-whatif-panel')){
