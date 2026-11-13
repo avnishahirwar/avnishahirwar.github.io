@@ -25,5 +25,7 @@ jobs:
         run: node --test tests/site-integrity.test.cjs
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
+      - name: Validate property calculators and embeds
+        run: node --test tests/property-tools.test.cjs
       - name: Check shared JavaScript syntax
         run: node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js
