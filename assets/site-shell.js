@@ -430,13 +430,39 @@ function injectCalculatorApplicationSchema(){
 }
 injectCalculatorApplicationSchema();
 
-// Free local calculator finder. No external AI API or visitor prompt storage.
-if(!document.querySelector('script[data-fc-free-assistant]')){
-  const assistantScript=document.createElement('script');
-  assistantScript.src='/assets/friendly-ai-assistant.js';
-  assistantScript.defer=true;
-  assistantScript.dataset.fcFreeAssistant='true';
-  document.head.appendChild(assistantScript);
+// Load the local calculator assistant only when a visitor opens it.
+// This keeps its UI and search code off the initial page-load critical path.
+if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('script[data-fc-free-assistant]')&&!window.__fcFreeAssistantLoaded&&!location.pathname.startsWith('/avnish-ai/')&&!location.pathname.includes('/admin')){
+  const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+  const labels={
+    en:{open:'Open assistant',loading:'Loading assistant…',retry:'Retry assistant'},
+    hi:{open:'सहायक खोलें',loading:'सहायक लोड हो रहा है…',retry:'फिर से कोशिश करें'},
+    es:{open:'Abrir asistente',loading:'Cargando asistente…',retry:'Reintentar asistente'},
+    fr:{open:'Ouvrir l’assistant',loading:'Chargement…',retry:'Réessayer'},
+    pt:{open:'Abrir assistente',loading:'Carregando…',retry:'Tentar novamente'},
+    ar:{open:'فتح المساعد',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
+    id:{open:'Buka asisten',loading:'Memuat…',retry:'Coba lagi'},
+    bn:{open:'সহায়ক খুলুন',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
+    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'}
+  };
+  const copy=labels[language]||labels.en;
+  const launcher=document.createElement('button');
+  launcher.id='fc-ai-lazy-launch';
+  launcher.type='button';
+  launcher.textContent=copy.open;
+  launcher.setAttribute('aria-label',copy.open);
+  launcher.addEventListener('click',()=>{
+    if(window.__fcFreeAssistantLoaded){launcher.remove();document.querySelector('#fc-ai-launch')?.click();return;}
+    launcher.disabled=true;
+    launcher.textContent=copy.loading;
+    const assistantScript=document.createElement('script');
+    assistantScript.src='/assets/friendly-ai-assistant.js';
+    assistantScript.dataset.fcFreeAssistant='true';
+    assistantScript.onload=()=>{launcher.remove();document.querySelector('#fc-ai-launch')?.click();};
+    assistantScript.onerror=()=>{assistantScript.remove();launcher.disabled=false;launcher.textContent=copy.retry;};
+    document.head.appendChild(assistantScript);
+  });
+  document.body.appendChild(launcher);
 }
 
 
