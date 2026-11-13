@@ -384,13 +384,85 @@ if(p.startsWith('/calculators/')&&main){
   }
 }
 
-// Free local calculator finder. No external AI API or visitor prompt storage.
-if(!document.querySelector('script[data-fc-free-assistant]')){
-  const assistantScript=document.createElement('script');
-  assistantScript.src='/assets/friendly-ai-assistant.js';
-  assistantScript.defer=true;
-  assistantScript.dataset.fcFreeAssistant='true';
-  document.head.appendChild(assistantScript);
+// Add a truthful WebApplication entity to calculator pages that do not already define one.
+// WebApplication is a schema.org subtype of SoftwareApplication. Do not invent ratings or reviews.
+function injectCalculatorApplicationSchema(){
+  const pathname=window.location.pathname;
+  if(!pathname.includes('/calculators/')||!pathname.toLowerCase().endsWith('.html'))return;
+  const hasApplicationSchema=[...document.querySelectorAll('script[type="application/ld+json"]')].some(node=>{
+    try{
+      const visit=value=>{
+        if(!value||typeof value!=='object')return false;
+        const types=Array.isArray(value['@type'])?value['@type']:[value['@type']];
+        if(types.some(type=>type==='WebApplication'||type==='SoftwareApplication'))return true;
+        return Object.values(value).some(child=>Array.isArray(child)?child.some(visit):visit(child));
+      };
+      return visit(JSON.parse(node.textContent||'null'));
+    }catch{return false;}
+  });
+  if(hasApplicationSchema)return;
+  const canonical=document.querySelector('link[rel="canonical"]')?.href||window.location.href.split('#')[0];
+  const heading=document.querySelector('main h1,h1')?.textContent?.trim()||document.title.split(' | Friendly Calculator')[0].trim();
+  const description=document.querySelector('meta[name="description"]')?.content?.trim();
+  const key=pathname.toLowerCase();
+  let applicationCategory='UtilitiesApplication';
+  if(['loan','emi','mortgage','gst','tax','salary','fd-','rd-','sip-','ppf','nps','interest','investment','gratuity','tds','hra','finance','credit','savings'].some(token=>key.includes(token)))applicationCategory='FinanceApplication';
+  else if(['gpa','cgpa','grade','education','math','algebra','fraction','percentage'].some(token=>key.includes(token)))applicationCategory='EducationalApplication';
+  else if(['bmi','health','calorie','heart-rate','water-intake','pregnancy'].some(token=>key.includes(token)))applicationCategory='HealthApplication';
+  const application={
+    '@context':'https://schema.org',
+    '@type':'WebApplication',
+    name:heading,
+    url:canonical,
+    applicationCategory,
+    operatingSystem:'Any',
+    isAccessibleForFree:true,
+    offers:{'@type':'Offer',price:'0',priceCurrency:'INR'},
+    inLanguage:document.documentElement.lang||'en',
+    ...(description?{description}:{}),
+    provider:{'@type':'Organization',name:'Friendly Calculator',url:'https://friendlycalculator.in/'}
+  };
+  const script=document.createElement('script');
+  script.type='application/ld+json';
+  script.dataset.fcCalculatorSchema='true';
+  script.textContent=JSON.stringify(application);
+  document.head.appendChild(script);
+}
+injectCalculatorApplicationSchema();
+
+// Load the local calculator assistant only when a visitor opens it.
+// This keeps its UI and search code off the initial page-load critical path.
+if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('script[data-fc-free-assistant]')&&!window.__fcFreeAssistantLoaded&&!location.pathname.startsWith('/avnish-ai/')&&!location.pathname.includes('/admin')){
+  const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+  const labels={
+    en:{open:'Open assistant',loading:'Loading assistant…',retry:'Retry assistant'},
+    hi:{open:'सहायक खोलें',loading:'सहायक लोड हो रहा है…',retry:'फिर से कोशिश करें'},
+    es:{open:'Abrir asistente',loading:'Cargando asistente…',retry:'Reintentar asistente'},
+    fr:{open:'Ouvrir l’assistant',loading:'Chargement…',retry:'Réessayer'},
+    pt:{open:'Abrir assistente',loading:'Carregando…',retry:'Tentar novamente'},
+    ar:{open:'فتح المساعد',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
+    id:{open:'Buka asisten',loading:'Memuat…',retry:'Coba lagi'},
+    bn:{open:'সহায়ক খুলুন',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
+    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'}
+  };
+  const copy=labels[language]||labels.en;
+  const launcher=document.createElement('button');
+  launcher.id='fc-ai-lazy-launch';
+  launcher.type='button';
+  launcher.textContent=copy.open;
+  launcher.setAttribute('aria-label',copy.open);
+  launcher.addEventListener('click',()=>{
+    if(window.__fcFreeAssistantLoaded){launcher.remove();document.querySelector('#fc-ai-launch')?.click();return;}
+    launcher.disabled=true;
+    launcher.textContent=copy.loading;
+    const assistantScript=document.createElement('script');
+    assistantScript.src='/assets/friendly-ai-assistant.js';
+    assistantScript.dataset.fcFreeAssistant='true';
+    assistantScript.onload=()=>{launcher.remove();document.querySelector('#fc-ai-launch')?.click();};
+    assistantScript.onerror=()=>{assistantScript.remove();launcher.disabled=false;launcher.textContent=copy.retry;};
+    document.head.appendChild(assistantScript);
+  });
+  document.body.appendChild(launcher);
 }
 
 

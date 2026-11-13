@@ -39,5 +39,7 @@ jobs:
         run: node --test tests/hindi-rural-localization.test.cjs
       - name: Validate free smart assistant privacy and integration
         run: node --test tests/free-smart-assistant.test.cjs
+      - name: Validate mobile calculator layouts and structured data
+        run: node --test tests/mobile-schema.test.cjs
       - name: Check shared JavaScript syntax
         run: node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js

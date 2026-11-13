@@ -5,6 +5,9 @@ on:
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "tests/mobile-schema.test.cjs"
 
 permissions:
   contents: read
