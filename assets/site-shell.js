@@ -278,6 +278,10 @@ if(calculatorPath.startsWith('/calculators/')&&main){
     'steps-to-km-calculator':[['pace-calculator','Pace Calculator'],['mileage-calculator','Mileage Calculator'],['unit-converter','Unit Converter'],['fuel-cost-calculator','Fuel Cost'],['time-zone-converter','Time Zone Converter']],
     'stamp-duty-calculator':[['bigha-to-sq-ft-calculator','Bigha to Sq Ft'],['land-unit-converter-calculator','Land Unit Converter'],['property-price-per-sq-ft-calculator','Property Price per Sq Ft'],['mortgage-calculator','Mortgage Calculator'],['home-loan-amortization-schedule-calculator','Home Loan Amortization']],
     'bigha-to-sq-ft-calculator':[['land-unit-converter-calculator','Land Unit Converter'],['stamp-duty-calculator','Stamp Duty'],['property-price-per-sq-ft-calculator','Property Price per Sq Ft'],['unit-converter','Unit Converter'],['concrete-calculator','Concrete']]
+    ,'crop-cost-profit-calculator':[['crop-yield-revenue-calculator','Crop Yield & Revenue'],['kcc-interest-calculator','KCC Interest'],['dairy-livestock-profit-calculator','Dairy & Livestock Costs'],['land-unit-converter-calculator','Land Unit Converter'],['bigha-to-sq-ft-calculator','Bigha to Sq Ft']]
+    ,'kcc-interest-calculator':[['crop-cost-profit-calculator','Crop Cost & Profit'],['crop-yield-revenue-calculator','Crop Yield & Revenue'],['dairy-livestock-profit-calculator','Dairy & Livestock Costs'],['loan-emi-calculator','Loan EMI'],['land-unit-converter-calculator','Land Unit Converter']]
+    ,'crop-yield-revenue-calculator':[['crop-cost-profit-calculator','Crop Cost & Profit'],['kcc-interest-calculator','KCC Interest'],['dairy-livestock-profit-calculator','Dairy & Livestock Costs'],['land-unit-converter-calculator','Land Unit Converter'],['bigha-to-sq-ft-calculator','Bigha to Sq Ft']]
+    ,'dairy-livestock-profit-calculator':[['crop-cost-profit-calculator','Crop Cost & Profit'],['crop-yield-revenue-calculator','Crop Yield & Revenue'],['kcc-interest-calculator','KCC Interest'],['loan-emi-calculator','Loan EMI'],['percentage-calculator','Percentage Calculator']]
   };
   let items=catalog[slug];
   if(!items){
