@@ -21,9 +21,13 @@ test('language switching preserves the current route when its translation exists
   assert.match(shell, /fc-language-notice/);
 });
 
-test('language routing does not force a browser-language redirect', () => {
-  assert.doesNotMatch(shell, /location\.replace\(localeHome\[navigator\.language/);
-  assert.doesNotMatch(shell, /navigator\.language[^;]{0,120}location\.(?:replace|href)/);
+test('saved language preference takes priority over browser language detection', () => {
+  assert.match(shell, /savedLocale=localStorage\.getItem\('fc-language-preference'\)/);
+  assert.match(shell, /if\(p==='\/'&&savedLocale&&localeHome\[savedLocale\]\)/);
+  assert.match(shell, /else if\(p==='\/'&&!savedLocale\)/);
+  assert.match(shell, /navigator\.languages\|\|\[\]/);
+  assert.match(shell, /split\('-'\)\[0\]/);
+  assert.match(shell, /location\.replace\(localeHome\[detected\]\)/);
 });
 
 
