@@ -145,7 +145,7 @@
       if(key==="age calculator"&&numeric.length===0){const match=String(rows[0]&&rows[0][1]||"").match(/(\d+) years, (\d+) months, (\d+) days/);if(match){const chart=document.createElement("section");chart.className="fc-result-chart";const title=document.createElement("h3");title.textContent="Age breakdown";chart.appendChild(title);[["Years",match[1]],["Months",match[2]],["Days",match[3]]].forEach(([label,value])=>{const item=document.createElement("div");item.className="fc-chart-item";const top=document.createElement("div");top.className="fc-chart-label";const name=document.createElement("span"),amount=document.createElement("strong");name.textContent=label;amount.textContent=value;top.append(name,amount);item.appendChild(top);chart.appendChild(item)});output.appendChild(chart)}}
       // Build a true month-by-month reducing-balance schedule for common EMI tools.
       // This supplements the result summary table; it does not replace calculator output.
-      const amortizationKeys=new Set(["loan emi calculator","home loan amortization schedule calculator","car loan calculator","bike loan calculator","business loan emi calculator","loan against property calculator"]);
+      const amortizationKeys=new Set(["loan emi calculator"]);
       if(amortizationKeys.has(lookupKey)&&["principal","rate","years"].every(id=>id in values)){
         const months=Math.round(values.years*12),monthlyRate=values.rate/1200,principalAmount=values.principal;
         if(months>0&&months<=600&&principalAmount>0){
