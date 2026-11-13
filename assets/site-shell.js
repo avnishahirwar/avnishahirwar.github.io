@@ -383,7 +383,7 @@ if(p.startsWith('/calculators/')&&main){
     const shareResult=document.createElement('button');shareResult.type='button';shareResult.textContent='Share Result';
     shareResult.addEventListener('click',async()=>{const text=resultText();if(text.startsWith('No calculated result')){shareResult.textContent='Calculate first';return;}const title=(main.querySelector('h1')?.textContent||document.title).trim();const shareData={title:title+' — Friendly Calculator',text:text+'\nSource: '+location.href.split('#')[0],url:location.href.split('#')[0]};try{if(navigator.share){await navigator.share(shareData);shareResult.textContent='Shared';}else{const ok=await copyText(shareData.title+'\n'+shareData.text);shareResult.textContent=ok?'Share text copied':'Share unavailable';}}catch(error){if(error?.name!=='AbortError')shareResult.textContent='Share unavailable';}});
     const print=document.createElement('button');print.type='button';print.textContent='Print / Save as PDF';print.addEventListener('click',()=>window.print());
-    const png=document.createElement('button');png.type='button';png.textContent='Download Result (PNG)';png.addEventListener('click',()=>{
+    const png=document.createElement('button');png.type='button';png.textContent='Download result image';png.addEventListener('click',()=>{
       const title=(main.querySelector('h1')?.textContent||document.title).trim();
       const result=resultNode();
       const lines=(result?.innerText||'Enter values and calculate to create a result image.').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);
