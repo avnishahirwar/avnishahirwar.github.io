@@ -1,25 +1,47 @@
-# Public pages are crawlable by default. Private/admin and test paths stay restricted.
+# Public pages are crawlable by default. Keep private/admin and test paths restricted.
 User-agent: *
 Allow: /
 Disallow: /calculator/admin.html
 Disallow: /tests/
 Disallow: /avnish-ai/
 
-# Explicit search crawlers: allow public calculator and editorial pages.
 # Search access is separate from model-training preferences.
+# Named crawler groups repeat the private-path exclusions because specific
+# user-agent groups do not inherit rules from the wildcard group.
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Claude-User
 Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Googlebot-News
 Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 Sitemap: https://friendlycalculator.in/sitemap.xml
