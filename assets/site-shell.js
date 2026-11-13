@@ -316,7 +316,7 @@ if(calculatorPath.startsWith('/calculators/')&&main){
 /* Dedicated embeddable calculator surface. Only /embed/ is intended for cross-origin framing. */
 const embedMode=new URLSearchParams(location.search).get('embed')==='1';
 if(embedMode){
-  document.documentElement.classList.add('fc-embed-mode');
+  document.body.classList.add('fc-embed-mode');
   const style=document.createElement('style');
   style.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode header,body.fc-embed-mode footer,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-related-calculators,body.fc-embed-mode .fc-skip-link{display:none!important}body.fc-embed-mode main,body.fc-embed-mode #fc-main-content{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}body.fc-embed-mode .hero{padding:12px 0!important}body.fc-embed-mode .wrap{width:100%!important;max-width:none!important}';
   document.head.append(style);
