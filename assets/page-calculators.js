@@ -5,7 +5,7 @@
     "income tax calculator india": {title:"Income Tax Calculator (Tax Year 2026–27)",fields:[["income","Annual taxable income (₹)","number",1200000],["regime","Tax regime","select",["New regime — Tax Year 2026–27","Old regime — individual below 60"]],["residency","Section 87A rebate eligibility","select",["Resident individual","Non-resident / not eligible"]]],calc:v=>{
       const slabs=v.regime.startsWith("New")?[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]]:[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]];
       let prev=0,tax=0;for(const [cap,rate] of slabs){const slice=Math.max(0,Math.min(v.income,cap)-prev);tax+=slice*rate;prev=cap;if(v.income<=cap)break;}
-      const eligible=v.residency==="Resident individual";let rebate=0;if(eligible&&v.regime.startsWith("New")){rebate=v.income<=1200000?Math.min(tax,60000):Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)));}else if(eligible&&v.income<=500000){rebate=Math.min(tax,12500);}
+      const eligible=v.residency==="Resident individual";let rebate=0;if(eligible&&v.regime.startsWith("New")){rebate=v.income<=1200000?Math.min(tax,60000):Math.max(0,tax-(v.income-1200000));}else if(eligible&&v.income<=500000){rebate=Math.min(tax,12500);}
       const after=Math.max(0,tax-rebate),cess=after*.04,total=after+cess;
       return [["Taxable income",v.income],["Tax before rebate",tax],["Section 87A rebate (if eligible)",rebate],["Health & education cess (4%)",cess],["Estimated tax including cess",total]];
     }},
@@ -16,7 +16,7 @@
       let prev=0,tax=0;for(const [cap,rate] of slabs){tax+=Math.max(0,Math.min(v.income,cap)-prev)*rate;prev=cap;if(v.income<=cap)break;}
       const eligible=v.residency==="Resident individual";
       let rebate=0;
-      if(eligible&&newRegime){rebate=v.income<=1200000?Math.min(tax,60000):Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)));}
+      if(eligible&&newRegime){rebate=v.income<=1200000?Math.min(tax,60000):Math.max(0,tax-(v.income-1200000));}
       else if(eligible&&v.income<=500000){rebate=Math.min(tax,12500);}
       const afterRebate=Math.max(0,tax-rebate),cess=afterRebate*.04,annual=afterRebate+cess,balance=Math.max(0,annual-v.paid);
       return [["Taxable income",v.income],["Tax before rebate",tax],["Section 87A rebate (if eligible)",rebate],["Health & education cess (4%)",cess],["Indicative annual tax incl. cess",annual],["Tax already paid",v.paid],["Estimated balance",balance],["Indicative monthly TDS",balance/v.months]];
