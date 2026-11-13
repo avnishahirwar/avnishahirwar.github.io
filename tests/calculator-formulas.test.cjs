@@ -110,13 +110,13 @@ test('production formula functions return correct numeric results for every shar
       ['Tax before rebate', 60000], ['Section 87A rebate (if eligible)', 60000], ['Estimated tax including cess', 0]
     ]],
     ['income tax calculator india', { income: 1210000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
-      ['Tax before rebate', 75000], ['Section 87A rebate (if eligible)', 65000], ['Health & education cess (4%)', 400], ['Estimated tax including cess', 10400]
+      ['Tax before rebate', 61500], ['Section 87A rebate (if eligible)', 51500], ['Health & education cess (4%)', 400], ['Estimated tax including cess', 10400]
     ]],
     ['salary tds calculator', { income: 900000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual', paid: 0, months: 6 }, [
       ['Tax before rebate', 30000], ['Section 87A rebate (if eligible)', 30000], ['Indicative annual tax incl. cess', 0], ['Estimated balance', 0], ['Indicative monthly TDS', 0]
     ]],
     ['salary tds calculator', { income: 1210000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual', paid: 0, months: 6 }, [
-      ['Tax before rebate', 75000], ['Section 87A rebate (if eligible)', 65000], ['Health & education cess (4%)', 400], ['Indicative annual tax incl. cess', 10400], ['Estimated balance', 10400], ['Indicative monthly TDS', 1733.333333]
+      ['Tax before rebate', 61500], ['Section 87A rebate (if eligible)', 51500], ['Health & education cess (4%)', 400], ['Indicative annual tax incl. cess', 10400], ['Estimated balance', 10400], ['Indicative monthly TDS', 1733.333333]
     ]],
     ['salary tds calculator', { income: 800000, regime: 'Old regime — individual below 60', residency: 'Resident individual', paid: 15400, months: 6 }, [
       ['Tax before rebate', 72500], ['Section 87A rebate (if eligible)', 0], ['Health & education cess (4%)', 2900], ['Indicative annual tax incl. cess', 75400], ['Estimated balance', 60000], ['Indicative monthly TDS', 10000]
