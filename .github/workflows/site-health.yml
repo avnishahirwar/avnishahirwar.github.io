@@ -21,6 +21,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Generate curated programmatic SEO pages
+        run: node scripts/generate-programmatic-seo.cjs
+      - name: Validate programmatic SEO pages
+        run: node --test tests/programmatic-seo.test.cjs
       - name: Validate sitemap, metadata and local links
         run: node --test tests/site-integrity.test.cjs
       - name: Validate calculator formulas
