@@ -704,14 +704,39 @@ test('Privacy policy does not claim Google CMP is live before account-side publi
 });
 
 
-test('localized income-tax pages do not expose the retired simplified calculator', () => {
-  for (const locale of ['hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta']) {
+test('Hindi Income Tax uses its reviewed localized model while other translated pages keep the retired model disabled', () => {
+  const hindi = fs.readFileSync(new URL('../hi/calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(hindi, /id="calculate-tax"/);
+  assert.match(hindi, /id="tax-results"/);
+  assert.match(hindi, /function calculate\(\)/);
+  assert.doesNotMatch(hindi, /localized-tax-review-note/);
+  assert.match(hindi, /memo-2026\.pdf/, 'Hindi tax model links to the official Finance Bill 2026 memorandum');
+  assert.match(hindi, /incometax\.gov\.in/, 'Hindi tax model links to the Income Tax Department');
+  for (const locale of ['es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta']) {
     const html = fs.readFileSync(new URL('../' + locale + '/calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
     assert.match(html, /id="localized-tax-review-note"/, locale + ' has a review notice');
     assert.match(html, /calculators\/income-tax-calculator\.html/, locale + ' links to the reviewed English model');
     assert.ok((html.match(/aria-hidden="true"/g) || []).length >= 3, locale + ' hides the old form, result and legacy explanation panels');
     assert.doesNotMatch(html, /function run\(\)/, locale + ' no longer executes the retired simplified model');
   }
+});
+
+test('the ten priority Hindi calculators expose canonical URLs, nine language alternates, schemas, formula notes and visual results', () => {
+  const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
+  for (const slug of slugs) {
+    const html = fs.readFileSync(new URL('../hi/calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
+    assert.match(html, /<html[^>]+lang="hi"/, slug + ' is marked Hindi');
+    assert.match(html, /rel="canonical" href="https:\/\/friendlycalculator\.in\/hi\/calculators\//, slug + ' has a Hindi canonical');
+    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','x-default']) assert.match(html, new RegExp('hreflang="' + locale + '"'), slug + ' is missing ' + locale + ' hreflang');
+    assert.match(html, /"@type":"SoftwareApplication"/, slug + ' has SoftwareApplication schema');
+    assert.match(html, /"@type":"FAQPage"/, slug + ' has FAQ schema');
+    assert.match(html, /hi-formula-intro/, slug + ' has a formula summary');
+    assert.match(html, /hi-top10-visuals\.js/, slug + ' loads its result chart');
+    assert.match(html, /उदाहरण|Worked example/, slug + ' has a worked example');
+  }
+  const visualRuntime = fs.readFileSync(new URL('../assets/hi-top10-visuals.js', 'file://' + __filename), 'utf8');
+  assert.match(visualRuntime, /hi-amortization-schedule/);
+  assert.match(visualRuntime, /hi-sip-growth/);
 });
 
 test('EPS pension estimate validates eligible service and salary before calculation', () => {

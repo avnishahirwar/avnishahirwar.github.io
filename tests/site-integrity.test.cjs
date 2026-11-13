@@ -609,14 +609,20 @@ test('Salary TDS calculator supports both simplified tax regimes, rebate eligibi
 });
 
 
-test('English Income Tax uses the reviewed salary model and translated pages safely pause the retired simplified model',()=>{
+test('English Income Tax retains the reviewed model, Hindi uses its localized 2026–27 model, and other translations remain safely paused',()=>{
   const shared=fs.readFileSync(path.join(root,'assets/page-calculators.js'),'utf8');
   assert.ok(shared.includes('grossSalary'));
   assert.ok(shared.includes('standardDeduction'));
   assert.ok(shared.includes('surchargeBands'));
   assert.ok(shared.includes('surchargeRelief'));
   assert.ok(shared.includes('Math.min(taxBeforeRebate,Math.max(0,taxBeforeRebate-(taxable-1200000)))'));
-  const locales=['hi','es','fr','pt','ar','id','bn','ta'];
+  const hindi=fs.readFileSync(path.join(root,'hi/calculators/income-tax-calculator.html'),'utf8');
+  assert.ok(hindi.includes('id="calculate-tax"'),'Hindi tax calculator is not interactive');
+  assert.ok(hindi.includes('id="tax-results"'),'Hindi tax results section is missing');
+  assert.ok(hindi.includes('कर वर्ष 2026–27'),'Hindi tax year disclosure is missing');
+  assert.ok(hindi.includes('function calculate()'),'Hindi tax calculation function is missing');
+  assert.ok(!hindi.includes('localized-tax-review-note'),'Hindi tax calculator should no longer be paused');
+  const locales=['es','fr','pt','ar','id','bn','ta'];
   for(const locale of locales){
     const file=path.join(root,locale,'calculators/income-tax-calculator.html');
     assert.ok(fs.existsSync(file),'Missing income tax calculator locale: '+locale);
