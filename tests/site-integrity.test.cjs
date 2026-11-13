@@ -609,17 +609,21 @@ test('Salary TDS calculator supports both simplified tax regimes, rebate eligibi
 });
 
 
-test('Income tax pages in all nine locales apply Section 87A marginal relief without a ₹60,000 cap above ₹12 lakh',()=>{
-  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+test('English Income Tax uses the reviewed salary model and translated pages safely pause the retired simplified model',()=>{
   const shared=fs.readFileSync(path.join(root,'assets/page-calculators.js'),'utf8');
-  assert.ok(shared.includes('Math.max(0,tax-(v.income-1200000))'));
-  assert.ok(!shared.includes('Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)))'));
+  assert.ok(shared.includes('grossSalary'));
+  assert.ok(shared.includes('standardDeduction'));
+  assert.ok(shared.includes('surchargeBands'));
+  assert.ok(shared.includes('surchargeRelief'));
+  assert.ok(shared.includes('Math.min(taxBeforeRebate,Math.max(0,taxBeforeRebate-(taxable-1200000)))'));
+  const locales=['hi','es','fr','pt','ar','id','bn','ta'];
   for(const locale of locales){
-    const file=locale==='en'?null:path.join(root,locale,'calculators/income-tax-calculator.html');
-    if(locale==='en')continue;
+    const file=path.join(root,locale,'calculators/income-tax-calculator.html');
     assert.ok(fs.existsSync(file),'Missing income tax calculator locale: '+locale);
     const html=fs.readFileSync(file,'utf8');
-    assert.ok(html.includes('Math.max(0,tax-(income-1200000))'),'Incorrect marginal relief formula: '+locale);
-    assert.ok(!html.includes('Math.min(60000,tax,Math.max(0,tax-(income-1200000)))'),'Capped marginal relief remains: '+locale);
+    assert.ok(html.includes('id="localized-tax-review-note"'),'Missing review notice: '+locale);
+    assert.ok((html.match(/aria-hidden="true"/g)||[]).length>=3,'Legacy calculator panels are still visible: '+locale);
+    assert.ok(html.includes('/calculators/income-tax-calculator.html'),'Missing reviewed English calculator link: '+locale);
+    assert.ok(!html.includes('function run()'),'Retired simplified calculator still runs: '+locale);
   }
 });
