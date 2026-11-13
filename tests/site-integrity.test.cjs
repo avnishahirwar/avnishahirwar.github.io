@@ -684,3 +684,25 @@ test('land area converter supports requested units and discloses local Bigha var
   assert.ok(engine.includes('107639.104167'));
   assert.ok(!html.includes('/assets/extra-calculators.js'));
 });
+
+
+test('homepage, directory, About and sitemap agree on the public calculator catalogue', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\\/calculators\\/[^"'#]+)["']/g)].map(m => m[1]));
+  const homepageLinks = uniqueCalculatorLinks(homepage);
+  const directoryLinks = uniqueCalculatorLinks(directory);
+  const sitemapCalculatorUrls = urls.filter(url => url.includes('/calculators/'));
+  const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
+  assert.equal(homepageLinks.size, 198, 'Homepage must link to every unique calculator');
+  assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
+  assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
+  assert.match(homepage, /Browse all 198 calculators across 14 categories/);
+  assert.match(directory, /Browse all 198 calculator tools/);
+  assert.match(directory, /Search 198 calculators by name or topic/);
+  assert.match(directory, /Showing all 198 calculators in 14 categories/);
+  assert.equal(categoryCount, 14, 'Directory must show all 14 calculator categories');
+  assert.match(about, /198 public calculators/);
+  assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators/);
+});
