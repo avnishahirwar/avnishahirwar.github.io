@@ -1,0 +1,36 @@
+# Friendly Calculator
+
+> Friendly Calculator is an independent website offering free online calculators and plain-language guides for finance, tax, salary, business, mathematics and everyday calculations. The primary audience includes people in India, with multilingual pages for additional audiences.
+
+## Official website
+- https://friendlycalculator.in/
+- https://friendlycalculator.in/calculator/about.html
+- https://friendlycalculator.in/calculator/contact.html
+- https://friendlycalculator.in/blog/
+- https://friendlycalculator.in/calculator/site-directory.html
+- https://friendlycalculator.in/calculator/methodology.html
+- https://friendlycalculator.in/calculator/disclaimer.html
+
+## Main calculator areas
+- Finance: https://friendlycalculator.in/calculator/finance-calculators.html
+- Tax and payroll: https://friendlycalculator.in/calculator/tax-calculators.html
+- Business: https://friendlycalculator.in/calculator/business-calculators.html
+- Everyday calculations: https://friendlycalculator.in/calculator/everyday-calculators.html
+- All calculators: https://friendlycalculator.in/calculator/site-directory.html
+
+## Selected calculators
+- Loan EMI: https://friendlycalculator.in/calculators/loan-emi-calculator.html
+- Fixed deposit: https://friendlycalculator.in/calculators/fd-calculator.html
+- SIP: https://friendlycalculator.in/calculators/sip-calculator.html
+- GST: https://friendlycalculator.in/calculators/gst-calculator.html
+- Income tax: https://friendlycalculator.in/calculators/income-tax-calculator.html
+- Home loan: https://friendlycalculator.in/calculators/home-loan-emi-calculator.html
+
+## Editorial and calculation notes
+- Calculator outputs are estimates based on user-entered values, formulas and stated assumptions; they are not guarantees or professional advice.
+- Readers should check each calculator's method, limitations and relevant official sources before relying on important results.
+- The blog contains explanatory guides and calculator education. It should not be treated as a real-time news wire.
+- Public contact and publisher information is available on the About and Contact pages.
+
+## Sitemap
+- https://friendlycalculator.in/sitemap.xml
