@@ -41,6 +41,10 @@ test('shared shell adds truthful WebApplication schema without fabricated review
   assert.ok(shell.includes('isAccessibleForFree:true'));
   assert.ok(shell.includes("priceCurrency:'INR'"));
   assert.ok(shell.includes('hasApplicationSchema'));
+  assert.ok(shell.includes("launcher.id='fc-ai-lazy-launch'"));
+  assert.ok(shell.includes("assistantScript.src='/assets/friendly-ai-assistant.js'"));
+  assert.ok(shell.includes('assistantScript.onload'));
+  assert.ok(!shell.includes("assistantScript.defer=true"));
   assert.ok(!shell.includes('aggregateRating') && !shell.includes('reviewRating'));
 });
 
