@@ -17,6 +17,7 @@ test('Salary TDS Calculator is localized and discoverable in all supported local
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
     assert.ok(html.includes('data-tds-calculator'), locale + ' has the localized TDS widget');
     assert.ok(html.includes('tds-calculator-localized.js'), locale + ' loads the localized widget');
+    assert.ok(html.includes('id="formula"') && html.includes('id="worked-example"'), locale + ' includes formula and worked example anchors');
     assert.ok(html.includes('"@type":"SoftwareApplication"') && html.includes('"@type":"FAQPage"'), locale + ' includes structured data');
     assert.equal((html.match(/hreflang="/g) || []).length, 10, locale + ' has reciprocal hreflang declarations');
     if (locale === 'ar') assert.match(html, /dir="rtl"/, 'Arabic page uses right-to-left layout');
