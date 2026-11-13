@@ -50,7 +50,8 @@ run:v=>{const senior=v.age>=70,listed=v.basis==='rural'||v.basis==='urban',match
 {id:'citizen',label:'Are you an Indian citizen?',type:'select',def:'yes',options:[['yes','Yes'],['no','No']]},
 {id:'age',label:'Age at enrolment (years)',def:25,min:1,max:100,step:1},
 {id:'account',label:'Do you have a savings bank or post office savings account?',type:'select',def:'yes',options:[['yes','Yes'],['no','No']]},
-{id:'taxpayer',label:'Are you an income-tax payer, or have you been one as of the application date?',type:'select',def:'no',options:[['no','No'],['yes','Yes']]}],
+{id:'taxpayer',label:'Are you an income-tax payer, or have you been one as of the application date?',type:'select',def:'no',options:[['no','No'],['yes','Yes']]},
+{id:'pension',label:'Choose target guaranteed monthly pension from age 60',type:'select',def:'5000',options:[['1000','₹1,000'],['2000','₹2,000'],['3000','₹3,000'],['4000','₹4,000'],['5000','₹5,000']]}],
 run:v=>{const eligible=v.citizen==='yes'&&v.age>=18&&v.age<=40&&v.account==='yes'&&v.taxpayer==='no';return {rows:[['Initial eligibility screen',eligible?'The answers meet the basic APY entry checks. Confirm account and application details with your bank or post office.':'One or more answers do not meet the standard APY entry checks.'],['Selected target pension',money(Number(v.pension||5000))+' per month from age 60'],['Contribution amount','Depends on enrolment age, pension slab and payment frequency. Use the official PFRDA contribution chart or ask the bank; no contribution amount is guessed here.']],chart:[]};}},
 'pmay-checker':{title:'PMAY Eligibility Checker',fields:[
 {id:'type',label:'Which housing programme applies?',type:'select',def:'urban',options:[['urban','PMAY-Urban 2.0'],['rural','PMAY-Gramin (rural)']]},
