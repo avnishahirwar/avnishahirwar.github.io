@@ -22,6 +22,7 @@ style.textContent=[
 '#fc-ai-launch .fc-ai-dot{width:9px;height:9px;border-radius:50%;background:#75d6a0;display:inline-block}',
 '#fc-ai-panel{position:fixed;right:20px;bottom:78px;z-index:9999;width:min(390px,calc(100vw - 24px));height:min(570px,calc(100dvh - 110px));background:#fff;border:1px solid #d8e0e8;border-radius:18px;box-shadow:0 18px 60px #10243a30;display:none;overflow:hidden;color:#1c2c3d;font:14px/1.45 Arial,sans-serif}',
 '#fc-ai-panel[aria-hidden="false"]{display:flex;flex-direction:column}',
+'#fc-ai-launch[aria-expanded="true"]{display:none}',
 '.fc-ai-head{background:#14283d;color:#fff;padding:15px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}',
 '.fc-ai-head strong{display:block;font-size:15px}.fc-ai-head small{display:block;color:#d7e1eb;margin-top:3px}',
 '.fc-ai-head button{border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}',
@@ -32,7 +33,7 @@ style.textContent=[
 '.fc-ai-quick{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 12px}.fc-ai-quick button{border:1px solid #ccd7e2;border-radius:999px;background:#fff;color:#24415c;padding:7px 10px;cursor:pointer;font-size:12px}',
 '.fc-ai-foot{padding:11px;border-top:1px solid #e0e6ec;background:#fff}.fc-ai-form{display:flex;gap:8px}.fc-ai-form input{flex:1;min-width:0;border:1px solid #cbd5df;border-radius:10px;padding:11px;font:inherit;color:#182b3e}.fc-ai-form button{border:0;border-radius:10px;background:#14283d;color:#fff;font-weight:700;padding:0 14px;cursor:pointer}',
 '.fc-ai-note{font-size:10px;color:#6b7885;margin:8px 2px 0}.fc-ai-loading{color:#687887;font-size:12px;margin:0 0 10px}',
-'@media(max-width:480px){#fc-ai-launch{right:12px;bottom:12px}#fc-ai-panel{right:12px;bottom:68px;width:calc(100vw - 24px);height:min(570px,calc(100dvh - 88px))}}',
+'@media(max-width:480px){#fc-ai-launch{right:12px;bottom:12px;padding:11px 15px;font-size:13px}#fc-ai-panel{right:12px;bottom:12px;width:calc(100vw - 24px);height:min(640px,calc(100dvh - 88px));max-height:calc(100dvh - 88px)}}',
 '@media(prefers-reduced-motion:no-preference){#fc-ai-panel{animation:fcAiIn .16s ease-out}@keyframes fcAiIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}}'
 ].join('\n');
 document.head.append(style);
@@ -63,7 +64,23 @@ const aliases=[
 [/home loan|housing loan|गृह ऋण|होम लोन/,'home loan emi'],[/personal loan|व्यक्तिगत ऋण|पर्सनल लोन/,'personal loan emi'],[/car loan|auto loan|कार लोन/,'car loan emi'],[/bike loan|two wheeler|बाइक लोन/,'bike loan emi'],[/emi|installment|किश्त|मासिक किस्त/,'loan emi'],[/sip|mutual fund|म्यूचुअल फंड/,'sip calculator'],[/fixed deposit|\bfd\b|एफडी|फिक्स्ड डिपॉजिट/,'fd calculator'],[/recurring deposit|\brd\b|आरडी/,'rd calculator'],[/goods and services|gst|जीएसटी/,'gst calculator'],[/income tax|आयकर|इनकम टैक्स/,'income tax calculator'],[/salary|take home|in hand|वेतन|सैलरी/,'salary calculator'],[/land|acre|hectare|bigha|बीघा|जमीन|भूमि/,'land unit converter'],[/kisan|farmer|किसान|कृषि/,'crop cost profit'],[/percentage|प्रतिशत/,'percentage calculator'],[/age|उम्र|आयु/,'age calculator'],[/bmi|body mass|बीएमआई/,'bmi calculator'],[/currency|exchange rate|मुद्रा/,'currency converter'],[/loan|ऋण|लोन/,'loan calculator'],[/tax|कर|टैक्स/,'tax calculator'],[/discount|छूट/,'discount calculator']
 ];
 const normalize=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}\s-]/gu,' ').replace(/\s+/g,' ').trim();
-const search=async query=>{const all=await getCatalogue();let q=normalize(query);aliases.forEach(([re,term])=>{if(re.test(q))q+=' '+term;});const tokens=[...new Set(q.split(/[\s-]+/).filter(x=>x.length>1))];return all.map(item=>{let score=0;const hay=normalize(item.search);tokens.forEach(token=>{if(hay.includes(token))score+=token.length>4?3:1;});if(hay.includes(normalize(query)))score+=6;return {...item,score};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title)).slice(0,5);};
+const search=async query=>{
+const all=await getCatalogue();const original=normalize(query);let q=original;
+aliases.forEach(([re,term])=>{if(re.test(original))q=term;});
+const tokens=[...new Set(q.split(/[\s-]+/).filter(x=>x.length>1))];
+const ranked=all.map(item=>{
+const title=normalize(item.title),hay=normalize(item.search);let score=0;
+if(title===q)score+=100;
+if(title.includes(q))score+=45;
+if(q.includes(title)&&title.length>5)score+=30;
+tokens.forEach(token=>{if(title.includes(token))score+=token.length>4?8:3;else if(hay.includes(token))score+=token.length>4?2:1;});
+if(hay.includes(original))score+=12;
+return {...item,score};
+}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title));
+const unique=new Map();
+for(const item of ranked){const key=normalize(item.title).replace(/ calculator$/,'').trim();if(!unique.has(key))unique.set(key,item);}
+return [...unique.values()].slice(0,5);
+};
 const ask=async raw=>{const query=String(raw||'').trim().slice(0,160);if(!query)return;addMessage(query,'user');input.value='';const q=normalize(query);
 if(/^(hi|hello|नमस्ते|नमस्कार|hey)/.test(q)){addMessage(t.hello);addQuick();return;}
 if(/(how.*work|कैसे काम|free|मुफ्त|फ्री)/.test(q)){addMessage(t.free+' '+t.disclaimer);addLinks([{title:t.all,url:directoryUrl}]);return;}
