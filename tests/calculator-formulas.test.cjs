@@ -732,6 +732,9 @@ test('the ten priority Hindi calculators expose canonical URLs, nine language al
     assert.match(html, /hi-top10-visuals\.js/, slug + ' loads its result chart');
     assert.match(html, /उदाहरण|Worked example/, slug + ' has a worked example');
   }
+  const visualRuntime = fs.readFileSync(new URL('../assets/hi-top10-visuals.js', 'file://' + __filename), 'utf8');
+  assert.match(visualRuntime, /hi-amortization-schedule/);
+  assert.match(visualRuntime, /hi-sip-growth/);
 });
 
 test('EPS pension estimate validates eligible service and salary before calculation', () => {
