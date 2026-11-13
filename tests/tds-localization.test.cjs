@@ -28,4 +28,7 @@ test('Salary TDS Calculator is localized and discoverable in all supported local
   assert.match(widget, /\[400000,0\],\[800000,\.05\],\[1200000,\.10\]/);
   assert.match(widget, /afterRebate\*\.04/);
   assert.match(widget, /balance\/months/);
+  assert.match(widget, /label\.htmlFor=field\.id/);
+  assert.match(widget, /table\.setAttribute\("aria-label",t\.result\)/);
+  assert.match(widget, /2026–27/);
 });
