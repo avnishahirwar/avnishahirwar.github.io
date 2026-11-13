@@ -662,3 +662,43 @@ test('SIP page exposes end-of-month and beginning-of-month calculations with mat
   closeTo(endMonth, 460077.3789, 0.01);
   closeTo(beginningMonth, 464678.1527, 0.01);
 });
+
+
+test('GST calculator avoids obsolete general-rate presets and asks for a verified custom rate', () => {
+  const html = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(html, /name="rate" type="number"/);
+  assert.match(html, /id="gst-common-rates"/);
+  assert.match(html, /option value="5"/);
+  assert.match(html, /option value="18"/);
+  assert.match(html, /option value="40"/);
+  assert.doesNotMatch(html, /<option>12<\/option>|<option>28<\/option>/);
+  assert.match(html, /HSN\/SAC classification/);
+  assert.match(html, /22 September 2025/);
+});
+
+test('Income Tax calculator explanation matches the expanded Tax Year 2026–27 model and states its limits', () => {
+  assert.match(source, /Age attained during the tax year/);
+  assert.match(source, /surcharge marginal relief and 4% health and education cess/);
+  assert.match(source, /salary-only estimate/);
+  assert.doesNotMatch(source, /does not calculate deductions from gross salary or model surcharge/);
+  const html = fs.readFileSync(new URL('../calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(html, /gross salary, standard deduction, age, residential status and tax regime/);
+  assert.match(html, /Tax Year 2026–27/);
+});
+
+test('About and Contact pages show consistent ownership, catalogue count and the actual contact route', () => {
+  const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
+  const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
+  assert.match(about, /Avnish Ahirwar/);
+  assert.match(about, /186 public calculators/);
+  assert.match(about, /Available calculators \(186 tools\)/);
+  assert.match(contact, /secure enquiry form is on this Contact page/);
+  assert.doesNotMatch(contact, /homepage enquiry form/);
+});
+
+test('Privacy policy does not claim Google CMP is live before account-side publication', () => {
+  const privacy = fs.readFileSync(new URL('../calculator/privacy.html', 'file://' + __filename), 'utf8');
+  assert.match(privacy, /Google <strong>Privacy &amp; messaging<\/strong>/);
+  assert.match(privacy, /message has not yet been published/);
+  assert.match(privacy, /does not claim that a Google-certified CMP is already active/);
+});
