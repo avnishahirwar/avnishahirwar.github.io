@@ -61,6 +61,7 @@ appendResultBreakdownChart(c.kind,r);
 
 /* Show a proportionate, accessible breakdown chart for numeric savings/loan results. */
 function appendResultBreakdownChart(kind,result){
+  if(typeof document.createElement!=='function'||!out||typeof out.appendChild!=='function')return;
   const groups={
     compound:[['Principal','Total investment'],['Interest','Estimated interest']],
     scss:[['Principal','Principal at maturity'],['Total interest','Total interest over tenure']],
