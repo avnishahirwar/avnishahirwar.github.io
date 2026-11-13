@@ -69,8 +69,10 @@ if(embedMode){
 }
 
 if(main&&!main.id)main.id='fc-main-content';
+const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
+const shellSkipLabels={hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்'};
 if(main&&!document.querySelector('.fc-skip-link')){
-  const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent='Skip to main content';document.body.prepend(skip);
+  const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent=shellSkipLabels[shellLocaleForSkip]||'Skip to main content';document.body.prepend(skip);
 }
 const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
@@ -305,8 +307,19 @@ if(p.startsWith('/calculators/')&&main){
       const current=Number(numeric.value)||100,min=numeric.min!==''?Number(numeric.min):Math.max(0,current*.5),max=numeric.max!==''?Number(numeric.max):Math.max(current*2,current+100);
       if(max>min){
         const panel=document.createElement('section');panel.className='fc-whatif-panel';
-        const h=document.createElement('h2');h.textContent='What-if scenario slider';
-        const label=document.createElement('label');label.textContent='Adjust '+(numeric.closest('label')?.querySelector('span')?.textContent||numeric.id||'the first input')+' to see how the result changes.';
+        const whatIfText={
+          en:{title:'What-if scenario slider',before:'Adjust ',after:' to see how the result changes.'},
+          hi:{title:'क्या हो अगर — परिदृश्य स्लाइडर',before:'परिणाम में बदलाव देखने के लिए ',after:' समायोजित करें।'},
+          es:{title:'Control deslizante de escenarios',before:'Ajusta ',after:' para ver cómo cambia el resultado.'},
+          fr:{title:'Curseur de simulation',before:'Ajustez ',after:' pour voir comment le résultat évolue.'},
+          pt:{title:'Controle deslizante de cenários',before:'Ajuste ',after:' para ver como o resultado muda.'},
+          ar:{title:'شريط تمرير السيناريو الافتراضي',before:'عدّل ',after:' لمعرفة كيفية تغيّر النتيجة.'},
+          id:{title:'Penggeser skenario',before:'Sesuaikan ',after:' untuk melihat perubahan hasil.'},
+          bn:{title:'সম্ভাব্য পরিস্থিতির স্লাইডার',before:'ফলাফল কীভাবে বদলায় তা দেখতে ',after:' সমন্বয় করুন।'},
+          ta:{title:'மாற்று நிலை ஸ்லைடர்',before:'முடிவு எவ்வாறு மாறுகிறது என்பதைப் பார்க்க ',after:' மாற்றவும்।'}
+        }[currentLocale]||{title:'What-if scenario slider',before:'Adjust ',after:' to see how the result changes.'};
+        const h=document.createElement('h2');h.textContent=whatIfText.title;
+        const label=document.createElement('label');label.textContent=whatIfText.before+(numeric.closest('label')?.querySelector('span')?.textContent||numeric.id||'the first input')+whatIfText.after;
         const range=document.createElement('input');range.type='range';range.min=min;range.max=max;range.step=numeric.step&&numeric.step!=='any'?numeric.step:Math.max((max-min)/100,.01);range.value=Math.max(min,Math.min(max,current));
         const value=document.createElement('output');value.textContent=range.value;
         const chartTitle=document.createElement('h3');chartTitle.textContent='Live result chart';
