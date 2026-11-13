@@ -112,7 +112,7 @@
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
     const key=h1.textContent.trim().toLowerCase();
-    const pageAliases={"/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
+    const pageAliases={"/calculators/home-loan-emi-calculator.html":"loan emi calculator","/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
     const lookupKey=pageAliases[location.pathname]||(key==="gst calculator india"?"gst calculator":key);
     const def=definitions[lookupKey]; if(!def||document.getElementById("live-page-calculator"))return;
     const panel=document.createElement("section"); panel.id="live-page-calculator";panel.className="panel";panel.style.scrollMarginTop="100px";
@@ -145,9 +145,9 @@
       if(key==="age calculator"&&numeric.length===0){const match=String(rows[0]&&rows[0][1]||"").match(/(\d+) years, (\d+) months, (\d+) days/);if(match){const chart=document.createElement("section");chart.className="fc-result-chart";const title=document.createElement("h3");title.textContent="Age breakdown";chart.appendChild(title);[["Years",match[1]],["Months",match[2]],["Days",match[3]]].forEach(([label,value])=>{const item=document.createElement("div");item.className="fc-chart-item";const top=document.createElement("div");top.className="fc-chart-label";const name=document.createElement("span"),amount=document.createElement("strong");name.textContent=label;amount.textContent=value;top.append(name,amount);item.appendChild(top);chart.appendChild(item)});output.appendChild(chart)}}
       // Build a true month-by-month reducing-balance schedule for common EMI tools.
       // This supplements the result summary table; it does not replace calculator output.
-      const amortizationKeys=new Set(["loan emi calculator"]);
+      const amortizationKeys=new Set(["loan emi calculator","car loan calculator","bike loan calculator","education loan calculator","loan against property calculator"]);
       if(amortizationKeys.has(lookupKey)&&["principal","rate","years"].every(id=>id in values)){
-        const months=Math.round(values.years*12),monthlyRate=values.rate/1200,principalAmount=values.principal;
+        const months=Math.round(values.years*12),monthlyRate=values.rate/1200;let principalAmount=values.principal;if(lookupKey==="education loan calculator"&&Number.isFinite(values.months)&&values.months>0)principalAmount+=values.principal*values.rate/100*values.months/12;
         if(months>0&&months<=600&&principalAmount>0){
           const paymentRow=rows.find(row=>/monthly emi/i.test(row[0]));
           const regularPayment=paymentRow&&typeof paymentRow[1]==="number"?paymentRow[1]:(monthlyRate===0?principalAmount/months:principalAmount*monthlyRate*Math.pow(1+monthlyRate,months)/(Math.pow(1+monthlyRate,months)-1));
