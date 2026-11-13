@@ -260,4 +260,88 @@ if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel
   actions.append(copy);panel.append(heading,intro,actions);main.append(panel);
 }
 
+
+// Shared calculator enhancements: export, embed attribution, what-if controls and related links.
+if(p.startsWith('/calculators/')&&main){
+  if(!document.querySelector('style[data-fc-tools]')){
+    const style=document.createElement('style');style.dataset.fcTools='1';
+    style.textContent='.fc-export-panel,.fc-related-tools,.fc-whatif-panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:18px;margin:18px 0}.fc-tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.fc-tool-actions button{border:0;border-radius:8px;background:#101c2c;color:#fff;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.fc-export-panel textarea{width:100%;min-height:88px;padding:10px;border:1px solid #bdc8d2;border-radius:8px;font:12px/1.5 ui-monospace,monospace}.fc-whatif-panel input[type=range]{width:100%}.fc-live-chart{margin:14px 0}.fc-live-row{margin:10px 0}.fc-live-row small{display:block;margin-bottom:4px;color:#526273}.fc-live-track{height:12px;background:#e8edf2;border-radius:20px;overflow:hidden}.fc-live-bar{height:100%;background:#385a7b;border-radius:20px}';
+    document.head.appendChild(style);
+  }
+  if(!main.querySelector('#printResult')&&!main.querySelector('.fc-export-panel')){
+    const panel=document.createElement('section');panel.className='fc-export-panel';
+    const h=document.createElement('h2');h.textContent='Export and embed this calculator';
+    const intro=document.createElement('p');intro.textContent='Print or save the result as a PDF, download a shareable result image, or embed this calculator with its attribution link.';
+    const actions=document.createElement('div');actions.className='fc-tool-actions';
+    const print=document.createElement('button');print.type='button';print.textContent='Print / Save as PDF';print.addEventListener('click',()=>window.print());
+    const png=document.createElement('button');png.type='button';png.textContent='Download result image';png.addEventListener('click',()=>{
+      const title=(main.querySelector('h1')?.textContent||document.title).trim();
+      const result=main.querySelector('#extraResult,.results,.result,[aria-live="polite"]');
+      const lines=(result?.innerText||'Enter values and calculate to create a result image.').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);
+      const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=720;const ctx=canvas.getContext('2d');
+      ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,1200,720);ctx.fillStyle='#101c2c';ctx.font='bold 38px Arial';ctx.fillText('Friendly Calculator',64,76);
+      ctx.font='bold 28px Arial';ctx.fillText(title.slice(0,58),64,132);ctx.fillStyle='#526273';ctx.font='18px Arial';ctx.fillText('Illustrative result · '+new Date().toLocaleDateString('en-IN'),64,170);
+      let y=225;ctx.font='20px Arial';for(const line of lines){if(y>630)break;ctx.fillStyle='#fff';ctx.fillRect(64,y-30,1072,54);ctx.fillStyle='#26384a';ctx.fillText(line.slice(0,90),84,y+5);y+=66;}
+      ctx.fillStyle='#526273';ctx.font='15px Arial';ctx.fillText('Check inputs, assumptions and official terms before relying on this estimate.',64,684);
+      canvas.toBlob(blob=>{if(!blob)return;const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download='friendly-calculator-result.png';a.click();URL.revokeObjectURL(url);},'image/png');
+    });
+    actions.append(print,png);
+    const code=document.createElement('textarea');code.readOnly=true;code.setAttribute('aria-label','Calculator embed code');
+    const embedUrl=location.href.split('#')[0]+(location.href.includes('?')?'&':'?')+'embed=1';
+    const title=(main.querySelector('h1')?.textContent||'Friendly Calculator').trim();
+    code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in/" rel="noopener">Friendly Calculator</a></p>';
+    const copy=document.createElement('button');copy.type='button';copy.textContent='Copy embed code';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);copy.textContent='Embed code copied';}catch(_){code.focus();code.select();copy.textContent='Select and copy the code';}});
+    actions.append(copy);panel.append(h,intro,actions,code);main.append(panel);
+  }
+  const extraForm=main.querySelector('#extraForm'),extraResult=main.querySelector('#extraResult');
+  if(extraForm&&extraResult&&!main.querySelector('.fc-whatif-panel')){
+    const numeric=extraForm.querySelector('input[type="number"]');
+    if(numeric){
+      const current=Number(numeric.value)||100,min=numeric.min!==''?Number(numeric.min):Math.max(0,current*.5),max=numeric.max!==''?Number(numeric.max):Math.max(current*2,current+100);
+      if(max>min){
+        const panel=document.createElement('section');panel.className='fc-whatif-panel';
+        const h=document.createElement('h2');h.textContent='What-if scenario slider';
+        const label=document.createElement('label');label.textContent='Adjust '+(numeric.closest('label')?.querySelector('span')?.textContent||numeric.id||'the first input')+' to see how the result changes.';
+        const range=document.createElement('input');range.type='range';range.min=min;range.max=max;range.step=numeric.step&&numeric.step!=='any'?numeric.step:Math.max((max-min)/100,.01);range.value=Math.max(min,Math.min(max,current));
+        const value=document.createElement('output');value.textContent=range.value;
+        const chartTitle=document.createElement('h3');chartTitle.textContent='Live result chart';
+        const chart=document.createElement('div');chart.className='fc-live-chart';chart.setAttribute('aria-live','polite');
+        const note=document.createElement('p');note.className='small';note.textContent='Bars display numeric outputs as shown; units may differ between rows.';
+        let syncing=false;
+        const draw=()=>{chart.replaceChildren();const rows=[...extraResult.querySelectorAll('.result-row')].map(row=>({label:row.querySelector('span')?.textContent||'',value:row.querySelector('strong')?.textContent||''})).map(x=>({...x,n:Number(x.value.replace(/[^\d.-]/g,''))})).filter(x=>x.label&&Number.isFinite(x.n)&&x.n>=0).slice(0,6);const maxValue=Math.max(1,...rows.map(x=>x.n));rows.forEach(x=>{const row=document.createElement('div');row.className='fc-live-row';const caption=document.createElement('small');caption.textContent=x.label+' · '+x.value;const track=document.createElement('div');track.className='fc-live-track';const bar=document.createElement('div');bar.className='fc-live-bar';bar.style.width=Math.max(1,x.n/maxValue*100)+'%';track.append(bar);row.append(caption,track);chart.append(row);});};
+        range.addEventListener('input',()=>{syncing=true;numeric.value=range.value;value.textContent=range.value;syncing=false;extraForm.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});
+        extraForm.addEventListener('input',()=>{if(!syncing){const n=Number(numeric.value);if(Number.isFinite(n)){range.value=Math.max(min,Math.min(max,n));value.textContent=n;}extraForm.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));}});
+        extraForm.addEventListener('submit',()=>Promise.resolve().then(draw));
+        panel.append(h,label,range,value,chartTitle,chart,note);extraResult.parentElement.insertAdjacentElement('afterend',panel);
+        draw();
+      }
+    }
+  }
+  const relatedMap={
+    '/calculators/land-unit-converter-calculator.html':[['Crop Cost & Profit','/calculators/crop-cost-profit-calculator.html'],['Crop Yield & Sale Value','/calculators/crop-yield-sale-value-calculator.html'],['Property Price per Sq Ft','/calculators/property-price-per-sq-ft-calculator.html']],
+    '/calculators/crop-cost-profit-calculator.html':[['Land Unit Converter','/calculators/land-unit-converter-calculator.html'],['KCC Interest','/calculators/kcc-interest-calculator.html'],['Crop Yield & Sale Value','/calculators/crop-yield-sale-value-calculator.html']],
+    '/calculators/kcc-interest-calculator.html':[['Crop Cost & Profit','/calculators/crop-cost-profit-calculator.html'],['MUDRA Loan EMI','/calculators/mudra-loan-category-emi-calculator.html']],
+    '/calculators/livestock-cost-profit-calculator.html':[['Crop Cost & Profit','/calculators/crop-cost-profit-calculator.html'],['Crop Yield & Sale Value','/calculators/crop-yield-sale-value-calculator.html']],
+    '/calculators/crop-yield-sale-value-calculator.html':[['Crop Cost & Profit','/calculators/crop-cost-profit-calculator.html'],['Land Unit Converter','/calculators/land-unit-converter-calculator.html']],
+    '/calculators/pm-kisan-eligibility-checker.html':[['KCC Interest','/calculators/kcc-interest-calculator.html'],['Crop Cost & Profit','/calculators/crop-cost-profit-calculator.html']],
+    '/calculators/ayushman-bharat-eligibility-checker.html':[['MP Ladli Behna Eligibility','/calculators/mp-ladli-behna-eligibility-checker.html'],['PMAY Eligibility','/calculators/pmay-eligibility-checker.html']],
+    '/calculators/apy-eligibility-pension-planner.html':[['First Job Salary','/calculators/first-job-salary-calculator.html'],['Salary Calculator','/calculators/salary-calculator.html']],
+    '/calculators/pmay-eligibility-checker.html':[['Rent vs Buy Home','/calculators/rent-vs-buy-home-calculator.html'],['Home Loan Eligibility','/calculators/home-loan-eligibility-calculator.html']],
+    '/calculators/mudra-loan-category-emi-calculator.html':[['Business Loan EMI','/calculators/business-loan-emi-calculator.html'],['KCC Interest','/calculators/kcc-interest-calculator.html']],
+    '/calculators/mp-ladli-behna-eligibility-checker.html':[['APY Pension Planner','/calculators/apy-eligibility-pension-planner.html'],['PMAY Eligibility','/calculators/pmay-eligibility-checker.html']],
+    '/calculators/job-change-take-home-salary-calculator.html':[['Salary Calculator','/calculators/salary-calculator.html'],['First Job Salary','/calculators/first-job-salary-calculator.html']],
+    '/calculators/first-job-salary-calculator.html':[['Salary Calculator','/calculators/salary-calculator.html'],['Job Change Take-home','/calculators/job-change-take-home-salary-calculator.html']],
+    '/calculators/fd-rd-sip-comparison-calculator.html':[['FD Calculator','/calculators/fd-calculator.html'],['RD Calculator','/calculators/rd-calculator.html'],['SIP Calculator','/calculators/sip-calculator.html']],
+    '/calculators/rent-vs-buy-home-calculator.html':[['Home Loan EMI','/calculators/loan-emi-calculator.html'],['Home Loan Eligibility','/calculators/home-loan-eligibility-calculator.html']],
+    '/calculators/loan-prepayment-vs-investment-calculator.html':[['Loan Prepayment','/calculators/loan-prepayment-calculator.html'],['FD vs RD vs SIP','/calculators/fd-rd-sip-comparison-calculator.html']]
+  };
+  const related=relatedMap[p];
+  if(related&&!main.querySelector('.fc-related-tools')&&!main.querySelector('section.related')){
+    const panel=document.createElement('section');panel.className='fc-related-tools';
+    const h=document.createElement('h2');h.textContent='Related calculators';
+    const list=document.createElement('p');related.forEach(([label,url],i)=>{if(i)list.append(' · ');const a=document.createElement('a');a.href=url;a.textContent=label;list.append(a);});
+    panel.append(h,list);main.append(panel);
+  }
+}
+
 })();
