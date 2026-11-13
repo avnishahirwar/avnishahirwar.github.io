@@ -528,3 +528,23 @@ test('Square root calculator is localized in all nine languages with reciprocal 
 
 
 test('Work hours calculator is localized in all nine languages with reciprocal hreflang and overnight shift calculation',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/work-hours-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/work-hours-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing work-hours locale: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));assert.ok(sitemap.includes(url));for(const id of ['start','end','break','days','calculate','net','total','status'])assert.ok(html.includes('id="'+id+'"'));if(locale!=='en'){assert.ok(html.includes('if(elapsed<=0)elapsed+=1440'));assert.ok(html.includes('const net=elapsed-br,total=net*days'));}if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}});
+
+
+test('Unit converter is available in all nine languages with reciprocal hreflang and working conversion controls',()=>{
+  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+  for(const locale of locales){
+    const url=locale==='en'?'https://friendlycalculator.in/calculators/unit-converter.html':'https://friendlycalculator.in/'+locale+'/calculators/unit-converter.html';
+    const file=localFile(url);
+    assert.ok(file&&fs.existsSync(file),'Missing unit-converter locale: '+url);
+    const html=fs.readFileSync(file,'utf8');
+    assert.match(html,new RegExp('<html lang="'+locale+'"'));
+    assert.ok(html.includes('hreflang="x-default"'));
+    for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));
+    assert.ok(sitemap.includes(url));
+    for(const id of ['category','amount','from','to','convert','swap','result','status'])assert.ok(html.includes('id="'+id+'"'));
+    if(locale!=='en')assert.ok(html.includes('/assets/unit-converter-localized.js'));
+    if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);
+  }
+  const script=fs.readFileSync(path.join(root,'assets/unit-converter-localized.js'),'utf8');
+  for(const formula of ['.0254','.45359237','3.785411784','(n-32)*5/9','x*9/5+32'])assert.ok(script.includes(formula),'Missing conversion constant/formula: '+formula);
+});
