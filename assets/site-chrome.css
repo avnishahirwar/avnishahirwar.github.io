@@ -22,3 +22,10 @@
 #extraResult .result-row strong{text-align:right;overflow-wrap:anywhere}
 #extraResult .small{grid-column:1/-1;color:#596b7c;font-size:.9rem;margin:6px 0 0}
 @media(max-width:600px){#extraResult .result-row{flex-direction:column;gap:3px}#extraResult .result-row strong{text-align:left}}
+/* Consistent small-screen layout for calculator input and result panels. */
+@media(max-width:640px){
+  .fields,.result-grid,.form-grid,.input-grid,.calculator-fields{grid-template-columns:minmax(0,1fr)!important}
+  .panel{padding:16px!important}
+  .panel input,.panel select,.panel textarea{width:100%;min-width:0;max-width:100%}
+  .panel table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
