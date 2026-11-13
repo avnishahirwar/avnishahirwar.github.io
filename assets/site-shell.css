@@ -98,3 +98,8 @@ main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafb
   .panel input,.panel select,.panel textarea{width:100%;min-width:0;max-width:100%}
   .panel table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 }
+/* Lightweight launcher shown before the optional assistant bundle is requested. */
+#fc-ai-lazy-launch{position:fixed;right:20px;bottom:20px;z-index:9998;border:0;border-radius:999px;background:#14283d;color:#fff;padding:13px 18px;font:700 14px/1.2 Arial,sans-serif;box-shadow:0 8px 28px #10243a35;cursor:pointer;max-width:calc(100vw - 24px)}
+#fc-ai-lazy-launch:focus-visible{outline:3px solid #d5a84b;outline-offset:3px}
+#fc-ai-lazy-launch:disabled{opacity:.75;cursor:wait}
+@media(max-width:600px){#fc-ai-lazy-launch{right:12px;bottom:12px}}
