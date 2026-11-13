@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="index,follow,max-image-preview:large"><title>Embed a Free Calculator | Friendly Calculator</title>
+<meta name="robots" content="noindex,nofollow"><title>Embed a Free Calculator | Friendly Calculator</title>
 <meta name="description" content="Add a free Friendly Calculator to your blog or website with a responsive iframe embed code and attribution link.">
 <link rel="icon" href="/favicon-96.png" type="image/png"><link rel="stylesheet" href="/assets/site-shell.css"><link rel="canonical" href="https://friendlycalculator.in/embed/"><meta property="og:title" content="Embed a Free Calculator | Friendly Calculator"><meta property="og:description" content="Add a free Friendly Calculator to your blog or website with a responsive iframe embed code and attribution link."><meta property="og:type" content="website"><meta property="og:url" content="https://friendlycalculator.in/embed/">
 <style>
@@ -12,12 +12,13 @@
 const params=new URLSearchParams(location.search);
 const src=params.get('src')||'';
 const allowed=new Set(['/calculators/loan-emi-calculator.html','/hi/calculators/home-loan-emi-calculator.html','/hi/calculators/sip-calculator.html','/hi/calculators/fd-calculator.html','/hi/calculators/income-tax-calculator.html','/calculators/sip-calculator.html','/calculators/fd-calculator.html','/calculators/income-tax-calculator.html']);
+const valid=/^\\/(?:(?:hi|es|fr|pt|ar|id|bn|ta)\\/)?calculators\\/[a-z0-9-]+\\.html$/;
 const builder=document.getElementById('builder'),mount=document.getElementById('mount');
 const makeEmbedUrl=path=>location.origin+'/embed/?s'+'rc='+encodeURIComponent(path);
 const codeFor=path=>'<iframe s'+'rc="'+makeEmbedUrl(path)+'" title="Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
 if(src){
   builder.remove();
-  if(!allowed.has(src)){const e=document.createElement('div');e.className='error';e.textContent='Invalid calculator embed URL. Please copy the embed code from the Friendly Calculator embed builder.';mount.append(e);return;}
+  if(!valid.test(src)||!allowed.has(src)){const e=document.createElement('div');e.className='error';e.textContent='Invalid calculator embed URL. Please copy the embed code from the Friendly Calculator embed builder.';mount.append(e);return;}
   const frame=document.createElement('iframe');frame.className='preview';frame.title='Friendly Calculator';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=src+(src.includes('?')?'&':'?')+'embed=1';mount.append(frame);
   const credit=document.createElement('div');credit.className='credit';credit.innerHTML='Calculator provided by <a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>';mount.append(credit);return;
 }
