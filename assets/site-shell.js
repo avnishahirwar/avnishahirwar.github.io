@@ -75,8 +75,18 @@ const embedMode=new URLSearchParams(location.search).get('embed')==='1';
 if(embedMode){
   document.body.classList.add('fc-embed-mode');
   const embedStyle=document.createElement('style');
-  embedStyle.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools{display:none!important}body.fc-embed-mode main{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}';
+  embedStyle.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-header,body.fc-embed-mode .fc-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools,body.fc-embed-mode>header,body.fc-embed-mode>footer,body.fc-embed-mode>aside{display:none!important}body.fc-embed-mode main{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}body.fc-embed-mode main>*:not(#live-page-calculator){display:none!important}body.fc-embed-mode #live-page-calculator{margin:0!important;max-width:none!important;border:0!important;border-radius:0!important;padding:8px!important;box-shadow:none!important}body.fc-embed-mode .fc-embed-attribution{display:block!important;margin:8px 12px 12px!important;text-align:right!important;font-size:12px!important;color:#64717d!important}body.fc-embed-mode .fc-embed-attribution a{color:#172638!important;font-weight:700!important}';
   document.head.append(embedStyle);
+  const addEmbedAttribution=()=>{
+    const widget=document.getElementById('live-page-calculator');
+    if(!widget||document.querySelector('.fc-embed-attribution'))return;
+    const credit=document.createElement('p');
+    credit.className='fc-embed-attribution';
+    credit.innerHTML='Calculator provided by <a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>';
+    widget.insertAdjacentElement('afterend',credit);
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addEmbedAttribution,{once:true});
+  else addEmbedAttribution();
 }
 
 if(main&&!main.id)main.id='fc-main-content';
