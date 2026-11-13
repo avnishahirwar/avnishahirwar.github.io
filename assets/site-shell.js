@@ -112,6 +112,16 @@ const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Website pages"><a href="/">Home</a><a href="'+r+'site-directory.html">All Pages Directory</a><a href="'+r+'finance-calculators.html">Finance</a><a href="'+r+'tax-calculators.html">Tax</a><a href="'+r+'business-calculators.html">Business Tools</a><a href="'+r+'everyday-calculators.html">Everyday</a><a href="'+r+'business.html">For Business</a><a href="'+r+'api.html">API</a><a href="'+r+'pricing.html">Plans</a><a href="'+r+'premium-waitlist.html">Premium Waitlist</a><a href="'+r+'about.html">About</a><a href="'+r+'methodology.html">Methodology</a><a href="'+r+'privacy.html">Privacy</a><a href="'+r+'terms.html">Terms</a><a href="'+r+'disclaimer.html">Disclaimer</a><a href="'+r+'contact.html">Contact</a><a href="'+languageHref+'" lang="'+currentLocale+'">'+languageLabel+'</a></nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>';
 f.querySelectorAll('.fc-global-footer-links a').forEach((a,i)=>{if(nav.footer[i])a.textContent=nav.footer[i];});
 const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length)fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());else document.body.append(f);
+const buildLocaleTarget=next=>{
+  // Preserve the current page path when an equivalent translation exists.
+  // Special English/Hindi pages use their established route aliases.
+  const alias=localeRoutes[p];
+  if(alias&&((next==='hi'&&alias.startsWith('/hi/'))||(next==='en'&&alias==='/')))return alias;
+  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)(?=\/)/,'');
+  if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
+  if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
+  return '/'+next+normalizedPath;
+};
 const languageSelect=document.getElementById('fc-language-select');
 if(languageSelect){
   languageSelect.addEventListener('change',()=>{
@@ -119,28 +129,15 @@ if(languageSelect){
     if(!localeHome[next])return;
     try{localStorage.setItem('fc-language-preference',next)}catch(_){}
     if(next===currentLocale)return;
-    if(next==='en'&&p==='/hi/index.html'){location.href='/';return;}
-    if(next==='hi'&&p==='/'){location.href='/hi/index.html';return;}
-    const calcMatch=p.match(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\/calculators\/([^/]+)$/)||p.match(/^\/calculators\/([^/]+)$/);
-    // Resolve calculator destinations against the actual static files instead of a
-    // manually maintained slug allowlist. This keeps newly translated pages usable
-    // as soon as they are added to a locale folder.
-    if(calcMatch){
-      const target=next==='en'?'/calculators/'+calcMatch[1]:'/'+next+'/calculators/'+calcMatch[1];
-      fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
-        if(response.ok){location.href=target;return;}
-        try{sessionStorage.setItem('fc-language-notice','This calculator is not available in the selected language yet. Opening that language homepage.')}catch(_){}
-        location.href=localeHome[next];
-      }).catch(()=>{
-        try{sessionStorage.setItem('fc-language-notice','The translated calculator could not be checked. Opening that language homepage.')}catch(_){}
-        location.href=localeHome[next];
-      });
-      return;
-    }
-    const destination=localeRoutes[p];
-    if(destination&&((next==='hi'&&destination.startsWith('/hi/'))||(next==='en'&&destination==='/'))){location.href=destination;return;}
-    try{sessionStorage.setItem('fc-language-notice','This page is not yet translated in the selected language. Opening the available language homepage.')}catch(_){}
-    location.href=localeHome[next];
+    const target=buildLocaleTarget(next);
+    fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
+      if(response.ok){location.href=target;return;}
+      try{sessionStorage.setItem('fc-language-notice','This page is not yet available in the selected language. Opening that language homepage instead.')}catch(_){}
+      location.href=localeHome[next];
+    }).catch(()=>{
+      try{sessionStorage.setItem('fc-language-notice','The selected language page could not be checked. Opening that language homepage instead.')}catch(_){}
+      location.href=localeHome[next];
+    });
   });
 }
 try{
