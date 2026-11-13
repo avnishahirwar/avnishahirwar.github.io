@@ -490,7 +490,8 @@ function injectLocalizedSchemeRateNotice(){
   };
   const item=rates[slug];if(!item)return;
   const existing=document.querySelector('.fc-rate-update');
-  if(existing)return;
+  const bodyText=document.body?.innerText||'';
+  if(existing||/(?:Updated:|अपडेट:|Actualizado:|Mis à jour|Atualizado:|تم التحديث:|Diperbarui:|হালনাগাদ:|புதுப்பிப்பு:)/i.test(bodyText))return;
   const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={en:'Updated: 13 November 2026.',hi:'अपडेट: 13 नवम्बर 2026।',es:'Actualizado: 13 de noviembre de 2026.',fr:'Mis à jour : 13 novembre 2026.',pt:'Atualizado: 13 de novembro de 2026.',ar:'تم التحديث: 13 نوفمبر 2026.',id:'Diperbarui: 13 November 2026.',bn:'হালনাগাদ: ১৩ নভেম্বর ২০২৬।',ta:'புதுப்பிப்பு: 13 நவம்பர் 2026.'};
   const sourceLabels={en:'Official rate notification',hi:'आधिकारिक दर अधिसूचना',es:'Notificación oficial de tasas',fr:'Notification officielle des taux',pt:'Notificação oficial das taxas',ar:'الإشعار الرسمي بالأسعار',id:'Pemberitahuan suku bunga resmi',bn:'সরকারি সুদের হার বিজ্ঞপ্তি',ta:'அதிகாரப்பூர்வ வட்டி அறிவிப்பு'};
