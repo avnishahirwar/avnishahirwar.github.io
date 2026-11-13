@@ -16,3 +16,22 @@ jobs:
           node-version: 22
       - name: Run calculator regression tests
         run: node --test tests/calculator-formulas.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs
+  catalogue-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit all English and localized calculator routes
+        run: node scripts/audit-calculator-catalogue.cjs
+      - name: Upload catalogue audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: friendly-calculator-catalogue-audit
+          path: |
+            artifacts/calculator-catalogue-audit.md
+            artifacts/calculator-catalogue-audit.json
+          retention-days: 14
