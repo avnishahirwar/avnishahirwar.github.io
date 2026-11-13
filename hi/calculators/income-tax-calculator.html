@@ -30,9 +30,9 @@ details{padding:12px 0;border-top:1px solid #e0e5ea}summary{font-weight:700;curs
 <body>
 <main class="wrap">
 <nav><a href="/hi/index.html">होम</a> / <a href="/calculator/site-directory.html">सभी कैलकुलेटर</a> / भारत आयकर कैलकुलेटर</nav>
-<header><p class="muted">TAX CALCULATOR · कर वर्ष 2026–27</p><h1>भारत आयकर कैलकुलेटर</h1><p class="muted">वेतन आयकर की हिंदी सामग्री और गणना पद्धति की समीक्षा जारी है।</p></header><section class="panel" id="localized-tax-review-note"><h2>हिंदी कैलकुलेटर समीक्षा में है</h2><p>कर स्लैब, रिबेट, अधिभार और पात्रता की आधिकारिक पुष्टि पूरी होने तक हिंदी में गणना अस्थायी रूप से उपलब्ध नहीं है। गलत कर अनुमान से बचने के लिए कृपया समीक्षा किया हुआ English calculator उपयोग करें।</p><p><a href="/calculators/income-tax-calculator.html">Open reviewed English Income Tax Calculator</a> · <a href="https://www.incometax.gov.in/" target="_blank" rel="noopener">आधिकारिक आयकर पोर्टल</a></p></section>
-<section aria-hidden="true" hidden class="panel hi-formula-intro"><h2>गणना का सूत्र — संक्षेप में</h2><p>कर योग्य वेतन = वार्षिक सकल वेतन − लागू मानक कटौती। स्लैब के अनुसार टैक्स निकालने के बाद पात्र रिबेट/सीमांत राहत, अधिभार और 4% स्वास्थ्य एवं शिक्षा उपकर जोड़ा जाता है।</p></section>
-<section aria-hidden="true" hidden class="panel" id="tax-tool">
+<header><p class="muted">TAX CALCULATOR · कर वर्ष 2026–27</p><h1>भारत आयकर कैलकुलेटर</h1><p class="muted">नई या पुरानी कर व्यवस्था चुनकर वेतन आय पर अनुमानित टैक्स, धारा 87A रिबेट, अधिभार और स्वास्थ्य एवं शिक्षा उपकर की गणना करें।</p></header>
+<section class="panel hi-formula-intro"><h2>गणना का सूत्र — संक्षेप में</h2><p>कर योग्य वेतन = वार्षिक सकल वेतन − लागू मानक कटौती। स्लैब के अनुसार टैक्स निकालने के बाद पात्र रिबेट/सीमांत राहत, अधिभार और 4% स्वास्थ्य एवं शिक्षा उपकर जोड़ा जाता है।</p></section>
+<section class="panel" id="tax-tool">
 <h2>अपनी वेतन और कर जानकारी दर्ज करें</h2>
 <div class="fields">
 <label class="field" for="gross-salary">वार्षिक सकल वेतन (₹)<input id="gross-salary" type="number" min="0" max="500000000" step="1" value="1275000"></label>
@@ -45,7 +45,7 @@ details{padding:12px 0;border-top:1px solid #e0e5ea}summary{font-weight:700;curs
 <button class="btn" id="calculate-tax" type="button">आयकर की गणना करें</button><button class="btn alt" id="reset-tax" type="button">रीसेट</button>
 <p id="tax-error" class="error" role="alert" aria-live="polite"></p>
 </section>
-<section aria-hidden="true" hidden class="panel" id="tax-results" aria-live="polite" hidden>
+<section class="panel" id="tax-results" aria-live="polite" hidden>
 <h2>आपका अनुमानित आयकर परिणाम</h2>
 <div class="results">
 <div class="result"><span>कर योग्य वेतन</span><strong id="taxable-income">—</strong></div>
@@ -57,7 +57,7 @@ details{padding:12px 0;border-top:1px solid #e0e5ea}summary{font-weight:700;curs
 </div>
 <p id="tax-summary" class="muted"></p>
 </section>
-<section aria-hidden="true" hidden class="panel">
+<section class="panel">
 <h2>कर स्लैब का संदर्भ</h2>
 <h3>नई कर व्यवस्था — 2026–27 का मॉडल</h3>
 <table class="tax-table"><thead><tr><th>कर योग्य आय का हिस्सा</th><th>दर</th></tr></thead><tbody><tr><td>₹4,00,000 तक</td><td>0%</td></tr><tr><td>₹4,00,001–₹8,00,000</td><td>5%</td></tr><tr><td>₹8,00,001–₹12,00,000</td><td>10%</td></tr><tr><td>₹12,00,001–₹16,00,000</td><td>15%</td></tr><tr><td>₹16,00,001–₹20,00,000</td><td>20%</td></tr><tr><td>₹20,00,001–₹24,00,000</td><td>25%</td></tr><tr><td>₹24,00,000 से अधिक</td><td>30%</td></tr></tbody></table>
@@ -76,6 +76,12 @@ details{padding:12px 0;border-top:1px solid #e0e5ea}summary{font-weight:700;curs
 <p>कर वर्ष 2026–27 के लिए नियम, अधिसूचनाएँ और आधिकारिक स्पष्टीकरण <a href="https://www.incometax.gov.in/" target="_blank" rel="noopener">आयकर विभाग के आधिकारिक पोर्टल</a> पर जाँचें। यह कैलकुलेटर कर सलाह या रिटर्न दाखिल करने की सेवा नहीं है।</p>
 </section>
 <section class="panel">
+<h2>आधिकारिक संदर्भ और अपडेट आधार</h2>
+<p>यह हिंदी वेतन-आधारित मॉडल Tax Year 2026–27 के लिए Income-tax Act, 2025 की धारा 202 और Finance Bill 2026 के प्रकाशित दर-सारांश को आधार बनाता है। नई व्यवस्था की स्लैब दरें, पुरानी व्यवस्था की निवासी वरिष्ठ नागरिक स्लैब, अधिभार और 4% cess आधिकारिक सरकारी सामग्री से मिलान किए गए हैं।</p>
+<ul><li><a href="https://www.incometaxindia.gov.in/documents/81799/11848482/memo-2026.pdf/fe530cfa-9c49-fc5c-4bfa-fc96fd5e7b7a?t=1770008674037" target="_blank" rel="noopener">Finance Bill 2026 — Memorandum explaining tax rates for Tax Year 2026–27 (Income Tax Department)</a></li><li><a href="https://www.incometax.gov.in/iec/foportal/help/individual/return-applicable-1?fromCampaign=true" target="_blank" rel="noopener">Income Tax Department — Salaried Individuals and tax slabs</a></li></ul>
+<p class="muted">यह मॉडल केवल सामान्य वेतन आय का अनुमान है। विशेष दर वाली आय, पूंजीगत लाभ, अन्य आय, सभी छूट/कटौतियाँ, TDS/advance-tax क्रेडिट और ITR-विशिष्ट समायोजन शामिल नहीं हैं। नियमों में बदलाव होने पर आधिकारिक अधिनियम, नियम और अधिसूचनाएँ प्राथमिक स्रोत हैं।</p>
+</section>
+<section class="panel">
 <h2>अक्सर पूछे जाने वाले प्रश्न</h2>
 <details><summary>आयकर कैलकुलेटर में कौन-सी आय दर्ज करें?</summary><p>अपना वार्षिक सकल वेतन दर्ज करें। चुनी गई कर व्यवस्था के अनुसार मानक कटौती अलग field में दी जाती है। अन्य आय और विशेष दर वाली आय इस सरल मॉडल में शामिल नहीं हैं।</p></details>
 <details><summary>नई व्यवस्था में धारा 87A रिबेट किसे मिल सकती है?</summary><p>यह मॉडल केवल पात्र निवासी व्यक्ति के लिए नई व्यवस्था में धारा 87A रिबेट और सीमांत राहत का अनुमान लगाता है। पात्रता और लागू कानून की पुष्टि आधिकारिक आयकर पोर्टल से करें।</p></details>
@@ -84,7 +90,38 @@ details{padding:12px 0;border-top:1px solid #e0e5ea}summary{font-weight:700;curs
 </section>
 <section class="panel"><p><a href="/calculators/income-tax-calculator.html">English Income Tax Calculator</a> · <a href="/hi/index.html">हिंदी होमपेज</a> · <a href="/hi/methodology.html">गणना पद्धति</a></p></section>
 </main>
-
+<script>
+(()=>{"use strict";
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("hi-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
+const slabsFor=(newRegime,resident,age)=>newRegime?[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]]:(resident&&age>=80?[[500000,0],[1000000,.20],[Infinity,.30]]:resident&&age>=60?[[300000,0],[500000,.05],[1000000,.20],[Infinity,.30]]:[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]]);
+const slabTax=(income,slabs)=>{let previous=0,total=0;for(const [cap,rate] of slabs){total+=Math.max(0,Math.min(income,cap)-previous)*rate;previous=cap;if(income<=cap)break;}return total;};
+function calculate(){
+ $("tax-error").textContent="";
+ const gross=Number($("gross-salary").value),deduction=Number($("standard-deduction").value),age=Number($("age").value),newRegime=$("regime").value==="new",resident=$("residency").value==="resident";
+ if(!Number.isFinite(gross)||gross<0||gross>500000000||!Number.isFinite(deduction)||deduction<0||deduction>gross||!Number.isInteger(age)||age<0||age>120){$("tax-error").textContent="कृपया सकल वेतन, मानक कटौती और आयु की सही सीमाओं में जानकारी दर्ज करें।";$("tax-results").hidden=true;return;}
+ const taxable=Math.max(0,gross-deduction),slabs=slabsFor(newRegime,resident,age),before=slabTax(taxable,slabs);
+ let rebate=0;
+ if(resident&&newRegime){rebate=taxable<=1200000?Math.min(before,60000):Math.min(before,Math.max(0,before-(taxable-1200000)));}
+ else if(resident&&!newRegime&&taxable<=500000){rebate=Math.min(before,12500);}
+ const after=Math.max(0,before-rebate);
+ const bands=newRegime?[[5000000,.10],[10000000,.15],[20000000,.25],[50000000,.25]]:[[5000000,.10],[10000000,.15],[20000000,.25],[50000000,.37]];
+ let rate=0,threshold=0,previousRate=0;
+ for(const [limit,nextRate] of bands){if(taxable>limit){threshold=limit;previousRate=rate;rate=nextRate;}else break;}
+ let surcharge=after*rate,relief=0;
+ if(threshold>0){const base=slabTax(threshold,slabs)*(1+previousRate),cap=base+(taxable-threshold),actual=after+surcharge;if(actual>cap){relief=actual-cap;surcharge=Math.max(0,surcharge-relief);}}
+ const cess=(after+surcharge)*.04,total=after+surcharge+cess;
+ $("taxable-income").textContent=money(taxable);$("tax-before").textContent=money(before);$("rebate").textContent=money(rebate);$("surcharge").textContent=money(surcharge);$("cess").textContent=money(cess);$("tax-total").textContent=money(total);
+ $("tax-summary").textContent="चुनी गई व्यवस्था: "+(newRegime?"नई":"पुरानी")+"; निवास स्थिति: "+(resident?"निवासी":"अनिवासी")+"; अधिभार दर: "+(rate*100)+"%; अधिभार सीमांत राहत: "+money(relief)+".";
+ $("tax-results").hidden=false;
+ if(typeof gtag==="function")gtag("event","calculator_used",{calculator_page:location.pathname,calculator_action:"calculate"});
+}
+$("regime").addEventListener("change",()=>{$("standard-deduction").value=$("regime").value==="new"?"75000":"50000";});
+$("calculate-tax").addEventListener("click",calculate);
+$("reset-tax").addEventListener("click",()=>{$("gross-salary").value="1275000";$("standard-deduction").value=$("regime").value==="new"?"75000":"50000";$("age").value="35";$("regime").value="new";$("residency").value="resident";$("standard-deduction").value="75000";$("tax-results").hidden=true;$("tax-error").textContent="";});
+calculate();
+})();
+</script>
 <script src="/assets/site-shell.js" defer></script>
-
+<script src="/assets/hi-top10-visuals.js" defer></script>
 </body></html>
