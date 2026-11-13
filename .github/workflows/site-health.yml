@@ -31,5 +31,7 @@ jobs:
         run: node --test tests/seo-consolidation.test.cjs
       - name: Validate multilingual route switching
         run: node --test tests/language-routing.test.cjs
+      - name: Validate Hindi rural calculator localization
+        run: node --test tests/hindi-rural-localization.test.cjs
       - name: Check shared JavaScript syntax
         run: node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js
