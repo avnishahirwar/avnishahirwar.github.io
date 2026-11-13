@@ -690,7 +690,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\\/calculators\\/[^"'#]+)["']/g)].map(m => m[1]));
+  const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
   const homepageLinks = uniqueCalculatorLinks(homepage);
   const directoryLinks = uniqueCalculatorLinks(directory);
   const sitemapCalculatorUrls = urls.filter(url => url.includes('/calculators/'));
