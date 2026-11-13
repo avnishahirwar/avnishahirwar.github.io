@@ -119,7 +119,7 @@ test('production formula functions return correct numeric results for every shar
       ['Estimated taxable salary income', 510000], ['Tax before rebate', 12000], ['Estimated tax including surcharge and cess', 12480]
     ]],
     ['income tax calculator india', { grossSalary: 560000, standardDeduction: 50000, age: 80, regime: 'Old regime — individual', residency: 'Resident individual' }, [
-      ['Estimated taxable salary income', 510000], ['Tax before rebate', 20000], ['Estimated tax including surcharge and cess', 2080]
+      ['Estimated taxable salary income', 510000], ['Tax before rebate', 2000], ['Estimated tax including surcharge and cess', 2080]
     ]],
     ['income tax calculator india', { grossSalary: 50750001, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
       ['Estimated taxable salary income', 50000001], ['Surcharge rate', 10], ['Marginal relief on surcharge', 1079999.33], ['Estimated tax including surcharge and cess', 11232001.04]
@@ -230,15 +230,20 @@ function numericCurrency(text) {
   return Number(String(text).replace(/[^0-9.-]/g, ''));
 }
 
-test('dedicated SIP page calculates the expected monthly annuity-due projection', () => {
+test('dedicated SIP page calculates both end-of-month and beginning-of-month projections', () => {
   const html = fs.readFileSync(new URL('../calculators/sip-calculator.html', 'file://' + __filename), 'utf8');
   const script = inlineScripts(html).find(item => item.includes("sipCalculate"));
   assert.ok(script, 'SIP calculation script exists');
-  const dom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10' });
-  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl });
-  const rows = resultRows(dom.get('sipResult'));
-  closeTo(numericCurrency(rows.find(row => row[0] === 'Total contributions')[1]), 240000, 0.1);
-  closeTo(numericCurrency(rows.find(row => row[0] === 'Illustrative estimated value')[1]), 464678.15, 0.2);
+  const endDom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10', sipTiming: 'end' });
+  vm.runInNewContext(script, { document: endDom.document, Number, Math, Intl });
+  const endRows = resultRows(endDom.get('sipResult'));
+  closeTo(numericCurrency(endRows.find(row => row[0] === 'Total contributions')[1]), 240000, 0.1);
+  closeTo(numericCurrency(endRows.find(row => row[0] === 'Illustrative estimated value')[1]), 460077.38, 0.2);
+
+  const beginningDom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10', sipTiming: 'beginning' });
+  vm.runInNewContext(script, { document: beginningDom.document, Number, Math, Intl });
+  const beginningRows = resultRows(beginningDom.get('sipResult'));
+  closeTo(numericCurrency(beginningRows.find(row => row[0] === 'Illustrative estimated value')[1]), 464678.15, 0.2);
 });
 
 test('dedicated PPF page calculates beginning-of-year annual compounding', () => {
