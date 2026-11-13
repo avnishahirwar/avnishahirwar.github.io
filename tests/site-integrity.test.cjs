@@ -671,3 +671,16 @@ test('shared calculator shell provides export, embed, what-if, live-chart and re
   assert.ok(shell.includes('fc-related-tools'));
   assert.ok(shell.includes('https://wa.me/'));
 });
+
+
+test('land area converter supports requested units and discloses local Bigha variation', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/land-unit-converter-calculator.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/rural-tools.js'), 'utf8');
+  assert.ok(html.includes('data-rural-tool="land-converter"'));
+  assert.ok(html.includes('Hectare'));
+  assert.ok(html.includes('Bigha is not a single uniform national unit'));
+  assert.ok(html.includes('/assets/rural-tools.js'));
+  assert.ok(engine.includes("configs['land-converter']"));
+  assert.ok(engine.includes('107639.104167'));
+  assert.doesNotMatch(html, /assets\\/extra-calculators\\.js/);
+});
