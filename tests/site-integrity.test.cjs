@@ -693,7 +693,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
   const homepageLinks = uniqueCalculatorLinks(homepage);
   const directoryLinks = uniqueCalculatorLinks(directory);
-  const sitemapCalculatorUrls = urls.filter(url => url.includes('/calculators/'));
+  const sitemapCalculatorUrls = urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url));
   const navStart = homepage.indexOf('<nav class="home-category-index"');
   const navEnd = homepage.indexOf('</nav>', navStart);
   const nav = homepage.slice(navStart, navEnd);
