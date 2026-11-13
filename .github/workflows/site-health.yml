@@ -2,7 +2,7 @@ name: Site health and link checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feature/rural-decision-tools-20261113]
   schedule:
     - cron: '17 2 * * *'
   workflow_dispatch:
@@ -26,4 +26,4 @@ jobs:
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
       - name: Check shared JavaScript syntax
-        run: node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js
+        run: node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js

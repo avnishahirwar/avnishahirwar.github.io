@@ -627,3 +627,60 @@ test('English Income Tax uses the reviewed salary model and translated pages saf
     assert.ok(!html.includes('function run()'),'Retired simplified calculator still runs: '+locale);
   }
 });
+
+
+test('agriculture, scheme and career calculator pages are linked, indexed and use the shared rural runtime', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/rural-tools.js'), 'utf8');
+  const pages = [
+    ['crop-cost-profit-calculator', 'crop-cost-profit'],
+    ['kcc-interest-calculator', 'kcc-interest'],
+    ['livestock-cost-profit-calculator', 'livestock-profit'],
+    ['crop-yield-sale-value-calculator', 'crop-yield-value'],
+    ['pm-kisan-eligibility-checker', 'pm-kisan-checker'],
+    ['ayushman-bharat-eligibility-checker', 'ayushman-checker'],
+    ['apy-eligibility-pension-planner', 'apy-planner'],
+    ['pmay-eligibility-checker', 'pmay-checker'],
+    ['mudra-loan-category-emi-calculator', 'mudra-planner'],
+    ['mp-ladli-behna-eligibility-checker', 'ladli-behna-checker'],
+    ['job-change-take-home-salary-calculator', 'job-change-salary'],
+    ['first-job-salary-calculator', 'first-job-salary']
+  ];
+  for (const [slug, key] of pages) {
+    const url = 'https://friendlycalculator.in/calculators/' + slug + '.html';
+    const file = path.join(root, 'calculators', slug + '.html');
+    assert.ok(urls.includes(url), 'Missing sitemap URL: ' + url);
+    assert.ok(fs.existsSync(file), 'Missing calculator file: ' + file);
+    assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), 'Missing directory link: ' + slug);
+    const html = fs.readFileSync(file, 'utf8');
+    assert.ok(html.includes('data-rural-tool="' + key + '"'), 'Missing runtime key: ' + key);
+    assert.ok(html.includes('/assets/rural-tools.js'), 'Missing rural runtime include: ' + slug);
+    assert.ok(html.includes('rel="canonical"'), 'Missing canonical: ' + slug);
+    assert.ok(html.includes('id="embedCode"'), 'Missing embed code UI: ' + slug);
+  }
+  assert.ok(engine.includes("configs['fd-rd-sip']"), 'FD vs RD vs SIP comparison model is missing');
+});
+
+test('shared calculator shell provides export, embed, what-if, live-chart and related-tool controls', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('Print / Save as PDF'));
+  assert.ok(shell.includes('Download result image'));
+  assert.ok(shell.includes('Copy embed code'));
+  assert.ok(shell.includes('What-if scenario slider'));
+  assert.ok(shell.includes('fc-live-chart'));
+  assert.ok(shell.includes('fc-related-tools'));
+  assert.ok(shell.includes('https://wa.me/'));
+});
+
+
+test('land area converter supports requested units and discloses local Bigha variation', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/land-unit-converter-calculator.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/rural-tools.js'), 'utf8');
+  assert.ok(html.includes('data-rural-tool="land-converter"'));
+  assert.ok(html.includes('Hectare'));
+  assert.ok(html.includes('Bigha is not a single uniform national unit'));
+  assert.ok(html.includes('/assets/rural-tools.js'));
+  assert.ok(engine.includes("configs['land-converter']"));
+  assert.ok(engine.includes('107639.104167'));
+  assert.ok(!html.includes('/assets/extra-calculators.js'));
+});
