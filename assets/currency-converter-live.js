@@ -9,7 +9,7 @@ function setRate(value){rateInput.value=String(value);rateInput.readOnly=true;}
 async function loadRate(){
  const id=++requestId,base=from.value,quote=to.value;
  error.textContent='';
- if(base===quote){rateDate=new Date().toISOString().slice(0,10);setRate(1);showStatus('1 '+base+' = 1 '+quote+' · Same currency');return;}
+ if(base===quote){rateDate='';setRate(1);showStatus('No conversion needed: both currency selections are '+base+'.');calculate();return;}
  rateInput.placeholder='Loading reference rate…';showStatus('Fetching the latest available reference rate…');
  try{
   const response=await fetch('https://api.frankfurter.dev/v2/rate/'+encodeURIComponent(base)+'/'+encodeURIComponent(quote),{headers:{Accept:'application/json'},cache:'no-cache'});
