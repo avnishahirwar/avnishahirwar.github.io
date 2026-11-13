@@ -184,7 +184,7 @@ print(response.json()["result"])</code></pre>
 <h2>5. Usage limits</h2>
 <div class="panel">
 <ul>
-<li>Every calculator request uses the same API key and is subject to its per-minute rate limit.</li>
+<li>Every calculator request uses the same API key. The Free plan is configured for up to 60 requests per minute per API key, in addition to the shared 50-request monthly account quota.</li>
 <li>Monthly quota and rate limits are enforced by the server, not by dashboard controls.</li>
 <li>Valid-key requests that reach calculation processing count toward monthly quota, including invalid-input responses.</li>
 <li>Requests rejected for invalid keys, disabled API access, exhausted quota or rate limits do not consume monthly quota.</li>
