@@ -92,7 +92,16 @@ run:v=>{const fixed=v.ctc*(1-v.variable/100)/12,net=fixed-v.pf-v.pt-v.tds-v.othe
 slider:{key:'gross',min:10000,max:200000,step:1000,label:'Monthly gross salary'},
 run:v=>{const deductions=v.pf+v.pt+v.tds+v.other,net=v.gross-deductions;return {rows:[['Monthly gross fixed salary',money(v.gross)],['Total monthly deductions',money(deductions)],['Estimated monthly in-hand salary',money(net)],['Estimated annual fixed in-hand pay',money(net*12)],['Annual variable pay / bonus (separate)',money(v.bonus)],['Estimated annual total after stated deductions',money(net*12+v.bonus)]],chart:[['Gross fixed salary',v.gross],['Estimated in-hand',Math.max(0,net)],['Deductions',deductions]]};}}
 };
-const root=document.querySelector('[data-rural-tool]');if(!root)return;
+configs['fd-rd-sip']={title:'FD vs RD vs SIP Comparison Calculator',fields:[
+{id:'fdPrincipal',label:'One-time FD deposit (₹)',def:100000,min:0,max:100000000,step:1000},
+{id:'fdRate',label:'Assumed annual FD rate (%)',def:7,min:0,max:30,step:0.1},
+{id:'rdMonthly',label:'Monthly RD deposit (₹)',def:5000,min:0,max:10000000,step:100},
+{id:'rdRate',label:'Assumed annual RD rate (%)',def:6.5,min:0,max:30,step:0.1},
+{id:'sipMonthly',label:'Monthly SIP contribution (₹)',def:5000,min:0,max:10000000,step:100},
+{id:'sipRate',label:'Assumed annual SIP return (%)',def:10,min:0,max:40,step:0.1},
+{id:'years',label:'Common comparison period (years)',def:5,min:1,max:50,step:1}],
+slider:{key:'sipMonthly',min:500,max:100000,step:500,label:'Monthly contribution'},
+run:v=>{const n=Math.round(v.years*12),fd=v.fdPrincipal*Math.pow(1+v.fdRate/400,4*v.years),rdRate=v.rdRate/1200,sipRate=v.sipRate/1200,rd=rdRate===0?v.rdMonthly*n:v.rdMonthly*(Math.pow(1+rdRate,n)-1)/rdRate,sip=sipRate===0?v.sipMonthly*n:v.sipMonthly*(Math.pow(1+sipRate,n)-1)/sipRate;return {rows:[['Estimated FD maturity (quarterly compounding)',money(fd)],['Estimated RD maturity (monthly deposits)',money(rd)],['Illustrative SIP future value',money(sip)],['Total RD contributions',money(v.rdMonthly*n)],['Total SIP contributions',money(v.sipMonthly*n)]],chart:[['FD maturity',fd],['RD maturity',rd],['SIP illustration',sip]]};}};\nconst root=document.querySelector('[data-rural-tool]');if(!root)return;
 const key=root.dataset.ruralTool,c=configs[key];if(!c)return;
 const form=document.getElementById('ruralForm'),out=document.getElementById('ruralResult'),chart=document.getElementById('ruralChart'),sliderHost=document.getElementById('scenarioHost');
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
