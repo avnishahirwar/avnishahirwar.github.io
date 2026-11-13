@@ -33,7 +33,7 @@
 function run(){const income=Number($('income').value),regime=$('regime').value,resident=$('resident').value;$('error').textContent='';if(!Number.isFinite(income)||income<0||income>500000000){$('error').textContent="Saisissez un revenu imposable valide.";return;}
 const slabs=regime==='new'?[[400000,0],[800000,.05],[1200000,.10],[1600000,.15],[2000000,.20],[2400000,.25],[Infinity,.30]]:[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]];
 let prev=0,tax=0;for(const [cap,rate] of slabs){const slice=Math.max(0,Math.min(income,cap)-prev);tax+=slice*rate;prev=cap;if(income<=cap)break;}
-let rebate=0;if(resident==='yes'&&regime==='new'){rebate=income<=1200000?Math.min(tax,60000):Math.min(60000,tax,Math.max(0,tax-(income-1200000)));}else if(resident==='yes'&&income<=500000){rebate=Math.min(tax,12500);}
+let rebate=0;if(resident==='yes'&&regime==='new'){rebate=income<=1200000?Math.min(tax,60000):Math.max(0,tax-(income-1200000));}else if(resident==='yes'&&income<=500000){rebate=Math.min(tax,12500);}
 const after=Math.max(0,tax-rebate),cess=after*.04,total=after+cess;
 $('before').textContent=money(tax);$('rebate').textContent=money(rebate);$('cess').textContent=money(cess);$('total').textContent=money(total);
 }
