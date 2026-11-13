@@ -17,7 +17,7 @@ test('all 12 new Hindi rural, scheme and career calculator pages exist and are l
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, /<html lang="hi">/);
     assert.match(html, new RegExp('https://friendlycalculator\\.in/hi/calculators/' + slug + '\\.html'));
-    assert.match(html, /<title>[^<\\u0000-\\u007f]+/);
+    const title = (html.match(/<title>([^<]*)<\\/title>/) || [])[1] || '';\n    assert.ok(/[\\u0900-\\u097f]/.test(title), 'title is not Hindi: ' + slug);
     assert.match(html, /assets\\/rural-tools\\.js/);
   }
 });
