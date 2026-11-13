@@ -2,7 +2,7 @@ name: Site health and link checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feature/rural-decision-tools-20261113]
   schedule:
     - cron: '17 2 * * *'
   workflow_dispatch:
