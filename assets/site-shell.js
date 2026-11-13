@@ -262,8 +262,9 @@ if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel
 
 
 /* Add useful internal links and consistent structured data to calculator pages. */
-if(p.startsWith('/calculators/')&&main){
-  const slug=p.split('/').pop().replace(/\.html$/,'');
+const calculatorPath=p.replace(/^\/(hi|es|fr|pt|ar|id|bn|ta)(?=\/calculators\/)/,'');
+if(calculatorPath.startsWith('/calculators/')&&main){
+  const slug=calculatorPath.split('/').pop().replace(/\.html$/,'');
   const catalog={
     'loan-emi-calculator':[['loan-prepayment-calculator','Loan Prepayment'],['car-loan-calculator','Car Loan EMI'],['home-loan-amortization-schedule-calculator','Home Loan Amortization'],['home-loan-eligibility-calculator','Home Loan Eligibility'],['mortgage-calculator','Mortgage Calculator']],
     'gst-calculator':[['gst-input-tax-credit-calculator','GST Input Tax Credit'],['gst-interest-calculator','GST Interest'],['gst-late-fee-calculator','GST Late Fee'],['reverse-charge-gst-calculator','Reverse Charge GST'],['gst-on-rent-calculator','GST on Rent']],
