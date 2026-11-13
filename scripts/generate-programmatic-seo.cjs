@@ -47,7 +47,7 @@ function render(item) {
     '<section class="faq"><h2>Frequently asked questions</h2><details><summary>Does a longer tenure reduce the EMI?</summary><p>Usually yes, because the principal is spread over more monthly payments. However, the total interest paid is generally higher.</p></details>' +
     '<details><summary>Is the interest rate fixed for the full loan?</summary><p>This illustration assumes a fixed rate. A floating-rate loan can change when the lender revises its benchmark or spread.</p></details>' +
     '<details><summary>Will my bank quote exactly this EMI?</summary><p>Not necessarily. Fees, payment dates, rate type, rounding and lender-specific terms can change the final schedule.</p></details></section>' +
-    '<p class="muted">Reviewed: ' + esc(data.reviewed) + ' · <a href="/calculators/loan-emi-calculator.html">Loan EMI Calculator</a> · <a href="/guides/">All guides</a></p></main></body></html>\n';
+    '<p class="muted">Reviewed: ' + esc(data.reviewed) + ' · <a href="/calculators/loan-emi-calculator.html">Loan EMI Calculator</a> · <a href="/guides/">All guides</a></p></main><script defer src="/assets/site-shell.js"></script></body></html>\n';
 }
 for (const item of data.pages) {
   if (!/^[a-z0-9-]+$/.test(item.slug) || !(Number(item.amount)>0) || !(Number(item.rate)>=0)) throw new Error('Invalid SEO page data: ' + item.slug);
