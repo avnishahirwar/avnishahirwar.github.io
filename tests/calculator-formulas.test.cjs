@@ -713,3 +713,9 @@ test('localized income-tax pages do not expose the retired simplified calculator
     assert.doesNotMatch(html, /function run\(\)/, locale + ' no longer executes the retired simplified model');
   }
 });
+
+test('EPS pension estimate validates eligible service and salary before calculation', () => {
+  const js = fs.readFileSync(new URL('../assets/extra-calculators.js', 'file://' + __filename), 'utf8');
+  assert.match(js, /case'eps':\{if\(v\.service<10\)/);
+  assert.match(js, /valid service period up to 50 years/);
+});
