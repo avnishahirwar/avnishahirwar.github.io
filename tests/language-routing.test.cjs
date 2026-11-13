@@ -32,6 +32,6 @@ test('Hindi Bigha and Stamp Duty calculator routes have localized documents', ()
     assert.ok(fs.existsSync(target), `Missing Hindi calculator page: ${file}`);
     const html = fs.readFileSync(target, 'utf8');
     assert.match(html, /<html lang="hi">/);
-    assert.match(html, new RegExp('https://friendlycalculator\\.in/hi/calculators/' + file.replaceAll('.', '\\\\.') + '"'));
+    assert.ok(html.includes('https://friendlycalculator.in/hi/calculators/' + file));
   }
 });
