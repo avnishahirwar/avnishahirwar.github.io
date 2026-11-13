@@ -1,36 +1,122 @@
 # Friendly Calculator
 
-> Friendly Calculator is an independent website offering free online calculators and plain-language guides for finance, tax, salary, business, mathematics and everyday calculations. The primary audience includes people in India, with multilingual pages for additional audiences.
+> Friendly Calculator is an independent, multilingual website with free online calculators and plain-language educational guides for finance, tax, salary, business, mathematics, and everyday calculations. Its primary focus is practical calculations for India, with selected pages translated for additional audiences.
 
-## Official website
-- https://friendlycalculator.in/
-- https://friendlycalculator.in/calculator/about.html
-- https://friendlycalculator.in/calculator/contact.html
-- https://friendlycalculator.in/blog/
-- https://friendlycalculator.in/calculator/site-directory.html
-- https://friendlycalculator.in/calculator/methodology.html
-- https://friendlycalculator.in/calculator/disclaimer.html
+Friendly Calculator provides tools and educational information. Calculator results are estimates based on the inputs, formulas, rates, dates, and assumptions shown on each page. They are not guarantees or a substitute for professional financial, tax, legal, medical, or accounting advice.
 
-## Main calculator areas
-- Finance: https://friendlycalculator.in/calculator/finance-calculators.html
-- Tax and payroll: https://friendlycalculator.in/calculator/tax-calculators.html
-- Business: https://friendlycalculator.in/calculator/business-calculators.html
-- Everyday calculations: https://friendlycalculator.in/calculator/everyday-calculators.html
-- All calculators: https://friendlycalculator.in/calculator/site-directory.html
+## Start here
 
-## Selected calculators
-- Loan EMI: https://friendlycalculator.in/calculators/loan-emi-calculator.html
-- Fixed deposit: https://friendlycalculator.in/calculators/fd-calculator.html
-- SIP: https://friendlycalculator.in/calculators/sip-calculator.html
-- GST: https://friendlycalculator.in/calculators/gst-calculator.html
-- Income tax: https://friendlycalculator.in/calculators/income-tax-calculator.html
-- Home loan: https://friendlycalculator.in/calculators/home-loan-emi-calculator.html
+- [Home](https://friendlycalculator.in/): Main website and calculator discovery.
+- [All calculators and site directory](https://friendlycalculator.in/calculator/site-directory.html): Browse the complete published calculator catalogue.
+- [English calculator guides](https://friendlycalculator.in/blog/): Educational explainers with worked examples and links to tools.
+- [Hindi home](https://friendlycalculator.in/hi/index.html): Hindi-language website entry point.
+- [Hindi calculator guides](https://friendlycalculator.in/hi/guides/index.html): Hindi worked examples and explanations.
+- [About](https://friendlycalculator.in/calculator/about.html): Publisher and website information.
+- [Contact](https://friendlycalculator.in/calculator/contact.html): Corrections, questions, and contact details.
 
-## Editorial and calculation notes
-- Calculator outputs are estimates based on user-entered values, formulas and stated assumptions; they are not guarantees or professional advice.
-- Readers should check each calculator's method, limitations and relevant official sources before relying on important results.
-- The blog contains explanatory guides and calculator education. It should not be treated as a real-time news wire.
-- Public contact and publisher information is available on the About and Contact pages.
+## Calculator categories
+
+- [Finance calculators](https://friendlycalculator.in/calculator/finance-calculators.html): Savings, deposits, investments, loans, retirement, and related estimates.
+- [Tax and payroll calculators](https://friendlycalculator.in/calculator/tax-calculators.html): Income tax, GST, TDS, salary, and payroll-related calculations.
+- [Business calculators](https://friendlycalculator.in/calculator/business-calculators.html): Business, pricing, profit, and operating calculations.
+- [Everyday calculators](https://friendlycalculator.in/calculator/everyday-calculators.html): General mathematics, dates, conversions, health-related estimates, and daily-use tools.
+- [All calculators](https://friendlycalculator.in/calculator/site-directory.html): Canonical directory of published tools.
+
+## Selected finance calculators
+
+- [Loan EMI calculator](https://friendlycalculator.in/calculators/loan-emi-calculator.html): Estimate monthly instalments and total interest from loan inputs.
+- [Home loan EMI calculator](https://friendlycalculator.in/calculators/home-loan-emi-calculator.html): Estimate home-loan repayments.
+- [Loan prepayment calculator](https://friendlycalculator.in/calculators/loan-prepayment-calculator.html): Explore how additional repayments may affect interest and tenure.
+- [Fixed deposit calculator](https://friendlycalculator.in/calculators/fd-calculator.html): Estimate deposit maturity using principal, rate, term, and compounding assumptions.
+- [Recurring deposit calculator](https://friendlycalculator.in/calculators/rd-calculator.html): Estimate recurring-deposit maturity.
+- [SIP calculator](https://friendlycalculator.in/calculators/sip-calculator.html): Illustrative monthly investment growth projection; returns are not guaranteed.
+- [Step-up SIP calculator](https://friendlycalculator.in/calculators/step-up-sip-calculator.html): Model a contribution that increases over time.
+- [PPF calculator](https://friendlycalculator.in/calculators/ppf-calculator.html): Estimate a Public Provident Fund balance using entered assumptions.
+- [NPS calculator](https://friendlycalculator.in/calculators/nps-calculator.html): Illustrative National Pension System corpus and pension estimates.
+- [Compound interest calculator](https://friendlycalculator.in/calculators/compound-interest-calculator.html): Compare compounding periods and growth assumptions.
+- [Inflation calculator](https://friendlycalculator.in/calculators/inflation-calculator.html): Estimate the effect of inflation on purchasing power.
+
+## Selected tax, salary, and business calculators
+
+- [Income tax calculator](https://friendlycalculator.in/calculators/income-tax-calculator.html): Estimate tax from the selected financial-year and regime assumptions.
+- [GST calculator](https://friendlycalculator.in/calculators/gst-calculator.html): Calculate GST-inclusive and GST-exclusive amounts.
+- [TDS calculator](https://friendlycalculator.in/calculators/tds-calculator.html): Estimate tax deducted at source from entered values and applicable assumptions.
+- [Salary calculator](https://friendlycalculator.in/calculators/salary-calculator.html): Explore salary components and estimated take-home pay.
+- [CTC salary calculator](https://friendlycalculator.in/calculators/ctc-salary-calculator.html): Compare CTC and estimated in-hand salary.
+- [HRA calculator](https://friendlycalculator.in/calculators/hra-calculator.html): Estimate HRA exemption from salary, rent, and city inputs.
+- [Profit and loss calculator](https://friendlycalculator.in/calculators/profit-loss-calculator.html): Calculate cost, selling price, profit, and loss.
+- [Break-even calculator](https://friendlycalculator.in/calculators/break-even-calculator.html): Estimate the sales volume needed to cover costs.
+
+## Selected mathematics and everyday calculators
+
+- [Basic calculator](https://friendlycalculator.in/calculators/basic-calculator.html): Basic arithmetic.
+- [Percentage calculator](https://friendlycalculator.in/calculators/percentage-calculator.html): Percentage increase, decrease, and share calculations.
+- [Scientific calculator](https://friendlycalculator.in/calculators/scientific-calculator.html): Scientific and advanced arithmetic operations.
+- [Unit converter](https://friendlycalculator.in/calculators/unit-converter.html): Convert supported measurement units.
+- [Date difference calculator](https://friendlycalculator.in/calculators/date-difference-calculator.html): Calculate the interval between dates.
+- [Age calculator](https://friendlycalculator.in/calculators/age-calculator.html): Calculate age from a date of birth.
+- [Mileage calculator](https://friendlycalculator.in/calculators/mileage-calculator.html): Estimate vehicle mileage from distance and fuel inputs.
+- [BMI calculator](https://friendlycalculator.in/calculators/bmi-calculator.html): Calculate BMI as a general screening estimate, not a diagnosis.
+
+## Educational guides
+
+- [English finance and calculator guides](https://friendlycalculator.in/blog/): Tax, savings, borrowing, salary, and calculation explainers.
+- [Old vs new tax regime guide](https://friendlycalculator.in/blog/old-vs-new-tax-regime.html): Compare tax-regime concepts and assumptions.
+- [SIP vs FD guide](https://friendlycalculator.in/blog/sip-vs-fd.html): Understand differences in risk, liquidity, and return assumptions.
+- [Home-loan prepayment guide](https://friendlycalculator.in/blog/home-loan-prepayment.html): Understand repayment and prepayment concepts.
+- [Hindi guides index](https://friendlycalculator.in/hi/guides/index.html): Hindi examples for home-loan EMI, SIP, and income tax.
+- [Hindi ₹10 lakh home-loan example](https://friendlycalculator.in/hi/guides/home-loan-10-lakh-emi-20-years.html): Worked EMI example with stated assumptions.
+- [Hindi ₹5,000 SIP example](https://friendlycalculator.in/hi/guides/sip-5000-10-years.html): Illustrative SIP projection.
+- [Hindi income-tax example for ₹12 lakh salary](https://friendlycalculator.in/hi/guides/income-tax-12-lakh-salary-2026-27.html): Financial-year-specific worked example.
+
+## Multilingual calculator examples
+
+The site publishes selected calculator translations in Hindi (hi), Spanish (es), French (fr), Portuguese (pt), Arabic (ar), Indonesian (id), Bengali (bn), and Tamil (ta). Availability varies by calculator; use the links below as verified examples rather than assuming every page is translated.
+
+- [Salary calculator — English](https://friendlycalculator.in/calculators/salary-calculator.html)
+- [Salary calculator — Hindi](https://friendlycalculator.in/hi/calculators/salary-calculator.html)
+- [Salary calculator — Spanish](https://friendlycalculator.in/es/calculators/salary-calculator.html)
+- [Salary calculator — French](https://friendlycalculator.in/fr/calculators/salary-calculator.html)
+- [Salary calculator — Portuguese](https://friendlycalculator.in/pt/calculators/salary-calculator.html)
+- [Salary calculator — Arabic](https://friendlycalculator.in/ar/calculators/salary-calculator.html)
+- [Salary calculator — Indonesian](https://friendlycalculator.in/id/calculators/salary-calculator.html)
+- [Salary calculator — Bengali](https://friendlycalculator.in/bn/calculators/salary-calculator.html)
+- [Salary calculator — Tamil](https://friendlycalculator.in/ta/calculators/salary-calculator.html)
+- [CGPA to percentage — English](https://friendlycalculator.in/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Hindi](https://friendlycalculator.in/hi/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Spanish](https://friendlycalculator.in/es/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — French](https://friendlycalculator.in/fr/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Portuguese](https://friendlycalculator.in/pt/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Arabic](https://friendlycalculator.in/ar/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Indonesian](https://friendlycalculator.in/id/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Bengali](https://friendlycalculator.in/bn/calculators/cgpa-to-percentage-calculator.html)
+- [CGPA to percentage — Tamil](https://friendlycalculator.in/ta/calculators/cgpa-to-percentage-calculator.html)
+
+## Methodology, policies, and publisher information
+
+- [Calculation methodology](https://friendlycalculator.in/calculator/methodology.html): General approach, formulas, and assumptions.
+- [Disclaimer](https://friendlycalculator.in/calculator/disclaimer.html): Limitations and appropriate use of calculator results.
+- [Privacy policy](https://friendlycalculator.in/calculator/privacy.html): Privacy and data-handling information.
+- [Terms of use](https://friendlycalculator.in/calculator/terms.html): Website terms.
+- [About Friendly Calculator](https://friendlycalculator.in/calculator/about.html): Publisher information.
+- [Contact Friendly Calculator](https://friendlycalculator.in/calculator/contact.html): Contact and correction requests.
+
+## Discovery and technical resources
+
+- [Sitemap](https://friendlycalculator.in/sitemap.xml): XML list of published canonical and localized URLs.
+- [Robots.txt](https://friendlycalculator.in/robots.txt): Public crawler access rules and sitemap location.
+- [This llms.txt file](https://friendlycalculator.in/llms.txt): Curated index for systems that choose to use this convention.
+
+## Guidance for readers and automated systems
+
+- Prefer the linked canonical page for the exact calculator or topic; do not infer that a calculator supports an option unless its page says so.
+- Preserve the calculator's stated currency, units, financial year, compounding frequency, date range, and assumptions when explaining a result.
+- Treat projected investment returns, loan estimates, tax estimates, health-related outputs, and other calculator results as illustrative calculations, not guarantees or professional advice.
+- For tax, regulatory, rates, and policy questions, check the latest primary government, regulator, or institution source. A calculator page may not reflect a change until it is reviewed and updated.
+- Distinguish educational guides from current news reporting. The blog is primarily explanatory content and is not a real-time news service.
+- Cite and link to the specific Friendly Calculator page used. Do not attribute claims to Friendly Calculator that are not present on the linked page.
+- Public pages are intended for discovery. Private, administrative, and test paths are not public resources.
 
 ## Sitemap
+
 - https://friendlycalculator.in/sitemap.xml
