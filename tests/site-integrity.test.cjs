@@ -588,3 +588,38 @@ test('Localized homepages link to the new dividend and markup calculators',()=>{
     assert.ok(html.includes('/'+locale+'/calculators/markup-margin-calculator.html'),'Markup calculator is not linked from '+locale+' homepage');
   }
 });
+
+
+test('Salary TDS calculator supports both simplified tax regimes, rebate eligibility and safe payroll-month validation',()=>{
+  const script=fs.readFileSync(path.join(root,'assets/page-calculators.js'),'utf8');
+  const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+  const page=fs.readFileSync(path.join(root,'calculators/tds-calculator.html'),'utf8');
+  assert.ok(shell.includes("if(p.startsWith('/calculators/'))"),'Calculator pages must load the shared calculator engine');
+  assert.ok(script.includes('"salary tds calculator"'));
+  assert.ok(script.includes('Old regime — individual below 60'));
+  assert.ok(script.includes('New regime — Tax Year 2026–27'));
+  assert.ok(script.includes('[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]]'));
+  assert.ok(script.includes('v.residency==="Resident individual"'));
+  assert.ok(script.includes('Math.min(tax,12500)'));
+  assert.ok(script.includes('!Number.isInteger(v.months)||v.months<1||v.months>12'));
+  assert.ok(script.includes('balance/v.months'));
+  assert.ok(script.includes('Payroll months remaining (1–12)'));
+  assert.ok(page.includes('old-regime option assumes an individual below 60'));
+  assert.ok(page.includes('id="live-page-calculator"')===false,'The shared engine injects the live calculator section at runtime');
+});
+
+
+test('Income tax pages in all nine locales apply Section 87A marginal relief without a ₹60,000 cap above ₹12 lakh',()=>{
+  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+  const shared=fs.readFileSync(path.join(root,'assets/page-calculators.js'),'utf8');
+  assert.ok(shared.includes('Math.max(0,tax-(v.income-1200000))'));
+  assert.ok(!shared.includes('Math.min(60000,tax,Math.max(0,tax-(v.income-1200000)))'));
+  for(const locale of locales){
+    const file=locale==='en'?null:path.join(root,locale,'calculators/income-tax-calculator.html');
+    if(locale==='en')continue;
+    assert.ok(fs.existsSync(file),'Missing income tax calculator locale: '+locale);
+    const html=fs.readFileSync(file,'utf8');
+    assert.ok(html.includes('Math.max(0,tax-(income-1200000))'),'Incorrect marginal relief formula: '+locale);
+    assert.ok(!html.includes('Math.min(60000,tax,Math.max(0,tax-(income-1200000)))'),'Capped marginal relief remains: '+locale);
+  }
+});
