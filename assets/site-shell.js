@@ -430,6 +430,52 @@ function injectCalculatorApplicationSchema(){
 }
 injectCalculatorApplicationSchema();
 
+/* Add FAQPage JSON-LD only when matching questions and answers are visibly present. */
+function injectVisibleCalculatorFaqSchema(){
+  const pathname=window.location.pathname.toLowerCase();
+  if(!pathname.includes('/calculators/')||!pathname.endsWith('.html'))return;
+  const hasFaqSchema=[...document.querySelectorAll('script[type="application/ld+json"]')].some(node=>{
+    try{
+      const visit=value=>{
+        if(!value||typeof value!=='object')return false;
+        const types=Array.isArray(value['@type'])?value['@type']:[value['@type']];
+        if(types.includes('FAQPage'))return true;
+        return Object.values(value).some(child=>Array.isArray(child)?child.some(visit):visit(child));
+      };
+      return visit(JSON.parse(node.textContent||'null'));
+    }catch{return false;}
+  });
+  if(hasFaqSchema)return;
+  const roots=[...document.querySelectorAll('.faq,.faq-section,[data-faq],section[id*="faq" i]')];
+  if(!roots.length){
+    for(const heading of document.querySelectorAll('h2,h3')){
+      if(/frequently asked questions|\bfaqs\b/i.test(heading.textContent||'')){
+        const section=heading.closest('section')||heading.parentElement;
+        if(section)roots.push(section);
+      }
+    }
+  }
+  const mainEntity=[];
+  const seen=new Set();
+  roots.forEach(root=>root.querySelectorAll('details').forEach(detail=>{
+    const summary=detail.querySelector(':scope > summary')||detail.querySelector('summary');
+    const question=(summary?.textContent||'').replace(/\s+/g,' ').trim();
+    const answer=[...detail.children].filter(child=>child!==summary).map(child=>child.textContent||'').join(' ').replace(/\s+/g,' ').trim();
+    if(question&&answer&&question.length<=500&&answer.length<=5000&&!seen.has(question)){
+      seen.add(question);
+      mainEntity.push({'@type':'Question',name:question,acceptedAnswer:{'@type':'Answer',text:answer}});
+    }
+  }));
+  if(!mainEntity.length)return;
+  const script=document.createElement('script');
+  script.type='application/ld+json';
+  script.dataset.fcFaqSchema='true';
+  script.textContent=JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity});
+  document.head.appendChild(script);
+}
+injectVisibleCalculatorFaqSchema();
+
+
 // Load the local calculator assistant only when a visitor opens it.
 // This keeps its UI and search code off the initial page-load critical path.
 if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('script[data-fc-free-assistant]')&&!window.__fcFreeAssistantLoaded&&!location.pathname.startsWith('/avnish-ai/')&&!location.pathname.includes('/admin')){
