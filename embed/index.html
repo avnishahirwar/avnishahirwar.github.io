@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="index,follow,max-image-preview:large"><title>Embed a Free Calculator | Friendly Calculator</title>
+<meta name="robots" content="noindex,nofollow"><title>Embed a Free Calculator | Friendly Calculator</title>
 <meta name="description" content="Add a free Friendly Calculator to your blog or website with a responsive iframe embed code and attribution link.">
 <link rel="icon" href="/favicon-96.png" type="image/png"><link rel="stylesheet" href="/assets/site-shell.css"><link rel="canonical" href="https://friendlycalculator.in/embed/"><meta property="og:title" content="Embed a Free Calculator | Friendly Calculator"><meta property="og:description" content="Add a free Friendly Calculator to your blog or website with a responsive iframe embed code and attribution link."><meta property="og:type" content="website"><meta property="og:url" content="https://friendlycalculator.in/embed/">
 <style>
@@ -13,7 +13,7 @@ const params=new URLSearchParams(location.search);
 const src=params.get('src')||'';
 const allowed=new Set(['/calculators/loan-emi-calculator.html','/hi/calculators/home-loan-emi-calculator.html','/hi/calculators/sip-calculator.html','/hi/calculators/fd-calculator.html','/hi/calculators/income-tax-calculator.html','/calculators/sip-calculator.html','/calculators/fd-calculator.html','/calculators/income-tax-calculator.html']);
 const builder=document.getElementById('builder'),mount=document.getElementById('mount');
-const makeEmbedUrl=path=>location.origin+'/embed/?s'+'rc='+encodeURIComponent(path);
+const makeEmbedUrl=path=>{const url=new URL('/embed/',location.origin);url.searchParams.set('src',path);return url.toString();};
 const quote=String.fromCharCode(34);const codeFor=path=>'<iframe s'+'rc='+quote+makeEmbedUrl(path)+quote+' title='+quote+'Friendly Calculator'+quote+' loading='+quote+'lazy'+quote+' width='+quote+'100%'+quote+' height='+quote+'760'+quote+' style='+quote+'border:0;max-width:100%'+quote+' referrerpolicy='+quote+'strict-origin-when-cross-origin'+quote+'></iframe>';
 if(src){
   builder.remove();
