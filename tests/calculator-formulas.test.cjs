@@ -106,11 +106,23 @@ test('production formula functions return correct numeric results for every shar
     ['epf / pf calculator', { monthly: 1800, rate: 8.25, years: 20 }, [
       ['Estimated contributions', 432000], ['Illustrative accumulated value', 1093788.39], ['Illustrative interest', 661788.39]
     ]],
-    ['income tax calculator india', { income: 1200000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
-      ['Tax before rebate', 60000], ['Section 87A rebate (if eligible)', 60000], ['Estimated tax including cess', 0]
+    ['income tax calculator india', { grossSalary: 1275000, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 1200000], ['Tax before rebate', 60000], ['Section 87A rebate / marginal relief', 60000], ['Estimated tax including surcharge and cess', 0]
     ]],
-    ['income tax calculator india', { income: 1210000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
-      ['Tax before rebate', 61500], ['Section 87A rebate (if eligible)', 51500], ['Health & education cess (4%)', 400], ['Estimated tax including cess', 10400]
+    ['income tax calculator india', { grossSalary: 1285000, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 1210000], ['Tax before rebate', 61500], ['Section 87A rebate / marginal relief', 51500], ['Health and education cess (4%)', 400], ['Estimated tax including surcharge and cess', 10400]
+    ]],
+    ['income tax calculator india', { grossSalary: 560000, standardDeduction: 50000, age: 40, regime: 'Old regime — individual', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 510000], ['Tax before rebate', 14500], ['Estimated tax including surcharge and cess', 15080]
+    ]],
+    ['income tax calculator india', { grossSalary: 560000, standardDeduction: 50000, age: 65, regime: 'Old regime — individual', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 510000], ['Tax before rebate', 12000], ['Estimated tax including surcharge and cess', 12480]
+    ]],
+    ['income tax calculator india', { grossSalary: 560000, standardDeduction: 50000, age: 80, regime: 'Old regime — individual', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 510000], ['Tax before rebate', 20000], ['Estimated tax including surcharge and cess', 20800]
+    ]],
+    ['income tax calculator india', { grossSalary: 50750001, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
+      ['Estimated taxable salary income', 50000001], ['Surcharge rate', 10], ['Marginal relief on surcharge', 1079999], ['Estimated tax including surcharge and cess', 11232001.04]
     ]],
     ['salary tds calculator', { income: 900000, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual', paid: 0, months: 6 }, [
       ['Tax before rebate', 30000], ['Section 87A rebate (if eligible)', 30000], ['Indicative annual tax incl. cess', 0], ['Estimated balance', 0], ['Indicative monthly TDS', 0]
@@ -623,4 +635,25 @@ test('dedicated Seconds to Hours calculator converts long durations and validate
   dom.get('duration').value = '-1';
   dom.get('calculate').listeners.click();
   assert.match(dom.get('error').textContent, /valid number of seconds/i);
+});
+
+
+test('SIP page exposes end-of-month and beginning-of-month calculations with matching worked examples', () => {
+  const html = fs.readFileSync(new URL('../calculators/sip-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(html, /id="sip-tool"/);
+  assert.match(html, /href="#sip-tool">Calculate now<\/a>/);
+  assert.match(html, /id="sipTiming"/);
+  assert.match(html, /<option value="end" selected>End of each month<\/option>/);
+  assert.match(html, /<option value="beginning">Beginning of each month<\/option>/);
+  assert.match(html, /timing==='beginning'\?1\+i:1/);
+  assert.match(html, /\(1 \+ i\)<sup>n<\/sup>/);
+  assert.match(html, /₹4,60,077/);
+  assert.match(html, /₹4,64,678/);
+  assert.match(html, /og-friendly-calculator\.png/);
+  assert.doesNotMatch(html, /og-friendly-calculator\.svg/);
+  const p = 2000, i = 0.12 / 12, n = 120;
+  const endMonth = p * ((Math.pow(1 + i, n) - 1) / i);
+  const beginningMonth = endMonth * (1 + i);
+  closeTo(endMonth, 460077.3789, 0.01);
+  closeTo(beginningMonth, 464678.1527, 0.01);
 });
