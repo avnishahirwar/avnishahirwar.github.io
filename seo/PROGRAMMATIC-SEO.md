@@ -10,3 +10,6 @@ node --test tests/programmatic-seo.test.cjs
 ```
 
 Keep the cohort selective. Each page must provide a distinct worked example, explicit calculation assumptions, a canonical URL, and an internal link to the relevant interactive calculator. Add new clusters only after checking search intent and actual user value. Do not generate mass near-duplicate or university-specific pages without an authoritative conversion rule.
+
+
+Last implementation review: 13 November 2026. The guide generator also includes the shared site shell so generated pages receive the same navigation and footer.
