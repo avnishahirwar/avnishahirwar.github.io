@@ -49,7 +49,7 @@ test('KVP page uses India Post displayed maturity terms and does not accept an u
 
 test('Gratuity page explains standard formula, partial-year rule and general eligibility threshold', () => {
   const html = read('calculators/gratuity-calculator.html');
-  assert.match(html, /salary\*15\*count\/26/);
+  assert.match(html, /s\*15\*count\/26/);
   assert.match(html, /fraction>0\.5/);
   assert.match(html, /five-year continuous-service threshold/i);
   assert.match(html, /labour\.gov\.in/);
