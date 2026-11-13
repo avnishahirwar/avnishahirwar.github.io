@@ -45,7 +45,6 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
 const r='/calculator/';
-const links=[];
 // Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
 const preservedAdminDashboardLink=['Admin',r+'admin.html'];
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
