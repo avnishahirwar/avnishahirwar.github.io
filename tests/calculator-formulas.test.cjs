@@ -702,3 +702,14 @@ test('Privacy policy does not claim Google CMP is live before account-side publi
   assert.match(privacy, /message has not yet been published/);
   assert.match(privacy, /does not claim that a Google-certified CMP is already active/);
 });
+
+
+test('localized income-tax pages do not expose the retired simplified calculator', () => {
+  for (const locale of ['hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta']) {
+    const html = fs.readFileSync(new URL('../' + locale + '/calculators/income-tax-calculator.html', 'file://' + __filename), 'utf8');
+    assert.match(html, /id="localized-tax-review-note"/, locale + ' has a review notice');
+    assert.match(html, /calculators\/income-tax-calculator\.html/, locale + ' links to the reviewed English model');
+    assert.match(html, /aria-hidden="true"/, locale + ' hides the old calculator panels');
+    assert.doesNotMatch(html, /function run\(\)/, locale + ' no longer executes the retired simplified model');
+  }
+});
