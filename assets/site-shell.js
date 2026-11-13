@@ -260,4 +260,55 @@ if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel
   actions.append(copy);panel.append(heading,intro,actions);main.append(panel);
 }
 
+
+/* Add useful internal links and consistent structured data to calculator pages. */
+if(p.startsWith('/calculators/')&&main){
+  const slug=p.split('/').pop().replace(/\\.html$/,'');
+  const catalog={
+    'loan-emi-calculator':[['loan-prepayment-calculator','Loan Prepayment'],['car-loan-calculator','Car Loan EMI'],['home-loan-amortization-schedule-calculator','Home Loan Amortization'],['home-loan-eligibility-calculator','Home Loan Eligibility'],['mortgage-calculator','Mortgage Calculator']],
+    'gst-calculator':[['gst-input-tax-credit-calculator','GST Input Tax Credit'],['gst-interest-calculator','GST Interest'],['gst-late-fee-calculator','GST Late Fee'],['reverse-charge-gst-calculator','Reverse Charge GST'],['gst-on-rent-calculator','GST on Rent']],
+    'income-tax-calculator':[['salary-calculator','Salary Calculator'],['tds-calculator','TDS Calculator'],['hra-calculator','HRA Exemption'],['ctc-salary-calculator','CTC to In-Hand Salary'],['advance-tax-calculator','Advance Tax']],
+    'number-to-words-indian-format':[['basic-calculator','Basic Calculator'],['percentage-calculator','Percentage Calculator'],['roman-numeral-converter','Roman Numeral Converter'],['unit-converter','Unit Converter'],['currency-converter-calculator','Currency Converter']],
+    'land-unit-converter-calculator':[['bigha-to-sq-ft-calculator','Bigha to Sq Ft'],['stamp-duty-calculator','Stamp Duty'],['property-price-per-sq-ft-calculator','Property Price per Sq Ft'],['unit-converter','Unit Converter'],['concrete-calculator','Concrete']],
+    'gratuity-calculator':[['epf-pf-calculator','EPF / PF'],['eps-pension-calculator','EPS Pension'],['leave-encashment-calculator','Leave Encashment'],['salary-calculator','Salary Calculator'],['retirement-corpus-calculator','Retirement Corpus']],
+    'eps-pension-calculator':[['epf-pf-calculator','EPF / PF'],['gratuity-calculator','Gratuity'],['retirement-corpus-calculator','Retirement Corpus'],['nps-calculator','NPS'],['ppf-calculator','PPF']],
+    'ssy-calculator':[['ppf-calculator','PPF'],['kvp-calculator','KVP'],['nsc-calculator','NSC'],['fd-calculator','FD'],['rd-calculator','RD']],
+    'kvp-calculator':[['ssy-calculator','SSY'],['nsc-calculator','NSC'],['ppf-calculator','PPF'],['fd-calculator','FD'],['rd-calculator','RD']],
+    'steps-to-km-calculator':[['pace-calculator','Pace Calculator'],['mileage-calculator','Mileage Calculator'],['unit-converter','Unit Converter'],['fuel-cost-calculator','Fuel Cost'],['time-zone-converter','Time Zone Converter']],
+    'stamp-duty-calculator':[['bigha-to-sq-ft-calculator','Bigha to Sq Ft'],['land-unit-converter-calculator','Land Unit Converter'],['property-price-per-sq-ft-calculator','Property Price per Sq Ft'],['mortgage-calculator','Mortgage Calculator'],['home-loan-amortization-schedule-calculator','Home Loan Amortization']],
+    'bigha-to-sq-ft-calculator':[['land-unit-converter-calculator','Land Unit Converter'],['stamp-duty-calculator','Stamp Duty'],['property-price-per-sq-ft-calculator','Property Price per Sq Ft'],['unit-converter','Unit Converter'],['concrete-calculator','Concrete']]
+  };
+  let items=catalog[slug];
+  if(!items){
+    if(/loan|emi|mortgage/.test(slug))items=catalog['loan-emi-calculator'];
+    else if(/gst|tax|tds|salary|hra/.test(slug))items=catalog['income-tax-calculator'];
+    else if(/ssy|kvp|nsc|ppf|fd|rd|sip|eps|epf|gratuity|nps/.test(slug))items=catalog['ssy-calculator'];
+    else if(/land|bigha|property|stamp/.test(slug))items=catalog['land-unit-converter-calculator'];
+    else if(/steps|pace|mileage|distance|unit-converter/.test(slug))items=catalog['steps-to-km-calculator'];
+    else items=[['basic-calculator','Basic Calculator'],['percentage-calculator','Percentage Calculator'],['unit-converter','Unit Converter'],['date-difference-calculator','Date Difference'],['age-calculator','Age Calculator']];
+  }
+  const relatedSection=[...main.querySelectorAll('section')].find(section=>(section.querySelector('h2')?.textContent||'').toLowerCase().includes('related'));
+  const relatedCount=relatedSection?relatedSection.querySelectorAll('a[href^="/calculators/"]').length:0;
+  if(relatedCount<4&&!main.querySelector('.fc-related-calculators')){
+    const section=document.createElement('section');section.className='fc-related-calculators';section.style.cssText='margin:22px 0;padding:18px;background:#fff;border:1px solid #dfe5eb;border-radius:12px';
+    const heading=document.createElement('h2');heading.textContent='Related calculators';
+    const list=document.createElement('ul');list.style.cssText='display:flex;flex-wrap:wrap;gap:8px 22px;padding-left:20px';
+    items.forEach(([path,label])=>{if(path===slug)return;const li=document.createElement('li'),a=document.createElement('a');a.href='/calculators/'+path+'.html';a.textContent=label;li.append(a);list.append(li);});
+    section.append(heading,list);main.append(section);
+  }
+  const schemaScripts=[...document.querySelectorAll('script[type="application/ld+json"]')];
+  const schemaData=schemaScripts.map(script=>{try{return JSON.parse(script.textContent)}catch(_){return null}}).filter(Boolean);
+  const hasType=type=>schemaData.some(data=>{const t=data['@type'];return t===type||(Array.isArray(t)&&t.includes(type))});
+  const addSchema=data=>{const script=document.createElement('script');script.type='application/ld+json';script.textContent=JSON.stringify(data);document.head.append(script);};
+  const pageTitle=(document.querySelector('h1')?.textContent||document.title||'Calculator').trim();
+  if(!hasType('WebApplication')){
+    const category=/gst|tax|loan|emi|mortgage|sip|fd|rd|ppf|nps|eps|epf|ssy|kvp|gratuity|salary/.test(slug)?'FinanceApplication':'UtilitiesApplication';
+    addSchema({'@context':'https://schema.org','@type':'WebApplication','name':pageTitle,'url':location.origin+p,'applicationCategory':category,'operatingSystem':'Any','offers':{'@type':'Offer','price':'0','priceCurrency':'INR'}});
+  }
+  if(!hasType('BreadcrumbList'))addSchema({'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'Home','item':location.origin+'/'},{'@type':'ListItem','position':2,'name':'All Calculators','item':location.origin+'/calculator/site-directory.html'},{'@type':'ListItem','position':3,'name':pageTitle,'item':location.origin+p}]});
+  if(!hasType('FAQPage')){
+    const questions=[...main.querySelectorAll('details')].map(detail=>({name:(detail.querySelector('summary')?.textContent||'').trim(),text:(detail.querySelector('p')?.textContent||'').trim()})).filter(item=>item.name.length>8&&item.text.length>25);
+    if(questions.length>=2)addSchema({'@context':'https://schema.org','@type':'FAQPage','mainEntity':questions.map(item=>({'@type':'Question','name':item.name,'acceptedAnswer':{'@type':'Answer','text':item.text}}))});
+  }
+}
 })();
