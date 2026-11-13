@@ -312,4 +312,37 @@ if(calculatorPath.startsWith('/calculators/')&&main){
     if(questions.length>=2)addSchema({'@context':'https://schema.org','@type':'FAQPage','mainEntity':questions.map(item=>({'@type':'Question','name':item.name,'acceptedAnswer':{'@type':'Answer','text':item.text}}))});
   }
 }
+
+/* Calculator-specific related links and copy-ready, attributed embed snippet. */
+if(p.startsWith('/calculators/')&&main){
+  const slug=p.split('/').pop();
+  const groups=[
+    {test:/emi|loan|mortgage|amortization|prepayment|interest-rate|eligibility/i,items:[['Home Loan EMI Calculator','/calculators/home-loan-emi-calculator.html'],['Car Loan Calculator','/calculators/car-loan-calculator.html'],['Personal Loan Calculator','/calculators/personal-loan-calculator.html'],['Loan Prepayment Calculator','/calculators/loan-prepayment-calculator.html'],['Home Loan Amortization Schedule','/calculators/home-loan-amortization-schedule-calculator.html']]},
+    {test:/land|bigha|guntha|sq-ft|stamp-duty|property-price/i,items:[['Land Unit Converter','/calculators/land-unit-converter-calculator.html'],['Bigha to Sq Ft Calculator','/calculators/bigha-to-sq-ft-calculator.html'],['Stamp Duty Calculator','/calculators/stamp-duty-calculator.html'],['Property Price per Sq Ft','/calculators/property-price-per-sq-ft-calculator.html'],['Mortgage Calculator','/calculators/mortgage-calculator.html']]},
+    {test:/gratuity|eps|ssy|kvp|ppf|fd-|rd-|nsc|epf|salary|pension/i,items:[['Gratuity Calculator','/calculators/gratuity-calculator.html'],['EPS Pension Calculator','/calculators/eps-pension-calculator.html'],['SSY Maturity Calculator','/calculators/ssy-calculator.html'],['KVP Calculator','/calculators/kvp-calculator.html'],['PPF Calculator','/calculators/ppf-calculator.html']]},
+    {test:/steps-to-km|pace|mileage|walking|distance/i,items:[['Steps to Km Calculator','/calculators/steps-to-km-calculator.html'],['Pace Calculator','/calculators/pace-calculator.html'],['Mileage Calculator','/calculators/mileage-calculator.html'],['Unit Converter','/calculators/unit-converter.html'],['Fuel Cost Calculator','/calculators/fuel-cost-calculator.html']]},
+    {test:/number-to-words|roman-numeral|percentage|basic-calculator|unit-converter|currency-converter/i,items:[['Number to Words (Indian Format)','/calculators/number-to-words-indian-format.html'],['Percentage Calculator','/calculators/percentage-calculator.html'],['Basic Calculator','/calculators/basic-calculator.html'],['Roman Numeral Converter','/calculators/roman-numeral-converter.html'],['Unit Converter','/calculators/unit-converter.html']]}
+  ];
+  const match=groups.find(g=>g.test.test(slug));
+  if(match&&!document.querySelector('.fc-related-calculators')){
+    const section=document.createElement('section');section.className='fc-related-calculators';section.style.cssText='margin:24px 0;padding:18px;border:1px solid #dfe5eb;border-radius:12px;background:#fff';
+    const h=document.createElement('h2');h.textContent='Related calculators';
+    const list=document.createElement('ul');list.style.cssText='display:flex;flex-wrap:wrap;gap:8px 22px;padding-left:20px';
+    match.items.filter(([,href])=>href!==p).slice(0,5).forEach(([label,href])=>{const li=document.createElement('li'),a=document.createElement('a');a.href=href;a.textContent=label;li.append(a);list.append(li)});
+    section.append(h,list);main.append(section);
+  }
+  if(!document.querySelector('.fc-embed-panel')){
+    const url=location.origin+p,title=(document.querySelector('h1')?.textContent||'Friendly Calculator').trim();
+    const safeTitle=title.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    const html='<iframe src="'+url+'" title="'+safeTitle+'" loading="lazy" width="100%" height="620" style="border:0;border-radius:12px;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>\n<p>Calculator provided by <a href="'+url+'" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>.</p>';
+    const section=document.createElement('section');section.className='fc-embed-panel';section.style.cssText='margin:24px 0;padding:18px;border:1px solid #dfe5eb;border-radius:12px;background:#fff';
+    const h=document.createElement('h2');h.textContent='Embed this calculator';
+    const intro=document.createElement('p');intro.textContent='Copy this HTML into your website. The iframe and attribution link automatically point to this calculator on Friendly Calculator.';
+    const area=document.createElement('textarea');area.readOnly=true;area.rows=5;area.value=html;area.setAttribute('aria-label','Calculator embed HTML');area.style.cssText='width:100%;max-width:100%;padding:12px;border:1px solid #bdc8d2;border-radius:8px;font:13px/1.5 ui-monospace,monospace';
+    const button=document.createElement('button');button.type='button';button.textContent='Copy embed code';button.style.cssText='margin-top:10px;padding:10px 16px;border:0;border-radius:8px;background:#101c2c;color:#fff;font-weight:700;cursor:pointer';
+    button.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(html);button.textContent='Copied';}catch(_){area.focus();area.select();button.textContent='Select and copy';}});
+    section.append(h,intro,area,button);main.append(section);
+  }
+}
+
 })();
