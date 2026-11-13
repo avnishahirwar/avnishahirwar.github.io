@@ -143,6 +143,39 @@
         output.appendChild(chart);
       }
       if(key==="age calculator"&&numeric.length===0){const match=String(rows[0]&&rows[0][1]||"").match(/(\d+) years, (\d+) months, (\d+) days/);if(match){const chart=document.createElement("section");chart.className="fc-result-chart";const title=document.createElement("h3");title.textContent="Age breakdown";chart.appendChild(title);[["Years",match[1]],["Months",match[2]],["Days",match[3]]].forEach(([label,value])=>{const item=document.createElement("div");item.className="fc-chart-item";const top=document.createElement("div");top.className="fc-chart-label";const name=document.createElement("span"),amount=document.createElement("strong");name.textContent=label;amount.textContent=value;top.append(name,amount);item.appendChild(top);chart.appendChild(item)});output.appendChild(chart)}}
+      // Build a true month-by-month reducing-balance schedule for common EMI tools.
+      // This supplements the result summary table; it does not replace calculator output.
+      const amortizationKeys=new Set(["loan emi calculator"]);
+      if(amortizationKeys.has(lookupKey)&&["principal","rate","years"].every(id=>id in values)){
+        const months=Math.round(values.years*12),monthlyRate=values.rate/1200,principalAmount=values.principal;
+        if(months>0&&months<=600&&principalAmount>0){
+          const paymentRow=rows.find(row=>/monthly emi/i.test(row[0]));
+          const regularPayment=paymentRow&&typeof paymentRow[1]==="number"?paymentRow[1]:(monthlyRate===0?principalAmount/months:principalAmount*monthlyRate*Math.pow(1+monthlyRate,months)/(Math.pow(1+monthlyRate,months)-1));
+          let balance=principalAmount,totalInterest=0;
+          const schedule=document.createElement("section");schedule.className="fc-amortization";
+          schedule.style.cssText="margin-top:18px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px";
+          const heading=document.createElement("h3");heading.textContent="Monthly loan amortization schedule";schedule.appendChild(heading);
+          const intro=document.createElement("p");intro.textContent="Each row separates the monthly payment into principal and interest and shows the remaining loan balance. Assumes a constant rate and monthly payments.";schedule.appendChild(intro);
+          const scroller=document.createElement("div");scroller.style.cssText="overflow:auto;max-height:460px;border:1px solid #e1e7ed;border-radius:8px";
+          const scheduleTable=document.createElement("table");scheduleTable.className="fc-result-table";scheduleTable.style.cssText="width:100%;min-width:720px;border-collapse:collapse";
+          const scheduleHead=document.createElement("thead"),scheduleHeadRow=document.createElement("tr");
+          ["Payment","Opening balance","EMI","Principal","Interest","Closing balance"].forEach(label=>{const th=document.createElement("th");th.scope="col";th.textContent=label;th.style.cssText="position:sticky;top:0;background:#edf3f7;z-index:1;padding:9px;text-align:right";scheduleHeadRow.appendChild(th)});
+          scheduleHead.appendChild(scheduleHeadRow);scheduleTable.appendChild(scheduleHead);
+          const scheduleBody=document.createElement("tbody");
+          const money=value=>"₹"+value.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+          for(let month=1;month<=months;month++){
+            const opening=balance,interest=opening*monthlyRate,actualPayment=Math.min(regularPayment,opening+interest),principalPaid=Math.min(opening,Math.max(0,actualPayment-interest));
+            balance=Math.max(0,opening-principalPaid);if(month===months||balance<0.005)balance=0;
+            totalInterest+=interest;
+            const tr=document.createElement("tr");
+            [String(month),money(opening),money(actualPayment),money(principalPaid),money(interest),money(balance)].forEach((value,index)=>{const cell=document.createElement(index===0?"th":"td");if(index===0)cell.scope="row";cell.textContent=value;cell.style.cssText="padding:8px;border-bottom:1px solid #e7edf2;text-align:right;white-space:nowrap";tr.appendChild(cell)});
+            scheduleBody.appendChild(tr);
+          }
+          scheduleTable.appendChild(scheduleBody);scroller.appendChild(scheduleTable);schedule.appendChild(scroller);
+          const note=document.createElement("p");note.className="fc-muted";note.textContent="Illustrative schedule only. Lender fees, payment-date conventions, rate resets, prepayments and rounding policies may change the actual statement.";schedule.appendChild(note);
+          output.appendChild(schedule);
+        }
+      }
       const solution=document.createElement("section");solution.className="fc-calculation-solution";solution.style.cssText="margin-top:18px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px";
       const solutionTitle=document.createElement("h3");solutionTitle.textContent="How this result was calculated";solution.appendChild(solutionTitle);
       const explanations={
