@@ -112,7 +112,12 @@ configs['land-converter']={title:'Land Area Converter',fields:[
 {id:'bighaFactor',label:'Square feet per local Bigha (confirm your district value)',def:27225,min:1,max:1000000,step:1}],
 slider:{key:'area',min:0.1,max:1000,step:0.1,label:'Area to convert'},
 run:v=>{const factors={sqft:1,acre:43560,hectare:107639.104167,bigha:v.bighaFactor,guntha:1089,cent:435.6};const sqft=v.area*factors[v.unit];return {rows:[['Converted area in square feet',quantity(sqft)+' sq ft'],['Converted area in acres',quantity(sqft/43560)+' acres'],['Converted area in hectares',quantity(sqft/107639.104167)+' hectares'],['Converted area in local Bigha',quantity(sqft/v.bighaFactor)+' Bigha'],['Converted area in Guntha',quantity(sqft/1089)+' Guntha'],['Converted area in Cent',quantity(sqft/435.6)+' Cent']],chart:[]};}};
-const root=document.querySelector('[data-rural-tool]');if(!root)return;
+configs['land-converter']={title:'Land Area Converter',fields:[
+{id:'area',label:'Area to convert',def:1,min:0,max:100000000,step:0.01},
+{id:'unit',label:'Input unit',type:'select',def:'acre',options:[['sqft','Square feet'],['acre','Acre'],['hectare','Hectare'],['bigha','Local Bigha'],['guntha','Guntha'],['cent','Cent']]},
+{id:'bighaSqft',label:'Local Bigha size (square feet) — verify for your district',def:27225,min:1,max:10000000,step:1}],
+slider:{key:'area',min:0.1,max:100,step:0.1,label:'Input land area'},
+run:v=>{const factors={sqft:1,acre:43560,hectare:107639.104167,bigha:v.bighaSqft,guntha:1089,cent:435.6};const sqft=v.area*factors[v.unit];const rows=[['Square feet',quantity(sqft)+' sq ft'],['Acres',quantity(sqft/43560)+' acres'],['Hectares',quantity(sqft/107639.104167)+' ha'],['Local Bigha',quantity(sqft/v.bighaSqft)+' Bigha'],['Guntha',quantity(sqft/1089)+' Guntha'],['Cent',quantity(sqft/435.6)+' Cent']];return {rows,chart:[['Acres',sqft/43560],['Hectares',sqft/107639.104167],['Local Bigha',sqft/v.bighaSqft],['Guntha',sqft/1089],['Cent',sqft/435.6]]};}};\nconst root=document.querySelector('[data-rural-tool]');if(!root)return;
 const key=root.dataset.ruralTool,c=configs[key];if(!c)return;
 const form=document.getElementById('ruralForm'),out=document.getElementById('ruralResult'),chart=document.getElementById('ruralChart'),sliderHost=document.getElementById('scenarioHost');
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
