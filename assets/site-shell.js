@@ -321,7 +321,8 @@ if(embedMode){
   style.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode header,body.fc-embed-mode footer,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-related-calculators,body.fc-embed-mode .fc-skip-link{display:none!important}body.fc-embed-mode main,body.fc-embed-mode #fc-main-content{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}body.fc-embed-mode .hero{padding:12px 0!important}body.fc-embed-mode .wrap{width:100%!important;max-width:none!important}';
   document.head.append(style);
 }
-if(calculatorPath.startsWith('/calculators/')&&main&&!embedMode&&!document.querySelector('.fc-embed-panel')){
+const embedCalcPath=p.replace(/^\/(hi|es|fr|pt|ar|id|bn|ta)(?=\/calculators\/)/,'');
+if(embedCalcPath.startsWith('/calculators/')&&main&&!embedMode&&!document.querySelector('.fc-embed-panel')){
   const panel=document.createElement('section');panel.className='fc-embed-panel';
   panel.style.cssText='margin:22px 0;padding:18px;background:#fff;border:1px solid #dfe5eb;border-radius:12px';
   const heading=document.createElement('h2');heading.textContent='Embed this calculator';
