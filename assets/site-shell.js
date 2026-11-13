@@ -75,7 +75,7 @@ const embedMode=new URLSearchParams(location.search).get('embed')==='1';
 if(embedMode){
   document.body.classList.add('fc-embed-mode');
   const embedStyle=document.createElement('style');
-  embedStyle.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools{display:none!important}body.fc-embed-mode main{width:100%!important;max-width:none!important;margin:0!important;padding:12px!important}';
+  embedStyle.textContent='body.fc-embed-mode{margin:0!important;background:#fff!important}body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools,body.fc-embed-mode .fc-header,body.fc-embed-mode .fc-footer,body.fc-embed-mode header.top,body.fc-embed-mode footer{display:none!important}body.fc-embed-mode main{width:100%!important;max-width:none!important;margin:0!important;padding:8px!important}body.fc-embed-mode main>*:not(#live-page-calculator){display:none!important}body.fc-embed-mode main>#live-page-calculator{display:block!important;width:100%!important;margin:0!important;padding:16px!important;border:0!important;border-radius:0!important;box-shadow:none!important}body.fc-embed-mode main>#live-page-calculator h2{margin-top:0!important}';
   document.head.append(embedStyle);
 }
 
