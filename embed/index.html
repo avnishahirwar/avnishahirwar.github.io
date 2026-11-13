@@ -15,7 +15,7 @@
 (()=>{'use strict';
 const params=new URLSearchParams(location.search);
 const src=params.get('src')||'';
-const valid=/^\/(?:hi|es|fr|pt|ar|id|bn|ta\/)?calculators\/[a-z0-9-]+\.html$/.test(src);
+const valid=/^\/(?:(?:hi|es|fr|pt|ar|id|bn|ta)\/)?calculators\/[a-z0-9-]+\.html$/.test(src);
 const mount=document.getElementById('mount');
 if(!valid){const e=document.createElement('div');e.className='error';e.textContent='Invalid calculator embed URL. Please copy the embed code from a Friendly Calculator page.';mount.append(e);return;}
 const frame=document.createElement('iframe');frame.className='frame';frame.title='Friendly Calculator';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=src+(src.includes('?')?'&':'?')+'embed=1';mount.append(frame);
