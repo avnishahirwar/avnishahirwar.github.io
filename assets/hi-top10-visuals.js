@@ -57,10 +57,10 @@
       rows.push([month,opening,emi,interest,principal,closing]);balance=closing;
     }
     holder.replaceChildren();const table=document.createElement("table");table.className="tax-table";
-    const caption=document.createElement("caption");caption.textContent="अनुमानित भुगतान अनुसूची";table.append(caption);
+    const caption=document.createElement("caption");caption.textContent="अनुमानित भुगतान अनुसूची";table.style.cssText="width:100%;border-collapse:collapse";caption.style.cssText="font-weight:700;text-align:left;padding:8px";table.append(caption);
     const thead=document.createElement("thead"),hr=document.createElement("tr");
     ["महीना","शुरुआती बकाया","EMI","ब्याज","मूलधन","अंतिम बकाया"].forEach(x=>{const th=document.createElement("th");th.scope="col";th.textContent=x;hr.append(th);});thead.append(hr);table.append(thead);
-    const tbody=document.createElement("tbody");rows.forEach(row=>{const tr=document.createElement("tr");row.forEach((v,i)=>{const cell=document.createElement(i===0?"th":"td");if(i===0)cell.scope="row";cell.textContent=i===0?String(v):money(v);tr.append(cell);});tbody.append(tr);});table.append(tbody);holder.append(table);section.hidden=false;
+    const tbody=document.createElement("tbody");rows.forEach(row=>{const tr=document.createElement("tr");row.forEach((v,i)=>{const cell=document.createElement(i===0?"th":"td");if(i===0)cell.scope="row";cell.textContent=i===0?String(v):money(v);cell.style.cssText="padding:8px;border-bottom:1px solid #e0e5ea;text-align:left;white-space:nowrap";if(i===0)cell.style.background="#edf2f6";tr.append(cell);});tbody.append(tr);});table.append(tbody);holder.append(table);section.hidden=false;
   };
   render();
   const observer=new MutationObserver(render);cfg.watch.map(x=>document.querySelector(x)).filter(Boolean).forEach(x=>observer.observe(x,{subtree:true,childList:true,characterData:true}));
@@ -87,9 +87,9 @@
     for(let month=1;month<=years*12;month++){value=value*(1+i)+p;invested+=p;if(month%12===0){rows.push({year:month/12,invested,value,gain:value-invested});}}
     chart.replaceChildren();const max=Math.max(1,...rows.map(x=>x.value));
     rows.forEach(x=>{const row=document.createElement("div");row.className="hi-result-bar-row";const top=document.createElement("div");top.className="hi-result-bar-label";const label=document.createElement("span");label.textContent="वर्ष "+x.year;const val=document.createElement("strong");val.textContent=money(x.value);top.append(label,val);const track=document.createElement("div");track.className="hi-result-bar-track";const bar=document.createElement("span");bar.className="hi-result-bar-fill";bar.style.width=Math.max(1,x.value/max*100)+"%";track.append(bar);row.append(top,track);chart.append(row);});
-    holder.replaceChildren();const table=document.createElement("table");table.className="tax-table";const caption=document.createElement("caption");caption.textContent="SIP की वार्षिक प्रगति";table.append(caption);
+    holder.replaceChildren();const table=document.createElement("table");table.className="tax-table";const caption=document.createElement("caption");caption.textContent="SIP की वार्षिक प्रगति";table.style.cssText="width:100%;border-collapse:collapse";caption.style.cssText="font-weight:700;text-align:left;padding:8px";table.append(caption);
     const thead=document.createElement("thead"),trh=document.createElement("tr");["वर्ष","कुल निवेश","अनुमानित मूल्य","अनुमानित लाभ"].forEach(x=>{const th=document.createElement("th");th.scope="col";th.textContent=x;trh.append(th);});thead.append(trh);table.append(thead);
-    const tbody=document.createElement("tbody");rows.forEach(x=>{const tr=document.createElement("tr");[String(x.year),money(x.invested),money(x.value),money(x.gain)].forEach((v,i)=>{const td=document.createElement(i===0?"th":"td");if(i===0)td.scope="row";td.textContent=v;tr.append(td);});tbody.append(tr);});table.append(tbody);holder.append(table);section.hidden=false;
+    const tbody=document.createElement("tbody");rows.forEach(x=>{const tr=document.createElement("tr");[String(x.year),money(x.invested),money(x.value),money(x.gain)].forEach((v,i)=>{const td=document.createElement(i===0?"th":"td");if(i===0)td.scope="row";td.textContent=v;td.style.cssText="padding:8px;border-bottom:1px solid #e0e5ea;text-align:left;white-space:nowrap";if(i===0)td.style.background="#edf2f6";tr.append(td);});tbody.append(tr);});table.append(tbody);holder.append(table);section.hidden=false;
   };
   render();["#monthly","#rate","#years"].forEach(sel=>document.querySelector(sel)?.addEventListener("input",render));document.addEventListener("click",()=>setTimeout(render,0));
 })();
