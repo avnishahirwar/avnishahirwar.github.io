@@ -5,7 +5,7 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-const chrome = fs.readFileSync(path.join(root, 'assets/site-chrome.css'), 'utf8');
+const chrome = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = sitemap.split('<loc>').slice(1).map(part => part.split('</loc>')[0]);
 
@@ -29,7 +29,7 @@ test('calculator detail pages declare mobile viewport and shared shell assets', 
     const html = fs.readFileSync(file, 'utf8');
     if (!html.includes('name="viewport"') && !html.includes("name='viewport'")) failures.push(url + ' (viewport meta)');
     if (!html.includes('/assets/site-shell.js')) failures.push(url + ' (shared shell script)');
-    if (!html.includes('/assets/site-chrome.css')) failures.push(url + ' (shared mobile chrome styles)');
+    if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared responsive shell styles)');
   }
   assert.deepEqual(failures, [], failures.slice(0, 30).join('\\n'));
 });
