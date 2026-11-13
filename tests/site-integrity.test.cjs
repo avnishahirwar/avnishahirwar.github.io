@@ -576,3 +576,15 @@ test('Dividend yield and markup margin calculators are localized in all nine lan
     }
   }
 });
+
+
+test('Localized homepages link to the new dividend and markup calculators',()=>{
+  const locales=['hi','es','fr','pt','ar','id','bn','ta'];
+  for(const locale of locales){
+    const file=path.join(root,locale,'index.html');
+    assert.ok(fs.existsSync(file),'Missing localized homepage: '+locale);
+    const html=fs.readFileSync(file,'utf8');
+    assert.ok(html.includes('/'+locale+'/calculators/dividend-yield-calculator.html'),'Dividend calculator is not linked from '+locale+' homepage');
+    assert.ok(html.includes('/'+locale+'/calculators/markup-margin-calculator.html'),'Markup calculator is not linked from '+locale+' homepage');
+  }
+});
