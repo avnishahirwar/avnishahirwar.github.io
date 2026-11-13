@@ -3,6 +3,10 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+
+/embed/*
+  Content-Security-Policy: frame-ancestors *
 
 https://friendly-calculator.pages.dev/*
   X-Robots-Tag: noindex

@@ -51,13 +51,26 @@ main{padding:40px 0 60px}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;mar
 <div class="warning"><strong>Keep your API key secret.</strong> Call this API from your own trusted server. Do not place an API key in public browser JavaScript, a mobile application package, a public repository or a shared screenshot. The dashboard's Try API tool is intended for private testing while signed in.</div>
 <p><a class="btn" href="/calculator/dashboard.html">Open Customer API Dashboard</a></p>
 
+<h2>Embed a website calculator</h2>
+<div class="panel">
+<p>Use the dedicated responsive embed wrapper for a calculator page. Replace the calculator path with a supported English or localized calculator URL copied from its page. The embed wrapper displays a Friendly Calculator attribution link; keep that credit visible.</p>
+<pre><code>&lt;iframe
+  src="https://friendlycalculator.in/embed/?src=%2Fcalculators%2Femi-calculator.html"
+  title="Friendly Calculator EMI"
+  loading="lazy"
+  style="width:100%;min-height:620px;border:0;border-radius:12px"
+  referrerpolicy="strict-origin-when-cross-origin"&gt;
+&lt;/iframe&gt;</code></pre>
+<p>For a page-specific, copy-ready snippet, use the “Embed this calculator” panel on the calculator page. Do not remove the attribution. Embeds are intended for calculator pages only, not arbitrary pages.</p>
+</div>
+
 <h2>1. Base URL and authentication</h2>
 <div class="panel">
 <p><strong>POST</strong> <code>https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/calculator-api</code></p>
 <p>Required headers:</p>
 <pre><code>Content-Type: application/json
 x-api-key: avsk_live_YOUR_PRIVATE_KEY</code></pre>
-<p>All 20 API-enabled calculators listed below use this single endpoint. The full website directory contains 176 public calculator pages; API availability is a separate, smaller set. Select an API calculator with the JSON <code>calculator</code> property. The key must be active, have the <code>calculators:read</code> scope and have API access enabled with remaining quota.</p>
+<p>All 20 API-enabled calculators listed below use this single endpoint. The full website directory contains 193 public calculator pages; API availability is a separate, smaller set. Select an API calculator with the JSON <code>calculator</code> property. The key must be active, have the <code>calculators:read</code> scope and have API access enabled with remaining quota.</p>
 </div>
 
 <h2>2. Available calculators and inputs</h2>
@@ -171,7 +184,7 @@ print(response.json()["result"])</code></pre>
 <h2>5. Usage limits</h2>
 <div class="panel">
 <ul>
-<li>Every calculator request uses the same API key and is subject to its per-minute rate limit.</li>
+<li>Every calculator request uses the same API key. The Free plan is configured for up to 60 requests per minute per API key, in addition to the shared 50-request monthly account quota.</li>
 <li>Monthly quota and rate limits are enforced by the server, not by dashboard controls.</li>
 <li>Valid-key requests that reach calculation processing count toward monthly quota, including invalid-input responses.</li>
 <li>Requests rejected for invalid keys, disabled API access, exhausted quota or rate limits do not consume monthly quota.</li>
