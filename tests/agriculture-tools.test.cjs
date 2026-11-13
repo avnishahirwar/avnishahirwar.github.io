@@ -34,8 +34,29 @@ test('Homepage, directory, About catalogue and sitemap discover the crop calcula
   for (const file of ['index.html','calculator/site-directory.html','calculator/about.html','sitemap.xml']) {
     assert.match(read(file), /crop-cost-profit-calculator\.html/);
   }
-  assert.match(read('calculator/about.html'), /189 public calculators/);
-  assert.match(read('calculator/about.html'), /Available calculators \(189 tools\)/);
+  assert.match(read('calculator/about.html'), /192 public calculators/);
+  assert.match(read('calculator/about.html'), /Available calculators \\(192 tools\\)/);
   assert.match(read('calculator/site-directory.html'), /12 categories/);
-  assert.match(read('index.html'), /189 calculators across 12 categories/);
+  assert.match(read('index.html'), /192 calculators across 12 categories/);
+});
+
+test('KCC, crop yield and dairy calculators use explicit user-entered local assumptions', () => {
+  const kcc = read('calculators/kcc-interest-calculator.html');
+  assert.match(kcc, /Average outstanding balance/);
+  assert.match(kcc, /effective concession rate/i);
+  assert.match(kcc, /bank confirms applies/i);
+  assert.match(kcc, /p\*\(r-b\)\/100\*m\/12/);
+  const crop = read('calculators/crop-yield-revenue-calculator.html');
+  assert.match(crop, /Expected yield per acre/);
+  assert.match(crop, /Expected sale price per quintal/);
+  assert.match(crop, /const revenue=netQty\*p/);
+  const dairy = read('calculators/dairy-livestock-profit-calculator.html');
+  assert.match(dairy, /Average milk per animal per day/);
+  assert.match(dairy, /Feed cost per day/);
+  assert.match(dairy, /const net=revenue-cost/);
+  for (const file of ['calculator/agriculture-calculators.html','calculator/site-directory.html','sitemap.xml']) {
+    assert.match(read(file), /kcc-interest-calculator\.html/);
+    assert.match(read(file), /crop-yield-revenue-calculator\.html/);
+    assert.match(read(file), /dairy-livestock-profit-calculator\.html/);
+  }
 });
