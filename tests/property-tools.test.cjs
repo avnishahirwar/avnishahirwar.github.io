@@ -9,7 +9,7 @@ test('Stamp Duty Calculator uses visitor-verified state rates instead of a natio
   const html = read('calculators/stamp-duty-calculator.html');
   assert.match(html, /id="stampRate" type="number"[^>]*placeholder="Enter verified rate"/);
   assert.match(html, /id="registrationRate" type="number"[^>]*placeholder="Enter verified rate"/);
-  assert.match(html, /stamp duty rate varies by state/i);
+  assert.match(html, /Stamp duty and registration rules vary by state/i);
   assert.match(html, /"@type":"FAQPage"/);
   assert.match(html, /"@type":"BreadcrumbList"/);
   assert.match(html, /"@type":"WebApplication"/);
