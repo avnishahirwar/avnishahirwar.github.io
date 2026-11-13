@@ -32,6 +32,7 @@ body{margin:0;background:#f5f6f8;color:#172638;font:16px/1.7 system-ui,-apple-sy
 <div><span>Total interest</span><strong id="amort-interest">—</strong></div>
 <div><span>Total repayment</span><strong id="amort-total">—</strong></div>
 </div>
+<div class="amortization-chart-panel"><h3>Principal versus interest</h3><div id="amortization-chart" role="img" aria-label="Principal and interest comparison chart"></div></div>
 <div class="amortization-table-wrap"><table class="amortization-table"><caption>Monthly home loan amortization schedule</caption><thead><tr><th scope="col">Month</th><th scope="col">Opening balance</th><th scope="col">EMI</th><th scope="col">Principal</th><th scope="col">Interest</th><th scope="col">Closing balance</th></tr></thead><tbody id="amortization-table-body"></tbody></table></div>
 </div>
 <p class="fc-muted">This estimate assumes a fixed annual rate, monthly reducing-balance interest and equal monthly instalments. It excludes fees, insurance, taxes, rate resets, prepayments and lender-specific rounding.</p></section>
@@ -91,6 +92,19 @@ form.addEventListener('submit',event=>{
  }
  body.replaceChildren(rows);
  show('amort-emi',emi);show('amort-interest',totalInterest);show('amort-total',totalPaid);
+ const chart=document.getElementById('amortization-chart');
+ if(chart){
+  chart.replaceChildren();
+  const svgNS='http://www.w3.org/2000/svg',svg=document.createElementNS(svgNS,'svg');
+  svg.setAttribute('viewBox','0 0 640 156');svg.setAttribute('width','100%');svg.setAttribute('role','img');svg.setAttribute('aria-label','Total principal and total interest comparison');
+  const max=Math.max(principal,totalInterest,1);
+  [['Principal',principal,22],['Interest',totalInterest,86]].forEach(([label,value,y])=>{
+   const t=document.createElementNS(svgNS,'text');t.setAttribute('x','8');t.setAttribute('y',String(y+18));t.setAttribute('font-size','14');t.textContent=label;svg.appendChild(t);
+   const r=document.createElementNS(svgNS,'rect');r.setAttribute('x','112');r.setAttribute('y',String(y));r.setAttribute('height','28');r.setAttribute('width',String(430*value/max));r.setAttribute('rx','5');r.setAttribute('fill',label==='Principal'?'#285f8f':'#c49a55');svg.appendChild(r);
+   const v=document.createElementNS(svgNS,'text');v.setAttribute('x',String(Math.min(550,120+430*value/max)));v.setAttribute('y',String(y+19));v.setAttribute('font-size','13');v.textContent=money.format(value);svg.appendChild(v);
+  });
+  chart.appendChild(svg);
+ }
  results.hidden=false;
  status.textContent='Schedule calculated for '+months+' monthly instalments. Values are estimates based on the assumptions entered.';
  if(typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
