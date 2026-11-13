@@ -384,6 +384,52 @@ if(p.startsWith('/calculators/')&&main){
   }
 }
 
+// Add a truthful WebApplication entity to calculator pages that do not already define one.
+// WebApplication is a schema.org subtype of SoftwareApplication. Do not invent ratings or reviews.
+function injectCalculatorApplicationSchema(){
+  const pathname=window.location.pathname;
+  if(!/\\/calculators\\/[^/]+\\.html$/i.test(pathname))return;
+  const hasApplicationSchema=[...document.querySelectorAll('script[type="application/ld+json"]')].some(node=>{
+    try{
+      const visit=value=>{
+        if(!value||typeof value!=='object')return false;
+        const types=Array.isArray(value['@type'])?value['@type']:[value['@type']];
+        if(types.some(type=>type==='WebApplication'||type==='SoftwareApplication'))return true;
+        return Object.values(value).some(child=>Array.isArray(child)?child.some(visit):visit(child));
+      };
+      return visit(JSON.parse(node.textContent||'null'));
+    }catch{return false;}
+  });
+  if(hasApplicationSchema)return;
+  const canonical=document.querySelector('link[rel="canonical"]')?.href||window.location.href.split('#')[0];
+  const heading=document.querySelector('main h1,h1')?.textContent?.trim()||document.title.replace(/\\s*[|–-]\\s*Friendly Calculator.*$/,'').trim();
+  const description=document.querySelector('meta[name="description"]')?.content?.trim();
+  const key=pathname.toLowerCase();
+  let applicationCategory='UtilitiesApplication';
+  if(/loan|emi|mortgage|gst|tax|salary|\\bfd\\b|\\brd\\b|\\bsip\\b|ppf|nps|interest|investment|gratuity|tds|hra|finance|credit|savings/.test(key))applicationCategory='FinanceApplication';
+  else if(/gpa|cgpa|grade|education|math|algebra|fraction|percentage/.test(key))applicationCategory='EducationalApplication';
+  else if(/bmi|health|calorie|heart-rate|water-intake|pregnancy/.test(key))applicationCategory='HealthApplication';
+  const application={
+    '@context':'https://schema.org',
+    '@type':'WebApplication',
+    name:heading,
+    url:canonical,
+    applicationCategory,
+    operatingSystem:'Any',
+    isAccessibleForFree:true,
+    offers:{'@type':'Offer',price:'0',priceCurrency:'INR'},
+    inLanguage:document.documentElement.lang||'en',
+    ...(description?{description}:{}),
+    provider:{'@type':'Organization',name:'Friendly Calculator',url:'https://friendlycalculator.in/'}
+  };
+  const script=document.createElement('script');
+  script.type='application/ld+json';
+  script.dataset.fcCalculatorSchema='true';
+  script.textContent=JSON.stringify(application);
+  document.head.appendChild(script);
+}
+injectCalculatorApplicationSchema();
+
 // Free local calculator finder. No external AI API or visitor prompt storage.
 if(!document.querySelector('script[data-fc-free-assistant]')){
   const assistantScript=document.createElement('script');
