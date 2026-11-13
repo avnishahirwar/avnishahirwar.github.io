@@ -34,10 +34,10 @@ test('Homepage, directory, About catalogue and sitemap discover the crop calcula
   for (const file of ['index.html','calculator/site-directory.html','calculator/about.html','sitemap.xml']) {
     assert.match(read(file), /crop-cost-profit-calculator\.html/);
   }
-  assert.match(read('calculator/about.html'), /192 public calculators/);
+  assert.match(read('calculator/about.html'), /193 public calculators/);
   assert.match(read('calculator/about.html'), /Available calculators \\(192 tools\\)/);
   assert.match(read('calculator/site-directory.html'), /12 categories/);
-  assert.match(read('index.html'), /192 calculators across 12 categories/);
+  assert.match(read('index.html'), /193 calculators across 12 categories/);
 });
 
 test('KCC, crop yield and dairy calculators use explicit user-entered local assumptions', () => {
