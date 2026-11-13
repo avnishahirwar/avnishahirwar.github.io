@@ -106,6 +106,12 @@ configs['fd-rd-sip']={title:'FD vs RD vs SIP Comparison Calculator',fields:[
 {id:'years',label:'Common comparison period (years)',def:5,min:1,max:50,step:1}],
 slider:{key:'sipMonthly',min:500,max:100000,step:500,label:'Monthly contribution'},
 run:v=>{const n=Math.round(v.years*12),fd=v.fdPrincipal*Math.pow(1+v.fdRate/400,4*v.years),rdRate=v.rdRate/1200,sipRate=v.sipRate/1200,rd=rdRate===0?v.rdMonthly*n:v.rdMonthly*(Math.pow(1+rdRate,n)-1)/rdRate,sip=sipRate===0?v.sipMonthly*n:v.sipMonthly*(Math.pow(1+sipRate,n)-1)/sipRate;return {rows:[['Estimated FD maturity (quarterly compounding)',money(fd)],['Estimated RD maturity (monthly deposits)',money(rd)],['Illustrative SIP future value',money(sip)],['Total RD contributions',money(v.rdMonthly*n)],['Total SIP contributions',money(v.sipMonthly*n)]],chart:[['FD maturity',fd],['RD maturity',rd],['SIP illustration',sip]]};}};
+configs['land-converter']={title:'Land Area Converter',fields:[
+{id:'area',label:'Area to convert',def:1,min:0,max:10000000,step:0.01},
+{id:'unit',label:'Input unit',type:'select',def:'acre',options:[['sqft','Square feet'],['acre','Acre'],['hectare','Hectare'],['bigha','Local Bigha'],['guntha','Guntha'],['cent','Cent']]},
+{id:'bighaFactor',label:'Square feet per local Bigha (confirm your district value)',def:27225,min:1,max:1000000,step:1}],
+slider:{key:'area',min:0.1,max:1000,step:0.1,label:'Area to convert'},
+run:v=>{const factors={sqft:1,acre:43560,hectare:107639.104167,bigha:v.bighaFactor,guntha:1089,cent:435.6};const sqft=v.area*factors[v.unit];return {rows:[['Converted area in square feet',quantity(sqft)+' sq ft'],['Converted area in acres',quantity(sqft/43560)+' acres'],['Converted area in hectares',quantity(sqft/107639.104167)+' hectares'],['Converted area in local Bigha',quantity(sqft/v.bighaFactor)+' Bigha'],['Converted area in Guntha',quantity(sqft/1089)+' Guntha'],['Converted area in Cent',quantity(sqft/435.6)+' Cent']],chart:[]};}};
 const root=document.querySelector('[data-rural-tool]');if(!root)return;
 const key=root.dataset.ruralTool,c=configs[key];if(!c)return;
 const form=document.getElementById('ruralForm'),out=document.getElementById('ruralResult'),chart=document.getElementById('ruralChart'),sliderHost=document.getElementById('scenarioHost');
