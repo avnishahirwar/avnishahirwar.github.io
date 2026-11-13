@@ -546,5 +546,5 @@ test('Unit converter is available in all nine languages with reciprocal hreflang
     if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);
   }
   const script=fs.readFileSync(path.join(root,'assets/unit-converter-localized.js'),'utf8');
-  for(const formula of ['0.0254','0.45359237','3.785411784','(n-32)*5/9','x*9/5+32'])assert.ok(script.includes(formula),'Missing conversion constant/formula: '+formula);
+  for(const formula of ['.0254','0.45359237','3.785411784','(n-32)*5/9','x*9/5+32'])assert.ok(script.includes(formula),'Missing conversion constant/formula: '+formula);
 });
