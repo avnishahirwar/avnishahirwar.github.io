@@ -49,7 +49,7 @@ test('KVP page uses India Post displayed maturity terms and does not accept an u
 
 test('Gratuity page explains standard formula, partial-year rule and general eligibility threshold', () => {
   const html = read('calculators/gratuity-calculator.html');
-  assert.match(html, /s\*15\*count\/26/);
+  assert.match(html, /s\*15\*yearsUsed\/26/);
   assert.match(html, /fraction>0\.5/);
   assert.match(html, /five-year continuous-service threshold/i);
   assert.match(html, /fixed-term pro-rata/i);
@@ -59,15 +59,15 @@ test('Gratuity page explains standard formula, partial-year rule and general eli
 
 test('EPS pension estimate requires the general 10-year eligible-service threshold', () => {
   const js = read('assets/extra-calculators.js');
-  assert.match(js, /case'eps':\\{if\\(v\\.service<10\\)/);
+  assert.match(js, /case'eps':\{if\(v\.service<10\)/);
 });
 
 test('SIP FAQ explains current equity-fund capital-gains treatment and instalment holding periods', () => {
   const html = read('calculators/sip-calculator.html');
   assert.match(html, /How is a SIP taxed in India/);
-  assert.match(html, /12\\.5%/);
+  assert.match(html, /12\.5%/);
   assert.match(html, /FIFO/);
-  assert.match(html, /incometaxindia\\.gov\\.in/);
+  assert.match(html, /incometaxindia\.gov\.in/);
 });
 
 test('Home-loan amortization page renders a principal-versus-interest chart', () => {
