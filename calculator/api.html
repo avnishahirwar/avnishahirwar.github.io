@@ -57,16 +57,16 @@ main{padding:40px 0 60px}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;mar
 <p>Required headers:</p>
 <pre><code>Content-Type: application/json
 x-api-key: avsk_live_YOUR_PRIVATE_KEY</code></pre>
-<p>All 20 API-enabled calculators listed below use this single endpoint. The full website directory contains 198 public calculator pages; API availability is a separate, smaller set. Select an API calculator with the JSON <code>calculator</code> property. The key must be active, have the <code>calculators:read</code> scope and have API access enabled with remaining quota.</p>
+<p>All 20 API-enabled calculators listed below use this single endpoint. The full website directory contains 200 public calculator pages; API availability is a separate, smaller set. Select an API calculator with the JSON <code>calculator</code> property. The key must be active, have the <code>calculators:read</code> scope and have API access enabled with remaining quota.</p>
 </div>
 
 
 <h2>Calculator embeds</h2>
 <div class="panel">
 <p>To embed a public calculator without an API key, use an iframe and keep the Friendly Calculator attribution link visible. The embedded page calculates in the visitor's browser.</p>
-<pre><code>&lt;iframe src="https://friendlycalculator.in/calculators/crop-cost-profit-calculator.html?embed=1"
+<pre><code>&lt;iframe src="https://friendlycalculator.in/embed/?src=%2Fcalculators%2Fcrop-cost-profit-calculator.html"
   title="Crop Cost &amp; Profit Calculator — Friendly Calculator"
-  loading="lazy" width="100%" height="760" style="border:0"&gt;&lt;/iframe&gt;
+  loading="lazy" width="100%" height="760" style="border:0" referrerpolicy="strict-origin-when-cross-origin"&gt;&lt;/iframe&gt;
 &lt;p&gt;Powered by &lt;a href="https://friendlycalculator.in/" rel="noopener"&gt;Friendly Calculator&lt;/a&gt;&lt;/p&gt;</code></pre>
 <p>For server-to-server API calls, keep the private API key on your own server. Never put API keys in public browser JavaScript or iframe markup. The API Free plan quota and per-minute rate limits remain separate from public iframe embeds.</p>
 </div>
