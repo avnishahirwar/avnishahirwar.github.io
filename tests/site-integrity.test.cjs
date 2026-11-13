@@ -548,3 +548,31 @@ test('Unit converter is available in all nine languages with reciprocal hreflang
   const script=fs.readFileSync(path.join(root,'assets/unit-converter-localized.js'),'utf8');
   for(const formula of ['.0254','.45359237','3.785411784','(n-32)*5/9','x*9/5+32'])assert.ok(script.includes(formula),'Missing conversion constant/formula: '+formula);
 });
+
+
+test('Dividend yield and markup margin calculators are localized in all nine languages',()=>{
+  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+  for(const slug of ['dividend-yield-calculator','markup-margin-calculator']){
+    for(const locale of locales){
+      const url=locale==='en'?'https://friendlycalculator.in/calculators/'+slug+'.html':'https://friendlycalculator.in/'+locale+'/calculators/'+slug+'.html';
+      const file=localFile(url);
+      assert.ok(file&&fs.existsSync(file),'Missing localized calculator: '+url);
+      const html=fs.readFileSync(file,'utf8');
+      assert.match(html,new RegExp('<html lang="'+locale+'"'));
+      assert.ok(html.includes('hreflang="x-default"'));
+      for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing hreflang '+alt+': '+url);
+      assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);
+      assert.ok(html.includes('application/ld+json'),'Missing structured data: '+url);
+      if(locale==='en')assert.ok(html.includes('id="form"'),'Missing English form: '+url);
+      else assert.ok(html.includes('id="calcForm"'),'Missing localized form: '+url);
+      if(slug==='dividend-yield-calculator'){
+        for(const id of ['price','dividend','shares','result'])assert.ok(html.includes('id="'+id+'"'),'Missing input '+id+': '+url);
+        if(locale!=='en')assert.ok(html.includes('d/p*100')&&html.includes('d*q'),'Dividend formula changed: '+url);
+      }else{
+        for(const id of ['cost','sell','result'])assert.ok(html.includes('id="'+id+'"'),'Missing input '+id+': '+url);
+        if(locale!=='en')assert.ok(html.includes('p/c*100')&&html.includes('p/s*100'),'Markup/margin formulas changed: '+url);
+      }
+      if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);
+    }
+  }
+});
