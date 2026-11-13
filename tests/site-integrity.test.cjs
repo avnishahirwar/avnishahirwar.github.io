@@ -708,6 +708,8 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.match(directory, /Search 200 calculators by name or topic/);
   assert.match(directory, /Showing all 200 calculators in 14 categories/);
   assert.equal(categoryCount, 14, 'Directory must show all 14 calculator categories');
+  assert.equal(navCategoryCount, 14, 'Homepage shortcuts must expose all 14 categories');
+  assert.equal(navCalculatorTotal, 200, 'Homepage category shortcuts must account for every calculator');
   assert.ok(homepage.includes('/calculators/stamp-duty-calculator.html'));
   assert.ok(homepage.includes('/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
