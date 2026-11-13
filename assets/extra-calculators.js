@@ -88,7 +88,7 @@ function appendResultBreakdownChart(kind,result){
   });
   out.appendChild(section);
 }
-appendResultBreakdownChart(spec.kind,r);
+appendResultBreakdownChart(c.kind,r);
 
 form.addEventListener('submit',e=>{e.preventDefault();run();});run();
 })();
