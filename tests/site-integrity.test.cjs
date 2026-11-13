@@ -682,5 +682,5 @@ test('land area converter supports requested units and discloses local Bigha var
   assert.ok(html.includes('/assets/rural-tools.js'));
   assert.ok(engine.includes("configs['land-converter']"));
   assert.ok(engine.includes('107639.104167'));
-  assert.doesNotMatch(html, /assets\\/extra-calculators\\.js/);
+  assert.ok(!html.includes('/assets/extra-calculators.js'));
 });
