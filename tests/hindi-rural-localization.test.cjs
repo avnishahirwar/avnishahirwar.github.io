@@ -15,17 +15,17 @@ test('all 12 new Hindi rural, scheme and career calculator pages exist and are l
     const file = path.join(root, 'hi', 'calculators', slug + '.html');
     assert.ok(fs.existsSync(file), 'missing Hindi page: ' + slug);
     const html = fs.readFileSync(file, 'utf8');
-    assert.match(html, /<html lang="hi">/);
-    assert.match(html, new RegExp('https://friendlycalculator\\.in/hi/calculators/' + slug + '\\.html'));
-    const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || '';
-    assert.ok(/[\\u0900-\\u097f]/.test(title), 'title is not Hindi: ' + slug);
-    assert.match(html, /assets\\/rural-tools\\.js/);
+    assert.ok(html.includes('<html lang="hi">'));
+    assert.ok(html.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const title = html.split('<title>')[1]?.split('</title>')[0] || '';
+    assert.ok(/[ऀ-ॿ]/.test(title), 'title is not Hindi: ' + slug);
+    assert.ok(html.includes('/assets/rural-tools.js'));
   }
 });
 
 test('shared rural calculator runtime translates field and result labels for Hindi pages', () => {
   const runtime = fs.readFileSync(path.join(root, 'assets', 'rural-tools.js'), 'utf8');
-  assert.match(runtime, /document\\.documentElement\\.lang==='hi'/);
+  assert.ok(runtime.includes("document.documentElement.lang==='hi'"));
   for (const label of ['खेती का क्षेत्रफल (एकड़)', 'बकाया KCC राशि (₹)', 'अनुमानित मासिक EMI', 'अनुमानित मासिक इन-हैंड वेतन']) {
     assert.ok(runtime.includes(label), 'missing Hindi runtime label: ' + label);
   }
