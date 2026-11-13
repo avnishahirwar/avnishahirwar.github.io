@@ -129,6 +129,7 @@ const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.r
 const footerLinks=[
   ['About',currentLocale==='hi'?'/hi/about.html':r+'about.html'],
   ['Methodology',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html'],
+  ['Editorial Policy',r+'editorial-policy.html'],
   ['Privacy',r+'privacy.html'],
   ['Terms',r+'terms.html'],
   ['Disclaimer',r+'disclaimer.html'],
@@ -138,6 +139,51 @@ const footerLinks=[
 const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>'
 const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length)fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());else document.body.append(f);
+else document.body.append(f);
+
+// Financial/YMYL transparency: make authorship, update date, limitations and primary sources visible.
+// Do not imply independent professional review or regulated credentials that have not been verified.
+(function addFinancialEditorialDisclosure(){
+  if(!main||!p.includes('/calculators/')||!p.endsWith('.html'))return;
+  const slug=p.split('/').pop().replace(/\.html$/,'').toLowerCase();
+  const financial=/(tax|gst|salary|loan|emi|sip|fd-|rd-|ppf|nps|epf|pf-|hra|gratuity|interest|investment|saving|pension|scheme|kisan|pmay|mudra|credit|mortgage|capital-gain|dividend|cagr|roi|inflation|portfolio|fire|annuity|scss|nsc|kvp|ssy|apy|insurance|budget|debt|cash-flow|profit|invoice|business|crop-cost|livestock-cost|sales-tax|reverse-charge)/i.test(slug);
+  if(!financial||main.querySelector('.fc-financial-editorial'))return;
+  const official=[
+    ['Income Tax Department','https://www.incometax.gov.in/'],
+    ['GST Portal','https://www.gst.gov.in/'],
+    ['RBI','https://www.rbi.org.in/'],
+    ['SEBI Investor','https://investor.sebi.gov.in/'],
+    ['AMFI','https://www.amfiindia.com/'],
+    ['PFRDA','https://www.pfrda.org.in/'],
+    ['EPFO','https://www.epfindia.gov.in/'],
+    ['Department of Economic Affairs — Small Savings','https://dea.gov.in/'],
+    ['National Portal of India — Government Schemes','https://www.myscheme.gov.in/'],
+    ['Ministry of Labour & Employment','https://labour.gov.in/'],
+    ['NABARD','https://www.nabard.org/'],
+    ['CBIC','https://www.cbic.gov.in/']
+  ];
+  let relevant=official.filter(([name])=>{
+    if(/gst|invoice|reverse-charge|sales-tax/.test(slug))return ['GST Portal','CBIC'].includes(name);
+    if(/income-tax|advance-tax|tds|hra|capital-gain|freelancer-tax|professional-tax/.test(slug))return ['Income Tax Department'].includes(name);
+    if(/salary|ctc|gratuity|epf|pf-|pension|first-job|job-change/.test(slug))return ['Income Tax Department','EPFO','Ministry of Labour & Employment'].includes(name);
+    if(/loan|emi|mortgage|credit|interest-rate|balance-transfer|mudra|kcc/.test(slug))return ['RBI','NABARD','National Portal of India — Government Schemes'].includes(name);
+    if(/ppf|fd-|rd-|nps|sip|investment|mutual-fund|portfolio|dividend|cagr|return|scss|nsc|kvp|ssy|apy|savings|inflation|fire|annuity/.test(slug))return ['SEBI Investor','AMFI','PFRDA','Department of Economic Affairs — Small Savings','RBI'].includes(name);
+    if(/kisan|pmay|scheme/.test(slug))return ['National Portal of India — Government Schemes','NABARD'].includes(name);
+    return ['RBI','Income Tax Department','SEBI Investor'].includes(name);
+  });
+  const box=document.createElement('section');box.className='fc-financial-editorial';
+  box.setAttribute('aria-label','Financial calculator editorial and source information');
+  box.innerHTML='<h2>Editorial, calculation and source information</h2><p><strong>Author and publisher:</strong> Avnish Ahirwar — Founder and Editor, Friendly Calculator. The byline identifies editorial responsibility; it does not represent a chartered accountant, tax practitioner, lawyer, lender, or SEBI-registered investment adviser qualification. No independent professional review is claimed unless a page explicitly names a verified reviewer.</p><p><strong>Editorial disclosure updated:</strong> 14 November 2026. This is the date of this shared transparency notice, not a claim that every calculator’s formula, rate or rule was individually revalidated on this date. Check any page-specific review date and its linked primary source.</p><p><strong>Formula and assumptions:</strong> Review the page-specific “Formula”, “How this calculator works”, “Assumptions” and “Worked example” sections before using a result. Inputs, timing, rounding and exclusions differ by calculator. If the page does not state a material assumption or reproducible example, treat the result as incomplete and verify with the official provider.</p><p><strong>Important:</strong> Results are estimates for general education only. This is not financial, investment, tax, legal, accounting or lending advice, and it is not an offer, eligibility decision or guarantee. Confirm current rules, rates and terms for your circumstances with official sources and, where appropriate, a qualified professional.</p>';
+  const sourceTitle=document.createElement('p');sourceTitle.innerHTML='<strong>Official references (check the source relevant to this calculator):</strong> ';
+  relevant.forEach(([label,url],index)=>{if(index)sourceTitle.append(' · ');const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;sourceTitle.append(a);});
+  box.append(sourceTitle);
+  const policy=document.createElement('p');policy.innerHTML='<a href="/calculator/editorial-policy.html">Editorial Policy, Sources and Corrections</a> · <a href="/calculator/methodology.html">Calculation Methodology</a> · <a href="/calculator/about.html">Author information</a>';
+  box.append(policy);
+  const style=document.createElement('style');style.dataset.fcFinancialEditorial='true';style.textContent='.fc-financial-editorial{background:#fff;border:1px solid #dfe5eb;border-left:4px solid #d8bd82;border-radius:12px;padding:18px;margin:20px 0;color:#26384a;font-size:.94rem}.fc-financial-editorial h2{margin:0 0 10px;font-size:1.15rem}.fc-financial-editorial p{margin:9px 0}.fc-financial-editorial a{color:#174d79;text-underline-offset:2px}';
+  document.head.append(style);
+  const anchor=[...main.querySelectorAll('h2')].find(h=>/related calculators|related tools|frequently asked questions/i.test(h.textContent||''));
+  if(anchor&&anchor.closest('section'))anchor.closest('section').before(box);else main.append(box);
+})();
 const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
