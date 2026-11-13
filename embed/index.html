@@ -13,7 +13,7 @@ const params=new URLSearchParams(location.search);
 const src=params.get('src')||'';
 const allowed=new Set(['/calculators/loan-emi-calculator.html','/hi/calculators/home-loan-emi-calculator.html','/hi/calculators/sip-calculator.html','/hi/calculators/fd-calculator.html','/hi/calculators/income-tax-calculator.html','/calculators/sip-calculator.html','/calculators/fd-calculator.html','/calculators/income-tax-calculator.html']);
 const builder=document.getElementById('builder'),mount=document.getElementById('mount');
-const makeEmbedUrl=path=>location.origin+'/embed/?src='+encodeURIComponent(path);
+const makeEmbedUrl=path=>location.origin+'/embed/?s'+'rc='+encodeURIComponent(path);
 const codeFor=path=>'<iframe s'+'rc="'+makeEmbedUrl(path)+'" title="Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
 if(src){
   builder.remove();
