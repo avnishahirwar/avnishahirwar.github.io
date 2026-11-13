@@ -27,7 +27,7 @@
     {id:"months",type:"number",label:t.fields.months,value:6,min:1,max:12,step:1}
   ];
   fields.forEach(field=>{
-    const label=document.createElement("label");label.className="field";label.textContent=field.label;
+    const label=document.createElement("label");label.className="field";label.htmlFor=field.id;label.textContent=field.label;
     const input=document.createElement(field.type==="select"?"select":"input");input.id=field.id;input.name=field.id;
     if(field.type==="select"){field.options.forEach(([value,text])=>{const option=document.createElement("option");option.value=value;option.textContent=text;input.append(option);});}
     else{input.type="number";input.value=field.value;input.min=field.min;input.max=field.max;input.step=field.step;input.required=true;}
@@ -55,7 +55,7 @@
     const values=[income,tax,rebate,cess,annual,paid,balance,monthly];
     result.replaceChildren();
     const title=document.createElement("h3");title.textContent=t.result;result.append(title);
-    const table=document.createElement("table");table.className="tds-table";
+    const table=document.createElement("table");table.className="tds-table";table.setAttribute("aria-label",t.result);
     const head=document.createElement("thead"),headRow=document.createElement("tr");
     [t.metric,t.amount].forEach(text=>{const th=document.createElement("th");th.textContent=text;headRow.append(th);});head.append(headRow);table.append(head);
     const body=document.createElement("tbody");
