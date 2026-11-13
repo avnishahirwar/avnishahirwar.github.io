@@ -601,7 +601,7 @@ test('Salary TDS calculator supports both simplified tax regimes, rebate eligibi
   assert.ok(script.includes('[[250000,0],[500000,.05],[1000000,.20],[Infinity,.30]]'));
   assert.ok(script.includes('v.residency==="Resident individual"'));
   assert.ok(script.includes('Math.min(tax,12500)'));
-  assert.ok(script.includes('v.months<1||v.months>12||!Number.isInteger(v.months)'));
+  assert.ok(script.includes('!Number.isInteger(v.months)||v.months<1||v.months>12'));
   assert.ok(script.includes('balance/v.months'));
   assert.ok(script.includes('Payroll months remaining (1–12)'));
   assert.ok(page.includes('old-regime option assumes an individual below 60'));
