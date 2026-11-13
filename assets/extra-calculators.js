@@ -84,7 +84,7 @@ function appendResultBreakdownChart(kind,result){
   const items=selected.map(([label,key])=>({label,value:result[key]})).filter(item=>typeof item.value==='number'&&Number.isFinite(item.value)&&item.value>=0);
   if(items.length<2||!items.some(item=>item.value>0))return;
   const max=Math.max(...items.map(item=>item.value),1);
-  const section=document.createElement('section');section.className='fc-result-chart';section.setAttribute('aria-label','Result breakdown chart');
+  const section=document.createElement('section');section.className='fc-result-chart';section.setAttribute('aria-label',kind==='rentbuy'?(rentBuyI18n[locale]?.chartTitle||'Result breakdown chart'):'Result breakdown chart');
   section.style.cssText='margin-top:14px;padding:14px;border:1px solid #dfe5eb;border-radius:10px;background:#fff';
   const heading=document.createElement('h3');heading.textContent=kind==='rentbuy'?(rentBuyI18n[locale]?.chartTitle||'Rent and ownership cost breakdown'):(locale==='hi'?'परिणाम का दृश्य सारांश':'Result breakdown');section.appendChild(heading);
   const note=document.createElement('p');note.className='small';note.textContent=kind==='rentbuy'?(rentBuyI18n[locale]?.chartNote||'Bars compare the cost components on a shared scale.'):(locale==='hi'?'बार समान पैमाने पर परिणाम के घटकों की तुलना दिखाते हैं; यह गणना का केवल दृश्य सारांश है।':'Bars use a shared scale to compare the components shown; this is an illustration of the calculated result.');section.appendChild(note);
