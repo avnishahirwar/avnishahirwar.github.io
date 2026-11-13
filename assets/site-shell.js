@@ -44,6 +44,26 @@ if(typeof window.gtag!=='function'){
 }
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
+// Keep category navigation inside the selected locale. A localized category card
+// links to its own anchor; on other localized pages it returns to that locale's hub.
+const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta'];
+if(localeCodes.includes(locale)){
+  const categoryMap={
+    '/calculator/finance-calculators.html':'finance',
+    '/calculator/tax-calculators.html':'tax',
+    '/calculator/business-calculators.html':'business',
+    '/calculator/everyday-calculators.html':'everyday'
+  };
+  for(const [href,id] of Object.entries(categoryMap)){
+    document.querySelectorAll('a[href="'+href+'"]').forEach(link=>{
+      const card=link.closest('section,article,.card,.fc-locale-card');
+      if(card&&p.startsWith('/'+locale+'/index.html'))card.id=id;
+      link.href='/'+locale+'/index.html#'+id;
+    });
+  }
+}
+
 const r='/calculator/';
 // Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
 const preservedAdminDashboardLink=['Admin',r+'admin.html'];
