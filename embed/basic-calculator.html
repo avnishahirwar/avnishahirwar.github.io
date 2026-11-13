@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<title>Basic Calculator | Friendly Calculator</title>
+<style>
+:root{color-scheme:light;--navy:#101c2c;--navy2:#20344c;--gold:#d8bd82}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:transparent;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;padding:8px}
+.calculator{width:min(440px,100%);background:linear-gradient(145deg,#101a2b,#20344c);color:#fff;border:1px solid #31445d;border-radius:22px;padding:14px;box-shadow:0 12px 30px #0b172a24}
+.calc-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.calc-heading strong{font-size:1rem}
+.pill{background:#e8d7ad;color:#253348;border-radius:99px;padding:4px 10px;font-size:.68rem;font-weight:850;letter-spacing:.08em}
+.screen{background:#07111f;border:1px solid #29384b;border-radius:13px;padding:12px;margin-bottom:10px;min-height:76px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.expression{font-size:.8rem;color:#aab7c8;min-height:20px;text-align:right;overflow-wrap:anywhere}
+.display{font:750 clamp(1.8rem,8vw,2.25rem)/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;text-align:right;overflow-wrap:anywhere;min-height:42px}
+.keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.key{min-height:48px;border:1px solid #34445b;border-radius:11px;background:#1c2a3e;color:#f8fafc;font:750 1rem system-ui;cursor:pointer;touch-action:manipulation}
+.key:hover{filter:brightness(1.14)}.key:active{transform:scale(.97)}
+.key:focus-visible{outline:3px solid #f1d38f;outline-offset:2px}
+.key.operator{background:#263d59;color:#d5e6f8}.key.utility{background:#35445a}.key.clear{background:#8d4650;border-color:#8d4650}.key.equals{background:var(--gold);border-color:var(--gold);color:#142033}.key.zero{grid-column:span 2}
+.attribution{margin:9px 2px 0;text-align:right;font-size:10px;color:#b8c6d5}
+.attribution a{color:#e8d7ad;text-decoration:none}
+@media(max-width:360px){.calculator{padding:11px}.key{min-height:44px}}
+</style>
+</head>
+<body>
+<section class="calculator" aria-label="Basic calculator">
+ <div class="calc-heading"><strong>Calculator</strong><span class="pill">STANDARD</span></div>
+ <div class="screen" aria-live="polite" aria-atomic="true"><div class="expression" id="expression"></div><output class="display" id="display">0</output></div>
+ <div class="keys" id="keys">
+  <button class="key clear" type="button" data-action="clear" aria-label="All clear">AC</button>
+  <button class="key utility" type="button" data-action="back" aria-label="Backspace">⌫</button>
+  <button class="key utility" type="button" data-action="percent" aria-label="Percent">%</button>
+  <button class="key operator" type="button" data-op="÷" aria-label="Divide">÷</button>
+  <button class="key" type="button" data-digit="7">7</button><button class="key" type="button" data-digit="8">8</button><button class="key" type="button" data-digit="9">9</button><button class="key operator" type="button" data-op="×" aria-label="Multiply">×</button>
+  <button class="key" type="button" data-digit="4">4</button><button class="key" type="button" data-digit="5">5</button><button class="key" type="button" data-digit="6">6</button><button class="key operator" type="button" data-op="−" aria-label="Subtract">−</button>
+  <button class="key" type="button" data-digit="1">1</button><button class="key" type="button" data-digit="2">2</button><button class="key" type="button" data-digit="3">3</button><button class="key operator" type="button" data-op="+" aria-label="Add">+</button>
+  <button class="key utility" type="button" data-action="sign" aria-label="Change sign">±</button><button class="key zero" type="button" data-digit="0">0</button><button class="key" type="button" data-action="decimal" aria-label="Decimal point">.</button><button class="key equals" type="button" data-action="equals" aria-label="Equals">=</button>
+ </div>
+ <div class="attribution"><a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a></div>
+</section>
+<script>
+(()=> {
+ const display=document.getElementById('display');
+ const expression=document.getElementById('expression');
+ const keys=document.getElementById('keys');
+ let current='0',stored=null,operator=null,replace=true,lastExpression='';
+ const paint=()=>{display.textContent=current;expression.textContent=lastExpression||(stored===null?'':String(stored)+' '+operator);};
+ const value=()=>Number(current);
+ const clear=()=>{current='0';stored=null;operator=null;replace=true;lastExpression='';paint();};
+ const digit=d=>{if(current==='Error')clear();if(replace){current=d;replace=false;}else if(current.replace('-','').length<16)current=current==='0'?d:current+d;lastExpression='';paint();};
+ const solve=()=>{if(operator===null||stored===null)return;const a=stored,b=value();let result=operator==='+'?a+b:operator==='−'?a-b:operator==='×'?a*b:b===0?NaN:a/b;if(!Number.isFinite(result)){current='Error';stored=null;operator=null;replace=true;lastExpression='Cannot divide by zero';paint();return;}lastExpression=String(a)+' '+operator+' '+String(b)+' =';current=String(Number(result.toPrecision(12)));stored=null;operator=null;replace=true;paint();};
+ const choose=op=>{if(current==='Error')return;if(operator!==null&&!replace)solve();stored=value();operator=op;replace=true;lastExpression='';paint();};
+ const action=a=>{if(a==='clear')clear();else if(a==='back'){if(!replace&&current!=='Error'){current=current.length>1?current.slice(0,-1):'0';if(current==='-')current='0';paint();}}else if(a==='equals')solve();else if(a==='decimal'){if(current==='Error')clear();if(replace){current='0.';replace=false;}else if(!current.includes('.'))current+='.';lastExpression='';paint();}else if(a==='sign'){if(current!=='0'&&current!=='Error')current=String(-value());paint();}else if(a==='percent'){if(current!=='Error')current=String(value()/100);replace=true;paint();}};
+ keys.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;if(button.dataset.digit!==undefined)digit(button.dataset.digit);else if(button.dataset.op)choose(button.dataset.op);else if(button.dataset.action)action(button.dataset.action);});
+ document.addEventListener('keydown',event=>{if(event.ctrlKey||event.metaKey||event.altKey)return;if(/^[0-9]$/.test(event.key)){digit(event.key);event.preventDefault();}else if(event.key==='.'){action('decimal');event.preventDefault();}else if(['+','-','*','/'].includes(event.key)){choose(({'+':'+','-':'−','*':'×','/':'÷'})[event.key]);event.preventDefault();}else if(event.key==='Enter'||event.key==='='){action('equals');event.preventDefault();}else if(event.key==='Escape'){clear();event.preventDefault();}else if(event.key==='Backspace'){action('back');event.preventDefault();}else if(event.key==='%'){action('percent');event.preventDefault();}});
+ paint();
+})();
+</script>
+</body>
+</html>
