@@ -1,0 +1,43 @@
+{
+  "site": "https://friendlycalculator.in",
+  "reviewed": "2026-11-13",
+  "policy": "Curated examples only. Each page states assumptions and links to the interactive calculator. Do not expand to near-duplicate combinations without search-demand and usefulness review.",
+  "pages": [
+    {
+      "slug": "emi-for-1-lakh-loan-at-8-percent",
+      "amount": 100000,
+      "rate": 8,
+      "description": "A small personal-loan illustration for comparing repayment periods."
+    },
+    {
+      "slug": "emi-for-2-lakh-loan-at-12-percent",
+      "amount": 200000,
+      "rate": 12,
+      "description": "An example for comparing the cost of a higher-rate, smaller loan."
+    },
+    {
+      "slug": "emi-for-5-lakh-loan-at-8-percent",
+      "amount": 500000,
+      "rate": 8,
+      "description": "A common loan-size illustration showing how tenure changes monthly EMI and total interest."
+    },
+    {
+      "slug": "emi-for-5-lakh-loan-at-10-percent",
+      "amount": 500000,
+      "rate": 10,
+      "description": "A rate comparison example for a ₹5 lakh loan."
+    },
+    {
+      "slug": "emi-for-5-lakh-loan-at-12-percent",
+      "amount": 500000,
+      "rate": 12,
+      "description": "A higher-rate example showing the effect of interest on repayment."
+    },
+    {
+      "slug": "emi-for-10-lakh-loan-at-8-percent",
+      "amount": 1000000,
+      "rate": 8,
+      "description": "A larger-loan illustration for planning monthly repayments."
+    }
+  ]
+}
