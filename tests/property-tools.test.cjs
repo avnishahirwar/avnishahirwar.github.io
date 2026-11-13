@@ -52,7 +52,28 @@ test('Gratuity page explains standard formula, partial-year rule and general eli
   assert.match(html, /s\*15\*count\/26/);
   assert.match(html, /fraction>0\.5/);
   assert.match(html, /five-year continuous-service threshold/i);
+  assert.match(html, /fixed-term pro-rata/i);
+  assert.match(html, /2000000/);
   assert.match(html, /labour\.gov\.in/);
+});
+
+test('EPS pension estimate requires the general 10-year eligible-service threshold', () => {
+  const js = read('assets/extra-calculators.js');
+  assert.match(js, /case'eps':\\{if\\(v\\.service<10\\)/);
+});
+
+test('SIP FAQ explains current equity-fund capital-gains treatment and instalment holding periods', () => {
+  const html = read('calculators/sip-calculator.html');
+  assert.match(html, /How is a SIP taxed in India/);
+  assert.match(html, /12\\.5%/);
+  assert.match(html, /FIFO/);
+  assert.match(html, /incometaxindia\\.gov\\.in/);
+});
+
+test('Home-loan amortization page renders a principal-versus-interest chart', () => {
+  const html = read('calculators/home-loan-amortization-schedule-calculator.html');
+  assert.match(html, /amortization-chart/);
+  assert.match(html, /Total principal and total interest comparison/);
 });
 
 test('Shared calculator shell adds relevant links and supported structured data', () => {
