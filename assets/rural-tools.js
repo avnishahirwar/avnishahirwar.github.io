@@ -126,7 +126,7 @@ if(document.documentElement.lang==='hi'){
   cfg.title=hiMap[cfg.title]||cfg.title;
   cfg.fields.forEach(f=>{f.label=hiMap[f.label]||f.label;if(f.options)f.options.forEach(o=>{o[1]=hiMap[o[1]]||o[1];});});
   if(cfg.slider)cfg.slider.label=hiMap[cfg.slider.label]||cfg.slider.label;
-  const originalRun=cfg.run;cfg.run=v=>{const r=originalRun(v);r.rows=r.rows.map(([k,val])=>[hiMap[k]||k,typeof val==='string'?val.replace(/per quintal/g,'प्रति क्विंटल'):val]);if(r.chart)r.chart=r.chart.map(([k,n])=>[hiMap[k]||k,n]);return r;};
+  const originalRun=cfg.run;cfg.run=v=>{const r=originalRun(v);r.rows=r.rows.map(([k,val])=>[hiMap[k]||k,typeof val==='string'?val.replace(/per quintal/g,'प्रति क्विंटल').replace(/\bquintals?\b/g,'क्विंटल'):val]);if(r.chart)r.chart=r.chart.map(([k,n])=>[hiMap[k]||k,n]);return r;};
  }
 }
 const root=document.querySelector('[data-rural-tool]');if(!root)return;
