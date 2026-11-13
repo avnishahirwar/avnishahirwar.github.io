@@ -3,7 +3,6 @@
   const configs = {
     "/hi/calculators/loan-emi-calculator.html": {title:"परिणाम का दृश्य सारांश", rows:[["मासिक EMI","#emi"],["कुल ब्याज","#interest"],["कुल भुगतान","#total"]]},
     "/hi/calculators/home-loan-emi-calculator.html": {title:"होम लोन परिणाम का दृश्य सारांश", rows:[["मासिक EMI","#emi"],["कुल ब्याज","#interest"],["कुल भुगतान","#total"]]},
-    "/hi/calculators/car-loan-calculator.html": {title:"कार लोन परिणाम का दृश्य सारांश", table:"#extraResult"},
     "/hi/calculators/personal-loan-eligibility-calculator.html": {title:"पर्सनल लोन पात्रता का दृश्य सारांश", table:"#extraResult"},
     "/hi/calculators/sip-calculator.html": {title:"SIP परिणाम का दृश्य सारांश", rows:[["कुल निवेश","#invested"],["अनुमानित भविष्य मूल्य","#future"],["अनुमानित लाभ","#gain"]]},
     "/hi/calculators/fd-calculator.html": {title:"FD परिणाम का दृश्य सारांश", rows:[["जमा मूलधन","#base"],["अनुमानित ब्याज","#interest"],["मैच्योरिटी राशि","#maturity"]]},
