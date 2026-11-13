@@ -671,7 +671,7 @@ test('GST calculator avoids obsolete general-rate presets and asks for a verifie
   assert.match(html, /option value="5"/);
   assert.match(html, /option value="18"/);
   assert.match(html, /option value="40"/);
-  assert.doesNotMatch(html, /<option>12<\/option>|<option>28<\/option>/);
+  assert.doesNotMatch(html, /12%|28%|<option>12<\/option>|<option>28<\/option>/);
   assert.match(html, /HSN\/SAC classification/);
   assert.match(html, /22 September 2025/);
 });
