@@ -29,6 +29,8 @@ test('generated EMI pages are indexable, canonical and useful', () => {
     assert.match(html, /rel="canonical"/);
     assert.match(html, /How the EMI is estimated/);
     assert.match(html, /loan-emi-calculator\.html/);
+    assert.ok(html.includes('/assets/site-shell.css'), 'generated page should use shared site styles');
+    assert.ok(html.includes('/assets/site-shell.js'), 'generated page should use shared navigation and footer');
     const canonical = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
     assert.ok(canonical, 'canonical missing for ' + page.slug);
     canonicals.push(canonical);
