@@ -25,3 +25,13 @@ test('language routing does not force a browser-language redirect', () => {
   assert.doesNotMatch(shell, /location\.replace\(localeHome\[navigator\.language/);
   assert.doesNotMatch(shell, /navigator\.language[^;]{0,120}location\.(?:replace|href)/);
 });
+
+test('Hindi Bigha and Stamp Duty calculator routes have localized documents', () => {
+  for (const file of ['bigha-to-sq-ft-calculator.html', 'stamp-duty-calculator.html']) {
+    const target = path.join(__dirname, '..', 'hi', 'calculators', file);
+    assert.ok(fs.existsSync(target), `Missing Hindi calculator page: ${file}`);
+    const html = fs.readFileSync(target, 'utf8');
+    assert.match(html, /<html lang="hi">/);
+    assert.ok(html.includes('https://friendlycalculator.in/hi/calculators/' + file));
+  }
+});
