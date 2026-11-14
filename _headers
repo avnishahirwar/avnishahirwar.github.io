@@ -13,3 +13,38 @@ https://friendly-calculator.pages.dev/*
 
 https://:version.friendly-calculator.pages.dev/*
   X-Robots-Tag: noindex
+
+# Cache static assets at the edge and in browsers; HTML remains revalidated.
+# Short TTL is intentional because asset URLs are not content-hashed yet.
+/assets/*.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/*.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/*.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/*.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/*.jpg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/*.jpeg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/*.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/*.jpg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/*.jpeg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
