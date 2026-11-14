@@ -750,7 +750,7 @@ test('open editorial content licence requires attribution and excludes software 
   assert.ok(urls.includes('https://friendlycalculator.in/calculator/content-license.html'));
   assert.match(license, /CC BY 4\.0/);
   assert.match(license, /Avnish Ahirwar/);
-  assert.match(license, /indicate whether changes were made/i);
+  assert.match(license, /state whether you made changes/i);
   assert.match(license, /commercial/i);
   assert.match(license, /software and source code/i);
   assert.ok(terms.includes('/calculator/content-license.html'));
