@@ -21,13 +21,16 @@ test('language switching preserves the current route when its translation exists
   assert.match(shell, /fc-language-notice/);
 });
 
-test('saved language preference takes priority over browser language detection', () => {
+test('saved manual language choice takes priority over browser language detection', () => {
   assert.match(shell, /savedLocale=localStorage\.getItem\('fc-language-preference'\)/);
-  assert.match(shell, /if\(p==='\/'&&savedLocale&&localeHome\[savedLocale\]\)/);
+  assert.match(shell, /savedSource=localStorage\.getItem\('fc-language-source'\)/);
+  assert.match(shell, /if\(p==='\/'&&savedLocale&&localeHome\[savedLocale\]&&savedLocale!=='en'\)/);
   assert.match(shell, /else if\(p==='\/'&&!savedLocale\)/);
-  assert.match(shell, /navigator\.languages\|\|\[\]/);
+  assert.match(shell, /navigator\.languages\)\&\&navigator\.languages\.length/);
+  assert.match(shell, /navigator\.language\|\|'en'/);
   assert.match(shell, /split\('-'\)\[0\]/);
   assert.match(shell, /location\.replace\(localeHome\[detected\]\)/);
+  assert.match(shell, /setItem\('fc-language-source','manual'\)/);
 });
 
 
