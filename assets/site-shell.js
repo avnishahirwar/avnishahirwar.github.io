@@ -135,6 +135,7 @@ ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத
 const nav=chrome[currentLocale]||chrome.en;
 const links=[
   ['Home',localeHome[currentLocale]],
+  ['Search Calculators','/calculator/site-directory.html#siteSearch'],
   ['Business Tools',r+'business-calculators.html'],
   ['Finance',r+'finance-calculators.html'],
   ['Tax',r+'tax-calculators.html'],
