@@ -15,6 +15,9 @@ const EXCLUDED_DIRS = new Set([
 const EXCLUDED_FILES = new Set([
   '404.html', 'offline.html'
 ]);
+const EXCLUDED_PATHS = new Set([
+  'calculator/admin.html'
+]);
 
 function walk(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -25,7 +28,8 @@ function walk(dir, files = []) {
     }
     if (entry.isFile() && entry.name.toLowerCase().endsWith('.html') &&
         !EXCLUDED_FILES.has(entry.name.toLowerCase())) {
-      files.push(path.relative(ROOT, path.join(dir, entry.name)).split(path.sep).join('/'));
+      const relative = path.relative(ROOT, path.join(dir, entry.name)).split(path.sep).join('/');
+      if (!EXCLUDED_PATHS.has(relative)) files.push(relative);
     }
   }
   return files;
