@@ -719,7 +719,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
   assert.match(directory, /Browse all 259 calculator tools/);
   assert.match(directory, /Search 259 calculators by name or topic/);
-  assert.match(directory, /Showing all 259 calculators in 14 categories/);
+  assert.match(directory, /Showing all 259 calculators in 15 categories/);
   assert.equal(categoryCount, 15, 'Directory must show all 15 calculator categories');
   assert.equal(navCategoryCount, 15, 'Homepage shortcuts must expose all 15 categories');
   assert.equal(navCalculatorTotal, 259, 'Homepage category shortcuts must account for every calculator');
