@@ -44,4 +44,49 @@ Disallow: /calculator/admin.html
 Disallow: /tests/
 Disallow: /avnish-ai/
 
+# Additional AI discovery and assistant crawlers. Search/retrieval agents are
+# allowed below. Model-training crawlers remain disallowed unless explicitly
+# approved as a separate policy decision.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Applebot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: YouBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
 Sitemap: https://friendlycalculator.in/sitemap.xml

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://friendlycalculator.in/</loc><lastmod>2026-11-14</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://friendlycalculator.in/</loc><image:image><image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc></image:image><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://friendlycalculator.in/ar/calculators/absolute-return-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/ar/calculators/add-days-to-date-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/ar/calculators/advance-tax-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
@@ -215,7 +215,7 @@
   <url><loc>https://friendlycalculator.in/bn/calculators/work-hours-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/bn/calculators/xirr-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/bn/index.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/calculator/about.html</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://friendlycalculator.in/calculator/about.html</loc><image:image><image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc></image:image><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/agriculture-calculators.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/api.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/business-calculators.html</loc><lastmod>2026-11-13</lastmod></url>
@@ -229,7 +229,7 @@
   <url><loc>https://friendlycalculator.in/calculator/methodology.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/pricing.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/privacy.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/calculator/site-directory.html</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://friendlycalculator.in/calculator/site-directory.html</loc><image:image><image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc></image:image><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/tax.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculator/terms.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/calculators/absolute-return-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
@@ -626,7 +626,6 @@
   <url><loc>https://friendlycalculator.in/fr/calculators/work-hours-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/fr/calculators/xirr-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/fr/index.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/google09d3278d6d57b1a4.html</loc><lastmod>2026-07-07</lastmod></url>
   <url><loc>https://friendlycalculator.in/guides/age-in-months-between-two-dates.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/guides/cgpa-to-percentage-india.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/guides/emi/emi-for-1-lakh-loan-at-8-percent.html</loc><lastmod>2026-11-13</lastmod></url>
@@ -756,7 +755,7 @@
   <url><loc>https://friendlycalculator.in/hi/guides/income-tax-12-lakh-salary-2026-27.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/hi/guides/index.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/hi/guides/sip-5000-10-years.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/hi/index.html</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://friendlycalculator.in/hi/index.html</loc><image:image><image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc></image:image><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://friendlycalculator.in/hi/methodology.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/id/calculators/absolute-return-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/id/calculators/add-days-to-date-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
@@ -854,8 +853,6 @@
   <url><loc>https://friendlycalculator.in/id/calculators/work-hours-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/id/calculators/xirr-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/id/index.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/map.html</loc><lastmod>2026-11-10</lastmod></url>
-  <url><loc>https://friendlycalculator.in/maps.html</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://friendlycalculator.in/pt/calculators/absolute-return-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/pt/calculators/add-days-to-date-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/pt/calculators/advance-tax-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
@@ -952,8 +949,6 @@
   <url><loc>https://friendlycalculator.in/pt/calculators/work-hours-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/pt/calculators/xirr-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/pt/index.html</loc><lastmod>2026-11-13</lastmod></url>
-  <url><loc>https://friendlycalculator.in/schema/_homepage.html</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://friendlycalculator.in/seo-meta-tags.html</loc><lastmod>2026-07-08</lastmod></url>
   <url><loc>https://friendlycalculator.in/ta/calculators/absolute-return-calculator.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://friendlycalculator.in/ta/calculators/add-days-to-date-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
   <url><loc>https://friendlycalculator.in/ta/calculators/advance-tax-calculator.html</loc><lastmod>2026-11-12</lastmod></url>
