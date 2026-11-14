@@ -978,3 +978,29 @@ test('Hindi digital root, divisibility test and reciprocal pages are localized a
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
+
+
+test('Hindi percentile, prime number, scientific notation and completing-square pages are localized and indexed', () => {
+  const cases = [
+    ['percentile-rank-calculator', 'percentile-rank', 'प्रतिशतक रैंक कैलकुलेटर', 'प्रतिशतक रैंक = (लक्ष्य से कम मानों की संख्या + 0.5 × लक्ष्य के बराबर मानों की संख्या) ÷ कुल मान × 100।', ['डेटा मान', 'लक्ष्य मान', 'कुल मानों की संख्या', 'Tie-adjusted प्रतिशतक रैंक']],
+    ['prime-number-calculator', 'prime-number', 'अभाज्य संख्या कैलकुलेटर', 'अभाज्य संख्या वह पूर्णांक है जो 1 से बड़ा हो और जिसके धनात्मक गुणनखंड केवल 1 तथा स्वयं वह संख्या हों।', ['जाँचने के लिए पूर्णांक', 'अभाज्य स्थिति', 'सबसे छोटा गुणनखंड']],
+    ['scientific-notation-calculator', 'scientific-notation', 'वैज्ञानिक संकेतन कैलकुलेटर', 'शून्य से अलग x के लिए वैज्ञानिक संकेतन a × 10ⁿ होता है, जहाँ 1 ≤ |a| < 10 और n पूर्णांक है।', ['बदलने के लिए संख्या', 'वैज्ञानिक संकेतन', 'गुणांक', '10 की घात']],
+    ['completing-the-square-calculator', 'completing-the-square', 'पूर्ण वर्ग बनाने का कैलकुलेटर', 'h = −b ÷ (2a), k = c − b² ÷ (4a)।', ['गुणांक a', 'गुणांक b', 'स्थिर पद c', 'शीर्ष रूप', 'सममिति अक्ष']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hp = path.join(root, 'hi/calculators/' + slug + '.html');
+    const ep = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hp), 'Missing Hindi page: ' + slug);
+    const h = fs.readFileSync(hp, 'utf8');
+    const e = fs.readFileSync(ep, 'utf8');
+    assert.match(h, /<html lang="hi">/);
+    assert.ok(h.includes('data-calculator="' + key + '"'));
+    assert.ok(h.includes('/assets/keyword-calculators.js'));
+    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
+    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(h.includes(title) && h.includes(formula));
+    for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
+  }
+});
