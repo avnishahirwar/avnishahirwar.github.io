@@ -109,13 +109,26 @@ const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
 const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
 const localeHome={en:'/',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html'};
-// Honour a language explicitly chosen by the visitor on future visits to the English root.
+// Language priority: an explicit visitor choice wins; otherwise use a supported
+// browser language on the first visit. English remains the fallback.
 try{
   const savedLocale=localStorage.getItem('fc-language-preference');
-  // English is the first-visit default. Only a language explicitly chosen
-  // by the visitor may redirect the root homepage on later visits.
+  const savedSource=localStorage.getItem('fc-language-source');
   if(p==='/'&&savedLocale&&localeHome[savedLocale]&&savedLocale!=='en'){
     location.replace(localeHome[savedLocale]);
+  }else if(p==='/'&&!savedLocale){
+    const browserPrefs=Array.isArray(navigator.languages)&&navigator.languages.length
+      ?navigator.languages:[navigator.language||'en'];
+    let detected='en';
+    for(const raw of browserPrefs){
+      const base=String(raw||'').toLowerCase().split('-')[0];
+      if(localeHome[base]){detected=base;break;}
+    }
+    if(detected!=='en'){
+      localStorage.setItem('fc-language-preference',detected);
+      localStorage.setItem('fc-language-source','browser');
+      location.replace(localeHome[detected]);
+    }
   }
 }catch(_){}
 
@@ -219,7 +232,7 @@ if(languageSelect){
   languageSelect.addEventListener('change',()=>{
     const next=languageSelect.value;
     if(!localeHome[next])return;
-    try{localStorage.setItem('fc-language-preference',next)}catch(_){}
+    try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
     fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
