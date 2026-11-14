@@ -13,7 +13,21 @@ const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai'
 ]);
 const EXCLUDED_FILES = new Set(['404.html', 'offline.html']);
-const EXCLUDED_PATHS = new Set(['calculator/admin.html']);
+const EXCLUDED_PATHS = new Set([
+  'calculator/admin.html',
+  'google09d3278d6d57b1a4.html',
+  'map.html',
+  'maps.html',
+  'schema/_homepage.html',
+  'seo-meta-tags.html'
+]);
+const BRAND_IMAGE_URL = SITE_ORIGIN + '/assets/friendly-calculator-brand-illustration.svg';
+const BRAND_IMAGE_PAGES = new Set([
+  SITE_ORIGIN + '/',
+  SITE_ORIGIN + '/hi/index.html',
+  SITE_ORIGIN + '/calculator/about.html',
+  SITE_ORIGIN + '/calculator/site-directory.html'
+]);
 
 function walk(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -92,10 +106,14 @@ function build() {
   const body = entries.map(entry =>
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
     (entry.lastmod ? '<lastmod>' + entry.lastmod + '</lastmod>' : '') +
+    (BRAND_IMAGE_PAGES.has(entry.loc)
+      ? '<image:image><image:loc>' + xmlEscape(BRAND_IMAGE_URL) + '</image:loc></image:image>'
+      : '') +
     '</url>'
   ).join('\n');
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' +
+    'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
     body + '\n</urlset>\n';
 
   if (Buffer.byteLength(xml, 'utf8') > MAX_BYTES) {
