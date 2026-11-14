@@ -953,3 +953,28 @@ test('Hindi average percentage, percentage-of-percentage and percent-error pages
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
+
+
+test('Hindi digital root, divisibility test and reciprocal pages are localized and indexed', () => {
+  const cases = [
+    ['digital-root-calculator', 'digital-root', 'डिजिटल रूट कैलकुलेटर', 'डिजिटल रूट: शून्य के लिए 0; अन्य पूर्णांकों के लिए 1 + ((|n| − 1) mod 9)।', ['पूर्णांक', 'अंकों का योग', 'डिजिटल रूट']],
+    ['divisibility-test-calculator', 'divisibility-test', 'विभाज्यता जाँच कैलकुलेटर', 'यदि संख्या ÷ भाजक का शेषफल 0 हो, तो संख्या भाजक से पूर्णतः विभाजित होती है।', ['जाँची जाने वाली पूर्णांक संख्या', 'भाजक', 'शेषफल', 'विभाजित होता है']],
+    ['reciprocal-calculator', 'reciprocal', 'व्युत्क्रम कैलकुलेटर', 'किसी गैर-शून्य संख्या x का व्युत्क्रम 1 ÷ x होता है। x × (1 ÷ x) = 1।', ['गैर-शून्य संख्या', 'व्युत्क्रम', 'सत्यापन']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hp = path.join(root, 'hi/calculators/' + slug + '.html');
+    const ep = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hp), 'Missing Hindi page: ' + slug);
+    const h = fs.readFileSync(hp, 'utf8');
+    const e = fs.readFileSync(ep, 'utf8');
+    assert.match(h, /<html lang="hi">/);
+    assert.ok(h.includes('data-calculator="' + key + '"'));
+    assert.ok(h.includes('/assets/keyword-calculators.js'));
+    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
+    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(h.includes(title) && h.includes(formula));
+    for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
+  }
+});
