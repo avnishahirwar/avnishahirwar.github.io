@@ -670,7 +670,7 @@ test('agriculture, scheme and career calculator pages are linked, indexed and us
 
 test('shared calculator shell provides export, embed, what-if, live-chart and related-tool controls', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes('Print Result / Save PDF'));
+  assert.ok(shell.includes('Print / Save as PDF'));
   assert.ok(shell.includes('Download Result (PNG)'));
   assert.ok(shell.includes('Copy embed code'));
   assert.ok(shell.includes('What-if scenario slider'));
