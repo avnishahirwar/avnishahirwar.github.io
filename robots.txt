@@ -44,19 +44,14 @@ Disallow: /calculator/admin.html
 Disallow: /tests/
 Disallow: /avnish-ai/
 
-# Additional AI discovery and assistant crawlers. These rules permit access to
-# public pages only; private/admin/test paths remain excluded above.
+# Additional AI discovery and assistant crawlers. Search/retrieval agents are
+# allowed below. Model-training crawlers remain disallowed unless explicitly
+# approved as a separate policy decision.
 User-agent: GPTBot
-Allow: /
-Disallow: /calculator/admin.html
-Disallow: /tests/
-Disallow: /avnish-ai/
+Disallow: /
 
 User-agent: ClaudeBot
-Allow: /
-Disallow: /calculator/admin.html
-Disallow: /tests/
-Disallow: /avnish-ai/
+Disallow: /
 
 User-agent: PerplexityBot
 Allow: /
@@ -71,16 +66,10 @@ Disallow: /tests/
 Disallow: /avnish-ai/
 
 User-agent: Applebot-Extended
-Allow: /
-Disallow: /calculator/admin.html
-Disallow: /tests/
-Disallow: /avnish-ai/
+Disallow: /
 
 User-agent: Google-Extended
-Allow: /
-Disallow: /calculator/admin.html
-Disallow: /tests/
-Disallow: /avnish-ai/
+Disallow: /
 
 User-agent: Amazonbot
 Allow: /
