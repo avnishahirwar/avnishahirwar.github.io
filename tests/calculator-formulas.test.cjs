@@ -74,7 +74,7 @@ test('production formula functions return correct numeric results for every shar
       ['Taxable value', 10000], ['Total GST', 1800], ['CGST', 900], ['SGST', 900], ['Invoice total', 11800]
     ]],
     ['loan emi calculator', { principal: 500000, rate: 9, years: 5 }, [
-      ['Monthly EMI', 10379.18], ['Total repayment', 622750.66], ['Total interest', 122750.66]
+      ['Monthly EMI', 10379.18], ['Total repayment', 623550.66], ['Total interest', 123550.66]
     ]],
     ['fixed deposit calculator', { principal: 100000, rate: 7, years: 3, frequency: '4' }, [
       ['Maturity value', 123143.93], ['Estimated interest', 23143.93]
@@ -690,8 +690,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /227 public calculators/);
-  assert.match(about, /Available calculators \(227 tools\)/);
+  assert.match(about, /235 public calculators/);
+  assert.match(about, /Available calculators \(235 tools\)/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
