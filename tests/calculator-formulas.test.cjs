@@ -74,7 +74,7 @@ test('production formula functions return correct numeric results for every shar
       ['Taxable value', 10000], ['Total GST', 1800], ['CGST', 900], ['SGST', 900], ['Invoice total', 11800]
     ]],
     ['loan emi calculator', { principal: 500000, rate: 9, years: 5 }, [
-      ['Monthly EMI', 10379.18], ['Total repayment', 623550.66], ['Total interest', 123550.66]
+      ['Monthly EMI', 10379.18], ['Total repayment', 622750.66], ['Total interest', 122750.66]
     ]],
     ['fixed deposit calculator', { principal: 100000, rate: 7, years: 3, frequency: '4' }, [
       ['Maturity value', 123143.93], ['Estimated interest', 23143.93]
