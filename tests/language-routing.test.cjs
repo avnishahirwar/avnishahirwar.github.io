@@ -18,7 +18,7 @@ test('language switching preserves the current route when its translation exists
   assert.doesNotMatch(shell, /localeRoutes\[p\]/, 'language routing must not depend on an undeclared localeRoutes global');
   assert.match(shell, /fetch\(target,\{method:'GET',cache:'no-store',credentials:'same-origin'\}\)/);
   assert.match(shell, /response\.body\?\.cancel\(\)/);
-  assert.match(shell, /if\(response\.ok\)\{location\.href=target;return;\}/);
+  assert.match(shell, /if\(response\.ok\)\{response\.body\?\.cancel\(\);location\.href=target;return;\}/);
   assert.match(shell, /location\.href=localeHome\[next\]/);
   assert.match(shell, /fc-language-notice/);
 });
