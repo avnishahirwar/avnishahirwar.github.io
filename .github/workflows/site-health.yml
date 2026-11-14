@@ -1,4 +1,5 @@
 name: Site health and link checks
+# Catalogue expansion validation includes the nine new math calculator routes.
 on:
   pull_request:
   push:
