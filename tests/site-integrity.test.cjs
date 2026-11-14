@@ -928,3 +928,28 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
+
+
+test('Hindi average percentage, percentage-of-percentage and percent-error pages are localized and indexed', () => {
+  const cases = [
+    ['average-percentage-calculator', 'average-percentage', 'औसत प्रतिशत कैलकुलेटर', 'औसत प्रतिशत = सभी दर्ज प्रतिशत मानों का योग ÷ मानों की संख्या।', ['प्रतिशत 1', 'प्रतिशत 2', 'औसत प्रतिशत', 'मानों की संख्या']],
+    ['percentage-of-percentage-calculator', 'percentage-of-percentage', 'प्रतिशत का प्रतिशत कैलकुलेटर', 'संयुक्त प्रतिशत = पहला प्रतिशत × दूसरा प्रतिशत ÷ 100।', ['आधार राशि', 'पहला प्रतिशत', 'दूसरा प्रतिशत', 'संयुक्त प्रतिशत']],
+    ['percent-error-calculator', 'percent-error', 'प्रतिशत त्रुटि कैलकुलेटर', 'पूर्ण प्रतिशत त्रुटि = |प्रेक्षित मान − संदर्भ मान| ÷ |संदर्भ मान| × 100।', ['प्रेक्षित मान', 'संदर्भ मान', 'पूर्ण त्रुटि', 'पूर्ण प्रतिशत त्रुटि']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hp = path.join(root, 'hi/calculators/' + slug + '.html');
+    const ep = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hp), 'Missing Hindi page: ' + slug);
+    const h = fs.readFileSync(hp, 'utf8');
+    const e = fs.readFileSync(ep, 'utf8');
+    assert.match(h, /<html lang="hi">/);
+    assert.ok(h.includes('data-calculator="' + key + '"'));
+    assert.ok(h.includes('/assets/keyword-calculators.js'));
+    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
+    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(h.includes(title) && h.includes(formula));
+    for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
+  }
+});
