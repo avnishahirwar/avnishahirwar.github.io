@@ -1,4 +1,4 @@
-name: Generate XML sitemaps
+name: Generate XML sitemap
 
 on:
   push:
@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -36,16 +38,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Generate sitemap index and child sitemaps
+      - name: Generate the single XML sitemap
         run: node scripts/generate-sitemaps.cjs
-      - name: Commit generated sitemap files when changed
+      - name: Commit generated sitemap when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml sitemap-*.xml
+          git add -A -- 'sitemap*.xml'
           if ! git diff --cached --quiet; then
-            git commit -m "chore(seo): regenerate XML sitemaps [skip ci]"
+            git commit -m "chore(seo): regenerate single XML sitemap [skip ci]"
             git push
           else
-            echo "Sitemaps are already up to date."
+            echo "Sitemap is already up to date."
           fi
