@@ -161,6 +161,36 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
+test('shared header and footer expose only the requested navigation items in order', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
+  const expectedHeader = [
+    '[nav.home,localeHome[currentLocale]]',
+    '[nav.business,',
+    '[nav.finance,',
+    '[nav.tax,',
+    '[nav.everyday,',
+    '[nav.all,r+\'site-directory.html\']',
+    '[nav.blog,',
+    '[nav.login,r+\'dashboard.html\']'
+  ];
+  let last = -1;
+  for (const item of expectedHeader) {
+    const index = header.indexOf(item);
+    assert.ok(index > last, 'Header item is missing or out of order: ' + item);
+    last = index;
+  }
+  assert.doesNotMatch(header, /nav\.search|Search Calculator/);
+  assert.match(shell, /en:\{home:'Home',login:'Login'/);
+  const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
+  for (const labels of [
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क']"
+  ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
+  assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
+  assert.match(shell, /const footerPaths=\[[^\\n]*'\/embed\/'[^\\n]*contact\.html'\];/);
+});
+
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes("['Admin',r+'admin.html']"));
