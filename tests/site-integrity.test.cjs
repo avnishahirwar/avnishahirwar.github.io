@@ -872,8 +872,33 @@ test('Hindi homepage links to the recently added calculator pages', () => {
     'median-calculator', 'mode-calculator', 'weighted-average-calculator',
     'square-root-calculator', 'decimal-to-percent-converter',
     'hours-to-minutes-calculator', 'aspect-ratio-calculator',
-    'words-per-minute-calculator'
+    'words-per-minute-calculator', 'percentage-change-calculator', 'fraction-to-percent-calculator', 'cube-root-calculator'
   ]) {
     assert.ok(home.includes('/hi/calculators/' + slug + '.html'), 'Hindi homepage is missing discovery link: ' + slug);
+  }
+});
+
+
+test('Hindi percentage change, fraction-to-percent and cube-root pages are localized, reciprocal and indexed', () => {
+  const cases = [
+    ['percentage-change-calculator', 'percentage-change', 'प्रतिशत परिवर्तन कैलकुलेटर', 'प्रतिशत परिवर्तन = ((नया मान − प्रारंभिक मान) ÷ |प्रारंभिक मान|) × 100।', ['प्रारंभिक मान', 'नया मान', 'वृद्धि', 'कमी']],
+    ['fraction-to-percent-calculator', 'fraction-to-percent', 'भिन्न से प्रतिशत कैलकुलेटर', 'प्रतिशत = (अंश ÷ हर) × 100।', ['अंश', 'हर', 'दशमलव मान', 'प्रतिशत']],
+    ['cube-root-calculator', 'cube-root', 'घनमूल कैलकुलेटर', 'x का घनमूल वह वास्तविक संख्या r है जिसके लिए r³ = x।', ['वास्तविक संख्या', 'वास्तविक घनमूल', 'सत्यापन']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hindiPath = path.join(root, 'hi/calculators/' + slug + '.html');
+    const englishPath = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hindiPath), 'Missing Hindi page: ' + slug);
+    const hindi = fs.readFileSync(hindiPath, 'utf8');
+    const english = fs.readFileSync(englishPath, 'utf8');
+    assert.match(hindi, /<html lang="hi">/);
+    assert.ok(hindi.includes('data-calculator="' + key + '"'));
+    assert.ok(hindi.includes('/assets/keyword-calculators.js'));
+    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
+    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
+    assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
+    for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
   }
 });
