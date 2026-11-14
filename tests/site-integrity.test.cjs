@@ -694,6 +694,7 @@ test('land area converter supports requested units and discloses local Bigha var
 });
 
 
+// Catalogue expansion regression: homepage, directory, About and sitemap must stay synchronized.
 test('homepage, directory, About and sitemap agree on the public calculator catalogue', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
