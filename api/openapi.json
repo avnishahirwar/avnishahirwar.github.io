@@ -1,0 +1,1067 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Friendly Calculator API",
+    "version": "1.0.0",
+    "description": "Server-to-server JSON API for 20 calculator models. A valid API key and enabled plan/quota are required. Calculation results are estimates where applicable; see the website's calculator methodology and individual limitations."
+  },
+  "servers": [
+    {
+      "url": "https://gtuycqunlihegsbvvsol.supabase.co/functions/v1",
+      "description": "Production Supabase Edge Function"
+    }
+  ],
+  "paths": {
+    "/calculator-api": {
+      "post": {
+        "operationId": "calculate",
+        "summary": "Run a calculator",
+        "description": "Submit one calculator identifier and its inputs. Requests are authenticated by x-api-key. Do not expose API keys in browser code, apps or public repositories.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "gst"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "amount",
+                          "rate",
+                          "mode",
+                          "supply"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "add",
+                              "remove"
+                            ]
+                          },
+                          "supply": {
+                            "type": "string",
+                            "enum": [
+                              "intra-state",
+                              "inter-state"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "emi"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "principal",
+                          "annualRate"
+                        ],
+                        "properties": {
+                          "principal": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "annualRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "years": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 50
+                          },
+                          "months": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 600
+                          }
+                        },
+                        "additionalProperties": false,
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "principal",
+                              "annualRate",
+                              "months"
+                            ],
+                            "properties": {
+                              "principal": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              },
+                              "annualRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              },
+                              "months": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 600
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "principal",
+                              "annualRate",
+                              "years"
+                            ],
+                            "properties": {
+                              "principal": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              },
+                              "annualRate": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              },
+                              "years": {
+                                "type": "number",
+                                "minimum": 1,
+                                "maximum": 50
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "fd"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "principal",
+                          "annualRate",
+                          "years"
+                        ],
+                        "properties": {
+                          "principal": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "annualRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "years": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 50
+                          },
+                          "frequency": {
+                            "type": "integer",
+                            "enum": [
+                              1,
+                              2,
+                              4,
+                              12
+                            ],
+                            "default": 4
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "discount"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "price",
+                          "discountPercent"
+                        ],
+                        "properties": {
+                          "price": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "discountPercent": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "profit-loss"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "costPrice",
+                          "sellingPrice"
+                        ],
+                        "properties": {
+                          "costPrice": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "sellingPrice": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "income-tax"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "income",
+                          "regime"
+                        ],
+                        "properties": {
+                          "income": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "regime": {
+                            "type": "string",
+                            "enum": [
+                              "new",
+                              "old"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "salary-tds"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "income",
+                          "paid",
+                          "months"
+                        ],
+                        "properties": {
+                          "income": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "paid": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "months": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 12
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "bmi"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "height",
+                          "weight"
+                        ],
+                        "properties": {
+                          "height": {
+                            "type": "number",
+                            "minimum": 50,
+                            "maximum": 260
+                          },
+                          "weight": {
+                            "type": "number",
+                            "minimum": 2,
+                            "maximum": 350
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "epf"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "monthly",
+                          "rate",
+                          "years"
+                        ],
+                        "properties": {
+                          "monthly": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 30
+                          },
+                          "years": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 50
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "savings-interest"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "principal",
+                          "rate",
+                          "days"
+                        ],
+                        "properties": {
+                          "principal": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "days": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 3650
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "salary"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "monthly",
+                          "days",
+                          "hours"
+                        ],
+                        "properties": {
+                          "monthly": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "days": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 31
+                          },
+                          "hours": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 24
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "inflation"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "amount",
+                          "rate",
+                          "years"
+                        ],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "years": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "fuel-cost"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "distance",
+                          "mileage",
+                          "price"
+                        ],
+                        "properties": {
+                          "distance": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "mileage": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 1000
+                          },
+                          "price": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100000
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "age"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "dob",
+                          "asof"
+                        ],
+                        "properties": {
+                          "dob": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "asof": {
+                            "type": "string",
+                            "format": "date"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "electricity"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "units",
+                          "rate"
+                        ],
+                        "properties": {
+                          "units": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "fixed": {
+                            "type": "number",
+                            "minimum": 0,
+                            "default": 0
+                          },
+                          "other": {
+                            "type": "number",
+                            "minimum": 0,
+                            "default": 0
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "sip"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "monthly",
+                          "rate",
+                          "years"
+                        ],
+                        "properties": {
+                          "monthly": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 50
+                          },
+                          "years": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 50
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "ppf"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "yearlyDeposit",
+                          "rate",
+                          "years"
+                        ],
+                        "properties": {
+                          "yearlyDeposit": {
+                            "type": "number",
+                            "minimum": 500,
+                            "maximum": 150000
+                          },
+                          "rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 15
+                          },
+                          "years": {
+                            "type": "integer",
+                            "minimum": 15,
+                            "maximum": 50
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "ctc-salary"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "ctc",
+                          "basicPercent",
+                          "pfPercent"
+                        ],
+                        "properties": {
+                          "ctc": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "basicPercent": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 100
+                          },
+                          "pfPercent": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "includeGratuity": {
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "professionalTaxMonthly": {
+                            "type": "number",
+                            "minimum": 0,
+                            "default": 0
+                          },
+                          "tdsMonthly": {
+                            "type": "number",
+                            "minimum": 0,
+                            "default": 0
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "hra"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "actualHraReceived",
+                          "basicSalary",
+                          "rentPaid"
+                        ],
+                        "properties": {
+                          "actualHraReceived": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "basicSalary": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "rentPaid": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "metro": {
+                            "type": "boolean"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "calculator",
+                      "inputs"
+                    ],
+                    "properties": {
+                      "calculator": {
+                        "type": "string",
+                        "const": "basic"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "required": [
+                          "a",
+                          "operation"
+                        ],
+                        "properties": {
+                          "a": {
+                            "type": "number"
+                          },
+                          "b": {
+                            "type": "number"
+                          },
+                          "operation": {
+                            "type": "string",
+                            "enum": [
+                              "add",
+                              "subtract",
+                              "multiply",
+                              "divide",
+                              "percent"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calculation completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ok",
+                    "calculator",
+                    "result",
+                    "usage"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": "boolean",
+                      "const": true
+                    },
+                    "calculator": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "plan": {
+                          "type": "string"
+                        },
+                        "quota": {
+                          "type": "integer"
+                        },
+                        "used": {
+                          "type": "integer"
+                        },
+                        "remaining": {
+                          "type": "integer"
+                        },
+                        "rate_limit_per_minute": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body, calculator or inputs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, expired or revoked API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "API access disabled or required scope missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported media type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Monthly quota or rate limit exceeded. May include Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Temporary server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Private API key issued from the Customer API Dashboard. Keep it on your server."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error",
+          "code"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "retry_after_seconds": {
+            "type": "integer"
+          },
+          "quota": {
+            "type": "integer"
+          },
+          "used": {
+            "type": "integer"
+          },
+          "remaining": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Calculations"
+    }
+  ]
+}
