@@ -15,8 +15,9 @@ test('global language selector supports all configured locales', () => {
 test('language switching preserves the current route when its translation exists', () => {
   assert.match(shell, /const buildLocaleTarget=next=>/);
   assert.match(shell, /currentLocale==='en'\?p:p\.replace/);
-  assert.match(shell, /fetch\(target,\{method:'HEAD',cache:'no-store'\}\)/);
-  assert.match(shell, /if\(response\.ok\)\{location\.href=target;return;\}/);
+  assert.match(shell, /fetch\(target,\{method:'GET',cache:'no-store',credentials:'same-origin'\}\)/);
+  assert.match(shell, /response\.body\?\.cancel\(\)/);
+  assert.match(shell, /if\(response\.ok\)\{response\.body\?\.cancel\(\);location\.href=target;return;\}/);
   assert.match(shell, /location\.href=localeHome\[next\]/);
   assert.match(shell, /fc-language-notice/);
 });

@@ -217,8 +217,11 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
-      if(response.ok){location.href=target;return;}
+    // Use GET for static hosts/CDNs that do not implement HEAD consistently.
+    // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
+    fetch(target,{method:'GET',cache:'no-store',credentials:'same-origin'}).then(response=>{
+      if(response.ok){response.body?.cancel();location.href=target;return;}
+      response.body?.cancel();
       try{sessionStorage.setItem('fc-language-notice','This page is not yet available in the selected language. Opening that language homepage instead.')}catch(_){}
       location.href=localeHome[next];
     }).catch(()=>{
