@@ -752,7 +752,7 @@ test('open editorial content licence requires attribution and excludes software 
   assert.match(license, /Avnish Ahirwar/);
   assert.match(license, /state whether you made changes/i);
   assert.match(license, /commercial/i);
-  assert.match(license, /software and source code/i);
+  assert.match(license, /software, source code/i);
   assert.ok(terms.includes('/calculator/content-license.html'));
   assert.ok(about.includes('/calculator/content-license.html'));
   assert.ok(methodology.includes('/calculator/content-license.html'));
