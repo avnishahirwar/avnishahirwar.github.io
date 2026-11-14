@@ -44,6 +44,26 @@ if(typeof window.gtag!=='function'){
 }
 const p=location.pathname;
 const hi=p.startsWith('/hi/');
+// Keep category navigation inside the selected locale. A localized category card
+// links to its own anchor; on other localized pages it returns to that locale's hub.
+const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta'];
+if(localeCodes.includes(locale)){
+  const categoryMap={
+    '/calculator/finance-calculators.html':'finance',
+    '/calculator/tax-calculators.html':'tax',
+    '/calculator/business-calculators.html':'business',
+    '/calculator/everyday-calculators.html':'everyday'
+  };
+  for(const [href,id] of Object.entries(categoryMap)){
+    document.querySelectorAll('a[href="'+href+'"]').forEach(link=>{
+      const card=link.closest('section,article,.card,.fc-locale-card');
+      if(card&&p.startsWith('/'+locale+'/index.html'))card.id=id;
+      link.href='/'+locale+'/index.html#'+id;
+    });
+  }
+}
+
 const r='/calculator/';
 // Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
 const preservedAdminDashboardLink=['Admin',r+'admin.html'];
@@ -360,8 +380,8 @@ if(p.startsWith('/calculators/')&&main){
     copyResult.addEventListener('click',async()=>{const text=resultText();if(text.startsWith('No calculated result')){copyResult.textContent='Calculate first';return;}const ok=await copyText((main.querySelector('h1')?.textContent||document.title).trim()+'\n'+text+'\nSource: '+location.href.split('#')[0]);copyResult.textContent=ok?'Result copied':'Copy unavailable';});
     const shareResult=document.createElement('button');shareResult.type='button';shareResult.textContent='Share Result';
     shareResult.addEventListener('click',async()=>{const text=resultText();if(text.startsWith('No calculated result')){shareResult.textContent='Calculate first';return;}const title=(main.querySelector('h1')?.textContent||document.title).trim();const shareData={title:title+' — Friendly Calculator',text:text+'\nSource: '+location.href.split('#')[0],url:location.href.split('#')[0]};try{if(navigator.share){await navigator.share(shareData);shareResult.textContent='Shared';}else{const ok=await copyText(shareData.title+'\n'+shareData.text);shareResult.textContent=ok?'Share text copied':'Share unavailable';}}catch(error){if(error?.name!=='AbortError')shareResult.textContent='Share unavailable';}});
-    const print=document.createElement('button');print.type='button';print.textContent='Print Result / Save PDF';print.addEventListener('click',()=>window.print());
-    const png=document.createElement('button');png.type='button';png.textContent='Download Result (PNG)';png.addEventListener('click',()=>{
+    const print=document.createElement('button');print.type='button';print.textContent='Print / Save as PDF';print.addEventListener('click',()=>window.print());
+    const png=document.createElement('button');png.type='button';png.textContent='Download result image';png.addEventListener('click',()=>{
       const title=(main.querySelector('h1')?.textContent||document.title).trim();
       const result=resultNode();
       const lines=(result?.innerText||'Enter values and calculate to create a result image.').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12);
