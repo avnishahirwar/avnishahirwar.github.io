@@ -714,6 +714,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
   assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/, 'Global header must link to the All Calculators directory');
+  assert.match(shell, /\['Search Calculator',r\+'site-directory\.html#siteSearch'\]/, 'Global header must retain a direct Search Calculator link');
   assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
   assert.match(directory, /Browse all 202 calculator tools/);
   assert.match(directory, /Search 202 calculators by name or topic/);
@@ -738,8 +739,9 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
-  assert.doesNotMatch(shell, /footerLabels[\s\S]{0,600}Cookies/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact','Cookies'\]/);
+  assert.match(shell, /r\+'cookies\.html'/, 'Footer must link to the Cookie Policy page');
+  
 });
 
 test('open editorial content licence requires attribution and excludes software and brand assets', () => {
