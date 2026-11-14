@@ -902,3 +902,29 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
   }
 });
+
+
+test('Hindi percentage increase, decrease, difference and percentage-point pages are localized and indexed', () => {
+  const cases = [
+    ['percentage-increase-calculator', 'percentage-increase', 'प्रतिशत वृद्धि कैलकुलेटर', 'वृद्धि = मूल मान × वृद्धि दर ÷ 100। नया मान = मूल मान + वृद्धि।', ['मूल मान', 'वृद्धि (%)', 'वृद्धि राशि', 'नया मान']],
+    ['percentage-decrease-calculator', 'percentage-decrease', 'प्रतिशत कमी कैलकुलेटर', 'कमी = मूल मान × कमी दर ÷ 100। नया मान = मूल मान − कमी।', ['मूल मान', 'कमी (%)', 'कमी राशि', 'नया मान']],
+    ['percentage-difference-calculator', 'percentage-difference', 'प्रतिशत अंतर कैलकुलेटर', 'प्रतिशत अंतर = |A − B| ÷ ((|A| + |B|) ÷ 2) × 100।', ['पहला मान', 'दूसरा मान', 'पूर्ण अंतर', 'प्रतिशत अंतर']],
+    ['percentage-point-calculator', 'percentage-point', 'प्रतिशत अंक कैलकुलेटर', 'प्रतिशत अंक परिवर्तन = नई दर − मूल दर।', ['मूल दर', 'नई दर', 'प्रतिशत अंक में परिवर्तन', 'सापेक्ष परिवर्तन']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hp = path.join(root, 'hi/calculators/' + slug + '.html');
+    const ep = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hp), 'Missing Hindi page: ' + slug);
+    const h = fs.readFileSync(hp, 'utf8');
+    const e = fs.readFileSync(ep, 'utf8');
+    assert.match(h, /<html lang="hi">/);
+    assert.ok(h.includes('data-calculator="' + key + '"'));
+    assert.ok(h.includes('/assets/keyword-calculators.js'));
+    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
+    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(h.includes(title) && h.includes(formula));
+    for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
+  }
+});
