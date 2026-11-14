@@ -123,3 +123,14 @@ test('browser roles cannot directly access API key hashes or usage history', () 
   assert.match(revokeMigration, /revoke all privileges on table public\.api_keys from anon, authenticated/i);
   assert.match(revokeMigration, /revoke all privileges on table public\.api_usage from anon, authenticated/i);
 });
+
+test('published OpenAPI specification matches the implemented calculator API', () => {
+  const spec = JSON.parse(fs.readFileSync(path.join(root, 'api/openapi.json'), 'utf8'));
+  assert.equal(spec.openapi, '3.1.0');
+  assert.ok(spec.paths['/calculator-api'].post.security.some(s => s.ApiKeyAuth));
+  assert.equal(spec.components.securitySchemes.ApiKeyAuth.name, 'x-api-key');
+  const documented = spec.paths['/calculator-api'].post.requestBody.content['application/json'].schema.oneOf
+    .map(item => item.properties.calculator.const).sort();
+  assert.deepEqual(documented, calculators.slice().sort());
+  assert.ok(spec.paths['/calculator-api'].post.responses['429']);
+});
