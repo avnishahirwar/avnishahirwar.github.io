@@ -44,5 +44,5 @@ test('premium waitlist remains accessible but is not offered as an indexable sea
 test('all 211 calculator pages remain in the sitemap after category cleanup', () => {
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, 202);
+  assert.equal(new Set(calculatorUrls).size, 211);
 });
