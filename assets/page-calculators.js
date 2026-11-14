@@ -111,6 +111,7 @@
   const formatResult = (value,unit) => typeof value==="string"?value:unit==="%"?Number(value).toFixed(2)+"%":unit==="number"?Number(value).toFixed(2):unit==="L"?Number(value).toFixed(2)+" L":money(value);
   function init(){
     const h1=document.querySelector("main h1, h1"); if(!h1)return;
+    if(document.querySelector("[data-fc-native-calculator]"))return;
     const key=h1.textContent.trim().toLowerCase();
     const pageAliases={"/calculators/home-loan-emi-calculator.html":"loan emi calculator","/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
     const lookupKey=pageAliases[location.pathname]||(key==="gst calculator india"?"gst calculator":key);

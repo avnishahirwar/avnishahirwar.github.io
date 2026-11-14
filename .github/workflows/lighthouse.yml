@@ -11,6 +11,7 @@ on:
       - "assets/site-shell.css"
       - "assets/page-calculators.js"
       - "calculators/loan-emi-calculator.html"
+      - "calculators/minutes-to-hours-calculator.html"
       - "_headers"
   pull_request:
     paths:
@@ -19,6 +20,7 @@ on:
       - "assets/site-shell.css"
       - "assets/page-calculators.js"
       - "calculators/loan-emi-calculator.html"
+      - "calculators/minutes-to-hours-calculator.html"
       - "tests/mobile-schema.test.cjs"
       - "_headers"
 

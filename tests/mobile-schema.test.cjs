@@ -6,6 +6,8 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
 const chrome = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+const calculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
+const minutesToHours = fs.readFileSync(path.join(root, 'calculators/minutes-to-hours-calculator.html'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = sitemap.split('<loc>').slice(1).map(part => part.split('</loc>')[0]);
 
@@ -53,4 +55,15 @@ test('mobile calculator panels collapse input grids and keep wide tables scrolla
   assert.ok(chrome.includes('.fields,.result-grid,.form-grid,.input-grid'));
   assert.ok(chrome.includes('grid-template-columns:minmax(0,1fr)!important'));
   assert.ok(chrome.includes('overflow-x:auto'));
+});
+
+
+test('native Minutes-to-Hours calculator does not receive a duplicate injected calculator panel', () => {
+  assert.ok(minutesToHours.includes('data-fc-native-calculator'));
+  assert.ok(calculators.includes('if(document.querySelector("[data-fc-native-calculator]"))return;'));
+});
+
+test('native Minutes-to-Hours page reserves the shared header before shell hydration', () => {
+  assert.ok(minutesToHours.includes('<header class="fc-global-header">'));
+  assert.ok(minutesToHours.includes('id="fc-primary-navigation"'));
 });
