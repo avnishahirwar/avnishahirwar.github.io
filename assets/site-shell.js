@@ -113,7 +113,7 @@ const localeHome={en:'/',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.h
 // Do not auto-redirect by browser language; visitors choose explicitly.
 
 const chrome={
-en:{home:'Home',login:'Log In',all:'All Calculators',search:'Search Calculator',finance:'Finance',tax:'Tax',business:'Business Tools',everyday:'Everyday',blog:'Blog',embed:'Embed',forBusiness:'For Business',api:'API',plans:'Plans',about:'About',contact:'Contact',admin:'Admin',language:'Language',choose:'Choose website language',change:'Change language',footer:['Home','All Pages Directory','Finance','Tax','Business Tools','Everyday','For Business','API','Plans','Premium Waitlist','About','Methodology','Privacy','Terms','Disclaimer','Contact']},
+en:{home:'Home',login:'Login',all:'All Calculators',search:'Search Calculator',finance:'Finance',tax:'Tax',business:'Business Tools',everyday:'Everyday',blog:'Blog',embed:'Embed',forBusiness:'For Business',api:'API',plans:'Plans',about:'About',contact:'Contact',admin:'Admin',language:'Language',choose:'Choose website language',change:'Change language',footer:['Home','All Pages Directory','Finance','Tax','Business Tools','Everyday','For Business','API','Plans','Premium Waitlist','About','Methodology','Privacy','Terms','Disclaimer','Contact']},
 hi:{home:'होम',login:'लॉग इन',all:'सभी कैलकुलेटर',search:'कैलकुलेटर खोजें',finance:'वित्त',tax:'टैक्स',business:'बिज़नेस टूल्स',everyday:'रोज़मर्रा',blog:'ब्लॉग',embed:'एम्बेड',forBusiness:'बिज़नेस सेवाएँ',api:'API',plans:'प्लान',about:'हमारे बारे में',contact:'संपर्क',admin:'एडमिन',language:'भाषा',choose:'वेबसाइट की भाषा चुनें',change:'भाषा बदलें',footer:['होम','सभी पेज','वित्त','टैक्स','बिज़नेस टूल्स','रोज़मर्रा','बिज़नेस सेवाएँ','API','प्लान','प्रीमियम वेटलिस्ट','हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','संपर्क']},
 es:{home:'Inicio',login:'Iniciar sesión',all:'Calculadoras',search:'Buscar calculadoras',finance:'Finanzas',tax:'Impuestos',business:'Herramientas de negocio',everyday:'Diario',blog:'Blog',embed:'Insertar',forBusiness:'Para empresas',api:'API',plans:'Planes',about:'Acerca de',contact:'Contacto',admin:'Admin',language:'Idioma',choose:'Elegir idioma del sitio',change:'Cambiar idioma',footer:['Inicio','Directorio','Finanzas','Impuestos','Negocios','Diario','Para empresas','API','Planes','Lista premium','Acerca de','Metodología','Privacidad','Términos','Aviso legal','Contacto']},
 fr:{home:'Accueil',login:'Connexion',all:'Calculatrices',search:'Rechercher un calculateur',finance:'Finance',tax:'Impôts',business:'Outils professionnels',everyday:'Quotidien',blog:'Blog',embed:'Intégrer',forBusiness:'Pour les entreprises',api:'API',plans:'Offres',about:'À propos',contact:'Contact',admin:'Admin',language:'Langue',choose:'Choisir la langue du site',change:'Changer de langue',footer:['Accueil','Répertoire','Finance','Impôts','Entreprise','Quotidien','Entreprises','API','Offres','Liste premium','À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Contact']},
@@ -131,7 +131,6 @@ const links=[
   [nav.tax,currentLocale==='en'?r+'tax-calculators.html':localeHome[currentLocale]+'#tax'],
   [nav.everyday,currentLocale==='en'?r+'everyday-calculators.html':localeHome[currentLocale]+'#everyday'],
   [nav.all,r+'site-directory.html'],
-  [nav.search||'Search Calculator',r+'site-directory.html#siteSearch'],
   [nav.blog,currentLocale==='hi'?'/hi/blog/':'/blog/'],
   [nav.login,r+'dashboard.html']
 ];
@@ -141,17 +140,17 @@ const old=[...document.body.children].find(e=>e.tagName==='HEADER');if(old)old.r
 const routeLanguageSelect=h.querySelector('#fc-language-select');
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
-  en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact','Cookies'],
-  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क','कुकीज़'],
-  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Insertar','Contacto','Cookies'],
-  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Intégrer','Contact','Cookies'],
-  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Incorporar','Contato','Cookies'],
-  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','تضمين','اتصل بنا','ملفات تعريف الارتباط'],
-  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Sematkan','Kontak','Cookie'],
-  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','এম্বেড','যোগাযোগ','কুকিজ'],
-  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','உட்பொதி','தொடர்பு','குக்கீகள்']
+  en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'],
+  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क'],
+  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Insertar','Contacto'],
+  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Intégrer','Contact'],
+  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Incorporar','Contato'],
+  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','تضمين','اتصل بنا'],
+  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Sematkan','Kontak'],
+  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','এম্বেড','যোগাযোগ'],
+  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','உட்பொதி','தொடர்பு']
 };
-const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html',r+'cookies.html'];
+const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
 const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo" loading="lazy" decoding="async"><strong>FRIENDLY CALCULATOR</strong><br><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div><nav class="fc-global-footer-links" aria-label="'+nav.footer[10]+'">'+footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav><small>© 2026 Friendly Calculator</small></div>'

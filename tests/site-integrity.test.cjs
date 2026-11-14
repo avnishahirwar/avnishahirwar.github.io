@@ -161,6 +161,36 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
+test('shared header and footer expose only the requested navigation items in order', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
+  const expectedHeader = [
+    '[nav.home,localeHome[currentLocale]]',
+    '[nav.business,',
+    '[nav.finance,',
+    '[nav.tax,',
+    '[nav.everyday,',
+    '[nav.all,r+\'site-directory.html\']',
+    '[nav.blog,',
+    '[nav.login,r+\'dashboard.html\']'
+  ];
+  let last = -1;
+  for (const item of expectedHeader) {
+    const index = header.indexOf(item);
+    assert.ok(index > last, 'Header item is missing or out of order: ' + item);
+    last = index;
+  }
+  assert.doesNotMatch(header, /nav\.search|Search Calculator/);
+  assert.match(shell, /en:\{home:'Home',login:'Login'/);
+  const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
+  for (const labels of [
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क']"
+  ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
+  assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
+  assert.ok(shell.includes("r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
+});
+
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes("['Admin',r+'admin.html']"));
@@ -716,7 +746,9 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
   assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/, 'Global header must link to the All Calculators directory');
-  assert.match(shell, /\[nav\.search\|\|'Search Calculator',r\+'site-directory\.html#siteSearch'\]/, 'Global header must retain a localized direct Search Calculator link');
+  const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
+  assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/, 'Header must follow the approved compact navigation');
+  assert.match(directory, /id="siteSearch"/, 'Calculator search remains available in the directory');
   assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
   assert.match(directory, /Browse all 283 calculator tools/);
   assert.match(directory, /Search 283 calculators by name or topic/);
@@ -742,8 +774,8 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact','Cookies'\]/);
-  assert.match(shell, /r\+'cookies\.html'/, 'Footer must link to the Cookie Policy page');
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
+  assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
 
