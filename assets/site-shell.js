@@ -204,10 +204,8 @@ const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.lengt
   if(anchor&&anchor.closest('section'))anchor.closest('section').before(box);else main.append(box);
 })();
 const buildLocaleTarget=next=>{
-  // Preserve the current page path when an equivalent translation exists.
-  // Special English/Hindi pages use their established route aliases.
-  const alias=localeRoutes[p];
-  if(alias&&((next==='hi'&&alias.startsWith('/hi/'))||(next==='en'&&alias==='/')))return alias;
+  // Keep the equivalent page path when a translated page exists.
+  // Locale routes are derived from the URL; no undeclared global route map is required.
   const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)(?=\/)/,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
@@ -221,8 +219,11 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next)}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    fetch(target,{method:'HEAD',cache:'no-store'}).then(response=>{
-      if(response.ok){location.href=target;return;}
+    // Use GET for static hosts/CDNs that do not implement HEAD consistently.
+    // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
+    fetch(target,{method:'GET',cache:'no-store',credentials:'same-origin'}).then(response=>{
+      if(response.ok){response.body?.cancel();location.href=target;return;}
+      response.body?.cancel();
       try{sessionStorage.setItem('fc-language-notice','This page is not yet available in the selected language. Opening that language homepage instead.')}catch(_){}
       location.href=localeHome[next];
     }).catch(()=>{
