@@ -741,3 +741,20 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
   assert.doesNotMatch(shell, /footerLabels[\s\S]{0,600}Cookies/);
 });
+
+test('open editorial content licence requires attribution and excludes software and brand assets', () => {
+  const license = fs.readFileSync(path.join(root, 'calculator/content-license.html'), 'utf8');
+  const terms = fs.readFileSync(path.join(root, 'calculator/terms.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const methodology = fs.readFileSync(path.join(root, 'calculator/methodology.html'), 'utf8');
+  assert.ok(urls.includes('https://friendlycalculator.in/calculator/content-license.html'));
+  assert.match(license, /CC BY 4\.0/);
+  assert.match(license, /Avnish Ahirwar/);
+  assert.match(license, /indicate whether changes were made/i);
+  assert.match(license, /commercial/i);
+  assert.match(license, /software and source code/i);
+  assert.ok(terms.includes('/calculator/content-license.html'));
+  assert.ok(about.includes('/calculator/content-license.html'));
+  assert.ok(methodology.includes('/calculator/content-license.html'));
+  assert.match(terms, /commercially, provided you give appropriate credit/);
+});
