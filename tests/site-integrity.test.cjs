@@ -806,3 +806,17 @@ test('open editorial content licence requires attribution and excludes software 
   assert.ok(methodology.includes('/calculator/content-license.html'));
   assert.match(terms, /commercially, provided you give appropriate credit/);
 });
+
+
+test('Hindi decimal-to-percent converter is localized, reciprocal and indexed', () => {
+  const hindiPath = path.join(root, 'hi/calculators/decimal-to-percent-converter.html');
+  const englishPath = path.join(root, 'calculators/decimal-to-percent-converter.html');
+  assert.ok(fs.existsSync(hindiPath), 'Hindi converter page must exist');
+  const hindi = fs.readFileSync(hindiPath, 'utf8');
+  const english = fs.readFileSync(englishPath, 'utf8');
+  assert.match(hindi, /<html lang="hi">/);
+  assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
+  assert.ok(english.includes('hreflang="hi"'));
+  for (const phrase of ['दशमलव से प्रतिशत कनवर्टर','प्रतिशत = दशमलव मान × 100','अक्सर पूछे जाने वाले सवाल','गणना करें']) assert.ok(hindi.includes(phrase), 'Hindi page is missing: ' + phrase);
+  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html'));
+});
