@@ -864,3 +864,16 @@ test('Hindi median and mode calculator pages are localized, reciprocal and index
     assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html'), 'Missing sitemap URL: ' + slug);
   }
 });
+
+
+test('Hindi homepage links to the recently added calculator pages', () => {
+  const home = fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8');
+  for (const slug of [
+    'median-calculator', 'mode-calculator', 'weighted-average-calculator',
+    'square-root-calculator', 'decimal-to-percent-converter',
+    'hours-to-minutes-calculator', 'aspect-ratio-calculator',
+    'words-per-minute-calculator'
+  ]) {
+    assert.ok(home.includes('/hi/calculators/' + slug + '.html'), 'Hindi homepage is missing discovery link: ' + slug);
+  }
+});
