@@ -44,4 +44,60 @@ Disallow: /calculator/admin.html
 Disallow: /tests/
 Disallow: /avnish-ai/
 
+# Additional AI discovery and assistant crawlers. These rules permit access to
+# public pages only; private/admin/test paths remain excluded above.
+User-agent: GPTBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Applebot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
+User-agent: YouBot
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
+
 Sitemap: https://friendlycalculator.in/sitemap.xml
