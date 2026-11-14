@@ -62,3 +62,8 @@ test('native Minutes-to-Hours calculator does not receive a duplicate injected c
   assert.ok(minutesToHours.includes('data-fc-native-calculator'));
   assert.ok(calculators.includes('if(document.querySelector("[data-fc-native-calculator]"))return;'));
 });
+
+test('native Minutes-to-Hours page reserves the shared header before shell hydration', () => {
+  assert.ok(minutesToHours.includes('<header class="fc-global-header">'));
+  assert.ok(minutesToHours.includes('id="fc-primary-navigation"'));
+});
