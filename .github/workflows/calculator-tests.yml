@@ -1,4 +1,5 @@
 name: Calculator formula tests
+# Run the additional Omni math expansion regression suite.
 on:
   push:
     branches: [main]
