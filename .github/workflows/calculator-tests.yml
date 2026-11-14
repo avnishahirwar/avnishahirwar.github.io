@@ -1,4 +1,5 @@
 name: Calculator formula tests
+# Run the additional Omni math expansion regression suite.
 on:
   push:
     branches: [main]
@@ -15,7 +16,7 @@ jobs:
         with:
           node-version: 22
       - name: Run calculator regression tests
-        run: node --test tests/calculator-formulas.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs
+        run: node --test tests/calculator-formulas.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs tests/omni-math-expansion.test.cjs
   catalogue-audit:
     runs-on: ubuntu-latest
     steps:
