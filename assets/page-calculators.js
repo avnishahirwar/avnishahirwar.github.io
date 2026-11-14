@@ -117,6 +117,7 @@
     const def=definitions[lookupKey]; if(!def)return;
     const existingPanel=document.getElementById("live-page-calculator");
     const panel=existingPanel||document.createElement("section"); panel.id="live-page-calculator";panel.className=existingPanel?existingPanel.className:"panel";panel.style.scrollMarginTop="100px";
+    panel.replaceChildren();
     const heading=document.createElement("h2");heading.textContent="Use the "+def.title;panel.appendChild(heading);
     const form=document.createElement("form");form.noValidate=true;form.style.display="grid";form.style.gridTemplateColumns="repeat(auto-fit,minmax(210px,1fr))";form.style.gap="12px";
     def.fields.forEach(([id,label,type,initial])=>{const wrap=document.createElement("label");wrap.style.display="grid";wrap.style.gap="5px";wrap.style.fontWeight="600";wrap.textContent=label;let input;if(type==="select"){input=document.createElement("select");initial.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=id==="frequency"?({"1":"Annually (1 time/year)","2":"Semi-annually (2 times/year)","4":"Quarterly (4 times/year)","12":"Monthly (12 times/year)"}[v]||v):v;input.appendChild(o)})}else{input=document.createElement("input");input.type=type;input.step="any";input.value=initial}input.name=id;input.required=true;input.style.cssText="width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px;font:inherit";wrap.appendChild(input);form.appendChild(wrap)});
