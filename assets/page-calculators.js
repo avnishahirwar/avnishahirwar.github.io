@@ -114,8 +114,10 @@
     const key=h1.textContent.trim().toLowerCase();
     const pageAliases={"/calculators/home-loan-emi-calculator.html":"loan emi calculator","/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
     const lookupKey=pageAliases[location.pathname]||(key==="gst calculator india"?"gst calculator":key);
-    const def=definitions[lookupKey]; if(!def||document.getElementById("live-page-calculator"))return;
-    const panel=document.createElement("section"); panel.id="live-page-calculator";panel.className="panel";panel.style.scrollMarginTop="100px";
+    const def=definitions[lookupKey]; if(!def)return;
+    const existingPanel=document.getElementById("live-page-calculator");
+    const panel=existingPanel||document.createElement("section"); panel.id="live-page-calculator";panel.className=existingPanel?existingPanel.className:"panel";panel.style.scrollMarginTop="100px";
+    panel.replaceChildren();
     const heading=document.createElement("h2");heading.textContent="Use the "+def.title;panel.appendChild(heading);
     const form=document.createElement("form");form.noValidate=true;form.style.display="grid";form.style.gridTemplateColumns="repeat(auto-fit,minmax(210px,1fr))";form.style.gap="12px";
     def.fields.forEach(([id,label,type,initial])=>{const wrap=document.createElement("label");wrap.style.display="grid";wrap.style.gap="5px";wrap.style.fontWeight="600";wrap.textContent=label;let input;if(type==="select"){input=document.createElement("select");initial.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=id==="frequency"?({"1":"Annually (1 time/year)","2":"Semi-annually (2 times/year)","4":"Quarterly (4 times/year)","12":"Monthly (12 times/year)"}[v]||v):v;input.appendChild(o)})}else{input=document.createElement("input");input.type=type;input.step="any";input.value=initial}input.name=id;input.required=true;input.style.cssText="width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px;font:inherit";wrap.appendChild(input);form.appendChild(wrap)});
@@ -262,7 +264,7 @@
       const steps=document.createElement("ol");rows.forEach(([label,value,suffix])=>{const li=document.createElement("li");li.textContent=label+": "+(formatResult(value,suffix));steps.appendChild(li)});solution.appendChild(steps);
       output.appendChild(solution);
       output.style.display="block";if(typeof window.gtag==="function")window.gtag("event","calculator_used",{calculator_name:def.title,calculator_page:location.pathname})});
-    panel.append(form,output);const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);
+    panel.append(form,output);if(!existingPanel){const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);}
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();

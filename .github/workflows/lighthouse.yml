@@ -2,11 +2,23 @@ name: Lighthouse and Core Web Vitals (lab)
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/lighthouse.yml"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "assets/page-calculators.js"
+      - "calculators/loan-emi-calculator.html"
+      - "_headers"
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
+      - "assets/page-calculators.js"
+      - "calculators/loan-emi-calculator.html"
       - "tests/mobile-schema.test.cjs"
       - "_headers"
 
@@ -29,6 +41,24 @@ jobs:
 
       - name: Verify Chrome
         run: google-chrome --version
+
+      - name: Wait for GitHub Pages to publish the updated calculator assets
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..30}; do
+            html="$(curl -fsSL "https://friendlycalculator.in/calculators/loan-emi-calculator.html?deploy=${GITHUB_SHA}" || true)"
+            js="$(curl -fsSL "https://friendlycalculator.in/assets/page-calculators.js?deploy=${GITHUB_SHA}" || true)"
+            if grep -q "fc-calculator-reserved" <<<"$html" && grep -q "const existingPanel" <<<"$js"; then
+              echo "Production calculator assets match commit ${GITHUB_SHA}."
+              exit 0
+            fi
+            echo "Waiting for GitHub Pages deployment (attempt ${attempt}/30)..."
+            sleep 20
+          done
+          echo "::error::Production did not publish the expected assets within 10 minutes."
+          exit 1
 
       - name: Run Lighthouse against production pages
         shell: bash
