@@ -151,6 +151,7 @@ const footerLinks=[
   ['About',currentLocale==='hi'?'/hi/about.html':r+'about.html'],
   ['Methodology',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html'],
   ['Privacy',r+'privacy.html'],
+  ['Cookies',r+'cookies.html'],
   ['Terms',r+'terms.html'],
   ['Disclaimer',r+'disclaimer.html'],
   ['Embed','/embed/'],
