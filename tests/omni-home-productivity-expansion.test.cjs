@@ -41,7 +41,7 @@ test('typing speed and speaking duration handle errors and rounded seconds', () 
   close(a[0][1],60); close(a[1][1],59.4); close(a[2][1],99);
   const b = d['speaking-time'].calc({words:750,rate:130,pauses:30});
   assert.equal(b[1][1],'6 min 16 sec');
-  assert.deepEqual(d['speaking-time'].calc({words:1,rate:1,pauses:0})[1][1],'1 min 0 sec');
+  assert.deepEqual(d['speaking-time'].calc({words:1,rate:1,pauses:0})[1][1],'1 min 00 sec');
 });
 test('paper batch mass and Pomodoro session totals are consistent', () => {
   const d = loadDefinitions();
