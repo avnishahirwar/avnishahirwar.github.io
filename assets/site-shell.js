@@ -132,7 +132,7 @@ const links=[
   [nav.everyday,currentLocale==='en'?r+'everyday-calculators.html':localeHome[currentLocale]+'#everyday'],
   [nav.all,r+'site-directory.html'],
   [nav.search||'Search Calculator',r+'site-directory.html#siteSearch'],
-  [nav.blog,currentLocale==='en'?'/blog/':'/'+currentLocale+'/blog/'],
+  [nav.blog,currentLocale==='hi'?'/hi/blog/':'/blog/'],
   [nav.login,r+'dashboard.html']
 ];
 const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+nav.language+'</span><select id="fc-language-select" aria-label="'+nav.choose+'">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
