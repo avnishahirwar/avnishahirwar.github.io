@@ -107,6 +107,7 @@ test('owner-designated permanent website features are protected from accidental 
     'calculator/admin.html',
     'calculator/about.html',
     'calculator/privacy.html',
+    'calculator/cookies.html',
     'calculator/terms.html',
     'calculator/disclaimer.html',
     'sitemap.xml',
@@ -120,6 +121,10 @@ test('owner-designated permanent website features are protected from accidental 
   const business = fs.readFileSync(path.join(root, 'calculator/business.html'), 'utf8');
   const contact = fs.readFileSync(path.join(root, 'calculator/contact.html'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const cookies = fs.readFileSync(path.join(root, 'calculator/cookies.html'), 'utf8');
+  assert.match(shell, /\['Cookies',r\+'cookies\.html'\]/);
+  assert.match(cookies, /<title>Cookies Policy \| Friendly Calculator<\/title>/);
+  assert.match(cookies, /rel="canonical" href="https:\/\/friendlycalculator\.in\/calculator\/cookies\.html"/);
 
   const permanentModels = [
     'Business Dashboard & SaaS Workspaces', 'Embed-as-a-Service', 'Automated Business Reports',
