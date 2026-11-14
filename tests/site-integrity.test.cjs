@@ -744,6 +744,17 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   
 });
 
+test('Founder landing page has the approved portrait, LinkedIn profile and factual identity markup', () => {
+  const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  assert.match(founder, /Avnish Ahirwar/);
+  assert.match(founder, /Investor and Founder/);
+  assert.match(founder, /src="\/assets\/founder-avnish-profile\.webp/);
+  assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar415/);
+  assert.match(founder, /application\/ld\+json/);
+  assert.match(about, /href="\/calculator\/founder\.html"/);
+});
+
 test('open editorial content licence requires attribution and excludes software and brand assets', () => {
   const license = fs.readFileSync(path.join(root, 'calculator/content-license.html'), 'utf8');
   const terms = fs.readFileSync(path.join(root, 'calculator/terms.html'), 'utf8');
