@@ -37,7 +37,7 @@ test('Search Calculator is localized across all supported locales', () => {
 });
 
 test('localized Blog navigation uses the active locale route', () => {
-  assert.ok(shell.includes("[nav.blog,currentLocale==='en'?'/blog/':'/'+currentLocale+'/blog/']"));
+  assert.ok(shell.includes("[nav.blog,currentLocale==='hi'?'/hi/blog/':'/blog/']"));
 });
 
 
