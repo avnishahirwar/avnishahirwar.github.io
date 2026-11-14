@@ -697,6 +697,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
   const homepageLinks = uniqueCalculatorLinks(homepage);
   const directoryLinks = uniqueCalculatorLinks(directory);
@@ -710,7 +711,9 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(homepageLinks.size, 202, 'Homepage must link to every unique calculator');
   assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
-  assert.match(homepage, /Browse all 202 calculators across 14 categories/);
+  assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
+  assert.match(shell, /\['Search Calculators','\/calculator\/site-directory\.html#siteSearch'\]/, 'Global header must link to the directory search');
+  assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
   assert.match(directory, /Browse all 202 calculator tools/);
   assert.match(directory, /Search 202 calculators by name or topic/);
   assert.match(directory, /Showing all 202 calculators in 14 categories/);
