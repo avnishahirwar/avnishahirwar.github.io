@@ -26,10 +26,21 @@ if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
 window.dataLayer=window.dataLayer||[];
 if(!window.__fcGtmContainerLoaded){
   window.__fcGtmContainerLoaded=true;
-  const gtmScript=document.createElement('script');
-  gtmScript.async=true;
-  gtmScript.src='https://www.googletagmanager.com/gtm.js?id=GTM-MGJQH4DB';
-  document.head.appendChild(gtmScript);
+  const injectGtm=()=>{
+    if(window.__fcGtmScriptStarted)return;
+    window.__fcGtmScriptStarted=true;
+    const gtmScript=document.createElement('script');
+    gtmScript.async=true;
+    gtmScript.fetchPriority='low';
+    gtmScript.src='https://www.googletagmanager.com/gtm.js?id=GTM-MGJQH4DB';
+    document.head.appendChild(gtmScript);
+  };
+  const scheduleGtm=()=>{
+    if('requestIdleCallback' in window)window.requestIdleCallback(injectGtm,{timeout:5000});
+    else window.setTimeout(injectGtm,2000);
+  };
+  if(document.readyState==='complete')window.setTimeout(scheduleGtm,1000);
+  else window.addEventListener('load',()=>window.setTimeout(scheduleGtm,1000),{once:true});
 }
 // Privacy-first analytics: GA4 is the only configured analytics provider.
 // Ensure localized pages also report to the same Friendly Calculator GA4 stream.
