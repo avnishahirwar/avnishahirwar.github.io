@@ -714,7 +714,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
   assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/, 'Global header must link to the All Calculators directory');
-  assert.match(shell, /\['Search Calculator',r\+'site-directory\.html#siteSearch'\]/, 'Global header must retain a direct Search Calculator link');
+  assert.match(shell, /\[nav\.search\|\|'Search Calculator',r\+'site-directory\.html#siteSearch'\]/, 'Global header must retain a localized direct Search Calculator link');
   assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
   assert.match(directory, /Browse all 202 calculator tools/);
   assert.match(directory, /Search 202 calculators by name or topic/);
