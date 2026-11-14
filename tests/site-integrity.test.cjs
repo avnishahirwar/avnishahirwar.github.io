@@ -109,6 +109,7 @@ test('owner-designated permanent website features are protected from accidental 
     'calculator/privacy.html',
     'calculator/terms.html',
     'calculator/disclaimer.html',
+    'calculator/cookies.html',
     'sitemap.xml',
     'robots.txt',
     'ads.txt'
@@ -726,4 +727,17 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
   assert.match(about, /202 public calculators/);
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
+});
+
+test('Cookie Policy is discoverable from Privacy, excluded from analytics and keeps the approved seven-link footer', () => {
+  const privacy = fs.readFileSync(path.join(root, 'calculator/privacy.html'), 'utf8');
+  const cookies = fs.readFileSync(path.join(root, 'calculator/cookies.html'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(privacy.includes('href="/calculator/cookies.html"'));
+  assert.ok(urls.includes('https://friendlycalculator.in/calculator/cookies.html'));
+  assert.ok(shell.includes('(?:privacy|cookies)'));
+  assert.match(cookies, /Last updated: 14 November 2026/);
+  assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
+  assert.doesNotMatch(shell, /footerLabels[\s\S]{0,600}Cookies/);
 });
