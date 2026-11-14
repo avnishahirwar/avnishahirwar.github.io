@@ -263,8 +263,8 @@ test('homepage uses the same navy brand color as the shared site shell', () => {
 
 test('language switch checks the selected locale calculator file before navigating', () => {
   const shell = fs.readFileSync(new URL('../assets/site-shell.js', 'file://' + __filename), 'utf8');
-  assert.match(shell, /fetch\(target,\{method:'HEAD',cache:'no-store'\}\)/);
-  assert.match(shell, /if\(response\.ok\)\{location\.href=target/);
+  assert.match(shell, /fetch\(target,\{method:'GET',cache:'no-store',credentials:'same-origin'\}\)/);
+  assert.match(shell, /if\(response\.ok\)\{response\.body\?\.cancel\(\);location\.href=target/);
   assert.match(shell, /fc-language-notice/);
 });
 
@@ -310,7 +310,8 @@ test('Investment Calculator is present, linked, indexed in sitemap and backed by
 
 test('language switcher dynamically checks existing locale calculator pages without a stale slug allowlist', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes("fetch(target,{method:'HEAD',cache:'no-store'})"));
+  assert.ok(shell.includes("fetch(target,{method:'GET',cache:'no-store',credentials:'same-origin'})"));
+  assert.ok(shell.includes("response.body?.cancel()"));
   assert.doesNotMatch(shell, /sharedTranslatedSlugs|hindiOnlySlugs|otherLocaleOnlySlugs/);
   for (const locale of ['hi','es','fr','pt','ar','id','bn','ta']) {
     const directory = path.join(root, locale, 'calculators');
