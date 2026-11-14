@@ -112,12 +112,10 @@ const localeHome={en:'/',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.h
 // Honour a language explicitly chosen by the visitor on future visits to the English root.
 try{
   const savedLocale=localStorage.getItem('fc-language-preference');
-  if(p==='/'&&savedLocale&&localeHome[savedLocale]){
-    if(savedLocale!=='en')location.replace(localeHome[savedLocale]);
-  }else if(p==='/'&&!savedLocale){
-    const browserLocales=[...(navigator.languages||[]),navigator.language].filter(Boolean);
-    const detected=browserLocales.map(value=>String(value).toLowerCase().split('-')[0]).find(code=>localeHome[code]);
-    if(detected&&detected!=='en')location.replace(localeHome[detected]);
+  // English is the first-visit default. Only a language explicitly chosen
+  // by the visitor may redirect the root homepage on later visits.
+  if(p==='/'&&savedLocale&&localeHome[savedLocale]&&savedLocale!=='en'){
+    location.replace(localeHome[savedLocale]);
   }
 }catch(_){}
 
