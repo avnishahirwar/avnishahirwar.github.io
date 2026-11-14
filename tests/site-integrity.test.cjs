@@ -843,3 +843,24 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
   }
 });
+
+
+test('Hindi median and mode calculator pages are localized, reciprocal and indexed', () => {
+  for (const [slug, title, formula, phrases] of [
+    ['median', 'माध्यिका कैलकुलेटर', 'विषम संख्या में मान हों तो बीच का मान माध्यिका होता है।', ['संख्याएँ','क्रमबद्ध मान','माध्यिका']],
+    ['mode', 'बहुलक कैलकुलेटर', 'बहुलक वह मान या मान हैं जिनकी आवृत्ति डेटा सेट में सबसे अधिक होती है।', ['संख्याएँ','अधिकतम आवृत्ति','बहुलक']]
+  ]) {
+    const hindiPath = path.join(root, 'hi/calculators/' + slug + '-calculator.html');
+    const englishPath = path.join(root, 'calculators/' + slug + '-calculator.html');
+    assert.ok(fs.existsSync(hindiPath), 'Missing Hindi page: ' + slug);
+    const hindi = fs.readFileSync(hindiPath, 'utf8');
+    const english = fs.readFileSync(englishPath, 'utf8');
+    assert.match(hindi, /<html lang="hi">/);
+    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
+    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
+    assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
+    for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html'), 'Missing sitemap URL: ' + slug);
+  }
+});
