@@ -1004,3 +1004,29 @@ test('Hindi percentile, prime number, scientific notation and completing-square 
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
+
+
+test('Hindi quartile, coefficient of variation, complex conjugate and discriminant pages are localized and indexed', () => {
+  const cases = [
+    ['quartile-calculator', 'quartile', 'चतुर्थक कैलकुलेटर', 'IQR = Q3 − Q1।', ['डेटा मान', 'प्रथम चतुर्थक (Q1)', 'माध्यिका (Q2)', 'तृतीय चतुर्थक (Q3)', 'अंतर-चतुर्थक परास (IQR)']],
+    ['coefficient-of-variation-calculator', 'coefficient-of-variation', 'परिवर्तन गुणांक कैलकुलेटर', 'परिवर्तन गुणांक = population standard deviation ÷ |औसत| × 100%।', ['डेटा मान', 'औसत', 'जनसंख्या मानक विचलन', 'परिवर्तन गुणांक']],
+    ['complex-conjugate-calculator', 'complex-conjugate', 'सम्मिश्र संयुग्म कैलकुलेटर', 'z = a + bi का संयुग्म a − bi है।', ['वास्तविक भाग', 'काल्पनिक गुणांक', 'सम्मिश्र संख्या', 'संयुग्म', 'मापांक (Modulus)']],
+    ['discriminant-calculator', 'discriminant', 'विविक्तकर कैलकुलेटर', 'विविक्तकर Δ = b² − 4ac।', ['गुणांक a', 'गुणांक b', 'स्थिर पद c', 'विविक्तकर', 'मूलों का प्रकार']]
+  ];
+  for (const [slug, key, title, formula, phrases] of cases) {
+    const hp = path.join(root, 'hi/calculators/' + slug + '.html');
+    const ep = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hp), 'Missing Hindi page: ' + slug);
+    const h = fs.readFileSync(hp, 'utf8');
+    const e = fs.readFileSync(ep, 'utf8');
+    assert.match(h, /<html lang="hi">/);
+    assert.ok(h.includes('data-calculator="' + key + '"'));
+    assert.ok(h.includes('/assets/keyword-calculators.js'));
+    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
+    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(h.includes(title) && h.includes(formula));
+    for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
+  }
+});
