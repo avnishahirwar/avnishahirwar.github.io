@@ -32,8 +32,8 @@ function walk(dir, files = []) {
 }
 
 function getCanonical(file, html) {
-  const match = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
-  const href = match && match[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+  const match = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+  const href = match && match[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
   const fallbackPath = file.endsWith('/index.html')
     ? '/' + file.slice(0, -'index.html'.length)
     : file === 'index.html' ? '/' : '/' + file;
@@ -48,8 +48,8 @@ function getCanonical(file, html) {
 }
 
 function isNoindex(html) {
-  return /<meta\\b[^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["'][^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b/i.test(html) ||
-    /<meta\\b[^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["']/i.test(html);
+  return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 
 function getLastmod(file) {
@@ -93,10 +93,10 @@ function build() {
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
     (entry.lastmod ? '<lastmod>' + entry.lastmod + '</lastmod>' : '') +
     '</url>'
-  ).join('\\n');
-  const xml = '<?xml version="1.0" encoding="UTF-8"?>\\n' +
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n' +
-    body + '\\n</urlset>\\n';
+  ).join('\n');
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    body + '\n</urlset>\n';
 
   if (Buffer.byteLength(xml, 'utf8') > MAX_BYTES) {
     throw new Error('Single sitemap exceeds the 50 MB uncompressed limit.');
