@@ -8,6 +8,7 @@ on:
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "tests/mobile-schema.test.cjs"
+      - "_headers"
 
 permissions:
   contents: read
