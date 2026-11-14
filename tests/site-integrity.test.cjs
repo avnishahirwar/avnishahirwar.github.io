@@ -820,3 +820,26 @@ test('Hindi decimal-to-percent converter is localized, reciprocal and indexed', 
   for (const phrase of ['दशमलव से प्रतिशत कनवर्टर','प्रतिशत = दशमलव मान × 100','अक्सर पूछे जाने वाले सवाल','गणना करें']) assert.ok(hindi.includes(phrase), 'Hindi page is missing: ' + phrase);
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html'));
 });
+
+
+test('Hindi utility calculator pages are localized, reciprocal and indexed', () => {
+  const pages = [
+    ['aspect-ratio-calculator', 'आस्पेक्ट रेशियो कैलकुलेटर', 'आस्पेक्ट रेशियो = चौड़ाई : ऊँचाई।', ['चौड़ाई','ऊँचाई','विकर्ण']],
+    ['words-per-minute-calculator', 'शब्द प्रति मिनट कैलकुलेटर', 'कुल WPM = कुल शब्द ÷ मिनट।', ['टाइप किए गए शब्द','शुद्ध टाइपिंग गति','सटीकता']],
+    ['weighted-average-calculator', 'भारित औसत कैलकुलेटर', 'भारित औसत = Σ(मान × भार) ÷ Σ(भार)।', ['भारित योग','भारों का योग','भारित औसत']]
+  ];
+  for (const [slug, title, formula, phrases] of pages) {
+    const hindiPath = path.join(root, 'hi/calculators/' + slug + '.html');
+    const englishPath = path.join(root, 'calculators/' + slug + '.html');
+    assert.ok(fs.existsSync(hindiPath), 'Missing Hindi page: ' + slug);
+    const hindi = fs.readFileSync(hindiPath, 'utf8');
+    const english = fs.readFileSync(englishPath, 'utf8');
+    assert.match(hindi, /<html lang="hi">/);
+    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
+    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
+    assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
+    for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
+    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+  }
+});
