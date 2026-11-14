@@ -19,7 +19,7 @@ const ensureFavicon=()=>{
 };
 ensureFavicon();
 // Do not load analytics tags on the Privacy Policy URL used for consent review.
-if(!/(^|\/)privacy\.html$/.test(location.pathname)){
+if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
 // Google Tag Manager container: loaded once on every page using this shared shell.
 // Keep the existing direct GA4 configuration below; do not add a second GA4 tag
 // inside GTM unless the direct GA4 installation is deliberately migrated.
