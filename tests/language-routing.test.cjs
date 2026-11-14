@@ -21,16 +21,23 @@ test('language switching preserves the current route when its translation exists
   assert.match(shell, /fc-language-notice/);
 });
 
-test('saved manual language choice takes priority over browser language detection', () => {
-  assert.match(shell, /savedLocale=localStorage\.getItem\('fc-language-preference'\)/);
-  assert.match(shell, /savedSource=localStorage\.getItem\('fc-language-source'\)/);
-  assert.match(shell, /if\(p==='\/'&&savedLocale&&localeHome\[savedLocale\]&&savedLocale!=='en'\)/);
-  assert.match(shell, /else if\(p==='\/'&&!savedLocale\)/);
-  assert.match(shell, /navigator\.languages\)\&\&navigator\.languages\.length/);
-  assert.match(shell, /navigator\.language\|\|'en'/);
-  assert.match(shell, /split\('-'\)\[0\]/);
-  assert.match(shell, /location\.replace\(localeHome\[detected\]\)/);
+test('URL locale remains authoritative and language switching does not auto-redirect', () => {
+  assert.match(shell, /The URL is the source of truth for the active language/);
+  assert.doesNotMatch(shell, /navigator\.languages/);
+  assert.doesNotMatch(shell, /location\.replace\(localeHome\[detected\]\)/);
+  assert.match(shell, /routeLanguageSelect\.value=currentLocale/);
   assert.match(shell, /setItem\('fc-language-source','manual'\)/);
+  assert.doesNotMatch(shell, /localeRoutes\[p\]/);
+});
+
+test('Search Calculator is localized across all supported locales', () => {
+  for (const label of ['Search Calculator','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு']) {
+    assert.ok(shell.includes(label), 'Missing localized Search Calculator label: ' + label);
+  }
+});
+
+test('localized Blog navigation uses the active locale route', () => {
+  assert.match(shell, /currentLocale==='en'\?'\/blog\/'\:'\/'+currentLocale\+'\/blog\//);
 });
 
 
