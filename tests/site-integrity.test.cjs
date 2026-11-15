@@ -1371,7 +1371,7 @@ test('directory prioritizes its visible brand illustration as the LCP image', ()
 
 test('homepage FAQ summary controls meet the minimum mobile touch target', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(page, /\.home-note details>summary\{[^}]*min-height:44px/);
+  assert.match(page, /\.home-note details>summary\{[^}]*display:block[^}]*min-height:44px/);
 });
 
 test('directory category links use visible accessible names and readable search status text', () => {
