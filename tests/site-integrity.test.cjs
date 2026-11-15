@@ -804,7 +804,8 @@ test('Founder landing page has the approved portrait, LinkedIn profile and factu
   const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   assert.match(founder, /Avnish Ahirwar/);
-  assert.match(founder, /Investor and Founder/);
+  assert.match(founder, /Founder and Author/);
+  assert.match(founder, /\"@type\":\"ProfilePage\"/);
   assert.match(founder, /src="\/assets\/founder-avnish-profile\.webp/);
   assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar415/);
   assert.match(founder, /application\/ld\+json/);
@@ -1094,4 +1095,19 @@ test('homepage category cards and headings match the calculator links in each ca
   for (const card of cards) {
     assert.equal(Number(card[2]), counts.get(card[1]), 'Category index count must match section links: ' + card[1]);
   }
+});
+
+
+test('Avnish Ahirwar founder identity is crawlable and consistently linked', () => {
+  const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  assert.match(home, /Founded by <a href="\/calculator\/founder\.html">Avnish Ahirwar<\/a>/);
+  assert.match(home, /"@type":"Person","@id":"https:\/\/friendlycalculator\.in\/calculator\/founder\.html#person","name":"Avnish Ahirwar"/);
+  assert.match(founder, /"@type":"ProfilePage"/);
+  assert.match(founder, /"name":"Avnish Ahirwar"/);
+  assert.match(founder, /<title>Avnish Ahirwar \| Founder of Friendly Calculator and Author<\/title>/);
+  assert.match(about, /<a href="\/calculator\/founder\.html">Avnish Ahirwar — Founder and Author<\/a>/);
+  assert.match(sitemap, /<loc>https:\/\/friendlycalculator\.in\/calculator\/founder\.html<\/loc>/);
 });
