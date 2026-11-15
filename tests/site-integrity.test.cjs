@@ -740,7 +740,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const navEnd = homepage.indexOf('</nav>', navStart);
   const nav = homepage.slice(navStart, navEnd);
   const navCategoryCount = (nav.match(/<a href="#home-/g) || []).length;
-  const navCalculatorTotal = [...nav.matchAll(/<span >(\d+) calculators? <\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
+  const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.equal(homepageLinks.size, 284, 'Homepage must link to every unique calculator');
   assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
@@ -758,7 +758,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
-  const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span >(\d+) calculators? <\/span>/g)];
+  const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculator(?:s)?<\/span>/g)];
   const directorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   assert.equal(directoryCards.length, 16, 'Directory category index must expose all 15 categories');
   assert.deepEqual(directoryCards.map(match => match[1]), directorySections.map(match => match[1]), 'Directory category index must link to every category in the same order');
@@ -1077,7 +1077,7 @@ test('homepage category cards and headings match the calculator links in each ca
   for (const match of sections) {
     const section = match[0];
     const id = (section.match(/<section class="category" id="([^"]+)"/) || [])[1];
-    const headingCount = Number((section.match(/<span class="category-count" >(\d+) calculators? <\/span>/) || [])[1]);
+    const headingCount = Number((section.match(/<span class="category-count">(\d+) calculator(?:s)?<\/span>/) || [])[1]);
     const group = (section.match(/<div class="category-links">([\s\S]*?)<\/div>/) || [])[1] || '';
     const groupedLinks = (group.match(/class="calculator-link"/g) || []).length;
     const allSectionLinks = (section.match(/class="calculator-link"/g) || []).length;
@@ -1090,7 +1090,7 @@ test('homepage category cards and headings match the calculator links in each ca
   }
 
   const index = (homepage.match(/<nav class="home-category-index"[\s\S]*?<\/nav>/) || [])[0] || '';
-  const cards = [...index.matchAll(/<a href="#([^"]+)"[^>]*>[\s\S]*?<span >(\d+) calculators? <\/span><\/a>/g)];
+  const cards = [...index.matchAll(/<a href="#([^"]+)"[^>]*>[\s\S]*?<span>(\d+) calculator(?:s)?<\/span><\/a>/g)];
   assert.equal(cards.length, sections.length, 'Category index must link to every category exactly once');
   for (const card of cards) {
     assert.equal(Number(card[2]), counts.get(card[1]), 'Category index count must match section links: ' + card[1]);
