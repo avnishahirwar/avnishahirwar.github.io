@@ -31,8 +31,31 @@
 <meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QVWQSEDRGL');</script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());
+gtag('config','G-QVWQSEDRGL');
+// Keep GA4 commands queued immediately, but load its large runtime after the
+// initial render so analytics parsing does not compete with the homepage.
+(()=>{
+  let loaded=false;
+  const load=()=>{
+    if(loaded)return;
+    loaded=true;
+    const script=document.createElement('script');
+    script.async=true;
+    script.src='https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL';
+    document.head.appendChild(script);
+  };
+  const schedule=()=>window.setTimeout(()=>{
+    if('requestIdleCallback' in window)window.requestIdleCallback(load,{timeout:6000});
+    else load();
+  },4000);
+  if(document.readyState==='complete')schedule();
+  else window.addEventListener('load',schedule,{once:true});
+})();
+</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/assets/site-shell.css">
 <style>
