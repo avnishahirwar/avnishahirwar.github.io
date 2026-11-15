@@ -94,3 +94,11 @@ test('homepage calculator search skips scanning all 285 links on initial empty q
   assert.match(script, /input\.addEventListener\('input',filter\)/);
   assert.match(script, /clear\.addEventListener\('click'/);
 });
+
+
+test('directory preloads its measured LCP hero illustration from the document head', () => {
+  const head = directory.slice(0, directory.indexOf('</head>'));
+  assert.ok(head.includes('<link rel="preload" as="image" href="/assets/friendly-calculator-brand-illustration.svg" type="image/svg+xml" fetchpriority="high">'));
+  assert.ok(directory.includes('<img src="/assets/friendly-calculator-brand-illustration.svg"'));
+  assert.ok(directory.includes('fetchpriority="high" decoding="async"'));
+});
