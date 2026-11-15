@@ -13,18 +13,19 @@ function init(){
  function dimension(value){const n=Number(value);if(!Number.isInteger(n)||n<1||n>maxSide)throw new Error('Enter a whole-number dimension between 1 and '+maxSide+' pixels.');return n;}
  function validateDimensions(w,h){if(w*h>maxPixels)throw new Error('The output is larger than 40 megapixels. Reduce the width or height.');}
  function loadFile(file){
-  resetOutput();sourceFile=file;sourceImage=null;
+  resetOutput();sourceFile=file;sourceImage=null;revoke(sourceUrl);sourceUrl=null;
+  originalPreview.removeAttribute('src');originalPreview.hidden=true;originalCaption.textContent='Original image';
   if(!file){setEnabled(false);sourceInfo.textContent='No image selected.';return;}
   if(!['image/png','image/jpeg','image/webp','image/gif'].includes(file.type)){setEnabled(false);setStatus('Choose a PNG, JPG, WebP or GIF image. SVG and other formats are not supported.',true);return;}
   if(file.size>maxFileBytes){setEnabled(false);setStatus('The selected image exceeds the 20 MB input limit.',true);return;}
-  revoke(sourceUrl);sourceUrl=URL.createObjectURL(file);
+  sourceUrl=URL.createObjectURL(file);
   const image=new Image();
   image.onload=()=>{
    sourceImage=image;ratio=image.naturalWidth/image.naturalHeight;
    const scale=Math.min(1,maxSide/image.naturalWidth,maxSide/image.naturalHeight,Math.sqrt(maxPixels/(image.naturalWidth*image.naturalHeight)));
    widthInput.value=String(Math.max(1,Math.round(image.naturalWidth*scale)));
    heightInput.value=String(Math.max(1,Math.round(image.naturalHeight*scale)));
-   setEnabled(true);originalPreview.src=sourceUrl;originalPreview.hidden=false;
+   setEnabled(true);qualityInput.disabled=formatInput.value==='image/png';originalPreview.src=sourceUrl;originalPreview.hidden=false;
    originalCaption.textContent='Original: '+image.naturalWidth+' × '+image.naturalHeight+' px';
    sourceInfo.textContent=(file.size/1024/1024).toFixed(2)+' MB · '+file.type;
    setStatus('Image loaded. Choose dimensions and output format.');
