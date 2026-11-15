@@ -70,7 +70,7 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
-const isCalculatorRoute=/^\/(?:hi|es|fr|pt|ar|id|bn|ta)?\/calculators\//.test(p);
+const isCalculatorRoute=/^\/(?:(?:hi|es|fr|pt|ar|id|bn|ta)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
