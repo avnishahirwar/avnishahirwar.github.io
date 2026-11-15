@@ -1181,3 +1181,13 @@ test('PWA manifest is installable and service worker caches only public query-fr
   assert.match(worker, /request\.mode === 'navigate'/);
   assert.match(offline, /You're offline/);
 });
+
+
+test('minutes-to-hours page documents fractional minutes, reference conversions and display precision', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/minutes-to-hours-calculator.html'), 'utf8');
+  assert.match(page, /95 minutes is 1\.5833 decimal hours/);
+  assert.match(page, /12\.5 minutes is valid/);
+  assert.match(page, /rounds the remaining minutes to two decimal places/);
+  assert.match(page, /1,440/);
+  assert.match(page, /does not determine payroll, overtime, billable hours or contractual working time/);
+});
