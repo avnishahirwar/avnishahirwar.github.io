@@ -1127,3 +1127,11 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
   assert.match(page, /does not download national, state, bank or company holiday calendars/);
   assert.match(page, /no longer than ten years/);
 });
+
+test('homepage category summary and directory markup match the published catalogue', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  assert.match(homepage, /organised into 16 clearly labelled categories/);
+  assert.doesNotMatch(directory, /\\\\n/);
+  assert.match(directory, /Showing all 284 calculators in 16 categories/);
+});
