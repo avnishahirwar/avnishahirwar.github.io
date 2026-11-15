@@ -772,3 +772,20 @@ test('EPS pension estimate validates eligible service and salary before calculat
   assert.match(js, /case'eps':\{if\(v\.service<10\)/);
   assert.match(js, /valid service period up to 50 years/);
 });
+
+
+test('advanced matrix calculator supports 2x2 and 3x3 operations with worked method labels', () => {
+  const matrix = require('../assets/matrix-calculator.js');
+  assert.equal(matrix.determinant([[1, 2], [3, 4]]), -2);
+  assert.equal(matrix.determinant([[1, 2, 3], [0, 1, 4], [5, 6, 0]]), 1);
+  assert.deepEqual(matrix.add([[1, 2], [3, 4]], [[5, 6], [7, 8]]), [[6, 8], [10, 12]]);
+  assert.deepEqual(matrix.multiply([[1, 2], [3, 4]], [[5, 6], [7, 8]]), [[19, 22], [43, 50]]);
+  assert.deepEqual(matrix.transpose([[1, 2, 3], [4, 5, 6]]), [[1, 4], [2, 5], [3, 6]]);
+  const inv = matrix.inverse([[4, 7], [2, 6]]);
+  assert.ok(Math.abs(inv[0][0] - 0.6) < 1e-10);
+  assert.ok(Math.abs(inv[0][1] + 0.7) < 1e-10);
+  assert.throws(() => matrix.inverse([[1, 2], [2, 4]]), /singular/);
+  const explained = matrix.calculate([[1, 2], [3, 4]], [[5, 6], [7, 8]], 'multiply');
+  assert.deepEqual(explained.matrix, [[19, 22], [43, 50]]);
+  assert.ok(explained.steps.length >= 2);
+});
