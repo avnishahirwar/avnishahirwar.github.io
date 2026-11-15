@@ -1320,3 +1320,13 @@ test('Bengali and Tamil aspect-ratio pages preserve the shared formula and recip
     assert.match(html, /hreflang="ta"/);
   }
 });
+
+
+test('hours-to-minutes page provides unit-consistent reference examples and valid social metadata', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/hours-to-minutes-calculator.html'), 'utf8');
+  assert.match(page, /Quick conversion reference/);
+  assert.match(page, /<td>2 hours 30 minutes<\/td><td>150<\/td><td>2\.5<\/td>/);
+  assert.match(page, /15 minutes is 0\.25 hour and 45 minutes is 0\.75 hour/);
+  assert.match(page, /rel="icon" type="image\/png" href="\/favicon\.png"/);
+  assert.match(page, /twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
+});
