@@ -209,6 +209,7 @@ test('About page catalogue matches every published calculator page', () => {
   assert.match(about, /Platform:<\/strong> 283 public calculators/);
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
+  assert.doesNotMatch(about, /<ol[^>]+start=/i, 'Catalogue numbering must not restart between calculator batches');
 });
 
 test('contact page has one consistent indexable robots directive', () => {
@@ -756,7 +757,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(categoryCount, 15, 'Directory must show all 15 calculator categories');
   assert.equal(navCategoryCount, 15, 'Homepage shortcuts must expose all 15 categories');
   assert.equal(navCalculatorTotal, 283, 'Homepage category shortcuts must account for every calculator');
-  assert.match(homepage, /href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>52 calculators<\/span><\/a>/, "Math shortcut must include the eight added calculators");
+  assert.match(homepage, /href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>61 calculators<\/span><\/a>/, "Math shortcut must match all 61 published calculators");
   assert.ok(homepage.includes('/calculators/stamp-duty-calculator.html'));
   assert.ok(homepage.includes('/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
