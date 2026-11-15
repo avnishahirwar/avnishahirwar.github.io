@@ -66,6 +66,7 @@ case'fee':r={'Estimated transaction fee':v.amount*rate,'Estimated amount after f
 }
 const formatValue=(k,val)=>{if(typeof val!=='number')return val;const key=k.toLowerCase();if(key.includes('utilization'))return val.toFixed(2)+'%';if(key.includes('hours'))return val.toFixed(2)+' hours';if(key.includes('bigha'))return val.toFixed(4)+' Bigha';if(key.includes('guntha'))return val.toFixed(4)+' Guntha';if(key.includes('cent'))return val.toFixed(4)+' Cent';if(key.includes('acres'))return val.toFixed(4)+' acres';if(key.includes('ratio')||key.includes('turnover')||key.includes('period')||key.includes('months'))return val.toFixed(2);return money(val);};out.innerHTML=Object.entries(r).map(([k,val])=>'<div class="result-row"><span>'+(c.kind==='rentbuy'?(rentBuyI18n[locale]?.results?.[k]||k):(language?(language.keys[k]||k):k))+'</span><strong>'+formatValue(k,val)+'</strong></div>').join('')+'<p class="small">'+(c.kind==='rentbuy'?(rentBuyI18n[locale]?.small||'Illustrative estimate based only on entered values.'):(language?language.small:'Illustrative estimate based only on entered values. Verify current product terms, applicable rules, fees and tax treatment with the relevant official source or provider.'))+'</p>';
 appendResultBreakdownChart(c.kind,r);
+appendEmiAmortizationSchedule(c.kind,v,rate/12,r);
 }
 
 /* Show a proportionate, accessible breakdown chart for numeric savings/loan results. */
@@ -99,6 +100,32 @@ function appendResultBreakdownChart(kind,result){
     track.appendChild(bar);row.append(label,track);section.appendChild(row);
   });
   out.appendChild(section);
+}
+
+/* Add an auditable month-by-month schedule to every standard EMI result. */
+function appendEmiAmortizationSchedule(kind,values,monthlyRate,result){
+  if(kind!=='emi'||!out||typeof out.appendChild!=='function')return;
+  const months=values.months,principal=values.principal,emi=result['Monthly EMI'];
+  if(!Number.isFinite(months)||!Number.isFinite(principal)||!Number.isFinite(emi)||months<=0||principal<=0||emi<=0)return;
+  const section=document.createElement('section');section.className='fc-amortization-report';
+  section.style.cssText='margin-top:14px;padding:14px;border:1px solid #dfe5eb;border-radius:10px;background:#fff';
+  const heading=document.createElement('h3');heading.textContent=locale==='hi'?'महीने-दर-महीने भुगतान अनुसूची':'Month-by-month repayment schedule';section.appendChild(heading);
+  const note=document.createElement('p');note.className='small';
+  if(!Number.isInteger(months)||months>600){note.textContent=locale==='hi'?'विस्तृत अनुसूची के लिए अवधि पूर्ण महीनों में और अधिकतम 600 महीने होनी चाहिए।':'The detailed schedule is shown for whole-month tenures up to 600 months. The EMI estimate above remains available for the entered period.';section.appendChild(note);out.appendChild(section);return;}
+  const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent=locale==='hi'?'पूरी भुगतान अनुसूची देखें ('+months+' महीने)':'View full repayment schedule ('+months+' months)';details.appendChild(summary);
+  const wrapper=document.createElement('div');wrapper.style.cssText='max-width:100%;overflow-x:auto;margin-top:10px';
+  const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse;font-size:.9rem';
+  const headers=locale==='hi'?['महीना','किस्त','मूलधन','ब्याज','शेष राशि']:['Month','EMI','Principal','Interest','Balance'];
+  const thead=document.createElement('thead'),headRow=document.createElement('tr');headers.forEach(label=>{const th=document.createElement('th');th.textContent=label;th.style.cssText='padding:8px;text-align:right;border-bottom:1px solid #dfe5eb;white-space:nowrap';headRow.appendChild(th);});thead.appendChild(headRow);table.appendChild(thead);
+  const tbody=document.createElement('tbody');let balance=principal,interestTotal=0,principalTotal=0;
+  for(let month=1;month<=months;month++){
+    const interestPart=balance*monthlyRate;let payment=Math.min(emi,balance+interestPart);let principalPart=Math.max(0,payment-interestPart);
+    if(month===months||principalPart>balance){principalPart=balance;payment=balance+interestPart;}
+    balance=Math.max(0,balance-principalPart);interestTotal+=interestPart;principalTotal+=principalPart;
+    const valuesForRow=[String(month),money(payment),money(principalPart),money(interestPart),money(balance)];const row=document.createElement('tr');valuesForRow.forEach(value=>{const td=document.createElement('td');td.textContent=value;td.style.cssText='padding:8px;text-align:right;border-bottom:1px solid #edf1f4;white-space:nowrap';row.appendChild(td);});tbody.appendChild(row);
+  }
+  table.appendChild(tbody);wrapper.appendChild(table);details.appendChild(wrapper);section.appendChild(details);
+  note.textContent=(locale==='hi'?'कुल अनुसूचित मूलधन: ':'Scheduled principal: ')+money(principalTotal)+' · '+(locale==='hi'?'कुल अनुसूचित ब्याज: ':'Scheduled interest: ')+money(interestTotal)+'. '+(locale==='hi'?'यह स्थिर दर और समान मासिक किस्त मानता है; वास्तविक lender शुल्क और दर बदलाव शामिल नहीं हैं।':'Assumes a constant monthly rate and equal instalments; lender fees, insurance, rate resets and provider-specific rounding are excluded.');section.appendChild(note);out.appendChild(section);
 }
 
 
