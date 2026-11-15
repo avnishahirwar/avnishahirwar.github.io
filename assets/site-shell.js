@@ -70,6 +70,7 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
+const isCalculatorRoute=/^\/(?:(?:hi|es|fr|pt|ar|id|bn|ta)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
@@ -262,7 +263,7 @@ try{
   if(notice){sessionStorage.removeItem('fc-language-notice');const n=document.createElement('p');n.className='fc-language-notice';n.setAttribute('role','status');n.textContent=notice;const target=document.querySelector('main')||document.body;target.prepend(n);}
 }catch(_){}
 document.querySelectorAll('a[href="/#tools"],a[href="/#calculators"],a[href="/#contact"],a[href="#tools"],a[href="#calculators"]').forEach(a=>a.href=/contact/.test(a.getAttribute('href'))?r+'contact.html':r+'site-directory.html');
-if(p.startsWith('/calculators/')){
+if(isCalculatorRoute){
   const getLocalCalculatorTarget=()=>document.getElementById('sip-tool')||document.getElementById('live-page-calculator')||document.querySelector('main form,main input,main select,main button')?.closest('section');
   const localTarget=getLocalCalculatorTarget();
   document.querySelectorAll('a[href^="/#calc-"],a[href^="https://friendlycalculator.in/#calc-"]').forEach(a=>{
@@ -328,7 +329,7 @@ document.querySelectorAll('p').forEach(e=>{if((e.textContent||'').trim().toLower
 }
 document.addEventListener('click',event=>{
   const button=event.target.closest('button');
-  if(!button||!p.startsWith('/calculators/'))return;
+  if(!button||!isCalculatorRoute)return;
   const label=(button.textContent||'').trim();
   const isCalculate=/calculate/i.test(label)||(p.endsWith('/basic-calculator.html')&&label==='=');
   if(!isCalculate||typeof window.gtag!=='function')return;
@@ -349,7 +350,7 @@ document.addEventListener('change',event=>{
 });
 
 // Give visitors simple, non-intrusive ways to share useful calculator pages.
-if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel')){
+if(isCalculatorRoute&&main&&!document.querySelector('.fc-share-panel')){
   const shareUrl=location.href.split('#')[0];
   const shareTitle=(document.querySelector('h1')?.textContent||document.title||'Friendly Calculator').trim();
   const encodedUrl=encodeURIComponent(shareUrl);
@@ -384,7 +385,7 @@ if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel
 
 
 // Shared calculator enhancements: export, embed attribution, what-if controls and related links.
-if(p.startsWith('/calculators/')&&main){
+if(isCalculatorRoute&&main){
   if(!document.querySelector('style[data-fc-tools]')){
     const style=document.createElement('style');style.dataset.fcTools='1';
     style.textContent='.fc-export-panel,.fc-related-tools,.fc-whatif-panel,.fc-scenario-panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:18px;margin:18px 0}.fc-tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.fc-tool-actions button{border:0;border-radius:8px;background:#101c2c;color:#fff;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.fc-export-panel textarea{width:100%;min-height:88px;padding:10px;border:1px solid #bdc8d2;border-radius:8px;font:12px/1.5 ui-monospace,monospace}.fc-whatif-panel input[type=range]{width:100%}.fc-live-chart{margin:14px 0}.fc-live-row{margin:10px 0}.fc-live-row small{display:block;margin-bottom:4px;color:#526273}.fc-live-track{height:12px;background:#e8edf2;border-radius:20px;overflow:hidden}.fc-live-bar{height:100%;background:#385a7b;border-radius:20px}.fc-scenario-list{display:grid;gap:10px}.fc-scenario-card{border:1px solid #dfe5eb;border-radius:8px;padding:12px;margin:10px 0}.fc-scenario-card p{overflow-wrap:anywhere}.fc-scenario-comparison{max-width:100%;overflow-x:auto}.fc-scenario-table{width:100%;border-collapse:collapse;min-width:520px}.fc-scenario-table th,.fc-scenario-table td{padding:9px;border-bottom:1px solid #dfe5eb;text-align:left;vertical-align:top}.fc-scenario-table th{background:#f3f6f8}';
@@ -431,6 +432,29 @@ if(p.startsWith('/calculators/')&&main){
   // User-controlled, device-local scenario snapshots and Excel-compatible CSV export.
   // Nothing is stored or transmitted until the visitor explicitly selects Save scenario.
   if(!main.querySelector('.fc-scenario-panel')){
+    const scenarioCopy=currentLocale==='hi'?{
+      title:'सेव किए गए गणना परिदृश्य',
+      description:'अधिकतम 3 परिदृश्य केवल इसी ब्राउज़र और डिवाइस पर सेव होंगे। कोई डेटा Friendly Calculator सर्वर पर अपलोड नहीं होगा।',
+      save:'वर्तमान परिदृश्य सेव करें',compare:'सेव किए गए परिदृश्यों की तुलना करें',clear:'सभी परिदृश्य हटाएँ',
+      restore:'इनपुट वापस लाएँ',delete:'हटाएँ',csv:'CSV डाउनलोड करें (Excel)',
+      saved:'परिदृश्य इसी डिवाइस के ब्राउज़र में सेव हुआ।',deleted:'परिदृश्य इस डिवाइस से हटा दिया गया।',
+      cleared:'इस डिवाइस से सभी सेव किए गए परिदृश्य हटा दिए गए।',
+      compared:'परिदृश्यों की तुलना हो गई। निष्कर्ष निकालने से पहले मान्यताओं और इकाइयों की जाँच करें।',
+      restored:'इनपुट वापस आ गए। यदि कैलकुलेटर अपने आप अपडेट न हो तो Calculate चुनें।',
+      enter:'पहले मान दर्ज करें और गणना करें।',maximum:'अधिकतम 3 परिदृश्य सेव हो सकते हैं। नया सेव करने से पहले एक हटाएँ।',
+      needTwo:'तुलना के लिए कम-से-कम दो परिदृश्य सेव करें।'
+    }:{
+      title:'Save and compare scenarios',
+      description:'Save up to 3 calculation snapshots on this device. Nothing is uploaded to Friendly Calculator.',
+      save:'Save current scenario',compare:'Compare saved scenarios',clear:'Clear saved scenarios',
+      restore:'Restore inputs',delete:'Delete',csv:'Download CSV (Excel)',
+      saved:'Scenario saved only in this browser on this device.',deleted:'Scenario deleted from this device.',
+      cleared:'All saved scenarios cleared from this device.',
+      compared:'Saved scenarios compared. Review the assumptions and units before drawing conclusions.',
+      restored:'Inputs restored. Select Calculate if this calculator does not update automatically.',
+      enter:'Enter values and calculate first.',maximum:'You can save up to 3 scenarios. Delete one before saving another.',
+      needTwo:'Save at least two scenarios to compare.'
+    };
     const excludedField=/dob|birth|email|phone|mobile|address|password|token|secret|api.?key/i;
     const calculatorControls=()=>{
       const root=main.querySelector('#live-page-calculator,form,[data-fc-native-calculator]')||main;
@@ -453,7 +477,7 @@ if(p.startsWith('/calculators/')&&main){
     }));
     const csvEscape=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
     const exportCsv=document.createElement('button');
-    exportCsv.type='button';exportCsv.textContent='Download CSV (Excel)';
+    exportCsv.type='button';exportCsv.textContent=scenarioCopy.csv;
     exportCsv.addEventListener('click',()=>{
       const rows=[['Friendly Calculator — '+(main.querySelector('h1')?.textContent||document.title)],['Page',location.href.split('#')[0]],['Exported',new Date().toISOString()],[],['Type','Name','Value']];
       readInputs().forEach(item=>rows.push(['Input',item.label,item.value]));
@@ -478,15 +502,13 @@ if(p.startsWith('/calculators/')&&main){
 
     const panel=document.createElement('section');panel.className='fc-scenario-panel';
     panel.setAttribute('aria-label','Saved calculation scenarios');
-    const heading=document.createElement('h2');heading.textContent=currentLocale==='hi'?'इस डिवाइस पर Scenario सेव करें':'Save and compare scenarios';
+    const heading=document.createElement('h2');heading.textContent=scenarioCopy.title;
     const description=document.createElement('p');
-    description.textContent=currentLocale==='hi'
-      ?'अधिकतम 3 गणना परिदृश्य केवल इसी ब्राउज़र और डिवाइस पर सेव होंगे। इन्हें सर्वर पर अपलोड नहीं किया जाता।'
-      :'Save up to 3 calculation snapshots on this device, then compare their inputs and results side by side. Nothing is uploaded to Friendly Calculator.';
+    description.textContent=scenarioCopy.description;
     const actions=document.createElement('div');actions.className='fc-tool-actions';
-    const save=document.createElement('button');save.type='button';save.textContent=currentLocale==='hi'?'वर्तमान Scenario सेव करें':'Save current scenario';
-    const compare=document.createElement('button');compare.type='button';compare.textContent=currentLocale==='hi'?'Scenarios की तुलना करें':'Compare saved scenarios';
-    const clear=document.createElement('button');clear.type='button';clear.textContent=currentLocale==='hi'?'सभी हटाएँ':'Clear saved scenarios';
+    const save=document.createElement('button');save.type='button';save.textContent=scenarioCopy.save;
+    const compare=document.createElement('button');compare.type='button';compare.textContent=scenarioCopy.compare;
+    const clear=document.createElement('button');clear.type='button';clear.textContent=scenarioCopy.clear;
     const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
     const list=document.createElement('div');list.className='fc-scenario-list';
     const comparison=document.createElement('div');comparison.className='fc-scenario-comparison';
@@ -508,7 +530,7 @@ if(p.startsWith('/calculators/')&&main){
         const card=document.createElement('article');card.className='fc-scenario-card';
         const title=document.createElement('strong');title.textContent=item.name+' · '+new Date(item.savedAt).toLocaleString();
         const result=document.createElement('p');result.textContent=item.result||'No result text was detected when saved.';
-        const restore=document.createElement('button');restore.type='button';restore.textContent='Restore inputs';
+        const restore=document.createElement('button');restore.type='button';restore.textContent=scenarioCopy.restore;
         restore.addEventListener('click',()=>{
           const controls=calculatorControls();
           item.inputs.forEach(input=>{
@@ -519,10 +541,10 @@ if(p.startsWith('/calculators/')&&main){
             control.dispatchEvent(new Event('input',{bubbles:true}));
             control.dispatchEvent(new Event('change',{bubbles:true}));
           });
-          status.textContent='Inputs restored. Select Calculate if this calculator does not update automatically.';
+          status.textContent=scenarioCopy.restored;
         });
-        const remove=document.createElement('button');remove.type='button';remove.textContent='Delete';
-        remove.addEventListener('click',()=>{const next=readSaved();next.splice(index,1);writeSaved(next);status.textContent='Scenario deleted from this device.';render();});
+        const remove=document.createElement('button');remove.type='button';remove.textContent=scenarioCopy.delete;
+        remove.addEventListener('click',()=>{const next=readSaved();next.splice(index,1);writeSaved(next);status.textContent=scenarioCopy.deleted;render();});
         const buttons=document.createElement('div');buttons.className='fc-tool-actions';buttons.append(restore,remove);
         card.append(title,result,buttons);list.appendChild(card);
       });
@@ -531,15 +553,15 @@ if(p.startsWith('/calculators/')&&main){
     };
     save.addEventListener('click',()=>{
       const inputs=readInputs(),result=resultSnapshot();
-      if(!inputs.length&&!result){status.textContent='Enter values and calculate first.';return;}
+      if(!inputs.length&&!result){status.textContent=scenarioCopy.enter;return;}
       const saved=readSaved();
-      if(saved.length>=3){status.textContent='You can save up to 3 scenarios. Delete one before saving another.';return;}
+      if(saved.length>=3){status.textContent=scenarioCopy.maximum;return;}
       saved.push({name:'Scenario '+(saved.length+1),savedAt:new Date().toISOString(),inputs,result});
-      if(writeSaved(saved)){status.textContent='Scenario saved only in this browser on this device.';render();}
+      if(writeSaved(saved)){status.textContent=scenarioCopy.saved;render();}
     });
     compare.addEventListener('click',()=>{
       const saved=readSaved();comparison.replaceChildren();
-      if(saved.length<2){status.textContent='Save at least two scenarios to compare.';return;}
+      if(saved.length<2){status.textContent=scenarioCopy.needTwo;return;}
       const table=document.createElement('table');table.className='fc-scenario-table';
       const head=document.createElement('thead'),headRow=document.createElement('tr');
       ['Input / result',...saved.map(item=>item.name)].forEach(label=>{const th=document.createElement('th');th.scope='col';th.textContent=label;headRow.appendChild(th);});
@@ -552,10 +574,10 @@ if(p.startsWith('/calculators/')&&main){
       });
       const resultRow=document.createElement('tr'),resultLabel=document.createElement('th');resultLabel.scope='row';resultLabel.textContent='Calculated result';resultRow.appendChild(resultLabel);
       saved.forEach(item=>{const cell=document.createElement('td');cell.textContent=item.result||'—';resultRow.appendChild(cell);});body.appendChild(resultRow);
-      table.appendChild(body);comparison.appendChild(table);status.textContent='Saved scenarios compared. Review the assumptions and units before drawing conclusions.';
+      table.appendChild(body);comparison.appendChild(table);status.textContent=scenarioCopy.compared;
     });
     clear.addEventListener('click',()=>{
-      try{localStorage.removeItem(storageKey);status.textContent='All saved scenarios cleared from this device.';render();}catch(_){status.textContent='Unable to clear browser storage.';}
+      try{localStorage.removeItem(storageKey);status.textContent=scenarioCopy.cleared;render();}catch(_){status.textContent='Unable to clear browser storage.';}
     });
     render();
   }
