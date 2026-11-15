@@ -1449,7 +1449,7 @@ test('homepage recent and favourite calculators remain browser-local and bounded
   assert.match(shell, /const pageItem=\{url:location\.pathname/);
   assert.match(personalTools, /slice\(0,5\)/);
   assert.match(personalTools, /fc-clear-recent/);
-  assert.match(personalTools, /not sent to our servers|stay in this browser/i);
+  assert.match(homepage, /not sent to our servers|stay in this browser/i);
   const vm = require('node:vm');
   assert.doesNotThrow(() => new vm.Script(personalTools), 'Homepage personal tools script must parse');
 });
