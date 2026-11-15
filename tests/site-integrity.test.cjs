@@ -206,7 +206,7 @@ test('About page catalogue matches every published calculator page', () => {
   const countMatch = about.match(/Available calculators \(\d+ tools\)/);
   assert.ok(countMatch, 'About page must publish the calculator catalogue count');
   assert.ok(about.includes('Available calculators (' + calculatorPages.length + ' tools)'));
-  assert.match(about, /Platform:<\/strong> 283 public calculators/);
+  assert.match(about, /Platform:<\/strong> 284 public calculators/);
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
   assert.doesNotMatch(about, /<ol[^>]+start=/i, 'Catalogue numbering must not restart between calculator batches');
@@ -742,7 +742,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const navCategoryCount = (nav.match(/<a href="#home-/g) || []).length;
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculators<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
-  assert.equal(homepageLinks.size, 283, 'Homepage must link to every unique calculator');
+  assert.equal(homepageLinks.size, 284, 'Homepage must link to every unique calculator');
   assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
@@ -751,16 +751,16 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/, 'Header must follow the approved compact navigation');
   assert.match(directory, /id="siteSearch"/, 'Calculator search remains available in the directory');
   assert.match(directory, /id="siteSearch"/, 'Directory must retain the calculator search input');
-  assert.match(directory, /Browse all 283 calculator tools/);
-  assert.match(directory, /Search 283 calculators by name or topic/);
-  assert.match(directory, /Showing all 283 calculators in 15 categories/);
-  assert.equal(categoryCount, 15, 'Directory must show all 15 calculator categories');
+  assert.match(directory, /Browse all 284 calculator tools/);
+  assert.match(directory, /Search 284 calculators by name or topic/);
+  assert.match(directory, /Showing all 284 calculators in 16 categories/);
+  assert.equal(categoryCount, 16, 'Directory must show all 15 calculator categories');
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
   const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculators<\/span>/g)];
   const directorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
-  assert.equal(directoryCards.length, 15, 'Directory category index must expose all 15 categories');
+  assert.equal(directoryCards.length, 16, 'Directory category index must expose all 15 categories');
   assert.deepEqual(directoryCards.map(match => match[1]), directorySections.map(match => match[1]), 'Directory category index must link to every category in the same order');
   const directoryCategoryCounts = new Map();
   for (const section of directorySections) {
@@ -775,14 +775,14 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
     assert.equal(Number(card[2]), directoryCategoryCounts.get(card[1]), 'Directory index count must match its category links: ' + card[1]);
   }
 
-  assert.equal(navCategoryCount, 15, 'Homepage shortcuts must expose all 15 categories');
-  assert.equal(navCalculatorTotal, 283, 'Homepage category shortcuts must account for every calculator');
+  assert.equal(navCategoryCount, 16, 'Homepage shortcuts must expose all 15 categories');
+  assert.equal(navCalculatorTotal, 284, 'Homepage category shortcuts must account for every calculator');
   assert.match(homepage, /href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>61 calculators<\/span><\/a>/, "Math shortcut must match all 61 published calculators");
   assert.ok(homepage.includes('/calculators/stamp-duty-calculator.html'));
   assert.ok(homepage.includes('/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.match(about, /283 public calculators/);
+  assert.match(about, /284 public calculators/);
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
