@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "Friendly Calculator",
+  "short_name": "Friendly Calc",
+  "description": "Free browser-based calculators for finance, tax, maths and everyday tasks.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f7f9",
+  "theme_color": "#101c2c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

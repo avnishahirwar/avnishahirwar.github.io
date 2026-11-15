@@ -18,6 +18,22 @@ const ensureFavicon=()=>{
   }
 };
 ensureFavicon();
+/* Installable app metadata and a conservative offline cache for public pages only. */
+const ensurePwa=()=>{
+  if(!document.head)return;
+  if(!document.querySelector('link[rel="manifest"]')){
+    const manifestLink=document.createElement('link');
+    manifestLink.rel='manifest';
+    manifestLink.href='/manifest.webmanifest';
+    document.head.appendChild(manifestLink);
+  }
+  if(typeof navigator==='undefined'||!('serviceWorker' in navigator)||location.protocol!=='https:')return;
+  const registerWorker=()=>{navigator.serviceWorker.register('/sw.js',{scope:'/'}).catch(()=>{});};
+  if(document.readyState==='complete')registerWorker();
+  else window.addEventListener('load',registerWorker,{once:true});
+};
+ensurePwa();
+
 // Do not load analytics tags on the Privacy Policy URL used for consent review.
 if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
 // Google Tag Manager container: loaded once on every page using this shared shell.
