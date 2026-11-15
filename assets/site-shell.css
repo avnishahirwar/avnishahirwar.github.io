@@ -1,4 +1,4 @@
-:root{--fc-shell-blue:#d8bd82;--fc-shell-blue-dark:#f0dfb5;--fc-shell-ink:#172638;--fc-shell-muted:#64717d;--fc-shell-border:#d9e0e6;--fc-navy:#101c2c;--fc-navy-deep:#0b1928;--fc-paper:#f5f6f8}
+:root{--fc-shell-blue:#d8bd82;--fc-shell-blue-dark:#f0dfb5;--fc-shell-ink:#172638;--fc-shell-muted:#5f6b76;--fc-shell-border:#d9e0e6;--fc-navy:#101c2c;--fc-navy-deep:#0b1928;--fc-paper:#f5f6f8}
 *,*::before,*::after{box-sizing:border-box}
 html{width:100%;max-width:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{width:100%;max-width:100%;min-width:0;overflow-x:clip}
@@ -54,7 +54,8 @@ main :is(.panel,.content,.note,.card,.quick,.category,.search-panel,.searchbar,.
 main :is(.panel,.content,.note,.card,.quick,.category,.search-panel,.searchbar,.section,.faq details,.example){background:#fff}
 main :is(.btn,.cta,button[type="submit"],button.calc){background:var(--fc-navy);color:#fff;border-color:var(--fc-navy)}
 main :is(.btn,.cta,button[type="submit"],button.calc):hover{background:#20364e}
-main :is(.eyebrow,.crumb a,.card span){color:#8b6d32}
+main :is(.eyebrow,.crumb a,.card span){color:#80632f}
+main .category-count{color:#5f6b76}
 main :is(.formula,.result,.search-hint){background:#edf2f6}
 main input,main select,main textarea{background:#fff;color:#172638;border:1px solid #cbd5df}
 main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafbfd;border-color:#cbd4dc;color:#84919d}
