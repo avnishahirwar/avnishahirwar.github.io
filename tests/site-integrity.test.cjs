@@ -1423,3 +1423,8 @@ test('homepage stays lightweight while all 285 calculators remain searchable and
     assert.doesNotThrow(() => new vm.Script(script[1]), 'Homepage inline script ' + (index + 1) + ' must parse');
   }
 });
+
+test('homepage calculator search results region has a valid accessible role', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(homepage, /id="fc-home-search-results"[^>]*role="region"[^>]*aria-label="Calculator search results"/);
+});
