@@ -70,3 +70,13 @@ test('Income Tax calculator uses the current site catalogue count', () => {
   assert.ok(html.includes('Explore all 285 calculators on Friendly Calculator.'));
   assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
 });
+
+
+test('API documentation uses the current public calculator catalogue count', () => {
+  const html = read('calculator/api.html');
+  const sitemap = read('sitemap.xml');
+  const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
+  assert.equal(new Set(calculatorUrls).size, 285);
+  assert.ok(html.includes('The full website directory contains 285 public calculator pages;'));
+  assert.ok(!html.includes('The full website directory contains 200 public calculator pages;'));
+});
