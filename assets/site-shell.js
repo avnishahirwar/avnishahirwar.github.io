@@ -427,6 +427,132 @@ if(p.startsWith('/calculators/')&&main){
     const copy=document.createElement('button');copy.type='button';copy.textContent='Copy embed code';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);copy.textContent='Embed code copied';}catch(_){code.focus();code.select();copy.textContent='Select and copy the code';}});
     actions.append(copy);const rights=document.createElement('p');rights.className='fc-content-rights';rights.textContent='© Friendly Calculator. You may save and share your own calculation results with attribution. Republishing website text, design or bulk-copying content without permission is not allowed.';panel.append(h,intro,actions,code,rights);main.append(panel);
   }
+
+  // User-controlled, device-local scenario snapshots and Excel-compatible CSV export.
+  // Nothing is stored or transmitted until the visitor explicitly selects Save scenario.
+  if(!main.querySelector('.fc-scenario-panel')){
+    const excludedField=/dob|birth|email|phone|mobile|address|password|token|secret|api.?key/i;
+    const calculatorControls=()=>{
+      const root=main.querySelector('#live-page-calculator,form,[data-fc-native-calculator]')||main;
+      return [...root.querySelectorAll('input,select,textarea')].filter(el=>{
+        if(el.closest('.fc-export-panel,.fc-scenario-panel'))return false;
+        if(['hidden','submit','button','reset','image','file','password','email','tel'].includes((el.type||'').toLowerCase()))return false;
+        if(excludedField.test((el.name||'')+' '+(el.id||'')))return false;
+        if(['checkbox','radio'].includes((el.type||'').toLowerCase())&&!el.checked)return false;
+        return true;
+      });
+    };
+    const fieldLabel=el=>{
+      const labels=el.labels?[...el.labels].map(x=>x.textContent.trim()).filter(Boolean):[];
+      return labels[0]||el.getAttribute('aria-label')||el.name||el.id||'Input';
+    };
+    const readInputs=()=>calculatorControls().map(el=>({
+      key:el.name||el.id||fieldLabel(el),
+      label:fieldLabel(el),
+      value:el.type==='checkbox'||el.type==='radio'?(el.checked?'Yes':'No'):String(el.value??'')
+    }));
+    const csvEscape=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
+    const exportCsv=document.createElement('button');
+    exportCsv.type='button';exportCsv.textContent='Download CSV (Excel)';
+    exportCsv.addEventListener('click',()=>{
+      const rows=[['Friendly Calculator — '+(main.querySelector('h1')?.textContent||document.title)],['Page',location.href.split('#')[0]],['Exported',new Date().toISOString()],[],['Type','Name','Value']];
+      readInputs().forEach(item=>rows.push(['Input',item.label,item.value]));
+      const result=main.querySelector('#live-page-calculator [aria-live="polite"],#extraResult,.results,.result,[aria-live="polite"],#result,#resultBox,.calculator-result,.result-box,.output');
+      const resultText=(result?.innerText||'').trim();
+      if(resultText)rows.push(['Result','Calculated result',resultText]);
+      const csv='\uFEFF'+rows.map(row=>row.map(csvEscape).join(',')).join('\r\n');
+      const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+      const url=URL.createObjectURL(blob),a=document.createElement('a');
+      a.href=url;a.download='friendly-calculator-result.csv';document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
+    const exportActions=main.querySelector('.fc-export-panel .fc-tool-actions');
+    if(exportActions)exportActions.appendChild(exportCsv);
+
+    const panel=document.createElement('section');panel.className='fc-scenario-panel';
+    panel.setAttribute('aria-label','Saved calculation scenarios');
+    const heading=document.createElement('h2');heading.textContent=currentLocale==='hi'?'इस डिवाइस पर Scenario सेव करें':'Save and compare scenarios';
+    const description=document.createElement('p');
+    description.textContent=currentLocale==='hi'
+      ?'अधिकतम 3 गणना परिदृश्य केवल इसी ब्राउज़र और डिवाइस पर सेव होंगे। इन्हें सर्वर पर अपलोड नहीं किया जाता।'
+      :'Save up to 3 calculation snapshots on this device, then compare their inputs and results side by side. Nothing is uploaded to Friendly Calculator.';
+    const actions=document.createElement('div');actions.className='fc-tool-actions';
+    const save=document.createElement('button');save.type='button';save.textContent=currentLocale==='hi'?'वर्तमान Scenario सेव करें':'Save current scenario';
+    const compare=document.createElement('button');compare.type='button';compare.textContent=currentLocale==='hi'?'Scenarios की तुलना करें':'Compare saved scenarios';
+    const clear=document.createElement('button');clear.type='button';clear.textContent=currentLocale==='hi'?'सभी हटाएँ':'Clear saved scenarios';
+    const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+    const list=document.createElement('div');list.className='fc-scenario-list';
+    const comparison=document.createElement('div');comparison.className='fc-scenario-comparison';
+    actions.append(save,compare,clear);panel.append(heading,description,actions,status,list,comparison);main.append(panel);
+    const storageKey='fc-scenarios-v1:'+location.pathname;
+    const readSaved=()=>{
+      try{const value=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(value)?value.slice(0,3):[];}catch(_){return [];}
+    };
+    const writeSaved=items=>{
+      try{localStorage.setItem(storageKey,JSON.stringify(items.slice(0,3)));return true;}catch(_){status.textContent='Browser storage is unavailable or full. No scenario was saved.';return false;}
+    };
+    const resultSnapshot=()=>{
+      const node=main.querySelector('#live-page-calculator [aria-live="polite"],#extraResult,.results,.result,[aria-live="polite"],#result,#resultBox,.calculator-result,.result-box,.output');
+      return (node?.innerText||'').trim();
+    };
+    const render=()=>{
+      const saved=readSaved();list.replaceChildren();comparison.replaceChildren();
+      saved.forEach((item,index)=>{
+        const card=document.createElement('article');card.className='fc-scenario-card';
+        const title=document.createElement('strong');title.textContent=item.name+' · '+new Date(item.savedAt).toLocaleString();
+        const result=document.createElement('p');result.textContent=item.result||'No result text was detected when saved.';
+        const restore=document.createElement('button');restore.type='button';restore.textContent='Restore inputs';
+        restore.addEventListener('click',()=>{
+          const controls=calculatorControls();
+          item.inputs.forEach(input=>{
+            const control=controls.find(el=>(el.name||el.id||fieldLabel(el))===input.key);
+            if(!control)return;
+            if(control.type==='checkbox'||control.type==='radio')control.checked=input.value==='Yes';
+            else control.value=input.value;
+            control.dispatchEvent(new Event('input',{bubbles:true}));
+            control.dispatchEvent(new Event('change',{bubbles:true}));
+          });
+          status.textContent='Inputs restored. Select Calculate if this calculator does not update automatically.';
+        });
+        const remove=document.createElement('button');remove.type='button';remove.textContent='Delete';
+        remove.addEventListener('click',()=>{const next=readSaved();next.splice(index,1);writeSaved(next);status.textContent='Scenario deleted from this device.';render();});
+        const buttons=document.createElement('div');buttons.className='fc-tool-actions';buttons.append(restore,remove);
+        card.append(title,result,buttons);list.appendChild(card);
+      });
+      compare.disabled=saved.length<2;
+      clear.disabled=saved.length===0;
+    };
+    save.addEventListener('click',()=>{
+      const inputs=readInputs(),result=resultSnapshot();
+      if(!inputs.length&&!result){status.textContent='Enter values and calculate first.';return;}
+      const saved=readSaved();
+      if(saved.length>=3){status.textContent='You can save up to 3 scenarios. Delete one before saving another.';return;}
+      saved.push({name:'Scenario '+(saved.length+1),savedAt:new Date().toISOString(),inputs,result});
+      if(writeSaved(saved)){status.textContent='Scenario saved only in this browser on this device.';render();}
+    });
+    compare.addEventListener('click',()=>{
+      const saved=readSaved();comparison.replaceChildren();
+      if(saved.length<2){status.textContent='Save at least two scenarios to compare.';return;}
+      const table=document.createElement('table');table.className='fc-scenario-table';
+      const head=document.createElement('thead'),headRow=document.createElement('tr');
+      ['Input / result',...saved.map(item=>item.name)].forEach(label=>{const th=document.createElement('th');th.scope='col';th.textContent=label;headRow.appendChild(th);});
+      head.appendChild(headRow);table.appendChild(head);
+      const body=document.createElement('tbody'),keys=[...new Set(saved.flatMap(item=>item.inputs.map(input=>input.key)))];
+      keys.forEach(key=>{
+        const row=document.createElement('tr'),label=document.createElement('th');label.scope='row';
+        const sample=saved.flatMap(item=>item.inputs).find(input=>input.key===key);label.textContent=sample?.label||key;row.appendChild(label);
+        saved.forEach(item=>{const cell=document.createElement('td');cell.textContent=item.inputs.find(input=>input.key===key)?.value??'—';row.appendChild(cell);});body.appendChild(row);
+      });
+      const resultRow=document.createElement('tr'),resultLabel=document.createElement('th');resultLabel.scope='row';resultLabel.textContent='Calculated result';resultRow.appendChild(resultLabel);
+      saved.forEach(item=>{const cell=document.createElement('td');cell.textContent=item.result||'—';resultRow.appendChild(cell);});body.appendChild(resultRow);
+      table.appendChild(body);comparison.appendChild(table);status.textContent='Saved scenarios compared. Review the assumptions and units before drawing conclusions.';
+    });
+    clear.addEventListener('click',()=>{
+      try{localStorage.removeItem(storageKey);status.textContent='All saved scenarios cleared from this device.';render();}catch(_){status.textContent='Unable to clear browser storage.';}
+    });
+    render();
+  }
+
   const extraForm=main.querySelector('#extraForm'),extraResult=main.querySelector('#extraResult');
   if(extraForm&&extraResult&&!main.querySelector('.fc-whatif-panel')){
     const numeric=extraForm.querySelector('input[type="number"]');
