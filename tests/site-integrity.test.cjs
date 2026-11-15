@@ -804,7 +804,7 @@ test('Founder landing page has the approved portrait, LinkedIn profile and factu
   const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   assert.match(founder, /Avnish Ahirwar/);
-  assert.match(founder, /Founder and Author/);
+  assert.match(founder, /Founder and Owner/);
   assert.match(founder, /\"@type\":\"ProfilePage\"/);
   assert.match(founder, /src="\/assets\/founder-avnish-profile\.webp/);
   assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar415/);
@@ -1107,7 +1107,7 @@ test('Avnish Ahirwar founder identity is crawlable and consistently linked', () 
   assert.match(home, /"@type":"Person","@id":"https:\/\/friendlycalculator\.in\/calculator\/founder\.html#person","name":"Avnish Ahirwar"/);
   assert.match(founder, /"@type":"ProfilePage"/);
   assert.match(founder, /"name":"Avnish Ahirwar"/);
-  assert.match(founder, /<title>Avnish Ahirwar \| Founder of Friendly Calculator and Author<\/title>/);
-  assert.match(about, /<a href="\/calculator\/founder\.html">Avnish Ahirwar — Founder and Author<\/a>/);
+  assert.ok(founder.includes('<title>Avnish Ahirwar | Founder and Owner of Friendly Calculator</title>'));
+  assert.match(about, /<a href="\/calculator\/founder\.html">Avnish Ahirwar — Founder and Owner<\/a>/);
   assert.match(sitemap, /<loc>https:\/\/friendlycalculator\.in\/calculator\/founder\.html<\/loc>/);
 });
