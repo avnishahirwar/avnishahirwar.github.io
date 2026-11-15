@@ -1240,3 +1240,28 @@ test('display settings provide persistent accessible dark mode and text scaling'
   assert.match(styles, /data-fc-text-size="larger"/);
   assert.match(styles, /color-scheme:dark/);
 });
+
+
+test('Bengali and Tamil Bigha calculator pages are fully localized and cross-linked', () => {
+  for (const locale of ['bn', 'ta']) {
+    const pagePath = path.join(root, locale, 'calculators', 'bigha-to-sq-ft-calculator.html');
+    const html = fs.readFileSync(pagePath, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '">'));
+    assert.match(html, /id="bighaForm"/);
+    assert.match(html, /id="factor"/);
+    assert.match(html, /0\\.09290304/);
+    assert.match(html, /43,560/);
+    assert.match(html, /hreflang="en"/);
+    assert.match(html, /hreflang="hi"/);
+    assert.match(html, /hreflang="bn"/);
+    assert.match(html, /hreflang="ta"/);
+    assert.match(html, /aria-live="polite"/);
+    const home = fs.readFileSync(path.join(root, locale, 'index.html'), 'utf8');
+    assert.ok(home.includes('/' + locale + '/calculators/bigha-to-sq-ft-calculator.html'));
+  }
+  for (const locale of ['en', 'hi']) {
+    const html = fs.readFileSync(path.join(root, locale === 'en' ? 'calculators' : 'hi/calculators', 'bigha-to-sq-ft-calculator.html'), 'utf8');
+    assert.match(html, /hreflang="bn"/);
+    assert.match(html, /hreflang="ta"/);
+  }
+});
