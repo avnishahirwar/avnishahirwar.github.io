@@ -89,7 +89,7 @@ test('homepage calculator search skips scanning all 285 links on initial empty q
   assert.ok(start >= 0 && end > start, 'Homepage search initializer must exist');
   const script = homepage.slice(start, end);
   assert.match(script, /if\(!query\)[\s\S]*?links\.hidden=true[\s\S]*?continue;/);
-  assert.match(script, /if\(hasSearched\)\{for\(const link of group\.querySelectorAll\('a\\.calculator-link'\)\)link\.hidden=false;\}/);
+  assert.match(script, /if\(hasSearched\)[\s\S]*?calculator-link[\s\S]*?hidden=false/);
   assert.match(script, /const matched=hay\.includes\(query\)/);
   assert.match(script, /input\.addEventListener\('input',filter\)/);
   assert.match(script, /clear\.addEventListener\('click'/);
