@@ -1135,3 +1135,21 @@ test('homepage category summary and directory markup match the published catalog
   assert.doesNotMatch(directory, /\\\\n/);
   assert.match(directory, /Showing all 284 calculators in 16 categories/);
 });
+
+test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const offline = fs.readFileSync(path.join(root, 'offline.html'), 'utf8');
+  assert.equal(manifest.start_url, '/');
+  assert.equal(manifest.scope, '/');
+  assert.equal(manifest.display, 'standalone');
+  assert.ok(manifest.icons.some(icon => icon.sizes === 'any' && icon.type === 'image/svg+xml'));
+  assert.match(shell, /manifest\.webmanifest/);
+  assert.match(shell, /serviceWorker\.register\('\/sw\.js'/);
+  assert.match(worker, /request\.method !== 'GET'/);
+  assert.match(worker, /url\.search \|\| url\.hash/);
+  assert.match(worker, /isPrivatePath/);
+  assert.match(worker, /request\.mode === 'navigate'/);
+  assert.match(offline, /You're offline/);
+});
