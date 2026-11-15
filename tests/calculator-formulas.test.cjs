@@ -741,9 +741,9 @@ test('the ten priority Hindi calculators expose canonical URLs, nine language al
 
 test('standard EMI calculators include a bounded month-by-month repayment schedule', () => {
   const js = fs.readFileSync(new URL('../assets/extra-calculators.js', 'file://' + __filename), 'utf8');
-  assert.match(js, /function appendEmiAmortizationSchedule\\(kind,values,monthlyRate,result\\)/);
+  assert.ok(js.includes('function appendEmiAmortizationSchedule(kind,values,monthlyRate,result)'));
   assert.match(js, /kind!=='emi'/);
-  assert.match(js, /Number\\.isInteger\\(months\\)\\|\\|months>600/);
+  assert.ok(js.includes('Number.isInteger(months)||months>600'));
   assert.match(js, /Scheduled principal/);
   assert.match(js, /Scheduled interest/);
   assert.match(js, /Month-by-month repayment schedule/);
