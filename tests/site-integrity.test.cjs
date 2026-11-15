@@ -1294,3 +1294,29 @@ test('Bengali and Tamil Bigha calculator pages are fully localized and cross-lin
     assert.match(html, /hreflang="ta"/);
   }
 });
+
+
+test('Bengali and Tamil aspect-ratio pages preserve the shared formula and reciprocal locale links', () => {
+  const en = fs.readFileSync(path.join(root, 'calculators/aspect-ratio-calculator.html'), 'utf8');
+  const hi = fs.readFileSync(path.join(root, 'hi/calculators/aspect-ratio-calculator.html'), 'utf8');
+  for (const locale of ['bn', 'ta']) {
+    const html = fs.readFileSync(path.join(root, locale, 'calculators/aspect-ratio-calculator.html'), 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '">'));
+    assert.match(html, /data-calculator="aspect-ratio"/);
+    assert.match(html, /id="fcNewCalc"/);
+    assert.match(html, /id="fcNewFields"/);
+    assert.match(html, /id="fcNewOutput"/);
+    assert.match(html, /(?:1920 × 1080|১৯২০ × ১০৮০)/);
+    assert.match(html, /hreflang="en"/);
+    assert.match(html, /hreflang="hi"/);
+    assert.match(html, /hreflang="bn"/);
+    assert.match(html, /hreflang="ta"/);
+    assert.match(html, /hreflang="x-default"/);
+    assert.match(html, /MutationObserver/);
+    assert.ok(fs.readFileSync(path.join(root, locale, 'index.html'), 'utf8').includes('/' + locale + '/calculators/aspect-ratio-calculator.html'));
+  }
+  for (const html of [en, hi]) {
+    assert.match(html, /hreflang="bn"/);
+    assert.match(html, /hreflang="ta"/);
+  }
+});
