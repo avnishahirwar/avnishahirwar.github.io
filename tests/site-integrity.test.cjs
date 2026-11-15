@@ -1227,3 +1227,16 @@ test('business page clearly exposes live selected-calculator iframe embeds', () 
   assert.match(page, /self-service iframe builder is already live/);
   assert.match(page, /keeps visible attribution/);
 });
+
+
+test('display settings provide persistent accessible dark mode and text scaling', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'fc-display-size', 'aria-pressed', 'prefers-color-scheme']) {
+    assert.ok(shell.includes(token), 'Missing display setting token: ' + token);
+  }
+  assert.match(styles, /data-fc-theme="dark"/);
+  assert.match(styles, /data-fc-text-size="large"/);
+  assert.match(styles, /data-fc-text-size="larger"/);
+  assert.match(styles, /color-scheme:dark/);
+});
