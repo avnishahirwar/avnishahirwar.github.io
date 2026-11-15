@@ -103,3 +103,65 @@ main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafb
 #fc-ai-lazy-launch:focus-visible{outline:3px solid #d5a84b;outline-offset:3px}
 #fc-ai-lazy-launch:disabled{opacity:.75;cursor:wait}
 @media(max-width:600px){#fc-ai-lazy-launch{right:12px;bottom:12px}}
+
+
+/* User-controlled display preferences. */
+html[data-fc-text-size="large"]{font-size:112.5%}
+html[data-fc-text-size="larger"]{font-size:125%}
+#fc-display-settings{position:fixed;left:14px;bottom:72px;z-index:9997;border:1px solid #b9c5d1;border-radius:999px;background:#fff;color:#172638;padding:9px 13px;font:700 13px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132125;cursor:pointer;max-width:calc(100vw - 28px)}
+#fc-display-settings:focus-visible,.fc-display-action:focus-visible,.fc-display-close:focus-visible{outline:3px solid #b58b3d;outline-offset:3px}
+.fc-display-panel{position:fixed;left:14px;bottom:122px;z-index:9997;width:min(300px,calc(100vw - 28px));padding:15px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.5 system-ui,sans-serif}
+.fc-display-panel[hidden]{display:none}
+.fc-display-panel>strong{display:block;margin-bottom:12px;font-size:1rem}
+.fc-display-action,.fc-display-close{border:1px solid #cbd5df;border-radius:7px;background:#f4f7f9;color:#172638;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+.fc-display-action:disabled{opacity:.45;cursor:not-allowed}
+.fc-display-size-label{display:block;margin:13px 0 7px;font-weight:700}
+.fc-display-size-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fc-display-size-value{min-width:58px;text-align:center;font-variant-numeric:tabular-nums}
+.fc-display-status{min-height:1.3em;margin:10px 0;color:#64717d;font-size:.86rem}
+.fc-display-close{width:100%}
+@media(max-width:600px){#fc-display-settings{left:12px;bottom:70px}.fc-display-panel{left:12px;bottom:120px}}
+html[data-fc-theme="dark"]{color-scheme:dark}
+html[data-fc-theme="dark"] body{background:#0b1420!important;color:#e6edf4!important}
+html[data-fc-theme="dark"] main,
+html[data-fc-theme="dark"] .wrap,
+html[data-fc-theme="dark"] .content,
+html[data-fc-theme="dark"] .container{color:#e6edf4}
+html[data-fc-theme="dark"] h1,
+html[data-fc-theme="dark"] h2,
+html[data-fc-theme="dark"] h3,
+html[data-fc-theme="dark"] h4,
+html[data-fc-theme="dark"] label,
+html[data-fc-theme="dark"] legend,
+html[data-fc-theme="dark"] strong{color:#edf3f8}
+html[data-fc-theme="dark"] p,
+html[data-fc-theme="dark"] li,
+html[data-fc-theme="dark"] small,
+html[data-fc-theme="dark"] .muted{color:#bdc9d5}
+html[data-fc-theme="dark"] a{color:#91c8ff}
+html[data-fc-theme="dark"] .panel,
+html[data-fc-theme="dark"] .card,
+html[data-fc-theme="dark"] .calculator-card,
+html[data-fc-theme="dark"] .result,
+html[data-fc-theme="dark"] .result-card,
+html[data-fc-theme="dark"] .content-card,
+html[data-fc-theme="dark"] .faq-item,
+html[data-fc-theme="dark"] .fc-share-panel,
+html[data-fc-theme="dark"] .fc-export-panel,
+html[data-fc-theme="dark"] .fc-display-panel{background:#142235!important;color:#e6edf4!important;border-color:#34475d!important}
+html[data-fc-theme="dark"] input,
+html[data-fc-theme="dark"] select,
+html[data-fc-theme="dark"] textarea{background:#0e1b2b!important;color:#edf3f8!important;border-color:#52657a!important}
+html[data-fc-theme="dark"] table,
+html[data-fc-theme="dark"] th,
+html[data-fc-theme="dark"] td{border-color:#40536a!important}
+html[data-fc-theme="dark"] th{background:#20334a!important;color:#edf3f8!important}
+html[data-fc-theme="dark"] tr:nth-child(even){background:#17283b}
+html[data-fc-theme="dark"] .fc-global-header{background:#071321!important}
+html[data-fc-theme="dark"] .fc-global-footer{background:#071321!important}
+html[data-fc-theme="dark"] #fc-display-settings{background:#142235;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] .fc-display-action,
+html[data-fc-theme="dark"] .fc-display-close{background:#20334a;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] .fc-display-status{color:#bdc9d5}
+html[data-fc-theme="dark"] .fc-language-control select{background:#0e1b2b;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#edf3f8!important}
