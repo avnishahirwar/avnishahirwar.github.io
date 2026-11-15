@@ -732,14 +732,15 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
-  const homepageLinks = uniqueCalculatorLinks(homepage);
+  const homepageLinks = new Set(searchIndex.map(item => item.url));
   const directoryLinks = uniqueCalculatorLinks(directory);
   const sitemapCalculatorUrls = urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url));
   const navStart = homepage.indexOf('<nav class="home-category-index"');
   const navEnd = homepage.indexOf('</nav>', navStart);
   const nav = homepage.slice(navStart, navEnd);
-  const navCategoryCount = (nav.match(/<a href="#home-/g) || []).length;
+  const navCategoryCount = (nav.match(/<a href="\/calculator\/site-directory\.html#/g) || []).length;
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.equal(homepageLinks.size, 285, 'Homepage must link to every unique calculator');
@@ -777,9 +778,9 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
 
   assert.equal(navCategoryCount, 16, 'Homepage shortcuts must expose all 15 categories');
   assert.equal(navCalculatorTotal, 285, 'Homepage category shortcuts must account for every calculator');
-  assert.match(homepage, /href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>62 calculators<\/span><\/a>/, "Math shortcut must match all 61 published calculators");
-  assert.ok(homepage.includes('/calculators/stamp-duty-calculator.html'));
-  assert.ok(homepage.includes('/calculators/bigha-to-sq-ft-calculator.html'));
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>62 calculators<\/span><\/a>/, "Math shortcut must link to its full directory category");
+  assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
+  assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
   assert.match(about, /285 public calculators/);
@@ -1341,7 +1342,7 @@ test('basic calculator avoids retired no-op chrome script and preserves deferred
 
 test('homepage prioritizes its visible brand illustration and keeps deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(page.includes('fetchpriority="high"'));
+  assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
   assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
