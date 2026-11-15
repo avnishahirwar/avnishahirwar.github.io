@@ -51,7 +51,7 @@ test('all 285 calculator pages remain in the sitemap after category cleanup', ()
 
 test('income tax WebPage structured data matches the current salary-tax calculator inputs and scope', () => {
   const html = read('calculators/income-tax-calculator.html');
-  const blocks = [...html.matchAll(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/g)].map(([, json]) => JSON.parse(json));
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(([, json]) => JSON.parse(json));
   const webPage = blocks.find(item => item['@type'] === 'WebPage');
   assert.ok(webPage, 'Income Tax page must include WebPage structured data');
   assert.match(webPage.description, /gross salary/);
