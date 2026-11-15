@@ -1330,3 +1330,18 @@ test('hours-to-minutes page provides unit-consistent reference examples and vali
   assert.match(page, /rel="icon" type="image\/png" href="\/favicon\.png"/);
   assert.match(page, /twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
 });
+
+
+test('basic calculator avoids retired no-op chrome script and preserves deferred shared shell', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
+  assert.doesNotMatch(page, /site-chrome\\.js/);
+  assert.match(page, /<script src="\\/assets\\/site-shell\\.js" defer><\\/script>/);
+  assert.match(page, /<link rel="stylesheet" href="\\/assets\\/site-chrome\\.css\\?v=1">/);
+});
+
+test('homepage prioritizes its visible brand illustration and keeps deferred shared shell', () => {
+  const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(page, /friendly-calculator-brand-illustration\\.svg"[^>]*fetchpriority="high"/);
+  assert.match(page, /friendly-calculator-brand-illustration\\.svg"[^>]*width="1200"[^>]*height="630"/);
+  assert.match(page, /<script src="\\/assets\\/site-shell\\.js" defer><\\/script>/);
+});
