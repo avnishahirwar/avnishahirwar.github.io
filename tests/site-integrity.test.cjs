@@ -1045,3 +1045,32 @@ test('Hindi appliance energy cost page is localized, linked and included in site
   assert.ok(hindiHome.includes('/hi/calculators/appliance-energy-cost-calculator.html'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/appliance-energy-cost-calculator.html'));
 });
+
+
+test('homepage category cards and headings match the calculator links in each category', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const sections = [...homepage.matchAll(/<section class="category"([\s\S]*?)<\/section>/g)];
+  const counts = new Map();
+
+  for (const match of sections) {
+    const section = match[0];
+    const id = (section.match(/<section class="category" id="([^"]+)"/) || [])[1];
+    const headingCount = Number((section.match(/<span class="category-count">(\d+) calculators<\/span>/) || [])[1]);
+    const group = (section.match(/<div class="category-links">([\s\S]*?)<\/div>/) || [])[1] || '';
+    const groupedLinks = (group.match(/class="calculator-link"/g) || []).length;
+    const allSectionLinks = (section.match(/class="calculator-link"/g) || []).length;
+
+    assert.ok(id, 'Every homepage category needs a stable section ID');
+    assert.ok(Number.isInteger(headingCount) && headingCount > 0, 'Every category heading needs a numeric count: ' + id);
+    assert.equal(allSectionLinks, groupedLinks, 'All category links must remain inside the styled link group: ' + id);
+    assert.equal(headingCount, groupedLinks, 'Category heading count must match its actual links: ' + id);
+    counts.set(id, groupedLinks);
+  }
+
+  const index = (homepage.match(/<nav class="home-category-index"[\s\S]*?<\/nav>/) || [])[0] || '';
+  const cards = [...index.matchAll(/<a href="#([^"]+)"[^>]*>[\s\S]*?<span>(\d+) calculators<\/span><\/a>/g)];
+  assert.equal(cards.length, sections.length, 'Category index must link to every category exactly once');
+  for (const card of cards) {
+    assert.equal(Number(card[2]), counts.get(card[1]), 'Category index count must match section links: ' + card[1]);
+  }
+});
