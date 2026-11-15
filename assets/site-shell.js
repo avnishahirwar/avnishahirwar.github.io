@@ -142,11 +142,15 @@ if(!window.__fcGtmContainerLoaded){
     document.head.appendChild(gtmScript);
   };
   const scheduleGtm=()=>{
-    if('requestIdleCallback' in window)window.requestIdleCallback(injectGtm,{timeout:5000});
-    else window.setTimeout(injectGtm,2000);
+    // Direct GA4 remains available through its queued gtag commands. Delay the
+    // additional GTM container until the visitor has had time to use the page.
+    window.setTimeout(()=>{
+      if('requestIdleCallback' in window)window.requestIdleCallback(injectGtm,{timeout:8000});
+      else injectGtm();
+    },8000);
   };
-  if(document.readyState==='complete')window.setTimeout(scheduleGtm,1000);
-  else window.addEventListener('load',()=>window.setTimeout(scheduleGtm,1000),{once:true});
+  if(document.readyState==='complete')scheduleGtm();
+  else window.addEventListener('load',scheduleGtm,{once:true});
 }
 // Privacy-first analytics: GA4 is the only configured analytics provider.
 // Ensure localized pages also report to the same Friendly Calculator GA4 stream.
