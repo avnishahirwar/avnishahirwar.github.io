@@ -1476,3 +1476,29 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
   assert.match(inlineCss, /\.home-tool-search\s*\{/, 'Homepage search panel selector must remain valid');
   assert.doesNotMatch(inlineCss, /(?:^|\n)\s*n\s+\.home-tool-search/, 'Homepage search selector must not have a stray leading n');
 });
+
+
+test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(homepage, /<h1>Free Online Calculators for India<\\/h1>/);
+  assert.match(homepage, /href="\\/hi\\/index\\.html"[^>]*lang="hi"/);
+  assert.match(homepage, /href="\\/ar\\/index\\.html"[^>]*lang="ar"/);
+  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
+  assert.ok(sitemap.includes('https://friendlycalculator.in/ar/index.html'));
+});
+
+test('Hindi and Arabic homepages cross-link the English and each other language editions', () => {
+  const hindi = fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8');
+  const arabic = fs.readFileSync(path.join(root, 'ar/index.html'), 'utf8');
+  assert.match(hindi, /href="\\/"[^>]*>English version<\\/a>/);
+  assert.match(hindi, /href="\\/ar\\/index\\.html"[^>]*lang="ar"/);
+  assert.match(arabic, /href="\\/"[^>]*>English<\\/a>/);
+  assert.match(arabic, /href="\\/hi\\/index\\.html"[^>]*lang="hi"/);
+});
+
+test('income tax page title and heading identify the current salary-estimate tax year', () => {
+  const tax = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
+  assert.match(tax, /<title>Income Tax Calculator India 2026–27 \\| Salary Tax Estimate<\\/title>/);
+  assert.match(tax, /<h1>Income Tax Calculator India for Tax Year 2026–27<\\/h1>/);
+  assert.match(tax, /name="description" content="[^"]*Tax Year 2026–27[^"]*salary income tax/);
+});
