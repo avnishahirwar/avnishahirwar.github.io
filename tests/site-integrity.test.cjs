@@ -1030,3 +1030,18 @@ test('Hindi quartile, coefficient of variation, complex conjugate and discrimina
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
+
+
+test('Hindi appliance energy cost page is localized, linked and included in sitemap', () => {
+  const page = fs.readFileSync(path.join(root, 'hi/calculators/appliance-energy-cost-calculator.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/keyword-calculators.js'), 'utf8');
+  const hindiHome = fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8');
+  assert.match(page, /<html lang="hi">/);
+  assert.ok(page.includes('उपकरण बिजली खर्च कैलकुलेटर'));
+  assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in/hi/calculators/appliance-energy-cost-calculator.html"'));
+  assert.ok(page.includes('hreflang="en"'));
+  assert.ok(engine.includes('उपकरण की शक्ति (वॉट)'));
+  assert.ok(engine.includes('अनुमानित मासिक बिजली खर्च'));
+  assert.ok(hindiHome.includes('/hi/calculators/appliance-energy-cost-calculator.html'));
+  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/appliance-energy-cost-calculator.html'));
+});
