@@ -34,6 +34,96 @@ const ensurePwa=()=>{
 };
 ensurePwa();
 
+/* Offer a clear install path and explain the offline boundary. */
+const ensurePwaInstallUi=()=>{
+  if(!document.body||window.self!==window.top)return;
+  if(/(?:^|\/)(?:admin|login|dashboard)(?:\/|\.|$)/i.test(location.pathname))return;
+  if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)return;
+  if(navigator.standalone===true)return;
+  if(document.getElementById('fc-pwa-install'))return;
+
+  const style=document.createElement('style');
+  style.textContent='.fc-pwa-install{position:fixed;left:14px;bottom:14px;z-index:1500;border:1px solid #d8bd82;border-radius:999px;background:#101c2c;color:#fff;padding:10px 15px;font:700 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132135;cursor:pointer}.fc-pwa-help{position:fixed;left:14px;bottom:66px;z-index:1500;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.55 system-ui,sans-serif}.fc-pwa-help p{margin:0 0 10px}.fc-pwa-help button{border:0;border-radius:7px;background:#101c2c;color:#fff;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}.fc-pwa-network{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1600;max-width:calc(100vw - 24px);padding:9px 14px;border-radius:9px;background:#25364b;color:#fff;font:600 13px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px #07132135}';
+  const button=document.createElement('button');
+  button.id='fc-pwa-install';
+  button.type='button';
+  button.className='fc-pwa-install';
+  button.textContent='Install Friendly Calculator';
+  button.setAttribute('aria-expanded','false');
+  button.setAttribute('aria-controls','fc-pwa-help');
+
+  const panel=document.createElement('section');
+  panel.id='fc-pwa-help';
+  panel.className='fc-pwa-help';
+  panel.hidden=true;
+  panel.setAttribute('aria-label','Install and offline help');
+  const message=document.createElement('p');
+  message.textContent='Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.';
+  const close=document.createElement('button');
+  close.type='button';
+  close.textContent='Close';
+  close.addEventListener('click',()=>{panel.hidden=true;button.setAttribute('aria-expanded','false');});
+  panel.append(message,close);
+
+  const network=document.createElement('div');
+  network.className='fc-pwa-network';
+  network.setAttribute('role','status');
+  network.setAttribute('aria-live','polite');
+  network.hidden=true;
+
+  let deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',event=>{
+    event.preventDefault();
+    deferredPrompt=event;
+    button.textContent='Install Friendly Calculator';
+  });
+  window.addEventListener('appinstalled',()=>{
+    deferredPrompt=null;
+    button.hidden=true;
+    panel.hidden=true;
+  });
+  button.addEventListener('click',async()=>{
+    if(deferredPrompt){
+      const promptEvent=deferredPrompt;
+      deferredPrompt=null;
+      try{
+        await promptEvent.prompt();
+        const choice=await promptEvent.userChoice;
+        if(choice&&choice.outcome==='accepted'){button.hidden=true;panel.hidden=true;return;}
+        message.textContent='Installation was not completed. You can try again from this button or use your browser menu if it offers an install option.';
+      }catch(_){
+        message.textContent='Your browser could not open the install prompt. Use the browser menu and choose Install app or Add to Home Screen if that option is available.';
+      }
+    }else{
+      const ua=navigator.userAgent||'';
+      if(/iPad|iPhone|iPod/i.test(ua)){
+        message.textContent='On iPhone or iPad, open this page in Safari, tap Share, then choose Add to Home Screen if available.';
+      }else if(/Android/i.test(ua)){
+        message.textContent='On Android, open the browser menu and choose Install app or Add to Home Screen if your browser offers it.';
+      }else{
+        message.textContent='In a supported desktop browser, use the install icon in the address bar or the browser menu option to install this site as an app, if available.';
+      }
+    }
+    panel.hidden=!panel.hidden;
+    button.setAttribute('aria-expanded',String(!panel.hidden));
+  });
+
+  window.addEventListener('offline',()=>{
+    network.textContent='You are offline. Previously visited public pages may still be available on this device.';
+    network.hidden=false;
+  });
+  window.addEventListener('online',()=>{
+    network.textContent='Connection restored.';
+    network.hidden=false;
+    window.setTimeout(()=>{network.hidden=true;},3500);
+  });
+
+  document.head.appendChild(style);
+  document.body.append(button,panel,network);
+};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensurePwaInstallUi,{once:true});
+else ensurePwaInstallUi();
+
 // Do not load analytics tags on the Privacy Policy URL used for consent review.
 if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
 // Google Tag Manager container: loaded once on every page using this shared shell.
