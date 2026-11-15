@@ -1111,3 +1111,19 @@ test('Avnish Ahirwar founder identity is crawlable and consistently linked', () 
   assert.match(about, /<a href="\/calculator\/founder\.html">Avnish Ahirwar — Founder and Owner<\/a>/);
   assert.match(sitemap, /<loc>https:\/\/friendlycalculator\.in\/calculator\/founder\.html<\/loc>/);
 });
+
+test('hours-to-minutes page includes an unambiguous worked example and payroll limitations', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/hours-to-minutes-calculator.html'), 'utf8');
+  assert.match(page, /\(2 × 60\) \+ 30 = 150 minutes/);
+  assert.match(page, /same duration is 2\.5 decimal hours/);
+  assert.match(page, /do not enter 2\.5 hours and then add 30 minutes again/);
+  assert.match(page, /does not calculate overtime/);
+});
+
+test('working-days page documents inclusive dates, weekends, custom holidays and range limit', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/working-days-calculator.html'), 'utf8');
+  assert.match(page, /start date and end date are both included/);
+  assert.match(page, /Saturdays and Sundays are excluded/);
+  assert.match(page, /does not download national, state, bank or company holiday calendars/);
+  assert.match(page, /no longer than ten years/);
+});
