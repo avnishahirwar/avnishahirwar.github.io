@@ -74,7 +74,24 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 @media(max-width:760px){.home-category-index{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.home-category-index{grid-template-columns:1fr}}
  .category-empty[hidden]{display:none!important}
-.home-learning{background:#fff;border:1px solid var(--fc-border);border-radius:10px;padding:20px;margin:18px 0 22px}.home-learning h2{margin:0 0 8px;color:#20364b}.home-learning>p{max-width:850px;color:var(--fc-muted)}.home-learning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.home-learning-grid article{border:1px solid var(--fc-border);border-radius:8px;padding:14px;background:#f9fafb}.home-learning-grid h3{font-size:1rem;margin:0 0 7px}.home-learning-grid p{font-size:.9rem;color:var(--fc-muted)}.home-learning-trust{font-size:.88rem}.home-learning-more{display:inline-block;background:#101c2c;color:#fff;padding:9px 13px;border-radius:5px;text-decoration:none;font-weight:700}@media(max-width:760px){.home-learning-grid{grid-template-columns:1fr}}\n</style>
+.home-learning{background:#fff;border:1px solid var(--fc-border);border-radius:10px;padding:20px;margin:18px 0 22px}.home-learning h2{margin:0 0 8px;color:#20364b}.home-learning>p{max-width:850px;color:var(--fc-muted)}.home-learning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.home-learning-grid article{border:1px solid var(--fc-border);border-radius:8px;padding:14px;background:#f9fafb}.home-learning-grid h3{font-size:1rem;margin:0 0 7px}.home-learning-grid p{font-size:.9rem;color:var(--fc-muted)}.home-learning-trust{font-size:.88rem}.home-learning-more{display:inline-block;background:#101c2c;color:#fff;padding:9px 13px;border-radius:5px;text-decoration:none;font-weight:700}@media(max-width:760px){.home-learning-grid{grid-template-columns:1fr}}\n
+/* Lightweight homepage calculator search and progressive category disclosure */
+.home-tool-search{margin:0 0 18px;padding:16px;background:#fff;border:1px solid var(--fc-border);border-radius:8px}
+.home-tool-search label{display:block;font-weight:750;margin:0 0 7px;color:#24394c}
+.home-tool-search-row{display:flex;gap:8px}
+.home-tool-search input{flex:1;min-width:0;padding:11px 12px;border:1px solid #aebbc7;border-radius:6px;font:inherit;background:#fff}
+.home-tool-search button,.fc-category-toggle{border:1px solid #101c2c;border-radius:6px;background:#101c2c;color:#fff;padding:9px 13px;font:inherit;font-weight:700;cursor:pointer}
+.home-tool-search button:hover,.fc-category-toggle:hover{background:#20364e}
+.home-tool-search-status{margin:8px 0 0;color:var(--fc-muted);font-size:.88rem}
+.home-popular-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.home-popular-tools a{display:inline-block;padding:7px 10px;border:1px solid var(--fc-border);border-radius:999px;background:#f7f9fb;color:#24394c;text-decoration:none;font-size:.88rem;font-weight:650}
+.home-popular-tools a:hover{border-color:#101c2c;text-decoration:underline}
+.category h2{flex-wrap:wrap}
+.fc-category-toggle{margin-left:auto;padding:6px 10px;font-size:.78rem;white-space:nowrap}
+.category-links[hidden]{display:none!important}
+@media(max-width:520px){.home-tool-search-row{flex-direction:column}.home-tool-search button{width:100%}.fc-category-toggle{margin-left:0}}
+
+</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@id":"https://friendlycalculator.in/calculator/founder.html#person"},"email":"avnishahirwar415@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar415@gmail.com","availableLanguage":["English","Hindi","Spanish","French","Portuguese","Arabic","Indonesian","Bengali","Tamil"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar415"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"},{"@type":"Person","@id":"https://friendlycalculator.in/calculator/founder.html#person","name":"Avnish Ahirwar","jobTitle":"Founder and Author","url":"https://friendlycalculator.in/calculator/founder.html","image":"https://friendlycalculator.in/assets/founder-avnish-profile.webp","sameAs":["https://www.linkedin.com/in/avnishahirwar415","https://www.instagram.com/avnish_ahirwar"],"worksFor":{"@id":"https://friendlycalculator.in/#organization"}}]}</script>
 
 
@@ -85,6 +102,22 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <section class="home-intro"><div class="page-wrap"><h1>Free Online Calculator for India</h1><p>Use our free online basic calculator for everyday maths, or explore GST, loan EMI, income tax, SIP, FD, salary, BMI and other practical tools.</p><p class="home-featured-tool"><a href="/calculators/basic-calculator.html">Open the free basic calculator</a> <span>for addition, subtraction, multiplication, division and percentages.</span></p>
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p><figure class="fc-brand-visual"><img src="/assets/friendly-calculator-brand-illustration.svg" alt="Friendly Calculator brand illustration showing a calculator for finance, tax, business and everyday calculations" width="1200" height="630" fetchpriority="high" decoding="async"><figcaption>Friendly Calculator — Practical tools for everyday calculations.</figcaption></figure></div></section>
 <main class="page-wrap home-main">
+<section class="home-tool-search" aria-labelledby="home-tool-search-title">
+<label id="home-tool-search-title" for="fc-home-tool-search">Search all 285 calculators</label>
+<div class="home-tool-search-row">
+<input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Try GST, EMI, SIP, percentage, age..." aria-describedby="fc-home-search-status">
+<button id="fc-home-search-clear" type="button">Clear</button>
+</div>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 285 calculators across 16 categories. Select a category to expand its tools.</p>
+<nav class="home-popular-tools" aria-label="Popular calculators">
+<a href="/calculators/gst-calculator.html">GST Calculator</a>
+<a href="/calculators/loan-emi-calculator.html">Loan EMI</a>
+<a href="/calculators/sip-calculator.html">SIP Calculator</a>
+<a href="/calculators/fd-calculator.html">FD Calculator</a>
+<a href="/calculators/income-tax-calculator.html">Income Tax</a>
+<a href="/calculators/basic-calculator.html">Basic Calculator</a>
+</nav>
+</section>
 <section class="home-learning" aria-labelledby="home-learning-title"><h2 id="home-learning-title">Understand the numbers before you decide</h2><p>Use a calculator to explore a scenario, then read the method, assumptions and limitations behind the result. Our India-focused guides explain common tax, salary, savings and borrowing calculations in plain language.</p><div class="home-learning-grid"><article><h3><a href="/blog/old-vs-new-tax-regime.html">Old vs New Tax Regime</a></h3><p>Compare tax assumptions, eligible deductions and financial-year rules before relying on an estimate.</p><a href="/calculators/income-tax-calculator.html">Income Tax Calculator</a></article><article><h3><a href="/blog/sip-vs-fd.html">SIP vs Fixed Deposit</a></h3><p>Understand market-linked projections versus deposit terms, including risk and liquidity.</p><a href="/calculators/sip-calculator.html">SIP Calculator</a> · <a href="/calculators/fd-calculator.html">FD Calculator</a></article><article><h3><a href="/blog/home-loan-prepayment.html">Home Loan Prepayment</a></h3><p>Explore how extra principal payments can change interest and remaining tenure.</p><a href="/calculators/loan-emi-calculator.html">Loan EMI Calculator</a></article></div><p class="home-learning-trust">Our <a href="/calculator/methodology.html">calculation methodology</a> explains formulas and exclusions. Read our <a href="/calculator/editorial-policy.html">editorial policy</a> for sourcing, authorship and corrections. Important decisions should be checked against official sources and qualified advice.</p><a class="home-learning-more" href="/blog/">Explore all finance and calculator guides</a></section>
 <nav class="home-category-index" aria-label="Calculator categories">
 <a href="#home-savings-investments"><strong>Savings, Investment &amp; Retirement</strong><span>38 calculators</span></a>
@@ -478,5 +511,71 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <section class="home-note"><h2>Friendly Calculator: clear tools by Avnish Ahirwar</h2><p>Friendly Calculator is being built by Founder <strong>Avnish Ahirwar</strong> as a multilingual platform for practical calculations in India and for users worldwide. Use the language selector to choose from the available languages.</p></section>
 <section class="home-note"><strong>About these tools:</strong> Calculators provide estimates based on the values and assumptions entered. Review each tool's method and limitations; verify important financial, tax or health decisions with the relevant official source or a qualified professional.</section>
 </main>
+
+<script>
+(()=>{'use strict';
+const root=document.getElementById('categoryGrid');
+const input=document.getElementById('fc-home-tool-search');
+const clear=document.getElementById('fc-home-search-clear');
+const status=document.getElementById('fc-home-search-status');
+if(!root||!input||!clear||!status)return;
+const groups=[...root.querySelectorAll('.category')];
+let visibleTotal=0;
+groups.forEach((group,index)=>{
+ const links=group.querySelector('.category-links');
+ const heading=group.querySelector('h2');
+ if(!links||!heading)return;
+ const button=document.createElement('button');
+ button.type='button';
+ button.className='fc-category-toggle';
+ button.textContent='Show calculators';
+ button.setAttribute('aria-expanded','false');
+ button.setAttribute('aria-controls','fc-home-category-'+(index+1));
+ links.id='fc-home-category-'+(index+1);
+ links.hidden=true;
+ button.addEventListener('click',()=>{
+  const expanded=button.getAttribute('aria-expanded')==='true';
+  links.hidden=expanded;
+  button.setAttribute('aria-expanded',String(!expanded));
+  button.textContent=expanded?'Show calculators':'Hide calculators';
+ });
+ heading.append(button);
+});
+function filter(){
+ const query=input.value.trim().toLocaleLowerCase();
+ let matches=0;
+ let shownGroups=0;
+ for(const group of groups){
+  const links=group.querySelector('.category-links');
+  const button=group.querySelector('.fc-category-toggle');
+  let groupMatches=0;
+  for(const link of group.querySelectorAll('a.calculator-link')){
+   const hay=(link.textContent+' '+(link.dataset.search||'')).toLocaleLowerCase();
+   const matched=!query||hay.includes(query);
+   link.hidden=!matched;
+   if(matched){matches++;groupMatches++;}
+  }
+  const showGroup=!query||groupMatches>0;
+  group.hidden=!showGroup;
+  if(showGroup)shownGroups++;
+  if(query&&groupMatches>0){
+   links.hidden=false;
+   button.setAttribute('aria-expanded','true');
+   button.textContent='Hide calculators';
+  }else if(!query){
+   links.hidden=true;
+   button.setAttribute('aria-expanded','false');
+   button.textContent='Show calculators';
+  }
+ }
+ status.textContent=query
+  ? matches+' matching calculator'+(matches===1?'':'s')+' in '+shownGroups+' categor'+(shownGroups===1?'y':'ies')+'.'
+  : 'Browse 285 calculators across 16 categories. Select a category to expand its tools.';
+}
+input.addEventListener('input',filter);
+clear.addEventListener('click',()=>{input.value='';filter();input.focus();});
+filter();
+})();
+</script>
 <script src="/assets/site-shell.js" defer></script>
 </body></html>
