@@ -231,6 +231,24 @@ function numericCurrency(text) {
   return Number(String(text).replace(/[^0-9.-]/g, ''));
 }
 
+test('quadratic solver explains the discriminant and substitutes the quadratic formula', () => {
+  const html = fs.readFileSync(new URL('../calculators/quadratic-polynomial-solver.html', 'file://' + __filename), 'utf8');
+  const script = inlineScripts(html).find(item => item.includes('case "quadratic"'));
+  assert.ok(script, 'Quadratic solver script exists');
+  const dom = makeTestDom({ a: '1', b: '-5', c: '6' });
+  vm.runInNewContext(script, { document: dom.document, Number, Math, Intl });
+  dom.get('form').listeners.submit({ preventDefault() {} });
+  const output = dom.get('result').innerHTML;
+  assert.match(output, /Roots: <b>3 and 2<\/b>/);
+  assert.match(output, /D = b² − 4ac/);
+  assert.match(output, /x₁/);
+  assert.match(output, /x₂/);
+  const complexDom = makeTestDom({ a: '1', b: '2', c: '5' });
+  vm.runInNewContext(script, { document: complexDom.document, Number, Math, Intl });
+  complexDom.get('form').listeners.submit({ preventDefault() {} });
+  assert.match(complexDom.get('result').innerHTML, /complex-conjugate roots/);
+});
+
 test('dedicated SIP page calculates both end-of-month and beginning-of-month projections', () => {
   const html = fs.readFileSync(new URL('../calculators/sip-calculator.html', 'file://' + __filename), 'utf8');
   const script = inlineScripts(html).find(item => item.includes("sipCalculate"));
