@@ -27,6 +27,13 @@ test('standalone calculator engine contains all expected calculator definitions'
   }
 });
 
+test('native GST calculator skips the generic calculator bundle', () => {
+  const gstPage = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
+  const shell = fs.readFileSync(new URL('../assets/site-shell.js', 'file://' + __filename), 'utf8');
+  assert.match(gstPage, /id="live-page-calculator"[^>]*data-fc-native-calculator/);
+  assert.ok(shell.includes("if(p.startsWith('/calculators/')&&!document.querySelector('[data-fc-native-calculator]')){"));
+});
+
 test('calculator engine validates input and safely renders result text', () => {
   assert.match(source, /Number\.isFinite/);
   assert.match(source, /Please enter valid non-negative values/);
