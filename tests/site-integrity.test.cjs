@@ -1109,3 +1109,12 @@ test('time conversion and working-days pages explain their actual calculation ru
   assert.match(working, /does not download national, state, bank or company holiday calendars/);
   assert.match(working, /no longer than ten years/);
 });
+
+
+test('minutes-to-hours page explains decimal hours, fractional minutes and display precision', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/minutes-to-hours-calculator.html'), 'utf8');
+  assert.match(page, /95 minutes is 1\.5833 decimal hours/);
+  assert.match(page, /12\.5 minutes is valid/);
+  assert.match(page, /rounds the remaining minutes to two decimal places/);
+  assert.match(page, /1,440/);
+});
