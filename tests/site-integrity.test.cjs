@@ -1191,3 +1191,39 @@ test('minutes-to-hours page documents fractional minutes, reference conversions 
   assert.match(page, /1,440/);
   assert.match(page, /does not determine payroll, overtime, billable hours or contractual working time/);
 });
+
+
+test('PWA install affordance explains browser install paths and the offline cache boundary', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.equal(manifest.display, 'standalone');
+  assert.match(shell, /beforeinstallprompt/);
+  assert.match(shell, /appinstalled/);
+  assert.match(shell, /Install Friendly Calculator/);
+  assert.match(shell, /Previously visited public pages may be available offline/);
+  assert.match(worker, /request\.mode === 'navigate'/);
+  assert.match(worker, /isPrivatePath/);
+});
+
+test('Bhopal and Madhya Pradesh resource hub uses existing calculators and official references', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/bhopal-calculators.html'), 'utf8');
+  assert.match(page, /rel="canonical" href="https:\/\/friendlycalculator\.in\/calculator\/bhopal-calculators\.html"/);
+  assert.match(page, /calculators\/electricity-bill-calculator\.html/);
+  assert.match(page, /calculators\/professional-tax-calculator\.html/);
+  assert.match(page, /calculators\/crop-cost-profit-calculator\.html/);
+  assert.match(page, /calculators\/kcc-interest-calculator\.html/);
+  assert.match(page, /mperc\.in\/notices\/view\/210/);
+  assert.match(page, /portal\.mpcz\.in\/web\/tariff-details/);
+  assert.match(page, /services\.mp\.gov\.in\/eservice/);
+  assert.match(page, /does not provide ward-level property guideline values/);
+  assert.ok(urls.includes('https://friendlycalculator.in/calculator/bhopal-calculators.html'));
+  assert.ok(fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8').includes('/calculator/bhopal-calculators.html'));
+});
+
+test('business page clearly exposes live selected-calculator iframe embeds', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/business.html'), 'utf8');
+  assert.match(page, /\/embed\//);
+  assert.match(page, /self-service iframe builder is already live/);
+  assert.match(page, /keeps visible attribution/);
+});
