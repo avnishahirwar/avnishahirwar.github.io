@@ -15,6 +15,7 @@ on:
       - "calculators/gst-calculator.html"
       - "assets/page-calculators.js"
       - "calculator/site-directory.html"
+      - "index.html"
       - "calculators/minutes-to-hours-calculator.html"
       - "_headers"
   pull_request:
