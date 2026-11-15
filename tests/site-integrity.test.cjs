@@ -1120,6 +1120,28 @@ test('hours-to-minutes page includes an unambiguous worked example and payroll l
   assert.match(page, /does not calculate overtime/);
 });
 
+test('Bengali and Tamil concrete calculators preserve the published material-estimate formula', () => {
+  for (const locale of ['bn', 'ta']) {
+    const html = fs.readFileSync(path.join(root, locale, 'calculators/concrete-calculator.html'), 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '">'));
+    for (const id of ['length', 'width', 'thickness', 'cement', 'sand', 'aggregate', 'calc-form', 'result']) {
+      assert.ok(html.includes('id="' + id + '"'), locale + ' missing ' + id);
+    }
+    assert.match(html, /wet=l\*w\*th\/1000/);
+    assert.match(html, /dry=wet\*1\.54/);
+    assert.match(html, /cv=dry\*c\/sum/);
+    assert.match(html, /cv\*1440\/50/);
+    assert.match(html, /hreflang="en"/);
+    assert.match(html, /hreflang="bn"/);
+    assert.match(html, /hreflang="ta"/);
+    assert.match(html, /qualified engineer|தகுதியான பொறியாளர்|যোগ্য প্রকৌশলী/i);
+    const home = fs.readFileSync(path.join(root, locale, 'index.html'), 'utf8');
+    assert.ok(home.includes('/' + locale + '/calculators/concrete-calculator.html'));
+  }
+  const english = fs.readFileSync(path.join(root, 'calculators/concrete-calculator.html'), 'utf8');
+  assert.match(english, /hreflang="bn"/);
+  assert.match(english, /hreflang="ta"/);
+});
 test('working-days page documents inclusive dates, weekends, custom holidays and range limit', () => {
   const page = fs.readFileSync(path.join(root, 'calculators/working-days-calculator.html'), 'utf8');
   assert.match(page, /start date and end date are both included/);
