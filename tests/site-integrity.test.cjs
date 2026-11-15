@@ -766,7 +766,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   for (const section of directorySections) {
     const id = section[1];
     const body = section[2];
-    const declared = Number((body.match(/<strong>(\d+) tools<\/strong>/) || [])[1]);
+    const declared = Number((body.match(/<strong>(\d+) tools?<\/strong>/) || [])[1]);
     const calculatorLinks = [...body.matchAll(/href="\/calculators\/[^"]+"/g)].length;
     assert.equal(declared, calculatorLinks, 'Directory category count must match calculator links: ' + id);
     directoryCategoryCounts.set(id, declared);
