@@ -4,7 +4,7 @@ function init(){
  const widthInput=document.getElementById('imageWidth'),heightInput=document.getElementById('imageHeight'),formatInput=document.getElementById('imageFormat'),qualityInput=document.getElementById('imageQuality'),ratioInput=document.getElementById('keepRatio');
  const resizeButton=document.getElementById('resizeImage'),resetButton=document.getElementById('resetImage'),download=document.getElementById('downloadImage'),status=document.getElementById('imageStatus'),sourceInfo=document.getElementById('sourceInfo');
  const originalPreview=document.getElementById('originalPreview'),outputPreview=document.getElementById('outputPreview'),originalCaption=document.getElementById('originalCaption'),outputCaption=document.getElementById('outputCaption');
- const maxFileBytes=20*1024*1024,maxSide=6000,maxPixels=40000000;
+ const maxFileBytes=20*1024*1024,maxSide=6000,maxPixels=20000000;
  let sourceFile=null,sourceUrl=null,outputUrl=null,sourceImage=null,ratio=1;
  const setStatus=(message,error=false)=>{status.textContent=message;status.className=error?'image-status image-error':'image-status';};
  const revoke=url=>{if(url)URL.revokeObjectURL(url);};
@@ -21,6 +21,7 @@ function init(){
   sourceUrl=URL.createObjectURL(file);
   const image=new Image();
   image.onload=()=>{
+   if(image.naturalWidth*image.naturalHeight>maxPixels){setEnabled(false);setStatus('The source image exceeds 20 megapixels. Choose a smaller image.',true);return;}
    sourceImage=image;ratio=image.naturalWidth/image.naturalHeight;
    const scale=Math.min(1,maxSide/image.naturalWidth,maxSide/image.naturalHeight,Math.sqrt(maxPixels/(image.naturalWidth*image.naturalHeight)));
    widthInput.value=String(Math.max(1,Math.round(image.naturalWidth*scale)));
