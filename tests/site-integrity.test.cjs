@@ -1306,7 +1306,7 @@ test('Bengali and Tamil aspect-ratio pages preserve the shared formula and recip
     assert.match(html, /id="fcNewCalc"/);
     assert.match(html, /id="fcNewFields"/);
     assert.match(html, /id="fcNewOutput"/);
-    assert.match(html, /1920 × 1080/);
+    assert.match(html, /(?:1920 × 1080|১৯২০ × ১০৮০)/);
     assert.match(html, /hreflang="en"/);
     assert.match(html, /hreflang="hi"/);
     assert.match(html, /hreflang="bn"/);
