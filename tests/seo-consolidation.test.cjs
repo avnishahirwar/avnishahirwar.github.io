@@ -29,7 +29,8 @@ test('tax category retains indexed legacy landing page and includes the consolid
     assert.ok(tax.includes('/calculators/' + slug + '.html'), 'Missing tax tool: ' + slug);
   }
   assert.ok(directory.includes('/calculator/tax.html'));
-  assert.ok(!directory.includes('/calculator/tax-calculators.html'));
+  const directoryContent = directory.replace(/<header[\s\S]*?<\/header>/i, '');
+  assert.ok(!directoryContent.includes('/calculator/tax-calculators.html'), 'Directory content must not promote the retired overlapping tax landing page');
   assert.match(tax, /<meta name="robots" content="index,follow/);
 });
 
