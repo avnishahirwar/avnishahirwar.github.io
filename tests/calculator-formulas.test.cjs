@@ -206,7 +206,8 @@ function makeTestDom(values = {}) {
     getElementById: get,
     createElement: tag => new Node(tag),
     addEventListener(name, fn) { this.listeners ??= {}; this.listeners[name] = fn; },
-    querySelector() { return get('calculator-root'); }
+    querySelector() { return get('calculator-root'); },
+    querySelectorAll(selector) { return selector === '.sip-slider' ? [] : []; }
   };
   return { document, get, elements };
 }
