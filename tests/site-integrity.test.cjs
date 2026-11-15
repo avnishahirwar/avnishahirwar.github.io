@@ -1105,7 +1105,7 @@ test('time conversion and working-days pages explain their actual calculation ru
   assert.match(hours, /overtime, break deductions and billable-time rounding/);
   assert.match(hours, /twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
   assert.match(working, /start date and end date are both included/);
-  assert.match(working, /Saturday and Sunday are excluded/);
+  assert.match(working, /Saturdays and Sundays are excluded/);
   assert.match(working, /does not download national, state, bank or company holiday calendars/);
   assert.match(working, /no longer than ten years/);
 });
