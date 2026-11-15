@@ -1075,3 +1075,28 @@ test('homepage category cards and headings match the calculator links in each ca
     assert.equal(Number(card[2]), counts.get(card[1]), 'Category index count must match section links: ' + card[1]);
   }
 });
+
+
+test('homepage category directory has accurate counts and no empty-state placeholder copy', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const sections = [...homepage.matchAll(/<section class="category" id="([^"]+)"[\\s\\S]*?<\\/section>/g)];
+  assert.equal(sections.length, 15, 'Expected all 15 published calculator categories');
+  const counts = new Map();
+  for (const section of sections) {
+    const id = section[1];
+    const html = section[0];
+    const links = (html.match(/class="calculator-link"/g) || []).length;
+    const headingCount = Number((html.match(/<span class="category-count">(\\d+) calculators<\\/span>/) || [])[1]);
+    assert.equal(headingCount, links, id + ' heading count must match its actual calculator links');
+    counts.set(id, links);
+  }
+  const index = (homepage.match(/<nav class="home-category-index"[\\s\\S]*?<\\/nav>/) || [])[0] || '';
+  for (const [id, count] of counts) {
+    const link = new RegExp('href="#' + id + '"[^>]*>[\\\\s\\\\S]*?<span>(\\\\d+) calculators<\\\\/span>');
+    const match = index.match(link);
+    assert.ok(match, 'Category index must link to ' + id);
+    assert.equal(Number(match[1]), count, id + ' index count must match its actual calculator links');
+  }
+  assert.doesNotMatch(homepage, /No matching calculators in this category/i,
+    'Do not publish empty-state placeholder copy in the crawlable homepage HTML');
+});
