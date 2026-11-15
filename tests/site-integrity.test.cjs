@@ -758,16 +758,16 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
-  const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\\s\\S]*?<span>(\\d+) calculators<\\/span>/g)];
-  const directorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\\s\\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\\/main>)/g)];
+  const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculators<\/span>/g)];
+  const directorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   assert.equal(directoryCards.length, 15, 'Directory category index must expose all 15 categories');
   assert.deepEqual(directoryCards.map(match => match[1]), directorySections.map(match => match[1]), 'Directory category index must link to every category in the same order');
   const directoryCategoryCounts = new Map();
   for (const section of directorySections) {
     const id = section[1];
     const body = section[2];
-    const declared = Number((body.match(/<strong>(\\d+) tools<\\/strong>/) || [])[1]);
-    const calculatorLinks = [...body.matchAll(/href="\\/calculators\\/[^"]+"/g)].length;
+    const declared = Number((body.match(/<strong>(\d+) tools<\/strong>/) || [])[1]);
+    const calculatorLinks = [...body.matchAll(/href="\/calculators\/[^"]+"/g)].length;
     assert.equal(declared, calculatorLinks, 'Directory category count must match calculator links: ' + id);
     directoryCategoryCounts.set(id, declared);
   }
