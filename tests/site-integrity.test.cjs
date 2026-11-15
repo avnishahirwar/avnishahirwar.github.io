@@ -1367,3 +1367,17 @@ test('directory prioritizes its visible brand illustration as the LCP image', ()
   assert.match(page, /friendly-calculator-brand-illustration\.svg[^>]*fetchpriority="high"/);
   assert.match(page, /width="1200" height="630"/);
 });
+
+
+test('homepage FAQ summary controls meet the minimum mobile touch target', () => {
+  const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(page, /\.home-note details>summary\{[^}]*min-height:44px/);
+});
+
+test('directory category links use visible accessible names and readable search status text', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const quickLinks = [...page.matchAll(/<a class="quick"[^>]*>/g)].map(match => match[0]);
+  assert.ok(quickLinks.length >= 16, 'Expected the category quick links');
+  assert.equal(quickLinks.some(link => /aria-label=/.test(link)), false, 'Visible link text should provide the accessible name');
+  assert.match(page, /#searchStatus\{[^}]*color:#4b5a6a/);
+});
