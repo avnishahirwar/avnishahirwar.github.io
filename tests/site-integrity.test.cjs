@@ -1466,6 +1466,7 @@ test('homepage recent and favourite calculators remain browser-local and bounded
 });
 
 
+
 test('homepage inline CSS has valid rule separation and the calculator search panel selector', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const styles = [...homepage.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(match => match[1]);
