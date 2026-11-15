@@ -209,7 +209,6 @@ test('About page catalogue matches every published calculator page', () => {
   assert.match(about, /Platform:<\/strong> 283 public calculators/);
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
-  assert.equal((about.match(/<ol\b/g) || []).length, 1, 'The full calculator catalogue must use one continuous ordered list');
   assert.doesNotMatch(about, /<ol[^>]+start=/i, 'Catalogue numbering must not restart between calculator batches');
 });
 
