@@ -1136,6 +1136,18 @@ test('homepage category summary and directory markup match the published catalog
   assert.match(directory, /Showing all 285 calculators in 16 categories/);
 });
 
+test('browser image resizer and converter process files locally without upload calls', () => {
+  const html = fs.readFileSync(path.join(root, 'calculator/image-tools.html'), 'utf8');
+  const js = fs.readFileSync(path.join(root, 'assets/image-tools.js'), 'utf8');
+  assert.ok(urls.includes('https://friendlycalculator.in/calculator/image-tools.html'));
+  assert.match(html, /rel="canonical" href="https:\/\/friendlycalculator\.in\/calculator\/image-tools\.html"/);
+  assert.match(html, /Image decoding, resizing and conversion happen locally in your browser/);
+  assert.match(js, /canvas\.toBlob/);
+  assert.match(js, /maxFileBytes=20\*1024\*1024/);
+  assert.doesNotMatch(js, /fetch\s*\(|XMLHttpRequest|sendBeacon|navigator\.sendBeacon/);
+  assert.ok(fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8').includes('/calculator/image-tools.html'));
+});
+
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
