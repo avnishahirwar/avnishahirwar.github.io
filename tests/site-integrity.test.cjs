@@ -1478,11 +1478,12 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 });
 
 
+
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(homepage, /<h1>Free Online Calculators for India<\\/h1>/);
-  assert.match(homepage, /href="\\/hi\\/index\\.html"[^>]*lang="hi"/);
-  assert.match(homepage, /href="\\/ar\\/index\\.html"[^>]*lang="ar"/);
+  assert.ok(homepage.includes('<h1>Free Online Calculators for India</h1>'));
+  assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
+  assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/ar/index.html'));
 });
@@ -1490,15 +1491,15 @@ test('homepage exposes crawlable internal links to Hindi and Arabic language edi
 test('Hindi and Arabic homepages cross-link the English and each other language editions', () => {
   const hindi = fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8');
   const arabic = fs.readFileSync(path.join(root, 'ar/index.html'), 'utf8');
-  assert.match(hindi, /href="\\/"[^>]*>English version<\\/a>/);
-  assert.match(hindi, /href="\\/ar\\/index\\.html"[^>]*lang="ar"/);
-  assert.match(arabic, /href="\\/"[^>]*>English<\\/a>/);
-  assert.match(arabic, /href="\\/hi\\/index\\.html"[^>]*lang="hi"/);
+  assert.ok(hindi.includes('<a class="button secondary" href="/">English version</a>'));
+  assert.ok(hindi.includes('<a class="button secondary" href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
+  assert.ok(arabic.includes('<a class="fc-locale-button alt" href="/">English</a>'));
+  assert.ok(arabic.includes('<a class="fc-locale-button alt" href="/hi/index.html" lang="hi">हिन्दी</a>'));
 });
 
 test('income tax page title and heading identify the current salary-estimate tax year', () => {
   const tax = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
-  assert.match(tax, /<title>Income Tax Calculator India 2026–27 \\| Salary Tax Estimate<\\/title>/);
-  assert.match(tax, /<h1>Income Tax Calculator India for Tax Year 2026–27<\\/h1>/);
-  assert.match(tax, /name="description" content="[^"]*Tax Year 2026–27[^"]*salary income tax/);
+  assert.ok(tax.includes('<title>Income Tax Calculator India 2026–27 | Salary Tax Estimate</title>'));
+  assert.ok(tax.includes('<h1>Income Tax Calculator India for Tax Year 2026–27</h1>'));
+  assert.ok(tax.includes('name="description" content="Estimate Indian salary income tax for Tax Year 2026–27'));
 });
