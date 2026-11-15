@@ -1346,3 +1346,17 @@ test('homepage prioritizes its visible brand illustration and keeps deferred sha
   assert.ok(page.includes('width="1200" height="630"'));
   assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
 });
+
+
+test('key calculator pages do not load the retired no-op chrome script', () => {
+  for (const relative of [
+    'calculators/basic-calculator.html',
+    'calculators/gst-calculator.html',
+    'calculators/minutes-to-hours-calculator.html',
+    'calculators/loan-emi-calculator.html'
+  ]) {
+    const page = fs.readFileSync(path.join(root, relative), 'utf8');
+    assert.equal(page.includes('/assets/site-chrome.js?v=1'), false, relative + ' must not request the retired no-op script');
+    assert.ok(page.includes('/assets/site-shell.js'), relative + ' must retain the shared site shell');
+  }
+});
