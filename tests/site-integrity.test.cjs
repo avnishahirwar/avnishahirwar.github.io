@@ -1137,6 +1137,8 @@ test('homepage category summary and directory markup match the published catalog
 });
 
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.match(worker, /friendly-calculator-public-v2/);
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
