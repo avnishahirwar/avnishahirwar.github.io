@@ -788,5 +788,12 @@ test('advanced matrix calculator supports 2x2 and 3x3 operations with worked met
   assert.throws(() => matrix.inverse([[1, 2], [2, 4]]), /singular/);
   const explained = matrix.calculate([[1, 2], [3, 4]], [[5, 6], [7, 8]], 'multiply');
   assert.deepEqual(explained.matrix, [[19, 22], [43, 50]]);
+  assert.ok(explained.steps.some(step => step.includes('1 × 5') && step.includes('2 × 7') && step.includes('19')), 'multiplication shows substituted arithmetic');
+  const added = matrix.calculate([[1, 2], [3, 4]], [[5, 6], [7, 8]], 'add');
+  assert.ok(added.steps.some(step => step === 'C11 = 1 + 5 = 6.'), 'addition shows each cell calculation');
+  const detSteps = matrix.calculate([[1, 2], [3, 4]], null, 'determinant');
+  assert.ok(detSteps.steps.some(step => step.includes('(1 × 4) − (2 × 3) = -2')), 'determinant shows substituted formula');
+  const inverseSteps = matrix.calculate([[4, 7], [2, 6]], null, 'inverse').steps;
+  assert.ok(inverseSteps.some(step => step.includes('divide R1')), 'inverse shows row operations');
   assert.ok(explained.steps.length >= 2);
 });

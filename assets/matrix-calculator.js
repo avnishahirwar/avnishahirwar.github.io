@@ -23,14 +23,60 @@ function inverse(m){
 }
 function formatNumber(x){if(Math.abs(x)<1e-10)x=0;return Number(x.toFixed(8)).toString();}
 function renderMatrix(m){return '<table aria-label="Matrix result"><tbody>'+m.map(row=>'<tr>'+row.map(v=>'<td>'+formatNumber(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';}
+function inverseSteps(m){
+ const n=m.length,a=m.map((row,i)=>row.concat(Array.from({length:n},(_,j)=>i===j?1:0))),steps=[];
+ for(let col=0;col<n;col++){
+  let pivot=col;
+  for(let r=col+1;r<n;r++)if(Math.abs(a[r][col])>Math.abs(a[pivot][col]))pivot=r;
+  if(Math.abs(a[pivot][col])<1e-12)throw new Error('A stable pivot could not be found; the matrix may be singular.');
+  if(pivot!==col){[a[col],a[pivot]]=[a[pivot],a[col]];steps.push('Swap row R'+(col+1)+' with row R'+(pivot+1)+'.');}
+  const divisor=a[col][col];
+  steps.push('Make the pivot in R'+(col+1)+' equal to 1: divide R'+(col+1)+' by '+formatNumber(divisor)+'.');
+  for(let j=0;j<2*n;j++)a[col][j]/=divisor;
+  for(let r=0;r<n;r++){
+   if(r===col)continue;
+   const factor=a[r][col];
+   if(Math.abs(factor)<1e-12)continue;
+   steps.push('Eliminate column '+(col+1)+' in R'+(r+1)+': R'+(r+1)+' ← R'+(r+1)+' − ('+formatNumber(factor)+') × R'+(col+1)+'.');
+   for(let j=0;j<2*n;j++)a[r][j]-=factor*a[col][j];
+  }
+ }
+ steps.push('The left block is now the identity matrix; the right block is A⁻¹.');
+ return steps;
+}
 function calculate(a,b,op){
  const n=a.length,det=determinant(a);
- if(op==='add')return {matrix:add(a,b),steps:['Add corresponding entries: Cᵢⱼ = Aᵢⱼ + Bᵢⱼ.','The result has the same dimensions as A and B.']};
- if(op==='subtract')return {matrix:add(a,b,-1),steps:['Subtract corresponding entries: Cᵢⱼ = Aᵢⱼ − Bᵢⱼ.','The result has the same dimensions as A and B.']};
- if(op==='multiply')return {matrix:multiply(a,b),steps:['Each output entry is the dot product of one row of A and one column of B.','Cᵢⱼ = Σₖ AᵢₖBₖⱼ.']};
- if(op==='transpose')return {matrix:transpose(a),steps:['Exchange rows and columns: (Aᵀ)ᵢⱼ = Aⱼᵢ.']};
- if(op==='determinant')return {scalar:det,steps:n===2?['For a 2×2 matrix, det(A) = ad − bc.','Substitute the four entries and evaluate.']:['For a 3×3 matrix, expand along the first row using cofactors.','det(A) = a(ei − fh) − b(di − fg) + c(dh − eg).']};
- if(op==='inverse')return {matrix:inverse(a),steps:['Calculate det(A) = '+formatNumber(det)+'.','Because the determinant is non-zero, an inverse exists.','Apply Gauss–Jordan elimination to [A | I] until the left side is I.','The right side is A⁻¹.']};
+ if(op==='add'||op==='subtract'){
+  const sign=op==='add'?1:-1,matrix=add(a,b,sign),symbol=sign===1?'+':'−',steps=[];
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)steps.push('C'+(i+1)+(j+1)+' = '+formatNumber(a[i][j])+' '+symbol+' '+formatNumber(b[i][j])+' = '+formatNumber(matrix[i][j])+'.');
+  return {matrix,steps};
+ }
+ if(op==='multiply'){
+  const bt=transpose(b),matrix=multiply(a,b),steps=[];
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){
+   const terms=a[i].map((v,k)=>'('+formatNumber(v)+' × '+formatNumber(bt[j][k])+')');
+   steps.push('C'+(i+1)+(j+1)+' = '+terms.join(' + ')+' = '+formatNumber(matrix[i][j])+'.');
+  }
+  return {matrix,steps};
+ }
+ if(op==='transpose'){
+  const matrix=transpose(a),steps=[];
+  for(let i=0;i<n;i++)steps.push('Column '+(i+1)+' of Aᵀ is row '+(i+1)+' of A: ['+a[i].map(formatNumber).join(', ')+'].');
+  return {matrix,steps};
+ }
+ if(op==='determinant'){
+  if(n===2){
+   const [x,y]=a[0],[z,w]=a[1];
+   return {scalar:det,steps:['For A = [[a, b], [c, d]], det(A) = (a × d) − (b × c).','Substitute: det(A) = ('+formatNumber(x)+' × '+formatNumber(w)+') − ('+formatNumber(y)+' × '+formatNumber(z)+') = '+formatNumber(det)+'.']};
+  }
+  const [[x,y,z],[p,q,r],[s,t,u]]=a;
+  const term1=formatNumber(q*u-r*t),term2=formatNumber(p*u-r*s),term3=formatNumber(p*t-q*s);
+  return {scalar:det,steps:['Expand along the first row: det(A) = a(ei − fh) − b(di − fg) + c(dh − eg).','Substitute: det(A) = '+formatNumber(x)+' × ('+formatNumber(q)+' × '+formatNumber(u)+' − '+formatNumber(r)+' × '+formatNumber(t)+') − '+formatNumber(y)+' × ('+formatNumber(p)+' × '+formatNumber(u)+' − '+formatNumber(r)+' × '+formatNumber(s)+') + '+formatNumber(z)+' × ('+formatNumber(p)+' × '+formatNumber(t)+' − '+formatNumber(q)+' × '+formatNumber(s)+').','Evaluate the minors: '+formatNumber(x)+' × ('+term1+') − '+formatNumber(y)+' × ('+term2+') + '+formatNumber(z)+' × ('+term3+') = '+formatNumber(det)+'.']};
+ }
+ if(op==='inverse'){
+  const matrix=inverse(a),steps=['Calculate det(A) = '+formatNumber(det)+'.','Because the determinant is non-zero, an inverse exists.',...inverseSteps(a)];
+  return {matrix,steps};
+ }
  throw new Error('Choose a supported matrix operation.');
 }
 if(typeof module!=='undefined'&&module.exports)module.exports={determinant,transpose,add,multiply,inverse,calculate};
