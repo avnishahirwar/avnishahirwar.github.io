@@ -543,31 +543,38 @@ groups.forEach((group,index)=>{
  });
  heading.append(button);
 });
+let hasSearched=false;
 function filter(){
  const query=input.value.trim().toLocaleLowerCase();
+ if(query)hasSearched=true;
  let matches=0;
  let shownGroups=0;
  for(const group of groups){
   const links=group.querySelector('.category-links');
   const button=group.querySelector('.fc-category-toggle');
-  let groupMatches=0;
-  for(const link of group.querySelectorAll('a.calculator-link')){
-   const hay=(link.textContent+' '+(link.dataset.search||'')).toLocaleLowerCase();
-   const matched=!query||hay.includes(query);
-   link.hidden=!matched;
-   if(matched){matches++;groupMatches++;}
-  }
-  const showGroup=!query||groupMatches>0;
-  group.hidden=!showGroup;
-  if(showGroup)shownGroups++;
-  if(query&&groupMatches>0){
-   links.hidden=false;
-   button.setAttribute('aria-expanded','true');
-   button.textContent='Hide calculators';
-  }else if(!query){
+  if(!query){
+   if(hasSearched){for(const link of group.querySelectorAll('a.calculator-link'))link.hidden=false;}
+   group.hidden=false;
    links.hidden=true;
    button.setAttribute('aria-expanded','false');
    button.textContent='Show calculators';
+   shownGroups++;
+   continue;
+  }
+  let groupMatches=0;
+  for(const link of group.querySelectorAll('a.calculator-link')){
+   const hay=(link.textContent+' '+(link.dataset.search||'')).toLocaleLowerCase();
+   const matched=hay.includes(query);
+   link.hidden=!matched;
+   if(matched){matches++;groupMatches++;}
+  }
+  const showGroup=groupMatches>0;
+  group.hidden=!showGroup;
+  if(showGroup)shownGroups++;
+  if(groupMatches>0){
+   links.hidden=false;
+   button.setAttribute('aria-expanded','true');
+   button.textContent='Hide calculators';
   }
  }
  status.textContent=query
