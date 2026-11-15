@@ -126,6 +126,18 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 .home-category-directory-link{font-weight:750}
 .home-category-index a{content-visibility:auto;contain-intrinsic-size:auto 58px}
 @media(max-width:520px){.home-search-results{grid-template-columns:1fr}}
+
+.fc-home-personal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0 20px;padding:16px;background:#fff;border:1px solid var(--fc-border);border-radius:8px}
+.fc-home-personal-column{min-width:0}.fc-home-personal-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fc-home-personal-heading h2{font-size:1rem;margin:0 0 8px;color:#24394c}
+.fc-home-personal-heading button,.fc-home-personal-remove{border:0;background:transparent;color:#526273;text-decoration:underline;font:inherit;font-size:.82rem;cursor:pointer}
+.fc-home-personal-list{display:grid;gap:7px}.fc-home-personal-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid var(--fc-border);border-radius:6px}
+.fc-home-personal-item a{font-size:.9rem;font-weight:650;text-decoration:none}.fc-home-personal-item a:hover{text-decoration:underline}
+.fc-home-personal-list p{margin:0;color:var(--fc-muted);font-size:.86rem}
+.fc-home-personal-privacy{grid-column:1/-1;margin:0;color:var(--fc-muted);font-size:.78rem}
+.fc-favourite-toggle{display:inline-flex;align-items:center;gap:6px;margin:8px 0;padding:8px 11px;border:1px solid var(--fc-border);border-radius:6px;background:#fff;color:#24394c;font:inherit;font-weight:650;cursor:pointer}
+.fc-favourite-toggle[aria-pressed="true"]{border-color:#a98735;background:#fff9e8}
+@media(max-width:600px){.fc-home-personal{grid-template-columns:1fr}.fc-home-personal-privacy{grid-column:auto}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@id":"https://friendlycalculator.in/calculator/founder.html#person"},"email":"avnishahirwar415@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar415@gmail.com","availableLanguage":["English","Hindi","Spanish","French","Portuguese","Arabic","Indonesian","Bengali","Tamil"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar415"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"},{"@type":"Person","@id":"https://friendlycalculator.in/calculator/founder.html#person","name":"Avnish Ahirwar","jobTitle":"Founder and Author","url":"https://friendlycalculator.in/calculator/founder.html","image":"https://friendlycalculator.in/assets/founder-avnish-profile.webp","sameAs":["https://www.linkedin.com/in/avnishahirwar415","https://www.instagram.com/avnish_ahirwar"],"worksFor":{"@id":"https://friendlycalculator.in/#organization"}}]}</script>
 
@@ -163,6 +175,17 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <a href="/calculators/percentage-calculator.html">Percentage Calculator</a>
 <a href="/calculators/electricity-bill-calculator.html">Electricity Bill Calculator</a>
 </nav>
+<section class="fc-home-personal" id="fc-home-personal" aria-label="Your saved and recent calculators">
+  <div class="fc-home-personal-column">
+    <div class="fc-home-personal-heading"><h2>Recently used</h2><button type="button" id="fc-clear-recent">Clear history</button></div>
+    <div id="fc-home-recent" class="fc-home-personal-list"><p>Calculators you open will appear here on this device.</p></div>
+  </div>
+  <div class="fc-home-personal-column">
+    <div class="fc-home-personal-heading"><h2>Favourites</h2></div>
+    <div id="fc-home-favourites" class="fc-home-personal-list"><p>Save a calculator as a favourite to find it quickly next time.</p></div>
+  </div>
+  <p class="fc-home-personal-privacy">Your recent list and favourites stay in this browser on this device. They are not sent to our servers.</p>
+</section>
 </section>
 
 <nav class="home-category-index" aria-label="Calculator categories">
@@ -257,5 +280,6 @@ input.addEventListener('input',()=>{window.clearTimeout(debounceTimer);debounceT
 clear.addEventListener('click',()=>{input.value='';search();input.focus();});
 })();
 </script>
+<script src="/assets/homepage-personal-tools.js" defer></script>
 <script src="/assets/site-shell.js" defer></script>
 </body></html>

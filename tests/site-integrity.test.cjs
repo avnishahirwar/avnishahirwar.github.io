@@ -1440,3 +1440,27 @@ test('static assets have safe browser cache headers and the service worker remai
   assert.match(headers, /\/apple-touch-icon\.png[\s\S]*?Cache-Control: public, max-age=604800/);
   assert.match(headers, /Content-Security-Policy: frame-ancestors 'self'/);
 });
+
+
+test('homepage recent and favourite calculators remain browser-local and bounded', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const personalToolsPath = path.join(root, 'assets/homepage-personal-tools.js');
+  assert.ok(fs.existsSync(personalToolsPath), 'Homepage personal tools script must exist');
+  const personalTools = fs.readFileSync(personalToolsPath, 'utf8');
+
+  assert.match(homepage, /id="fc-home-personal"/);
+  assert.match(homepage, /id="fc-home-recent"/);
+  assert.match(homepage, /id="fc-home-favourites"/);
+  assert.match(homepage, /homepage-personal-tools\.js/);
+  assert.match(homepage, /not sent to our servers|stay in this browser/i);
+  assert.match(shell, /const recentKey='fc-recent-v1'/);
+  assert.match(shell, /const favouriteKey='fc-favourites-v1'/);
+  assert.match(shell, /recent\.slice\(0,5\)/);
+  assert.match(shell, /favouriteButton\.setAttribute\('aria-pressed'/);
+  assert.match(shell, /const pageItem=\{url:location\.pathname/);
+  assert.match(personalTools, /slice\(0,5\)/);
+  assert.match(personalTools, /fc-clear-recent/);
+  const vm = require('node:vm');
+  assert.doesNotThrow(() => new vm.Script(personalTools), 'Homepage personal tools script must parse');
+});

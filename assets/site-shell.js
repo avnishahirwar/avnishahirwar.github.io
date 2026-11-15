@@ -975,4 +975,36 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
 })();
 
 
+// Store only calculator paths and page titles in this browser. Query strings are
+// deliberately excluded so entered amounts or other input values are never saved.
+if(isCalculatorRoute&&main){
+  const recentKey='fc-recent-v1';
+  const favouriteKey='fc-favourites-v1';
+  const pageItem={url:location.pathname,title:(main.querySelector('h1')?.textContent||document.title||'Calculator').trim().slice(0,120)};
+  const readItems=key=>{try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value.filter(item=>item&&typeof item.url==='string'&&item.url.startsWith('/')&&typeof item.title==='string'):[];}catch(_){return [];}};
+  const writeItems=(key,items)=>{try{localStorage.setItem(key,JSON.stringify(items));return true;}catch(_){return false;}};
+  const recent=readItems(recentKey).filter(item=>item.url!==pageItem.url);
+  recent.unshift(pageItem);
+  writeItems(recentKey,recent.slice(0,5));
+  const favouriteButton=document.createElement('button');
+  favouriteButton.type='button';
+  favouriteButton.className='fc-favourite-toggle';
+  const refreshFavourite=()=>{
+    const saved=readItems(favouriteKey);
+    const active=saved.some(item=>item.url===pageItem.url);
+    favouriteButton.setAttribute('aria-pressed',String(active));
+    favouriteButton.textContent=active?'★ Saved to favourites':'☆ Add to favourites';
+  };
+  favouriteButton.addEventListener('click',()=>{
+    const saved=readItems(favouriteKey);
+    const exists=saved.some(item=>item.url===pageItem.url);
+    const next=exists?saved.filter(item=>item.url!==pageItem.url):[pageItem,...saved.filter(item=>item.url!==pageItem.url)].slice(0,20);
+    if(writeItems(favouriteKey,next))refreshFavourite();
+    else favouriteButton.textContent='Browser storage unavailable';
+  });
+  const heading=main.querySelector('h1');
+  if(heading)heading.insertAdjacentElement('afterend',favouriteButton);
+  refreshFavourite();
+}
+
 })();
