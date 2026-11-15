@@ -804,7 +804,7 @@ test('Founder landing page has the approved portrait, LinkedIn profile and factu
   const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   assert.match(founder, /Avnish Ahirwar/);
-  assert.match(founder, /Founder and Author/);
+  assert.match(founder, /Founder and Owner/);
   assert.match(founder, /\"@type\":\"ProfilePage\"/);
   assert.match(founder, /src="\/assets\/founder-avnish-profile\.webp/);
   assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar415/);
