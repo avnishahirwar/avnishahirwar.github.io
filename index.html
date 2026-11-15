@@ -543,14 +543,17 @@ groups.forEach((group,index)=>{
  });
  heading.append(button);
 });
+let hasSearched=false;
 function filter(){
  const query=input.value.trim().toLocaleLowerCase();
+ if(query)hasSearched=true;
  let matches=0;
  let shownGroups=0;
  for(const group of groups){
   const links=group.querySelector('.category-links');
   const button=group.querySelector('.fc-category-toggle');
   if(!query){
+   if(hasSearched){for(const link of group.querySelectorAll('a.calculator-link'))link.hidden=false;}
    group.hidden=false;
    links.hidden=true;
    button.setAttribute('aria-expanded','false');
