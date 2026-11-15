@@ -732,14 +732,15 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
-  const homepageLinks = uniqueCalculatorLinks(homepage);
+  const homepageLinks = new Set(searchIndex.map(item => item.url));
   const directoryLinks = uniqueCalculatorLinks(directory);
   const sitemapCalculatorUrls = urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url));
   const navStart = homepage.indexOf('<nav class="home-category-index"');
   const navEnd = homepage.indexOf('</nav>', navStart);
   const nav = homepage.slice(navStart, navEnd);
-  const navCategoryCount = (nav.match(/<a href="#home-/g) || []).length;
+  const navCategoryCount = (nav.match(/<a href="\/calculator\/site-directory\.html#/g) || []).length;
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.equal(homepageLinks.size, 285, 'Homepage must link to every unique calculator');
@@ -777,9 +778,9 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
 
   assert.equal(navCategoryCount, 16, 'Homepage shortcuts must expose all 15 categories');
   assert.equal(navCalculatorTotal, 285, 'Homepage category shortcuts must account for every calculator');
-  assert.match(homepage, /href="#home-math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>62 calculators<\/span><\/a>/, "Math shortcut must match all 61 published calculators");
-  assert.ok(homepage.includes('/calculators/stamp-duty-calculator.html'));
-  assert.ok(homepage.includes('/calculators/bigha-to-sq-ft-calculator.html'));
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>62 calculators<\/span><\/a>/, "Math shortcut must link to its full directory category");
+  assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
+  assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
   assert.match(about, /285 public calculators/);
@@ -1341,7 +1342,7 @@ test('basic calculator avoids retired no-op chrome script and preserves deferred
 
 test('homepage prioritizes its visible brand illustration and keeps deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(page.includes('fetchpriority="high"'));
+  assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
   assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
@@ -1380,4 +1381,45 @@ test('directory category links use visible accessible names and readable search 
   assert.ok(quickLinks.length >= 16, 'Expected the category quick links');
   assert.equal(quickLinks.some(link => /aria-label=/.test(link)), false, 'Visible link text should provide the accessible name');
   assert.match(page, /#searchStatus\{[^}]*color:#4b5a6a/);
+});
+
+
+test('homepage stays lightweight while all 285 calculators remain searchable and discoverable', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const searchIndexPath = path.join(root, 'assets/calculator-search-index.json');
+  assert.ok(fs.existsSync(searchIndexPath), 'Deferred calculator search index must exist');
+  const searchIndex = JSON.parse(fs.readFileSync(searchIndexPath, 'utf8'));
+
+  assert.ok(Buffer.byteLength(homepage, 'utf8') < 500 * 1024, 'Homepage HTML must stay below 500 KB');
+  assert.equal((homepage.match(/class=["']calculator-link["']/g) || []).length, 0,
+    'The homepage must not embed the full calculator catalogue');
+  assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
+  const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
+  assert.equal((popular.match(/<a\s/g) || []).length, 16, 'Homepage must show exactly 16 popular calculator links');
+
+  const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
+  const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
+  assert.ok(categoryNavStart >= 0 && categoryNavEnd > categoryNavStart, 'Homepage category cards must exist');
+  const categoryNav = homepage.slice(categoryNavStart, categoryNavEnd);
+  const categoryLinks = [...categoryNav.matchAll(/href="\/calculator\/site-directory\.html#([^"]+)"/g)].map(match => match[1]);
+  assert.equal(categoryLinks.length, 16, 'All 16 category cards must link to the full directory');
+  assert.equal(new Set(categoryLinks).size, 16, 'Category card destinations must be unique');
+
+  assert.equal(searchIndex.length, 285, 'All 285 calculators must remain in the deferred search index');
+  assert.equal(new Set(searchIndex.map(item => item.url)).size, 285, 'Search index URLs must be unique');
+  for (const item of searchIndex) {
+    assert.ok(item.name && item.category && item.url.startsWith('/calculators/'), 'Search entries must have a name, category and calculator URL');
+    assert.ok(fs.existsSync(path.join(root, item.url.replace(/^\//, ''))), 'Search result target must exist: ' + item.url);
+  }
+  assert.match(homepage, /calculator-search-index\.json/);
+  assert.match(homepage, /input\.addEventListener\('input'/);
+  assert.match(homepage, /function loadCatalogue\(/);
+  assert.match(homepage, /loading="lazy" fetchpriority="low"/, 'Decorative homepage artwork must not compete with the initial render');
+
+  const vm = require('node:vm');
+  const scripts = [...homepage.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)]
+    .filter(match => !/type=["']application\/ld\+json["']/i.test(match[0]));
+  for (const [index, script] of scripts.entries()) {
+    assert.doesNotThrow(() => new vm.Script(script[1]), 'Homepage inline script ' + (index + 1) + ' must parse');
+  }
 });

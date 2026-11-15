@@ -27,6 +27,8 @@ on:
       - "assets/loan-emi-calculator.js"
       - "calculators/loan-emi-calculator.html"
       - "calculator/site-directory.html"
+      - "index.html"
+      - "assets/calculator-search-index.json"
       - "calculators/minutes-to-hours-calculator.html"
       - "tests/mobile-schema.test.cjs"
       - "_headers"
