@@ -1136,6 +1136,19 @@ test('homepage category summary and directory markup match the published catalog
   assert.match(directory, /Showing all 285 calculators in 16 categories/);
 });
 
+
+test('Maharashtra employee professional tax uses Schedule I salary bands and February collection', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/professional-tax-calculator.html'), 'utf8');
+  assert.match(html, /value="MH">Maharashtra — verified employee schedule/);
+  assert.match(html, /Maharashtra statutory employee category/);
+  assert.match(html, /salary<=7500/);
+  assert.match(html, /salary<=10000/);
+  assert.match(html, /salary<=25000/);
+  assert.match(html, /normal=200;february=300/);
+  assert.match(html, /mahagst\.gov\.in/);
+  assert.match(html, /Other taxpayer classes and exemptions are not covered/);
+});
+
 test('browser image resizer and converter process files locally without upload calls', () => {
   const html = fs.readFileSync(path.join(root, 'calculator/image-tools.html'), 'utf8');
   const js = fs.readFileSync(path.join(root, 'assets/image-tools.js'), 'utf8');
