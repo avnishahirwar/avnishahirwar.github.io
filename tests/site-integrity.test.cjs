@@ -1446,7 +1446,7 @@ test('homepage recent and favourite calculators remain browser-local and bounded
   assert.match(shell, /recent\.slice\(0,5\)/);
   assert.match(shell, /favouriteButton\.setAttribute\('aria-pressed'/);
   assert.match(shell, /url:location\.pathname/);
-  assert.doesNotMatch(shell, /url:location\.href/);
+  assert.match(shell, /const pageItem=\{url:location\.pathname/);
   assert.match(personalTools, /slice\(0,5\)/);
   assert.match(personalTools, /fc-clear-recent/);
   assert.match(personalTools, /not sent to our servers|stay in this browser/i);
