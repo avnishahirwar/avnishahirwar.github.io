@@ -1126,6 +1126,13 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
   assert.match(page, /Saturdays and Sundays are excluded/);
   assert.match(page, /does not download national, state, bank or company holiday calendars/);
   assert.match(page, /no longer than ten years/);
+  assert.match(page, /Monday 2 November through Friday 6 November 2026/);
+  assert.match(page, /Wednesday 4 November is entered as a custom holiday/);
+  assert.match(page, /commas, spaces, semicolons or new lines/);
+  assert.match(page, /Duplicate dates are counted once/);
+  assert.match(page, /3,660 days/);
+  assert.match(page, /Can I change the weekend days\?/);
+  assert.match(page, /Does the calculator automatically exclude Indian public holidays\?/);
 });
 
 test('homepage category summary and directory markup match the published catalogue', () => {
