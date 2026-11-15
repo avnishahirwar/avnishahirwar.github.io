@@ -895,5 +895,77 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.body.appendChild(launcher);
 }
 
+/* Accessible display preferences: persistent theme and text scaling. */
+(()=>{
+  if(!document.body||window.self!==window.top||document.getElementById('fc-display-settings'))return;
+  const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+  const labels={
+    en:{open:'Display settings',title:'Display settings',theme:'Dark mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
+    hi:{open:'दिखावट सेटिंग',title:'दिखावट सेटिंग',theme:'डार्क मोड',smaller:'अ−',larger:'अ+',close:'बंद करें',themeOn:'डार्क मोड चालू',themeOff:'डार्क मोड बंद',text:'अक्षर का आकार'},
+    es:{open:'Apariencia',title:'Ajustes de pantalla',theme:'Modo oscuro',smaller:'A−',larger:'A+',close:'Cerrar',themeOn:'Modo oscuro activado',themeOff:'Modo oscuro desactivado',text:'Tamaño del texto'},
+    fr:{open:'Affichage',title:'Paramètres d’affichage',theme:'Mode sombre',smaller:'A−',larger:'A+',close:'Fermer',themeOn:'Mode sombre activé',themeOff:'Mode sombre désactivé',text:'Taille du texte'},
+    pt:{open:'Aparência',title:'Configurações de exibição',theme:'Modo escuro',smaller:'A−',larger:'A+',close:'Fechar',themeOn:'Modo escuro ativado',themeOff:'Modo escuro desativado',text:'Tamanho do texto'},
+    ar:{open:'إعدادات العرض',title:'إعدادات العرض',theme:'الوضع الداكن',smaller:'A−',larger:'A+',close:'إغلاق',themeOn:'الوضع الداكن مفعّل',themeOff:'الوضع الداكن متوقف',text:'حجم النص'},
+    id:{open:'Tampilan',title:'Pengaturan tampilan',theme:'Mode gelap',smaller:'A−',larger:'A+',close:'Tutup',themeOn:'Mode gelap aktif',themeOff:'Mode gelap nonaktif',text:'Ukuran teks'},
+    bn:{open:'প্রদর্শন সেটিংস',title:'প্রদর্শন সেটিংস',theme:'ডার্ক মোড',smaller:'অ−',larger:'অ+',close:'বন্ধ',themeOn:'ডার্ক মোড চালু',themeOff:'ডার্ক মোড বন্ধ',text:'লেখার আকার'},
+    ta:{open:'காட்சி அமைப்புகள்',title:'காட்சி அமைப்புகள்',theme:'இருண்ட பயன்முறை',smaller:'அ−',larger:'அ+',close:'மூடு',themeOn:'இருண்ட பயன்முறை இயக்கம்',themeOff:'இருண்ட பயன்முறை முடக்கம்',text:'எழுத்து அளவு'}
+  };
+  const t=labels[lang]||labels.en;
+  const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
+  const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
+  const theme=read('fc-display-theme','');
+  const initialTheme=theme==='dark'||theme==='light'?theme:
+    (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  const allowedSizes=['normal','large','larger'];
+  const initialSize=allowedSizes.includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
+  const applyTheme=value=>{
+    document.documentElement.setAttribute('data-fc-theme',value);
+    write('fc-display-theme',value);
+    themeButton.setAttribute('aria-pressed',String(value==='dark'));
+    themeButton.textContent=t.theme+' · '+(value==='dark'?'●':'○');
+    status.textContent=value==='dark'?t.themeOn:t.themeOff;
+  };
+  const applySize=value=>{
+    const safe=allowedSizes.includes(value)?value:'normal';
+    document.documentElement.setAttribute('data-fc-text-size',safe);
+    write('fc-display-size',safe);
+    sizeValue.textContent=safe==='normal'?'100%':safe==='large'?'112.5%':'125%';
+    smaller.disabled=safe==='normal';
+    larger.disabled=safe==='larger';
+  };
+  const open=document.createElement('button');
+  open.id='fc-display-settings';
+  open.type='button';
+  open.textContent=t.open;
+  open.setAttribute('aria-expanded','false');
+  open.setAttribute('aria-controls','fc-display-panel');
+  const panel=document.createElement('section');
+  panel.id='fc-display-panel';
+  panel.className='fc-display-panel';
+  panel.hidden=true;
+  panel.setAttribute('aria-label',t.title);
+  const heading=document.createElement('strong');heading.textContent=t.title;
+  const themeButton=document.createElement('button');themeButton.type='button';themeButton.className='fc-display-action';
+  themeButton.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-fc-theme')==='dark'?'light':'dark'));
+  const sizeLabel=document.createElement('label');sizeLabel.className='fc-display-size-label';sizeLabel.textContent=t.text;
+  const sizeRow=document.createElement('div');sizeRow.className='fc-display-size-row';
+  const smaller=document.createElement('button');smaller.type='button';smaller.className='fc-display-action';smaller.textContent=t.smaller;smaller.setAttribute('aria-label',t.smaller+' '+t.text);
+  const sizeValue=document.createElement('output');sizeValue.className='fc-display-size-value';
+  const larger=document.createElement('button');larger.type='button';larger.className='fc-display-action';larger.textContent=t.larger;larger.setAttribute('aria-label',t.larger+' '+t.text);
+  smaller.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='larger'?'large':'normal'));
+  larger.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='normal'?'large':'larger'));
+  sizeRow.append(smaller,sizeValue,larger);
+  const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
+  const closePanel=()=>{panel.hidden=true;open.setAttribute('aria-expanded','false');};
+  close.addEventListener('click',closePanel);
+  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)themeButton.focus();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
+  panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
+  document.body.append(open,panel);
+  applyTheme(initialTheme);
+  applySize(initialSize);
+})();
+
 
 })();
