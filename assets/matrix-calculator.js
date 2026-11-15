@@ -52,7 +52,6 @@ function init(){
    out.innerHTML=html;out.classList.remove('matrix-error');out.classList.add('matrix-success');
   }catch(error){out.innerHTML='<p class="matrix-error">'+String(error.message||'Unable to calculate this matrix.')+'</p>';out.classList.remove('matrix-success');}
  }
- size.addEventListener('change,',()=>{});
  size.addEventListener('change',examples);operation.addEventListener('change',updateOperation);
  document.getElementById('calculateMatrix').addEventListener('click',run);
  document.getElementById('resetMatrix').addEventListener('click',()=>{examples();out.innerHTML='<p class="matrix-note">Examples restored. Choose Calculate to see the result.</p>';});
