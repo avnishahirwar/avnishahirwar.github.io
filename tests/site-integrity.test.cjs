@@ -1428,3 +1428,15 @@ test('homepage calculator search results region has a valid accessible role', ()
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(homepage, /id="fc-home-search-results"[^>]*role="region"[^>]*aria-label="Calculator search results"/);
 });
+
+
+test('static assets have safe browser cache headers and the service worker remains revalidatable', () => {
+  const headers = fs.readFileSync(path.join(root, '_headers'), 'utf8');
+  assert.match(headers, /\/assets\/\*[\s\S]*?Cache-Control: public, max-age=86400, stale-while-revalidate=604800/);
+  assert.match(headers, /\/manifest\.webmanifest[\s\S]*?Cache-Control: public, max-age=3600, stale-while-revalidate=86400/);
+  assert.match(headers, /\/sw\.js[\s\S]*?Cache-Control: no-cache/);
+  assert.match(headers, /\/favicon-96\.png[\s\S]*?Cache-Control: public, max-age=604800/);
+  assert.match(headers, /\/favicon\.svg[\s\S]*?Cache-Control: public, max-age=604800/);
+  assert.match(headers, /\/apple-touch-icon\.png[\s\S]*?Cache-Control: public, max-age=604800/);
+  assert.match(headers, /Content-Security-Policy: frame-ancestors 'self'/);
+});
