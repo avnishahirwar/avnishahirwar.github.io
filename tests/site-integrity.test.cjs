@@ -1249,7 +1249,7 @@ test('Bengali and Tamil Bigha calculator pages are fully localized and cross-lin
     assert.match(html, new RegExp('<html lang="' + locale + '">'));
     assert.match(html, /id="bighaForm"/);
     assert.match(html, /id="factor"/);
-    assert.match(html, /0\\.09290304/);
+    assert.match(html, /0\.09290304/);
     assert.match(html, /43,560/);
     assert.match(html, /hreflang="en"/);
     assert.match(html, /hreflang="hi"/);
