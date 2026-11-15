@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
 const vm = require('node:vm');
 const source = fs.readFileSync(new URL('../assets/keyword-calculators.js', 'file://' + __filename), 'utf8');
 function definitions(){const at=source.lastIndexOf('})();');const code=source.slice(0,at)+'globalThis.__defs=defs;'+source.slice(at);const sandbox={document:{readyState:'loading',addEventListener(){}}};vm.runInNewContext(code,sandbox,{timeout:1000});return sandbox.__defs;}
