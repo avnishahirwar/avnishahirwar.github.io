@@ -11,7 +11,7 @@ function init(){
  const resetOutput=()=>{revoke(outputUrl);outputUrl=null;outputPreview.removeAttribute('src');outputPreview.hidden=true;download.hidden=true;outputCaption.textContent='Resized image';};
  function setEnabled(enabled){[widthInput,heightInput,formatInput,qualityInput,ratioInput,resizeButton].forEach(el=>el.disabled=!enabled);}
  function dimension(value){const n=Number(value);if(!Number.isInteger(n)||n<1||n>maxSide)throw new Error('Enter a whole-number dimension between 1 and '+maxSide+' pixels.');return n;}
- function validateDimensions(w,h){if(w*h>maxPixels)throw new Error('The output is larger than 40 megapixels. Reduce the width or height.');}
+ function validateDimensions(w,h){if(w*h>maxPixels)throw new Error('The output is larger than 20 megapixels. Reduce the width or height.');}
  function loadFile(file){
   resetOutput();sourceFile=file;sourceImage=null;revoke(sourceUrl);sourceUrl=null;
   originalPreview.removeAttribute('src');originalPreview.hidden=true;originalCaption.textContent='Original image';
