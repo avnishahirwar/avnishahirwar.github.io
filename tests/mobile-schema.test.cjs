@@ -8,6 +8,7 @@ const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
 const chrome = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
 const calculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
 const minutesToHours = fs.readFileSync(path.join(root, 'calculators/minutes-to-hours-calculator.html'), 'utf8');
+const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = sitemap.split('<loc>').slice(1).map(part => part.split('</loc>')[0]);
 
@@ -66,4 +67,13 @@ test('native Minutes-to-Hours calculator does not receive a duplicate injected c
 test('native Minutes-to-Hours page reserves the shared header before shell hydration', () => {
   assert.ok(minutesToHours.includes('<header class="fc-global-header">'));
   assert.ok(minutesToHours.includes('id="fc-primary-navigation"'));
+});
+
+
+test('calculator directory renders the shared header before shell hydration to prevent mobile layout shift', () => {
+  assert.ok(directory.includes('<header class="fc-global-header"><div class="fc-global-nav">'));
+  assert.ok(directory.includes('id="fc-primary-navigation"'));
+  assert.ok(directory.includes('id="fc-language-select"'));
+  assert.ok(shell.includes('const headerIsReady=!!(existingHeader&&existingHeader.classList.contains(\'fc-global-header\')'));
+  assert.ok(shell.includes('const activeHeader=headerIsReady?existingHeader:h;'));
 });
