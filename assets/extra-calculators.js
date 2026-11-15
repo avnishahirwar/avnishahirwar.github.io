@@ -65,7 +65,8 @@ case'landunit':{if(v.bigha<=0||v.guntha<=0||v.cent<=0){out.textContent='All loca
 case'fee':r={'Estimated transaction fee':v.amount*rate,'Estimated amount after fee':v.amount-v.amount*rate};break;
 }
 const formatValue=(k,val)=>{if(typeof val!=='number')return val;const key=k.toLowerCase();if(key.includes('utilization'))return val.toFixed(2)+'%';if(key.includes('hours'))return val.toFixed(2)+' hours';if(key.includes('bigha'))return val.toFixed(4)+' Bigha';if(key.includes('guntha'))return val.toFixed(4)+' Guntha';if(key.includes('cent'))return val.toFixed(4)+' Cent';if(key.includes('acres'))return val.toFixed(4)+' acres';if(key.includes('ratio')||key.includes('turnover')||key.includes('period')||key.includes('months'))return val.toFixed(2);return money(val);};out.innerHTML=Object.entries(r).map(([k,val])=>'<div class="result-row"><span>'+(c.kind==='rentbuy'?(rentBuyI18n[locale]?.results?.[k]||k):(language?(language.keys[k]||k):k))+'</span><strong>'+formatValue(k,val)+'</strong></div>').join('')+'<p class="small">'+(c.kind==='rentbuy'?(rentBuyI18n[locale]?.small||'Illustrative estimate based only on entered values.'):(language?language.small:'Illustrative estimate based only on entered values. Verify current product terms, applicable rules, fees and tax treatment with the relevant official source or provider.'))+'</p>';
-appendResultBreakdownChart(c.kind,r);\nappendEmiAmortizationSchedule(c.kind,v,rate/12,r);
+appendResultBreakdownChart(c.kind,r);
+appendEmiAmortizationSchedule(c.kind,v,rate/12,r);
 }
 
 /* Show a proportionate, accessible breakdown chart for numeric savings/loan results. */
