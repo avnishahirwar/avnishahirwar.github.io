@@ -104,3 +104,21 @@ test('directory preloads its measured LCP hero illustration from the document he
   assert.ok(directory.includes('<img src="/assets/friendly-calculator-brand-illustration.svg"'));
   assert.ok(directory.includes('fetchpriority="high" decoding="async"'));
 });
+
+
+test('homepage queues GA4 immediately but defers the analytics runtime past first render', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(homepage, /gtag\('config','G-QVWQSEDRGL'\)/);
+  assert.match(homepage, /window\.addEventListener\('load',schedule/);
+  assert.match(homepage, /},4000\)/);
+  assert.match(homepage, /requestIdleCallback\(load,\{timeout:6000\}\)/);
+  assert.doesNotMatch(homepage, /<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js/);
+});
+
+test('shared shell delays GTM container while preserving queued analytics events', () => {
+  assert.match(shell, /window\.dataLayer=window\.dataLayer\|\|\[\]/);
+  assert.match(shell, /window\.setTimeout\(\(\)=>/);
+  assert.match(shell, /\},8000\)/);
+  assert.match(shell, /requestIdleCallback\(injectGtm,\{timeout:8000\}\)/);
+  assert.match(shell, /gtm\.js\?id=GTM-MGJQH4DB/);
+});
