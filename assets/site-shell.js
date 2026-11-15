@@ -387,7 +387,7 @@ if(p.startsWith('/calculators/')&&main&&!document.querySelector('.fc-share-panel
 if(p.startsWith('/calculators/')&&main){
   if(!document.querySelector('style[data-fc-tools]')){
     const style=document.createElement('style');style.dataset.fcTools='1';
-    style.textContent='.fc-export-panel,.fc-related-tools,.fc-whatif-panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:18px;margin:18px 0}.fc-tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.fc-tool-actions button{border:0;border-radius:8px;background:#101c2c;color:#fff;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.fc-export-panel textarea{width:100%;min-height:88px;padding:10px;border:1px solid #bdc8d2;border-radius:8px;font:12px/1.5 ui-monospace,monospace}.fc-whatif-panel input[type=range]{width:100%}.fc-live-chart{margin:14px 0}.fc-live-row{margin:10px 0}.fc-live-row small{display:block;margin-bottom:4px;color:#526273}.fc-live-track{height:12px;background:#e8edf2;border-radius:20px;overflow:hidden}.fc-live-bar{height:100%;background:#385a7b;border-radius:20px}';
+    style.textContent='.fc-export-panel,.fc-related-tools,.fc-whatif-panel,.fc-scenario-panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:18px;margin:18px 0}.fc-tool-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.fc-tool-actions button{border:0;border-radius:8px;background:#101c2c;color:#fff;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.fc-export-panel textarea{width:100%;min-height:88px;padding:10px;border:1px solid #bdc8d2;border-radius:8px;font:12px/1.5 ui-monospace,monospace}.fc-whatif-panel input[type=range]{width:100%}.fc-live-chart{margin:14px 0}.fc-live-row{margin:10px 0}.fc-live-row small{display:block;margin-bottom:4px;color:#526273}.fc-live-track{height:12px;background:#e8edf2;border-radius:20px;overflow:hidden}.fc-live-bar{height:100%;background:#385a7b;border-radius:20px}.fc-scenario-list{display:grid;gap:10px}.fc-scenario-card{border:1px solid #dfe5eb;border-radius:8px;padding:12px;margin:10px 0}.fc-scenario-card p{overflow-wrap:anywhere}.fc-scenario-comparison{max-width:100%;overflow-x:auto}.fc-scenario-table{width:100%;border-collapse:collapse;min-width:520px}.fc-scenario-table th,.fc-scenario-table td{padding:9px;border-bottom:1px solid #dfe5eb;text-align:left;vertical-align:top}.fc-scenario-table th{background:#f3f6f8}';
     document.head.appendChild(style);
   }
   if(!main.querySelector('#printResult')&&!main.querySelector('.fc-export-panel')){
@@ -486,7 +486,7 @@ if(p.startsWith('/calculators/')&&main){
     actions.append(save,compare,clear);panel.append(heading,description,actions,status,list,comparison);main.append(panel);
     const storageKey='fc-scenarios-v1:'+location.pathname;
     const readSaved=()=>{
-      try{const value=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(value)?value.slice(0,3):[];}catch(_){return [];}
+      try{const value=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(value)?value.filter(item=>item&&typeof item==='object'&&Array.isArray(item.inputs)&&item.inputs.every(input=>input&&typeof input.key==='string'&&typeof input.label==='string'&&typeof input.value==='string')).slice(0,3):[];}catch(_){return [];}
     };
     const writeSaved=items=>{
       try{localStorage.setItem(storageKey,JSON.stringify(items.slice(0,3)));return true;}catch(_){status.textContent='Browser storage is unavailable or full. No scenario was saved.';return false;}
