@@ -1144,6 +1144,8 @@ test('browser image resizer and converter process files locally without upload c
   assert.match(html, /Image decoding, resizing and conversion happen locally in your browser/);
   assert.match(js, /canvas\.toBlob/);
   assert.match(js, /maxFileBytes=20\*1024\*1024/);
+  assert.match(js, /maxPixels=20000000/);
+  assert.match(js, /The output is larger than 20 megapixels/);
   assert.doesNotMatch(js, /fetch\s*\(|XMLHttpRequest|sendBeacon|navigator\.sendBeacon/);
   assert.ok(fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8').includes('/calculator/image-tools.html'));
 });
