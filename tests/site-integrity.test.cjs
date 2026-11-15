@@ -1107,7 +1107,7 @@ test('Avnish Ahirwar founder identity is crawlable and consistently linked', () 
   assert.match(home, /"@type":"Person","@id":"https:\/\/friendlycalculator\.in\/calculator\/founder\.html#person","name":"Avnish Ahirwar"/);
   assert.match(founder, /"@type":"ProfilePage"/);
   assert.match(founder, /"name":"Avnish Ahirwar"/);
-  assert.match(founder, /<title>Avnish Ahirwar \\| Founder and Owner of Friendly Calculator<\\/title>/);
+  assert.ok(founder.includes('<title>Avnish Ahirwar | Founder and Owner of Friendly Calculator</title>'));
   assert.match(about, /<a href="\/calculator\/founder\.html">Avnish Ahirwar — Founder and Owner<\/a>/);
   assert.match(sitemap, /<loc>https:\/\/friendlycalculator\.in\/calculator\/founder\.html<\/loc>/);
 });
