@@ -460,6 +460,13 @@ if(p.startsWith('/calculators/')&&main){
       const result=main.querySelector('#live-page-calculator [aria-live="polite"],#extraResult,.results,.result,[aria-live="polite"],#result,#resultBox,.calculator-result,.result-box,.output');
       const resultText=(result?.innerText||'').trim();
       if(resultText)rows.push(['Result','Calculated result',resultText]);
+      const outputTables=main.querySelectorAll('#visualReport table,#sipResult table,#extraResult table,#result table,#resultBox table,.calculator-result table,.result-box table,.fc-result-table');
+      outputTables.forEach((table,tableIndex)=>{
+        [...table.rows].forEach((row,rowIndex)=>{
+          const values=[...row.cells].map(cell=>(cell.innerText||cell.textContent||'').trim());
+          if(values.length)rows.push(['Output table '+(tableIndex+1),'Row '+(rowIndex+1),...values]);
+        });
+      });
       const csv='\uFEFF'+rows.map(row=>row.map(csvEscape).join(',')).join('\r\n');
       const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
       const url=URL.createObjectURL(blob),a=document.createElement('a');
