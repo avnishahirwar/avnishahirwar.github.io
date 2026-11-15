@@ -60,3 +60,13 @@ test('income tax WebPage structured data matches the current salary-tax calculat
   assert.match(webPage.description, /ordinary salary income only/);
   assert.doesNotMatch(webPage.description, /no separate deduction or personal-profile inputs/);
 });
+
+
+test('Income Tax calculator uses the current site catalogue count', () => {
+  const html = read('calculators/income-tax-calculator.html');
+  const sitemap = read('sitemap.xml');
+  const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
+  assert.equal(new Set(calculatorUrls).size, 285);
+  assert.ok(html.includes('Explore all 285 calculators on Friendly Calculator.'));
+  assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
+});
