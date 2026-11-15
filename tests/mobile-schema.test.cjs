@@ -81,3 +81,15 @@ test('priority pages render the shared header before shell hydration to prevent 
   assert.ok(shell.includes('const headerIsReady=!!(existingHeader&&existingHeader.classList.contains(\'fc-global-header\')'));
   assert.ok(shell.includes('const activeHeader=headerIsReady?existingHeader:h;'));
 });
+
+test('homepage calculator search skips scanning all 285 links on initial empty query', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const start = homepage.indexOf("const root=document.getElementById('categoryGrid')");
+  const end = homepage.indexOf('})();', start);
+  assert.ok(start >= 0 && end > start, 'Homepage search initializer must exist');
+  const script = homepage.slice(start, end);
+  assert.match(script, /if\(!query\)[\s\S]*?links\.hidden=true[\s\S]*?continue;/);
+  assert.match(script, /const matched=hay\.includes\(query\)/);
+  assert.match(script, /input\.addEventListener\('input',filter\)/);
+  assert.match(script, /clear\.addEventListener\('click'/);
+});
