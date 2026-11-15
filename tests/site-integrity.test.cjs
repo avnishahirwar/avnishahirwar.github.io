@@ -1095,3 +1095,17 @@ test('homepage category cards and headings match the calculator links in each ca
     assert.equal(Number(card[2]), counts.get(card[1]), 'Category index count must match section links: ' + card[1]);
   }
 });
+
+
+test('time conversion and working-days pages explain their actual calculation rules', () => {
+  const hours = fs.readFileSync(path.join(root, 'calculators/hours-to-minutes-calculator.html'), 'utf8');
+  const working = fs.readFileSync(path.join(root, 'calculators/working-days-calculator.html'), 'utf8');
+  assert.match(hours, /\(2 × 60\) \+ 30 = 150 minutes/);
+  assert.match(hours, /2\.5 hours and 30 additional minutes/);
+  assert.match(hours, /overtime, break deductions and billable-time rounding/);
+  assert.match(hours, /twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
+  assert.match(working, /start date and end date are both included/);
+  assert.match(working, /Saturday and Sunday are excluded/);
+  assert.match(working, /does not download national, state, bank or company holiday calendars/);
+  assert.match(working, /no longer than ten years/);
+});
