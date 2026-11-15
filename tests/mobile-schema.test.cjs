@@ -82,17 +82,19 @@ test('priority pages render the shared header before shell hydration to prevent 
   assert.ok(shell.includes('const activeHeader=headerIsReady?existingHeader:h;'));
 });
 
-test('homepage calculator search skips scanning all 285 links on initial empty query', () => {
+test('homepage calculator search loads its index only after typing and renders a bounded result set', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const start = homepage.indexOf("const root=document.getElementById('categoryGrid')");
+  const start = homepage.indexOf("const input=document.getElementById('fc-home-tool-search')");
   const end = homepage.indexOf('})();', start);
-  assert.ok(start >= 0 && end > start, 'Homepage search initializer must exist');
+  assert.ok(start >= 0 && end > start, 'Homepage deferred search initializer must exist');
   const script = homepage.slice(start, end);
-  assert.match(script, /if\(!query\)[\s\S]*?links\.hidden=true[\s\S]*?continue;/);
-  assert.match(script, /if\(hasSearched\)[\s\S]*?calculator-link[\s\S]*?hidden=false/);
-  assert.match(script, /const matched=hay\.includes\(query\)/);
-  assert.match(script, /input\.addEventListener\('input',filter\)/);
-  assert.match(script, /clear\.addEventListener\('click'/);
+  assert.match(script, /function loadCatalogue\(/);
+  assert.match(script, /fetch\('\/assets\/calculator-search-index\.json'/);
+  assert.match(script, /input\.addEventListener\('input'/);
+  assert.match(script, /window\.setTimeout\(search,120\)/);
+  assert.match(script, /if\(!query\)[\s\S]*?results\.hidden=true/);
+  assert.match(script, /items\.slice\(0,12\)/);
+  assert.match(script, /if\(items\.length>12\)/);
 });
 
 
