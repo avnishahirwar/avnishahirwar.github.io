@@ -38,7 +38,28 @@
 <label>Supply type<select name="supply" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>Intra-state (CGST + SGST)</option><option>Inter-state (IGST)</option></select></label>
 <button class="btn" type="submit" style="border:0;cursor:pointer">Calculate GST</button>
 </form>
-<div id="gst-live-result" aria-live="polite" style="display:none;margin-top:18px"></div>
+<div id="gst-live-result" aria-live="polite" style="display:block;margin-top:18px">
+<h3>Calculation result</h3>
+<table class="fc-result-table"><tbody>
+<tr><th>Taxable value</th><td>₹10,000.00</td></tr>
+<tr><th>Total GST</th><td>₹1,800.00</td></tr>
+<tr><th>CGST</th><td>₹900.00</td></tr>
+<tr><th>SGST</th><td>₹900.00</td></tr>
+<tr><th>Invoice total</th><td>₹11,800.00</td></tr>
+</tbody></table>
+<section class="fc-calculation-solution" style="margin-top:16px;padding:14px;background:#fff;border:1px solid #d9e2ea;border-radius:10px">
+<h3>How this result was calculated</h3>
+<p>GST = taxable value × rate ÷ 100. Invoice total = taxable value + GST.</p>
+<p>Intra-state supply: GST is split into CGST and SGST.</p>
+</section>
+<section class="fc-result-chart"><h3>Result chart</h3>
+<div class="fc-chart-item"><div class="fc-chart-label"><span>Taxable value</span><strong>₹10,000.00</strong></div><div class="fc-chart-track"><span class="fc-chart-bar" style="width:84.7458%"></span></div></div>
+<div class="fc-chart-item"><div class="fc-chart-label"><span>Total GST</span><strong>₹1,800.00</strong></div><div class="fc-chart-track"><span class="fc-chart-bar" style="width:15.2542%"></span></div></div>
+<div class="fc-chart-item"><div class="fc-chart-label"><span>CGST</span><strong>₹900.00</strong></div><div class="fc-chart-track"><span class="fc-chart-bar" style="width:7.6271%"></span></div></div>
+<div class="fc-chart-item"><div class="fc-chart-label"><span>SGST</span><strong>₹900.00</strong></div><div class="fc-chart-track"><span class="fc-chart-bar" style="width:7.6271%"></span></div></div>
+<div class="fc-chart-item"><div class="fc-chart-label"><span>Invoice total</span><strong>₹11,800.00</strong></div><div class="fc-chart-track"><span class="fc-chart-bar" style="width:100%"></span></div></div>
+</section>
+</div>
 </section>
 <section class="panel"><h2>Current GST rate guidance — Updated: 13 November 2026</h2><p>The GST Council’s rate rationalisation introduced a 5% merit rate, an 18% standard rate and a 40% special demerit rate for selected goods and services, with changes for most goods and services taking effect on 22 September 2025. These are not an exhaustive list of every GST treatment: exemptions and specific rates can apply. Do not infer a rate from the product name alone. Confirm the current HSN/SAC classification, rate notification and place-of-supply rules before invoicing.</p><p>The 57th GST Council meeting on 8 October 2026 focused on process reforms, clarifications and trade facilitation; check the latest official notifications for any transaction-specific changes.</p><p>Official references: <a href="https://gstcouncil.gov.in/sites/default/files/2025-09/faq_0.pdf" target="_blank" rel="noopener noreferrer">56th GST Council rate-change FAQs</a> · <a href="https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2320934&amp;lang=2&amp;reg=48" target="_blank" rel="noopener noreferrer">57th GST Council recommendations</a> · <a href="https://www.gstcouncil.gov.in/cgst-rate-notification" target="_blank" rel="noopener noreferrer">GST rate notifications</a>.</p></section>
 <section class="panel"><h2>What is a GST calculator?</h2><p>Use this GST calculator to estimate the tax component and final price. Choose whether the entered amount is before GST or already includes GST, then enter the verified rate applicable to the goods or services. Verify classification and current rates before invoicing.</p><h2>How to use this GST calculator</h2><ol><li>Enter the amount before tax or the GST-inclusive amount, depending on the calculation you want to perform.</li><li>Choose whether to add GST to the amount or extract GST from an inclusive price.</li><li>Enter the rate verified for the goods or services and choose intra-state or inter-state supply to display the appropriate tax split.</li><li>Review the taxable value, total GST, CGST and SGST or IGST, and the final invoice amount.</li></ol><a class="btn" href="#live-page-calculator">Calculate now</a></section>
@@ -78,7 +99,7 @@ const solution=document.createElement('section');solution.className='fc-calculat
 const h=document.createElement('h3');h.textContent='How this result was calculated';const p=document.createElement('p');p.textContent=mode==='Add GST'?'GST = taxable value × rate ÷ 100. Invoice total = taxable value + GST.':'Taxable value = inclusive amount × 100 ÷ (100 + rate). GST = inclusive amount − taxable value.';const q=document.createElement('p');q.textContent=intra?'Intra-state supply: GST is split into CGST and SGST.':'Inter-state supply: GST is shown as IGST.';solution.append(h,p,q);out.appendChild(solution);
 const chart=document.createElement('section');chart.className='fc-result-chart';const ch=document.createElement('h3');ch.textContent='Result chart';chart.appendChild(ch);const max=Math.max(...rows.map(x=>x[1]),1);rows.forEach(([label,value])=>{const item=document.createElement('div');item.className='fc-chart-item';const line=document.createElement('div');line.className='fc-chart-label';const name=document.createElement('span'),amountText=document.createElement('strong');name.textContent=label;amountText.textContent=money(value);line.append(name,amountText);const track=document.createElement('div');track.className='fc-chart-track';const bar=document.createElement('span');bar.className='fc-chart-bar';bar.style.width=Math.max(2,value/max*100)+'%';track.appendChild(bar);item.append(line,track);chart.appendChild(item)});out.appendChild(chart);out.style.display='block';
 }
-form.addEventListener('submit',calculate);calculate(new Event('submit',{cancelable:true,preventDefault(){}}));
+form.addEventListener('submit',calculate);// The default result is server-rendered above; calculate only after an explicit form submission.
 })();
 </script>
 

@@ -849,3 +849,15 @@ test('dedicated Loan EMI page script calculates standard and zero-rate cases', (
   closeTo(zeroRate.emi, 10000, 0.001);
   closeTo(zeroRate.totalInterest, 0, 0.001);
 });
+
+test('GST page renders its default result statically and calculates only on user submission', () => {
+  const html = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
+  const script = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
+    .map(match => match[1]).find(source => source.includes("form.addEventListener('submit',calculate)"));
+  assert.ok(script, 'GST calculator submit handler must remain present');
+  assert.match(html, /id="gst-live-result" aria-live="polite" style="display:block/);
+  for (const value of ['₹10,000.00', '₹1,800.00', '₹900.00', '₹11,800.00']) assert.ok(html.includes(value), 'Missing static default result ' + value);
+  assert.match(script, /form.addEventListener\('submit',calculate\)/);
+  assert.doesNotMatch(script, /calculate\(new Event\('submit'/);
+  assert.match(script, /How this result was calculated/);
+});
