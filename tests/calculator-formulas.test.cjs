@@ -815,3 +815,29 @@ test('advanced matrix calculator supports 2x2 and 3x3 operations with worked met
   assert.ok(inverseSteps.some(step => step.includes('divide R1')), 'inverse shows row operations');
   assert.ok(explained.steps.length >= 2);
 });
+
+
+// The Loan EMI page uses a focused script instead of downloading the full
+// shared calculator bundle. Exercise the dedicated production formula.
+test('dedicated Loan EMI page script calculates standard and zero-rate cases', () => {
+  const pageSource = fs.readFileSync(new URL('../assets/loan-emi-calculator.js', 'file://' + __filename), 'utf8');
+  assert.match(pageSource, /Monthly loan amortization schedule/);
+  assert.match(pageSource, /calculator_used/);
+  const instrumented = pageSource.replace(
+    'window.FriendlyCalculatorLoanEMI = { calculateLoanEmi };',
+    'globalThis.__calculateLoanEmi = calculateLoanEmi;'
+  );
+  const sandbox = {
+    document: { readyState: 'loading', addEventListener() {} },
+    window: {},
+    location: { pathname: '/calculators/loan-emi-calculator.html' }
+  };
+  vm.runInNewContext(instrumented, sandbox, { timeout: 1000 });
+  const standard = sandbox.__calculateLoanEmi(500000, 9, 60);
+  closeTo(standard.emi, 10379.177, 0.01);
+  closeTo(standard.totalRepayment, 622750.62, 0.1);
+  closeTo(standard.totalInterest, 122750.62, 0.1);
+  const zeroRate = sandbox.__calculateLoanEmi(120000, 0, 12);
+  closeTo(zeroRate.emi, 10000, 0.001);
+  closeTo(zeroRate.totalInterest, 0, 0.001);
+});
