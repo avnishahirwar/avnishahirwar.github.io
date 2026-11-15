@@ -747,6 +747,10 @@ test('standard EMI calculators include a bounded month-by-month repayment schedu
   assert.match(js, /Scheduled principal/);
   assert.match(js, /Scheduled interest/);
   assert.match(js, /Month-by-month repayment schedule/);
+  for (const slug of ['car-loan-calculator','bike-loan-calculator','gold-loan-calculator','loan-against-property-calculator']) {
+    const html = fs.readFileSync(new URL('../calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
+    assert.match(html, /data-fc-native-calculator/, slug + ' must not receive a duplicate injected calculator');
+  }
   const principal = 800000, annualRate = 0.09, months = 60, monthlyRate = annualRate / 12;
   const emi = principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
   let balance = principal, interestTotal = 0, principalTotal = 0;
