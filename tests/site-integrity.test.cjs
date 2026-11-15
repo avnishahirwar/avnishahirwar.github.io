@@ -1360,3 +1360,10 @@ test('key calculator pages do not load the retired no-op chrome script', () => {
     assert.ok(page.includes('/assets/site-shell.js'), relative + ' must retain the shared site shell');
   }
 });
+
+
+test('directory prioritizes its visible brand illustration as the LCP image', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  assert.match(page, /friendly-calculator-brand-illustration\.svg[^>]*fetchpriority="high"/);
+  assert.match(page, /width="1200" height="630"/);
+});

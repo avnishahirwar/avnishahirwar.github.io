@@ -12,6 +12,7 @@ on:
       - "assets/page-calculators.js"
       - "assets/loan-emi-calculator.js"
       - "calculators/loan-emi-calculator.html"
+      - "calculator/site-directory.html"
       - "calculators/minutes-to-hours-calculator.html"
       - "_headers"
   pull_request:
@@ -22,6 +23,7 @@ on:
       - "assets/page-calculators.js"
       - "assets/loan-emi-calculator.js"
       - "calculators/loan-emi-calculator.html"
+      - "calculator/site-directory.html"
       - "calculators/minutes-to-hours-calculator.html"
       - "tests/mobile-schema.test.cjs"
       - "_headers"
@@ -54,7 +56,8 @@ jobs:
           for attempt in {1..30}; do
             html="$(curl -fsSL "https://friendlycalculator.in/calculators/loan-emi-calculator.html?deploy=${GITHUB_SHA}" || true)"
             js="$(curl -fsSL "https://friendlycalculator.in/assets/loan-emi-calculator.js?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js"; then
+            directory="$(curl -fsSL "https://friendlycalculator.in/calculator/site-directory.html?deploy=${GITHUB_SHA}" || true)"
+            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory"; then
               echo "Production calculator assets match commit ${GITHUB_SHA}."
               exit 0
             fi
