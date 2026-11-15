@@ -57,5 +57,5 @@ function init(){
  document.getElementById('resetMatrix').addEventListener('click',()=>{examples();out.innerHTML='<p class="matrix-note">Examples restored. Choose Calculate to see the result.</p>';});
  examples();
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+if(typeof document!=='undefined'){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();}
 })();
