@@ -1464,3 +1464,13 @@ test('homepage recent and favourite calculators remain browser-local and bounded
   const vm = require('node:vm');
   assert.doesNotThrow(() => new vm.Script(personalTools), 'Homepage personal tools script must parse');
 });
+
+test('homepage inline CSS has valid rule separation and the calculator search panel selector', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const styles = [...homepage.matchAll(/<style[^>]*>([\\s\\S]*?)<\\/style>/gi)].map(match => match[1]);
+  assert.ok(styles.length >= 1, 'Homepage inline CSS must remain present');
+  const inlineCss = styles.join('\\n');
+  assert.doesNotMatch(inlineCss, /\\\\n/, 'CSS must not contain a literal escaped newline token');
+  assert.match(inlineCss, /\\.home-tool-search\\s*\\{/, 'Homepage search panel selector must remain valid');
+  assert.doesNotMatch(inlineCss, /(?:^|\\n)\\s*n\\s+\\.home-tool-search/, 'Homepage search selector must not have a stray leading n');
+});
