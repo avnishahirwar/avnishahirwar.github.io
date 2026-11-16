@@ -21,6 +21,7 @@ const normalizePath=value=>{
 };
 const src=rawSrc?normalizePath(rawSrc):'';
 const builder=document.getElementById('builder'),mount=document.getElementById('mount');
+const select=document.getElementById('tool'),code=document.getElementById('code'),preview=document.getElementById('preview'),status=document.getElementById('status');
 const makeEmbedUrl=path=>location.origin+'/embed/?src='+encodeURIComponent(path);
 const codeFor=path=>'<iframe src="'+(path==='/embed/basic-calculator.html'?location.origin+path:makeEmbedUrl(path))+'" title="Friendly Calculator" loading="lazy" width="100%" height="'+(path==='/embed/basic-calculator.html'?'520':'760')+'" style="border:0;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
 let allowedPaths=new Set(['/embed/basic-calculator.html']);
@@ -62,7 +63,6 @@ if(rawSrc){
   })();
   return;
 }
-const select=document.getElementById('tool'),code=document.getElementById('code'),preview=document.getElementById('preview'),status=document.getElementById('status');
 const refresh=()=>{
   const path=select.value;
   code.value='';
