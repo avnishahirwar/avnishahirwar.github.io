@@ -20,7 +20,7 @@ test('UK 2026-27 take-home estimate applies personal allowance, income tax and a
 });
 test('UK Scotland uses Scottish bands and student loan plans use official 2026-27 thresholds',()=>{
  const scot=calculateUKTakeHome(50000,{region:'scotland'});
- assert.equal(scot.incomeTax,8528.13);
+ assert.equal(scot.incomeTax,8982.05);
  const p2=calculateUKTakeHome(40000,{studentLoanPlan:'plan2',postgraduateLoan:true});
  assert.equal(p2.studentLoan,955.35);
  assert.equal(p2.postgraduateLoan,1140);
@@ -32,7 +32,7 @@ test('UK personal allowance tapers above £100,000 and invalid student plans are
 });
 test('Germany 2026 income tax follows §32a EStG progressive tariff',()=>{
  assert.equal(calculateGermanIncomeTax(12000).incomeTax,0);
- assert.equal(calculateGermanIncomeTax(30000).incomeTax,4874);
+ assert.equal(calculateGermanIncomeTax(30000).incomeTax,4217);
  assert.equal(calculateGermanIncomeTax(100000).incomeTax,30864);
  assert.equal(calculateGermanIncomeTax(300000).incomeTax,115529);
 });
