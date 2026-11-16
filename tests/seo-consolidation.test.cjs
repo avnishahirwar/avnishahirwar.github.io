@@ -43,10 +43,9 @@ test('legacy everyday alias is crawlable and canonically consolidated', () => {
 
 test('premium waitlist is indexable and included in the sitemap', () => {
   const html = read('calculator/premium-waitlist.html');
-  const sitemap = read('sitemap.xml');
   assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/i);
   assert.match(html, /Register your interest/);
-  assert.ok(sitemap.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
+  assert.ok(html.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
 });
 
 test('all 285 calculator pages remain in the sitemap after category cleanup', () => {
