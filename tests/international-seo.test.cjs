@@ -16,13 +16,13 @@ function walk(dir,files=[]){
 }
 function headOf(html){const i=html.toLowerCase().indexOf('</head>');return i<0?html:html.slice(0,i);}
 function langOf(html,file){
- const m=headOf(html).match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i);
+ const m=headOf(html).match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
  if(m)return m[1].toLowerCase();
  const first=path.relative(root,file).split(path.sep)[0];
  return ['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'].includes(first)?first:'en';
 }
-function canonicalOf(html){const m=headOf(html).match(/<link\\b(?=[^>]*\\brel=["']canonical["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/i);return m?new URL(m[1],origin).href:null;}
-function alternatesOf(html){return [...headOf(html).matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>({lang:m[1].toLowerCase(),href:new URL(m[2],origin).href}));}
+function canonicalOf(html){const m=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return m?new URL(m[1],origin).href:null;}
+function alternatesOf(html){return [...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>({lang:m[1].toLowerCase(),href:new URL(m[2],origin).href}));}
 function localFile(url){
  const u=new URL(url);if(u.origin!==origin||u.search||u.hash)return null;
  let p=decodeURIComponent(u.pathname);if(p==='/')p='/index.html';else if(p.endsWith('/'))p+='index.html';
@@ -56,6 +56,6 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
   }
  }
  console.log('Hreflang audit: '+pages.length+' HTML pages, '+tagged+' pages with alternates, '+checked+' alternate references, '+errors.length+' defects.');
- if(errors.length)console.log(errors.slice(0,80).join('\\n'));
+ if(errors.length)console.log(errors.slice(0,80).join('\n'));
  assert.equal(errors.length,0,'Hreflang defects: '+errors.length);
 });
