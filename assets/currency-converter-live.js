@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const amount=$('amount'),rateInput=$('rate'),from=$('fromCurrency'),to=$('toCurrency'),status=$('rateStatus'),error=$('error'),result=$('converted');
 if(!amount||!rateInput||!from||!to||!status||!error||!result)return;
-const fmtNumber=new Intl.NumberFormat('en-IN',{maximumFractionDigits:6});
+const fmtNumber=new Intl.NumberFormat(window.FCLocale?.getLocale?.()||'en-IN',{maximumFractionDigits:6});
 let rateDate='',requestId=0;
 function showStatus(message){status.textContent=message;}
 function setRate(value){rateInput.value=String(value);rateInput.readOnly=true;}
@@ -32,7 +32,7 @@ function calculate(){
  if(!Number.isFinite(value)||value<0||!Number.isFinite(rate)||rate<=0){result.textContent='—';if(rateInput.value)error.textContent='Enter a non-negative amount and a positive exchange rate.';return;}
  const converted=value*rate;
  if(!Number.isFinite(converted)){result.textContent='—';error.textContent='The result is outside the supported number range.';return;}
- try{result.textContent=new Intl.NumberFormat(undefined,{style:'currency',currency:to.value,maximumFractionDigits:2}).format(converted);}
+ try{result.textContent=window.FCLocale?.formatCurrency?window.FCLocale.formatCurrency(converted,to.value,{maximumFractionDigits:2}):new Intl.NumberFormat('en-IN',{style:'currency',currency:to.value,maximumFractionDigits:2}).format(converted);}
  catch(_){result.textContent=fmtNumber.format(converted)+' '+to.value;}
  if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
 }
