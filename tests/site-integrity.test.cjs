@@ -192,11 +192,11 @@ test('shared header and footer expose only the requested navigation items in ord
   assert.match(shell, /en:\{home:'Home',login:'Login'/);
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact']",
-    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क']"
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
+  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
 });
 
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
