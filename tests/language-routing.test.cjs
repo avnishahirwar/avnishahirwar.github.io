@@ -5,7 +5,7 @@ const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
 test('global language selector supports all configured locales', () => {
-  for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta']) {
+  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta']) {
     assert.ok(shell.includes(locale + ':'));
   }
   assert.match(shell, /fc-language-select/);
@@ -32,7 +32,7 @@ test('URL locale remains authoritative and language switching does not auto-redi
 });
 
 test('Search Calculator is localized across all supported locales', () => {
-  for (const label of ['Search Calculator','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு']) {
+  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு']) {
     assert.ok(shell.includes(label), 'Missing localized Search Calculator label: ' + label);
   }
 });
@@ -50,4 +50,11 @@ test('Hindi Bigha and Stamp Duty calculator routes have localized documents', ()
     assert.match(html, /<html lang="hi">/);
     assert.ok(html.includes('https://friendlycalculator.in/hi/calculators/' + file));
   }
+});
+
+test('German locale is available in the global selector and routing', () => {
+  assert.match(shell, /de:'Deutsch'/);
+  assert.match(shell, /de:'\/de\/index.html'/);
+  assert.match(shell, /de:'Zum Hauptinhalt springen'/);
+  assert.match(shell, /\(de\|es\|fr\|pt\|ar\|id\|bn\|ta\)/);
 });
