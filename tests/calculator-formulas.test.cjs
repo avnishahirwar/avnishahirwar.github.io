@@ -117,7 +117,7 @@ test('production formula functions return correct numeric results for every shar
     ['income tax calculator india', { grossSalary: 1275000, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
       ['Estimated taxable salary income', 1200000], ['Tax before rebate', 60000], ['Section 87A rebate / marginal relief', 60000], ['Estimated tax including surcharge and cess', 0]
     ]],
-    ['income tax calculator india', { grossSalary: 1286000, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
+    ['income tax calculator india', { grossSalary: 1285000, standardDeduction: 75000, age: 35, regime: 'New regime — Tax Year 2026–27', residency: 'Resident individual' }, [
       ['Estimated taxable salary income', 1210000], ['Tax before rebate', 61500], ['Section 87A rebate / marginal relief', 51500], ['Health and education cess (4%)', 400], ['Estimated tax including surcharge and cess', 10400]
     ]],
     ['income tax calculator india', { grossSalary: 560000, standardDeduction: 50000, age: 40, regime: 'Old regime — individual', residency: 'Resident individual' }, [
