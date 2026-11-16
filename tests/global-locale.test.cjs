@@ -178,3 +178,14 @@ test('English and localized unit converters respect the selected country number 
   assert.match(source,/fc:localechange/);
  }
 });
+
+test('country selector chooses the correct regional number and date locale defaults',()=>{
+ const x=boot();
+ const cases=[['PK','en-PK','PKR'],['SG','en-SG','SGD'],['CH','de-CH','CHF'],['IE','en-IE','EUR'],['IT','it-IT','EUR'],['NL','nl-NL','EUR'],['PT','pt-PT','EUR']];
+ for(const [country,locale,currency] of cases){
+  assert.equal(x.api.setCountry(country),true,country+' country should be selectable');
+  assert.equal(x.api.getLocale(),locale,country+' should use its regional locale');
+  assert.equal(x.api.getCurrency(),currency,country+' should use its default currency');
+  assert.doesNotThrow(()=>x.api.formatNumber(1234567.89));
+ }
+});
