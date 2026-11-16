@@ -1529,6 +1529,7 @@ test('Net Worth Calculator is indexed, discoverable and calculates assets less l
   assert.match(page, /<title>Net Worth Calculator/);
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /value="INR" selected/);
+  assert.match(page, /id="fc-main-content"/);
   assert.match(page, /id="net-worth-form"/);
   assert.match(directory, /href="\/calculators\/net-worth-calculator\.html"/);
   assert.match(about, /href="\/calculators\/net-worth-calculator\.html"/);
