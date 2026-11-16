@@ -13,7 +13,7 @@ test('mortgage payment handles zero interest and standard amortisation',()=>{
 test('US mortgage includes user-entered escrow-style estimates without inventing live rates',()=>{
  const r=calc.calculateUSMortgage({homePrice:400000,downPayment:80000,annualInterestRate:6.5,termYears:30,annualPropertyTaxRate:1.1,annualHomeInsurance:1800,monthlyHOA:100});
  assert.equal(r.principal,320000);
- assert.equal(r.monthlyPropertyTax,366.6666666666667);
+ assert.ok(Math.abs(r.monthlyPropertyTax-366.6666666666667)<1e-9);
  assert.equal(r.monthlyHomeInsurance,150);
  assert.equal(r.monthlyHOA,100);
  assert.ok(r.estimatedMonthlyHousingCost>r.monthlyPrincipalAndInterest);
