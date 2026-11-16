@@ -168,3 +168,13 @@ test('German unit converter also applies the shared Metric and Imperial preferen
  assert.match(page,/length:\['ft','in'\]/);
  assert.match(page,/mass:\['lb','oz'\]/);
 });
+
+test('English and localized unit converters respect the selected country number format',()=>{
+ const english=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');
+ const localized=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');
+ const german=fs.readFileSync(new URL('../de/calculators/unit-converter.html','file://'+__filename),'utf8');
+ for(const source of [english,localized,german]){
+  assert.match(source,/FCLocale\?\.formatNumber/);
+  assert.match(source,/fc:localechange/);
+ }
+});
