@@ -18,8 +18,10 @@ test('additive hreflang repair has no remaining unambiguous reciprocal additions
   assert.match(output, /Dry run only\. No files were changed\./);
 });
 
-test('hreflang page edits preserve every original byte except the inserted alternate tags', () => {
-  const changed = execFileSync('git', ['diff', '--name-only', 'origin/main...HEAD', '--', '*.html'], {
+test('hreflang page edits preserve every original byte except the inserted alternate tags', t => {
+  const baseRef = process.env.GITHUB_BASE_REF;
+  if (!baseRef) { t.skip('byte-preservation comparison is a pull-request-only check'); return; }
+  const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef + '...HEAD', '--', '*.html'], {
     cwd: root, encoding: 'utf8'
   }).trim().split('\n').filter(Boolean);
   assert.ok(changed.length > 0, 'expected repaired HTML pages');
