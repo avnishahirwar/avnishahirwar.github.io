@@ -56,6 +56,6 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
   }
  }
  console.log('Hreflang audit: '+pages.length+' HTML pages, '+tagged+' pages with alternates, '+checked+' alternate references, '+errors.length+' defects.');
- if(errors.length)console.log(errors.slice(0,80).join('\n'));
+ if(errors.length)console.log(errors.join('\n'));
  assert.equal(errors.length,0,'Hreflang defects: '+errors.length);
 });
