@@ -40,7 +40,7 @@ jobs:
   lighthouse:
     name: Lighthouse mobile audit
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
           echo "::error::Production did not publish the expected assets within 10 minutes."
           exit 1
 
-      - name: Run Lighthouse against production pages
+      - name: Run Lighthouse across representative site-wide page types and languages
         shell: bash
         run: |
           set -euo pipefail
@@ -110,6 +110,17 @@ jobs:
           gst-calculator|https://friendlycalculator.in/calculators/gst-calculator.html
           loan-emi|https://friendlycalculator.in/calculators/loan-emi-calculator.html
           minutes-to-hours|https://friendlycalculator.in/calculators/minutes-to-hours-calculator.html
+          finance-category|https://friendlycalculator.in/calculator/finance-calculators.html
+          tax-category|https://friendlycalculator.in/calculator/tax.html
+          income-tax|https://friendlycalculator.in/calculators/income-tax-calculator.html
+          sip-calculator|https://friendlycalculator.in/calculators/sip-calculator.html
+          mortgage-calculator|https://friendlycalculator.in/calculators/mortgage-calculator.html
+          methodology|https://friendlycalculator.in/calculator/methodology.html
+          about|https://friendlycalculator.in/calculator/about.html
+          international-home|https://friendlycalculator.in/international/
+          blog-home|https://friendlycalculator.in/blog/
+          hindi-home|https://friendlycalculator.in/hi/index.html
+          spanish-home|https://friendlycalculator.in/es/index.html
           URLS
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
