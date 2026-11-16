@@ -164,7 +164,7 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
-const isCalculatorRoute=/^\/(?:(?:hi|es|fr|pt|ar|id|bn|ta)\/)?calculators\//.test(p);
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
@@ -223,19 +223,20 @@ if(embedMode){
 }
 
 if(main&&!main.id)main.id='fc-main-content';
-const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
-const shellSkipLabels={hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்'};
+const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
+const shellSkipLabels={de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்'};
 if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent=shellSkipLabels[shellLocaleForSkip]||'Skip to main content';document.body.prepend(skip);
 }
 const h=document.createElement('header');h.className='fc-global-header';
-const localeNames={en:'English',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
-const localeHome={en:'/',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html'};
+const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
+const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html'};
 // The URL is the source of truth for the active language.
 // Do not auto-redirect by browser language; visitors choose explicitly.
 
 const chrome={
+de:{home:'Startseite',login:'Anmelden',all:'Alle Rechner',search:'Rechner suchen',finance:'Finanzen',tax:'Steuern',business:'Business-Tools',everyday:'Alltag',blog:'Blog',embed:'Einbetten',forBusiness:'Für Unternehmen',api:'API',plans:'Tarife',about:'Über uns',contact:'Kontakt',admin:'Admin',language:'Sprache',choose:'Website-Sprache auswählen',change:'Sprache ändern',footer:['Startseite','Verzeichnis','Finanzen','Steuern','Business','Alltag','Für Unternehmen','API','Tarife','Premium-Warteliste','Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Kontakt']},
 en:{home:'Home',login:'Login',all:'All Calculators',search:'Search Calculator',finance:'Finance',tax:'Tax',business:'Business Tools',everyday:'Everyday',blog:'Blog',embed:'Embed',forBusiness:'For Business',api:'API',plans:'Plans',about:'About',contact:'Contact',admin:'Admin',language:'Language',choose:'Choose website language',change:'Change language',footer:['Home','All Pages Directory','Finance','Tax','Business Tools','Everyday','For Business','API','Plans','Premium Waitlist','About','Methodology','Privacy','Terms','Disclaimer','Contact']},
 hi:{home:'होम',login:'लॉग इन',all:'सभी कैलकुलेटर',search:'कैलकुलेटर खोजें',finance:'वित्त',tax:'टैक्स',business:'बिज़नेस टूल्स',everyday:'रोज़मर्रा',blog:'ब्लॉग',embed:'एम्बेड',forBusiness:'बिज़नेस सेवाएँ',api:'API',plans:'प्लान',about:'हमारे बारे में',contact:'संपर्क',admin:'एडमिन',language:'भाषा',choose:'वेबसाइट की भाषा चुनें',change:'भाषा बदलें',footer:['होम','सभी पेज','वित्त','टैक्स','बिज़नेस टूल्स','रोज़मर्रा','बिज़नेस सेवाएँ','API','प्लान','प्रीमियम वेटलिस्ट','हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','संपर्क']},
 es:{home:'Inicio',login:'Iniciar sesión',all:'Calculadoras',search:'Buscar calculadoras',finance:'Finanzas',tax:'Impuestos',business:'Herramientas de negocio',everyday:'Diario',blog:'Blog',embed:'Insertar',forBusiness:'Para empresas',api:'API',plans:'Planes',about:'Acerca de',contact:'Contacto',admin:'Admin',language:'Idioma',choose:'Elegir idioma del sitio',change:'Cambiar idioma',footer:['Inicio','Directorio','Finanzas','Impuestos','Negocios','Diario','Para empresas','API','Planes','Lista premium','Acerca de','Metodología','Privacidad','Términos','Aviso legal','Contacto']},
@@ -271,6 +272,7 @@ const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
+  de:['Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Einbetten','Kontakt'],
   en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'],
   hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क'],
   es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Insertar','Contacto'],
@@ -334,7 +336,7 @@ const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)(?=\/)/,'');
+  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta)(?=\/)/,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
   return '/'+next+(normalizedPath.startsWith('/')?normalizedPath:'/'+normalizedPath);
