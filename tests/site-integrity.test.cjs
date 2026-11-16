@@ -1384,7 +1384,7 @@ test('directory category links use visible accessible names and readable search 
 });
 
 
-test('homepage stays lightweight while all 285 calculators remain searchable and discoverable', () => {
+test('homepage stays lightweight while all 286 calculators remain searchable and discoverable', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndexPath = path.join(root, 'assets/calculator-search-index.json');
   assert.ok(fs.existsSync(searchIndexPath), 'Deferred calculator search index must exist');
@@ -1405,7 +1405,7 @@ test('homepage stays lightweight while all 285 calculators remain searchable and
   assert.equal(categoryLinks.length, 16, 'All 16 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 16, 'Category card destinations must be unique');
 
-  assert.equal(searchIndex.length, 285, 'All 285 calculators must remain in the deferred search index');
+  assert.equal(searchIndex.length, 286, 'All 286 calculators must remain in the deferred search index');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, 285, 'Search index URLs must be unique');
   for (const item of searchIndex) {
     assert.ok(item.name && item.category && item.url.startsWith('/calculators/'), 'Search entries must have a name, category and calculator URL');
@@ -1513,4 +1513,37 @@ test('RD calculator explains its end-of-month estimate and distinguishes officia
   assert.ok(rd.includes('https://www.nsiindia.gov.in/writereaddata/SchemeRules/RECURRINGDEPOSITSCHEMERule.pdf'));
   assert.ok(rd.includes('Is this the official Post Office RD maturity calculator?'));
   assert.ok(rd.includes('Math.pow(1+quarterly,1/3)-1'));
+});
+
+test('Net Worth Calculator is indexed, discoverable and calculates assets less liabilities', () => {
+  const pagePath = path.join(root, 'calculators/net-worth-calculator.html');
+  const scriptPath = path.join(root, 'assets/net-worth-calculator.js');
+  const page = fs.readFileSync(pagePath, 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const finance = fs.readFileSync(path.join(root, 'calculator/finance-calculators.html'), 'utf8');
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const calculator = require(scriptPath);
+
+  assert.ok(urls.includes('https://friendlycalculator.in/calculators/net-worth-calculator.html'));
+  assert.match(page, /<title>Net Worth Calculator/);
+  assert.match(page, /name="robots" content="index,follow/);
+  assert.match(page, /value="INR" selected/);
+  assert.match(page, /id="net-worth-form"/);
+  assert.match(directory, /href="\/calculators\/net-worth-calculator\.html"/);
+  assert.match(about, /href="\/calculators\/net-worth-calculator\.html"/);
+  assert.match(finance, /href="\/calculators\/net-worth-calculator\.html"/);
+  assert.ok(searchIndex.some(item => item.url === '/calculators/net-worth-calculator.html'));
+  assert.equal(searchIndex.length, 286);
+
+  const result = calculator.calculateNetWorth({
+    cash: 25000, investments: 50000, otherAssets: 10000,
+    homeLoan: 10000, creditCard: 10000
+  });
+  assert.equal(result.totalAssets, 85000);
+  assert.equal(result.totalLiabilities, 20000);
+  assert.equal(result.netWorth, 65000);
+  assert.ok(Math.abs(result.liabilityToAssetPercent - (20000 / 85000 * 100)) < 1e-10);
+  assert.throws(() => calculator.calculateNetWorth({ cash: -1 }), /non-negative/);
+  assert.equal(calculator.calculateNetWorth({}).netWorth, 0);
 });
