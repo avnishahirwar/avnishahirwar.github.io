@@ -50,3 +50,26 @@ test('simple-interest calculator hreflang cluster includes only the existing Eng
   assert.deepEqual(actual,expected,file);
  }
 });
+
+test('priority calculator hreflang clusters are complete and reciprocal across nine locales',()=>{
+ const routes=[
+  'basic-calculator.html',
+  'bike-loan-calculator.html',
+  'business-loan-emi-calculator.html',
+  'car-loan-calculator.html',
+  'discount-calculator.html',
+  'ppf-calculator.html'
+ ];
+ const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+ for(const route of routes){
+  const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+  expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
+  for(const locale of locales){
+   const file=path.join(root,locale==='en'?'':locale,'calculators',route);
+   const html=fs.readFileSync(file,'utf8');
+   const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
+   const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   assert.deepEqual(actual,expected,locale+'/'+route);
+  }
+ }
+});
