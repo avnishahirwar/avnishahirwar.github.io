@@ -2000,5 +2000,26 @@
     "category": "Career & Salary Planning",
     "keywords": "first job fresher salary in hand take home salary calculator",
     "description": ""
+  },
+  {
+    "name": "US 401(k) Growth Calculator",
+    "url": "/calculators/401k-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "US 401k retirement account employee contribution employer match growth projection",
+    "description": "Estimate a simplified 401(k) balance with employee contributions and employer matching."
+  },
+  {
+    "name": "Canada GST/HST Calculator",
+    "url": "/calculators/canada-gst-hst-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "Canada GST HST province provincial sales tax PST QST RST calculator",
+    "description": "Estimate GST/HST and optional provincial sales tax on a Canadian purchase."
+  },
+  {
+    "name": "UK Stamp Duty Calculator",
+    "url": "/calculators/uk-stamp-duty-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "UK England Northern Ireland stamp duty land tax SDLT residential property first time buyer",
+    "description": "Estimate residential SDLT with progressive bands and common surcharges."
   }
 ]
