@@ -290,11 +290,12 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
     primaryNav.classList.toggle('fc-nav-open',open);
     toggle.textContent=open?(closeText[currentLocale]||closeText.en):(menuText[currentLocale]||menuText.en);
   });
-  toggle.addEventListener('keydown',event=>{
+  document.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){
       toggle.setAttribute('aria-expanded','false');
       primaryNav.classList.remove('fc-nav-open');
       toggle.textContent=menuText[currentLocale]||menuText.en;
+      toggle.focus();
     }
   });
   primaryNav.addEventListener('click',event=>{
