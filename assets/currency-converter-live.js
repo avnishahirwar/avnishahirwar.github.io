@@ -17,8 +17,8 @@ async function loadRate(){
   const data=await response.json();
   if(id!==requestId)return;
   if(!Number.isFinite(Number(data.rate))||Number(data.rate)<=0||!data.date)throw new Error('Rate response was incomplete');
-  rateDate=data.date;setRate(data.rate);
-  showStatus('Reference rate date: '+rateDate+' · Source: Frankfurter · Reference rates are not live trading quotes.');
+  rateDate=data.date;setRate(data.rate);const displayRateDate=window.FCLocale?.formatDate?window.FCLocale.formatDate(data.date):data.date;
+  showStatus('Reference rate date: '+displayRateDate+' · Source: Frankfurter · Reference rates are not live trading quotes.');
   calculate();
  }catch(e){
   if(id!==requestId)return;
