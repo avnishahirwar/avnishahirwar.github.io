@@ -33,6 +33,50 @@ function project401k({currentBalance=0,annualSalary,employeeContributionPercent,
  }
  return {endingBalance:balance,employeeContributions:employeeTotal,employerContributions:employerTotal,totalContributions:employeeTotal+employerTotal};
 }
-const api={calculateGSTHST,calculateSDLT,project401k};
+
+function calculateUKTakeHome(grossAnnual,{region='england',studentLoanPlan='none',postgraduateLoan=false}={}){
+ const gross=validNonNegative(grossAnnual,'Gross annual salary');
+ const allowance=Math.max(0,12570-Math.max(0,gross-100000)/2);
+ const taxable=Math.max(0,gross-allowance);
+ const bands=region==='scotland'
+  ?[[3967,0.19],[16956,0.20],[31092,0.21],[62430,0.42],[125140,0.45],[Infinity,0.48]]
+  :[[37700,0.20],[125140,0.40],[Infinity,0.45]];
+ if(!['england','wales','northern-ireland','scotland'].includes(region))throw new RangeError('Choose a valid UK tax region');
+ let remaining=taxable,previous=0,incomeTax=0;
+ for(const [limit,rate] of bands){const portion=Math.max(0,Math.min(remaining+previous,limit)-previous);incomeTax+=portion*rate;previous=limit;if(remaining<=0)break;remaining-=portion;}
+ const niPrimary=242*52,niUpper=967*52;
+ const nationalInsurance=Math.max(0,Math.min(gross,niUpper)-niPrimary)*0.08+Math.max(0,gross-niUpper)*0.02;
+ const studentThresholds={plan1:26900,plan2:29385,plan4:33795,plan5:25000};
+ if(studentLoanPlan!=='none'&&!Object.hasOwn(studentThresholds,studentLoanPlan))throw new RangeError('Choose a valid student loan plan');
+ const studentLoan=studentLoanPlan==='none'?0:Math.max(0,gross-studentThresholds[studentLoanPlan])*0.09;
+ const postgraduate=postgraduateLoan?Math.max(0,gross-21000)*0.06:0;
+ return {gross,personalAllowance:allowance,taxableIncome:taxable,incomeTax,nationalInsurance,studentLoan,postgraduateLoan:postgraduate,totalDeductions:incomeTax+nationalInsurance+studentLoan+postgraduate,netAnnual:gross-incomeTax-nationalInsurance-studentLoan-postgraduate,netMonthly:(gross-incomeTax-nationalInsurance-studentLoan-postgraduate)/12,region,taxYear:'2026-27'};
+}
+function calculateGermanIncomeTax(taxableIncome){
+ const income=Math.floor(validNonNegative(taxableIncome,'Taxable income'));
+ let raw=0;
+ if(income<=12348)raw=0;
+ else if(income<=17799){const y=(income-12348)/10000;raw=(914.51*y+1400)*y;}
+ else if(income<=69878){const z=(income-17799)/10000;raw=(173.10*z+2397)*z+1034.87;}
+ else if(income<=277825)raw=0.42*income-11135.63;
+ else raw=0.45*income-19470.38;
+ return {taxableIncome:income,incomeTax:Math.max(0,Math.floor(raw)),taxYear:2026,solidaritySurchargeIncluded:false,churchTaxIncluded:false};
+}
+function calculateCanadaCPP(annualPensionableEarnings,{selfEmployed=false}={}){
+ const income=validNonNegative(annualPensionableEarnings,'Annual pensionable earnings');
+ const first=Math.max(0,Math.min(income,74600)-3500)*0.0595;
+ const second=Math.max(0,Math.min(income,85000)-74600)*0.04;
+ const employee=first+second,multiplier=selfEmployed?2:1;
+ return {pensionableEarnings:income,baseCPP:Math.min(first,4230.45),cpp2:Math.min(second,416),employeeContribution:employee,contribution:employee*multiplier,selfEmployed:Boolean(selfEmployed),maximumEmployeeContribution:4646.45,maximumSelfEmployedContribution:9292.90,taxYear:2026};
+}
+function calculateCanadaRRSP({priorYearEarnedIncome,pensionAdjustment=0,unusedContributionRoom=0}={}){
+ const earned=validNonNegative(priorYearEarnedIncome,'Prior-year earned income');
+ const adjustment=validNonNegative(pensionAdjustment,'Pension adjustment');
+ const unused=validNonNegative(unusedContributionRoom,'Unused contribution room');
+ const newRoom=Math.max(0,Math.min(earned*0.18,33810)-adjustment);
+ return {earnedIncome:earned,annualDollarLimit:33810,newRoom,unusedContributionRoom:unused,estimatedAvailableRoom:newRoom+unused,taxYear:2026};
+}
+
+const api={calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FCCountryCalculators=api;
 })(typeof window!=='undefined'?window:globalThis);
