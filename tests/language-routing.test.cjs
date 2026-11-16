@@ -80,10 +80,8 @@ test('Japanese and Russian calculator routes receive localized shell behavior', 
 
 
 test('Partial German, Japanese and Russian editions have explicit navigation fallbacks and footer labels',()=>{
-  for(const locale of ['de','ja','ru']){
-    assert.match(shell,new RegExp(locale+":\\['[^']+\\(.*(?:English|англ|英語).*\\)"));
-  }
-  assert.match(shell,/footerLabels\[currentLocale\]\\.map/);
-  assert.match(shell,/ja:\['サイトについて（英語）'/);
-  assert.match(shell,/ru:\['О проекте \(англ\.\)'/);
+  assert.match(shell,/de:\\['Über uns \\(Englisch\\)'/);
+  assert.match(shell,/ja:\\['サイトについて（英語）'/);
+  assert.match(shell,/ru:\\['О проекте \\(англ\\.\\)'/);
+  assert.ok(shell.includes('const footerLinks=footerLabels[currentLocale].map('),'Every supported locale must have footer labels to prevent a runtime error');
 });
