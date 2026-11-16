@@ -19,8 +19,11 @@ function calculateSDLT(price,{additionalProperty=false,nonResident=false,firstTi
 }
 function project401k({currentBalance=0,annualSalary,employeeContributionPercent,employerMatchPercent,employerMatchCapPercent,annualReturnPercent,years,salaryGrowthPercent=0}){
  let balance=validNonNegative(currentBalance,'Current balance'),salary=validNonNegative(annualSalary,'Annual salary');
- const employeePct=validNonNegative(employeeContributionPercent,'Employee contribution'),matchPct=validNonNegative(employerMatchPercent,'Employer match'),capPct=validNonNegative(employerMatchCapPercent,'Employer match cap'),returnPct=validNonNegative(annualReturnPercent,'Annual return'),growthPct=validNonNegative(salaryGrowthPercent,'Salary growth'),term=validNonNegative(years,'Years');
- if([employeePct,matchPct,capPct,returnPct,growthPct].some(x=>x>100)||term>80||!Number.isInteger(term)||term<1)throw new RangeError('Check percentages and enter a whole number of years from 1 to 80');
+ const employeePct=validNonNegative(employeeContributionPercent,'Employee contribution'),matchPct=validNonNegative(employerMatchPercent,'Employer match'),capPct=validNonNegative(employerMatchCapPercent,'Employer match cap'),term=validNonNegative(years,'Years');
+ const returnPct=Number(annualReturnPercent),growthPct=Number(salaryGrowthPercent);
+ if(!Number.isFinite(returnPct)||returnPct < -100||returnPct>100)throw new RangeError('Annual return must be between -100% and 100%');
+ if(!Number.isFinite(growthPct)||growthPct < -100||growthPct>100)throw new RangeError('Salary growth must be between -100% and 100%');
+ if([employeePct,matchPct,capPct].some(x=>x>100)||term>80||!Number.isInteger(term)||term<1)throw new RangeError('Check contribution and match percentages, and enter a whole number of years from 1 to 80');
  let employeeTotal=0,employerTotal=0;
  for(let year=0;year<term;year++){
   const employee=salary*employeePct/100;
