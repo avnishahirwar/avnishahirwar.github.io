@@ -1,4 +1,4 @@
-const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP}=require('../assets/country-calculators.js');
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax}=require('../assets/country-calculators.js');
 test('Canada GST/HST add and remove modes calculate tax consistently',()=>{const add=calculateGSTHST(100,13,0,'add');assert.equal(add.tax,13);assert.equal(add.gross,113);const remove=calculateGSTHST(113,13,0,'remove');assert.equal(remove.net,100);assert.equal(remove.tax,13);});
 test('Canada calculator supports separate provincial tax input',()=>{const r=calculateGSTHST(100,5,7,'add');assert.equal(r.totalRate,12);assert.equal(r.tax,12);assert.equal(r.gross,112);});
 test('UK SDLT standard bands use progressive portions',()=>{assert.equal(calculateSDLT(295000).tax,4750);});
@@ -79,4 +79,27 @@ test('country tax landing pages link to the correct calculators',()=>{
   assert.ok(html.includes(link));
   assert.match(html,/rel="canonical"/);
  }
+});
+
+test('Australia 2026-27 resident tax rates apply progressive bands excluding Medicare levy',()=>{
+ const r=calculateAustraliaIncomeTax(100000);
+ assert.equal(r.incomeTax,22492);
+ assert.equal(r.taxYear,'2026-27');
+ assert.equal(r.medicareLevyIncluded,false);
+});
+test('Australia 2026-27 super guarantee is 12% and capped at the maximum contribution base',()=>{
+ assert.equal(calculateAustraliaSuper(100000).employerSuper,12000);
+ assert.equal(calculateAustraliaSuper(300000).employerSuper,32499.6);
+});
+test('Singapore CPF 2026 age-based rates use the $8,000 ordinary wage ceiling',()=>{
+ const a=calculateSingaporeCPF(9000,{ageGroup:'55-and-below'});
+ assert.equal(a.contributableWages,8000);assert.equal(a.employerContribution,1360);assert.equal(a.employeeContribution,1600);assert.equal(a.totalContribution,2960);
+ const senior=calculateSingaporeCPF(5000,{ageGroup:'above-60-to-65'});
+ assert.equal(senior.employerContribution,625);assert.equal(senior.employeeContribution,625);
+ const low=calculateSingaporeCPF(700,{ageGroup:'55-and-below'});assert.equal(low.totalContribution,0);
+});
+test('UAE individual personal income tax estimate is zero and does not claim other payroll deductions',()=>{
+ const r=calculateUAEIndividualIncomeTax(120000);
+ assert.equal(r.personalIncomeTax,0);assert.equal(r.netAfterPersonalIncomeTax,120000);
+ assert.match(r.scope,/personal income tax only/);
 });
