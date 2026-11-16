@@ -3,7 +3,10 @@ const form=document.getElementById('vat-form');if(!form)return;
 const amount=document.getElementById('vat-amount'),rate=document.getElementById('vat-rate'),mode=document.getElementById('vat-mode'),output=document.getElementById('vat-result'),error=document.getElementById('vat-error'),symbol=document.getElementById('vat-currency-symbol');
 const jurisdiction=document.getElementById('vat-jurisdiction'),sourceNote=document.getElementById('vat-rate-source');
 const RATE_PRESETS={
- GB:{name:'United Kingdom',rate:20,url:'https://www.gov.uk/vat-rates',source:'HMRC standard VAT rate — 20%. Reduced, zero-rated and exempt supplies are not covered by this preset.'},
+ AE:{name:'United Arab Emirates',rate:5,url:'https://u.ae/en/information-and-services/finance-and-investment/taxation',source:'UAE standard VAT rate — 5%. Zero-rated and exempt supplies are not covered by this preset.'},
+SA:{name:'Saudi Arabia',rate:15,url:'https://zatca.gov.sa/en/RulesRegulations/VAT/Pages/About-Vat.aspx',source:'ZATCA standard VAT rate — 15%. Zero-rated and exempt supplies are not covered by this preset.'},
+AU:{name:'Australia',rate:10,url:'https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/tax-gap/a-h-tax-gaps/goods-and-services-tax-gap/overview',source:'ATO GST rate — 10% on most goods and services. GST-free and input-taxed supplies are not covered by this preset.'},
+GB:{name:'United Kingdom',rate:20,url:'https://www.gov.uk/vat-rates',source:'HMRC standard VAT rate — 20%. Reduced, zero-rated and exempt supplies are not covered by this preset.'},
  AU:{name:'Australia',rate:10,url:'https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works',source:'ATO GST rate — 10% on most goods and services. GST-free and input-taxed supplies are not covered by this preset.'},
  SG:{name:'Singapore',rate:9,url:'https://www.iras.gov.sg/taxes/goods-services-tax-%28gst%29/basics-of-gst/current-gst-rates',source:'IRAS prevailing GST rate — 9%. Zero-rated and exempt supplies are not covered by this preset.'},
  DE:{name:'Germany',rate:19,url:'https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm',source:'European Commission standard VAT rate — 19%.'},
