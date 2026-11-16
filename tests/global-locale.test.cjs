@@ -9,7 +9,7 @@ const vatSource=fs.readFileSync(new URL('../assets/vat-calculator.js','file://'+
 function boot(initial={},browserLocale='') {
  const values=new Map(Object.entries(initial)),listeners={},events=[];
  const select=()=>({value:'',addEventListener(type,fn){listeners[type]=fn;}});
- const elements={'fc-currency-select':select(),'fc-locale-select':select()};
+ const elements={'fc-currency-select':select(),'fc-locale-select':select(),'fc-unit-system-select':select()};
  const context={
   Intl,Number,Date,Object,navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
@@ -34,8 +34,8 @@ test('currency selection persists without changing entered numeric values',()=>{
  assert.equal(x.api.setCurrency('BAD'),false);
 });
 test('locale and currency changes dispatch a shared event',()=>{
- const x=boot();x.api.setCurrency('EUR');x.api.setLocale('de-DE');assert.equal(x.events.length,2);
- assert.equal(x.events[1].detail.locale,'de-DE');
+ const x=boot();x.api.setCurrency('EUR');x.api.setLocale('de-DE');assert.equal(x.events.filter(event=>event.type==='fc:localechange').length,2);
+ assert.equal(x.events.filter(event=>event.type==='fc:localechange')[1].detail.locale,'de-DE');
 });
 test('generic calculator outputs use the shared currency and locale formatters',()=>{
  assert.ok(genericSource.includes('window.FCLocale.formatCurrency'));assert.ok(genericSource.includes('window.FCLocale.formatNumber'));
@@ -113,4 +113,31 @@ test('global unit converter distinguishes US and Imperial measures and supports 
  for(const token of ['galUS','qtUS','ptUS','galImp','ptImp','acre','ha','area','st'])assert.ok(page.includes(token),token);
  for(const token of ['galUS','galImp','ptImp','acre','ha','area','st'])assert.ok(localized.includes(token),token);
  assert.match(page,/US customary and Imperial measures are separate options/);
+});
+
+test('global unit preference defaults to metric except US browser locale',()=>{
+ const india=boot({},'en-IN');assert.equal(india.api.getUnitSystem(),'metric');
+ const us=boot({},'en-US');assert.equal(us.api.getUnitSystem(),'imperial');
+});
+test('global unit preference can be changed and persists across pages',()=>{
+ const x=boot();assert.equal(x.api.setUnitSystem('imperial'),true);
+ assert.equal(x.api.getUnitSystem(),'imperial');
+ assert.equal(x.values.get('fc-preferred-unit-system'),'imperial');
+ assert.equal(x.events.at(-1).type,'fc:unitchange');
+ assert.equal(x.api.setUnitSystem('unknown'),false);
+});
+test('shared header exposes a site-wide metric and imperial preference',()=>{
+ const shell=fs.readFileSync(new URL('../assets/site-shell.js','file://'+__filename),'utf8');
+ assert.match(shell,/fc-unit-system-select/);
+ assert.match(shell,/value=\"metric\"/);
+ assert.match(shell,/value=\"imperial\"/);
+});
+test('English unit converter defaults to the selected metric or imperial unit pairs',()=>{
+ const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');
+ assert.match(page,/getUnitSystem/);
+ assert.match(page,/fc:unitchange/);
+ assert.match(page,/length:\['ft','in'\]/);
+ assert.match(page,/mass:\['lb','oz'\]/);
+ assert.match(page,/length:\['m','cm'\]/);
+ assert.match(page,/mass:\['kg','g'\]/);
 });
