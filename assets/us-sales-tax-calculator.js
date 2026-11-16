@@ -36,7 +36,7 @@
         result.innerHTML =
           '<dl class="results-grid">' +
           '<div><dt>Purchase amount</dt><dd>' + format(totals.subtotal) + '</dd></div>' +
-          '<div><dt>Combined sales-tax rate</dt><dd>' + totals.rate.toFixed(3).replace(/\\.?0+$/, '') + '%</dd></div>' +
+          '<div><dt>Combined sales-tax rate</dt><dd>' + totals.rate.toFixed(3).replace(/\.?0+$/, '') + '%</dd></div>' +
           '<div><dt>Estimated sales tax</dt><dd>' + format(totals.tax) + '</dd></div>' +
           '<div class="total"><dt>Total after tax</dt><dd>' + format(totals.total) + '</dd></div>' +
           '</dl>';
