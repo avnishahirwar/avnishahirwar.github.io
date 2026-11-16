@@ -21,6 +21,19 @@ ensureFavicon();
 /* Installable app metadata and a conservative offline cache for public pages only. */
 const ensurePwa=()=>{
   if(!document.head)return;
+  // iOS Safari needs viewport-fit=cover before safe-area CSS can be applied.
+  const viewport=document.querySelector('meta[name="viewport"]');
+  if(viewport&&!/viewport-fit=cover/i.test(viewport.content||'')){
+    viewport.content=(viewport.content||'width=device-width,initial-scale=1')+',viewport-fit=cover';
+  }
+  const addAppleMeta=(name,content)=>{
+    if(!document.querySelector('meta[name="'+name+'"]')){
+      const meta=document.createElement('meta');meta.name=name;meta.content=content;document.head.appendChild(meta);
+    }
+  };
+  addAppleMeta('apple-mobile-web-app-capable','yes');
+  addAppleMeta('apple-mobile-web-app-title','Friendly Calculator');
+  addAppleMeta('apple-mobile-web-app-status-bar-style','default');
   if(!document.querySelector('link[rel="manifest"]')){
     const manifestLink=document.createElement('link');
     manifestLink.rel='manifest';
