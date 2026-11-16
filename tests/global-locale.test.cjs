@@ -149,7 +149,7 @@ test('English unit converter applies browser-locale defaults after shared locale
 });
 test('all nine localized unit converters share Metric and Imperial preferences',()=>{
  const script=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');
- assert.match(script,/defaults:\{metric/);
+ assert.match(script,/const defaults=\{metric/);
  assert.match(script,/imperial:\{length:\['ft','in'\]/);
  assert.match(script,/selectedDefaults\(\)\[c\]/);
  assert.match(script,/fc:locale-ready/);
