@@ -5,7 +5,7 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('legacy overlapping category pages are excluded from indexing and point to retained categories', () => {
+test('legacy overlapping category pages remain crawlable and point to retained categories', () => {
   const mappings = {
     'calculator/finance.html': '/calculator/finance-calculators.html',
     'calculator/business-tools.html': '/calculator/business-calculators.html',
@@ -14,7 +14,7 @@ test('legacy overlapping category pages are excluded from indexing and point to 
   const sitemap = read('sitemap.xml');
   for (const [file, target] of Object.entries(mappings)) {
     const html = read(file);
-    assert.match(html, /<meta name="robots" content="noindex,follow">/);
+    assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/i);
     assert.ok(html.includes('https://friendlycalculator.in' + target), file + ' must declare the retained canonical URL');
     assert.ok(html.includes('Open '), file + ' must provide a user-facing path to the retained category');
     assert.ok(!sitemap.includes('https://friendlycalculator.in/' + file), file + ' must not remain in the sitemap');
