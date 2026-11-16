@@ -1,66 +1,22 @@
 (()=>{'use strict';
-const STORAGE_KEY='fc-preferred-currency';
-const CURRENCIES={
- INR:{label:'INR · Indian Rupee',locale:'en-IN',symbol:'₹'},
- USD:{label:'USD · US Dollar',locale:'en-US',symbol:'$'},
- EUR:{label:'EUR · Euro',locale:'en-IE',symbol:'€'},
- GBP:{label:'GBP · British Pound',locale:'en-GB',symbol:'£'},
- AED:{label:'AED · UAE Dirham',locale:'en-AE',symbol:'د.إ'},
- CAD:{label:'CAD · Canadian Dollar',locale:'en-CA',symbol:'$'},
- AUD:{label:'AUD · Australian Dollar',locale:'en-AU',symbol:'$'},
- JPY:{label:'JPY · Japanese Yen',locale:'ja-JP',symbol:'¥'},
- SGD:{label:'SGD · Singapore Dollar',locale:'en-SG',symbol:'$'},
- CHF:{label:'CHF · Swiss Franc',locale:'de-CH',symbol:'CHF'},
- CNY:{label:'CNY · Chinese Yuan',locale:'zh-CN',symbol:'¥'},
- NZD:{label:'NZD · New Zealand Dollar',locale:'en-NZ',symbol:'$'},
- SAR:{label:'SAR · Saudi Riyal',locale:'ar-SA',symbol:'ر.س'},
- BRL:{label:'BRL · Brazilian Real',locale:'pt-BR',symbol:'R$'},
- MXN:{label:'MXN · Mexican Peso',locale:'es-MX',symbol:'$'},
- ZAR:{label:'ZAR · South African Rand',locale:'en-ZA',symbol:'R'},
- BDT:{label:'BDT · Bangladeshi Taka',locale:'bn-BD',symbol:'৳'},
- PKR:{label:'PKR · Pakistani Rupee',locale:'en-PK',symbol:'Rs'},
- IDR:{label:'IDR · Indonesian Rupiah',locale:'id-ID',symbol:'Rp'},
- THB:{label:'THB · Thai Baht',locale:'th-TH',symbol:'฿'}
-};
-const safeRead=()=>{try{return localStorage.getItem(STORAGE_KEY)||'INR';}catch(_){return 'INR';}};
-const safeWrite=value=>{try{localStorage.setItem(STORAGE_KEY,value);}catch(_){}};
-let currency=CURRENCIES[safeRead()]?safeRead():'INR';
-const locale=()=>CURRENCIES[currency].locale;
-const formatNumber=(value,options={})=>new Intl.NumberFormat(locale(),options).format(Number(value));
-const formatCurrency=(value,code=currency,options={})=>{
- const selected=CURRENCIES[code]?code:'INR';
- return new Intl.NumberFormat(CURRENCIES[selected].locale,{style:'currency',currency:selected,maximumFractionDigits:2,...options}).format(Number(value));
-};
-const formatDate=(value,options={})=>new Intl.DateTimeFormat(locale(),{year:'numeric',month:'short',day:'numeric',...options}).format(value instanceof Date?value:new Date(value));
-const api=Object.freeze({
- currencies:Object.freeze(Object.keys(CURRENCIES)),
- getCurrency:()=>currency,
- getLocale:locale,
- formatNumber,
- formatCurrency,
- formatDate,
- setCurrency(value){
-  if(!CURRENCIES[value])return false;
-  currency=value;safeWrite(value);
-  document.documentElement.dataset.fcCurrency=value;
-  document.documentElement.lang=document.documentElement.lang||'en';
-  window.dispatchEvent(new CustomEvent('fc:currencychange',{detail:{currency:value,locale:locale()}}));
-  return true;
- }
+const CURRENCY_KEY='fc-preferred-currency',LOCALE_KEY='fc-preferred-format-locale';
+const CURRENCIES={INR:'INR · Indian Rupee',USD:'USD · US Dollar',EUR:'EUR · Euro',GBP:'GBP · British Pound',AED:'AED · UAE Dirham',CAD:'CAD · Canadian Dollar',AUD:'AUD · Australian Dollar',JPY:'JPY · Japanese Yen',SGD:'SGD · Singapore Dollar',CHF:'CHF · Swiss Franc',CNY:'CNY · Chinese Yuan',NZD:'NZD · New Zealand Dollar',SAR:'SAR · Saudi Riyal',BRL:'BRL · Brazilian Real',MXN:'MXN · Mexican Peso',ZAR:'ZAR · South African Rand',BDT:'BDT · Bangladeshi Taka',PKR:'PKR · Pakistani Rupee',IDR:'IDR · Indonesian Rupiah',THB:'THB · Thai Baht'};
+const LOCALES={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English'};
+const read=(key,fallback,allowed)=>{try{const value=localStorage.getItem(key);return allowed(value)?value:fallback;}catch(_){return fallback;}};
+let currency=read(CURRENCY_KEY,'INR',v=>Object.hasOwn(CURRENCIES,v));
+let formatLocale=read(LOCALE_KEY,'en-IN',v=>Object.hasOwn(LOCALES,v));
+const formatNumber=(value,options={})=>new Intl.NumberFormat(formatLocale,options).format(Number(value));
+const formatCurrency=(value,code=currency,options={})=>{const selected=Object.hasOwn(CURRENCIES,code)?code:'INR';return new Intl.NumberFormat(formatLocale,{style:'currency',currency:selected,maximumFractionDigits:2,...options}).format(Number(value));};
+const formatDate=(value,options={})=>new Intl.DateTimeFormat(formatLocale,{year:'numeric',month:'short',day:'numeric',...options}).format(value instanceof Date?value:new Date(value));
+const emit=()=>window.dispatchEvent(new CustomEvent('fc:localechange',{detail:{currency,locale:formatLocale}}));
+const api=Object.freeze({currencies:Object.freeze(Object.keys(CURRENCIES)),locales:Object.freeze(Object.keys(LOCALES)),getCurrency:()=>currency,getLocale:()=>formatLocale,formatNumber,formatCurrency,formatDate,
+setCurrency(value){if(!Object.hasOwn(CURRENCIES,value))return false;currency=value;try{localStorage.setItem(CURRENCY_KEY,value);}catch(_){}document.documentElement.dataset.fcCurrency=value;emit();return true;},
+setLocale(value){if(!Object.hasOwn(LOCALES,value))return false;formatLocale=value;try{localStorage.setItem(LOCALE_KEY,value);}catch(_){}document.documentElement.dataset.fcLocale=value;emit();return true;}
 });
 window.FCLocale=api;
-const select=document.getElementById('fc-currency-select');
-if(select){
- select.value=currency;
- select.addEventListener('change',()=>api.setCurrency(select.value));
-}
-document.documentElement.dataset.fcCurrency=currency;
-window.addEventListener('storage',event=>{
- if(event.key===STORAGE_KEY&&CURRENCIES[event.newValue]){
-  currency=event.newValue;
-  if(select)select.value=currency;
-  document.documentElement.dataset.fcCurrency=currency;
-  window.dispatchEvent(new CustomEvent('fc:currencychange',{detail:{currency,locale:locale()}}));
- }
-});
+const currencySelect=document.getElementById('fc-currency-select'),localeSelect=document.getElementById('fc-locale-select');
+if(currencySelect){currencySelect.value=currency;currencySelect.addEventListener('change',()=>api.setCurrency(currencySelect.value));}
+if(localeSelect){localeSelect.value=formatLocale;localeSelect.addEventListener('change',()=>api.setLocale(localeSelect.value));}
+document.documentElement.dataset.fcCurrency=currency;document.documentElement.dataset.fcLocale=formatLocale;
+window.addEventListener('storage',event=>{if(event.key===CURRENCY_KEY&&Object.hasOwn(CURRENCIES,event.newValue)){currency=event.newValue;if(currencySelect)currencySelect.value=currency;document.documentElement.dataset.fcCurrency=currency;emit();}if(event.key===LOCALE_KEY&&Object.hasOwn(LOCALES,event.newValue)){formatLocale=event.newValue;if(localeSelect)localeSelect.value=formatLocale;document.documentElement.dataset.fcLocale=formatLocale;emit();}});
 })();
