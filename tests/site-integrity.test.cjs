@@ -36,6 +36,14 @@ test('AdSense publisher loader is not duplicated and configured ad slots have a 
   }
   assert.deepEqual(failures, [], 'AdSense loader must match actual ad-slot pages: ' + failures.join(', '));
 });
+
+test('AdSense auto ads are excluded from navigation, contact and interactive calculator pages', () => {
+  const excluded = ['index.html', 'calculator/contact.html', 'calculators/loan-emi-calculator.html'];
+  for (const relative of excluded) {
+    const html = fs.readFileSync(path.join(root, relative), 'utf8');
+    assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
+  }
+});
 test('every public sitemap page loads the shared site header and footer shell', () => {
   const failures = [];
   for (const url of urls) {
