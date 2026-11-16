@@ -173,6 +173,8 @@ test('Canada 2026 payroll estimates CPP, CPP2 and separate EI rates for Quebec',
 });
 test('new US UK and Canada payroll pages are indexable, locale-aware and link official sources',()=>{
  const root=path.join(__dirname,'..');
+ const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+ assert.match(shell,/global-locale\\.js/);
  for(const [file,source] of [
   ['international/us-income-tax-calculator.html','irs.gov'],
   ['international/uk-payroll-calculator.html','gov.uk'],
