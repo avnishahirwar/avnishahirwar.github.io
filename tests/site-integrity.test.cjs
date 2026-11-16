@@ -1392,6 +1392,14 @@ test('directory category links use visible accessible names and readable search 
 });
 
 
+test('homepage search runtime validates the complete 303-item deferred catalogue', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  assert.equal(searchIndex.length, 303);
+  assert.match(homepage, /items\.length!==303/);
+  assert.doesNotMatch(homepage, /items\.length!==285/);
+});
+
 test('homepage stays lightweight while all 303 calculators remain searchable and discoverable', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndexPath = path.join(root, 'assets/calculator-search-index.json');

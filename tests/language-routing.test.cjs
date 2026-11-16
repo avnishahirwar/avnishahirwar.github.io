@@ -77,3 +77,11 @@ test('Japanese and Russian calculator routes receive localized shell behavior', 
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
   assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru']"));
 });
+
+
+test('Partial German, Japanese and Russian editions have explicit navigation fallbacks and footer labels',()=>{
+  assert.ok(shell.includes("de:['Über uns (Englisch)'"));
+  assert.ok(shell.includes("ja:['サイトについて（英語）'"));
+  assert.ok(shell.includes("ru:['О проекте (англ.)'"));
+  assert.ok(shell.includes('const footerLinks=footerLabels[currentLocale].map('),'Every supported locale must have footer labels to prevent a runtime error');
+});
