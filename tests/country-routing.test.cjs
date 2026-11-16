@@ -46,6 +46,6 @@ test('Canada, Australia, UAE and Saudi Arabia country hubs list only their scope
  for(const [file,link,source,marker] of checks){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   assert.match(html,/rel="canonical"/);assert.ok(html.includes(link));assert.ok(html.includes(source));assert.ok(html.includes(marker));
-  assert.doesNotMatch(html,/Indian GST|PPF Calculator|HRA Exemption/);
+  assert.doesNotMatch(html,/href=[\"'][^\"']*(?:gst-calculator|ppf-calculator|hra-calculator)/i);
  }
 });
