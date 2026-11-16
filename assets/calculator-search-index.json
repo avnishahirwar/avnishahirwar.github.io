@@ -1,1 +1,2004 @@
-[{"name":"Compound Interest Calculator","url":"/calculators/compound-interest-calculator.html","category":"Savings, Investment & Retirement","keywords":"compound interest compounding future value principal","description":"Estimate compound growth for a one-time principal."},{"name":"RD Calculator","url":"/calculators/rd-calculator.html","category":"Savings, Investment & Retirement","keywords":"rd recurring deposit monthly instalment maturity interest","description":"Estimate recurring deposit maturity and interest."},{"name":"Fixed Deposit Calculator","url":"/calculators/fd-calculator.html","category":"Savings, Investment & Retirement","keywords":"fixed deposit fd maturity interest","description":"Estimate deposit maturity and interest."},{"name":"SIP Calculator","url":"/calculators/sip-calculator.html","category":"Savings, Investment & Retirement","keywords":"sip mutual fund monthly investment projection","description":"Illustrative monthly investment projection."},{"name":"₹5,000 Monthly SIP Scenario","url":"/calculators/sip-5000-monthly-calculator.html","category":"Savings, Investment & Retirement","keywords":"sip 5000 monthly scenario 10 year worked example","description":"Explore a worked ₹5,000 monthly SIP scenario."},{"name":"PPF Calculator","url":"/calculators/ppf-calculator.html","category":"Savings, Investment & Retirement","keywords":"ppf public provident fund","description":"Estimate Public Provident Fund maturity."},{"name":"EPF / PF Calculator","url":"/calculators/epf-pf-calculator.html","category":"Savings, Investment & Retirement","keywords":"epf pf provident fund employee","description":"Estimate provident fund accumulation."},{"name":"Savings Interest Calculator","url":"/calculators/savings-interest-calculator.html","category":"Savings, Investment & Retirement","keywords":"savings bank interest account","description":"Estimate savings account interest."},{"name":"Inflation Calculator","url":"/calculators/inflation-calculator.html","category":"Savings, Investment & Retirement","keywords":"inflation future price cost","description":"Estimate future costs using an assumed rate."},{"name":"Simple Interest Calculator","url":"/calculators/simple-interest-calculator.html","category":"Savings, Investment & Retirement","keywords":"simple interest calculator simple interest calculator calculate simple interest, total interest and maturity amount using principal, annual rate and time. free simple interest calculator with formula and example.","description":"Estimate simple interest on a principal amount using an annual interest rate and a time period. The tool shows interest earned and the total amount before any fees, taxes or contractual adjustments."},{"name":"ROI Calculator","url":"/calculators/roi-calculator.html","category":"Savings, Investment & Retirement","keywords":"roi calculator roi calculator calculate return on investment (roi), net gain or loss and percentage return from an initial investment, current value and additional income.","description":"Calculate a simple return on investment from the original cost, current value and any additional income received. Use it to compare scenarios on a consistent basis."},{"name":"CAGR Calculator","url":"/calculators/cagr-calculator.html","category":"Savings, Investment & Retirement","keywords":"cagr calculator cagr calculator calculate compound annual growth rate (cagr) from beginning value, ending value and number of years with a clear formula and example.","description":"Estimate the compound annual growth rate between a beginning value and an ending value over a stated period. CAGR expresses a smoothed annual growth rate; it does not show the actual path taken between the two values."},{"name":"Lumpsum Investment Calculator","url":"/calculators/lumpsum-investment-calculator.html","category":"Savings, Investment & Retirement","keywords":"lumpsum investment calculator project the value of a one-time investment.","description":"Project the value of a one-time investment."},{"name":"Step-up SIP Calculator","url":"/calculators/step-up-sip-calculator.html","category":"Savings, Investment & Retirement","keywords":"step-up sip calculator model annual increases in monthly contributions.","description":"Model annual increases in monthly contributions."},{"name":"SIP Goal Calculator","url":"/calculators/sip-goal-calculator.html","category":"Savings, Investment & Retirement","keywords":"sip goal calculator estimate the monthly sip needed for a target.","description":"Estimate the monthly SIP needed for a target."},{"name":"SIP Delay Cost Calculator","url":"/calculators/sip-delay-cost-calculator.html","category":"Savings, Investment & Retirement","keywords":"sip delay cost calculator compare starting a sip now versus later.","description":"Compare starting a SIP now versus later."},{"name":"SWP Calculator","url":"/calculators/swp-calculator.html","category":"Savings, Investment & Retirement","keywords":"swp calculator estimate withdrawals and remaining balance.","description":"Estimate withdrawals and remaining balance."},{"name":"STP Calculator","url":"/calculators/stp-calculator.html","category":"Savings, Investment & Retirement","keywords":"stp calculator model transfers between source and destination funds.","description":"Model transfers between source and destination funds."},{"name":"Absolute Return Calculator","url":"/calculators/absolute-return-calculator.html","category":"Savings, Investment & Retirement","keywords":"absolute return calculator calculate total gain or loss and return percentage.","description":"Calculate total gain or loss and return percentage."},{"name":"Real Return Calculator","url":"/calculators/real-return-calculator.html","category":"Savings, Investment & Retirement","keywords":"real return calculator estimate inflation-adjusted investment return.","description":"Estimate inflation-adjusted investment return."},{"name":"Retirement Corpus Calculator","url":"/calculators/retirement-corpus-calculator.html","category":"Savings, Investment & Retirement","keywords":"retirement corpus calculator project savings and contributions until retirement.","description":"Project savings and contributions until retirement."},{"name":"FIRE Calculator","url":"/calculators/fire-calculator.html","category":"Savings, Investment & Retirement","keywords":"fire calculator estimate an illustrative financial independence target.","description":"Estimate an illustrative financial independence target."},{"name":"Retirement Withdrawal Calculator","url":"/calculators/retirement-withdrawal-calculator.html","category":"Savings, Investment & Retirement","keywords":"retirement withdrawal calculator estimate how long a corpus may last.","description":"Estimate how long a corpus may last."},{"name":"Portfolio Allocation Calculator","url":"/calculators/portfolio-allocation-calculator.html","category":"Savings, Investment & Retirement","keywords":"portfolio allocation calculator review asset values and portfolio percentages.","description":"Review asset values and portfolio percentages."},{"name":"Kisan Vikas Patra Calculator","url":"/calculators/kvp-calculator.html","category":"Savings, Investment & Retirement","keywords":"kisan vikas patra calculator illustrate kvp maturity using selected scheme duration.","description":"Illustrate KVP maturity using selected scheme duration."},{"name":"NPS Calculator","url":"/calculators/nps-calculator.html","category":"Savings, Investment & Retirement","keywords":"nps calculator project nps corpus and annuity allocation.","description":"Project NPS corpus and annuity allocation."},{"name":"Dividend Yield Calculator","url":"/calculators/dividend-yield-calculator.html","category":"Savings, Investment & Retirement","keywords":"dividend yield calculator calculate dividend yield and annual income.","description":"Calculate dividend yield and annual income."},{"name":"Sukanya Samriddhi Yojana Calculator","url":"/calculators/ssy-calculator.html","category":"Savings, Investment & Retirement","keywords":"sukanya samriddhi yojana calculator","description":"Project Sukanya Samriddhi account maturity from deposits, interest and tenure."},{"name":"Senior Citizens Savings Scheme Calculator","url":"/calculators/scss-calculator.html","category":"Savings, Investment & Retirement","keywords":"senior citizens savings scheme calculator","description":"Estimate Senior Citizens Savings Scheme interest payouts and maturity."},{"name":"Post Office Monthly Income Scheme Calculator","url":"/calculators/post-office-mis-calculator.html","category":"Savings, Investment & Retirement","keywords":"post office monthly income scheme calculator","description":"Estimate monthly interest income from a Post Office MIS deposit."},{"name":"National Savings Certificate Calculator","url":"/calculators/nsc-calculator.html","category":"Savings, Investment & Retirement","keywords":"national savings certificate calculator","description":"Project NSC maturity value and interest for a selected investment term."},{"name":"Stock Average Calculator","url":"/calculators/stock-average-calculator.html","category":"Savings, Investment & Retirement","keywords":"stock average calculator","description":"Calculate the weighted average purchase price across stock lots."},{"name":"Brokerage Calculator","url":"/calculators/brokerage-calculator.html","category":"Savings, Investment & Retirement","keywords":"brokerage calculator","description":"Estimate brokerage and transaction charges for a trade."},{"name":"XIRR Calculator","url":"/calculators/xirr-calculator.html","category":"Savings, Investment & Retirement","keywords":"xirr calculator estimate an annualised return from dated cash flows.","description":"Estimate an annualised return from dated cash flows."},{"name":"EPS Pension Calculator","url":"/calculators/eps-pension-calculator.html","category":"Savings, Investment & Retirement","keywords":"eps pension calculator illustrative pension estimate from pensionable salary and service.","description":"Illustrative pension estimate from pensionable salary and service."},{"name":"Investment Calculator","url":"/calculators/investment-calculator.html","category":"Savings, Investment & Retirement","keywords":"investment calculator future value monthly contributions assumed return","description":"Project an initial amount plus monthly contributions using an assumed return."},{"name":"Mutual Fund Return Calculator","url":"/calculators/mutual-fund-return-calculator.html","category":"Savings, Investment & Retirement","keywords":"mutual fund return calculator project an illustrative lump-sum and monthly contribution value.","description":"Project an illustrative lump-sum and monthly contribution value."},{"name":"FD vs RD vs SIP Comparison Calculator","url":"/calculators/fd-rd-sip-comparison-calculator.html","category":"Savings, Investment & Retirement","keywords":"fd vs rd vs sip comparison calculator compare illustrative deposit and investment scenarios.","description":"Compare illustrative deposit and investment scenarios."},{"name":"Loan EMI Calculator","url":"/calculators/loan-emi-calculator.html","category":"Loans, EMI & Credit","keywords":"loan emi mortgage monthly instalment interest","description":"Estimate monthly instalments and interest."},{"name":"Home Loan EMI Calculator","url":"/calculators/home-loan-emi-calculator.html","category":"Loans, EMI & Credit","keywords":"home loan emi mortgage monthly payment interest tenure","description":"Estimate monthly home-loan instalments, total interest and repayment."},{"name":"Payment Calculator","url":"/calculators/payment-calculator.html","category":"Loans, EMI & Credit","keywords":"payment calculator monthly biweekly weekly instalment purchase finance","description":"Estimate monthly, biweekly or weekly purchase-financing payments."},{"name":"Home Loan Eligibility Calculator","url":"/calculators/home-loan-eligibility-calculator.html","category":"Loans, EMI & Credit","keywords":"home loan eligibility calculator","description":"Estimate an indicative home-loan amount from income and existing obligations."},{"name":"Home Loan &amp; Loan Prepayment Calculator","url":"/calculators/loan-prepayment-calculator.html","category":"Loans, EMI & Credit","keywords":"home loan prepayment calculator loan prepayment lump sum prepayment extra monthly payment","description":"Estimate how a one-time principal payment and extra monthly payments affect loan payoff time and interest."},{"name":"Credit Card EMI Calculator","url":"/calculators/credit-card-emi-calculator.html","category":"Loans, EMI & Credit","keywords":"credit card emi calculator","description":"Estimate the EMI and total cost of converting a card balance to instalments."},{"name":"Credit Card Payoff Calculator","url":"/calculators/credit-card-payoff-calculator.html","category":"Loans, EMI & Credit","keywords":"credit card payoff calculator","description":"Estimate the time and interest needed to clear a credit-card balance."},{"name":"Business Loan EMI Calculator","url":"/calculators/business-loan-emi-calculator.html","category":"Loans, EMI & Credit","keywords":"business loan emi calculator","description":"Estimate monthly instalments and total interest for a business loan."},{"name":"Lease vs Buy Car Calculator","url":"/calculators/lease-vs-buy-car-calculator.html","category":"Loans, EMI & Credit","keywords":"lease vs buy car calculator compare estimated lease and purchase cash costs.","description":"Compare estimated lease and purchase cash costs."},{"name":"Rent vs Buy Home Calculator","url":"/calculators/rent-vs-buy-home-calculator.html","category":"Loans, EMI & Credit","keywords":"rent vs buy home calculator compare estimated renting and buying cash costs.","description":"Compare estimated renting and buying cash costs."},{"name":"Balance Transfer Savings Calculator","url":"/calculators/balance-transfer-savings-calculator.html","category":"Loans, EMI & Credit","keywords":"balance transfer savings calculator compare repayments and transfer fees.","description":"Compare repayments and transfer fees."},{"name":"Loan Prepayment vs Investment Calculator","url":"/calculators/loan-prepayment-vs-investment-calculator.html","category":"Loans, EMI & Credit","keywords":"loan prepayment vs investment calculator compare interest saved with a projected investment gain.","description":"Compare interest saved with a projected investment gain."},{"name":"Credit Card Minimum Due Calculator","url":"/calculators/credit-card-minimum-due-calculator.html","category":"Loans, EMI & Credit","keywords":"credit card minimum due calculator estimate a minimum due from user-entered card terms.","description":"Estimate a minimum due from user-entered card terms."},{"name":"Credit Utilization Calculator","url":"/calculators/credit-utilization-calculator.html","category":"Loans, EMI & Credit","keywords":"credit utilization calculator calculate balance as a share of available credit.","description":"Calculate balance as a share of available credit."},{"name":"Home Loan Amortization Schedule Calculator","url":"/calculators/home-loan-amortization-schedule-calculator.html","category":"Loans, EMI & Credit","keywords":"home loan amortization schedule calculator month-by-month principal, interest and balance schedule.","description":"Month-by-month principal, interest and balance schedule."},{"name":"Loan Comparison Calculator","url":"/calculators/loan-comparison-calculator.html","category":"Loans, EMI & Credit","keywords":"loan comparison calculator compare emi, interest and total repayment.","description":"Compare EMI, interest and total repayment."},{"name":"Loan-to-Value Calculator","url":"/calculators/loan-to-value-calculator.html","category":"Loans, EMI & Credit","keywords":"loan-to-value calculator calculate loan amount as a share of asset value.","description":"Calculate loan amount as a share of asset value."},{"name":"Credit Card Interest Calculator","url":"/calculators/credit-card-interest-calculator.html","category":"Loans, EMI & Credit","keywords":"credit card interest calculator estimate simple interest by apr and days.","description":"Estimate simple interest by APR and days."},{"name":"Mortgage Calculator","url":"/calculators/mortgage-calculator.html","category":"Loans, EMI & Credit","keywords":"mortgage calculator home loan monthly payment property tax insurance","description":"Estimate home-loan payments plus property tax, insurance and monthly maintenance."},{"name":"Car Loan Calculator","url":"/calculators/car-loan-calculator.html","category":"Loans, EMI & Credit","keywords":"car loan calculator estimate car loan emi and total interest.","description":"Estimate car loan EMI and total interest."},{"name":"Bike Loan Calculator","url":"/calculators/bike-loan-calculator.html","category":"Loans, EMI & Credit","keywords":"bike loan calculator estimate two-wheeler loan emi and repayment.","description":"Estimate two-wheeler loan EMI and repayment."},{"name":"Education Loan Calculator","url":"/calculators/education-loan-calculator.html","category":"Loans, EMI & Credit","keywords":"education loan calculator estimate education-loan emi after a simplified moratorium.","description":"Estimate education-loan EMI after a simplified moratorium."},{"name":"Gold Loan Calculator","url":"/calculators/gold-loan-calculator.html","category":"Loans, EMI & Credit","keywords":"gold loan calculator compare bullet-interest and emi repayment estimates.","description":"Compare bullet-interest and EMI repayment estimates."},{"name":"Personal Loan Eligibility Calculator","url":"/calculators/personal-loan-eligibility-calculator.html","category":"Loans, EMI & Credit","keywords":"personal loan eligibility calculator estimate emi capacity using income and obligations.","description":"Estimate EMI capacity using income and obligations."},{"name":"Loan Against Property Calculator","url":"/calculators/loan-against-property-calculator.html","category":"Loans, EMI & Credit","keywords":"loan against property calculator estimate secured-loan emi and total interest.","description":"Estimate secured-loan EMI and total interest."},{"name":"Debt Snowball Calculator","url":"/calculators/debt-snowball-calculator.html","category":"Loans, EMI & Credit","keywords":"debt snowball calculator order debt balances from smallest to largest.","description":"Order debt balances from smallest to largest."},{"name":"EMI vs Lump Sum Calculator","url":"/calculators/emi-vs-lump-sum-calculator.html","category":"Loans, EMI & Credit","keywords":"emi vs lump sum calculator compare upfront purchase cost with financed cash payments.","description":"Compare upfront purchase cost with financed cash payments."},{"name":"Interest Rate Calculator","url":"/calculators/interest-rate-calculator.html","category":"Loans, EMI & Credit","keywords":"interest rate calculator estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term.","description":"Estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term."},{"name":"GST Calculator","url":"/calculators/gst-calculator.html","category":"Tax, Salary & Payroll","keywords":"gst tax goods services invoice","description":"Add or remove GST from an amount."},{"name":"Income Tax Calculator","url":"/calculators/income-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"income tax india old new regime","description":"Indicative income tax estimate."},{"name":"TDS Calculator","url":"/calculators/tds-calculator.html","category":"Tax, Salary & Payroll","keywords":"tds tax deducted source salary","description":"Estimate salary TDS under selected assumptions."},{"name":"HRA Exemption Calculator","url":"/calculators/hra-calculator.html","category":"Tax, Salary & Payroll","keywords":"hra house rent exemption","description":"Estimate eligible HRA exemption."},{"name":"CTC to In-Hand Salary","url":"/calculators/ctc-salary-calculator.html","category":"Tax, Salary & Payroll","keywords":"ctc in hand salary take home","description":"Estimate take-home pay from CTC."},{"name":"Salary Calculator","url":"/calculators/salary-calculator.html","category":"Tax, Salary & Payroll","keywords":"salary daily hourly pay","description":"Convert pay to daily and hourly estimates."},{"name":"Gratuity Calculator","url":"/calculators/gratuity-calculator.html","category":"Tax, Salary & Payroll","keywords":"gratuity calculator estimate gratuity using eligible wages and service years.","description":"Estimate gratuity using eligible wages and service years."},{"name":"Capital Gains Tax Estimator","url":"/calculators/capital-gains-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"capital gains tax estimator","description":"Estimate capital-gains tax from the transaction details and tax assumptions entered."},{"name":"Professional Tax Calculator","url":"/calculators/professional-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"professional tax calculator","description":"Estimate professional tax from the selected state and salary details."},{"name":"Advance Tax Planner","url":"/calculators/advance-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"advance tax planner","description":"Plan advance-tax instalments from an estimated annual tax liability."},{"name":"Leave Encashment Calculator","url":"/calculators/leave-encashment-calculator.html","category":"Tax, Salary & Payroll","keywords":"leave encashment calculator","description":"Estimate leave encashment from salary details and eligible leave days."},{"name":"Bonus Calculator","url":"/calculators/bonus-calculator.html","category":"Tax, Salary & Payroll","keywords":"bonus calculator","description":"Estimate a bonus amount using the percentage or calculation method entered."},{"name":"Freelancer Tax Estimator","url":"/calculators/freelancer-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"freelancer tax estimator","description":"Estimate taxable income and tax from freelance earnings and deductions."},{"name":"GST Late Fee Estimator","url":"/calculators/gst-late-fee-calculator.html","category":"Tax, Salary & Payroll","keywords":"gst late fee estimator","description":"Estimate GST late fees from the return delay and applicable rate entered."},{"name":"GST Interest Estimator","url":"/calculators/gst-interest-calculator.html","category":"Tax, Salary & Payroll","keywords":"gst interest estimator","description":"Estimate interest on delayed GST payment using the rate and delay period."},{"name":"GST Input Tax Credit Calculator","url":"/calculators/gst-input-tax-credit-calculator.html","category":"Tax, Salary & Payroll","keywords":"gst input tax credit calculator","description":"Estimate input tax credit from eligible purchase GST amounts."},{"name":"Reverse Charge GST Calculator","url":"/calculators/reverse-charge-gst-calculator.html","category":"Tax, Salary & Payroll","keywords":"reverse charge gst calculator","description":"Estimate GST payable under the reverse-charge assumptions entered."},{"name":"GST on Rent Estimator","url":"/calculators/gst-on-rent-calculator.html","category":"Tax, Salary & Payroll","keywords":"gst on rent estimator","description":"Estimate GST on rental charges using the entered rent and rate."},{"name":"Salary Slip Calculator","url":"/calculators/salary-slip-calculator.html","category":"Tax, Salary & Payroll","keywords":"salary slip calculator","description":"Build a sample salary breakdown from earnings, allowances and deductions."},{"name":"Sales Tax Calculator","url":"/calculators/sales-tax-calculator.html","category":"Tax, Salary & Payroll","keywords":"sales tax calculator estimate sales tax and total.","description":"Estimate sales tax and total."},{"name":"Salary Hike Calculator","url":"/calculators/salary-hike-calculator.html","category":"Tax, Salary & Payroll","keywords":"salary hike calculator estimate revised annual and monthly gross pay.","description":"Estimate revised annual and monthly gross pay."},{"name":"Overtime Pay Calculator","url":"/calculators/overtime-pay-calculator.html","category":"Tax, Salary & Payroll","keywords":"overtime pay calculator estimate gross pay from regular and overtime hours.","description":"Estimate gross pay from regular and overtime hours."},{"name":"Pay Day Calculator","url":"/calculators/pay-day-calculator.html","category":"Tax, Salary & Payroll","keywords":"pay day calculator estimate the next payday from a pay frequency.","description":"Estimate the next payday from a pay frequency."},{"name":"Stamp Duty Calculator","url":"/calculators/stamp-duty-calculator.html","category":"Tax, Salary & Payroll","keywords":"stamp duty registration charges property transfer India","description":"Estimate stamp duty and registration charges from user-entered state rates."},{"name":"Profit & Loss Calculator","url":"/calculators/profit-loss-calculator.html","category":"Business, Sales & Operations","keywords":"profit loss margin business","description":"Calculate profit, loss and percentage."},{"name":"Discount Calculator","url":"/calculators/discount-calculator.html","category":"Business, Sales & Operations","keywords":"discount sale price savings","description":"Calculate savings and final selling price."},{"name":"Business Markup & Margin Calculator","url":"/calculators/markup-margin-calculator.html","category":"Business, Sales & Operations","keywords":"business markup & margin calculator calculate unit markup and gross margin.","description":"Calculate unit markup and gross margin."},{"name":"Break-Even Point Calculator","url":"/calculators/break-even-calculator.html","category":"Business, Sales & Operations","keywords":"break-even point calculator estimate break-even units and sales revenue.","description":"Estimate break-even units and sales revenue."},{"name":"Payback Period Calculator","url":"/calculators/payback-period-calculator.html","category":"Business, Sales & Operations","keywords":"payback period calculator","description":"Estimate how long an investment takes to recover its initial cost."},{"name":"Invoice Calculator","url":"/calculators/invoice-calculator.html","category":"Business, Sales & Operations","keywords":"invoice calculator","description":"Calculate invoice totals from line items, discounts and tax."},{"name":"Working Capital Calculator","url":"/calculators/working-capital-calculator.html","category":"Business, Sales & Operations","keywords":"working capital calculator","description":"Estimate short-term working-capital needs from current assets and liabilities."},{"name":"Inventory Turnover Calculator","url":"/calculators/inventory-turnover-calculator.html","category":"Business, Sales & Operations","keywords":"inventory turnover calculator","description":"Calculate inventory turnover from cost of goods sold and average inventory."},{"name":"Bulk Discount Calculator","url":"/calculators/bulk-discount-calculator.html","category":"Business, Sales & Operations","keywords":"bulk discount calculator","description":"Calculate bulk-order savings and the effective price per unit."},{"name":"Freelancer Hourly Rate Calculator","url":"/calculators/freelancer-rate-calculator.html","category":"Business, Sales & Operations","keywords":"freelancer hourly rate calculator","description":"Estimate an hourly rate from target income, billable hours and expenses."},{"name":"UPI Transaction Cost Estimator","url":"/calculators/upi-charges-calculator.html","category":"Business, Sales & Operations","keywords":"upi transaction cost estimator","description":"Estimate payment-processing costs from transaction volume and fee assumptions."},{"name":"Burn Rate & Runway Calculator","url":"/calculators/burn-rate-runway-calculator.html","category":"Business, Sales & Operations","keywords":"burn rate & runway calculator estimate monthly net cash burn and cash runway.","description":"Estimate monthly net cash burn and cash runway."},{"name":"Commission Calculator","url":"/calculators/commission-calculator.html","category":"Business, Sales & Operations","keywords":"commission calculator calculate commission from sales and rate.","description":"Calculate commission from sales and rate."},{"name":"COGS Calculator","url":"/calculators/cogs-calculator.html","category":"Business, Sales & Operations","keywords":"cogs calculator calculate cost of goods sold.","description":"Calculate cost of goods sold."},{"name":"Unit Price Comparison Calculator","url":"/calculators/unit-price-comparison-calculator.html","category":"Business, Sales & Operations","keywords":"unit price comparison calculator compare package cost per unit.","description":"Compare package cost per unit."},{"name":"Cash Flow Calculator","url":"/calculators/cash-flow-calculator.html","category":"Business, Sales & Operations","keywords":"cash flow calculator calculate net cash flow and closing cash.","description":"Calculate net cash flow and closing cash."},{"name":"Meeting Cost Calculator","url":"/calculators/meeting-cost-calculator.html","category":"Business, Sales & Operations","keywords":"meeting cost calculator estimate meeting time and indicative staff cost from attendance, duration and hourly cost.","description":"Estimate meeting time and indicative staff cost from attendance, duration and hourly cost."},{"name":"Words per Minute Calculator","url":"/calculators/words-per-minute-calculator.html","category":"Business, Sales & Operations","keywords":"words per minute calculator calculate gross and net typing speed and an error-based accuracy estimate.","description":"Calculate gross and net typing speed and an error-based accuracy estimate."},{"name":"Speaking Time Calculator","url":"/calculators/speaking-time-calculator.html","category":"Business, Sales & Operations","keywords":"speaking time calculator estimate presentation duration from word count, speaking pace and pauses.","description":"Estimate presentation duration from word count, speaking pace and pauses."},{"name":"Paper Weight Calculator","url":"/calculators/paper-weight-calculator.html","category":"Business, Sales & Operations","keywords":"paper weight calculator estimate paper batch weight from sheet dimensions, gsm and quantity.","description":"Estimate paper batch weight from sheet dimensions, GSM and quantity."},{"name":"Basic Calculator","url":"/calculators/basic-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"basic calculator arithmetic add subtract multiply divide","description":"Basic arithmetic operations."},{"name":"Scientific Calculator","url":"/calculators/scientific-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"scientific calculator online free advanced math trigonometry logarithm square root powers","description":"Trigonometry, roots, logarithms and powers."},{"name":"LCM &amp; HCF Calculator","url":"/calculators/lcm-hcf-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"lcm hcf calculator lcm and hcf gcd least common multiple highest common factor","description":"Find common multiples and factors for whole numbers."},{"name":"Percentage Calculator","url":"/calculators/percentage-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage calculator percentage increase decrease percentage of a number percentage difference","description":"Find percentages, increase, decrease and percentage difference."},{"name":"Fraction Calculator","url":"/calculators/fraction-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"fraction calculator add subtract multiply divide simplify fractions","description":"Add, subtract, multiply, divide and simplify fractions."},{"name":"Average Calculator","url":"/calculators/average-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"average calculator average calculator find the arithmetic average (mean), sum and count of numbers. enter values separated by commas, spaces or new lines.","description":"Find the arithmetic mean of a list of numbers. The calculator also displays the total sum and number of valid values so you can check the calculation."},{"name":"Ratio Calculator","url":"/calculators/ratio-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"ratio calculator ratio calculator simplify a two-number ratio to its lowest whole-number form and view the equivalent ratio relationship.","description":"Simplify a ratio between two non-negative values by dividing both sides by their greatest common divisor. The result is shown in its lowest whole-number form when the inputs are integers."},{"name":"Square Root Calculator","url":"/calculators/square-root-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"square root calculator square root calculator calculate the principal square root of a non-negative number and verify it by squaring the result.","description":"Calculate the principal square root of a non-negative number. The result is the non-negative value that, when multiplied by itself, gives the input."},{"name":"Quadratic Equation Solver","url":"/calculators/quadratic-polynomial-solver.html","category":"Mathematics, Numbers & Statistics","keywords":"quadratic equation solver solve quadratic equations and complex roots.","description":"Solve quadratic equations and complex roots."},{"name":"Matrix Calculator","url":"/calculators/matrix-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"matrix calculator add subtract multiply transpose determinant inverse 2x2 3x3 worked steps","description":"Add, subtract, multiply, transpose and invert 2×2 or 3×3 matrices with worked explanations."},{"name":"Matrix Determinant Calculator","url":"/calculators/matrix-determinant-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"matrix determinant calculator calculate a 3×3 matrix determinant.","description":"Calculate a 3×3 matrix determinant."},{"name":"Statistics Calculator","url":"/calculators/statistics-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"statistics calculator calculate mean, median, mode and standard deviation.","description":"Calculate mean, median, mode and standard deviation."},{"name":"Permutation Calculator","url":"/calculators/permutation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"permutation calculator count ordered selections from distinct items.","description":"Count ordered selections from distinct items."},{"name":"Combination Calculator","url":"/calculators/combination-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"combination calculator count unordered groups selected from distinct items.","description":"Count unordered groups selected from distinct items."},{"name":"Probability Calculator","url":"/calculators/probability-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"probability calculator calculate basic probability for equally likely outcomes.","description":"Calculate basic probability for equally likely outcomes."},{"name":"Prime Number Checker","url":"/calculators/prime-number-checker.html","category":"Mathematics, Numbers & Statistics","keywords":"prime number checker check whether a whole number is prime or composite.","description":"Check whether a whole number is prime or composite."},{"name":"Prime Factorization Calculator","url":"/calculators/prime-factorization-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"prime factorization calculator express an integer as a product of prime factors.","description":"Express an integer as a product of prime factors."},{"name":"Factorial Calculator","url":"/calculators/factorial-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"factorial calculator calculate n factorial for a non-negative integer.","description":"Calculate n factorial for a non-negative integer."},{"name":"Modulo Calculator","url":"/calculators/modulo-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"modulo calculator find the remainder after division by a non-zero divisor.","description":"Find the remainder after division by a non-zero divisor."},{"name":"Rounding Calculator","url":"/calculators/rounding-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"rounding calculator round a number using nearest, floor or ceiling rules.","description":"Round a number using nearest, floor or ceiling rules."},{"name":"Significant Figures Calculator","url":"/calculators/significant-figures-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"significant figures calculator round a value to a chosen significant-figure count.","description":"Round a value to a chosen significant-figure count."},{"name":"Scientific Notation Converter","url":"/calculators/scientific-notation-converter.html","category":"Mathematics, Numbers & Statistics","keywords":"scientific notation converter convert values to normalized scientific notation.","description":"Convert values to normalized scientific notation."},{"name":"Decimal to Fraction Calculator","url":"/calculators/decimal-to-fraction-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"decimal to fraction calculator approximate a decimal as a simplified fraction.","description":"Approximate a decimal as a simplified fraction."},{"name":"Mixed Number Calculator","url":"/calculators/mixed-number-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"mixed number calculator convert an improper fraction to a mixed number.","description":"Convert an improper fraction to a mixed number."},{"name":"Arithmetic Progression Calculator","url":"/calculators/arithmetic-progression-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"arithmetic progression calculator calculate the nth term and sum of an arithmetic sequence.","description":"Calculate the nth term and sum of an arithmetic sequence."},{"name":"Geometric Progression Calculator","url":"/calculators/geometric-progression-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"geometric progression calculator calculate the nth term and sum of a geometric sequence.","description":"Calculate the nth term and sum of a geometric sequence."},{"name":"Number to Words (Indian Format)","url":"/calculators/number-to-words-indian-format.html","category":"Mathematics, Numbers & Statistics","keywords":"number to words (indian format) spell out whole numbers using indian place values.","description":"Spell out whole numbers using Indian place values."},{"name":"Long Division Calculator","url":"/calculators/long-division-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"long division calculator show quotient and remainder for a division calculation.","description":"Show quotient and remainder for a division calculation."},{"name":"Random Number Generator","url":"/calculators/random-number-generator.html","category":"Mathematics, Numbers & Statistics","keywords":"random number generator generate random whole numbers within a chosen range for classroom exercises, sampling and software testing.","description":"Generate random whole numbers within a chosen range for classroom exercises, sampling and software testing."},{"name":"Percentage Change Calculator","url":"/calculators/percentage-change-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage change calculator math statistics percentage conversion","description":"Calculate the absolute and percentage change between two values."},{"name":"Percentage Increase Calculator","url":"/calculators/percentage-increase-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage increase calculator math statistics percentage conversion","description":"Find the increase amount and resulting value."},{"name":"Percentage Decrease Calculator","url":"/calculators/percentage-decrease-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage decrease calculator math statistics percentage conversion","description":"Find the decrease amount and remaining value."},{"name":"Percentage Difference Calculator","url":"/calculators/percentage-difference-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage difference calculator math statistics percentage conversion","description":"Compare two values using percentage difference."},{"name":"Fraction to Percent Calculator","url":"/calculators/fraction-to-percent-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"fraction to percent calculator math statistics percentage conversion","description":"Convert a fraction into a decimal and percentage."},{"name":"Decimal to Percent Converter","url":"/calculators/decimal-to-percent-converter.html","category":"Mathematics, Numbers & Statistics","keywords":"decimal to percent converter math statistics percentage conversion","description":"Convert a decimal value into a percentage."},{"name":"Weighted Average Calculator","url":"/calculators/weighted-average-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"weighted average calculator math statistics percentage conversion","description":"Calculate an average using corresponding weights."},{"name":"Median Calculator","url":"/calculators/median-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"median calculator math statistics percentage conversion","description":"Find the middle value in an ordered list."},{"name":"Mode Calculator","url":"/calculators/mode-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"mode calculator math statistics percentage conversion","description":"Find the most frequent value or values."},{"name":"Sample Standard Deviation Calculator","url":"/calculators/sample-standard-deviation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"sample standard deviation calculator mathematics statistics","description":"Calculate sample variance and sample standard deviation using the n − 1 denominator."},{"name":"Z-Score Calculator","url":"/calculators/z-score-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"z-score calculator mathematics statistics","description":"Standardize a value against the mean and population standard deviation of reference data."},{"name":"Percentile Rank Calculator","url":"/calculators/percentile-rank-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentile rank calculator mathematics statistics","description":"Find a tie-adjusted percentile rank within a data set."},{"name":"Quartile Calculator","url":"/calculators/quartile-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"quartile calculator mathematics statistics","description":"Calculate Q1, median, Q3 and the interquartile range."},{"name":"Coefficient of Variation Calculator","url":"/calculators/coefficient-of-variation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"coefficient of variation calculator mathematics statistics","description":"Compare population spread with the absolute mean as a percentage."},{"name":"Geometric Mean Calculator","url":"/calculators/geometric-mean-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"geometric mean calculator mathematics statistics","description":"Calculate the multiplicative average of positive values."},{"name":"Harmonic Mean Calculator","url":"/calculators/harmonic-mean-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"harmonic mean calculator mathematics statistics","description":"Calculate the harmonic average of positive values."},{"name":"Mean Absolute Deviation Calculator","url":"/calculators/mean-absolute-deviation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"mean absolute deviation calculator mathematics statistics","description":"Calculate the average absolute distance from the arithmetic mean."},{"name":"Prime Number Calculator","url":"/calculators/prime-number-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"prime number calculator mathematics numbers","description":"Check whether a whole number is prime or composite and find its smallest factor."},{"name":"Cube Root Calculator","url":"/calculators/cube-root-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"cube root calculator mathematics numbers","description":"Calculate the real cube root of positive, zero or negative numbers."},{"name":"Scientific Notation Calculator","url":"/calculators/scientific-notation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"scientific notation calculator mathematics numbers","description":"Convert a number into normalized scientific notation."},{"name":"Digital Root Calculator","url":"/calculators/digital-root-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"digital root calculator mathematics numbers","description":"Find the sum of a whole number's digits and its digital root."},{"name":"Divisibility Test Calculator","url":"/calculators/divisibility-test-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"divisibility test calculator mathematics numbers","description":"Check divisibility and display the remainder."},{"name":"Reciprocal Calculator","url":"/calculators/reciprocal-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"reciprocal calculator mathematics numbers","description":"Calculate the multiplicative inverse of a non-zero number."},{"name":"Binomial Coefficient Calculator","url":"/calculators/binomial-coefficient-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"binomial coefficient calculator mathematics numbers","description":"Count combinations when order does not matter."},{"name":"Percentage Point Calculator","url":"/calculators/percentage-point-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage point calculator mathematics numbers","description":"Compare two percentage rates in percentage points and relative change."},{"name":"Average Percentage Calculator","url":"/calculators/average-percentage-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"average percentage calculator math algebra calculator","description":"Calculate the arithmetic average of several percentage values."},{"name":"Percentage of a Percentage Calculator","url":"/calculators/percentage-of-percentage-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percentage of a percentage calculator math algebra calculator","description":"Find a percentage of another percentage and apply the combined rate to a base amount."},{"name":"Percent Error Calculator","url":"/calculators/percent-error-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"percent error calculator math algebra calculator","description":"Calculate absolute percent error by comparing an observed value with a reference value."},{"name":"Absolute Value Equation Calculator","url":"/calculators/absolute-value-equation-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"absolute value equation calculator math algebra calculator","description":"Solve equations of the form |a × x + b| = c and show the real solution values."},{"name":"Absolute Value Inequality Calculator","url":"/calculators/absolute-value-inequalities-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"absolute value inequality calculator math algebra calculator","description":"Solve both the inside-interval and outside-interval forms of |a × x + b| compared with a positive bound."},{"name":"Completing the Square Calculator","url":"/calculators/completing-the-square-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"completing the square calculator math algebra calculator","description":"Rewrite a quadratic expression in vertex form and calculate its vertex."},{"name":"Discriminant Calculator","url":"/calculators/discriminant-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"discriminant calculator math algebra calculator","description":"Calculate the discriminant of a quadratic equation and classify its roots."},{"name":"Complex Conjugate Calculator","url":"/calculators/complex-conjugate-calculator.html","category":"Mathematics, Numbers & Statistics","keywords":"complex conjugate calculator math algebra calculator","description":"Find the complex conjugate, modulus and argument of a complex number."},{"name":"Property Price per Sq Ft Calculator","url":"/calculators/property-price-per-sq-ft-calculator.html","category":"Geometry, Measurement & Construction","keywords":"property price per sq ft calculator estimate price per square foot.","description":"Estimate price per square foot."},{"name":"Pythagoras Calculator","url":"/calculators/pythagoras-calculator.html","category":"Geometry, Measurement & Construction","keywords":"pythagoras calculator calculate a missing side in a right-angled triangle.","description":"Calculate a missing side in a right-angled triangle."},{"name":"Triangle Area Calculator","url":"/calculators/triangle-area-calculator.html","category":"Geometry, Measurement & Construction","keywords":"triangle area calculator calculate area using base-height or heron's formula.","description":"Calculate area using base-height or Heron's formula."},{"name":"Triangle Angle Calculator","url":"/calculators/triangle-angle-calculator.html","category":"Geometry, Measurement & Construction","keywords":"triangle angle calculator find interior angles from three side lengths.","description":"Find interior angles from three side lengths."},{"name":"Circle Area Calculator","url":"/calculators/circle-area-calculator.html","category":"Geometry, Measurement & Construction","keywords":"circle area calculator calculate circle area from radius or diameter.","description":"Calculate circle area from radius or diameter."},{"name":"Circle Circumference Calculator","url":"/calculators/circle-circumference-calculator.html","category":"Geometry, Measurement & Construction","keywords":"circle circumference calculator calculate the boundary length of a circle.","description":"Calculate the boundary length of a circle."},{"name":"Rectangle Area Calculator","url":"/calculators/rectangle-area-calculator.html","category":"Geometry, Measurement & Construction","keywords":"rectangle area calculator calculate rectangle area and perimeter.","description":"Calculate rectangle area and perimeter."},{"name":"Square Area Calculator","url":"/calculators/square-area-calculator.html","category":"Geometry, Measurement & Construction","keywords":"square area calculator calculate square area, perimeter and diagonal.","description":"Calculate square area, perimeter and diagonal."},{"name":"Volume Calculator","url":"/calculators/volume-calculator.html","category":"Geometry, Measurement & Construction","keywords":"volume calculator calculate volume for cube, cuboid, cylinder or sphere.","description":"Calculate volume for cube, cuboid, cylinder or sphere."},{"name":"Surface Area Calculator","url":"/calculators/surface-area-calculator.html","category":"Geometry, Measurement & Construction","keywords":"surface area calculator calculate total surface area for common solids.","description":"Calculate total surface area for common solids."},{"name":"Perimeter Calculator","url":"/calculators/perimeter-calculator.html","category":"Geometry, Measurement & Construction","keywords":"perimeter calculator calculate the boundary length of common shapes.","description":"Calculate the boundary length of common shapes."},{"name":"Concrete Calculator","url":"/calculators/concrete-calculator.html","category":"Geometry, Measurement & Construction","keywords":"concrete calculator estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio.","description":"Estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio."},{"name":"Board Foot Calculator","url":"/calculators/board-foot-calculator.html","category":"Geometry, Measurement & Construction","keywords":"board foot calculator construction materials estimate calculator","description":"Estimate lumber volume in board feet from board length, width, thickness and quantity."},{"name":"Cubic Yard Calculator","url":"/calculators/cubic-yard-calculator.html","category":"Geometry, Measurement & Construction","keywords":"cubic yard calculator construction materials estimate calculator","description":"Calculate rectangular volume in cubic feet, cubic yards and cubic metres."},{"name":"Brick Calculator","url":"/calculators/brick-calculator.html","category":"Geometry, Measurement & Construction","keywords":"brick calculator construction materials estimate calculator","description":"Estimate the number of bricks for a wall using dimensions, openings, brick size, mortar joints and a waste allowance."},{"name":"Drywall Calculator","url":"/calculators/drywall-calculator.html","category":"Geometry, Measurement & Construction","keywords":"drywall calculator construction materials estimate calculator","description":"Estimate drywall sheets for wall coverage using wall dimensions, openings, sheet size and a cutting allowance."},{"name":"Gravel Calculator","url":"/calculators/gravel-calculator.html","category":"Geometry, Measurement & Construction","keywords":"gravel calculator construction materials estimate calculator","description":"Estimate gravel volume and approximate mass for a rectangular area using depth, bulk density and an allowance."},{"name":"Tile Calculator","url":"/calculators/tile-calculator.html","category":"Geometry, Measurement & Construction","keywords":"tile calculator construction materials estimate calculator","description":"Estimate floor tile quantity and material cost from room dimensions, tile size and a cutting allowance."},{"name":"Sand Calculator","url":"/calculators/sand-calculator.html","category":"Geometry, Measurement & Construction","keywords":"sand calculator construction materials estimate calculator","description":"Estimate sand volume and approximate mass for a rectangular area using depth and editable bulk density."},{"name":"Pipe Weight Calculator","url":"/calculators/pipe-weight-calculator.html","category":"Geometry, Measurement & Construction","keywords":"pipe weight calculator construction materials estimate calculator","description":"Estimate hollow pipe mass from outside diameter, wall thickness, length, material density and quantity."},{"name":"Square Footage Calculator","url":"/calculators/square-footage-calculator.html","category":"Geometry, Measurement & Construction","keywords":"square footage calculator calculate rectangular floor or surface area in square feet, square yards and square metres.","description":"Calculate rectangular floor or surface area in square feet, square yards and square metres."},{"name":"Square Yards Calculator","url":"/calculators/square-yards-calculator.html","category":"Geometry, Measurement & Construction","keywords":"square yards calculator calculate rectangular area in square feet, square yards and square metres using feet-based dimensions.","description":"Calculate rectangular area in square feet, square yards and square metres using feet-based dimensions."},{"name":"Square Feet to Cubic Yards Calculator","url":"/calculators/square-feet-to-cubic-yards-calculator.html","category":"Geometry, Measurement & Construction","keywords":"square feet to cubic yards calculator estimate material volume from surface area and depth, with an optional 10% ordering allowance.","description":"Estimate material volume from surface area and depth, with an optional 10% ordering allowance."},{"name":"Paint Calculator","url":"/calculators/paint-calculator.html","category":"Geometry, Measurement & Construction","keywords":"paint calculator estimate paint quantity from combined wall length, wall height, openings, coverage per litre and number of coats.","description":"Estimate paint quantity from combined wall length, wall height, openings, coverage per litre and number of coats."},{"name":"Carpet Calculator","url":"/calculators/carpet-calculator.html","category":"Geometry, Measurement & Construction","keywords":"carpet calculator estimate carpet area for rectangular rooms and add an allowance for seams, cuts and fitting waste.","description":"Estimate carpet area for rectangular rooms and add an allowance for seams, cuts and fitting waste."},{"name":"Flooring Calculator","url":"/calculators/flooring-calculator.html","category":"Geometry, Measurement & Construction","keywords":"flooring calculator estimate floor area, required flooring boxes and purchased coverage using package coverage and a waste allowance.","description":"Estimate floor area, required flooring boxes and purchased coverage using package coverage and a waste allowance."},{"name":"Wallpaper Calculator","url":"/calculators/wallpaper-calculator.html","category":"Geometry, Measurement & Construction","keywords":"wallpaper calculator estimate wallpaper rolls from wall width, wall height, roll dimensions and a pattern-matching allowance.","description":"Estimate wallpaper rolls from wall width, wall height, roll dimensions and a pattern-matching allowance."},{"name":"Decking Board Calculator","url":"/calculators/decking-calculator.html","category":"Geometry, Measurement & Construction","keywords":"decking board calculator estimate board rows and linear board length for a rectangular deck from deck dimensions, board width, gap, stock length and cutting allowance.","description":"Estimate board rows and linear board length for a rectangular deck from deck dimensions, board width, gap, stock length and cutting allowance."},{"name":"Date Difference Calculator","url":"/calculators/date-difference-calculator.html","category":"Date, Time & Work","keywords":"date difference days between two dates elapsed calendar days weeks","description":"Count days, weeks and calendar time between dates."},{"name":"Age Calculator","url":"/calculators/age-calculator.html","category":"Date, Time & Work","keywords":"age date years months days","description":"Calculate age on a selected date using the date of birth you enter."},{"name":"Work Hours Calculator","url":"/calculators/work-hours-calculator.html","category":"Date, Time & Work","keywords":"work hours calculator working hours shift duration timesheet breaks overnight","description":"Calculate shift duration and subtract unpaid breaks."},{"name":"Hours to Minutes Calculator","url":"/calculators/hours-to-minutes-calculator.html","category":"Date, Time & Work","keywords":"hours to minutes calculator hours to minutes calculator convert hours and additional minutes into total minutes and decimal hours with a quick time conversion calculator.","description":"Convert a duration entered in hours and minutes into total minutes and decimal hours. This is useful for basic time calculations and timesheet checks."},{"name":"Age Difference Calculator","url":"/calculators/age-difference-calculator.html","category":"Date, Time & Work","keywords":"age difference calculator calculate the calendar age gap between two dates.","description":"Compare two dates and calculate the calendar gap in years, months and days."},{"name":"Working Days Calculator","url":"/calculators/working-days-calculator.html","category":"Date, Time & Work","keywords":"working days calculator count weekdays, excluding optional custom holidays.","description":"Count weekdays, excluding optional custom holidays."},{"name":"Add Days to Date Calculator","url":"/calculators/add-days-to-date-calculator.html","category":"Date, Time & Work","keywords":"add days to date calculator add calendar days to a selected date.","description":"Add calendar days to a selected date."},{"name":"Subtract Days from Date Calculator","url":"/calculators/subtract-days-from-date-calculator.html","category":"Date, Time & Work","keywords":"subtract days from date calculator subtract calendar days from a selected date.","description":"Subtract calendar days from a selected date."},{"name":"Time Zone Converter","url":"/calculators/time-zone-converter.html","category":"Date, Time & Work","keywords":"time zone converter convert a time using entered utc offsets.","description":"Convert a time using entered UTC offsets."},{"name":"Seconds to Hours Calculator","url":"/calculators/seconds-to-hours-calculator.html","category":"Date, Time & Work","keywords":"seconds to hours calculator convert seconds into hours and minutes.","description":"Convert seconds into hours and minutes."},{"name":"Minutes to Hours Calculator","url":"/calculators/minutes-to-hours-calculator.html","category":"Date, Time & Work","keywords":"minutes to hours calculator convert minutes into decimal and whole hours.","description":"Convert minutes into decimal and whole hours."},{"name":"Countdown Calculator","url":"/calculators/countdown-calculator.html","category":"Date, Time & Work","keywords":"countdown calculator count calendar days until a target date.","description":"Count calendar days until a target date."},{"name":"Retirement Date Calculator","url":"/calculators/retirement-date-calculator.html","category":"Date, Time & Work","keywords":"retirement date calculator estimate a target date from a birth date and age.","description":"Estimate a target date from a birth date and age."},{"name":"Pomodoro Session Planner","url":"/calculators/pomodoro-session-planner.html","category":"Date, Time & Work","keywords":"pomodoro session planner plan focus sessions and breaks and estimate total session time.","description":"Plan focus sessions and breaks and estimate total session time."},{"name":"Unit Converter","url":"/calculators/unit-converter.html","category":"Converters, Data & Technology","keywords":"unit converter length weight mass temperature volume speed kg lbs cm feet celsius fahrenheit km miles","description":"Convert length, weight, temperature, volume and speed."},{"name":"Data Storage & Bandwidth Calculator","url":"/calculators/data-storage-bandwidth-calculator.html","category":"Converters, Data & Technology","keywords":"data storage & bandwidth calculator convert data sizes and estimate transfer time.","description":"Convert data sizes and estimate transfer time."},{"name":"Password Strength Checker & Generator","url":"/calculators/password-strength-checker.html","category":"Converters, Data & Technology","keywords":"password strength checker & generator check password characteristics locally and generate passwords.","description":"Check password characteristics locally and generate passwords."},{"name":"Currency Converter Calculator","url":"/calculators/currency-converter-calculator.html","category":"Converters, Data & Technology","keywords":"currency converter calculator","description":"Convert between currencies using the exchange rate you enter."},{"name":"Land Area Converter (Bigha, Guntha & Cent)","url":"/calculators/land-unit-converter-calculator.html","category":"Converters, Data & Technology","keywords":"land unit converter (bigha, guntha & cent) convert land area using local unit conversion factors.","description":"Convert land area using local unit conversion factors."},{"name":"Roman Numeral Converter","url":"/calculators/roman-numeral-converter.html","category":"Converters, Data & Technology","keywords":"roman numeral converter convert whole numbers to standard roman numerals.","description":"Convert whole numbers to standard Roman numerals."},{"name":"Binary Converter","url":"/calculators/binary-converter.html","category":"Converters, Data & Technology","keywords":"binary converter convert decimal integers to binary notation.","description":"Convert decimal integers to binary notation."},{"name":"Hex Converter","url":"/calculators/hex-converter.html","category":"Converters, Data & Technology","keywords":"hex converter convert decimal integers to hexadecimal notation.","description":"Convert decimal integers to hexadecimal notation."},{"name":"Octal Converter","url":"/calculators/octal-converter.html","category":"Converters, Data & Technology","keywords":"octal converter convert decimal integers to octal notation.","description":"Convert decimal integers to octal notation."},{"name":"Subnet Calculator","url":"/calculators/subnet-calculator.html","category":"Converters, Data & Technology","keywords":"subnet calculator calculate ipv4 network address, subnet mask, broadcast address and host range from an ip address and cidr prefix.","description":"Calculate IPv4 network address, subnet mask, broadcast address and host range from an IP address and CIDR prefix."},{"name":"Bigha to Sq Ft Calculator","url":"/calculators/bigha-to-sq-ft-calculator.html","category":"Converters, Data & Technology","keywords":"bigha to square feet land area conversion","description":"Convert Bigha using a locally verified square-feet factor."},{"name":"Aspect Ratio Calculator","url":"/calculators/aspect-ratio-calculator.html","category":"Converters, Data & Technology","keywords":"aspect ratio calculator digital media technology calculator","description":"Calculate and simplify an image, display or video aspect ratio from its width and height."},{"name":"Screen Size Calculator","url":"/calculators/screen-size-calculator.html","category":"Converters, Data & Technology","keywords":"screen size calculator digital media technology calculator","description":"Calculate the width, height and area of a display from its diagonal and aspect ratio."},{"name":"Pixels Per Inch (PPI) Calculator","url":"/calculators/pixels-per-inch-calculator.html","category":"Converters, Data & Technology","keywords":"pixels per inch (ppi) calculator digital media technology calculator","description":"Calculate pixel density and pixel pitch from display resolution and diagonal size."},{"name":"Image File Size Calculator","url":"/calculators/image-file-size-calculator.html","category":"Converters, Data & Technology","keywords":"image file size calculator digital media technology calculator","description":"Estimate uncompressed image data size and a compressed size from pixel dimensions, bit depth, channels and compression ratio."},{"name":"Playback Speed Calculator","url":"/calculators/playback-speed-calculator.html","category":"Converters, Data & Technology","keywords":"playback speed calculator digital media technology calculator","description":"Calculate the new playback duration and time saved when audio or video is played at a different speed."},{"name":"Frames to Timecode Calculator","url":"/calculators/frames-to-timecode-calculator.html","category":"Converters, Data & Technology","keywords":"frames to timecode calculator digital media technology calculator","description":"Convert a total frame count into non-drop-frame HH:MM:SS:FF timecode at an integer frame rate."},{"name":"Timecode to Frames Calculator","url":"/calculators/timecode-to-frames-calculator.html","category":"Converters, Data & Technology","keywords":"timecode to frames calculator digital media technology calculator","description":"Convert non-drop-frame HH:MM:SS:FF timecode into a total frame count at an integer frame rate."},{"name":"Camera Field of View Calculator","url":"/calculators/camera-field-of-view-calculator.html","category":"Converters, Data & Technology","keywords":"camera field of view calculator digital media technology calculator","description":"Calculate horizontal, vertical and diagonal camera field of view from sensor dimensions and focal length."},{"name":"Acre to Are Converter","url":"/calculators/acre-to-are-conversion-calculator.html","category":"Converters, Data & Technology","keywords":"acre to are converter unit conversion calculator","description":"Convert acres into ares, hectares and square metres using standard area factors."},{"name":"Ares to Hectares Converter","url":"/calculators/ares-to-hectares-calculator.html","category":"Converters, Data & Technology","keywords":"ares to hectares converter unit conversion calculator","description":"Convert ares into hectares, square metres and acres."},{"name":"Decimeter to Meter Converter","url":"/calculators/decimeter-to-meter-calculator.html","category":"Converters, Data & Technology","keywords":"decimeter to meter converter unit conversion calculator","description":"Convert decimetres into metres, centimetres and millimetres."},{"name":"Feet to Inches Converter","url":"/calculators/feet-to-inches-calculator.html","category":"Converters, Data & Technology","keywords":"feet to inches converter unit conversion calculator","description":"Convert feet into inches, centimetres and metres."},{"name":"Inches to Fraction Calculator","url":"/calculators/inches-to-fraction-calculator.html","category":"Converters, Data & Technology","keywords":"inches to fraction calculator unit conversion calculator","description":"Round a decimal inch measurement to the nearest 1/64 inch and display its mixed fraction."},{"name":"Decagram to Gram Converter","url":"/calculators/decagram-to-gram-calculator.html","category":"Converters, Data & Technology","keywords":"decagram to gram converter unit conversion calculator","description":"Convert decagrams into grams, kilograms and milligrams."},{"name":"Liters to Centiliters Converter","url":"/calculators/liters-to-cl-calculator.html","category":"Converters, Data & Technology","keywords":"liters to centiliters converter unit conversion calculator","description":"Convert litres into centilitres, millilitres and cubic metres."},{"name":"Acres to Square Miles Converter","url":"/calculators/acres-to-square-miles-calculator.html","category":"Converters, Data & Technology","keywords":"acres to square miles converter unit conversion calculator","description":"Convert acres into square miles, square feet and square metres."},{"name":"Electricity Bill Calculator","url":"/calculators/electricity-bill-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"electricity bill units household power","description":"Estimate a bill from total units consumed and a single per-unit rate."},{"name":"Fuel Cost Calculator","url":"/calculators/fuel-cost-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"fuel petrol diesel trip travel cost","description":"Estimate trip fuel use and total cost from distance, vehicle mileage and fuel price."},{"name":"Split Bill Calculator","url":"/calculators/split-bill-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"split bill calculator bill splitting restaurant tip group expense equal share","description":"Divide a group bill and include an optional tip."},{"name":"Mileage Calculator","url":"/calculators/mileage-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"mileage calculator mileage calculator calculate vehicle mileage or fuel efficiency in kilometres per litre from distance travelled and fuel used.","description":"Calculate vehicle efficiency from distance travelled and fuel consumed."},{"name":"Marriage Cost Calculator","url":"/calculators/marriage-cost-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"marriage cost calculator","description":"Estimate a future event budget after applying an inflation assumption."},{"name":"Electricity Bill Slab Calculator","url":"/calculators/electricity-bill-slab-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"electricity bill slab calculator estimate a progressive bill from custom unit slabs and rates.","description":"Calculate a tiered bill using slab-wise consumption and the rates entered for each slab."},{"name":"Tip Calculator","url":"/calculators/tip-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"tip calculator calculate tip and split a bill.","description":"Calculate tip and split a bill."},{"name":"Steps to Km Calculator","url":"/calculators/steps-to-km-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"steps to km calculator estimate distance from steps and entered step length.","description":"Estimate distance from steps and entered step length."},{"name":"Appliance Energy Cost Calculator","url":"/calculators/appliance-energy-cost-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"appliance energy cost calculator estimate monthly and annual appliance energy use and cost from watts, hours and tariff.","description":"Estimate monthly and annual appliance energy use and cost from watts, hours and tariff."},{"name":"Electricity Cost per Use Calculator","url":"/calculators/electricity-single-usage-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"electricity cost per use calculator estimate the electricity cost of one appliance session from its power rating and run time.","description":"Estimate the electricity cost of one appliance session from its power rating and run time."},{"name":"Data Usage Calculator","url":"/calculators/data-usage-calculator.html","category":"Home, Travel & Everyday Costs","keywords":"data usage calculator estimate video, music and browsing data use over a selected period.","description":"Estimate video, music and browsing data use over a selected period."},{"name":"Solar Savings & Rooftop Solar ROI Calculator","url":"/calculators/solar-savings-calculator.html","category":"Energy & Sustainability","keywords":"solar savings rooftop solar ROI payback solar generation electricity bill savings","description":"Estimate solar generation, bill savings and simple payback using your local tariff and installer quote."},{"name":"Cake Pan Converter","url":"/calculators/cake-pans-calculator.html","category":"Food & Cooking","keywords":"cake pan converter food cooking recipe calculator","description":"Scale a round cake recipe by comparing the surface areas of two circular pans."},{"name":"Cooking Measurement Converter","url":"/calculators/cooking-measurement-calculator.html","category":"Food & Cooking","keywords":"cooking measurement converter food cooking recipe calculator","description":"Convert cups into millilitres, centilitres, tablespoons, teaspoons and US fluid ounces."},{"name":"Coffee Ratio Calculator","url":"/calculators/coffee-ratio-calculator.html","category":"Food & Cooking","keywords":"coffee ratio calculator food cooking recipe calculator","description":"Calculate a coffee-to-water brew ratio from coffee and water mass."},{"name":"Pizza Size Calculator","url":"/calculators/pizza-calculator.html","category":"Food & Cooking","keywords":"pizza size calculator food cooking recipe calculator","description":"Calculate the area of a round pizza and compare total area across multiple pizzas."},{"name":"Pizza Party Calculator","url":"/calculators/pizza-party-calculator.html","category":"Food & Cooking","keywords":"pizza party calculator food cooking recipe calculator","description":"Estimate how many pizzas to order from guest count, slices per guest and slices per pizza."},{"name":"Cake Serving Calculator","url":"/calculators/cake-serving-calculator.html","category":"Food & Cooking","keywords":"cake serving calculator food cooking recipe calculator","description":"Estimate round cake servings from cake diameter and the assumed area of each slice."},{"name":"Dry to Cooked Pasta Converter","url":"/calculators/dry-to-cooked-pasta-calculator.html","category":"Food & Cooking","keywords":"dry to cooked pasta converter food cooking recipe calculator","description":"Estimate cooked pasta mass from dry pasta mass using an editable yield factor."},{"name":"Uncooked to Cooked Rice Calculator","url":"/calculators/uncooked-to-cooked-rice-calculator.html","category":"Food & Cooking","keywords":"uncooked to cooked rice calculator food cooking recipe calculator","description":"Estimate cooked rice mass from dry rice mass using an editable yield factor."},{"name":"CGPA to Percentage Calculator","url":"/calculators/cgpa-to-percentage-calculator.html","category":"Education & Academic Tools","keywords":"cgpa to percentage calculator convert cgpa using an institution multiplier.","description":"Convert CGPA using an institution multiplier."},{"name":"GPA Calculator","url":"/calculators/gpa-calculator.html","category":"Education & Academic Tools","keywords":"gpa calculator calculate credit-weighted gpa.","description":"Calculate credit-weighted GPA."},{"name":"Child Education Cost Calculator","url":"/calculators/child-education-calculator.html","category":"Education & Academic Tools","keywords":"child education cost calculator","description":"Project a future education target using current cost, inflation and years."},{"name":"Grade Calculator","url":"/calculators/grade-calculator.html","category":"Education & Academic Tools","keywords":"grade calculator calculate a course percentage and a configurable letter grade from points earned and points possible.","description":"Calculate a course percentage and a configurable letter grade from points earned and points possible."},{"name":"BMI Calculator","url":"/calculators/bmi-calculator.html","category":"Health, Fitness & Family","keywords":"bmi body mass index adult","description":"Adult BMI reference with limitations."},{"name":"Water Intake Estimator","url":"/calculators/water-intake-calculator.html","category":"Health, Fitness & Family","keywords":"water intake estimator estimate daily fluid intake from body weight.","description":"Estimate daily fluid intake from body weight."},{"name":"Pace Calculator","url":"/calculators/pace-calculator.html","category":"Health, Fitness & Family","keywords":"pace calculator calculate running pace and speed.","description":"Calculate running pace and speed."},{"name":"Heart Rate Zones Calculator","url":"/calculators/heart-rate-zones-calculator.html","category":"Health, Fitness & Family","keywords":"heart rate zones calculator estimate broad age-based heart rate zones.","description":"Estimate broad age-based heart rate zones."},{"name":"Pregnancy Due Date Calculator","url":"/calculators/pregnancy-due-date-calculator.html","category":"Health, Fitness & Family","keywords":"pregnancy due date calculator estimate a due date from a reference date.","description":"Estimate a due date from a reference date."},{"name":"Sleep Debt Calculator","url":"/calculators/sleep-debt-calculator.html","category":"Health, Fitness & Family","keywords":"sleep debt calculator estimate a sleep-duration shortfall over a selected period.","description":"Estimate a sleep-duration shortfall over a selected period."},{"name":"Pregnancy Calculator","url":"/calculators/pregnancy-calculator.html","category":"Health, Fitness & Family","keywords":"pregnancy calculator estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period.","description":"Estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period."},{"name":"Pregnancy Conception Calculator","url":"/calculators/pregnancy-conception-calculator.html","category":"Health, Fitness & Family","keywords":"pregnancy conception calculator estimate an approximate conception date from an estimated due date for pregnancy date-planning information.","description":"Estimate an approximate conception date from an estimated due date for pregnancy date-planning information."},{"name":"Crop Cost & Profit Calculator","url":"/calculators/crop-cost-profit-calculator.html","category":"Agriculture & Rural Finance","keywords":"crop cost profit calculator farming agriculture seed fertilizer labour irrigation machinery revenue profit per acre","description":""},{"name":"Kisan Credit Card Interest Calculator","url":"/calculators/kcc-interest-calculator.html","category":"Agriculture & Rural Finance","keywords":"kisan credit card KCC interest calculator farmer loan interest","description":""},{"name":"Livestock Cost & Profit Calculator","url":"/calculators/livestock-cost-profit-calculator.html","category":"Agriculture & Rural Finance","keywords":"livestock dairy animal husbandry cost profit milk feed veterinary calculator","description":""},{"name":"Crop Yield & Sale Value Calculator","url":"/calculators/crop-yield-sale-value-calculator.html","category":"Agriculture & Rural Finance","keywords":"crop yield harvest sale price quintal agriculture calculator","description":""},{"name":"PM-KISAN Eligibility Checker","url":"/calculators/pm-kisan-eligibility-checker.html","category":"Government Schemes & Eligibility","keywords":"PM Kisan eligibility beneficiary checker farmer scheme","description":""},{"name":"Ayushman Bharat Eligibility Checker","url":"/calculators/ayushman-bharat-eligibility-checker.html","category":"Government Schemes & Eligibility","keywords":"Ayushman Bharat PM-JAY eligibility senior citizen health cover checker","description":""},{"name":"Atal Pension Yojana Planner","url":"/calculators/apy-eligibility-pension-planner.html","category":"Government Schemes & Eligibility","keywords":"Atal Pension Yojana APY eligibility pension planner","description":""},{"name":"PMAY Eligibility Checker","url":"/calculators/pmay-eligibility-checker.html","category":"Government Schemes & Eligibility","keywords":"PMAY urban rural housing eligibility checker","description":""},{"name":"MUDRA Loan Category & EMI Calculator","url":"/calculators/mudra-loan-category-emi-calculator.html","category":"Government Schemes & Eligibility","keywords":"MUDRA PMMY loan category EMI calculator Shishu Kishore Tarun","description":""},{"name":"MP Ladli Behna Eligibility Checker","url":"/calculators/mp-ladli-behna-eligibility-checker.html","category":"Government Schemes & Eligibility","keywords":"Madhya Pradesh MP Ladli Behna scheme eligibility checker","description":""},{"name":"Job Change Take-home Salary Calculator","url":"/calculators/job-change-take-home-salary-calculator.html","category":"Career & Salary Planning","keywords":"job change new offer salary take home in hand CTC calculator","description":""},{"name":"First Job Salary Calculator","url":"/calculators/first-job-salary-calculator.html","category":"Career & Salary Planning","keywords":"first job fresher salary in hand take home salary calculator","description":""}]
+[
+  {
+    "name": "Compound Interest Calculator",
+    "url": "/calculators/compound-interest-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "compound interest compounding future value principal",
+    "description": "Estimate compound growth for a one-time principal."
+  },
+  {
+    "name": "RD Calculator",
+    "url": "/calculators/rd-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "rd recurring deposit monthly instalment maturity interest",
+    "description": "Estimate recurring deposit maturity and interest."
+  },
+  {
+    "name": "Fixed Deposit Calculator",
+    "url": "/calculators/fd-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "fixed deposit fd maturity interest",
+    "description": "Estimate deposit maturity and interest."
+  },
+  {
+    "name": "SIP Calculator",
+    "url": "/calculators/sip-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sip mutual fund monthly investment projection",
+    "description": "Illustrative monthly investment projection."
+  },
+  {
+    "name": "₹5,000 Monthly SIP Scenario",
+    "url": "/calculators/sip-5000-monthly-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sip 5000 monthly scenario 10 year worked example",
+    "description": "Explore a worked ₹5,000 monthly SIP scenario."
+  },
+  {
+    "name": "PPF Calculator",
+    "url": "/calculators/ppf-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "ppf public provident fund",
+    "description": "Estimate Public Provident Fund maturity."
+  },
+  {
+    "name": "EPF / PF Calculator",
+    "url": "/calculators/epf-pf-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "epf pf provident fund employee",
+    "description": "Estimate provident fund accumulation."
+  },
+  {
+    "name": "Savings Interest Calculator",
+    "url": "/calculators/savings-interest-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "savings bank interest account",
+    "description": "Estimate savings account interest."
+  },
+  {
+    "name": "Inflation Calculator",
+    "url": "/calculators/inflation-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "inflation future price cost",
+    "description": "Estimate future costs using an assumed rate."
+  },
+  {
+    "name": "Simple Interest Calculator",
+    "url": "/calculators/simple-interest-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "simple interest calculator simple interest calculator calculate simple interest, total interest and maturity amount using principal, annual rate and time. free simple interest calculator with formula and example.",
+    "description": "Estimate simple interest on a principal amount using an annual interest rate and a time period. The tool shows interest earned and the total amount before any fees, taxes or contractual adjustments."
+  },
+  {
+    "name": "ROI Calculator",
+    "url": "/calculators/roi-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "roi calculator roi calculator calculate return on investment (roi), net gain or loss and percentage return from an initial investment, current value and additional income.",
+    "description": "Calculate a simple return on investment from the original cost, current value and any additional income received. Use it to compare scenarios on a consistent basis."
+  },
+  {
+    "name": "CAGR Calculator",
+    "url": "/calculators/cagr-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "cagr calculator cagr calculator calculate compound annual growth rate (cagr) from beginning value, ending value and number of years with a clear formula and example.",
+    "description": "Estimate the compound annual growth rate between a beginning value and an ending value over a stated period. CAGR expresses a smoothed annual growth rate; it does not show the actual path taken between the two values."
+  },
+  {
+    "name": "Lumpsum Investment Calculator",
+    "url": "/calculators/lumpsum-investment-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "lumpsum investment calculator project the value of a one-time investment.",
+    "description": "Project the value of a one-time investment."
+  },
+  {
+    "name": "Step-up SIP Calculator",
+    "url": "/calculators/step-up-sip-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "step-up sip calculator model annual increases in monthly contributions.",
+    "description": "Model annual increases in monthly contributions."
+  },
+  {
+    "name": "SIP Goal Calculator",
+    "url": "/calculators/sip-goal-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sip goal calculator estimate the monthly sip needed for a target.",
+    "description": "Estimate the monthly SIP needed for a target."
+  },
+  {
+    "name": "SIP Delay Cost Calculator",
+    "url": "/calculators/sip-delay-cost-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sip delay cost calculator compare starting a sip now versus later.",
+    "description": "Compare starting a SIP now versus later."
+  },
+  {
+    "name": "SWP Calculator",
+    "url": "/calculators/swp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "swp calculator estimate withdrawals and remaining balance.",
+    "description": "Estimate withdrawals and remaining balance."
+  },
+  {
+    "name": "STP Calculator",
+    "url": "/calculators/stp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stp calculator model transfers between source and destination funds.",
+    "description": "Model transfers between source and destination funds."
+  },
+  {
+    "name": "Absolute Return Calculator",
+    "url": "/calculators/absolute-return-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "absolute return calculator calculate total gain or loss and return percentage.",
+    "description": "Calculate total gain or loss and return percentage."
+  },
+  {
+    "name": "Real Return Calculator",
+    "url": "/calculators/real-return-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "real return calculator estimate inflation-adjusted investment return.",
+    "description": "Estimate inflation-adjusted investment return."
+  },
+  {
+    "name": "Retirement Corpus Calculator",
+    "url": "/calculators/retirement-corpus-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "retirement corpus calculator project savings and contributions until retirement.",
+    "description": "Project savings and contributions until retirement."
+  },
+  {
+    "name": "FIRE Calculator",
+    "url": "/calculators/fire-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "fire calculator estimate an illustrative financial independence target.",
+    "description": "Estimate an illustrative financial independence target."
+  },
+  {
+    "name": "Retirement Withdrawal Calculator",
+    "url": "/calculators/retirement-withdrawal-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "retirement withdrawal calculator estimate how long a corpus may last.",
+    "description": "Estimate how long a corpus may last."
+  },
+  {
+    "name": "Portfolio Allocation Calculator",
+    "url": "/calculators/portfolio-allocation-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio allocation calculator review asset values and portfolio percentages.",
+    "description": "Review asset values and portfolio percentages."
+  },
+  {
+    "name": "Net Worth Calculator",
+    "url": "/calculators/net-worth-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "net worth calculator assets liabilities personal net worth balance sheet wealth cash savings investments property loans debts",
+    "description": "Estimate net worth by subtracting current liabilities from total assets."
+  },
+  {
+    "name": "Kisan Vikas Patra Calculator",
+    "url": "/calculators/kvp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "kisan vikas patra calculator illustrate kvp maturity using selected scheme duration.",
+    "description": "Illustrate KVP maturity using selected scheme duration."
+  },
+  {
+    "name": "NPS Calculator",
+    "url": "/calculators/nps-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "nps calculator project nps corpus and annuity allocation.",
+    "description": "Project NPS corpus and annuity allocation."
+  },
+  {
+    "name": "Dividend Yield Calculator",
+    "url": "/calculators/dividend-yield-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "dividend yield calculator calculate dividend yield and annual income.",
+    "description": "Calculate dividend yield and annual income."
+  },
+  {
+    "name": "Sukanya Samriddhi Yojana Calculator",
+    "url": "/calculators/ssy-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sukanya samriddhi yojana calculator",
+    "description": "Project Sukanya Samriddhi account maturity from deposits, interest and tenure."
+  },
+  {
+    "name": "Senior Citizens Savings Scheme Calculator",
+    "url": "/calculators/scss-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "senior citizens savings scheme calculator",
+    "description": "Estimate Senior Citizens Savings Scheme interest payouts and maturity."
+  },
+  {
+    "name": "Post Office Monthly Income Scheme Calculator",
+    "url": "/calculators/post-office-mis-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "post office monthly income scheme calculator",
+    "description": "Estimate monthly interest income from a Post Office MIS deposit."
+  },
+  {
+    "name": "National Savings Certificate Calculator",
+    "url": "/calculators/nsc-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "national savings certificate calculator",
+    "description": "Project NSC maturity value and interest for a selected investment term."
+  },
+  {
+    "name": "Stock Average Calculator",
+    "url": "/calculators/stock-average-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stock average calculator",
+    "description": "Calculate the weighted average purchase price across stock lots."
+  },
+  {
+    "name": "Brokerage Calculator",
+    "url": "/calculators/brokerage-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "brokerage calculator",
+    "description": "Estimate brokerage and transaction charges for a trade."
+  },
+  {
+    "name": "XIRR Calculator",
+    "url": "/calculators/xirr-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "xirr calculator estimate an annualised return from dated cash flows.",
+    "description": "Estimate an annualised return from dated cash flows."
+  },
+  {
+    "name": "EPS Pension Calculator",
+    "url": "/calculators/eps-pension-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "eps pension calculator illustrative pension estimate from pensionable salary and service.",
+    "description": "Illustrative pension estimate from pensionable salary and service."
+  },
+  {
+    "name": "Investment Calculator",
+    "url": "/calculators/investment-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "investment calculator future value monthly contributions assumed return",
+    "description": "Project an initial amount plus monthly contributions using an assumed return."
+  },
+  {
+    "name": "Mutual Fund Return Calculator",
+    "url": "/calculators/mutual-fund-return-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "mutual fund return calculator project an illustrative lump-sum and monthly contribution value.",
+    "description": "Project an illustrative lump-sum and monthly contribution value."
+  },
+  {
+    "name": "FD vs RD vs SIP Comparison Calculator",
+    "url": "/calculators/fd-rd-sip-comparison-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "fd vs rd vs sip comparison calculator compare illustrative deposit and investment scenarios.",
+    "description": "Compare illustrative deposit and investment scenarios."
+  },
+  {
+    "name": "Loan EMI Calculator",
+    "url": "/calculators/loan-emi-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "loan emi mortgage monthly instalment interest",
+    "description": "Estimate monthly instalments and interest."
+  },
+  {
+    "name": "Home Loan EMI Calculator",
+    "url": "/calculators/home-loan-emi-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "home loan emi mortgage monthly payment interest tenure",
+    "description": "Estimate monthly home-loan instalments, total interest and repayment."
+  },
+  {
+    "name": "Payment Calculator",
+    "url": "/calculators/payment-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "payment calculator monthly biweekly weekly instalment purchase finance",
+    "description": "Estimate monthly, biweekly or weekly purchase-financing payments."
+  },
+  {
+    "name": "Home Loan Eligibility Calculator",
+    "url": "/calculators/home-loan-eligibility-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "home loan eligibility calculator",
+    "description": "Estimate an indicative home-loan amount from income and existing obligations."
+  },
+  {
+    "name": "Home Loan &amp; Loan Prepayment Calculator",
+    "url": "/calculators/loan-prepayment-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "home loan prepayment calculator loan prepayment lump sum prepayment extra monthly payment",
+    "description": "Estimate how a one-time principal payment and extra monthly payments affect loan payoff time and interest."
+  },
+  {
+    "name": "Credit Card EMI Calculator",
+    "url": "/calculators/credit-card-emi-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "credit card emi calculator",
+    "description": "Estimate the EMI and total cost of converting a card balance to instalments."
+  },
+  {
+    "name": "Credit Card Payoff Calculator",
+    "url": "/calculators/credit-card-payoff-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "credit card payoff calculator",
+    "description": "Estimate the time and interest needed to clear a credit-card balance."
+  },
+  {
+    "name": "Business Loan EMI Calculator",
+    "url": "/calculators/business-loan-emi-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "business loan emi calculator",
+    "description": "Estimate monthly instalments and total interest for a business loan."
+  },
+  {
+    "name": "Lease vs Buy Car Calculator",
+    "url": "/calculators/lease-vs-buy-car-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "lease vs buy car calculator compare estimated lease and purchase cash costs.",
+    "description": "Compare estimated lease and purchase cash costs."
+  },
+  {
+    "name": "Rent vs Buy Home Calculator",
+    "url": "/calculators/rent-vs-buy-home-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "rent vs buy home calculator compare estimated renting and buying cash costs.",
+    "description": "Compare estimated renting and buying cash costs."
+  },
+  {
+    "name": "Balance Transfer Savings Calculator",
+    "url": "/calculators/balance-transfer-savings-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "balance transfer savings calculator compare repayments and transfer fees.",
+    "description": "Compare repayments and transfer fees."
+  },
+  {
+    "name": "Loan Prepayment vs Investment Calculator",
+    "url": "/calculators/loan-prepayment-vs-investment-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "loan prepayment vs investment calculator compare interest saved with a projected investment gain.",
+    "description": "Compare interest saved with a projected investment gain."
+  },
+  {
+    "name": "Credit Card Minimum Due Calculator",
+    "url": "/calculators/credit-card-minimum-due-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "credit card minimum due calculator estimate a minimum due from user-entered card terms.",
+    "description": "Estimate a minimum due from user-entered card terms."
+  },
+  {
+    "name": "Credit Utilization Calculator",
+    "url": "/calculators/credit-utilization-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "credit utilization calculator calculate balance as a share of available credit.",
+    "description": "Calculate balance as a share of available credit."
+  },
+  {
+    "name": "Home Loan Amortization Schedule Calculator",
+    "url": "/calculators/home-loan-amortization-schedule-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "home loan amortization schedule calculator month-by-month principal, interest and balance schedule.",
+    "description": "Month-by-month principal, interest and balance schedule."
+  },
+  {
+    "name": "Loan Comparison Calculator",
+    "url": "/calculators/loan-comparison-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "loan comparison calculator compare emi, interest and total repayment.",
+    "description": "Compare EMI, interest and total repayment."
+  },
+  {
+    "name": "Loan-to-Value Calculator",
+    "url": "/calculators/loan-to-value-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "loan-to-value calculator calculate loan amount as a share of asset value.",
+    "description": "Calculate loan amount as a share of asset value."
+  },
+  {
+    "name": "Credit Card Interest Calculator",
+    "url": "/calculators/credit-card-interest-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "credit card interest calculator estimate simple interest by apr and days.",
+    "description": "Estimate simple interest by APR and days."
+  },
+  {
+    "name": "Mortgage Calculator",
+    "url": "/calculators/mortgage-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "mortgage calculator home loan monthly payment property tax insurance",
+    "description": "Estimate home-loan payments plus property tax, insurance and monthly maintenance."
+  },
+  {
+    "name": "Car Loan Calculator",
+    "url": "/calculators/car-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "car loan calculator estimate car loan emi and total interest.",
+    "description": "Estimate car loan EMI and total interest."
+  },
+  {
+    "name": "Bike Loan Calculator",
+    "url": "/calculators/bike-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "bike loan calculator estimate two-wheeler loan emi and repayment.",
+    "description": "Estimate two-wheeler loan EMI and repayment."
+  },
+  {
+    "name": "Education Loan Calculator",
+    "url": "/calculators/education-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "education loan calculator estimate education-loan emi after a simplified moratorium.",
+    "description": "Estimate education-loan EMI after a simplified moratorium."
+  },
+  {
+    "name": "Gold Loan Calculator",
+    "url": "/calculators/gold-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "gold loan calculator compare bullet-interest and emi repayment estimates.",
+    "description": "Compare bullet-interest and EMI repayment estimates."
+  },
+  {
+    "name": "Personal Loan Eligibility Calculator",
+    "url": "/calculators/personal-loan-eligibility-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "personal loan eligibility calculator estimate emi capacity using income and obligations.",
+    "description": "Estimate EMI capacity using income and obligations."
+  },
+  {
+    "name": "Loan Against Property Calculator",
+    "url": "/calculators/loan-against-property-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "loan against property calculator estimate secured-loan emi and total interest.",
+    "description": "Estimate secured-loan EMI and total interest."
+  },
+  {
+    "name": "Debt Snowball Calculator",
+    "url": "/calculators/debt-snowball-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "debt snowball calculator order debt balances from smallest to largest.",
+    "description": "Order debt balances from smallest to largest."
+  },
+  {
+    "name": "EMI vs Lump Sum Calculator",
+    "url": "/calculators/emi-vs-lump-sum-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "emi vs lump sum calculator compare upfront purchase cost with financed cash payments.",
+    "description": "Compare upfront purchase cost with financed cash payments."
+  },
+  {
+    "name": "Interest Rate Calculator",
+    "url": "/calculators/interest-rate-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "interest rate calculator estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term.",
+    "description": "Estimate the annual interest rate implied by a loan amount, fixed monthly payment and repayment term."
+  },
+  {
+    "name": "GST Calculator",
+    "url": "/calculators/gst-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst tax goods services invoice",
+    "description": "Add or remove GST from an amount."
+  },
+  {
+    "name": "Income Tax Calculator",
+    "url": "/calculators/income-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "income tax india old new regime",
+    "description": "Indicative income tax estimate."
+  },
+  {
+    "name": "TDS Calculator",
+    "url": "/calculators/tds-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "tds tax deducted source salary",
+    "description": "Estimate salary TDS under selected assumptions."
+  },
+  {
+    "name": "HRA Exemption Calculator",
+    "url": "/calculators/hra-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "hra house rent exemption",
+    "description": "Estimate eligible HRA exemption."
+  },
+  {
+    "name": "CTC to In-Hand Salary",
+    "url": "/calculators/ctc-salary-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "ctc in hand salary take home",
+    "description": "Estimate take-home pay from CTC."
+  },
+  {
+    "name": "Salary Calculator",
+    "url": "/calculators/salary-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "salary daily hourly pay",
+    "description": "Convert pay to daily and hourly estimates."
+  },
+  {
+    "name": "Gratuity Calculator",
+    "url": "/calculators/gratuity-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gratuity calculator estimate gratuity using eligible wages and service years.",
+    "description": "Estimate gratuity using eligible wages and service years."
+  },
+  {
+    "name": "Capital Gains Tax Estimator",
+    "url": "/calculators/capital-gains-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "capital gains tax estimator",
+    "description": "Estimate capital-gains tax from the transaction details and tax assumptions entered."
+  },
+  {
+    "name": "Professional Tax Calculator",
+    "url": "/calculators/professional-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "professional tax calculator",
+    "description": "Estimate professional tax from the selected state and salary details."
+  },
+  {
+    "name": "Advance Tax Planner",
+    "url": "/calculators/advance-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "advance tax planner",
+    "description": "Plan advance-tax instalments from an estimated annual tax liability."
+  },
+  {
+    "name": "Leave Encashment Calculator",
+    "url": "/calculators/leave-encashment-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "leave encashment calculator",
+    "description": "Estimate leave encashment from salary details and eligible leave days."
+  },
+  {
+    "name": "Bonus Calculator",
+    "url": "/calculators/bonus-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "bonus calculator",
+    "description": "Estimate a bonus amount using the percentage or calculation method entered."
+  },
+  {
+    "name": "Freelancer Tax Estimator",
+    "url": "/calculators/freelancer-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "freelancer tax estimator",
+    "description": "Estimate taxable income and tax from freelance earnings and deductions."
+  },
+  {
+    "name": "GST Late Fee Estimator",
+    "url": "/calculators/gst-late-fee-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst late fee estimator",
+    "description": "Estimate GST late fees from the return delay and applicable rate entered."
+  },
+  {
+    "name": "GST Interest Estimator",
+    "url": "/calculators/gst-interest-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst interest estimator",
+    "description": "Estimate interest on delayed GST payment using the rate and delay period."
+  },
+  {
+    "name": "GST Input Tax Credit Calculator",
+    "url": "/calculators/gst-input-tax-credit-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst input tax credit calculator",
+    "description": "Estimate input tax credit from eligible purchase GST amounts."
+  },
+  {
+    "name": "Reverse Charge GST Calculator",
+    "url": "/calculators/reverse-charge-gst-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "reverse charge gst calculator",
+    "description": "Estimate GST payable under the reverse-charge assumptions entered."
+  },
+  {
+    "name": "GST on Rent Estimator",
+    "url": "/calculators/gst-on-rent-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst on rent estimator",
+    "description": "Estimate GST on rental charges using the entered rent and rate."
+  },
+  {
+    "name": "Salary Slip Calculator",
+    "url": "/calculators/salary-slip-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "salary slip calculator",
+    "description": "Build a sample salary breakdown from earnings, allowances and deductions."
+  },
+  {
+    "name": "Sales Tax Calculator",
+    "url": "/calculators/sales-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "sales tax calculator estimate sales tax and total.",
+    "description": "Estimate sales tax and total."
+  },
+  {
+    "name": "Salary Hike Calculator",
+    "url": "/calculators/salary-hike-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "salary hike calculator estimate revised annual and monthly gross pay.",
+    "description": "Estimate revised annual and monthly gross pay."
+  },
+  {
+    "name": "Overtime Pay Calculator",
+    "url": "/calculators/overtime-pay-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "overtime pay calculator estimate gross pay from regular and overtime hours.",
+    "description": "Estimate gross pay from regular and overtime hours."
+  },
+  {
+    "name": "Pay Day Calculator",
+    "url": "/calculators/pay-day-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "pay day calculator estimate the next payday from a pay frequency.",
+    "description": "Estimate the next payday from a pay frequency."
+  },
+  {
+    "name": "Stamp Duty Calculator",
+    "url": "/calculators/stamp-duty-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "stamp duty registration charges property transfer India",
+    "description": "Estimate stamp duty and registration charges from user-entered state rates."
+  },
+  {
+    "name": "Profit & Loss Calculator",
+    "url": "/calculators/profit-loss-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "profit loss margin business",
+    "description": "Calculate profit, loss and percentage."
+  },
+  {
+    "name": "Discount Calculator",
+    "url": "/calculators/discount-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "discount sale price savings",
+    "description": "Calculate savings and final selling price."
+  },
+  {
+    "name": "Business Markup & Margin Calculator",
+    "url": "/calculators/markup-margin-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "business markup & margin calculator calculate unit markup and gross margin.",
+    "description": "Calculate unit markup and gross margin."
+  },
+  {
+    "name": "Break-Even Point Calculator",
+    "url": "/calculators/break-even-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "break-even point calculator estimate break-even units and sales revenue.",
+    "description": "Estimate break-even units and sales revenue."
+  },
+  {
+    "name": "Payback Period Calculator",
+    "url": "/calculators/payback-period-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "payback period calculator",
+    "description": "Estimate how long an investment takes to recover its initial cost."
+  },
+  {
+    "name": "Invoice Calculator",
+    "url": "/calculators/invoice-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "invoice calculator",
+    "description": "Calculate invoice totals from line items, discounts and tax."
+  },
+  {
+    "name": "Working Capital Calculator",
+    "url": "/calculators/working-capital-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "working capital calculator",
+    "description": "Estimate short-term working-capital needs from current assets and liabilities."
+  },
+  {
+    "name": "Inventory Turnover Calculator",
+    "url": "/calculators/inventory-turnover-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "inventory turnover calculator",
+    "description": "Calculate inventory turnover from cost of goods sold and average inventory."
+  },
+  {
+    "name": "Bulk Discount Calculator",
+    "url": "/calculators/bulk-discount-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "bulk discount calculator",
+    "description": "Calculate bulk-order savings and the effective price per unit."
+  },
+  {
+    "name": "Freelancer Hourly Rate Calculator",
+    "url": "/calculators/freelancer-rate-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "freelancer hourly rate calculator",
+    "description": "Estimate an hourly rate from target income, billable hours and expenses."
+  },
+  {
+    "name": "UPI Transaction Cost Estimator",
+    "url": "/calculators/upi-charges-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "upi transaction cost estimator",
+    "description": "Estimate payment-processing costs from transaction volume and fee assumptions."
+  },
+  {
+    "name": "Burn Rate & Runway Calculator",
+    "url": "/calculators/burn-rate-runway-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "burn rate & runway calculator estimate monthly net cash burn and cash runway.",
+    "description": "Estimate monthly net cash burn and cash runway."
+  },
+  {
+    "name": "Commission Calculator",
+    "url": "/calculators/commission-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "commission calculator calculate commission from sales and rate.",
+    "description": "Calculate commission from sales and rate."
+  },
+  {
+    "name": "COGS Calculator",
+    "url": "/calculators/cogs-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "cogs calculator calculate cost of goods sold.",
+    "description": "Calculate cost of goods sold."
+  },
+  {
+    "name": "Unit Price Comparison Calculator",
+    "url": "/calculators/unit-price-comparison-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "unit price comparison calculator compare package cost per unit.",
+    "description": "Compare package cost per unit."
+  },
+  {
+    "name": "Cash Flow Calculator",
+    "url": "/calculators/cash-flow-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "cash flow calculator calculate net cash flow and closing cash.",
+    "description": "Calculate net cash flow and closing cash."
+  },
+  {
+    "name": "Meeting Cost Calculator",
+    "url": "/calculators/meeting-cost-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "meeting cost calculator estimate meeting time and indicative staff cost from attendance, duration and hourly cost.",
+    "description": "Estimate meeting time and indicative staff cost from attendance, duration and hourly cost."
+  },
+  {
+    "name": "Words per Minute Calculator",
+    "url": "/calculators/words-per-minute-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "words per minute calculator calculate gross and net typing speed and an error-based accuracy estimate.",
+    "description": "Calculate gross and net typing speed and an error-based accuracy estimate."
+  },
+  {
+    "name": "Speaking Time Calculator",
+    "url": "/calculators/speaking-time-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "speaking time calculator estimate presentation duration from word count, speaking pace and pauses.",
+    "description": "Estimate presentation duration from word count, speaking pace and pauses."
+  },
+  {
+    "name": "Paper Weight Calculator",
+    "url": "/calculators/paper-weight-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "paper weight calculator estimate paper batch weight from sheet dimensions, gsm and quantity.",
+    "description": "Estimate paper batch weight from sheet dimensions, GSM and quantity."
+  },
+  {
+    "name": "Basic Calculator",
+    "url": "/calculators/basic-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "basic calculator arithmetic add subtract multiply divide",
+    "description": "Basic arithmetic operations."
+  },
+  {
+    "name": "Scientific Calculator",
+    "url": "/calculators/scientific-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "scientific calculator online free advanced math trigonometry logarithm square root powers",
+    "description": "Trigonometry, roots, logarithms and powers."
+  },
+  {
+    "name": "LCM &amp; HCF Calculator",
+    "url": "/calculators/lcm-hcf-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "lcm hcf calculator lcm and hcf gcd least common multiple highest common factor",
+    "description": "Find common multiples and factors for whole numbers."
+  },
+  {
+    "name": "Percentage Calculator",
+    "url": "/calculators/percentage-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage calculator percentage increase decrease percentage of a number percentage difference",
+    "description": "Find percentages, increase, decrease and percentage difference."
+  },
+  {
+    "name": "Fraction Calculator",
+    "url": "/calculators/fraction-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "fraction calculator add subtract multiply divide simplify fractions",
+    "description": "Add, subtract, multiply, divide and simplify fractions."
+  },
+  {
+    "name": "Average Calculator",
+    "url": "/calculators/average-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "average calculator average calculator find the arithmetic average (mean), sum and count of numbers. enter values separated by commas, spaces or new lines.",
+    "description": "Find the arithmetic mean of a list of numbers. The calculator also displays the total sum and number of valid values so you can check the calculation."
+  },
+  {
+    "name": "Ratio Calculator",
+    "url": "/calculators/ratio-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "ratio calculator ratio calculator simplify a two-number ratio to its lowest whole-number form and view the equivalent ratio relationship.",
+    "description": "Simplify a ratio between two non-negative values by dividing both sides by their greatest common divisor. The result is shown in its lowest whole-number form when the inputs are integers."
+  },
+  {
+    "name": "Square Root Calculator",
+    "url": "/calculators/square-root-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "square root calculator square root calculator calculate the principal square root of a non-negative number and verify it by squaring the result.",
+    "description": "Calculate the principal square root of a non-negative number. The result is the non-negative value that, when multiplied by itself, gives the input."
+  },
+  {
+    "name": "Quadratic Equation Solver",
+    "url": "/calculators/quadratic-polynomial-solver.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "quadratic equation solver solve quadratic equations and complex roots.",
+    "description": "Solve quadratic equations and complex roots."
+  },
+  {
+    "name": "Matrix Calculator",
+    "url": "/calculators/matrix-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "matrix calculator add subtract multiply transpose determinant inverse 2x2 3x3 worked steps",
+    "description": "Add, subtract, multiply, transpose and invert 2×2 or 3×3 matrices with worked explanations."
+  },
+  {
+    "name": "Matrix Determinant Calculator",
+    "url": "/calculators/matrix-determinant-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "matrix determinant calculator calculate a 3×3 matrix determinant.",
+    "description": "Calculate a 3×3 matrix determinant."
+  },
+  {
+    "name": "Statistics Calculator",
+    "url": "/calculators/statistics-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "statistics calculator calculate mean, median, mode and standard deviation.",
+    "description": "Calculate mean, median, mode and standard deviation."
+  },
+  {
+    "name": "Permutation Calculator",
+    "url": "/calculators/permutation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "permutation calculator count ordered selections from distinct items.",
+    "description": "Count ordered selections from distinct items."
+  },
+  {
+    "name": "Combination Calculator",
+    "url": "/calculators/combination-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "combination calculator count unordered groups selected from distinct items.",
+    "description": "Count unordered groups selected from distinct items."
+  },
+  {
+    "name": "Probability Calculator",
+    "url": "/calculators/probability-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "probability calculator calculate basic probability for equally likely outcomes.",
+    "description": "Calculate basic probability for equally likely outcomes."
+  },
+  {
+    "name": "Prime Number Checker",
+    "url": "/calculators/prime-number-checker.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "prime number checker check whether a whole number is prime or composite.",
+    "description": "Check whether a whole number is prime or composite."
+  },
+  {
+    "name": "Prime Factorization Calculator",
+    "url": "/calculators/prime-factorization-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "prime factorization calculator express an integer as a product of prime factors.",
+    "description": "Express an integer as a product of prime factors."
+  },
+  {
+    "name": "Factorial Calculator",
+    "url": "/calculators/factorial-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "factorial calculator calculate n factorial for a non-negative integer.",
+    "description": "Calculate n factorial for a non-negative integer."
+  },
+  {
+    "name": "Modulo Calculator",
+    "url": "/calculators/modulo-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "modulo calculator find the remainder after division by a non-zero divisor.",
+    "description": "Find the remainder after division by a non-zero divisor."
+  },
+  {
+    "name": "Rounding Calculator",
+    "url": "/calculators/rounding-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "rounding calculator round a number using nearest, floor or ceiling rules.",
+    "description": "Round a number using nearest, floor or ceiling rules."
+  },
+  {
+    "name": "Significant Figures Calculator",
+    "url": "/calculators/significant-figures-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "significant figures calculator round a value to a chosen significant-figure count.",
+    "description": "Round a value to a chosen significant-figure count."
+  },
+  {
+    "name": "Scientific Notation Converter",
+    "url": "/calculators/scientific-notation-converter.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "scientific notation converter convert values to normalized scientific notation.",
+    "description": "Convert values to normalized scientific notation."
+  },
+  {
+    "name": "Decimal to Fraction Calculator",
+    "url": "/calculators/decimal-to-fraction-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "decimal to fraction calculator approximate a decimal as a simplified fraction.",
+    "description": "Approximate a decimal as a simplified fraction."
+  },
+  {
+    "name": "Mixed Number Calculator",
+    "url": "/calculators/mixed-number-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "mixed number calculator convert an improper fraction to a mixed number.",
+    "description": "Convert an improper fraction to a mixed number."
+  },
+  {
+    "name": "Arithmetic Progression Calculator",
+    "url": "/calculators/arithmetic-progression-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "arithmetic progression calculator calculate the nth term and sum of an arithmetic sequence.",
+    "description": "Calculate the nth term and sum of an arithmetic sequence."
+  },
+  {
+    "name": "Geometric Progression Calculator",
+    "url": "/calculators/geometric-progression-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "geometric progression calculator calculate the nth term and sum of a geometric sequence.",
+    "description": "Calculate the nth term and sum of a geometric sequence."
+  },
+  {
+    "name": "Number to Words (Indian Format)",
+    "url": "/calculators/number-to-words-indian-format.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "number to words (indian format) spell out whole numbers using indian place values.",
+    "description": "Spell out whole numbers using Indian place values."
+  },
+  {
+    "name": "Long Division Calculator",
+    "url": "/calculators/long-division-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "long division calculator show quotient and remainder for a division calculation.",
+    "description": "Show quotient and remainder for a division calculation."
+  },
+  {
+    "name": "Random Number Generator",
+    "url": "/calculators/random-number-generator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "random number generator generate random whole numbers within a chosen range for classroom exercises, sampling and software testing.",
+    "description": "Generate random whole numbers within a chosen range for classroom exercises, sampling and software testing."
+  },
+  {
+    "name": "Percentage Change Calculator",
+    "url": "/calculators/percentage-change-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage change calculator math statistics percentage conversion",
+    "description": "Calculate the absolute and percentage change between two values."
+  },
+  {
+    "name": "Percentage Increase Calculator",
+    "url": "/calculators/percentage-increase-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage increase calculator math statistics percentage conversion",
+    "description": "Find the increase amount and resulting value."
+  },
+  {
+    "name": "Percentage Decrease Calculator",
+    "url": "/calculators/percentage-decrease-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage decrease calculator math statistics percentage conversion",
+    "description": "Find the decrease amount and remaining value."
+  },
+  {
+    "name": "Percentage Difference Calculator",
+    "url": "/calculators/percentage-difference-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage difference calculator math statistics percentage conversion",
+    "description": "Compare two values using percentage difference."
+  },
+  {
+    "name": "Fraction to Percent Calculator",
+    "url": "/calculators/fraction-to-percent-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "fraction to percent calculator math statistics percentage conversion",
+    "description": "Convert a fraction into a decimal and percentage."
+  },
+  {
+    "name": "Decimal to Percent Converter",
+    "url": "/calculators/decimal-to-percent-converter.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "decimal to percent converter math statistics percentage conversion",
+    "description": "Convert a decimal value into a percentage."
+  },
+  {
+    "name": "Weighted Average Calculator",
+    "url": "/calculators/weighted-average-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "weighted average calculator math statistics percentage conversion",
+    "description": "Calculate an average using corresponding weights."
+  },
+  {
+    "name": "Median Calculator",
+    "url": "/calculators/median-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "median calculator math statistics percentage conversion",
+    "description": "Find the middle value in an ordered list."
+  },
+  {
+    "name": "Mode Calculator",
+    "url": "/calculators/mode-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "mode calculator math statistics percentage conversion",
+    "description": "Find the most frequent value or values."
+  },
+  {
+    "name": "Sample Standard Deviation Calculator",
+    "url": "/calculators/sample-standard-deviation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "sample standard deviation calculator mathematics statistics",
+    "description": "Calculate sample variance and sample standard deviation using the n − 1 denominator."
+  },
+  {
+    "name": "Z-Score Calculator",
+    "url": "/calculators/z-score-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "z-score calculator mathematics statistics",
+    "description": "Standardize a value against the mean and population standard deviation of reference data."
+  },
+  {
+    "name": "Percentile Rank Calculator",
+    "url": "/calculators/percentile-rank-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentile rank calculator mathematics statistics",
+    "description": "Find a tie-adjusted percentile rank within a data set."
+  },
+  {
+    "name": "Quartile Calculator",
+    "url": "/calculators/quartile-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "quartile calculator mathematics statistics",
+    "description": "Calculate Q1, median, Q3 and the interquartile range."
+  },
+  {
+    "name": "Coefficient of Variation Calculator",
+    "url": "/calculators/coefficient-of-variation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "coefficient of variation calculator mathematics statistics",
+    "description": "Compare population spread with the absolute mean as a percentage."
+  },
+  {
+    "name": "Geometric Mean Calculator",
+    "url": "/calculators/geometric-mean-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "geometric mean calculator mathematics statistics",
+    "description": "Calculate the multiplicative average of positive values."
+  },
+  {
+    "name": "Harmonic Mean Calculator",
+    "url": "/calculators/harmonic-mean-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "harmonic mean calculator mathematics statistics",
+    "description": "Calculate the harmonic average of positive values."
+  },
+  {
+    "name": "Mean Absolute Deviation Calculator",
+    "url": "/calculators/mean-absolute-deviation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "mean absolute deviation calculator mathematics statistics",
+    "description": "Calculate the average absolute distance from the arithmetic mean."
+  },
+  {
+    "name": "Prime Number Calculator",
+    "url": "/calculators/prime-number-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "prime number calculator mathematics numbers",
+    "description": "Check whether a whole number is prime or composite and find its smallest factor."
+  },
+  {
+    "name": "Cube Root Calculator",
+    "url": "/calculators/cube-root-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "cube root calculator mathematics numbers",
+    "description": "Calculate the real cube root of positive, zero or negative numbers."
+  },
+  {
+    "name": "Scientific Notation Calculator",
+    "url": "/calculators/scientific-notation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "scientific notation calculator mathematics numbers",
+    "description": "Convert a number into normalized scientific notation."
+  },
+  {
+    "name": "Digital Root Calculator",
+    "url": "/calculators/digital-root-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "digital root calculator mathematics numbers",
+    "description": "Find the sum of a whole number's digits and its digital root."
+  },
+  {
+    "name": "Divisibility Test Calculator",
+    "url": "/calculators/divisibility-test-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "divisibility test calculator mathematics numbers",
+    "description": "Check divisibility and display the remainder."
+  },
+  {
+    "name": "Reciprocal Calculator",
+    "url": "/calculators/reciprocal-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "reciprocal calculator mathematics numbers",
+    "description": "Calculate the multiplicative inverse of a non-zero number."
+  },
+  {
+    "name": "Binomial Coefficient Calculator",
+    "url": "/calculators/binomial-coefficient-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "binomial coefficient calculator mathematics numbers",
+    "description": "Count combinations when order does not matter."
+  },
+  {
+    "name": "Percentage Point Calculator",
+    "url": "/calculators/percentage-point-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage point calculator mathematics numbers",
+    "description": "Compare two percentage rates in percentage points and relative change."
+  },
+  {
+    "name": "Average Percentage Calculator",
+    "url": "/calculators/average-percentage-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "average percentage calculator math algebra calculator",
+    "description": "Calculate the arithmetic average of several percentage values."
+  },
+  {
+    "name": "Percentage of a Percentage Calculator",
+    "url": "/calculators/percentage-of-percentage-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage of a percentage calculator math algebra calculator",
+    "description": "Find a percentage of another percentage and apply the combined rate to a base amount."
+  },
+  {
+    "name": "Percent Error Calculator",
+    "url": "/calculators/percent-error-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percent error calculator math algebra calculator",
+    "description": "Calculate absolute percent error by comparing an observed value with a reference value."
+  },
+  {
+    "name": "Absolute Value Equation Calculator",
+    "url": "/calculators/absolute-value-equation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "absolute value equation calculator math algebra calculator",
+    "description": "Solve equations of the form |a × x + b| = c and show the real solution values."
+  },
+  {
+    "name": "Absolute Value Inequality Calculator",
+    "url": "/calculators/absolute-value-inequalities-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "absolute value inequality calculator math algebra calculator",
+    "description": "Solve both the inside-interval and outside-interval forms of |a × x + b| compared with a positive bound."
+  },
+  {
+    "name": "Completing the Square Calculator",
+    "url": "/calculators/completing-the-square-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "completing the square calculator math algebra calculator",
+    "description": "Rewrite a quadratic expression in vertex form and calculate its vertex."
+  },
+  {
+    "name": "Discriminant Calculator",
+    "url": "/calculators/discriminant-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "discriminant calculator math algebra calculator",
+    "description": "Calculate the discriminant of a quadratic equation and classify its roots."
+  },
+  {
+    "name": "Complex Conjugate Calculator",
+    "url": "/calculators/complex-conjugate-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "complex conjugate calculator math algebra calculator",
+    "description": "Find the complex conjugate, modulus and argument of a complex number."
+  },
+  {
+    "name": "Property Price per Sq Ft Calculator",
+    "url": "/calculators/property-price-per-sq-ft-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "property price per sq ft calculator estimate price per square foot.",
+    "description": "Estimate price per square foot."
+  },
+  {
+    "name": "Pythagoras Calculator",
+    "url": "/calculators/pythagoras-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "pythagoras calculator calculate a missing side in a right-angled triangle.",
+    "description": "Calculate a missing side in a right-angled triangle."
+  },
+  {
+    "name": "Triangle Area Calculator",
+    "url": "/calculators/triangle-area-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "triangle area calculator calculate area using base-height or heron's formula.",
+    "description": "Calculate area using base-height or Heron's formula."
+  },
+  {
+    "name": "Triangle Angle Calculator",
+    "url": "/calculators/triangle-angle-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "triangle angle calculator find interior angles from three side lengths.",
+    "description": "Find interior angles from three side lengths."
+  },
+  {
+    "name": "Circle Area Calculator",
+    "url": "/calculators/circle-area-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "circle area calculator calculate circle area from radius or diameter.",
+    "description": "Calculate circle area from radius or diameter."
+  },
+  {
+    "name": "Circle Circumference Calculator",
+    "url": "/calculators/circle-circumference-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "circle circumference calculator calculate the boundary length of a circle.",
+    "description": "Calculate the boundary length of a circle."
+  },
+  {
+    "name": "Rectangle Area Calculator",
+    "url": "/calculators/rectangle-area-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "rectangle area calculator calculate rectangle area and perimeter.",
+    "description": "Calculate rectangle area and perimeter."
+  },
+  {
+    "name": "Square Area Calculator",
+    "url": "/calculators/square-area-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square area calculator calculate square area, perimeter and diagonal.",
+    "description": "Calculate square area, perimeter and diagonal."
+  },
+  {
+    "name": "Volume Calculator",
+    "url": "/calculators/volume-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "volume calculator calculate volume for cube, cuboid, cylinder or sphere.",
+    "description": "Calculate volume for cube, cuboid, cylinder or sphere."
+  },
+  {
+    "name": "Surface Area Calculator",
+    "url": "/calculators/surface-area-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "surface area calculator calculate total surface area for common solids.",
+    "description": "Calculate total surface area for common solids."
+  },
+  {
+    "name": "Perimeter Calculator",
+    "url": "/calculators/perimeter-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "perimeter calculator calculate the boundary length of common shapes.",
+    "description": "Calculate the boundary length of common shapes."
+  },
+  {
+    "name": "Concrete Calculator",
+    "url": "/calculators/concrete-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "concrete calculator estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio.",
+    "description": "Estimate concrete volume for a rectangular slab and approximate material quantities from a user-entered mix ratio."
+  },
+  {
+    "name": "Board Foot Calculator",
+    "url": "/calculators/board-foot-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "board foot calculator construction materials estimate calculator",
+    "description": "Estimate lumber volume in board feet from board length, width, thickness and quantity."
+  },
+  {
+    "name": "Cubic Yard Calculator",
+    "url": "/calculators/cubic-yard-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "cubic yard calculator construction materials estimate calculator",
+    "description": "Calculate rectangular volume in cubic feet, cubic yards and cubic metres."
+  },
+  {
+    "name": "Brick Calculator",
+    "url": "/calculators/brick-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "brick calculator construction materials estimate calculator",
+    "description": "Estimate the number of bricks for a wall using dimensions, openings, brick size, mortar joints and a waste allowance."
+  },
+  {
+    "name": "Drywall Calculator",
+    "url": "/calculators/drywall-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "drywall calculator construction materials estimate calculator",
+    "description": "Estimate drywall sheets for wall coverage using wall dimensions, openings, sheet size and a cutting allowance."
+  },
+  {
+    "name": "Gravel Calculator",
+    "url": "/calculators/gravel-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "gravel calculator construction materials estimate calculator",
+    "description": "Estimate gravel volume and approximate mass for a rectangular area using depth, bulk density and an allowance."
+  },
+  {
+    "name": "Tile Calculator",
+    "url": "/calculators/tile-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "tile calculator construction materials estimate calculator",
+    "description": "Estimate floor tile quantity and material cost from room dimensions, tile size and a cutting allowance."
+  },
+  {
+    "name": "Sand Calculator",
+    "url": "/calculators/sand-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "sand calculator construction materials estimate calculator",
+    "description": "Estimate sand volume and approximate mass for a rectangular area using depth and editable bulk density."
+  },
+  {
+    "name": "Pipe Weight Calculator",
+    "url": "/calculators/pipe-weight-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "pipe weight calculator construction materials estimate calculator",
+    "description": "Estimate hollow pipe mass from outside diameter, wall thickness, length, material density and quantity."
+  },
+  {
+    "name": "Square Footage Calculator",
+    "url": "/calculators/square-footage-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square footage calculator calculate rectangular floor or surface area in square feet, square yards and square metres.",
+    "description": "Calculate rectangular floor or surface area in square feet, square yards and square metres."
+  },
+  {
+    "name": "Square Yards Calculator",
+    "url": "/calculators/square-yards-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square yards calculator calculate rectangular area in square feet, square yards and square metres using feet-based dimensions.",
+    "description": "Calculate rectangular area in square feet, square yards and square metres using feet-based dimensions."
+  },
+  {
+    "name": "Square Feet to Cubic Yards Calculator",
+    "url": "/calculators/square-feet-to-cubic-yards-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square feet to cubic yards calculator estimate material volume from surface area and depth, with an optional 10% ordering allowance.",
+    "description": "Estimate material volume from surface area and depth, with an optional 10% ordering allowance."
+  },
+  {
+    "name": "Paint Calculator",
+    "url": "/calculators/paint-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "paint calculator estimate paint quantity from combined wall length, wall height, openings, coverage per litre and number of coats.",
+    "description": "Estimate paint quantity from combined wall length, wall height, openings, coverage per litre and number of coats."
+  },
+  {
+    "name": "Carpet Calculator",
+    "url": "/calculators/carpet-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "carpet calculator estimate carpet area for rectangular rooms and add an allowance for seams, cuts and fitting waste.",
+    "description": "Estimate carpet area for rectangular rooms and add an allowance for seams, cuts and fitting waste."
+  },
+  {
+    "name": "Flooring Calculator",
+    "url": "/calculators/flooring-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "flooring calculator estimate floor area, required flooring boxes and purchased coverage using package coverage and a waste allowance.",
+    "description": "Estimate floor area, required flooring boxes and purchased coverage using package coverage and a waste allowance."
+  },
+  {
+    "name": "Wallpaper Calculator",
+    "url": "/calculators/wallpaper-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "wallpaper calculator estimate wallpaper rolls from wall width, wall height, roll dimensions and a pattern-matching allowance.",
+    "description": "Estimate wallpaper rolls from wall width, wall height, roll dimensions and a pattern-matching allowance."
+  },
+  {
+    "name": "Decking Board Calculator",
+    "url": "/calculators/decking-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "decking board calculator estimate board rows and linear board length for a rectangular deck from deck dimensions, board width, gap, stock length and cutting allowance.",
+    "description": "Estimate board rows and linear board length for a rectangular deck from deck dimensions, board width, gap, stock length and cutting allowance."
+  },
+  {
+    "name": "Date Difference Calculator",
+    "url": "/calculators/date-difference-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "date difference days between two dates elapsed calendar days weeks",
+    "description": "Count days, weeks and calendar time between dates."
+  },
+  {
+    "name": "Age Calculator",
+    "url": "/calculators/age-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "age date years months days",
+    "description": "Calculate age on a selected date using the date of birth you enter."
+  },
+  {
+    "name": "Work Hours Calculator",
+    "url": "/calculators/work-hours-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "work hours calculator working hours shift duration timesheet breaks overnight",
+    "description": "Calculate shift duration and subtract unpaid breaks."
+  },
+  {
+    "name": "Hours to Minutes Calculator",
+    "url": "/calculators/hours-to-minutes-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "hours to minutes calculator hours to minutes calculator convert hours and additional minutes into total minutes and decimal hours with a quick time conversion calculator.",
+    "description": "Convert a duration entered in hours and minutes into total minutes and decimal hours. This is useful for basic time calculations and timesheet checks."
+  },
+  {
+    "name": "Age Difference Calculator",
+    "url": "/calculators/age-difference-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "age difference calculator calculate the calendar age gap between two dates.",
+    "description": "Compare two dates and calculate the calendar gap in years, months and days."
+  },
+  {
+    "name": "Working Days Calculator",
+    "url": "/calculators/working-days-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "working days calculator count weekdays, excluding optional custom holidays.",
+    "description": "Count weekdays, excluding optional custom holidays."
+  },
+  {
+    "name": "Add Days to Date Calculator",
+    "url": "/calculators/add-days-to-date-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "add days to date calculator add calendar days to a selected date.",
+    "description": "Add calendar days to a selected date."
+  },
+  {
+    "name": "Subtract Days from Date Calculator",
+    "url": "/calculators/subtract-days-from-date-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "subtract days from date calculator subtract calendar days from a selected date.",
+    "description": "Subtract calendar days from a selected date."
+  },
+  {
+    "name": "Time Zone Converter",
+    "url": "/calculators/time-zone-converter.html",
+    "category": "Date, Time & Work",
+    "keywords": "time zone converter convert a time using entered utc offsets.",
+    "description": "Convert a time using entered UTC offsets."
+  },
+  {
+    "name": "Seconds to Hours Calculator",
+    "url": "/calculators/seconds-to-hours-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "seconds to hours calculator convert seconds into hours and minutes.",
+    "description": "Convert seconds into hours and minutes."
+  },
+  {
+    "name": "Minutes to Hours Calculator",
+    "url": "/calculators/minutes-to-hours-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "minutes to hours calculator convert minutes into decimal and whole hours.",
+    "description": "Convert minutes into decimal and whole hours."
+  },
+  {
+    "name": "Countdown Calculator",
+    "url": "/calculators/countdown-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "countdown calculator count calendar days until a target date.",
+    "description": "Count calendar days until a target date."
+  },
+  {
+    "name": "Retirement Date Calculator",
+    "url": "/calculators/retirement-date-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "retirement date calculator estimate a target date from a birth date and age.",
+    "description": "Estimate a target date from a birth date and age."
+  },
+  {
+    "name": "Pomodoro Session Planner",
+    "url": "/calculators/pomodoro-session-planner.html",
+    "category": "Date, Time & Work",
+    "keywords": "pomodoro session planner plan focus sessions and breaks and estimate total session time.",
+    "description": "Plan focus sessions and breaks and estimate total session time."
+  },
+  {
+    "name": "Unit Converter",
+    "url": "/calculators/unit-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "unit converter length weight mass temperature volume speed kg lbs cm feet celsius fahrenheit km miles",
+    "description": "Convert length, weight, temperature, volume and speed."
+  },
+  {
+    "name": "Data Storage & Bandwidth Calculator",
+    "url": "/calculators/data-storage-bandwidth-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "data storage & bandwidth calculator convert data sizes and estimate transfer time.",
+    "description": "Convert data sizes and estimate transfer time."
+  },
+  {
+    "name": "Password Strength Checker & Generator",
+    "url": "/calculators/password-strength-checker.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "password strength checker & generator check password characteristics locally and generate passwords.",
+    "description": "Check password characteristics locally and generate passwords."
+  },
+  {
+    "name": "Currency Converter Calculator",
+    "url": "/calculators/currency-converter-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "currency converter calculator",
+    "description": "Convert between currencies using the exchange rate you enter."
+  },
+  {
+    "name": "Land Area Converter (Bigha, Guntha & Cent)",
+    "url": "/calculators/land-unit-converter-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "land unit converter (bigha, guntha & cent) convert land area using local unit conversion factors.",
+    "description": "Convert land area using local unit conversion factors."
+  },
+  {
+    "name": "Roman Numeral Converter",
+    "url": "/calculators/roman-numeral-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "roman numeral converter convert whole numbers to standard roman numerals.",
+    "description": "Convert whole numbers to standard Roman numerals."
+  },
+  {
+    "name": "Binary Converter",
+    "url": "/calculators/binary-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "binary converter convert decimal integers to binary notation.",
+    "description": "Convert decimal integers to binary notation."
+  },
+  {
+    "name": "Hex Converter",
+    "url": "/calculators/hex-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "hex converter convert decimal integers to hexadecimal notation.",
+    "description": "Convert decimal integers to hexadecimal notation."
+  },
+  {
+    "name": "Octal Converter",
+    "url": "/calculators/octal-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "octal converter convert decimal integers to octal notation.",
+    "description": "Convert decimal integers to octal notation."
+  },
+  {
+    "name": "Subnet Calculator",
+    "url": "/calculators/subnet-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "subnet calculator calculate ipv4 network address, subnet mask, broadcast address and host range from an ip address and cidr prefix.",
+    "description": "Calculate IPv4 network address, subnet mask, broadcast address and host range from an IP address and CIDR prefix."
+  },
+  {
+    "name": "Bigha to Sq Ft Calculator",
+    "url": "/calculators/bigha-to-sq-ft-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "bigha to square feet land area conversion",
+    "description": "Convert Bigha using a locally verified square-feet factor."
+  },
+  {
+    "name": "Aspect Ratio Calculator",
+    "url": "/calculators/aspect-ratio-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "aspect ratio calculator digital media technology calculator",
+    "description": "Calculate and simplify an image, display or video aspect ratio from its width and height."
+  },
+  {
+    "name": "Screen Size Calculator",
+    "url": "/calculators/screen-size-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "screen size calculator digital media technology calculator",
+    "description": "Calculate the width, height and area of a display from its diagonal and aspect ratio."
+  },
+  {
+    "name": "Pixels Per Inch (PPI) Calculator",
+    "url": "/calculators/pixels-per-inch-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "pixels per inch (ppi) calculator digital media technology calculator",
+    "description": "Calculate pixel density and pixel pitch from display resolution and diagonal size."
+  },
+  {
+    "name": "Image File Size Calculator",
+    "url": "/calculators/image-file-size-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "image file size calculator digital media technology calculator",
+    "description": "Estimate uncompressed image data size and a compressed size from pixel dimensions, bit depth, channels and compression ratio."
+  },
+  {
+    "name": "Playback Speed Calculator",
+    "url": "/calculators/playback-speed-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "playback speed calculator digital media technology calculator",
+    "description": "Calculate the new playback duration and time saved when audio or video is played at a different speed."
+  },
+  {
+    "name": "Frames to Timecode Calculator",
+    "url": "/calculators/frames-to-timecode-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "frames to timecode calculator digital media technology calculator",
+    "description": "Convert a total frame count into non-drop-frame HH:MM:SS:FF timecode at an integer frame rate."
+  },
+  {
+    "name": "Timecode to Frames Calculator",
+    "url": "/calculators/timecode-to-frames-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "timecode to frames calculator digital media technology calculator",
+    "description": "Convert non-drop-frame HH:MM:SS:FF timecode into a total frame count at an integer frame rate."
+  },
+  {
+    "name": "Camera Field of View Calculator",
+    "url": "/calculators/camera-field-of-view-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "camera field of view calculator digital media technology calculator",
+    "description": "Calculate horizontal, vertical and diagonal camera field of view from sensor dimensions and focal length."
+  },
+  {
+    "name": "Acre to Are Converter",
+    "url": "/calculators/acre-to-are-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "acre to are converter unit conversion calculator",
+    "description": "Convert acres into ares, hectares and square metres using standard area factors."
+  },
+  {
+    "name": "Ares to Hectares Converter",
+    "url": "/calculators/ares-to-hectares-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "ares to hectares converter unit conversion calculator",
+    "description": "Convert ares into hectares, square metres and acres."
+  },
+  {
+    "name": "Decimeter to Meter Converter",
+    "url": "/calculators/decimeter-to-meter-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "decimeter to meter converter unit conversion calculator",
+    "description": "Convert decimetres into metres, centimetres and millimetres."
+  },
+  {
+    "name": "Feet to Inches Converter",
+    "url": "/calculators/feet-to-inches-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "feet to inches converter unit conversion calculator",
+    "description": "Convert feet into inches, centimetres and metres."
+  },
+  {
+    "name": "Inches to Fraction Calculator",
+    "url": "/calculators/inches-to-fraction-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "inches to fraction calculator unit conversion calculator",
+    "description": "Round a decimal inch measurement to the nearest 1/64 inch and display its mixed fraction."
+  },
+  {
+    "name": "Decagram to Gram Converter",
+    "url": "/calculators/decagram-to-gram-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "decagram to gram converter unit conversion calculator",
+    "description": "Convert decagrams into grams, kilograms and milligrams."
+  },
+  {
+    "name": "Liters to Centiliters Converter",
+    "url": "/calculators/liters-to-cl-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "liters to centiliters converter unit conversion calculator",
+    "description": "Convert litres into centilitres, millilitres and cubic metres."
+  },
+  {
+    "name": "Acres to Square Miles Converter",
+    "url": "/calculators/acres-to-square-miles-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "acres to square miles converter unit conversion calculator",
+    "description": "Convert acres into square miles, square feet and square metres."
+  },
+  {
+    "name": "Electricity Bill Calculator",
+    "url": "/calculators/electricity-bill-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "electricity bill units household power",
+    "description": "Estimate a bill from total units consumed and a single per-unit rate."
+  },
+  {
+    "name": "Fuel Cost Calculator",
+    "url": "/calculators/fuel-cost-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "fuel petrol diesel trip travel cost",
+    "description": "Estimate trip fuel use and total cost from distance, vehicle mileage and fuel price."
+  },
+  {
+    "name": "Split Bill Calculator",
+    "url": "/calculators/split-bill-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "split bill calculator bill splitting restaurant tip group expense equal share",
+    "description": "Divide a group bill and include an optional tip."
+  },
+  {
+    "name": "Mileage Calculator",
+    "url": "/calculators/mileage-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "mileage calculator mileage calculator calculate vehicle mileage or fuel efficiency in kilometres per litre from distance travelled and fuel used.",
+    "description": "Calculate vehicle efficiency from distance travelled and fuel consumed."
+  },
+  {
+    "name": "Marriage Cost Calculator",
+    "url": "/calculators/marriage-cost-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "marriage cost calculator",
+    "description": "Estimate a future event budget after applying an inflation assumption."
+  },
+  {
+    "name": "Electricity Bill Slab Calculator",
+    "url": "/calculators/electricity-bill-slab-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "electricity bill slab calculator estimate a progressive bill from custom unit slabs and rates.",
+    "description": "Calculate a tiered bill using slab-wise consumption and the rates entered for each slab."
+  },
+  {
+    "name": "Tip Calculator",
+    "url": "/calculators/tip-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "tip calculator calculate tip and split a bill.",
+    "description": "Calculate tip and split a bill."
+  },
+  {
+    "name": "Steps to Km Calculator",
+    "url": "/calculators/steps-to-km-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "steps to km calculator estimate distance from steps and entered step length.",
+    "description": "Estimate distance from steps and entered step length."
+  },
+  {
+    "name": "Appliance Energy Cost Calculator",
+    "url": "/calculators/appliance-energy-cost-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "appliance energy cost calculator estimate monthly and annual appliance energy use and cost from watts, hours and tariff.",
+    "description": "Estimate monthly and annual appliance energy use and cost from watts, hours and tariff."
+  },
+  {
+    "name": "Electricity Cost per Use Calculator",
+    "url": "/calculators/electricity-single-usage-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "electricity cost per use calculator estimate the electricity cost of one appliance session from its power rating and run time.",
+    "description": "Estimate the electricity cost of one appliance session from its power rating and run time."
+  },
+  {
+    "name": "Data Usage Calculator",
+    "url": "/calculators/data-usage-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "data usage calculator estimate video, music and browsing data use over a selected period.",
+    "description": "Estimate video, music and browsing data use over a selected period."
+  },
+  {
+    "name": "Solar Savings & Rooftop Solar ROI Calculator",
+    "url": "/calculators/solar-savings-calculator.html",
+    "category": "Energy & Sustainability",
+    "keywords": "solar savings rooftop solar ROI payback solar generation electricity bill savings",
+    "description": "Estimate solar generation, bill savings and simple payback using your local tariff and installer quote."
+  },
+  {
+    "name": "Cake Pan Converter",
+    "url": "/calculators/cake-pans-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "cake pan converter food cooking recipe calculator",
+    "description": "Scale a round cake recipe by comparing the surface areas of two circular pans."
+  },
+  {
+    "name": "Cooking Measurement Converter",
+    "url": "/calculators/cooking-measurement-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "cooking measurement converter food cooking recipe calculator",
+    "description": "Convert cups into millilitres, centilitres, tablespoons, teaspoons and US fluid ounces."
+  },
+  {
+    "name": "Coffee Ratio Calculator",
+    "url": "/calculators/coffee-ratio-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "coffee ratio calculator food cooking recipe calculator",
+    "description": "Calculate a coffee-to-water brew ratio from coffee and water mass."
+  },
+  {
+    "name": "Pizza Size Calculator",
+    "url": "/calculators/pizza-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "pizza size calculator food cooking recipe calculator",
+    "description": "Calculate the area of a round pizza and compare total area across multiple pizzas."
+  },
+  {
+    "name": "Pizza Party Calculator",
+    "url": "/calculators/pizza-party-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "pizza party calculator food cooking recipe calculator",
+    "description": "Estimate how many pizzas to order from guest count, slices per guest and slices per pizza."
+  },
+  {
+    "name": "Cake Serving Calculator",
+    "url": "/calculators/cake-serving-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "cake serving calculator food cooking recipe calculator",
+    "description": "Estimate round cake servings from cake diameter and the assumed area of each slice."
+  },
+  {
+    "name": "Dry to Cooked Pasta Converter",
+    "url": "/calculators/dry-to-cooked-pasta-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "dry to cooked pasta converter food cooking recipe calculator",
+    "description": "Estimate cooked pasta mass from dry pasta mass using an editable yield factor."
+  },
+  {
+    "name": "Uncooked to Cooked Rice Calculator",
+    "url": "/calculators/uncooked-to-cooked-rice-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "uncooked to cooked rice calculator food cooking recipe calculator",
+    "description": "Estimate cooked rice mass from dry rice mass using an editable yield factor."
+  },
+  {
+    "name": "CGPA to Percentage Calculator",
+    "url": "/calculators/cgpa-to-percentage-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "cgpa to percentage calculator convert cgpa using an institution multiplier.",
+    "description": "Convert CGPA using an institution multiplier."
+  },
+  {
+    "name": "GPA Calculator",
+    "url": "/calculators/gpa-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "gpa calculator calculate credit-weighted gpa.",
+    "description": "Calculate credit-weighted GPA."
+  },
+  {
+    "name": "Child Education Cost Calculator",
+    "url": "/calculators/child-education-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "child education cost calculator",
+    "description": "Project a future education target using current cost, inflation and years."
+  },
+  {
+    "name": "Grade Calculator",
+    "url": "/calculators/grade-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "grade calculator calculate a course percentage and a configurable letter grade from points earned and points possible.",
+    "description": "Calculate a course percentage and a configurable letter grade from points earned and points possible."
+  },
+  {
+    "name": "BMI Calculator",
+    "url": "/calculators/bmi-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "bmi body mass index adult",
+    "description": "Adult BMI reference with limitations."
+  },
+  {
+    "name": "Water Intake Estimator",
+    "url": "/calculators/water-intake-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "water intake estimator estimate daily fluid intake from body weight.",
+    "description": "Estimate daily fluid intake from body weight."
+  },
+  {
+    "name": "Pace Calculator",
+    "url": "/calculators/pace-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "pace calculator calculate running pace and speed.",
+    "description": "Calculate running pace and speed."
+  },
+  {
+    "name": "Heart Rate Zones Calculator",
+    "url": "/calculators/heart-rate-zones-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "heart rate zones calculator estimate broad age-based heart rate zones.",
+    "description": "Estimate broad age-based heart rate zones."
+  },
+  {
+    "name": "Pregnancy Due Date Calculator",
+    "url": "/calculators/pregnancy-due-date-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "pregnancy due date calculator estimate a due date from a reference date.",
+    "description": "Estimate a due date from a reference date."
+  },
+  {
+    "name": "Sleep Debt Calculator",
+    "url": "/calculators/sleep-debt-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "sleep debt calculator estimate a sleep-duration shortfall over a selected period.",
+    "description": "Estimate a sleep-duration shortfall over a selected period."
+  },
+  {
+    "name": "Pregnancy Calculator",
+    "url": "/calculators/pregnancy-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "pregnancy calculator estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period.",
+    "description": "Estimate gestational age, pregnancy trimester and an approximate due date from the first day of the last menstrual period."
+  },
+  {
+    "name": "Pregnancy Conception Calculator",
+    "url": "/calculators/pregnancy-conception-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "pregnancy conception calculator estimate an approximate conception date from an estimated due date for pregnancy date-planning information.",
+    "description": "Estimate an approximate conception date from an estimated due date for pregnancy date-planning information."
+  },
+  {
+    "name": "Crop Cost & Profit Calculator",
+    "url": "/calculators/crop-cost-profit-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "crop cost profit calculator farming agriculture seed fertilizer labour irrigation machinery revenue profit per acre",
+    "description": ""
+  },
+  {
+    "name": "Kisan Credit Card Interest Calculator",
+    "url": "/calculators/kcc-interest-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "kisan credit card KCC interest calculator farmer loan interest",
+    "description": ""
+  },
+  {
+    "name": "Livestock Cost & Profit Calculator",
+    "url": "/calculators/livestock-cost-profit-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "livestock dairy animal husbandry cost profit milk feed veterinary calculator",
+    "description": ""
+  },
+  {
+    "name": "Crop Yield & Sale Value Calculator",
+    "url": "/calculators/crop-yield-sale-value-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "crop yield harvest sale price quintal agriculture calculator",
+    "description": ""
+  },
+  {
+    "name": "PM-KISAN Eligibility Checker",
+    "url": "/calculators/pm-kisan-eligibility-checker.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "PM Kisan eligibility beneficiary checker farmer scheme",
+    "description": ""
+  },
+  {
+    "name": "Ayushman Bharat Eligibility Checker",
+    "url": "/calculators/ayushman-bharat-eligibility-checker.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "Ayushman Bharat PM-JAY eligibility senior citizen health cover checker",
+    "description": ""
+  },
+  {
+    "name": "Atal Pension Yojana Planner",
+    "url": "/calculators/apy-eligibility-pension-planner.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "Atal Pension Yojana APY eligibility pension planner",
+    "description": ""
+  },
+  {
+    "name": "PMAY Eligibility Checker",
+    "url": "/calculators/pmay-eligibility-checker.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "PMAY urban rural housing eligibility checker",
+    "description": ""
+  },
+  {
+    "name": "MUDRA Loan Category & EMI Calculator",
+    "url": "/calculators/mudra-loan-category-emi-calculator.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "MUDRA PMMY loan category EMI calculator Shishu Kishore Tarun",
+    "description": ""
+  },
+  {
+    "name": "MP Ladli Behna Eligibility Checker",
+    "url": "/calculators/mp-ladli-behna-eligibility-checker.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "Madhya Pradesh MP Ladli Behna scheme eligibility checker",
+    "description": ""
+  },
+  {
+    "name": "Job Change Take-home Salary Calculator",
+    "url": "/calculators/job-change-take-home-salary-calculator.html",
+    "category": "Career & Salary Planning",
+    "keywords": "job change new offer salary take home in hand CTC calculator",
+    "description": ""
+  },
+  {
+    "name": "First Job Salary Calculator",
+    "url": "/calculators/first-job-salary-calculator.html",
+    "category": "Career & Salary Planning",
+    "keywords": "first job fresher salary in hand take home salary calculator",
+    "description": ""
+  }
+]
