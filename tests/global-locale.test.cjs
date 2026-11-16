@@ -141,3 +141,30 @@ test('English unit converter defaults to the selected metric or imperial unit pa
  assert.match(page,/length:\['m','cm'\]/);
  assert.match(page,/mass:\['kg','g'\]/);
 });
+
+test('English unit converter applies browser-locale defaults after shared locale initialization',()=>{
+ const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');
+ assert.match(page,/fc:locale-ready/);
+ assert.match(page,/fc:unitchange/);
+});
+test('eight shared localized unit converters share Metric and Imperial preferences',()=>{
+ const script=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');
+ assert.match(script,/const defaults=\{metric/);
+ assert.match(script,/imperial:\{length:\['ft','in'\]/);
+ assert.match(script,/selectedDefaults\(\)\[c\]/);
+ assert.match(script,/fc:locale-ready/);
+ assert.match(script,/fc:unitchange/);
+ for(const locale of ['hi','ar','bn','es','fr','id','pt','ta']){
+  const page=fs.readFileSync(new URL('../'+locale+'/calculators/unit-converter.html','file://'+__filename),'utf8');
+  assert.match(page,/unit-converter-localized\.js/,'Missing shared localized converter: '+locale);
+ }
+});
+
+test('German unit converter also applies the shared Metric and Imperial preference',()=>{
+ const page=fs.readFileSync(new URL('../de/calculators/unit-converter.html','file://'+__filename),'utf8');
+ assert.match(page,/getUnitSystem/);
+ assert.match(page,/fc:locale-ready/);
+ assert.match(page,/fc:unitchange/);
+ assert.match(page,/length:\['ft','in'\]/);
+ assert.match(page,/mass:\['lb','oz'\]/);
+});
