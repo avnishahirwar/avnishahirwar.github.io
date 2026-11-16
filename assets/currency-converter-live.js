@@ -46,7 +46,7 @@ async function loadRate(){
  const id=++requestId,base=from.value,quote=to.value;
  error.textContent='';
  if(base===quote){setRate(1);showStatus(text.same+base+'.');calculate();return;}
- rateInput.value='';rateInput.readOnly=true;rateInput.placeholder=text.loading;showStatus(text.loading);
+ rateInput.value='';rateInput.readOnly=true;rateInput.placeholder=text.loading;showStatus(text.loading);calculate();
  try{
   const response=await fetch('https://api.frankfurter.dev/v2/rate/'+encodeURIComponent(base)+'/'+encodeURIComponent(quote),{headers:{Accept:'application/json'},cache:'no-cache'});
   if(!response.ok)throw new Error('Rate service returned '+response.status);
@@ -60,7 +60,7 @@ async function loadRate(){
  }catch(_){
   if(id!==requestId)return;
   rateInput.readOnly=false;rateInput.value='';rateInput.placeholder=text.rate;
-  showStatus(text.manual);error.textContent='';
+  showStatus(text.manual);error.textContent='';calculate();
  }
 }
 $('calculate').addEventListener('click',calculate);
