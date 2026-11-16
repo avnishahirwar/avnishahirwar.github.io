@@ -94,3 +94,14 @@ test('manual currency and format preferences override browser auto-detection',()
  const x=boot({'fc-preferred-currency':'INR','fc-preferred-format-locale':'en-IN'},'en-US');
  assert.equal(x.api.getCurrency(),'INR');assert.equal(x.api.getLocale(),'en-IN');
 });
+
+
+test('global locale supports additional international currencies and regional number formats',()=>{
+ const cases=[['tr-TR','TRY','tr-TR'],['ko-KR','KRW','ko-KR'],['vi-VN','VND','vi-VN'],['fil-PH','PHP','fil-PH'],['ms-MY','MYR','ms-MY'],['pl-PL','PLN','pl-PL'],['sv-SE','SEK','sv-SE'],['nb-NO','NOK','nb-NO'],['da-DK','DKK','da-DK'],['en-NG','NGN','en-NG'],['en-KE','KES','en-KE'],['ar-EG','EGP','ar-EG'],['ne-NP','NPR','ne-NP'],['es-CL','CLP','es-CL']];
+ for(const [browser,currency,locale] of cases){const x=boot({},browser);assert.equal(x.api.getCurrency(),currency,browser);assert.equal(x.api.getLocale(),locale,browser);assert.ok(x.api.formatCurrency(1234).length>0);}
+});
+test('currency menu and share panel expose international currency and Pinterest/Reddit options',()=>{
+ const shell=fs.readFileSync(new URL('../assets/site-shell.js','file://'+__filename),'utf8');
+ for(const code of ['TRY','KRW','VND','PHP','MYR','PLN','SEK','NOK','DKK','CZK','HUF','ILS','NGN','KES','EGP','QAR','KWD','OMR','LKR','NPR','BHD','CLP','COP','ARS','UAH','MAD','RON','BGN'])assert.ok(shell.includes(code+":"),code);
+ assert.match(shell,/pinterest\.com\/pin\/create\/button/);assert.match(shell,/reddit\.com\/submit/);
+});
