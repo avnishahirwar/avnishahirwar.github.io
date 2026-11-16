@@ -8,15 +8,17 @@ let formatLocale=read(LOCALE_KEY,'en-IN',v=>Object.hasOwn(LOCALES,v));
 const formatNumber=(value,options={})=>new Intl.NumberFormat(formatLocale,options).format(Number(value));
 const formatCurrency=(value,code=currency,options={})=>{const selected=Object.hasOwn(CURRENCIES,code)?code:'INR';return new Intl.NumberFormat(formatLocale,{style:'currency',currency:selected,maximumFractionDigits:2,...options}).format(Number(value));};
 const formatDate=(value,options={})=>new Intl.DateTimeFormat(formatLocale,{year:'numeric',month:'short',day:'numeric',...options}).format(value instanceof Date?value:new Date(value));
-const emit=()=>window.dispatchEvent(new CustomEvent('fc:localechange',{detail:{currency,locale:formatLocale}}));
+const currencySymbol=code=>{try{return new Intl.NumberFormat(formatLocale,{style:'currency',currency:code}).formatToParts(0).find(part=>part.type==='currency')?.value||code;}catch(_){return code;}};
+const updateCurrencyLabels=()=>{const symbol=currencySymbol(currency);document.querySelectorAll('label,.slider-hint,[aria-label]').forEach(element=>{if(element.hasAttribute('aria-label')){if(!element.dataset.fcCurrencyAriaTemplate)element.dataset.fcCurrencyAriaTemplate=element.getAttribute('aria-label')||'';element.setAttribute('aria-label',element.dataset.fcCurrencyAriaTemplate.replace(/₹/g,symbol));}if(element.tagName==='LABEL'||element.classList.contains('slider-hint'))Array.from(element.childNodes||[]).forEach(node=>{if(node.nodeType!==3)return;if(node.__fcCurrencyTemplate===undefined)node.__fcCurrencyTemplate=node.nodeValue||'';node.nodeValue=node.__fcCurrencyTemplate.replace(/₹/g,symbol);});});};
+const emit=()=>{updateCurrencyLabels();window.dispatchEvent(new CustomEvent('fc:localechange',{detail:{currency,locale:formatLocale}}));};
 const api=Object.freeze({currencies:Object.freeze(Object.keys(CURRENCIES)),locales:Object.freeze(Object.keys(LOCALES)),getCurrency:()=>currency,getLocale:()=>formatLocale,formatNumber,formatCurrency,formatDate,
 setCurrency(value){if(!Object.hasOwn(CURRENCIES,value))return false;currency=value;try{localStorage.setItem(CURRENCY_KEY,value);}catch(_){}document.documentElement.dataset.fcCurrency=value;emit();return true;},
 setLocale(value){if(!Object.hasOwn(LOCALES,value))return false;formatLocale=value;try{localStorage.setItem(LOCALE_KEY,value);}catch(_){}document.documentElement.dataset.fcLocale=value;emit();return true;}
 });
 window.FCLocale=api;
 const currencySelect=document.getElementById('fc-currency-select'),localeSelect=document.getElementById('fc-locale-select');
-if(currencySelect){currencySelect.value=currency;currencySelect.addEventListener('change',()=>api.setCurrency(currencySelect.value));}
+if(currencySelect){currencySelect.title='Display currency only. Changing it does not convert existing numeric inputs.';currencySelect.value=currency;currencySelect.addEventListener('change',()=>api.setCurrency(currencySelect.value));}
 if(localeSelect){localeSelect.value=formatLocale;localeSelect.addEventListener('change',()=>api.setLocale(localeSelect.value));}
-document.documentElement.dataset.fcCurrency=currency;document.documentElement.dataset.fcLocale=formatLocale;window.dispatchEvent(new CustomEvent('fc:locale-ready',{detail:{currency,locale:formatLocale}}));
+document.documentElement.dataset.fcCurrency=currency;document.documentElement.dataset.fcLocale=formatLocale;updateCurrencyLabels();window.dispatchEvent(new CustomEvent('fc:locale-ready',{detail:{currency,locale:formatLocale}}));
 window.addEventListener('storage',event=>{if(event.key===CURRENCY_KEY&&Object.hasOwn(CURRENCIES,event.newValue)){currency=event.newValue;if(currencySelect)currencySelect.value=currency;document.documentElement.dataset.fcCurrency=currency;emit();}if(event.key===LOCALE_KEY&&Object.hasOwn(LOCALES,event.newValue)){formatLocale=event.newValue;if(localeSelect)localeSelect.value=formatLocale;document.documentElement.dataset.fcLocale=formatLocale;emit();}});
 })();
