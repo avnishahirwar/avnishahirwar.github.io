@@ -332,7 +332,7 @@ const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
-  de:['Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Einbetten','Kontakt'],
+  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Einbetten','Kontakt (Englisch)'],
   en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'],
   hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क'],
   es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Insertar','Contacto'],
@@ -341,7 +341,9 @@ const footerLabels={
   ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','تضمين','اتصل بنا'],
   id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Sematkan','Kontak'],
   bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','এম্বেড','যোগাযোগ'],
-  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','உட்பொதி','தொடர்பு']
+  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','உட்பொதி','தொடர்பு'],
+  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','埋め込み','お問い合わせ（英語）'],
+  ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Встроить','Контакты (англ.)']
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
