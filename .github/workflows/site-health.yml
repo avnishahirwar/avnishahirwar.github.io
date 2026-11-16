@@ -45,4 +45,4 @@ jobs:
       - name: Validate mobile calculator layouts and structured data
         run: node --test tests/mobile-schema.test.cjs
       - name: Check shared JavaScript syntax
-        run: node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js
+        run: node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js
