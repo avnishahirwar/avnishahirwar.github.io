@@ -1,4 +1,4 @@
-const test=require('node:test');const assert=require('node:assert/strict');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP}=require('../assets/country-calculators.js');
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP}=require('../assets/country-calculators.js');
 test('Canada GST/HST add and remove modes calculate tax consistently',()=>{const add=calculateGSTHST(100,13,0,'add');assert.equal(add.tax,13);assert.equal(add.gross,113);const remove=calculateGSTHST(113,13,0,'remove');assert.equal(remove.net,100);assert.equal(remove.tax,13);});
 test('Canada calculator supports separate provincial tax input',()=>{const r=calculateGSTHST(100,5,7,'add');assert.equal(r.totalRate,12);assert.equal(r.tax,12);assert.equal(r.gross,112);});
 test('UK SDLT standard bands use progressive portions',()=>{assert.equal(calculateSDLT(295000).tax,4750);});
@@ -49,4 +49,34 @@ test('Canada 2026 RRSP room applies 18 percent, dollar cap, pension adjustment a
  assert.equal(r.estimatedAvailableRoom,15000);
  const cap=calculateCanadaRRSP({priorYearEarnedIncome:300000});
  assert.equal(cap.newRoom,33810);
+});
+
+test('UK Germany and Canada 2026 country calculator pages are indexable and include official sources and FAQ schema',()=>{
+ const root=path.join(__dirname,'..');
+ const checks=[
+  ['international/uk-income-tax-calculator.html','https://www.gov.uk/','FAQPage'],
+  ['international/germany-income-tax-calculator.html','https://www.gesetze-im-internet.de/estg/__32a.html','ELSTER'],
+  ['international/canada-tax-calculators.html','https://www.canada.ca/','FAQPage']
+ ];
+ for(const [file,source,marker] of checks){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.match(html,/name="robots" content="index,follow/);
+  assert.match(html,/rel="canonical"/);
+  assert.match(html,/"@type":"SoftwareApplication"/);
+  assert.match(html,/"@type":"FAQPage"/);
+  assert.ok(html.includes(source),'Official source missing from '+file);
+  assert.ok(html.includes(marker),'Expected content missing from '+file);
+ }
+});
+test('country tax landing pages link to the correct calculators',()=>{
+ const root=path.join(__dirname,'..');
+ for(const [file,link] of [
+  ['international/uk/index.html','/international/uk-income-tax-calculator.html'],
+  ['international/germany/index.html','/international/germany-income-tax-calculator.html'],
+  ['international/canada/index.html','/international/canada-tax-calculators.html']
+ ]){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.ok(html.includes(link));
+  assert.match(html,/rel="canonical"/);
+ }
 });
