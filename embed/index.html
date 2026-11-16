@@ -11,7 +11,7 @@
 (()=>{'use strict';
 const params=new URLSearchParams(location.search);
 const rawSrc=params.get('src')||'';
-const valid=/^\\/(?:embed\\/basic-calculator|calculators\\/[a-z0-9-]+)\\.html$/;
+const valid=/^\\/(?:embed\\/basic-calculator|(?:[a-z]{2}\\/)?calculators\\/[a-z0-9-]+)\\.html$/;
 const normalizePath=value=>{
   try{
     const url=new URL(value,location.origin);
@@ -48,19 +48,22 @@ async function loadCalculatorOptions(){
 }
 if(rawSrc){
   builder.remove();
-  (async()=>{
-    await loadCalculatorOptions();
-    if(!src||!allowedPaths.has(src)){
-      const e=document.createElement('div');e.className='error';
-      e.textContent='Invalid calculator embed URL. Please copy the embed code from the Friendly Calculator embed builder.';
-      mount.append(e);return;
-    }
-    if(src==='/embed/basic-calculator.html'){
-      const frame=document.createElement('iframe');frame.className='preview';frame.title='Basic Calculator';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=src;frame.style.height='520px';mount.append(frame);return;
-    }
-    const frame=document.createElement('iframe');frame.className='preview';frame.title='Friendly Calculator';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=src;mount.append(frame);
-    const credit=document.createElement('div');credit.className='credit';credit.innerHTML='Calculator provided by <a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>';mount.append(credit);
-  })();
+  if(!src||!valid.test(src)){
+    const e=document.createElement('div');e.className='error';
+    e.textContent='Invalid calculator embed URL. Please copy the embed code from the Friendly Calculator embed builder.';
+    mount.append(e);return;
+  }
+  const frame=document.createElement('iframe');
+  frame.className='preview';frame.title='Friendly Calculator';frame.loading='lazy';
+  frame.referrerPolicy='strict-origin-when-cross-origin';
+  frame.src=src+(src.includes('?')?'&':'?')+'embed=1';
+  if(src==='/embed/basic-calculator.html')frame.style.height='520px';
+  mount.append(frame);
+  if(src!=='/embed/basic-calculator.html'){
+    const credit=document.createElement('div');credit.className='credit';
+    credit.innerHTML='Calculator provided by <a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>';
+    mount.append(credit);
+  }
   return;
 }
 const refresh=()=>{
