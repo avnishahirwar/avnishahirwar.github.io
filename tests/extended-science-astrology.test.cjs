@@ -83,7 +83,7 @@ test('numerical derivative and Simpson integration calculate polynomial examples
   const integral = runTool('integral', { expression: 'x^2', lower: 0, upper: 3, steps: 100 });
   assert.match(integral.result, /Approximate definite integral: 9/);
   const invalid = runTool('integral', { expression: 'x^2', lower: 0, upper: 3, steps: 9 });
-  assert.match(invalid.status, /even number of integration steps/);
+  assert.match(invalid.status, /Use 2–20,000 integration steps/);
 });
 
 test('3D vector and planetary weight tools use the stated vector and gravity calculations', () => {
