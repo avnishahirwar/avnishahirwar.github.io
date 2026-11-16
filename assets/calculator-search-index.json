@@ -2021,5 +2021,103 @@
     "category": "Tax, Salary & Payroll",
     "keywords": "UK England Northern Ireland stamp duty land tax SDLT residential property first time buyer",
     "description": "Estimate residential SDLT with progressive bands and common surcharges."
+  },
+  {
+    "name": "Chinese Zodiac Calculator",
+    "url": "/calculators/chinese-zodiac-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "chinese zodiac calculator animal birth year lunar year",
+    "description": "Find an approximate Chinese zodiac animal from a birth year."
+  },
+  {
+    "name": "Definite Integral Calculator",
+    "url": "/calculators/definite-integral-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "definite integral calculator simpson rule numerical integration calculus",
+    "description": "Approximate a definite integral using the composite Simpson numerical method."
+  },
+  {
+    "name": "Numerical Derivative Calculator",
+    "url": "/calculators/derivative-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "numerical derivative calculator central difference derivative estimate calculus",
+    "description": "Estimate the derivative of an expression at a selected x value."
+  },
+  {
+    "name": "Life Path Number Calculator",
+    "url": "/calculators/life-path-number-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "life path number calculator numerology birth date",
+    "description": "Calculate a numerology life path number from a birth date."
+  },
+  {
+    "name": "Linear Equation System Calculator",
+    "url": "/calculators/linear-equation-system-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "linear equation system calculator simultaneous equations two variables",
+    "description": "Solve two simultaneous linear equations in two variables."
+  },
+  {
+    "name": "Matrix Addition Calculator",
+    "url": "/calculators/matrix-addition-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "matrix addition calculator add two matrices equal dimensions",
+    "description": "Add two matrices of equal dimensions."
+  },
+  {
+    "name": "Name Numerology Calculator",
+    "url": "/calculators/name-numerology-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "name numerology calculator pythagorean name number",
+    "description": "Calculate a Pythagorean-style name number using English letters."
+  },
+  {
+    "name": "Permutation and Combination Calculator",
+    "url": "/calculators/permutation-combination-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "permutation combination calculator npr ncr factorial arrangements selections",
+    "description": "Calculate nPr permutations and nCr combinations."
+  },
+  {
+    "name": "Personal Year Number Calculator",
+    "url": "/calculators/personal-year-number-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "personal year number calculator numerology selected year",
+    "description": "Calculate a numerology personal-year number for a selected year."
+  },
+  {
+    "name": "Planetary Weight Calculator",
+    "url": "/calculators/planetary-weight-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "planetary weight calculator gravity planets moon scale reading",
+    "description": "Compare an object's approximate scale reading under the surface gravity of planets and the Moon."
+  },
+  {
+    "name": "Quadratic Formula Calculator",
+    "url": "/calculators/quadratic-formula-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "quadratic formula calculator roots discriminant equation",
+    "description": "Solve quadratic equations and calculate real or complex roots."
+  },
+  {
+    "name": "3D Vector Calculator",
+    "url": "/calculators/vector-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "3d vector calculator dot product cross product magnitude",
+    "description": "Calculate dot product, cross product and vector magnitudes for two 3D vectors."
+  },
+  {
+    "name": "Zodiac Compatibility Calculator",
+    "url": "/calculators/zodiac-compatibility-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "zodiac compatibility calculator western signs elements astrology",
+    "description": "Compare the traditional elements of two Western sun signs."
+  },
+  {
+    "name": "Zodiac Sign Calculator",
+    "url": "/calculators/zodiac-sign-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "zodiac sign calculator western sun sign birth date",
+    "description": "Find an approximate Western sun sign from a birth date."
   }
 ]
