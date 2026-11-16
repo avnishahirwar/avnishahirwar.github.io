@@ -37,8 +37,8 @@ for (const file of files.sort()) {
   };
   for (const k of Object.keys(checks)) if(checks[k]) stats.checks[k]++;
   const rateSensitive=ratePattern.test(path.basename(file));
-  const updated=has(html,/updated\\s*[:：]|checked\\s+(?:against|on)|rates\\s+checked|अद्यतन\\s*[:：]|अपडेट\\s*[:：]/i);
-  const source=has(html,/(dea\\.gov\\.in|indiapost\\.gov\\.in|gst\\.gov\\.in|incometax\\.gov\\.in|epfindia\\.gov\\.in|canada\\.ca|gov\\.uk)/i);
+  const updated=has(html,/updated\s*[:：]|checked\s+(?:against|on)|rates\s+checked|अद्यतन\s*[:：]|अपडेट\s*[:：]/i);
+  const source=has(html,/(dea\.gov\.in|indiapost\.gov\.in|gst\.gov\.in|incometax\.gov\.in|epfindia\.gov\.in|canada\.ca|gov\.uk)/i);
   if(rateSensitive){if(updated)stats.checks.updatedRateStamp++;if(source)stats.checks.authoritativeRateSource++;}
   const missing=Object.entries(checks).filter(([,v])=>!v).map(([k])=>k);
   if(rateSensitive&&!updated)missing.push('updatedRateStamp');
