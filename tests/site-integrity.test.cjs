@@ -1481,7 +1481,7 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('<h1>Free Online Calculators for India</h1>'));
+  assert.ok(homepage.includes('<h1>Free Online Calculators for Everyone</h1>'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
