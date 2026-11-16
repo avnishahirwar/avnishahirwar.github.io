@@ -33,18 +33,23 @@ test('generated sitemap check includes hreflang clusters',()=>{
 });
 
 
-test('percentage calculator hreflang cluster includes only the existing English and Hindi pages',()=>{
- const expected=[['en','https://friendlycalculator.in/calculators/percentage-calculator.html'],['hi','https://friendlycalculator.in/hi/calculators/percentage-calculator.html'],['x-default','https://friendlycalculator.in/calculators/percentage-calculator.html']];
- for(const file of ['calculators/percentage-calculator.html','hi/calculators/percentage-calculator.html']){
+test('percentage calculator hreflang cluster includes all nine published language pages',()=>{
+ const route='percentage-calculator.html';
+ const locales=['en','hi','x-default','ar','bn','es','fr','id','pt','ta'];
+ const expected=locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+ for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
   assert.deepEqual(actual,expected,file);
  }
 });
 
-test('simple-interest calculator hreflang cluster includes only the existing English and Bengali pages',()=>{
- const expected=[['en','https://friendlycalculator.in/calculators/simple-interest-calculator.html'],['bn','https://friendlycalculator.in/bn/calculators/simple-interest-calculator.html'],['x-default','https://friendlycalculator.in/calculators/simple-interest-calculator.html']];
- for(const file of ['calculators/simple-interest-calculator.html','bn/calculators/simple-interest-calculator.html']){
+test('simple-interest English and Bengali hreflang alternates match published translations',()=>{
+ const route='simple-interest-calculator.html';
+ const englishLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
+ const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt'];
+ const expectedFor=locales=>locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+ for(const [file,expected] of [['calculators/'+route,expectedFor(englishLocales)],['bn/calculators/'+route,expectedFor(bengaliLocales)]]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
   assert.deepEqual(actual,expected,file);
