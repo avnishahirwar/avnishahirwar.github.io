@@ -1,0 +1,33 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {execFileSync}=require('node:child_process');
+const root=path.join(__dirname,'..');
+const locales=['hi','es','fr','pt','ar','id','bn','ta'];
+test('all existing localized currency converters load the shared reference-rate client',()=>{
+ for(const locale of locales){
+  const html=fs.readFileSync(path.join(root,locale,'calculators/currency-converter-calculator.html'),'utf8');
+  assert.match(html,/\/assets\/currency-converter-live\.js/,'missing shared FX client: '+locale);
+  assert.match(html,/hreflang="de"/,'missing reciprocal German hreflang: '+locale);
+ }
+});
+test('English and German currency converters share the reciprocal language cluster',()=>{
+ for(const file of ['calculators/currency-converter-calculator.html','de/calculators/currency-converter-calculator.html']){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.match(html,/hreflang="de"/);
+  assert.match(html,/hreflang="x-default"/);
+  assert.match(html,/\/assets\/currency-converter-live\.js/);
+ }
+});
+test('shared FX client uses free reference rates and preserves a manual fallback',()=>{
+ const js=fs.readFileSync(path.join(root,'assets/currency-converter-live.js'),'utf8');
+ assert.match(js,/api\.frankfurter\.dev\/v2\/rate/);
+ assert.match(js,/rateInput\.readOnly=false/);
+ assert.match(js,/text\.manual/);
+ assert.match(js,/new Intl\.NumberFormat/);
+});
+test('generated sitemap check includes hreflang clusters',()=>{
+ const output=execFileSync(process.execPath,['scripts/generate-sitemaps.cjs','--check'],{cwd:root,encoding:'utf8'});
+ assert.match(output,/language clusters/);
+});

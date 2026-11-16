@@ -8,6 +8,7 @@ const { execFileSync } = require('node:child_process');
 const ROOT = process.cwd();
 const SITE_ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
+const LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta']);
 const MAX_BYTES = 50 * 1024 * 1024;
 const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai'
@@ -92,7 +93,7 @@ function build() {
     const loc = getCanonical(file, html);
     if (!loc || seen.has(loc)) continue;
     seen.add(loc);
-    entries.push({ loc, lastmod: getLastmod(file) });
+    entries.push({ loc, lastmod: getLastmod(file), file });
   }
 
   if (!seen.has(SITE_ORIGIN + '/')) {
@@ -102,10 +103,30 @@ function build() {
     throw new Error('Single sitemap limit exceeded: ' + entries.length + ' URLs (maximum ' + MAX_URLS + ').');
   }
 
+  const languageGroups = new Map();
+  for (const entry of entries) {
+    const parts = entry.file.split('/');
+    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
+    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
+    if (!languageGroups.has(key)) languageGroups.set(key, new Map());
+    languageGroups.get(key).set(locale, entry.loc);
+  }
+  for (const entry of entries) {
+    const parts = entry.file.split('/');
+    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
+    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
+    const group = languageGroups.get(key);
+    entry.alternates = group && group.size > 1 ? group : null;
+  }
+  const hreflangGroups = [...languageGroups.values()].filter(group => group.size > 1).length;
   entries.sort((a, b) => a.loc.localeCompare(b.loc));
   const body = entries.map(entry =>
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
     (entry.lastmod ? '<lastmod>' + entry.lastmod + '</lastmod>' : '') +
+    (entry.alternates ? [...entry.alternates.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([lang,url]) =>
+      '<xhtml:link rel="alternate" hreflang="' + xmlEscape(lang) + '" href="' + xmlEscape(url) + '"/>'
+    ).join('') + (entry.alternates.has('en') ?
+      '<xhtml:link rel="alternate" hreflang="x-default" href="' + xmlEscape(entry.alternates.get('en')) + '"/>' : '') : '') +
     (BRAND_IMAGE_PAGES.has(entry.loc)
       ? '<image:image><image:loc>' + xmlEscape(BRAND_IMAGE_URL) + '</image:loc></image:image>'
       : '') +
@@ -113,28 +134,29 @@ function build() {
   ).join('\n');
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' +
-    'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
+    'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ' +
+    'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
     body + '\n</urlset>\n';
 
   if (Buffer.byteLength(xml, 'utf8') > MAX_BYTES) {
     throw new Error('Single sitemap exceeds the 50 MB uncompressed limit.');
   }
-  return { xml, urlCount: entries.length, pageCount: candidates.length };
+  return { xml, urlCount: entries.length, pageCount: candidates.length, hreflangGroups };
 }
 
 function main() {
-  const { xml, urlCount, pageCount } = build();
+  const { xml, urlCount, pageCount, hreflangGroups } = build();
   if (process.argv.includes('--check')) {
-    if (!xml.startsWith('<?xml') || !xml.includes('<urlset')) {
+    if (!xml.startsWith('<?xml') || !xml.includes('<urlset') || !xml.includes('xmlns:xhtml=') || !xml.includes('<xhtml:link') || hreflangGroups < 1) {
       throw new Error('Invalid sitemap XML envelope.');
     }
     console.log('Single sitemap check passed: ' + urlCount +
-      ' unique canonical URLs from ' + pageCount + ' HTML files.');
+      ' unique canonical URLs from ' + pageCount + ' HTML files; ' + hreflangGroups + ' language clusters.');
     return;
   }
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
   console.log('Generated one sitemap.xml with ' + urlCount +
-    ' unique canonical URLs from ' + pageCount + ' HTML files.');
+    ' unique canonical URLs from ' + pageCount + ' HTML files; ' + hreflangGroups + ' language clusters.');
 }
 
 main();
