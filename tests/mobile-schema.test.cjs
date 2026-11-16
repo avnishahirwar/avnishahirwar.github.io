@@ -122,3 +122,14 @@ test('shared shell delays GTM container while preserving queued analytics events
   assert.match(shell, /requestIdleCallback\(injectGtm,\{timeout:8000\}\)/);
   assert.match(shell, /gtm\.js\?id=GTM-MGJQH4DB/);
 });
+
+test('mobile primary navigation toggle remains beside the brand and is keyboard accessible', () => {
+  assert.match(shell, /const primaryNav=activeHeader\.querySelector\('#fc-primary-navigation'\)/);
+  assert.match(shell, /toggle\.setAttribute\('aria-controls','fc-primary-navigation'\)/);
+  assert.match(shell, /toggle\.setAttribute\('aria-expanded','false'\)/);
+  assert.match(shell, /event\.key==='Escape'/);
+  assert.match(shell, /toggle\.focus\(\)/);
+  assert.match(chrome, /\.fc-nav-toggle:focus-visible/);
+  assert.match(chrome, /\.fc-global-brand\{flex:1 1 auto;min-width:0;width:auto\}/);
+  assert.match(chrome, /\.fc-global-links\.fc-nav-open\{display:flex;flex-direction:column\}/);
+});

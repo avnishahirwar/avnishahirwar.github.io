@@ -274,6 +274,47 @@ const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation')&&existingHeader.querySelector('#fc-language-select')&&existingHeader.querySelector('#fc-currency-select')&&existingHeader.querySelector('#fc-country-select')&&existingHeader.querySelector('#fc-locale-select')&&existingHeader.querySelector('#fc-unit-system-select'));
 if(existingHeader){if(!headerIsReady)existingHeader.replaceWith(h);}else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
+const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
+if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
+  const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
+  const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
+  const toggle=document.createElement('button');
+  toggle.type='button';
+  toggle.className='fc-nav-toggle';
+  toggle.setAttribute('aria-controls','fc-primary-navigation');
+  toggle.setAttribute('aria-expanded','false');
+  toggle.textContent=menuText[currentLocale]||menuText.en;
+  toggle.addEventListener('click',()=>{
+    const open=toggle.getAttribute('aria-expanded')!=='true';
+    toggle.setAttribute('aria-expanded',String(open));
+    primaryNav.classList.toggle('fc-nav-open',open);
+    toggle.textContent=open?(closeText[currentLocale]||closeText.en):(menuText[currentLocale]||menuText.en);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){
+      toggle.setAttribute('aria-expanded','false');
+      primaryNav.classList.remove('fc-nav-open');
+      toggle.textContent=menuText[currentLocale]||menuText.en;
+      toggle.focus();
+    }
+  });
+  primaryNav.addEventListener('click',event=>{
+    if(event.target.closest('a')&&window.matchMedia('(max-width: 760px)').matches){
+      toggle.setAttribute('aria-expanded','false');
+      primaryNav.classList.remove('fc-nav-open');
+      toggle.textContent=menuText[currentLocale]||menuText.en;
+    }
+  });
+  const syncNav=()=>{
+    if(!window.matchMedia('(max-width: 760px)').matches){
+      primaryNav.classList.remove('fc-nav-open');
+      toggle.setAttribute('aria-expanded','false');
+      toggle.textContent=menuText[currentLocale]||menuText.en;
+    }
+  };
+  window.addEventListener('resize',syncNav,{passive:true});
+  activeHeader.querySelector('.fc-global-nav')?.insertBefore(toggle,primaryNav);
+}
 const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
