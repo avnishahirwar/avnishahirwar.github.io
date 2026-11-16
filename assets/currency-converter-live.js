@@ -46,7 +46,7 @@ async function loadRate(){
  const id=++requestId,base=from.value,quote=to.value;
  error.textContent='';
  if(base===quote){setRate(1);showStatus(text.same+base+'.');calculate();return;}
- rateInput.placeholder=text.loading;showStatus(text.loading);
+ rateInput.value='';rateInput.readOnly=true;rateInput.placeholder=text.loading;showStatus(text.loading);
  try{
   const response=await fetch('https://api.frankfurter.dev/v2/rate/'+encodeURIComponent(base)+'/'+encodeURIComponent(quote),{headers:{Accept:'application/json'},cache:'no-cache'});
   if(!response.ok)throw new Error('Rate service returned '+response.status);
