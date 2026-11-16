@@ -110,3 +110,10 @@ test('shared expression parser does not evaluate arbitrary JavaScript', () => {
   assert.doesNotMatch(runtime, /\bnew\s+Function\s*\(/);
   assert.match(runtime, /Unsupported expression token/);
 });
+
+test('expression parser accepts decimals, whitespace, powers and multiplication in scientific tools', () => {
+  const derivative = runTool('derivative', { expression: ' x ^ 2 ', x: 3 });
+  assert.match(derivative.result, /Numerical derivative at x = 3: 6/);
+  const integral = runTool('integral', { expression: '0.5 * x^2', lower: 0, upper: 2, steps: 100 });
+  assert.match(integral.result, /Approximate definite integral: 1\.33333333/);
+});
