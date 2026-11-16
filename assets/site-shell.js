@@ -164,12 +164,12 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
-const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta)\/)?calculators\//.test(p);
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
 const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
-const localeCodes=['hi','es','fr','pt','ar','id','bn','ta'];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru'];
 if(localeCodes.includes(locale)){
   const categoryMap={
     '/calculator/finance-calculators.html':'finance',
