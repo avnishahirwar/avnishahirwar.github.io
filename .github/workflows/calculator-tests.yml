@@ -24,6 +24,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Audit all English and localized calculator routes
         run: node scripts/audit-calculator-catalogue.cjs
       - name: Upload catalogue audit report
