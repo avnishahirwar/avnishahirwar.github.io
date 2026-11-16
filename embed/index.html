@@ -10,22 +10,71 @@
 <script>
 (()=>{'use strict';
 const params=new URLSearchParams(location.search);
-const src=params.get('src')||'';
-const allowed=new Set(['/embed/basic-calculator.html','/calculators/loan-emi-calculator.html','/calculators/home-loan-emi-calculator.html','/calculators/loan-prepayment-calculator.html','/calculators/gst-calculator.html','/calculators/sip-calculator.html','/calculators/fd-calculator.html','/calculators/rd-calculator.html','/calculators/nps-calculator.html','/calculators/hra-calculator.html','/calculators/ctc-salary-calculator.html','/calculators/income-tax-calculator.html','/hi/calculators/home-loan-emi-calculator.html','/hi/calculators/sip-calculator.html','/hi/calculators/fd-calculator.html','/hi/calculators/income-tax-calculator.html']);
-const valid=/^\/(?:embed\/basic-calculator|(?:(?:hi|es|fr|pt|ar|id|bn|ta)\/)?calculators\/[a-z0-9-]+)\.html$/;
+const rawSrc=params.get('src')||'';
+const valid=/^\\/(?:embed\\/basic-calculator|(?:(?:hi|es|fr|pt|ar|id|bn|ta)\\/)?calculators\\/[a-z0-9-]+)\\.html$/;
+const normalizePath=value=>{
+  try{
+    const url=new URL(value,location.origin);
+    if(url.origin!==location.origin||url.search||url.hash)return '';
+    return url.pathname;
+  }catch(_){return '';}
+};
+const src=rawSrc?normalizePath(rawSrc):'';
 const builder=document.getElementById('builder'),mount=document.getElementById('mount');
-const makeEmbedUrl=path=>location.origin+'/embed/?s'+'rc='+encodeURIComponent(path);
-const codeFor=path=>'<iframe s'+'rc="'+(path==='/embed/basic-calculator.html'?location.origin+path:makeEmbedUrl(path))+'" title="Friendly Calculator" loading="lazy" width="100%" height="'+(path==='/embed/basic-calculator.html'?'520':'760')+'" style="border:0;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+const makeEmbedUrl=path=>location.origin+'/embed/?src='+encodeURIComponent(path);
+const codeFor=path=>'<iframe src="'+(path==='/embed/basic-calculator.html'?location.origin+path:makeEmbedUrl(path))+'" title="Friendly Calculator" loading="lazy" width="100%" height="'+(path==='/embed/basic-calculator.html'?'520':'760')+'" style="border:0;max-width:100%" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+async function calculatorPathExists(path){
+  if(!valid.test(path))return false;
+  try{
+    const response=await fetch(path,{method:'HEAD',credentials:'same-origin',redirect:'follow'});
+    const finalUrl=new URL(response.url||path,location.href);
+    return response.ok&&finalUrl.origin===location.origin&&(response.headers.get('content-type')||'').toLowerCase().includes('text/html');
+  }catch(_){return false;}
+}
 if(src){
   builder.remove();
-  if(!valid.test(src)||!allowed.has(src)){const e=document.createElement('div');e.className='error';e.textContent='Invalid calculator embed URL. Please copy the embed code from the Friendly Calculator embed builder.';mount.append(e);return;}
+  if(!await calculatorPathExists(src)){const e=document.createElement('div');e.className='error';e.textContent='This calculator link is not available for embedding. Please choose a published calculator from the Friendly Calculator embed builder and copy its code again.';mount.append(e);return;}
   const frame=document.createElement('iframe');frame.className='preview';frame.title='Friendly Calculator';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=src+(src.includes('?')?'&':'?')+'embed=1';if(src==='/embed/basic-calculator.html')frame.style.height='520px';mount.append(frame);
   if(src!=='/embed/basic-calculator.html'){const credit=document.createElement('div');credit.className='credit';credit.innerHTML='Calculator provided by <a href="https://friendlycalculator.in/" target="_blank" rel="noopener noreferrer">Friendly Calculator</a>';mount.append(credit);}return;
 }
 const select=document.getElementById('tool'),code=document.getElementById('code'),preview=document.getElementById('preview'),status=document.getElementById('status');
-const refresh=()=>{const path=select.value;code.value=codeFor(path);preview.src=path==='/embed/basic-calculator.html'?location.origin+path:makeEmbedUrl(path);preview.style.height=path==='/embed/basic-calculator.html'?'520px':'600px';};
+async function loadCalculatorOptions(){
+  try{
+    const response=await fetch('/assets/calculator-search-index.json',{credentials:'same-origin'});
+    if(!response.ok)return;
+    const calculators=await response.json();
+    const existing=new Set(Array.from(select.options,option=>option.value));
+    calculators.forEach(item=>{
+      const path=item&&typeof item.url==='string'?item.url:'';
+      if(!valid.test(path)||existing.has(path))return;
+      const option=document.createElement('option');
+      option.value=path;
+      option.textContent=item.name||path.split('/').pop().replace(/\\.html$/,'').replace(/-/g,' ');
+      select.add(option);
+      existing.add(path);
+    });
+  }catch(_){status.textContent='Some calculator choices could not be loaded. Existing choices are still available.';}
+}
+const refresh=async()=>{
+  const path=select.value;
+  code.value='';
+  status.textContent='Checking calculator availability…';
+  if(!await calculatorPathExists(path)){
+    preview.removeAttribute('src');
+    status.textContent='This calculator is not currently available for embedding. Please select another published calculator.';
+    return;
+  }
+  code.value=codeFor(path);
+  preview.src=path==='/embed/basic-calculator.html'?location.origin+path:makeEmbedUrl(path);
+  preview.style.height=path==='/embed/basic-calculator.html'?'520px':'600px';
+  status.textContent='Copy this responsive iframe code and paste it into your website.';
+};
 select.addEventListener('change',refresh);document.getElementById('previewButton').addEventListener('click',refresh);
-document.getElementById('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);status.textContent='Embed code copied. Paste it into your website.';}catch(_){code.focus();code.select();status.textContent='Select the code and copy it manually.';}});
-refresh();
+document.getElementById('copy').addEventListener('click',async()=>{
+  if(!code.value){status.textContent='Select an available calculator before copying the embed code.';return;}
+  try{await navigator.clipboard.writeText(code.value);status.textContent='Embed code copied. Paste it into your website.';}
+  catch(_){code.focus();code.select();status.textContent='Select the code and copy it manually.';}
+});
+(async()=>{await loadCalculatorOptions();await refresh();})();
 })();
 </script></body></html>
