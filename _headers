@@ -2,7 +2,6 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  X-Frame-Options: SAMEORIGIN
   Content-Security-Policy: frame-ancestors 'self'
 
 /assets/*
@@ -25,7 +24,6 @@
 
 
 /embed/*
-  ! X-Frame-Options
   Content-Security-Policy: frame-ancestors *
 
 https://friendly-calculator.pages.dev/*
