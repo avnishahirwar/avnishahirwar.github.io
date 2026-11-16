@@ -64,8 +64,8 @@ function calculateGermanIncomeTax(taxableIncome){
 }
 function calculateCanadaCPP(annualPensionableEarnings,{selfEmployed=false}={}){
  const income=validNonNegative(annualPensionableEarnings,'Annual pensionable earnings');
- const first=max(0,Math.min(income,74600)-3500)*0.0595;
- const second=max(0,Math.min(income,85000)-74600)*0.04;
+ const first=Math.max(0,Math.min(income,74600)-3500)*0.0595;
+ const second=Math.max(0,Math.min(income,85000)-74600)*0.04;
  const employee=first+second,multiplier=selfEmployed?2:1;
  return {pensionableEarnings:income,baseCPP:Math.min(first,4230.45),cpp2:Math.min(second,416),employeeContribution:employee,contribution:employee*multiplier,selfEmployed:Boolean(selfEmployed),maximumEmployeeContribution:4646.45,maximumSelfEmployedContribution:9292.90,taxYear:2026};
 }
