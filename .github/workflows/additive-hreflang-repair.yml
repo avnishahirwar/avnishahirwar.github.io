@@ -22,6 +22,9 @@ jobs:
         run: node --check scripts/add-hreflang-reciprocals.cjs
       - name: Add only unambiguous reciprocal links
         run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Report remaining hreflang defects (diagnostic only)
+        continue-on-error: true
+        run: node --test tests/international-seo-diagnostic.test.cjs || true
       - name: Commit additive page updates
         run: |
           git config user.name "github-actions[bot]"
