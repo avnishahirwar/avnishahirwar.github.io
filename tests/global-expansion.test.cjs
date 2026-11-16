@@ -42,3 +42,34 @@ test('global landing page is discoverable from homepage and uses the shared site
   assert.match(globalPage, /\/assets\/site-shell\.js/);
   assert.match(globalPage, /\/assets\/site-shell\.css/);
 });
+
+test('primary navigation follows a clear category order and includes the international hub', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const navStart = shell.indexOf('const links=[');
+  const navEnd = shell.indexOf('];', navStart);
+  const nav = shell.slice(navStart, navEnd);
+  const order = ['nav.home','nav.finance','nav.tax','nav.business','nav.everyday','nav.global','nav.all','nav.blog','nav.login'];
+  let previous = -1;
+  for (const item of order) {
+    const index = nav.indexOf(item);
+    assert.ok(index > previous, 'Navigation item out of order or missing: ' + item);
+    previous = index;
+  }
+  assert.match(nav, /r\+'tax\.html'/);
+});
+
+test('footer links to every public category and the international calculator hub', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /r\+'finance-calculators\.html'/);
+  assert.match(shell, /r\+'tax\.html'/);
+  assert.match(shell, /r\+'business-calculators\.html'/);
+  assert.match(shell, /r\+'everyday-calculators\.html'/);
+  assert.match(shell, /'\/international\/'/);
+});
+
+test('directory promotes the global hub and current tax category route', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  assert.match(directory, /href="\/international\/"/);
+  assert.match(directory, /href="\/calculator\/tax\.html"/);
+  assert.match(directory, /International Calculators/);
+});
