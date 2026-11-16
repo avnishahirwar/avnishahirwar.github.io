@@ -13,7 +13,7 @@ function boot(initial={}) {
  const context={
   Intl,Number,Date,Object,
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
-  document:{documentElement:{dataset:{}},getElementById:id=>elements[id]},
+  document:{documentElement:{dataset:{}},getElementById:id=>elements[id],querySelectorAll:()=>[]},
   window:{dispatchEvent:event=>events.push(event),addEventListener:(type,fn)=>{(listeners['window:'+type]??=[]).push(fn);}},
   CustomEvent:function(type,init){this.type=type;this.detail=init.detail;}
  };
@@ -44,4 +44,27 @@ test('generic calculator outputs use the shared currency and locale formatters',
 test('international VAT page is canonical, indexable and uses the shared locale helper',()=>{
  assert.ok(vatPage.includes('https://friendlycalculator.in/international/vat-calculator.html'));
  assert.ok(vatPage.includes('index,follow'));assert.ok(vatSource.includes('FCLocale'));
+});
+
+test('currency formatting follows the selected display currency without altering the calculation value',()=>{
+ const x=boot();const inr=x.api.formatCurrency(1000);assert.ok(inr.includes('₹'));
+ x.api.setCurrency('USD');assert.ok(x.api.formatCurrency(1000).includes('$'));
+ assert.equal(x.api.getCurrency(),'USD');
+});
+test('global currency helper updates currency labels and explains display-only behavior',()=>{
+ assert.match(source,/updateCurrencyLabels/);
+ assert.match(source,/Display currency only\. Changing it does not convert existing numeric inputs/);
+});
+test('native financial calculators refresh displayed results after currency preference changes',()=>{
+ const loan=fs.readFileSync(new URL('../assets/loan-emi-calculator.js','file://'+__filename),'utf8');
+ const rd=fs.readFileSync(new URL('../calculators/rd-calculator.html','file://'+__filename),'utf8');
+ const sip=fs.readFileSync(new URL('../calculators/sip-calculator.html','file://'+__filename),'utf8');
+ const homeLoan=fs.readFileSync(new URL('../calculators/home-loan-emi-calculator.html','file://'+__filename),'utf8');
+ const mortgage=fs.readFileSync(new URL('../calculators/mortgage-calculator.html','file://'+__filename),'utf8');
+ for(const code of [loan,rd,sip,homeLoan,mortgage])assert.match(code,/FCLocale\.formatCurrency/);
+ for(const code of [loan,rd,sip,homeLoan,mortgage])assert.match(code,/fc:localechange/);
+});
+test('generic finance calculator rerenders existing results when display currency changes',()=>{
+ assert.match(genericSource,/refreshForLocale/);
+ assert.match(genericSource,/localeRefresh/);
 });

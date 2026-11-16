@@ -68,7 +68,8 @@ button{border:0;border-radius:9px;background:var(--navy);color:#fff;padding:12px
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
-const money=value=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(value);
+const money=value=>window.FCLocale?window.FCLocale.formatCurrency(value,window.FCLocale.getCurrency(),{maximumFractionDigits:2}):new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(value);
+let localeRefresh=false;
 function calculate(){
  const p=Number($('monthly').value),rate=Number($('rate').value),years=Number($('years').value),extra=Number($('months').value);
  const n=years*12+extra;
@@ -83,10 +84,11 @@ function calculate(){
  $('interest').textContent=money(maturity-total);
  $('maturity').textContent=money(maturity);
  $('status').textContent='Estimate for '+n+' monthly instalments. Actual bank calculations may differ.';
- if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
+ if(!localeRefresh&&typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
 }
 $('calculate').addEventListener('click',calculate);
 ['monthly','rate','years','months'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')calculate()}));
+window.addEventListener('fc:localechange',()=>{localeRefresh=true;try{calculate()}finally{localeRefresh=false}});window.addEventListener('fc:locale-ready',()=>{localeRefresh=true;try{calculate()}finally{localeRefresh=false}});
 calculate();
 })();
 </script>

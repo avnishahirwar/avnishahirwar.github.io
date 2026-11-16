@@ -140,6 +140,7 @@ const money=value=>window.FCLocale?window.FCLocale.formatCurrency(value,window.F
 const updateCurrencyLabels=()=>{const code=window.FCLocale?.getCurrency?.()||'INR';let symbol='₹';try{symbol=new Intl.NumberFormat(window.FCLocale?.getLocale?.()||'en-IN',{style:'currency',currency:code}).formatToParts(0).find(part=>part.type==='currency')?.value||symbol;}catch(_){}document.querySelectorAll('#mortgage-form .field span').forEach(label=>{if(/\(₹\)/.test(label.textContent))label.textContent=label.textContent.replace('(₹)','('+symbol+')');else if(/\([^)]{1,5}\)$/.test(label.textContent)&&/price|payment|tax|insurance|charges/i.test(label.textContent))label.textContent=label.textContent.replace(/\([^)]{1,5}\)$/,'('+symbol+')');});};
 updateCurrencyLabels();
 window.addEventListener('fc:localechange',updateCurrencyLabels);window.addEventListener('fc:locale-ready',updateCurrencyLabels);window.addEventListener('load',updateCurrencyLabels,{once:true});
+let localeRefresh=false;
 form.addEventListener('submit',event=>{
   event.preventDefault();
   try{
@@ -174,7 +175,7 @@ form.addEventListener('submit',event=>{
     note.className='muted';
     note.textContent='Illustrative fixed-rate estimate. Fees, taxes or charges not entered above are excluded.';
     output.append(heading,list,note);
-    if(typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
+    if(!localeRefresh&&typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
   }catch(error){
     output.replaceChildren();
     const message=document.createElement('span');
@@ -183,6 +184,8 @@ form.addEventListener('submit',event=>{
     output.appendChild(message);
   }
 });
+const refreshForLocale=()=>{if(output.childNodes.length&&typeof form.requestSubmit==='function'){localeRefresh=true;try{form.requestSubmit()}finally{localeRefresh=false}}};
+window.addEventListener('fc:localechange',refreshForLocale);window.addEventListener('fc:locale-ready',refreshForLocale);
 })();
 </script>
 </body>

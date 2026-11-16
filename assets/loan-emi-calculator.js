@@ -15,10 +15,9 @@
     };
   }
 
-  const money = value => "₹" + Number(value).toLocaleString("en-IN", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+  const money = value => window.FCLocale
+    ? window.FCLocale.formatCurrency(value, window.FCLocale.getCurrency(), { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : "₹" + Number(value).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   function cell(tag, text, scope) {
     const node = document.createElement(tag);
@@ -75,6 +74,15 @@
     output.setAttribute("aria-live", "polite");
     output.style.cssText = "display:none;margin-top:16px;padding:14px;background:#edf3f7;border-radius:10px";
     panel.append(form, output);
+    let localeRefresh = false;
+    const refreshForLocale = () => {
+      if (output.style.display !== "none" && typeof form.requestSubmit === "function") {
+        localeRefresh = true;
+        try { form.requestSubmit(); } finally { localeRefresh = false; }
+      }
+    };
+    window.addEventListener("fc:localechange", refreshForLocale);
+    window.addEventListener("fc:locale-ready", refreshForLocale);
 
     form.addEventListener("submit", event => {
       event.preventDefault();
@@ -208,7 +216,7 @@
       output.appendChild(solution);
       output.style.display = "block";
 
-      if (typeof window.gtag === "function") {
+      if (!localeRefresh && typeof window.gtag === "function") {
         window.gtag("event", "calculator_used", {
           calculator_name: "Loan EMI Calculator",
           calculator_page: location.pathname
