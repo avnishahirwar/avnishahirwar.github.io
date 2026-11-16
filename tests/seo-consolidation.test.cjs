@@ -8,7 +8,6 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 test('legacy overlapping category pages are excluded from indexing and point to retained categories', () => {
   const mappings = {
     'calculator/finance.html': '/calculator/finance-calculators.html',
-    'calculator/everyday.html': '/calculator/everyday-calculators.html',
     'calculator/business-tools.html': '/calculator/business-calculators.html',
     'calculator/tax-calculators.html': '/calculator/tax.html'
   };
@@ -34,12 +33,20 @@ test('tax category retains indexed legacy landing page and includes the consolid
   assert.match(tax, /<meta name="robots" content="index,follow/);
 });
 
-test('premium waitlist remains accessible but is not offered as an indexable search landing page', () => {
+test('legacy everyday alias is crawlable and canonically consolidated', () => {
+  const html = read('calculator/everyday.html');
+  const sitemap = read('sitemap.xml');
+  assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/i);
+  assert.ok(html.includes('https://friendlycalculator.in/calculator/everyday-calculators.html'));
+  assert.ok(!sitemap.includes('https://friendlycalculator.in/calculator/everyday.html'));
+});
+
+test('premium waitlist is indexable and included in the sitemap', () => {
   const html = read('calculator/premium-waitlist.html');
   const sitemap = read('sitemap.xml');
-  assert.match(html, /<meta name="robots" content="noindex,follow">/);
+  assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/i);
   assert.match(html, /Register your interest/);
-  assert.ok(!sitemap.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
+  assert.ok(sitemap.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
 });
 
 test('all 285 calculator pages remain in the sitemap after category cleanup', () => {
