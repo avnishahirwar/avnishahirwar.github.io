@@ -69,5 +69,5 @@ test('all HTML hreflang alternates resolve to real same-domain pages and recipro
     }
   }
   console.log('International hreflang audit: ' + pages.length + ' HTML pages, ' + checked + ' alternate references.');
-  assert.deepEqual(errors, [], errors.slice(0, 50).join('\n'));
+  assert.equal(errors.length, 0, 'Found ' + errors.length + ' hreflang defects:\n' + errors.slice(0, 50).join('\n'));
 });
