@@ -21,7 +21,7 @@ test('international directory links only to existing country-oriented and genera
     '/calculators/sales-tax-calculator.html',
     '/calculators/currency-converter-calculator.html',
     '/calculators/tip-calculator.html',
-    '/calculator/tax-calculators.html',
+    '/calculator/tax.html',
     '/calculator/finance-calculators.html'
   ]) {
     assert.ok(fs.existsSync(path.join(root, route.replace(/^\//, ''))), 'Missing linked route: ' + route);
@@ -72,4 +72,18 @@ test('directory promotes the global hub and current tax category route', () => {
   assert.match(directory, /href="\/international\/"/);
   assert.match(directory, /href="\/calculator\/tax\.html"/);
   assert.match(directory, /International Calculators/);
+});
+
+test('static directory navigation is crawlable and uses the canonical tax category route', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const header = directory.slice(directory.indexOf('<nav id="fc-primary-navigation"'), directory.indexOf('</nav>', directory.indexOf('<nav id="fc-primary-navigation"')));
+  for (const route of [
+    '/calculator/finance-calculators.html',
+    '/calculator/tax.html',
+    '/calculator/business-calculators.html',
+    '/calculator/everyday-calculators.html',
+    '/international/',
+    '/calculator/site-directory.html'
+  ]) assert.ok(header.includes('href="' + route + '"'), 'Missing crawlable header route: ' + route);
+  assert.ok(!header.includes('/calculator/tax-calculators.html'), 'Retired tax category URL must not be in primary navigation');
 });
