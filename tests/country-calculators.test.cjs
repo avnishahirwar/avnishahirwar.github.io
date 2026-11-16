@@ -83,7 +83,7 @@ test('country tax landing pages link to the correct calculators',()=>{
 
 test('Australia 2026-27 resident tax rates apply progressive bands excluding Medicare levy',()=>{
  const r=calculateAustraliaIncomeTax(100000);
- assert.equal(r.incomeTax,22492);
+ assert.equal(r.incomeTax,20520);
  assert.equal(r.taxYear,'2026-27');
  assert.equal(r.medicareLevyIncluded,false);
 });
