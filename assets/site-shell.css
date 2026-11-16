@@ -175,7 +175,7 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
 .fc-nav-toggle:focus-visible{outline:3px solid #d8bd82;outline-offset:3px}
 @media(max-width:760px){
   .fc-global-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0}
-  .fc-global-brand{flex:1 1 auto;min-width:0}
+  .fc-global-brand{flex:1 1 auto;min-width:0;width:auto}
   .fc-nav-toggle{display:inline-flex;flex:0 0 auto}
   .fc-global-links{display:none;order:3;flex:1 0 100%;width:100%;min-width:0;padding:10px 0 4px;border-top:1px solid #34475d;align-items:stretch;justify-content:flex-start;gap:6px}
   .fc-global-links.fc-nav-open{display:flex;flex-direction:column}
