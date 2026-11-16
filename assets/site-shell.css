@@ -186,3 +186,32 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
   .fc-global-links .fc-language-control select,.fc-global-links .fc-country-control select,.fc-global-links .fc-currency-control select,.fc-global-links .fc-format-control select,.fc-global-links .fc-unit-control select{width:100%;max-width:none;min-height:40px}
 }
 @media(min-width:761px){.fc-nav-toggle{display:none!important}.fc-global-links{display:flex!important}}
+
+
+/* iOS Safari and iPadOS refinements: safe areas, readable form controls and touch targets. */
+@supports (padding: max(0px)) {
+  .fc-global-header { padding-top: env(safe-area-inset-top); }
+  .fc-global-footer { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  #fc-ai-lazy-launch, #fc-display-settings, .fc-pwa-install {
+    bottom: max(14px, calc(env(safe-area-inset-bottom) + 10px));
+  }
+  .fc-display-panel, .fc-pwa-help {
+    bottom: max(122px, calc(env(safe-area-inset-bottom) + 112px));
+  }
+}
+@media (max-width: 760px) {
+  :where(button, [role="button"], input[type="button"], input[type="submit"], .fc-nav-toggle) {
+    min-height: 44px;
+  }
+  .fc-global-links a { min-height: 44px; }
+  .fc-global-nav { padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
+}
+@supports (-webkit-touch-callout: none) {
+  html { -webkit-text-size-adjust: 100%; }
+  input, select, textarea { font-size: 16px; }
+  input[type="number"], input[inputmode="decimal"], input[inputmode="numeric"] {
+    font-variant-numeric: tabular-nums;
+  }
+  button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+  main table { -webkit-overflow-scrolling: touch; }
+}
