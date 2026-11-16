@@ -1,3 +1,4 @@
+const {calculateUSFederalTakeHome,calculateUKEmployerNIC,calculateCanadaPayroll}=require('../assets/international-payroll.js');
 const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax}=require('../assets/country-calculators.js');
 test('Canada GST/HST add and remove modes calculate tax consistently',()=>{const add=calculateGSTHST(100,13,0,'add');assert.equal(add.tax,13);assert.equal(add.gross,113);const remove=calculateGSTHST(113,13,0,'remove');assert.equal(remove.net,100);assert.equal(remove.tax,13);});
 test('Canada calculator supports separate provincial tax input',()=>{const r=calculateGSTHST(100,5,7,'add');assert.equal(r.totalRate,12);assert.equal(r.tax,12);assert.equal(r.gross,112);});
@@ -135,4 +136,60 @@ test('Asia-Pacific country landing pages link to their published calculators',()
   const html=fs.readFileSync(path.join(root,file),'utf8');
   assert.ok(html.includes(link));assert.match(html,/rel="canonical"/);
  }
+});
+
+test('US 2026 federal income tax and employee FICA use IRS and SSA standard values',()=>{
+ const r=calculateUSFederalTakeHome(85000,{filingStatus:'single'});
+ assert.equal(r.standardDeduction,16100);
+ assert.equal(r.taxableIncome,68900);
+ assert.equal(r.federalIncomeTax,9870);
+ assert.equal(r.socialSecurity,5270);
+ assert.equal(r.medicare,1232.5);
+ assert.equal(r.estimatedNet,68627.5);
+ assert.equal(r.taxYear,2026);
+});
+test('US filing statuses apply the correct 2026 standard deduction and reject invalid status',()=>{
+ assert.equal(calculateUSFederalTakeHome(50000,{filingStatus:'marriedJoint'}).standardDeduction,32200);
+ assert.equal(calculateUSFederalTakeHome(50000,{filingStatus:'headOfHousehold'}).standardDeduction,24150);
+ assert.equal(calculateUSFederalTakeHome(50000,{filingStatus:'marriedSeparate'}).standardDeduction,16100);
+ assert.throws(()=>calculateUSFederalTakeHome(50000,{filingStatus:'invalid'}),RangeError);
+});
+test('UK employer NIC estimate applies the 2026-27 £5,000 secondary threshold and 15% rate',()=>{
+ const r=calculateUKEmployerNIC(40000);
+ assert.equal(r.employerNIC,5250);
+ assert.equal(r.totalEmployerCost,45250);
+ assert.equal(r.taxYear,'2026-27');
+ assert.equal(r.employmentAllowanceApplied,false);
+});
+test('Canada 2026 payroll estimates CPP, CPP2 and separate EI rates for Quebec',()=>{
+ const outside=calculateCanadaPayroll(85000);
+ assert.equal(outside.employeeCPP,4646.45);
+ assert.equal(outside.employeeEI,1123.07);
+ assert.equal(outside.employerEI,1572.3);
+ assert.equal(outside.employeePayrollContributions,5769.52);
+ const qc=calculateCanadaPayroll(85000,{province:'quebec'});
+ assert.equal(qc.employeeEI,895.7);
+ assert.equal(qc.employerEI,1253.98);
+});
+test('new US UK and Canada payroll pages are indexable, locale-aware and link official sources',()=>{
+ const root=path.join(__dirname,'..');
+ for(const [file,source] of [
+  ['international/us-income-tax-calculator.html','irs.gov'],
+  ['international/uk-payroll-calculator.html','gov.uk'],
+  ['international/canada-payroll-calculator.html','canada.ca']
+ ]){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.match(html,/name="robots" content="index,follow/);
+  assert.match(html,/rel="canonical"/);
+  assert.match(html,/"@type":"SoftwareApplication"/);
+  assert.match(html,/"@type":"FAQPage"/);
+  assert.match(html,/global-locale\.js/);
+  assert.match(html,new RegExp(source));
+ }
+});
+test('international country hubs and directory link to new tax and payroll calculators',()=>{
+ const root=path.join(__dirname,'..');
+ assert.match(fs.readFileSync(path.join(root,'international/index.html'),'utf8'),/us-income-tax-calculator\.html/);
+ assert.match(fs.readFileSync(path.join(root,'international/uk/index.html'),'utf8'),/uk-payroll-calculator\.html/);
+ assert.match(fs.readFileSync(path.join(root,'international/canada/index.html'),'utf8'),/canada-payroll-calculator\.html/);
 });
