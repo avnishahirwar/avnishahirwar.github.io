@@ -106,5 +106,11 @@ test('currency menu and share panel expose international currency and Pinterest/
  assert.match(shell,/pinterest\.com\/pin\/create\/button/);assert.match(shell,/reddit\.com\/submit/);
 });
 
-
-test('global unit converter distinguishes US and Imperial measures and supports area units',()=>{\n const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');\n const localized=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');\n for(const token of ['galUS','qtUS','ptUS','galImp','ptImp','acre','ha','area','st'])assert.ok(page.includes(token),token);\n for(const token of ['galUS','galImp','ptImp','acre','ha','area','st'])assert.ok(localized.includes(token),token);\n assert.match(page,/US customary and Imperial measures are separate options/);\n});\n
+ 
+test('global unit converter distinguishes US and Imperial measures and supports area units',()=>{
+ const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');
+ const localized=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');
+ for(const token of ['galUS','qtUS','ptUS','galImp','ptImp','acre','ha','area','st'])assert.ok(page.includes(token),token);
+ for(const token of ['galUS','galImp','ptImp','acre','ha','area','st'])assert.ok(localized.includes(token),token);
+ assert.match(page,/US customary and Imperial measures are separate options/);
+});
