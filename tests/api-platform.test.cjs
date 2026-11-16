@@ -138,7 +138,7 @@ test('published OpenAPI specification matches the implemented calculator API', (
 test('API documentation uses the current public calculator catalogue count', () => {
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.equal(new Set(calculatorUrls).size, 285);
-  assert.match(docs, /The full website directory contains 285 public calculators/);
+  assert.equal(new Set(calculatorUrls).size, 286);
+  assert.match(docs, /The full website directory contains 286 public calculators/);
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });
