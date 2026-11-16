@@ -77,6 +77,43 @@ function calculateCanadaRRSP({priorYearEarnedIncome,pensionAdjustment=0,unusedCo
  return {earnedIncome:earned,annualDollarLimit:33810,newRoom,unusedContributionRoom:unused,estimatedAvailableRoom:newRoom+unused,taxYear:2026};
 }
 
-const api={calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP};
+
+function calculateAustraliaIncomeTax(taxableIncome){
+ const income=validNonNegative(taxableIncome,'Taxable income');
+ let tax=0;
+ tax+=Math.max(0,Math.min(income,45000)-18200)*0.15;
+ tax+=Math.max(0,Math.min(income,135000)-45000)*0.30;
+ tax+=Math.max(0,Math.min(income,190000)-135000)*0.37;
+ tax+=Math.max(0,income-190000)*0.45;
+ return {taxableIncome:income,incomeTax:Math.round(tax*100)/100,taxYear:'2026-27',medicareLevyIncluded:false};
+}
+function calculateAustraliaSuper(qualifyingEarnings){
+ const earnings=validNonNegative(qualifyingEarnings,'Qualifying earnings');
+ const capped=Math.min(earnings,270830);
+ return {qualifyingEarnings:earnings,cappedEarnings:capped,superGuaranteeRate:12,employerSuper:capped*0.12,financialYear:'2026-27'};
+}
+function calculateSingaporeCPF(monthlyOrdinaryWages,{ageGroup='55-and-below'}={}){
+ const wages=validNonNegative(monthlyOrdinaryWages,'Monthly ordinary wages');
+ const rates={
+  '55-and-below':[17,20],
+  'above-55-to-60':[16,18],
+  'above-60-to-65':[12.5,12.5],
+  'above-65-to-70':[9,7.5],
+  'above-70':[7.5,5]
+ };
+ if(!Object.hasOwn(rates,ageGroup))throw new RangeError('Choose a valid CPF age group');
+ const [employerRate,employeeRate]=rates[ageGroup];
+ if(wages<=750)throw new RangeError('This simplified calculator supports monthly ordinary wages above S$750; graduated rates apply below that threshold');
+ const contributableWages=Math.min(wages,8000);
+ const employer=Math.round(contributableWages*employerRate/100);
+ const employee=Math.round(contributableWages*employeeRate/100);
+ return {monthlyWages:wages,ordinaryWageCeiling:8000,contributableWages,employerRate,employeeRate,employerContribution:employer,employeeContribution:employee,totalContribution:employer+employee,year:2026,scope:'Singapore citizens and third-year-onwards permanent residents; ordinary wages above $750'};
+}
+function calculateUAEIndividualIncomeTax(annualIncome){
+ const income=validNonNegative(annualIncome,'Annual income');
+ return {annualIncome:income,personalIncomeTax:0,netAfterPersonalIncomeTax:income,scope:'UAE individual personal income tax only'};
+}
+
+const api={calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FCCountryCalculators=api;
 })(typeof window!=='undefined'?window:globalThis);

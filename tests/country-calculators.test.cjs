@@ -1,4 +1,4 @@
-const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP}=require('../assets/country-calculators.js');
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const {calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax}=require('../assets/country-calculators.js');
 test('Canada GST/HST add and remove modes calculate tax consistently',()=>{const add=calculateGSTHST(100,13,0,'add');assert.equal(add.tax,13);assert.equal(add.gross,113);const remove=calculateGSTHST(113,13,0,'remove');assert.equal(remove.net,100);assert.equal(remove.tax,13);});
 test('Canada calculator supports separate provincial tax input',()=>{const r=calculateGSTHST(100,5,7,'add');assert.equal(r.totalRate,12);assert.equal(r.tax,12);assert.equal(r.gross,112);});
 test('UK SDLT standard bands use progressive portions',()=>{assert.equal(calculateSDLT(295000).tax,4750);});
@@ -78,5 +78,61 @@ test('country tax landing pages link to the correct calculators',()=>{
   const html=fs.readFileSync(path.join(root,file),'utf8');
   assert.ok(html.includes(link));
   assert.match(html,/rel="canonical"/);
+ }
+});
+
+test('Australia 2026-27 resident tax rates apply progressive bands excluding Medicare levy',()=>{
+ const r=calculateAustraliaIncomeTax(100000);
+ assert.equal(r.incomeTax,20520);
+ assert.equal(r.taxYear,'2026-27');
+ assert.equal(r.medicareLevyIncluded,false);
+});
+test('Australia 2026-27 super guarantee is 12% and capped at the maximum contribution base',()=>{
+ assert.equal(calculateAustraliaSuper(100000).employerSuper,12000);
+ assert.equal(calculateAustraliaSuper(300000).employerSuper,32499.6);
+});
+test('Singapore CPF 2026 age-based rates use the $8,000 ordinary wage ceiling',()=>{
+ const a=calculateSingaporeCPF(9000,{ageGroup:'55-and-below'});
+ assert.equal(a.contributableWages,8000);assert.equal(a.employerContribution,1360);assert.equal(a.employeeContribution,1600);assert.equal(a.totalContribution,2960);
+ const senior=calculateSingaporeCPF(5000,{ageGroup:'above-60-to-65'});
+ assert.equal(senior.employerContribution,625);assert.equal(senior.employeeContribution,625);
+ assert.throws(()=>calculateSingaporeCPF(700,{ageGroup:'55-and-below'}),RangeError);
+});
+test('UAE individual personal income tax estimate is zero and does not claim other payroll deductions',()=>{
+ const r=calculateUAEIndividualIncomeTax(120000);
+ assert.equal(r.personalIncomeTax,0);assert.equal(r.netAfterPersonalIncomeTax,120000);
+ assert.match(r.scope,/personal income tax only/);
+});
+
+test('Australia, Singapore and UAE calculator pages include official-source links and FAQ schema',()=>{
+ const root=path.join(__dirname,'..');
+ for(const [file,source] of [
+  ['international/australia-tax-super-calculator.html','ato.gov.au'],
+  ['international/singapore-cpf-calculator.html','cpf.gov.sg'],
+  ['international/uae-personal-income-tax-calculator.html','u.ae'],
+  ['international/saudi-vat-calculator.html','zatca.gov.sa']
+ ]){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.match(html,/rel="canonical"/);
+  assert.match(html,/"@type":"SoftwareApplication"/);
+  assert.match(html,/"@type":"FAQPage"/);
+  assert.ok(html.includes(source),'Missing official source in '+file);
+ }
+});
+test('UAE, Saudi and Australia standard tax presets are present in international VAT calculator',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'..','international/vat-calculator.html'),'utf8');
+ const js=fs.readFileSync(path.join(__dirname,'..','assets/vat-calculator.js'),'utf8');
+ for(const [code,rate] of [['AE',5],['SA',15],['AU',10]]){assert.ok(html.includes('value="'+code+'"'));assert.match(js,new RegExp(code+":\\{name:[^,]+,rate:"+rate));}
+});
+test('Asia-Pacific country landing pages link to their published calculators',()=>{
+ const root=path.join(__dirname,'..');
+ for(const [file,link] of [
+  ['international/australia/index.html','/international/australia-tax-super-calculator.html'],
+  ['international/singapore/index.html','/international/singapore-cpf-calculator.html'],
+  ['international/uae/index.html','/international/uae-personal-income-tax-calculator.html'],
+  ['international/saudi-arabia/index.html','/international/saudi-vat-calculator.html']
+ ]){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.ok(html.includes(link));assert.match(html,/rel="canonical"/);
  }
 });
