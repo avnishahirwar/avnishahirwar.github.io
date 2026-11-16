@@ -106,6 +106,8 @@ The site publishes selected calculator translations in Hindi (hi), Spanish (es),
 - [Sitemap](https://friendlycalculator.in/sitemap.xml): XML list of published canonical and localized URLs.
 - [Robots.txt](https://friendlycalculator.in/robots.txt): Public crawler access rules and sitemap location.
 - [This llms.txt file](https://friendlycalculator.in/llms.txt): Curated index for systems that choose to use this convention.
+- [Developer guide](https://friendlycalculator.in/developers/): Public documentation for embedding Friendly Calculator tools in other websites, including supported iframe usage and limitations.
+- [Embed Builder](https://friendlycalculator.in/embed/): Generate and preview an iframe snippet for supported calculators; follow the developer guide for implementation details.
 
 ## Guidance for readers and automated systems
 
