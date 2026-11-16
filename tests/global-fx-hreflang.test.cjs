@@ -68,7 +68,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across n
    const file=path.join(root,locale==='en'?'':locale,'calculators',route);
    const html=fs.readFileSync(file,'utf8');
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
-   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
    assert.deepEqual(actual,expected,locale+'/'+route);
   }
  }
