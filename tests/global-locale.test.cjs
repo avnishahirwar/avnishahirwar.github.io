@@ -105,3 +105,6 @@ test('currency menu and share panel expose international currency and Pinterest/
  for(const code of ['TRY','KRW','VND','PHP','MYR','PLN','SEK','NOK','DKK','CZK','HUF','ILS','NGN','KES','EGP','QAR','KWD','OMR','LKR','NPR','BHD','CLP','COP','ARS','UAH','MAD','RON','BGN'])assert.ok(shell.includes(code+":"),code);
  assert.match(shell,/pinterest\.com\/pin\/create\/button/);assert.match(shell,/reddit\.com\/submit/);
 });
+
+
+test('global unit converter distinguishes US and Imperial measures and supports area units',()=>{\n const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');\n const localized=fs.readFileSync(new URL('../assets/unit-converter-localized.js','file://'+__filename),'utf8');\n for(const token of ['galUS','qtUS','ptUS','galImp','ptImp','acre','ha','area'])assert.ok(page.includes(token),token);\n for(const token of ['galUS','galImp','ptImp','acre','ha','area'])assert.ok(localized.includes(token),token);\n assert.match(page,/US customary and Imperial measures are separate options/);\n});\n
