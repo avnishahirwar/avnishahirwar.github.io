@@ -6,12 +6,12 @@ const source=fs.readFileSync(new URL('../assets/global-locale.js','file://'+__fi
 const genericSource=fs.readFileSync(new URL('../assets/page-calculators.js','file://'+__filename),'utf8');
 const vatPage=fs.readFileSync(new URL('../international/vat-calculator.html','file://'+__filename),'utf8');
 const vatSource=fs.readFileSync(new URL('../assets/vat-calculator.js','file://'+__filename),'utf8');
-function boot(initial={}) {
+function boot(initial={},browserLocale='') {
  const values=new Map(Object.entries(initial)),listeners={},events=[];
  const select=()=>({value:'',addEventListener(type,fn){listeners[type]=fn;}});
  const elements={'fc-currency-select':select(),'fc-locale-select':select()};
  const context={
-  Intl,Number,Date,Object,
+  Intl,Number,Date,Object,navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
   document:{documentElement:{dataset:{}},getElementById:id=>elements[id],querySelectorAll:()=>[]},
   window:{dispatchEvent:event=>events.push(event),addEventListener:(type,fn)=>{(listeners['window:'+type]??=[]).push(fn);}},
@@ -82,4 +82,15 @@ test('VAT preset engine includes official rates and preserves manual override',(
  }
  assert.match(vatSource,/jurisdiction\.value!=='manual'/);
  assert.match(vatSource,/Manual rate selected/);
+});
+
+test('browser region auto-detects currency and number locale when no saved preference exists',()=>{
+ const us=boot({},'en-US');assert.equal(us.api.getCurrency(),'USD');assert.equal(us.api.getLocale(),'en-US');
+ const jp=boot({},'ja-JP');assert.equal(jp.api.getCurrency(),'JPY');assert.equal(jp.api.getLocale(),'ja-JP');
+ const ru=boot({},'ru-RU');assert.equal(ru.api.getCurrency(),'RUB');assert.equal(ru.api.getLocale(),'ru-RU');
+ const india=boot({},'en-IN');assert.equal(india.api.getCurrency(),'INR');assert.equal(india.api.getLocale(),'en-IN');
+});
+test('manual currency and format preferences override browser auto-detection',()=>{
+ const x=boot({'fc-preferred-currency':'INR','fc-preferred-format-locale':'en-IN'},'en-US');
+ assert.equal(x.api.getCurrency(),'INR');assert.equal(x.api.getLocale(),'en-IN');
 });

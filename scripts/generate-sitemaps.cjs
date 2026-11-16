@@ -8,7 +8,7 @@ const { execFileSync } = require('node:child_process');
 const ROOT = process.cwd();
 const SITE_ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
-const LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta']);
+const LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru']);
 const MAX_BYTES = 50 * 1024 * 1024;
 const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai'

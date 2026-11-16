@@ -223,15 +223,15 @@ if(embedMode){
 }
 
 if(main&&!main.id)main.id='fc-main-content';
-const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
-const shellSkipLabels={de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்'};
+const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||'en';
+const shellSkipLabels={de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்',ja:'メインコンテンツへ',ru:'Перейти к основному содержимому'};
 if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent=shellSkipLabels[shellLocaleForSkip]||'Skip to main content';document.body.prepend(skip);
 }
 const h=document.createElement('header');h.className='fc-global-header';
-const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்'};
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta)\//.exec(p)||[])[1]||'en';
-const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html'};
+const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்',ja:'日本語',ru:'Русский'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||'en';
+const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html'};
 // The URL is the source of truth for the active language.
 // Do not auto-redirect by browser language; visitors choose explicitly.
 
@@ -245,7 +245,9 @@ pt:{home:'Início',login:'Entrar',all:'Calculadoras',search:'Pesquisar calculado
 ar:{home:'الرئيسية',login:'تسجيل الدخول',all:'جميع الحاسبات',search:'البحث عن حاسبة',finance:'التمويل',tax:'الضرائب',business:'أدوات الأعمال',global:'حاسبات عالمية',everyday:'اليومي',blog:'المدونة',embed:'تضمين',forBusiness:'للأعمال',api:'API',plans:'الخطط',about:'من نحن',contact:'اتصل بنا',admin:'المسؤول',language:'اللغة',choose:'اختر لغة الموقع',change:'تغيير اللغة',footer:['الرئيسية','الدليل','التمويل','الضرائب','الأعمال','اليومي','للأعمال','API','الخطط','قائمة بريميوم','من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','اتصل بنا']},
 id:{home:'Beranda',login:'Masuk',all:'Semua kalkulator',search:'Cari kalkulator',finance:'Keuangan',tax:'Pajak',business:'Alat bisnis',global:'Kalkulator global',everyday:'Sehari-hari',blog:'Blog',embed:'Sematkan',forBusiness:'Untuk bisnis',api:'API',plans:'Paket',about:'Tentang',contact:'Kontak',admin:'Admin',language:'Bahasa',choose:'Pilih bahasa situs',change:'Ubah bahasa',footer:['Beranda','Direktori','Keuangan','Pajak','Bisnis','Sehari-hari','Untuk bisnis','API','Paket','Daftar premium','Tentang','Metodologi','Privasi','Ketentuan','Penafian','Kontak']},
 bn:{home:'হোম',login:'লগ ইন',all:'সব ক্যালকুলেটর',search:'ক্যালকুলেটর খুঁজুন',finance:'অর্থ',tax:'কর',business:'ব্যবসার টুল',global:'বিশ্বব্যাপী ক্যালকুলেটর',everyday:'দৈনন্দিন',blog:'ব্লগ',embed:'এম্বেড',forBusiness:'ব্যবসার জন্য',api:'API',plans:'প্ল্যান',about:'পরিচিতি',contact:'যোগাযোগ',admin:'অ্যাডমিন',language:'ভাষা',choose:'ওয়েবসাইটের ভাষা বাছুন',change:'ভাষা পরিবর্তন',footer:['হোম','ডিরেক্টরি','অর্থ','কর','ব্যবসা','দৈনন্দিন','ব্যবসার জন্য','API','প্ল্যান','প্রিমিয়াম তালিকা','পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','যোগাযোগ']},
-ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத்து கணிப்பான்கள்',search:'கணிப்பானைத் தேடு',finance:'நிதி',tax:'வரி',business:'வணிகக் கருவிகள்',global:'உலகளாவிய கணிப்பான்கள்',everyday:'அன்றாடம்',blog:'வலைப்பதிவு',embed:'உட்பொதி',forBusiness:'வணிகங்களுக்கு',api:'API',plans:'திட்டங்கள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு',admin:'நிர்வாகம்',language:'மொழி',choose:'இணையதள மொழியைத் தேர்ந்தெடுக்கவும்',change:'மொழியை மாற்று',footer:['முகப்பு','பட்டியல்','நிதி','வரி','வணிகம்','அன்றாடம்','வணிகங்களுக்கு','API','திட்டங்கள்','பிரீமியம் பட்டியல்','எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','தொடர்பு']}
+ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத்து கணிப்பான்கள்',search:'கணிப்பானைத் தேடு',finance:'நிதி',tax:'வரி',business:'வணிகக் கருவிகள்',global:'உலகளாவிய கணிப்பான்கள்',everyday:'அன்றாடம்',blog:'வலைப்பதிவு',embed:'உட்பொதி',forBusiness:'வணிகங்களுக்கு',api:'API',plans:'திட்டங்கள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு',admin:'நிர்வாகம்',language:'மொழி',choose:'இணையதள மொழியைத் தேர்ந்தெடுக்கவும்',change:'மொழியை மாற்று',footer:['முகப்பு','பட்டியல்','நிதி','வரி','வணிகம்','அன்றாடம்','வணிகங்களுக்கு','API','திட்டங்கள்','பிரீமியம் பட்டியல்','எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','தொடர்பு']},
+ja:{home:'ホーム',login:'ログイン',all:'すべての計算ツール',search:'計算ツールを検索',finance:'金融',tax:'税金',business:'ビジネスツール',global:'世界向け計算ツール',everyday:'日常',blog:'ブログ',embed:'埋め込み',forBusiness:'法人向け',api:'API',plans:'プラン',about:'サイトについて',contact:'お問い合わせ',admin:'管理',language:'言語',choose:'サイトの言語を選択',change:'言語を変更',footer:['ホーム','一覧','金融','税金','ビジネス','日常','法人向け','API','プラン','プレミアム','サイトについて','計算方法','プライバシー','利用規約','免責事項','お問い合わせ']},
+ru:{home:'Главная',login:'Войти',all:'Все калькуляторы',search:'Поиск калькулятора',finance:'Финансы',tax:'Налоги',business:'Бизнес-инструменты',global:'Международные калькуляторы',everyday:'На каждый день',blog:'Блог',embed:'Встроить',forBusiness:'Для бизнеса',api:'API',plans:'Тарифы',about:'О проекте',contact:'Контакты',admin:'Администратор',language:'Язык',choose:'Выберите язык сайта',change:'Изменить язык',footer:['Главная','Каталог','Финансы','Налоги','Бизнес','На каждый день','Для бизнеса','API','Тарифы','Премиум','О проекте','Методология','Конфиденциальность','Условия','Отказ от ответственности','Контакты']}
 };
 const nav=chrome[currentLocale]||chrome.en;
 const links=[
@@ -254,15 +256,15 @@ const links=[
   [nav.finance,currentLocale==='en'?r+'finance-calculators.html':localeHome[currentLocale]+'#finance'],
   [nav.tax,currentLocale==='en'?r+'tax.html':localeHome[currentLocale]+'#tax'],
   [nav.everyday,currentLocale==='en'?r+'everyday-calculators.html':localeHome[currentLocale]+'#everyday'],
-  [nav.global,'/international/'],
+  [nav.global,currentLocale==='ja'||currentLocale==='ru'?'/'+currentLocale+'/international/':'/international/'],
   [nav.all,r+'site-directory.html'],
   [nav.blog,currentLocale==='hi'?'/hi/blog/':'/blog/'],
   [nav.login,r+'dashboard.html']
 ];
 const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+nav.language+'</span><select id="fc-language-select" aria-label="'+nav.choose+'">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
-const currencyNames={INR:'INR · Indian Rupee',USD:'USD · US Dollar',EUR:'EUR · Euro',GBP:'GBP · British Pound',AED:'AED · UAE Dirham',CAD:'CAD · Canadian Dollar',AUD:'AUD · Australian Dollar',JPY:'JPY · Japanese Yen',SGD:'SGD · Singapore Dollar',CHF:'CHF · Swiss Franc',CNY:'CNY · Chinese Yuan',NZD:'NZD · New Zealand Dollar',SAR:'SAR · Saudi Riyal',BRL:'BRL · Brazilian Real',MXN:'MXN · Mexican Peso',ZAR:'ZAR · South African Rand',BDT:'BDT · Bangladeshi Taka',PKR:'PKR · Pakistani Rupee',IDR:'IDR · Indonesian Rupiah',THB:'THB · Thai Baht'};
+const currencyNames={INR:'INR · Indian Rupee',USD:'USD · US Dollar',EUR:'EUR · Euro',GBP:'GBP · British Pound',AED:'AED · UAE Dirham',CAD:'CAD · Canadian Dollar',AUD:'AUD · Australian Dollar',JPY:'JPY · Japanese Yen',SGD:'SGD · Singapore Dollar',CHF:'CHF · Swiss Franc',CNY:'CNY · Chinese Yuan',NZD:'NZD · New Zealand Dollar',SAR:'SAR · Saudi Riyal',BRL:'BRL · Brazilian Real',MXN:'MXN · Mexican Peso',ZAR:'ZAR · South African Rand',BDT:'BDT · Bangladeshi Taka',PKR:'PKR · Pakistani Rupee',IDR:'IDR · Indonesian Rupiah',THB:'THB · Thai Baht',RUB:'RUB · Russian Ruble'};
 const currencyControl='<label class="fc-currency-control"><span class="fc-language-label">Display currency</span><select id="fc-currency-select" aria-label="Display currency">'+Object.entries(currencyNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
-const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English'};
+const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','ru-RU':'Russia · Русский','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English'};
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Number & date</span><select id="fc-locale-select" aria-label="Country number and date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+currencyControl+formatControl+'</nav></div>';
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
@@ -337,7 +339,7 @@ const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta)(?=\/)/,'');
+  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)(?=\/)/,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
   return '/'+next+(normalizedPath.startsWith('/')?normalizedPath:'/'+normalizedPath);
