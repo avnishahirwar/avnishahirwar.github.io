@@ -11,7 +11,7 @@
 (()=>{'use strict';
 const params=new URLSearchParams(location.search);
 const rawSrc=params.get('src')||'';
-const valid=/^\\/(?:embed\\/basic-calculator|(?:[a-z]{2}\\/)?calculators\\/[a-z0-9-]+)\\.html$/;
+const valid=/^\/(?:embed\/basic-calculator|(?:[a-z]{2}\/)?calculators\/[a-z0-9-]+)\.html$/;
 const normalizePath=value=>{
   try{
     const url=new URL(value,location.origin);
@@ -39,7 +39,7 @@ async function loadCalculatorOptions(){
       if(Array.from(select.options).some(option=>option.value===path))return;
       const option=document.createElement('option');
       option.value=path;
-      option.textContent=item.name||path.split('/').pop().replace(/\\.html$/,'').replace(/-/g,' ');
+      option.textContent=item.name||path.split('/').pop().replace(/\.html$/,'').replace(/-/g,' ');
       select.add(option);
     });
   }catch(_){
