@@ -136,7 +136,10 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--g);outline-offs
 (()=>{'use strict';
 const form=document.getElementById('mortgage-form');
 const output=document.getElementById('mortgage-result');
-const money=value=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);
+const money=value=>window.FCLocale?window.FCLocale.formatCurrency(value,window.FCLocale.getCurrency(),{maximumFractionDigits:0}):new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);
+const updateCurrencyLabels=()=>{const code=window.FCLocale?.getCurrency?.()||'INR';let symbol='₹';try{symbol=new Intl.NumberFormat(window.FCLocale?.getLocale?.()||'en-IN',{style:'currency',currency:code}).formatToParts(0).find(part=>part.type==='currency')?.value||symbol;}catch(_){}document.querySelectorAll('#mortgage-form .field span').forEach(label=>{if(/\(₹\)/.test(label.textContent))label.textContent=label.textContent.replace('(₹)','('+symbol+')');else if(/\([^)]{1,5}\)$/.test(label.textContent)&&/price|payment|tax|insurance|charges/i.test(label.textContent))label.textContent=label.textContent.replace(/\([^)]{1,5}\)$/,'('+symbol+')');});};
+updateCurrencyLabels();
+window.addEventListener('fc:currencychange',updateCurrencyLabels);
 form.addEventListener('submit',event=>{
   event.preventDefault();
   try{
