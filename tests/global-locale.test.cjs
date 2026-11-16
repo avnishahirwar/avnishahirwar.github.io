@@ -136,7 +136,6 @@ test('English unit converter defaults to the selected metric or imperial unit pa
  const page=fs.readFileSync(new URL('../calculators/unit-converter.html','file://'+__filename),'utf8');
  assert.match(page,/getUnitSystem/);
  assert.match(page,/fc:unitchange/);
- for(const unit of ['\[']){} 
  assert.match(page,/length:\['ft','in'\]/);
  assert.match(page,/mass:\['lb','oz'\]/);
  assert.match(page,/length:\['m','cm'\]/);
