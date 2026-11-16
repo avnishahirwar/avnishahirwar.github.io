@@ -17,6 +17,6 @@ window.FCLocale=api;
 const currencySelect=document.getElementById('fc-currency-select'),localeSelect=document.getElementById('fc-locale-select');
 if(currencySelect){currencySelect.value=currency;currencySelect.addEventListener('change',()=>api.setCurrency(currencySelect.value));}
 if(localeSelect){localeSelect.value=formatLocale;localeSelect.addEventListener('change',()=>api.setLocale(localeSelect.value));}
-document.documentElement.dataset.fcCurrency=currency;document.documentElement.dataset.fcLocale=formatLocale;
+document.documentElement.dataset.fcCurrency=currency;document.documentElement.dataset.fcLocale=formatLocale;window.dispatchEvent(new CustomEvent('fc:locale-ready',{detail:{currency,locale:formatLocale}}));
 window.addEventListener('storage',event=>{if(event.key===CURRENCY_KEY&&Object.hasOwn(CURRENCIES,event.newValue)){currency=event.newValue;if(currencySelect)currencySelect.value=currency;document.documentElement.dataset.fcCurrency=currency;emit();}if(event.key===LOCALE_KEY&&Object.hasOwn(LOCALES,event.newValue)){formatLocale=event.newValue;if(localeSelect)localeSelect.value=formatLocale;document.documentElement.dataset.fcLocale=formatLocale;emit();}});
 })();
