@@ -103,7 +103,8 @@ function calculateSingaporeCPF(monthlyOrdinaryWages,{ageGroup='55-and-below'}={}
  };
  if(!Object.hasOwn(rates,ageGroup))throw new RangeError('Choose a valid CPF age group');
  const [employerRate,employeeRate]=rates[ageGroup];
- const contributableWages=wages<=750?0:Math.min(wages,8000);
+ if(wages<=750)throw new RangeError('This simplified calculator supports monthly ordinary wages above S$750; graduated rates apply below that threshold');
+ const contributableWages=Math.min(wages,8000);
  const employer=Math.round(contributableWages*employerRate/100);
  const employee=Math.round(contributableWages*employeeRate/100);
  return {monthlyWages:wages,ordinaryWageCeiling:8000,contributableWages,employerRate,employeeRate,employerContribution:employer,employeeContribution:employee,totalContribution:employer+employee,year:2026,scope:'Singapore citizens and third-year-onwards permanent residents; ordinary wages above $750'};
