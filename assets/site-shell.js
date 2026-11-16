@@ -312,7 +312,7 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
     }
   };
   window.addEventListener('resize',syncNav,{passive:true});
-  activeHeader.querySelector('.fc-global-nav')?.appendChild(toggle);
+  activeHeader.querySelector('.fc-global-nav')?.insertBefore(toggle,primaryNav);
 }
 const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
