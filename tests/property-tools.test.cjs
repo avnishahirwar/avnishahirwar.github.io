@@ -31,6 +31,9 @@ test('Embed wrapper allowlists calculator paths and shows attribution', () => {
   const html = read('embed/index.html');
   assert.match(html, /noindex,nofollow/);
   assert.ok(html.includes(String.raw`calculators\/[a-z0-9-]+)\.html`));
+  assert.match(html, /\(\?:\[a-z\]\{2\}\\\/\)\?/);
+  assert.match(html, /embed=1/);
+  assert.doesNotMatch(html, /method:'HEAD'/);
   assert.match(html, /Friendly Calculator/);
   assert.match(html, /referrerPolicy='strict-origin-when-cross-origin'/);
   const shell = read('assets/site-shell.js');
