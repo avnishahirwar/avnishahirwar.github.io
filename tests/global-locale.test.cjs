@@ -68,3 +68,18 @@ test('generic finance calculator rerenders existing results when display currenc
  assert.match(genericSource,/refreshForLocale/);
  assert.match(genericSource,/localeRefresh/);
 });
+
+test('VAT calculator offers sourced standard-rate presets and keeps manual rate as the default',()=>{
+ const page=fs.readFileSync(new URL('../international/vat-calculator.html','file://'+__filename),'utf8');
+ for(const code of ['GB','AU','SG','DE','FR','ES','IT','IE','NL','SE','DK','FI'])assert.ok(page.includes('value="'+code+'"'));
+ for(const sourceUrl of ['https://www.gov.uk/vat-rates','https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works','https://www.iras.gov.sg/taxes/goods-services-tax-%28gst%29/basics-of-gst/current-gst-rates','https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm'])assert.ok(page.includes(sourceUrl));
+ assert.match(page,/value="manual">Manual rate/);
+ assert.match(page,/Standard-rate references checked 16 November 2026/);
+});
+test('VAT preset engine includes official rates and preserves manual override',()=>{
+ for(const [code,rateValue] of [['GB',20],['AU',10],['SG',9],['DE',19],['FR',20],['ES',21],['IT',22],['IE',23],['NL',21],['SE',25],['DK',25],['FI',25.5]]){
+  assert.match(vatSource,new RegExp(code+":\\{name:[^,]+,rate:"+rateValue));
+ }
+ assert.match(vatSource,/jurisdiction\.value!=='manual'/);
+ assert.match(vatSource,/Manual rate selected/);
+});
