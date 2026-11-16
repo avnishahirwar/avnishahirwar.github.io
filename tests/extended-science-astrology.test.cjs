@@ -97,7 +97,7 @@ test('3D vector and planetary weight tools use the stated vector and gravity cal
 });
 
 test('numerology and zodiac tools return conventional labels with appropriate caveats', () => {
-  assert.match(runTool('life-path', { 'birth-date': '1990-01-01' }).result, /Life Path number: 2/);
+  assert.match(runTool('life-path', { 'birth-date': '1990-01-01' }).result, /Life Path number: 3/);
   assert.match(runTool('personal-year', { 'birth-date': '1990-01-01', year: 2026 }).result, /Personal Year number: 3/);
   assert.match(runTool('name-number', { 'full-name': 'AVNISH' }).result, /Pythagorean name number: 1/);
   assert.match(runTool('chinese-zodiac', { year: 2024 }).result, /Dragon/);
