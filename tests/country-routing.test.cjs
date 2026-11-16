@@ -36,3 +36,16 @@ test('UK country hub uses UK tax-year scope and UK-specific calculators and sour
  assert.match(html,/gov\.uk/);
  assert.doesNotMatch(html,/GST Calculator|PPF Calculator|HRA Exemption/);
 });
+test('Canada, Australia, UAE and Saudi Arabia country hubs list only their scoped tools',()=>{
+ const checks=[
+  ['ca/index.html','/international/canada-payroll-calculator.html','canada.ca','GST/HST'],
+  ['au/index.html','/international/australia-tax-super-calculator.html','ato.gov.au','2026–27'],
+  ['ae/index.html','/international/uae-personal-income-tax-calculator.html','u.ae','AED'],
+  ['sa/index.html','/international/saudi-vat-calculator.html','zatca.gov.sa','15%']
+ ];
+ for(const [file,link,source,marker] of checks){
+  const html=fs.readFileSync(path.join(root,file),'utf8');
+  assert.match(html,/rel="canonical"/);assert.ok(html.includes(link));assert.ok(html.includes(source));assert.ok(html.includes(marker));
+  assert.doesNotMatch(html,/Indian GST|PPF Calculator|HRA Exemption/);
+ }
+});
