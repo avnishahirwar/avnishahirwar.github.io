@@ -48,7 +48,7 @@ test('primary navigation follows a clear category order and includes the interna
   const navStart = shell.indexOf('const links=[');
   const navEnd = shell.indexOf('];', navStart);
   const nav = shell.slice(navStart, navEnd);
-  const order = ['nav.home','nav.finance','nav.tax','nav.business','nav.everyday','nav.global','nav.all','nav.blog','nav.login'];
+  const order = ['nav.home','nav.business','nav.finance','nav.tax','nav.everyday','nav.global','nav.all','nav.blog','nav.login'];
   let previous = -1;
   for (const item of order) {
     const index = nav.indexOf(item);
@@ -58,13 +58,10 @@ test('primary navigation follows a clear category order and includes the interna
   assert.match(nav, /r\+'tax\.html'/);
 });
 
-test('footer links to every public category and the international calculator hub', () => {
+test('shared footer retains its approved compact policy navigation while global tools stay in the header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /r\+'finance-calculators\.html'/);
-  assert.match(shell, /r\+'tax\.html'/);
-  assert.match(shell, /r\+'business-calculators\.html'/);
-  assert.match(shell, /r\+'everyday-calculators\.html'/);
-  assert.match(shell, /'\/international\/'/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
+  assert.match(shell, /\[nav\.global,'\/international\/'\]/);
 });
 
 test('directory promotes the global hub and current tax category route', () => {
