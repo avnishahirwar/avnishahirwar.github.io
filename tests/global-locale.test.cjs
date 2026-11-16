@@ -34,8 +34,8 @@ test('currency selection persists without changing entered numeric values',()=>{
  assert.equal(x.api.setCurrency('BAD'),false);
 });
 test('locale and currency changes dispatch a shared event',()=>{
- const x=boot();x.api.setCurrency('EUR');x.api.setLocale('de-DE');assert.equal(x.events.length,2);
- assert.equal(x.events[1].detail.locale,'de-DE');
+ const x=boot();x.api.setCurrency('EUR');x.api.setLocale('de-DE');assert.equal(x.events.filter(event=>event.type==='fc:localechange').length,2);
+ assert.equal(x.events.filter(event=>event.type==='fc:localechange')[1].detail.locale,'de-DE');
 });
 test('generic calculator outputs use the shared currency and locale formatters',()=>{
  assert.ok(genericSource.includes('window.FCLocale.formatCurrency'));assert.ok(genericSource.includes('window.FCLocale.formatNumber'));
