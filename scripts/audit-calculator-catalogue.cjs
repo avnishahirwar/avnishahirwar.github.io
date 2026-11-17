@@ -18,7 +18,7 @@ for (const lang of languages) walk(path.join(root,lang,'calculators'));
 const has = (html,re) => re.test(html);
 const findings = [];
 const stats = {total:files.length,english:0,localized:0,byLanguage:{},checks:{title:0,description:0,canonical:0,formula:0,workedExample:0,visibleFaq:0,faqSchema:0,chartOrTable:0,updatedRateStamp:0,authoritativeRateSource:0}};
-const ratePattern = /(ppf|ssy|sukanya|nsc|kvp|scss|post-office-(?:rd|mis)|gst|income-tax|advance-tax|tds|epf|pf-calculator|uk-stamp-duty)/i;
+const ratePattern = /(ppf|ssy|sukanya|nsc|kvp|scss|post-office-(?:rd|mis)|gst|income-tax|advance-tax|tds|epf|pf-calculator|uk-stamp-duty|national-insurance|superannuation)/i;
 for (const file of files.sort()) {
   const rel = path.relative(root,file).split(path.sep).join('/');
   const m = rel.match(/^([a-z]{2})\/calculators\//);
