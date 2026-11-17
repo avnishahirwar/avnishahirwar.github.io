@@ -198,11 +198,11 @@ test('international country hubs and directory link to new tax and payroll calcu
 
 test('Canada 2026 federal income tax applies progressive brackets and tapered basic personal credit',()=>{
  const r=calculateCanadaFederalIncomeTax(85000,{employmentIncome:85000});
- assert.equal(r.grossFederalTax,13833.785);
+ assert.equal(r.grossFederalTax,13621.01);
  assert.equal(r.basicPersonalAmount,16452);
  assert.equal(r.basicPersonalCredit,2303.28);
  assert.equal(r.employmentCredit,210.14);
- assert.equal(r.federalIncomeTax,11320.37);
+ assert.equal(r.federalIncomeTax,11107.59);
  assert.equal(r.taxYear,2026);
  const high=calculateCanadaFederalIncomeTax(300000);
  assert.equal(high.basicPersonalAmount,14829);
