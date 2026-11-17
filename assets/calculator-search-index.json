@@ -2756,5 +2756,75 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "square binomial algebra polynomial identity",
     "description": "Expand the square of a binomial using the standard algebraic identity."
+  },
+  {
+    "name": "Accuracy Calculator",
+    "url": "/calculators/accuracy-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "accuracy calculator statistics probability data analysis calculator",
+    "description": "Calculate accuracy and error rate from correct results and total observations."
+  },
+  {
+    "name": "ANOVA Calculator",
+    "url": "/calculators/anova-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "anova calculator statistics probability data analysis calculator",
+    "description": "Perform a one-way analysis of variance for two or more groups of numerical observations."
+  },
+  {
+    "name": "Bayes' Theorem Calculator",
+    "url": "/calculators/bayes-theorem-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "bayes' theorem calculator statistics probability data analysis calculator",
+    "description": "Apply Bayes' theorem to update a prior probability using an observed event and its likelihood."
+  },
+  {
+    "name": "Chebyshev's Theorem Calculator",
+    "url": "/calculators/chebyshevs-theorem-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "chebyshev's theorem calculator statistics probability data analysis calculator",
+    "description": "Estimate the minimum proportion of observations within a chosen number of standard deviations of the mean."
+  },
+  {
+    "name": "Confusion Matrix Calculator",
+    "url": "/calculators/confusion-matrix-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "confusion matrix calculator statistics probability data analysis calculator",
+    "description": "Calculate classification metrics from true positives, false positives, true negatives and false negatives."
+  },
+  {
+    "name": "Conditional Probability Calculator",
+    "url": "/calculators/conditional-probability-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "conditional probability calculator statistics probability data analysis calculator",
+    "description": "Calculate the probability of event A given that event B has occurred."
+  },
+  {
+    "name": "Expected Value Calculator",
+    "url": "/calculators/expected-value-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "expected value calculator statistics probability data analysis calculator",
+    "description": "Find the expected value of a discrete distribution from outcomes and their corresponding probabilities."
+  },
+  {
+    "name": "Joint Probability Calculator",
+    "url": "/calculators/joint-probability-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "joint probability calculator statistics probability data analysis calculator",
+    "description": "Check a joint probability against two event probabilities and compare it with the independent-events case."
+  },
+  {
+    "name": "Class Width Calculator",
+    "url": "/calculators/class-width-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "class width calculator statistics probability data analysis calculator",
+    "description": "Calculate class width to divide a numerical data range into a chosen number of equal classes."
+  },
+  {
+    "name": "Confidence Interval Calculator",
+    "url": "/calculators/confidence-interval-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "confidence interval calculator statistics probability data analysis calculator",
+    "description": "Calculate a z-based confidence interval for a population mean using sample summary statistics."
   }
 ]
