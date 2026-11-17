@@ -1637,3 +1637,14 @@ test('five new informational calculators are indexed, discoverable and use bound
   assert.equal(searchIndex.length, 311);
   assert.ok(homepage.includes('311 calculators'));
 });
+
+ 
+test('high-intent finance hubs link loan, mortgage, insurance and tax collections', () => {
+  const finance = fs.readFileSync(path.join(root, 'calculator/finance-calculators.html'), 'utf8');
+  const insurance = fs.readFileSync(path.join(root, 'calculator/insurance-calculators.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  for (const marker of ['/calculators/loan-emi-calculator.html','/calculators/mortgage-calculator.html','/calculators/home-loan-eligibility-calculator.html','/calculators/insurance-premium-calculator.html','/calculator/insurance-calculators.html','/calculator/tax.html']) assert.ok(finance.includes(marker), 'finance hub missing ' + marker);
+  assert.match(insurance, /Insurance Premium Calculator/);
+  assert.match(insurance, /does not provide an insurance quote/i);
+  assert.ok(directory.includes('/calculator/insurance-calculators.html'));
+});
