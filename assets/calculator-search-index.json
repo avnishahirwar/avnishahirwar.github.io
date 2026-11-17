@@ -2259,5 +2259,75 @@
     "category": "Biology & Chemistry",
     "keywords": "serial dilution concentration dilution factor steps",
     "description": "Calculate final concentration after repeated equal-step serial dilutions."
+  },
+  {
+    "name": "Doubling Time Calculator",
+    "url": "/calculators/doubling-time-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "doubling time calculator mathematics, numbers & statistics free online calculator",
+    "description": "Estimate time to double a quantity from a constant proportional growth rate."
+  },
+  {
+    "name": "Absolute Value Calculator",
+    "url": "/calculators/absolute-value-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "absolute value calculator mathematics, numbers & statistics free online calculator",
+    "description": "Find the non-negative distance of a real number from zero."
+  },
+  {
+    "name": "Addition Calculator",
+    "url": "/calculators/addition-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "addition calculator mathematics, numbers & statistics free online calculator",
+    "description": "Add two or more numbers and view their sum."
+  },
+  {
+    "name": "Proportion Calculator",
+    "url": "/calculators/proportion-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "proportion calculator mathematics, numbers & statistics free online calculator",
+    "description": "Solve a direct proportion by finding the missing fourth value."
+  },
+  {
+    "name": "Temperature Conversion Calculator",
+    "url": "/calculators/temperature-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "temperature conversion calculator converters, data & technology free online calculator",
+    "description": "Convert temperatures between Celsius, Fahrenheit and Kelvin."
+  },
+  {
+    "name": "Length Converter",
+    "url": "/calculators/length-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "length converter converters, data & technology free online calculator",
+    "description": "Convert common metric and imperial length units."
+  },
+  {
+    "name": "Weight Converter",
+    "url": "/calculators/weight-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "weight converter converters, data & technology free online calculator",
+    "description": "Convert mass values between kilograms, grams, pounds and ounces."
+  },
+  {
+    "name": "Time Unit Converter",
+    "url": "/calculators/time-unit-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "time unit converter converters, data & technology free online calculator",
+    "description": "Convert durations between seconds, minutes, hours, days, weeks and years."
+  },
+  {
+    "name": "Area Converter",
+    "url": "/calculators/area-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "area converter converters, data & technology free online calculator",
+    "description": "Convert area values between square metres, square feet, acres and hectares."
+  },
+  {
+    "name": "Volume Converter",
+    "url": "/calculators/volume-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "volume converter converters, data & technology free online calculator",
+    "description": "Convert volumes between litres, millilitres, cubic metres, US gallons and cups."
   }
 ]
