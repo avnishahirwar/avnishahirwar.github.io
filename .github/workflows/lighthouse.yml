@@ -25,6 +25,7 @@ on:
       - "calculator/legal-compliance.html"
       - "calculators/mortgage-calculator.html"
       - "calculators/sip-calculator.html"
+      - "calculators/income-tax-calculator.html"
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
