@@ -15,9 +15,15 @@ test('UK 2026-27 take-home estimate applies personal allowance, income tax and a
  const r=calculateUKTakeHome(50000);
  assert.equal(r.personalAllowance,12570);
  assert.equal(r.incomeTax,7486);
- assert.equal(r.nationalInsurance,2993.28);
+ assert.equal(r.nationalInsurance,2994.4);
  assert.equal(r.taxYear,'2026-27');
- assert.equal(r.netAnnual,39520.72);
+ assert.equal(r.netAnnual,39519.6);
+});
+test('UK 2026-27 employee NI uses HMRC annual thresholds rather than rounded weekly thresholds multiplied by 52',()=>{
+ assert.equal(calculateUKTakeHome(12570).nationalInsurance,0);
+ assert.equal(calculateUKTakeHome(12571).nationalInsurance,0.08);
+ assert.equal(calculateUKTakeHome(50270).nationalInsurance,3016);
+ assert.equal(calculateUKTakeHome(50271).nationalInsurance,3016.02);
 });
 test('UK Scotland uses Scottish bands and student loan plans use official 2026-27 thresholds',()=>{
  const scot=calculateUKTakeHome(50000,{region:'scotland'});
