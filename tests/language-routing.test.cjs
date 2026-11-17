@@ -85,3 +85,22 @@ test('Partial German, Japanese and Russian editions have explicit navigation fal
   assert.ok(shell.includes("ru:['О проекте (англ.)'"));
   assert.ok(shell.includes('const footerLinks=footerLabels[currentLocale].map('),'Every supported locale must have footer labels to prevent a runtime error');
 });
+
+test('German, Japanese and Russian basic calculators are fully localized and have reciprocal hreflang', () => {
+  const pages = {
+    de: ['Einfacher Rechner', 'Addition', 'Division'],
+    ja: ['基本電卓', '加算', '計算方法'],
+    ru: ['Базовый калькулятор', 'сложение', 'Как это работает']
+  };
+  for (const [locale, phrases] of Object.entries(pages)) {
+    const file = path.join(__dirname, '..', locale, 'calculators', 'basic-calculator.html');
+    assert.ok(fs.existsSync(file), 'Missing ' + locale + ' basic calculator');
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.ok(html.includes('rel="canonical"'));
+    assert.ok(html.includes('hreflang="x-default"'));
+    for (const phrase of phrases) assert.ok(html.includes(phrase), 'Missing localized phrase: ' + phrase);
+    assert.match(html, /data-action="equals"/);
+    assert.match(html, /site-shell\.js/);
+  }
+});
