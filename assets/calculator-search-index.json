@@ -2966,5 +2966,75 @@
     "category": "Biology & Chemistry",
     "keywords": "hydrogen ion concentration pH acidity molar concentration",
     "description": "Convert pH into hydrogen ion concentration using the standard logarithmic relationship."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadro-s-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "avogadro number constant particles moles chemistry",
+    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "Molar Mass of Gas Calculator",
+    "url": "/calculators/molar-mass-of-gas-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molar mass gas ideal gas equation pressure volume temperature",
+    "description": "Estimate a gas's molar mass from its sample mass, pressure, volume and absolute temperature using the ideal gas equation."
+  },
+  {
+    "name": "Moles to Atoms Converter",
+    "url": "/calculators/moles-to-atoms-converter.html",
+    "category": "Biology & Chemistry",
+    "keywords": "moles to atoms converter avogadro constant molecules chemistry",
+    "description": "Convert moles into the number of molecules or formula units and total atoms represented."
+  },
+  {
+    "name": "PPM to Molarity Calculator",
+    "url": "/calculators/ppm-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "ppm to molarity parts per million mass concentration density",
+    "description": "Convert a dilute mass concentration in parts per million into molarity using solution density and molar mass."
+  },
+  {
+    "name": "Residence Time Calculator",
+    "url": "/calculators/residence-time-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "residence time hydraulic retention volume flow rate",
+    "description": "Estimate the average hydraulic residence time from a system's working volume and volumetric flow rate."
+  },
+  {
+    "name": "Dilution Factor Calculator",
+    "url": "/calculators/dilution-factor-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dilution factor stock concentration target concentration final volume",
+    "description": "Calculate the dilution factor, stock volume and diluent volume needed to prepare a target concentration."
+  },
+  {
+    "name": "Henderson-Hasselbalch Calculator",
+    "url": "/calculators/henderson-hasselbalch-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "henderson hasselbalch buffer pH pKa acid base ratio",
+    "description": "Estimate buffer pH from pKa and the ratio of conjugate-base concentration to weak-acid concentration."
+  },
+  {
+    "name": "Mass Percent Calculator",
+    "url": "/calculators/mass-percent-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mass percent weight by weight concentration solute solvent",
+    "description": "Calculate the mass percentage of a solute from the solute mass and solvent mass."
+  },
+  {
+    "name": "Percentage Concentration to Molarity Calculator",
+    "url": "/calculators/percentage-concentration-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percentage concentration to molarity w/v grams per 100 ml",
+    "description": "Convert a mass/volume percentage (% w/v) into molarity using the solute's molar mass."
+  },
+  {
+    "name": "pH Calculator",
+    "url": "/calculators/ph-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "pH calculator hydrogen ion concentration acidity chemistry",
+    "description": "Calculate pH from hydrogen-ion concentration expressed in moles per litre."
   }
 ]
