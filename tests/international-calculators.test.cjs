@@ -65,7 +65,7 @@ test('UK National Insurance calculator applies 2026–27 standard category A ban
   assert.match(ctx.elements.get('total').textContent, /2,194\\.40/);
   setValues(ctx, { earnings: 60000 });
   click(ctx);
-  assert.match(ctx.elements.get('total').textContent, /2,788\\.00/);
+  assert.match(ctx.elements.get('total').textContent, /3,210\\.60/);
 });
 
 test('Australian superannuation calculator applies 12% and the annual contribution base', () => {
