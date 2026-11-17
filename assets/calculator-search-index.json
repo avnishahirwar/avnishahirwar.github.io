@@ -791,6 +791,13 @@
     "description": "Trigonometry, roots, logarithms and powers."
   },
   {
+    "name": "Graphing Calculator",
+    "url": "/calculators/graphing-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "free online graphing calculator plot functions equations curves compare graphs table of values roots intersections 2d graph",
+    "description": "Plot multiple mathematical functions and compare curves in an interactive 2D graph."
+  },
+  {
     "name": "LCM &amp; HCF Calculator",
     "url": "/calculators/lcm-hcf-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
