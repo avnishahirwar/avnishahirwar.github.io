@@ -23,7 +23,7 @@ for (const [locale, language, currency] of pages) {
     assert.match(html, /updateCurrencyLabel/);
     assert.match(html, /fc:localechange/);
     assert.match(html, /countryDefaults/);
-    assert.match(html, new RegExp(`Intl\\.NumberFormat\\(locale,\\{style:'currency',currency:code`));
+    assert.match(html, /Intl\.NumberFormat\(locale,\{style:["']currency["'],currency:code/);
     assert.doesNotMatch(html, /<label[^>]*>[^<]*\\(₹\\)/);
   });
 }
