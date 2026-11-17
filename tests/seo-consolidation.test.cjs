@@ -76,3 +76,15 @@ test('Income Tax calculator uses the current site catalogue count', () => {
   assert.ok(html.includes('Explore all 309 calculators on Friendly Calculator.'));
   assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
 });
+
+test('seven small-savings calculators show the current review date and RBI rate cross-check', () => {
+  const pages = [
+    'kvp-calculator.html', 'nsc-calculator.html', 'post-office-mis-calculator.html',
+    'ppf-calculator.html', 'rd-calculator.html', 'scss-calculator.html', 'ssy-calculator.html'
+  ];
+  for (const name of pages) {
+    const html = fs.readFileSync(path.join(root, 'calculators', name), 'utf8');
+    assert.match(html, /Updated: 16 November 2026/);
+    assert.match(html, /rbi\.org\.in\/Scripts\/PublicationsView\.aspx\?id=24085/);
+  }
+});
