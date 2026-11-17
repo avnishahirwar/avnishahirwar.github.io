@@ -2903,5 +2903,40 @@
     "category": "Business & Trade",
     "keywords": "FTE full time equivalent staffing employee hours workforce capacity",
     "description": "Convert total employee work hours into full-time equivalent (FTE) staffing for a consistent period."
+  },
+  {
+    "name": "Earnings per Share (EPS) Calculator",
+    "url": "/calculators/earnings-per-share-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "earnings per share EPS net income preferred dividends weighted average shares equity analysis",
+    "description": "Calculate basic earnings per share from net income, preferred dividends and weighted-average common shares."
+  },
+  {
+    "name": "Price-to-Earnings (P/E) Ratio Calculator",
+    "url": "/calculators/price-to-earnings-ratio-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "price earnings ratio PE P/E stock valuation share price earnings per share",
+    "description": "Calculate a share's price-to-earnings ratio from its market price per share and earnings per share."
+  },
+  {
+    "name": "Market Capitalization Calculator",
+    "url": "/calculators/market-capitalization-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "market capitalization market cap share price shares outstanding company valuation equity",
+    "description": "Estimate a listed company's market capitalization from its current share price and shares outstanding."
+  },
+  {
+    "name": "Enterprise Value Calculator",
+    "url": "/calculators/enterprise-value-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "enterprise value EV market capitalization debt cash preferred equity minority interest company valuation",
+    "description": "Estimate enterprise value by combining equity value, debt, preferred equity and minority interest, then subtracting cash."
+  },
+  {
+    "name": "Return on Equity (ROE) Calculator",
+    "url": "/calculators/return-on-equity-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "return on equity ROE net income average shareholders equity profitability ratio",
+    "description": "Calculate return on equity using net income and average shareholders' equity for the same reporting period."
   }
 ]
