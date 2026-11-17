@@ -2175,5 +2175,33 @@
     "category": "Insurance & Protection",
     "keywords": "insurance premium calculator life health motor travel property quote premium add-on rider discount tax payment frequency currency",
     "description": "Estimate an insurance premium breakdown using quote values and assumptions you enter."
+  },
+  {
+    "name": "Paycheck Calculator",
+    "url": "/calculators/paycheck-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "paycheck take home net pay gross pay deductions payroll pay frequency",
+    "description": "Estimate take-home pay from gross pay and entered deductions."
+  },
+  {
+    "name": "UK National Insurance Calculator",
+    "url": "/calculators/national-insurance-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "UK National Insurance employee Class 1 payroll 2026 2027 thresholds",
+    "description": "Estimate employee Class 1 NI using 2026–27 standard category A rates."
+  },
+  {
+    "name": "Australia Superannuation Calculator",
+    "url": "/calculators/superannuation-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "Australia superannuation super guarantee employer contribution retirement balance ATO",
+    "description": "Estimate 2026–27 employer super contributions and an illustrative future balance."
+  },
+  {
+    "name": "Zakat Calculator",
+    "url": "/calculators/zakat-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "Zakat calculator zakatable wealth Nisab eligible assets liabilities 2.5 percent",
+    "description": "Estimate Zakat from eligible wealth, entered liabilities and a verified Nisab threshold."
   }
 ]
