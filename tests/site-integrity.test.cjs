@@ -165,8 +165,8 @@ test('owner-designated permanent website features are protected from accidental 
   assert.match(contact, /Business Enquiries & Partnerships/i);
   assert.match(contact, /Custom calculator development/i);
   assert.match(shell, /instagram\.com\/avnish_ahirwar/);
-  assert.match(shell, /linkedin\.com\/in\/avnishahirwar420/);
-  assert.match(shell, /mailto:avnishahirwar420@gmail\.com/);
+  assert.match(shell, /linkedin\.com\/in\/avnishahirwar415/);
+  assert.match(shell, /mailto:avnishahirwar415@gmail\.com/);
   assert.doesNotMatch(shell, /About, trust & policies/i);
   assert.match(shell, /\.ad-slot/);
   assert.match(shell, /\.ad-placeholder/);
@@ -858,7 +858,7 @@ test('Founder landing page has the approved portrait, LinkedIn profile and factu
   assert.match(founder, /Founder and Owner/);
   assert.match(founder, /\"@type\":\"ProfilePage\"/);
   assert.match(founder, /src="\/assets\/founder-avnish-profile\.webp/);
-  assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar420/);
+  assert.match(founder, /https:\/\/www\.linkedin\.com\/in\/avnishahirwar415/);
   assert.match(founder, /application\/ld\+json/);
   assert.match(about, /href="\/calculator\/founder\.html"/);
 });
