@@ -18,6 +18,13 @@ on:
       - "index.html"
       - "calculators/minutes-to-hours-calculator.html"
       - "_headers"
+      - "calculator/about.html"
+      - "calculator/finance-calculators.html"
+      - "calculator/tax.html"
+      - "calculator/methodology.html"
+      - "calculator/legal-compliance.html"
+      - "calculators/mortgage-calculator.html"
+      - "calculators/sip-calculator.html"
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
@@ -62,7 +69,8 @@ jobs:
             html="$(curl -fsSL "https://friendlycalculator.in/calculators/loan-emi-calculator.html?deploy=${GITHUB_SHA}" || true)"
             js="$(curl -fsSL "https://friendlycalculator.in/assets/loan-emi-calculator.js?deploy=${GITHUB_SHA}" || true)"
             directory="$(curl -fsSL "https://friendlycalculator.in/calculator/site-directory.html?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory"; then
+            legal="$(curl -fsSL "https://friendlycalculator.in/calculator/legal-compliance.html?deploy=${GITHUB_SHA}" || true)"
+            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal"; then
               echo "Production calculator assets match commit ${GITHUB_SHA}."
               exit 0
             fi
@@ -121,6 +129,7 @@ jobs:
           blog-home|https://friendlycalculator.in/blog/
           hindi-home|https://friendlycalculator.in/hi/index.html
           spanish-home|https://friendlycalculator.in/es/index.html
+          legal-compliance|https://friendlycalculator.in/calculator/legal-compliance.html
           URLS
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
