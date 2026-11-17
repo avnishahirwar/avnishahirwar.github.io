@@ -214,7 +214,7 @@ test('About page catalogue matches every published calculator page', () => {
   const countMatch = about.match(/Available calculators \(\d+ tools\)/);
   assert.ok(countMatch, 'About page must publish the calculator catalogue count');
   assert.ok(about.includes('Available calculators (' + calculatorPages.length + ' tools)'));
-  assert.match(about, /Platform:<\/strong> 308 public calculators/);
+  assert.match(about, /Platform:<\/strong> 309 public calculators/);
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
   assert.doesNotMatch(about, /<ol[^>]+start=/i, 'Catalogue numbering must not restart between calculator batches');
@@ -791,7 +791,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.match(about, /308 public calculators/);
+  assert.match(about, /309 public calculators/);
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
