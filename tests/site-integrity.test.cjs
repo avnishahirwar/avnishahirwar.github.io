@@ -1597,7 +1597,7 @@ test('Net Worth Calculator is indexed, discoverable and calculates assets less l
   assert.match(about, /href="\/calculators\/net-worth-calculator\.html"/);
   assert.match(finance, /href="\/calculators\/net-worth-calculator\.html"/);
   assert.ok(searchIndex.some(item => item.url === '/calculators/net-worth-calculator.html'));
-  assert.equal(searchIndex.length, 404);
+  assert.equal(searchIndex.length, 405);
 
   const result = calculator.calculateNetWorth({
     cash: 25000, investments: 50000, otherAssets: 10000,
