@@ -148,17 +148,18 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <meta name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax">
 <meta name="twitter:description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"Are Friendly Calculator tools free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. The calculators currently available on the website can be used without a subscription. Any future paid features will be identified clearly before use."}},{"@type":"Question","name":"Are calculator results guaranteed to match a bank, employer or government calculation?","acceptedAnswer":{"@type":"Answer","text":"No. Results are estimates based on the inputs, formulas and assumptions shown on each calculator page. Actual terms, rounding, fees and applicable rules may change the result."}},{"@type":"Question","name":"Does Friendly Calculator provide tax, legal or financial advice?","acceptedAnswer":{"@type":"Answer","text":"No. Friendly Calculator provides calculation tools and general information, not professional advice. Verify tax rules and important decisions with the relevant official source or a qualified professional."}},{"@type":"Question","name":"How current are tax calculator rules?","acceptedAnswer":{"@type":"Answer","text":"Tax-year assumptions and review dates are shown on relevant tax calculator pages where applicable. Always confirm the current law and your individual circumstances with the Income Tax Department before filing."}},{"@type":"Question","name":"Can I use Friendly Calculator on a mobile phone?","acceptedAnswer":{"@type":"Answer","text":"Yes. The website is designed to work on mobile phones, tablets and desktop browsers."}}]}</script></head>
 <body>
-<header class="fc-global-header"><div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Choose website language"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Choose website language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="de">Deutsch (selected tools)</option><option value="ja">日本語 (selected tools)</option><option value="ru">Русский (selected tools)</option></select></label></nav></div></header>
+<header class="fc-global-header"><div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Choose website language"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Choose website language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="de">Deutsch (selected tools)</option><option value="ja">日本語 (selected tools)</option><option value="ru">Русский (selected tools)</option></select></label><a href="/calculator/site-directory.html#biology-chemistry"><strong>Biology &amp; Chemistry</strong><span>8 calculators</span></a>
+</nav></div></header>
 <section class="home-intro"><div class="page-wrap"><h1>Free Online Calculators for India and Worldwide</h1><p>Use free calculators for loan EMI, income tax, GST, salary, savings, business and everyday maths. India-focused tools and selected international calculators explain their formulas, inputs and assumptions.</p><p class="home-featured-tool"><a href="/calculators/basic-calculator.html">Open the free basic calculator</a> <span>for addition, subtraction, multiplication, division and percentages.</span></p>
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p></div></section>
 <main class="page-wrap home-main">
 <section class="home-tool-search" aria-labelledby="home-tool-search-title">
-<label id="home-tool-search-title" for="fc-home-tool-search">Search all 315 calculators</label>
+<label id="home-tool-search-title" for="fc-home-tool-search">Search all 323 calculators</label>
 <div class="home-tool-search-row">
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Try GST, EMI, SIP, percentage, age..." aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button">Clear</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 315 calculators across 19 categories. Search instantly or choose a category below.</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 323 calculators across 20 categories. Search instantly or choose a category below.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -248,7 +249,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==315)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||items.length!==323)throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -264,9 +265,9 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 315 calculators across 19 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 323 calculators across 20 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching all 315 calculators…';
+ status.textContent='Searching all 323 calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
