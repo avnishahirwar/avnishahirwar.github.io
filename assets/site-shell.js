@@ -284,9 +284,14 @@ const countryControl='<label class="fc-country-control"><span class="fc-language
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Number & date format</span><select id="fc-locale-select" aria-label="Number and date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
 h.innerHTML='<div class="fc-global-nav"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+countryControl+currencyControl+formatControl+unitControl+'</nav></div>';
+const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
+const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation')&&existingHeader.querySelector('#fc-language-select')&&existingHeader.querySelector('#fc-currency-select')&&existingHeader.querySelector('#fc-country-select')&&existingHeader.querySelector('#fc-locale-select')&&existingHeader.querySelector('#fc-unit-system-select'));
-if(existingHeader){if(!headerIsReady)existingHeader.replaceWith(h);}else document.body.prepend(h);
+if(headerIsReady){if(reservedHeader)reservedHeader.remove();}
+else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
+else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
+else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
