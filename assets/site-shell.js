@@ -1086,7 +1086,9 @@ if(isCalculatorRoute&&main){
     else favouriteButton.textContent='Browser storage unavailable';
   });
   const heading=main.querySelector('h1');
-  if(heading)heading.insertAdjacentElement('afterend',favouriteButton);
+  const favouriteSlot=heading?.nextElementSibling?.classList.contains('fc-favourite-slot')?heading.nextElementSibling:null;
+  if(favouriteSlot)favouriteSlot.replaceWith(favouriteButton);
+  else if(heading)heading.insertAdjacentElement('afterend',favouriteButton);
   refreshFavourite();
 }
 
