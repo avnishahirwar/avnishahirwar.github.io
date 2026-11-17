@@ -192,11 +192,11 @@ test('shared header and footer expose only the requested navigation items in ord
   assert.match(shell, /en:\{home:'Home',login:'Login'/);
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact']",
-    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','एम्बेड','संपर्क']"
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
+  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
 });
 
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
@@ -795,7 +795,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
-test('Cookie Policy is discoverable from Privacy, excluded from analytics and keeps the approved seven-link footer', () => {
+test('Cookie Policy is discoverable from Privacy, excluded from analytics and keeps the approved policy footer', () => {
   const privacy = fs.readFileSync(path.join(root, 'calculator/privacy.html'), 'utf8');
   const cookies = fs.readFileSync(path.join(root, 'calculator/cookies.html'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
@@ -804,7 +804,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact'\]/);
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });

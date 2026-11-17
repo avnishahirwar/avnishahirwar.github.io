@@ -58,9 +58,9 @@ test('primary navigation follows a clear category order and includes the interna
   assert.match(nav, /r\+'tax\.html'/);
 });
 
-test('shared footer retains its approved compact policy navigation while global tools stay in the header', () => {
+test('shared footer exposes the policy navigation including Legal & Compliance while global tools stay in the header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Embed','Contact'\]/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact'\]/);
   assert.ok(shell.includes("[nav.global,currentLocale==='ja'||currentLocale==='ru'?'/'+currentLocale+'/international/':'/international/']"));
 });
 
