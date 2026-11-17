@@ -2938,5 +2938,33 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "return on equity ROE net income average shareholders equity profitability ratio",
     "description": "Calculate return on equity using net income and average shareholders' equity for the same reporting period."
+  },
+  {
+    "name": "Molality Calculator",
+    "url": "/calculators/molality-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molality chemistry solution concentration solvent mass moles",
+    "description": "Calculate solution molality from solute mass, molar mass and solvent mass."
+  },
+  {
+    "name": "Normality Calculator",
+    "url": "/calculators/normality-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "normality chemistry equivalents solution concentration equivalent weight",
+    "description": "Calculate solution normality from solute mass, equivalent weight and final solution volume."
+  },
+  {
+    "name": "Empirical Formula Calculator",
+    "url": "/calculators/empirical-formula-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "empirical formula chemistry elemental composition mole ratio",
+    "description": "Estimate the simplest whole-number atom ratio from the masses and atomic masses of two elements."
+  },
+  {
+    "name": "Hydrogen Ion Concentration Calculator",
+    "url": "/calculators/hydrogen-ion-concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "hydrogen ion concentration pH acidity molar concentration",
+    "description": "Convert pH into hydrogen ion concentration using the standard logarithmic relationship."
   }
 ]
