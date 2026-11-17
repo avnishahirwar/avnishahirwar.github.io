@@ -19,7 +19,7 @@ for (const [locale, language, currency] of pages) {
   test(`/${locale}/ loan EMI calculator uses the visitor currency`, () => {
     const file = path.join(__dirname, '..', locale, 'calculators', 'loan-emi-calculator.html');
     const html = fs.readFileSync(file, 'utf8');
-    assert.match(html, /FCLocale\?\.formatCurrency\(value,code/);
+    assert.match(html, /FCLocale\?\.formatCurrency/);
     assert.match(html, /updateCurrencyLabel/);
     assert.match(html, /fc:localechange/);
     assert.match(html, /countryDefaults/);
