@@ -826,7 +826,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
 
   assert.equal(navCategoryCount, 20, 'Homepage shortcuts must expose all 20 categories');
   assert.equal(navCalculatorTotal, 404, 'Homepage category shortcuts must account for every calculator');
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>105 calculators<\/span><\/a>/, "Math shortcut must link to its full directory category");
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>115 calculators<\/span><\/a>/, "Math shortcut must link to its full directory category");
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
