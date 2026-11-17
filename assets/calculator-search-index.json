@@ -2828,6 +2828,41 @@
     "description": "Calculate a z-based confidence interval for a population mean using sample summary statistics."
   },
   {
+    "name": "Google AdSense Revenue Calculator",
+    "url": "/calculators/google-adsense-revenue-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "google adsense revenue calculator page views rpm ad revenue website monetization",
+    "description": "Estimate display-ad revenue from page views and an assumed page RPM. Enter your own RPM rather than relying on an unverified benchmark."
+  },
+  {
+    "name": "ROAS Calculator",
+    "url": "/calculators/roas-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "roas calculator return on ad spend advertising revenue marketing campaign",
+    "description": "Calculate return on advertising spend from advertising cost and attributed revenue, including the revenue-to-cost multiple and net difference."
+  },
+  {
+    "name": "SaaS Metrics Calculator",
+    "url": "/calculators/saas-metrics-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "saas metrics calculator mrr arr arpu customer churn subscription business",
+    "description": "Estimate annual recurring revenue, average revenue per customer, customer churn and net customer change from monthly SaaS inputs."
+  },
+  {
+    "name": "Pre and Post-Money Valuation Calculator",
+    "url": "/calculators/pre-post-money-valuation-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "pre money post money valuation calculator startup investment ownership dilution",
+    "description": "Calculate post-money valuation and the implied investor ownership percentage from a pre-money valuation and new investment amount."
+  },
+  {
+    "name": "Accumulated Depreciation Calculator",
+    "url": "/calculators/accumulated-depreciation-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "accumulated depreciation calculator straight line asset book value salvage useful life",
+    "description": "Estimate straight-line annual and accumulated depreciation, remaining book value and depreciated percentage from asset details."
+  },
+  {
     "name": "VAT Calculator",
     "url": "/international/vat-calculator.html",
     "category": "International tools",
