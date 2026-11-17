@@ -88,7 +88,7 @@ test('Partial German, Japanese and Russian editions have explicit navigation fal
 
 test('German, Japanese and Russian basic calculators are fully localized and have reciprocal hreflang', () => {
   const pages = {
-    de: ['Einfacher Rechner', 'Addition', 'Einheiten'],
+    de: ['Einfacher Rechner', 'Addition', 'Division'],
     ja: ['基本電卓', '加算', '計算方法'],
     ru: ['Базовый калькулятор', 'сложение', 'Как это работает']
   };
