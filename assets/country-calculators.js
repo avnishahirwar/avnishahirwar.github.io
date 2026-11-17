@@ -117,7 +117,8 @@ function calculateUAEIndividualIncomeTax(annualIncome){
 
 function calculateCanadaFederalIncomeTax(taxableIncome,{employmentIncome=0}={}){
  const income=Math.floor(validNonNegative(taxableIncome,'Taxable income'));
- const employment=Math.min(income,validNonNegative(employmentIncome,'Employment income'));
+ const employment=validNonNegative(employmentIncome,'Employment income');
+ if(employment>income)throw new RangeError('Employment income cannot exceed taxable income in this simplified estimate');
  const bands=[[58523,.14],[117045,.205],[181440,.26],[258482,.29],[Infinity,.33]];
  let tax=0,lower=0;
  for(const [upper,rate] of bands){const slice=Math.max(0,Math.min(income,upper)-lower);tax+=slice*rate;if(income<=upper)break;lower=upper;}
