@@ -2688,13 +2688,6 @@
     "description": "Estimate the probability that at least two people in a group share a birthday, assuming 365 equally likely days."
   },
   {
-    "name": "Absolute Value Inequalities Calculator",
-    "url": "/calculators/absolute-value-inequalities-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "absolute value inequalities mathematics algebra inequalities polynomials",
-    "description": "Solve inequalities involving the absolute value of a linear expression."
-  },
-  {
     "name": "Box Method Calculator",
     "url": "/calculators/box-method-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
@@ -2756,5 +2749,12 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "multiplying polynomials mathematics algebra inequalities polynomials",
     "description": "Multiply two finite polynomials entered as coefficient lists."
+  },
+  {
+    "name": "Square of a Binomial Calculator",
+    "url": "/calculators/square-of-a-binomial-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "square binomial algebra polynomial identity",
+    "description": "Expand the square of a binomial using the standard algebraic identity."
   }
 ]
