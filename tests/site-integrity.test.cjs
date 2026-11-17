@@ -1653,3 +1653,13 @@ test('high-intent finance hubs link loan, mortgage, insurance and tax collection
   assert.match(insurance, /does not provide an insurance quote/i);
   assert.ok(directory.includes('/calculator/insurance-calculators.html'));
 });
+
+
+test('custom Stamp Duty and US 401(k) pages skip the generic calculator injector', () => {
+  for (const file of ['calculators/stamp-duty-calculator.html', 'calculators/401k-calculator.html']) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /data-fc-native-calculator/, file + ' must declare its native calculator UI');
+  }
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /!document\.querySelector\('\[data-fc-native-calculator\]'\)/);
+});
