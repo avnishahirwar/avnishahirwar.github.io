@@ -153,12 +153,12 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p></div></section>
 <main class="page-wrap home-main">
 <section class="home-tool-search" aria-labelledby="home-tool-search-title">
-<label id="home-tool-search-title" for="fc-home-tool-search">Search all 323 calculators</label>
+<label id="home-tool-search-title" for="fc-home-tool-search">Search all 333 calculators</label>
 <div class="home-tool-search-row">
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Try GST, EMI, SIP, percentage, age..." aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button">Clear</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 323 calculators across 20 categories. Search instantly or choose a category below.</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 333 calculators across 20 categories. Search instantly or choose a category below.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -199,12 +199,12 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <a href="/calculator/site-directory.html#insurance-protection"><strong>Insurance &amp; Protection</strong><span>1 calculator</span></a>
 <a href="/calculator/site-directory.html#tax-payroll"><strong>Tax, Salary &amp; Payroll</strong><span>28 calculators</span></a>
 <a href="/calculator/site-directory.html#business-operations"><strong>Business, Sales &amp; Operations</strong><span>20 calculators</span></a>
-<a href="/calculator/site-directory.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics</strong><span>70 calculators</span></a>
+<a href="/calculator/site-directory.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics</strong><span>74 calculators</span></a>
 <a href="/calculator/site-directory.html#astronomy-space"><strong>Astronomy &amp; Space</strong><span>1 calculator</span></a>
 <a href="/calculator/site-directory.html#astrology-numerology"><strong>Astrology &amp; Numerology</strong><span>8 calculators</span></a>
 <a href="/calculator/site-directory.html#geometry-construction"><strong>Geometry, Measurement &amp; Construction</strong><span>28 calculators</span></a>
 <a href="/calculator/site-directory.html#date-time-work"><strong>Date, Time &amp; Work</strong><span>14 calculators</span></a>
-<a href="/calculator/site-directory.html#converters-technology"><strong>Converters, Data &amp; Technology</strong><span>27 calculators</span></a>
+<a href="/calculator/site-directory.html#converters-technology"><strong>Converters, Data &amp; Technology</strong><span>33 calculators</span></a>
 <a href="/calculator/site-directory.html#home-travel"><strong>Home, Travel &amp; Everyday Costs</strong><span>11 calculators</span></a>
 <a href="/calculator/site-directory.html#energy-sustainability"><strong>Energy &amp; Sustainability</strong><span>1 calculator</span></a>
 <a href="/calculator/site-directory.html#food-cooking"><strong>Food &amp; Cooking</strong><span>8 calculators</span></a>
@@ -249,7 +249,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==323)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||items.length!==333)throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -265,9 +265,9 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 323 calculators across 20 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 333 calculators across 20 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching all 323 calculators…';
+ status.textContent='Searching all 333 calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
