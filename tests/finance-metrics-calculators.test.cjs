@@ -1,6 +1,8 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
 const metrics=require('../assets/finance-metrics.js');
 
 test('Earnings per share uses income less preferred dividends over weighted-average shares',()=>{
@@ -23,12 +25,12 @@ test('ROE divides net income by average equity',()=>{
  assert.throws(()=>metrics.calculate('roe',{netIncome:100,averageEquity:0}),/greater than zero/);
 });
 test('five equity calculator pages are indexable and linked from the catalogue',()=>{
- const index=JSON.parse(fs.readFileSync('assets/calculator-search-index.json','utf8'));
- const directory=fs.readFileSync('calculator/site-directory.html','utf8');
- const about=fs.readFileSync('calculator/about.html','utf8');
- const finance=fs.readFileSync('calculator/finance-calculators.html','utf8');
- const home=fs.readFileSync('index.html','utf8');
+ const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
+ const directory=fs.readFileSync(path.join(root,'calculator/site-directory.html'),'utf8');
+ const about=fs.readFileSync(path.join(root,'calculator/about.html'),'utf8');
+ const finance=fs.readFileSync(path.join(root,'calculator/finance-calculators.html'),'utf8');
+ const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const slugs=['earnings-per-share-calculator','price-to-earnings-ratio-calculator','market-capitalization-calculator','enterprise-value-calculator','return-on-equity-calculator'];
- for(const slug of slugs){const url='/calculators/'+slug+'.html';const page=fs.readFileSync(url.slice(1),'utf8');assert.ok(index.some(item=>item.url===url));assert.ok(directory.includes('href="'+url+'"'));assert.ok(about.includes('href="'+url+'"'));assert.ok(finance.includes('href="'+url+'"'));assert.ok(page.includes('rel="canonical"'));assert.ok(page.includes('application/ld+json'));assert.ok(page.includes('finance-metrics.js'));}
+ for(const slug of slugs){const url='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,url.slice(1)),'utf8');assert.ok(index.some(item=>item.url===url));assert.ok(directory.includes('href="'+url+'"'));assert.ok(about.includes('href="'+url+'"'));assert.ok(finance.includes('href="'+url+'"'));assert.ok(page.includes('rel="canonical"'));assert.ok(page.includes('application/ld+json'));assert.ok(page.includes('finance-metrics.js'));}
  assert.equal(index.length,420);assert.equal(new Set(index.map(item=>item.url)).size,420);assert.match(home,/Search all 420 calculators/);assert.match(directory,/Browse all 419 calculator tools/);
 });
