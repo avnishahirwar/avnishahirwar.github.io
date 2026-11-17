@@ -44,7 +44,9 @@ function calculateUKTakeHome(grossAnnual,{region='england',studentLoanPlan='none
  if(!['england','wales','northern-ireland','scotland'].includes(region))throw new RangeError('Choose a valid UK tax region');
  let remaining=taxable,previous=0,incomeTax=0;
  for(const [limit,rate] of bands){const portion=Math.max(0,Math.min(remaining+previous,limit)-previous);incomeTax+=portion*rate;previous=limit;if(remaining<=0)break;remaining-=portion;}
- const niPrimary=242*52,niUpper=967*52;
+ // Use HMRC's published annual thresholds. Multiplying rounded weekly thresholds by 52
+ // produces different annual amounts (£12,584 / £50,284) from the official £12,570 / £50,270.
+ const niPrimary=12570,niUpper=50270;
  const nationalInsurance=Math.max(0,Math.min(gross,niUpper)-niPrimary)*0.08+Math.max(0,gross-niUpper)*0.02;
  const studentThresholds={plan1:26900,plan2:29385,plan4:33795,plan5:25000};
  if(studentLoanPlan!=='none'&&!Object.hasOwn(studentThresholds,studentLoanPlan))throw new RangeError('Choose a valid student loan plan');
