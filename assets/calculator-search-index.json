@@ -1501,7 +1501,7 @@
     "name": "Pomodoro Session Planner",
     "url": "/calculators/pomodoro-session-planner.html",
     "category": "Date, Time & Work",
-    "keywords": "pomodoro session planner plan focus sessions and breaks and estimate total session time.",
+    "keywords": "pomodoro session planner plan focus sessions and breaks and estimate total session time. deep work calculator deep work planner focus blocks concentration session break planner",
     "description": "Plan focus sessions and breaks and estimate total session time."
   },
   {
@@ -1879,7 +1879,7 @@
     "name": "Pace Calculator",
     "url": "/calculators/pace-calculator.html",
     "category": "Health, Fitness & Family",
-    "keywords": "pace calculator calculate running pace and speed.",
+    "keywords": "pace calculator calculate running pace and speed. running calculator run pace running speed distance duration",
     "description": "Calculate running pace and speed."
   },
   {
@@ -2152,7 +2152,14 @@
     "name": "Goal Success Calculator",
     "url": "/calculators/goal-success-calculator.html",
     "category": "Education & Academic Tools",
-    "keywords": "goal success calculator milestone progress goal tracker schedule completion",
+    "keywords": "goal success calculator milestone progress goal tracker schedule completion goal calculator goal planner personal goal progress milestone tracker",
     "description": "Calculate milestone completion and compare progress with elapsed planned time."
+  },
+  {
+    "name": "Study Calculator",
+    "url": "/calculators/study-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "study calculator study planner study time calculator study sessions focus time break time weekly study schedule",
+    "description": "Estimate focused study time, breaks and weekly study-session totals."
   }
 ]
