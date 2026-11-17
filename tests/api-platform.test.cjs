@@ -137,7 +137,7 @@ test('published OpenAPI specification matches the implemented calculator API', (
 
 test('API documentation uses the current public calculator catalogue count', () => {
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  assert.equal(searchIndex.length, 410);
-  assert.match(docs, /The full website directory contains 410 public calculators/);
+  assert.equal(searchIndex.length, 415);
+  assert.match(docs, /The full website directory contains 415 public calculators/);
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });
