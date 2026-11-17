@@ -114,6 +114,21 @@ function calculateUAEIndividualIncomeTax(annualIncome){
  return {annualIncome:income,personalIncomeTax:0,netAfterPersonalIncomeTax:income,scope:'UAE individual personal income tax only'};
 }
 
-const api={calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax};
+
+function calculateCanadaFederalIncomeTax(taxableIncome,{employmentIncome=0}={}){
+ const income=Math.floor(validNonNegative(taxableIncome,'Taxable income'));
+ const employment=validNonNegative(employmentIncome,'Employment income');
+ if(employment>income)throw new RangeError('Employment income cannot exceed taxable income in this simplified estimate');
+ const bands=[[58523,.14],[117045,.205],[181440,.26],[258482,.29],[Infinity,.33]];
+ let tax=0,lower=0;
+ for(const [upper,rate] of bands){const slice=Math.max(0,Math.min(income,upper)-lower);tax+=slice*rate;if(income<=upper)break;lower=upper;}
+ const basicPersonalAmount=income<=181440?16452:income>=258482?14829:16452-(income-181440)*(1623/77042);
+ const basicPersonalCredit=basicPersonalAmount*.14;
+ const employmentAmount=Math.min(1501,employment)*.14;
+ const federalTax=Math.max(0,Math.round((tax-basicPersonalCredit-employmentAmount)*100)/100);
+ return {taxableIncome:income,employmentIncome:employment,grossFederalTax:Math.round(tax*100)/100,basicPersonalAmount:Math.round(basicPersonalAmount*100)/100,basicPersonalCredit:Math.round(basicPersonalCredit*100)/100,employmentCredit:Math.round(employmentAmount*100)/100,federalIncomeTax:federalTax,taxYear:2026,scope:'Simplified federal income tax only; provincial/territorial tax, surtaxes, other credits, deductions and special rules excluded'};
+}
+
+const api={calculateCanadaFederalIncomeTax,calculateGSTHST,calculateSDLT,project401k,calculateUKTakeHome,calculateGermanIncomeTax,calculateCanadaCPP,calculateCanadaRRSP,calculateAustraliaIncomeTax,calculateAustraliaSuper,calculateSingaporeCPF,calculateUAEIndividualIncomeTax};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.FCCountryCalculators=api;
 })(typeof window!=='undefined'?window:globalThis);
