@@ -2469,5 +2469,75 @@
     "category": "Biology & Chemistry",
     "keywords": "rabbit gestation calculator biology chemistry calculator",
     "description": "Estimate a doe rabbit's expected kindling date from a recorded mating date using a typical 31-day gestation."
+  },
+  {
+    "name": "Atomic Mass Calculator",
+    "url": "/calculators/atomic-mass-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "atomic mass calculator chemistry calculator",
+    "description": "Calculate a weighted atomic mass from isotope masses and their relative abundances."
+  },
+  {
+    "name": "Average Atomic Mass Calculator",
+    "url": "/calculators/average-atomic-mass-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "average atomic mass calculator chemistry calculator",
+    "description": "Find an element's average atomic mass from the masses and natural abundances of its isotopes."
+  },
+  {
+    "name": "Bond Order Calculator",
+    "url": "/calculators/bond-order-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "bond order calculator chemistry calculator",
+    "description": "Calculate molecular-orbital bond order from the number of bonding and antibonding electrons."
+  },
+  {
+    "name": "Mass Concentration to Molar Concentration Conversion",
+    "url": "/calculators/mass-concentration-to-molar-concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mass concentration to molar concentration conversion chemistry calculator",
+    "description": "Convert a mass concentration in grams per litre to molar concentration using the solute's molar mass."
+  },
+  {
+    "name": "Molar Mass Calculator",
+    "url": "/calculators/molar-mass-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molar mass calculator chemistry calculator",
+    "description": "Estimate molar mass from a chemical formula using a built-in set of common atomic weights."
+  },
+  {
+    "name": "Percent Composition Calculator",
+    "url": "/calculators/percent-composition-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent composition calculator chemistry calculator",
+    "description": "Calculate each element's mass percentage in a compound from its chemical formula."
+  },
+  {
+    "name": "Grams to Moles Calculator",
+    "url": "/calculators/grams-to-moles-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "grams to moles calculator chemistry calculator",
+    "description": "Convert a sample mass in grams to amount of substance in moles using its molar mass."
+  },
+  {
+    "name": "Mole Calculator",
+    "url": "/calculators/mole-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mole calculator chemistry calculator",
+    "description": "Calculate moles and approximate particle count from sample mass and molar mass."
+  },
+  {
+    "name": "Mole Fraction Calculator",
+    "url": "/calculators/mole-fraction-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mole fraction calculator chemistry calculator",
+    "description": "Calculate the mole fraction of each component from a comma-separated list of component amounts."
+  },
+  {
+    "name": "Atom Economy Calculator",
+    "url": "/calculators/atom-economy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "atom economy calculator chemistry calculator",
+    "description": "Estimate atom economy from the molar mass of the desired product and the total molar mass of reactants."
   }
 ]
