@@ -9,10 +9,10 @@ test('Study Calculator is indexed, discoverable and uses the published catalogue
   const page = fs.readFileSync(root + '/calculators/study-calculator.html', 'utf8');
   const directory = fs.readFileSync(root + '/calculator/site-directory.html', 'utf8');
   const home = fs.readFileSync(root + '/index.html', 'utf8');
-  assert.equal(index.length, 343);
+  assert.equal(index.length, 353);
   assert.ok(index.some(item => item.name === 'Study Calculator' && item.url === '/calculators/study-calculator.html'));
   assert.match(directory, /href="\/calculators\/study-calculator\.html"/);
-  assert.match(home, /Search all 343 calculators/);
+  assert.match(home, /Search all 353 calculators/);
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /rel="canonical"/);
   assert.match(page, /EducationalApplication/);
