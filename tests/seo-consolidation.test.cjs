@@ -48,10 +48,10 @@ test('premium waitlist is indexable and included in the sitemap', () => {
   assert.ok(html.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
 });
 
-test('all 315 calculator pages remain in the sitemap after category cleanup', () => {
+test('all 323 calculator pages remain in the sitemap after category cleanup', () => {
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, 315);
+  assert.equal(new Set(calculatorUrls).size, 323);
 });
 
 
@@ -72,8 +72,8 @@ test('Income Tax calculator uses the current site catalogue count', () => {
   const html = read('calculators/income-tax-calculator.html');
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, 315);
-  assert.ok(html.includes('Explore all 315 calculators on Friendly Calculator.'));
+  assert.equal(new Set(calculatorUrls).size, 323);
+  assert.ok(html.includes('Explore all 323 calculators on Friendly Calculator.'));
   assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
 });
 
