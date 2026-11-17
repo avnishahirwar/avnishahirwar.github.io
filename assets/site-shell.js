@@ -14,8 +14,9 @@ const ensureFavicon=()=>{
       document.head.appendChild(link);
     }
   };
-  // Keep a vector favicon and a 96px PNG fallback available to crawlers and browsers.
+  // Keep the same vector brand icon and square PNG sizes available across pages.
   ensure('icon','image/svg+xml','/favicon.svg','any');
+  ensure('icon','image/png','/favicon-48.png','48x48');
   ensure('icon','image/png','/favicon-96.png','96x96');
 };
 ensureFavicon();
@@ -204,10 +205,15 @@ const r='/calculator/';
 // Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
 const preservedAdminDashboardLink=['Admin',r+'admin.html'];
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
-// One PNG favicon, one theme colour and one share-preview image across the site.
+// Keep vector, 48px/96px PNG and Apple touch icons together on every page.
 document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]').forEach(node=>node.remove());
-const favicon=document.createElement('link');favicon.rel='icon';favicon.type='image/png';favicon.sizes='96x96';favicon.href='/favicon-96.png';document.head.appendChild(favicon);
-if(!document.querySelector('link[rel="apple-touch-icon"]')){const apple=document.createElement('link');apple.rel='apple-touch-icon';apple.sizes='180x180';apple.href='/apple-touch-icon.png';document.head.appendChild(apple);}
+const addIcon=(rel,type,sizes,href)=>{const link=document.createElement('link');link.rel=rel;link.type=type;if(sizes)link.sizes=sizes;link.href=href;document.head.appendChild(link);};
+addIcon('icon','image/svg+xml','any','/favicon.svg');
+addIcon('icon','image/png','48x48','/favicon-48.png');
+addIcon('icon','image/png','96x96','/favicon-96.png');
+addIcon('shortcut icon','image/png','48x48','/favicon-48.png');
+document.querySelectorAll('link[rel="apple-touch-icon"]').forEach(node=>node.remove());
+addIcon('apple-touch-icon','image/png','180x180','/apple-touch-icon.png');
 const themeMeta=document.querySelector('meta[name="theme-color" i]')||document.head.appendChild(document.createElement('meta'));
 themeMeta.name='theme-color';themeMeta.content='#101c2c';
 const setMeta=(selector,attr,value)=>{let node=document.head.querySelector(selector);if(!node){node=document.createElement('meta');const key=selector.match(/\[(property|name)=["']([^"']+)["']\]/);if(key)node.setAttribute(key[1],key[2]);document.head.appendChild(node);}node.setAttribute(attr,value);};
