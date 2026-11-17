@@ -56,7 +56,7 @@ test('simple-interest English and Bengali hreflang alternates match published tr
  }
 });
 
-test('priority calculator hreflang clusters are complete and reciprocal across nine locales',()=>{
+test('priority calculator hreflang clusters are complete and reciprocal across supported locales',()=>{
  const routes=[
   'basic-calculator.html',
   'bike-loan-calculator.html',
@@ -65,8 +65,10 @@ test('priority calculator hreflang clusters are complete and reciprocal across n
   'discount-calculator.html',
   'ppf-calculator.html'
  ];
- const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+ const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+ const expandedLocales=[...baseLocales,'de','ja','ru'];
  for(const route of routes){
+  const locales=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
   expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
   for(const locale of locales){
