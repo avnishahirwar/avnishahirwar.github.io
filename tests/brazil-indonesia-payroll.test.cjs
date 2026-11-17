@@ -67,7 +67,7 @@ test('Indonesia PPh 21 page is indexable, canonical, linked from country hub and
  assert.match(page,/rel="canonical"/);
  assert.match(page,/"@type":"SoftwareApplication"/);
  assert.match(page,/PP 58\/2023/);
- assert.match(page,/Januari sampai November/);
+ assert.match(page,/Januari[–-]November/);
  assert.match(page,/Desember/);
  assert.match(page,/peraturan\.bpk\.go\.id/);
  assert.ok(hub.includes('/international/indonesia-pph21-monthly-calculator.html'));
