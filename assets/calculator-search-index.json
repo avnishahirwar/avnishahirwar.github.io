@@ -2399,5 +2399,75 @@
     "category": "Biology & Chemistry",
     "keywords": "qpcr efficiency calculator biology chemistry educational calculator",
     "description": "Estimate qPCR amplification efficiency from the slope of a standard-curve regression."
+  },
+  {
+    "name": "Mutation Rate Calculator",
+    "url": "/calculators/mutation-rate-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mutation rate calculator biology chemistry calculator",
+    "description": "Estimate an observed mutation frequency and a simple per-generation approximation from mutant counts and population size."
+  },
+  {
+    "name": "Punnett Square Calculator",
+    "url": "/calculators/punnett-square-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "punnett square calculator biology chemistry calculator",
+    "description": "Calculate genotype and phenotype probabilities for a single-gene Mendelian cross using two parental genotypes."
+  },
+  {
+    "name": "Trihybrid Cross Calculator - Punnett Square",
+    "url": "/calculators/trihybrid-cross-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "trihybrid cross calculator   punnett square biology chemistry calculator",
+    "description": "Estimate offspring phenotype probabilities for three independently assorting Mendelian traits from two parental genotypes."
+  },
+  {
+    "name": "Cat Pregnancy Calculator",
+    "url": "/calculators/cat-pregnancy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cat pregnancy calculator biology chemistry calculator",
+    "description": "Estimate a cat's expected queening date from a recorded mating date using a typical gestation duration and reference range."
+  },
+  {
+    "name": "Cow Gestation Calculator",
+    "url": "/calculators/cow-gestation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cow gestation calculator biology chemistry calculator",
+    "description": "Estimate a cow's expected calving date from the recorded breeding date using an approximate 283-day average."
+  },
+  {
+    "name": "Dog Pregnancy Calculator",
+    "url": "/calculators/dog-pregnancy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dog pregnancy calculator biology chemistry calculator",
+    "description": "Estimate a dog's expected whelping date from a recorded breeding date and display a broad reference window."
+  },
+  {
+    "name": "Goat Gestation Calculator",
+    "url": "/calculators/goat-gestation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "goat gestation calculator biology chemistry calculator",
+    "description": "Estimate a doe's expected kidding date from a recorded breeding date using a typical 150-day gestation."
+  },
+  {
+    "name": "Guinea Pig Pregnancy Calculator",
+    "url": "/calculators/guinea-pig-pregnancy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "guinea pig pregnancy calculator biology chemistry calculator",
+    "description": "Estimate a guinea pig's expected delivery date from a recorded mating date using a reference gestation period."
+  },
+  {
+    "name": "Mare Gestation Calculator - Horse Gestation",
+    "url": "/calculators/mare-gestation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mare gestation calculator   horse gestation biology chemistry calculator",
+    "description": "Estimate a mare's expected foaling date from a recorded breeding date using a broad equine gestation range."
+  },
+  {
+    "name": "Rabbit Gestation Calculator",
+    "url": "/calculators/rabbit-gestation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "rabbit gestation calculator biology chemistry calculator",
+    "description": "Estimate a doe rabbit's expected kindling date from a recorded mating date using a typical 31-day gestation."
   }
 ]
