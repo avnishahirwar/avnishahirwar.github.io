@@ -364,10 +364,9 @@ test('language switcher dynamically checks existing locale calculator pages with
 test('every public sitemap page has a valid favicon reference and matching asset MIME type', () => {
   const failures = [];
   const shellJs = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const shellNormalizesFavicons = shellJs.includes('ensureFavicon') &&
-    shellJs.includes("link.href='/favicon-96.png'") &&
-    shellJs.includes("icon.type='image/png'") &&
-    shellJs.includes("icon.type='image/svg+xml'");
+  const shellNormalizesFavicons = shellJs.includes('const ensureFavicon=()=>{') &&
+    shellJs.includes("ensure('icon','image/svg+xml','/favicon.svg','any')") &&
+    shellJs.includes("ensure('icon','image/png','/favicon-96.png','96x96')");
   for (const url of urls) {
     const file = localFile(url);
     if (!file || !fs.existsSync(file)) continue;
