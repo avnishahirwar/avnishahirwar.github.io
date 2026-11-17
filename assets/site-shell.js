@@ -254,7 +254,7 @@ if(embedMode){
   if(main){
     const form=main.querySelector('form');
     const native=main.querySelector('[data-fc-native-calculator]');
-    const standalone=main.querySelector('section.tool,section.calculator,.calculator');
+    const standalone=main.querySelector('section.tool,section.calculator,.calculator,section#sip-tool');
     const candidate=native||standalone||(form&&form.closest('[data-fc-native-calculator],section.panel,section,article,.calculator,form'));
     const root=candidate&&[...main.children].find(child=>child===candidate||child.contains(candidate));
     if(root){
