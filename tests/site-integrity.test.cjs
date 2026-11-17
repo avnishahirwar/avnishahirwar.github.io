@@ -299,6 +299,22 @@ test('GST calculator links to the current 309-page catalogue count', () => {
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
 });
 
+test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
+  const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
+  const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
+  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
+  assert.ok(rd.includes('name="description" content="Estimate RD maturity in India from monthly deposit, annual rate and tenure. View total deposits, interest, a worked example and key limitations."'));
+  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
+  assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
+  assert.ok(rd.includes('₹1,41,944'));
+  assert.ok(rd.includes('not official Post Office maturity quotations'));
+  assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily & Hourly Pay</title>'));
+  assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
+  assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
+  assert.ok(salary.includes('Explore all 309 calculators on Friendly Calculator.'));
+  assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
+});
+
 test('homepage uses the same navy brand color as the shared site shell', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('--fc-blue:#101c2c;--fc-blue-dark:#20364e;'));
@@ -1532,8 +1548,8 @@ test('income tax page title and heading identify the current salary-estimate tax
 
 test('RD calculator explains its end-of-month estimate and distinguishes official Post Office scheme rules', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
-  assert.ok(rd.includes('<title>RD Calculator India – Monthly Deposit & Maturity Estimate</title>'));
-  assert.ok(rd.includes('<h1>Recurring Deposit (RD) Calculator India</h1>'));
+  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
+  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
   assert.ok(rd.includes('This general estimate is not the official National Savings Recurring Deposit maturity table.'));
   assert.ok(rd.includes('https://www.nsiindia.gov.in/writereaddata/SchemeRules/RECURRINGDEPOSITSCHEMERule.pdf'));
   assert.ok(rd.includes('Is this the official Post Office RD maturity calculator?'));
