@@ -2539,5 +2539,75 @@
     "category": "Biology & Chemistry",
     "keywords": "atom economy calculator chemistry calculator",
     "description": "Estimate atom economy from the molar mass of the desired product and the total molar mass of reactants."
+  },
+  {
+    "name": "Percentage Increase Classic",
+    "url": "/calculators/percentage-increase-classic-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage increase classic mathematics numbers algebra calculator",
+    "description": "Calculate the percentage increase from an original value to a new value."
+  },
+  {
+    "name": "Time Percentage Calculator",
+    "url": "/calculators/time-percentage-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "time percentage calculator mathematics numbers algebra calculator",
+    "description": "Calculate how much of a total time period has elapsed as a percentage."
+  },
+  {
+    "name": "Percent to Goal Calculator",
+    "url": "/calculators/percent-to-goal-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percent to goal calculator mathematics numbers algebra calculator",
+    "description": "Measure progress toward a numeric target and calculate the amount remaining."
+  },
+  {
+    "name": "Relative Change Calculator",
+    "url": "/calculators/relative-change-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "relative change calculator mathematics numbers algebra calculator",
+    "description": "Calculate the signed change between two values relative to the magnitude of the starting value."
+  },
+  {
+    "name": "Slope Percentage Calculator",
+    "url": "/calculators/slope-percentage-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "slope percentage calculator mathematics numbers algebra calculator",
+    "description": "Convert vertical rise and horizontal run into a signed slope percentage and angle."
+  },
+  {
+    "name": "Direct Variation Calculator",
+    "url": "/calculators/direct-variation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "direct variation calculator mathematics numbers algebra calculator",
+    "description": "Find the constant of proportionality and predict a value using the direct-variation model y = kx."
+  },
+  {
+    "name": "Inverse Variation Calculator",
+    "url": "/calculators/inverse-variation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "inverse variation calculator mathematics numbers algebra calculator",
+    "description": "Find the constant of inverse variation and predict a value using y = k ÷ x."
+  },
+  {
+    "name": "FOIL Calculator",
+    "url": "/calculators/foil-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "foil calculator mathematics numbers algebra calculator",
+    "description": "Expand the product of two binomials using First, Outer, Inner and Last terms."
+  },
+  {
+    "name": "Complex Number Calculator",
+    "url": "/calculators/complex-number-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "complex number calculator mathematics numbers algebra calculator",
+    "description": "Calculate sum, difference, product and quotient for two complex numbers."
+  },
+  {
+    "name": "Complex Root Calculator",
+    "url": "/calculators/complex-root-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "complex root calculator mathematics numbers algebra calculator",
+    "description": "Calculate both square roots of a complex number a + bi."
   }
 ]
