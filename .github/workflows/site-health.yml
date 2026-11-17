@@ -34,6 +34,8 @@ jobs:
         run: node --test tests/calculator-formulas.test.cjs
       - name: Validate insurance premium calculator
         run: node --test tests/insurance-premium-calculator.test.cjs
+      - name: Validate graphing calculator
+        run: node --test tests/graphing-calculator.test.cjs
       - name: Validate property calculators and embeds
         run: node --test tests/property-tools.test.cjs
       - name: Validate SEO consolidation and sitemap exclusions
@@ -49,4 +51,4 @@ jobs:
       - name: Check calculator-only embed mode
         run: node --test tests/embed-mode.test.cjs
       - name: Check shared JavaScript syntax
-        run: node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js
+        run: node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js && node --check assets/graphing-calculator.js
