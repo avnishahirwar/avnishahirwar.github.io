@@ -798,13 +798,13 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.match(directory, /Browse all 323 calculator tools/);
   assert.match(directory, /Search 323 calculators by name or topic/);
   assert.match(directory, /Showing all 323 calculators in 20 categories/);
-  assert.equal(categoryCount, 19, 'Directory must show all 19 calculator categories');
+  assert.equal(categoryCount, 20, 'Directory must show all 20 calculator categories');
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
   const directoryCards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculator(?:s)?<\/span>/g)];
   const directorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
-  assert.equal(directoryCards.length, 19, 'Directory category index must expose all 20 categories');
+  assert.equal(directoryCards.length, 20, 'Directory category index must expose all 20 categories');
   assert.deepEqual(directoryCards.map(match => match[1]), directorySections.map(match => match[1]), 'Directory category index must link to every category in the same order');
   const directoryCategoryCounts = new Map();
   for (const section of directorySections) {
@@ -819,7 +819,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
     assert.equal(Number(card[2]), directoryCategoryCounts.get(card[1]), 'Directory index count must match its category links: ' + card[1]);
   }
 
-  assert.equal(navCategoryCount, 19, 'Homepage shortcuts must expose all 20 categories');
+  assert.equal(navCategoryCount, 20, 'Homepage shortcuts must expose all 20 categories');
   assert.equal(navCalculatorTotal, 323, 'Homepage category shortcuts must account for every calculator');
   assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>70 calculators<\/span><\/a>/, "Math shortcut must link to its full directory category");
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
@@ -1453,8 +1453,8 @@ test('homepage stays lightweight while all 323 calculators remain searchable and
   assert.ok(categoryNavStart >= 0 && categoryNavEnd > categoryNavStart, 'Homepage category cards must exist');
   const categoryNav = homepage.slice(categoryNavStart, categoryNavEnd);
   const categoryLinks = [...categoryNav.matchAll(/href="\/calculator\/site-directory\.html#([^"]+)"/g)].map(match => match[1]);
-  assert.equal(categoryLinks.length, 19, 'All 20 category cards must link to the full directory');
-  assert.equal(new Set(categoryLinks).size, 19, 'Category card destinations must be unique');
+  assert.equal(categoryLinks.length, 20, 'All 20 category cards must link to the full directory');
+  assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
   assert.equal(searchIndex.length, 323, 'All 323 calculators must remain in the deferred search index');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, 323, 'Search index URLs must be unique');
