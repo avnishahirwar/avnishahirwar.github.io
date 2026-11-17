@@ -1564,3 +1564,37 @@ test('Net Worth Calculator is indexed, discoverable and calculates assets less l
   assert.throws(() => calculator.calculateNetWorth({ cash: -1 }), /non-negative/);
   assert.equal(calculator.calculateNetWorth({}).netWorth, 0);
 });
+
+
+test('five new informational calculators are indexed, discoverable and use bounded browser-side calculations', () => {
+  const pages = {
+    'medical-unit-converter': ['Medical Unit Converter', '18.0182', '38.67', 'does not interpret'],
+    'dream-reflection-calculator': ['Dream Reflection Calculator', 'recall', 'vivid', 'not a validated'],
+    'love-compatibility-calculator': ['Love Compatibility Calculator', 'respect', 'communication', 'not a prediction'],
+    'friendship-compatibility-calculator': ['Friendship Compatibility Calculator', 'support', 'interests', 'not a scientific'],
+    'goal-success-calculator': ['Goal Success Calculator', 'completed', 'planned', 'not a success prediction']
+  };
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const vm = require('node:vm');
+
+  for (const [slug, markers] of Object.entries(pages)) {
+    const html = fs.readFileSync(path.join(root, 'calculators', slug + '.html'), 'utf8');
+    assert.ok(html.includes('<title>' + markers[0] + ' | Friendly Calculator</title>'), slug + ' title');
+    assert.match(html, /name="robots" content="index,follow/);
+    assert.match(html, /rel="canonical"/);
+    assert.match(html, /type="application\/ld\+json"/);
+    assert.match(html, /id="calculate|id="convert/);
+    for (const marker of markers.slice(1)) assert.ok(html.toLowerCase().includes(marker.toLowerCase()), slug + ' missing marker: ' + marker);
+    const inlineScripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+    assert.ok(inlineScripts.length >= 1, slug + ' must include its calculation logic');
+    for (const script of inlineScripts) assert.doesNotThrow(() => new vm.Script(script), slug + ' script must parse');
+    assert.ok(searchIndex.some(item => item.url === '/calculators/' + slug + '.html'), slug + ' must be in search index');
+    assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from directory');
+    assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
+  }
+  assert.equal(searchIndex.length, 308);
+  assert.ok(homepage.includes('308 calculators'));
+});
