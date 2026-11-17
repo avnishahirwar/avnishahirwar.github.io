@@ -12,7 +12,7 @@ test('embed mode isolates the calculator container from page content', () => {
   assert.match(shell, /main>\*:not\(\.fc-embed-calculator\)/);
   assert.match(shell, /fc-embed-calculator/);
   assert.match(shell, /data-fc-native-calculator/);
-  assert.match(shell, /section\.tool,section\.calculator,\.calculator/);
+  assert.match(shell, /section\.tool,section\.calculator,\.calculator,section#sip-tool/);
 });
 
 test('embed mode hides site chrome and editorial sections while preserving attribution', () => {
