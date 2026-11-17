@@ -2868,5 +2868,40 @@
     "category": "International tools",
     "keywords": "VAT value added tax add remove tax inclusive exclusive net gross international sales tax",
     "description": "Add value added tax to a net price or extract the VAT component from a tax-inclusive total using a rate you enter."
+  },
+  {
+    "name": "Business Budget Calculator",
+    "url": "/calculators/business-budget-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "business budget monthly revenue fixed costs variable expenses operating profit budget planning",
+    "description": "Build a simple monthly operating budget from revenue, fixed costs, variable costs and other expenses."
+  },
+  {
+    "name": "Churn Rate Calculator",
+    "url": "/calculators/churn-rate-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "customer churn rate customer retention SaaS subscription lost customers",
+    "description": "Estimate customer churn and retention for a period using starting customers and customers lost."
+  },
+  {
+    "name": "Customer Acquisition Cost Calculator",
+    "url": "/calculators/customer-acquisition-cost-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "customer acquisition cost CAC marketing sales spend new customers startup",
+    "description": "Calculate customer acquisition cost (CAC) from marketing, sales and other acquisition spending."
+  },
+  {
+    "name": "Customer Retention Rate Calculator",
+    "url": "/calculators/customer-retention-rate-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "customer retention rate retained customers customer loyalty subscription business",
+    "description": "Calculate the share of starting customers retained after excluding new customers acquired during the period."
+  },
+  {
+    "name": "Full-Time Equivalent (FTE) Calculator",
+    "url": "/calculators/fte-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "FTE full time equivalent staffing employee hours workforce capacity",
+    "description": "Convert total employee work hours into full-time equivalent (FTE) staffing for a consistent period."
   }
 ]
