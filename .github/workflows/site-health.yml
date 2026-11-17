@@ -34,6 +34,8 @@ jobs:
         run: node --test tests/site-integrity.test.cjs
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
+      - name: Validate international calculator formulas
+        run: node --test tests/international-calculators.test.cjs
       - name: Validate insurance premium calculator
         run: node --test tests/insurance-premium-calculator.test.cjs
       - name: Validate graphing calculator
