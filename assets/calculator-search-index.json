@@ -2119,5 +2119,40 @@
     "category": "Astrology & Numerology",
     "keywords": "zodiac sign calculator western sun sign birth date",
     "description": "Find an approximate Western sun sign from a birth date."
+  },
+  {
+    "name": "Medical Unit Converter",
+    "url": "/calculators/medical-unit-converter.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "medical unit converter blood glucose cholesterol mg/dL mmol/L laboratory conversion",
+    "description": "Convert selected blood glucose or cholesterol concentration units without interpreting results."
+  },
+  {
+    "name": "Dream Reflection Calculator",
+    "url": "/calculators/dream-reflection-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "dream reflection calculator dream journal recall vividness emotion journaling",
+    "description": "Create a non-clinical personal reflection score from dream-journal ratings."
+  },
+  {
+    "name": "Love Compatibility Calculator",
+    "url": "/calculators/love-compatibility-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "love compatibility calculator relationship respect communication trust reliability",
+    "description": "Reflect on relationship qualities using user-entered ratings; no predictions."
+  },
+  {
+    "name": "Friendship Compatibility Calculator",
+    "url": "/calculators/friendship-compatibility-calculator.html",
+    "category": "Astrology & Numerology",
+    "keywords": "friendship compatibility calculator trust communication support shared interests",
+    "description": "Reflect on friendship qualities using user-entered ratings; no predictions."
+  },
+  {
+    "name": "Goal Success Calculator",
+    "url": "/calculators/goal-success-calculator.html",
+    "category": "Education & Academic Tools",
+    "keywords": "goal success calculator milestone progress goal tracker schedule completion",
+    "description": "Calculate milestone completion and compare progress with elapsed planned time."
   }
 ]
