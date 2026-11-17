@@ -1665,3 +1665,29 @@ test('custom Stamp Duty and US 401(k) pages skip the generic calculator injector
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /!document\.querySelector\('\[data-fc-native-calculator\]'\)/);
 });
+
+test('four chemistry batch calculators are complete and discoverable', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const routes = [
+    'molality-calculator',
+    'normality-calculator',
+    'empirical-formula-calculator',
+    'hydrogen-ion-concentration-calculator'
+  ];
+  for (const slug of routes) {
+    const route = '/calculators/' + slug + '.html';
+    const page = fs.readFileSync(path.join(root, route.slice(1)), 'utf8');
+    assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in' + route + '"'));
+    assert.match(page, /"@type":"SoftwareApplication"/);
+    assert.match(page, /<form id="calcForm"/);
+    assert.match(page, /<h2>Formula<\/h2>/);
+    assert.match(page, /Assumptions and limitations/);
+    assert.match(page, /aria-live="polite"/);
+    assert.ok(directory.includes('href="' + route + '"'));
+    assert.ok(about.includes('href="' + route + '"'));
+    assert.ok(index.some(item => item.url === route));
+  }
+  assert.equal(index.length, 424);
+});
