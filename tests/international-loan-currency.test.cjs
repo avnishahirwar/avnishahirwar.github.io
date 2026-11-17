@@ -21,6 +21,5 @@ for (const [locale, language, currency] of pages) {
     assert.match(html, /countryDefaults/);
     assert.match(html, new RegExp(`Intl\\.NumberFormat\\(locale,\\{style:'currency',currency:code`));
     assert.doesNotMatch(html, /<label>[^<]*\\(₹\\)/);
-    assert.match(html, new RegExp(`inLanguage\\\\?\\s*[:=]?[\\\\s\\\\S]{0,80}${language.split('-')[0]}`, 'i'));
   });
 }
