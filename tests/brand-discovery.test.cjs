@@ -6,7 +6,7 @@ const root=path.resolve(__dirname,'..');
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const page=fs.readFileSync(path.join(root,'calculator/why-friendly-calculator.html'),'utf8');
 test('homepage presents Friendly Calculator consistently as an India and worldwide calculator platform',()=>{
- assert.match(home,/<title>Free Online Calculators for India &amp; Worldwide \| Friendly Calculator<\/title>/);
+ assert.match(home,/<title>Free Online Calculators India &amp; Worldwide \| EMI, GST &amp; Tax<\/title>/);
  assert.match(home,/<meta property="og:site_name" content="Friendly Calculator">/);
  assert.match(home,/"@type":"WebSite","@id":"https:\/\/friendlycalculator\.in\/#website","name":"Friendly Calculator"/);
  assert.match(home,/A calculator website for India, Madhya Pradesh and worldwide users/);
