@@ -23,7 +23,7 @@ test('Mexico ISR page is indexable, canonical, localized and cites the official 
 
 test('Mexico ISR monthly calculator preserves all 11 official 2026 tariff bands',()=>{
  assert.equal(brackets.length,11);
- assert.deepEqual(brackets.map(x=>[x.lower,x.upper,x.fixed,x.rate]),[
+ assert.deepEqual(Array.from(brackets,x=>[x.lower,x.upper,x.fixed,x.rate]),[
   [0.01,844.59,0,1.92],[844.60,7168.51,16.22,6.40],[7168.52,12598.02,420.95,10.88],
   [12598.03,14644.64,1011.68,16.00],[14644.65,17533.64,1339.14,17.92],[17533.65,35362.83,1856.84,21.36],
   [35362.84,55736.68,5665.16,23.52],[55736.69,106410.50,10457.09,30.00],
