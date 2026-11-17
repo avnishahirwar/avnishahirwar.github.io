@@ -2329,5 +2329,75 @@
     "category": "Converters, Data & Technology",
     "keywords": "volume converter converters, data & technology free online calculator",
     "description": "Convert volumes between litres, millilitres, cubic metres, US gallons and cups."
+  },
+  {
+    "name": "Generation Time Calculator",
+    "url": "/calculators/generation-time-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "generation time calculator biology chemistry educational calculator",
+    "description": "Estimate microbial or cell generation time from initial and final population counts over a measured interval."
+  },
+  {
+    "name": "Ligation Calculator",
+    "url": "/calculators/ligation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "ligation calculator biology chemistry educational calculator",
+    "description": "Estimate the insert DNA mass needed for a selected insert-to-vector molar ratio in a DNA ligation setup."
+  },
+  {
+    "name": "Log Reduction Calculator",
+    "url": "/calculators/log-reduction-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "log reduction calculator biology chemistry educational calculator",
+    "description": "Calculate log₁₀ reduction and percentage reduction from initial and final microbial counts or concentrations."
+  },
+  {
+    "name": "Protein Concentration Calculator",
+    "url": "/calculators/protein-concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "protein concentration calculator biology chemistry educational calculator",
+    "description": "Estimate protein concentration from absorbance at 280 nm, molecular weight, extinction coefficient and optical path length."
+  },
+  {
+    "name": "Dihybrid Cross Calculator - Punnett Square",
+    "url": "/calculators/dihybrid-cross-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dihybrid cross calculator   punnett square biology chemistry educational calculator",
+    "description": "Estimate offspring phenotype probabilities for a two-trait Mendelian cross using parental genotypes."
+  },
+  {
+    "name": "DNA Copy Number Calculator",
+    "url": "/calculators/dna-copy-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dna copy number calculator biology chemistry educational calculator",
+    "description": "Estimate the number of double-stranded DNA molecules from DNA mass and fragment length."
+  },
+  {
+    "name": "DNA to mRNA Converter",
+    "url": "/calculators/dna-to-mrna-converter.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dna to mrna converter biology chemistry educational calculator",
+    "description": "Transcribe a coding-strand DNA sequence into its corresponding mRNA sequence by replacing thymine with uracil."
+  },
+  {
+    "name": "Hardy-Weinberg Equilibrium Calculator",
+    "url": "/calculators/hardy-weinberg-equilibrium-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "hardy weinberg equilibrium calculator biology chemistry educational calculator",
+    "description": "Calculate allele frequencies and expected genotype frequencies under the two-allele Hardy–Weinberg model."
+  },
+  {
+    "name": "Mutation Frequency Calculator",
+    "url": "/calculators/mutation-frequency-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mutation frequency calculator biology chemistry educational calculator",
+    "description": "Calculate the observed mutation frequency from mutant and total screened colonies or events."
+  },
+  {
+    "name": "qPCR Efficiency Calculator",
+    "url": "/calculators/qpcr-efficiency-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "qpcr efficiency calculator biology chemistry educational calculator",
+    "description": "Estimate qPCR amplification efficiency from the slope of a standard-curve regression."
   }
 ]
