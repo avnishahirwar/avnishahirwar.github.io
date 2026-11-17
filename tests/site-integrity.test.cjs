@@ -17,6 +17,11 @@ function localFile(url, baseFile = 'index.html') {
   return target;
 }
 
+test('international hub hero links meet the dark-header contrast style', () => {
+  const html = fs.readFileSync(path.join(root, 'international/index.html'), 'utf8');
+  assert.match(html, /\.hero\\s+\.links\\s+a\\s*\\{[^}]*color:\\s*#e6d6b2/i);
+});
+
 test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.match(sitemap, /^<\?xml/);
   assert.ok(urls.length >= 20, 'Expected public site pages in sitemap');
