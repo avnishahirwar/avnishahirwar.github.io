@@ -1,0 +1,11 @@
+'use strict';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {calculate}=require('../assets/insurance-premium-calculator.js');
+const html=fs.readFileSync(path.join(__dirname,'../calculators/insurance-premium-calculator.html'),'utf8');
+test('insurance premium estimator calculates quote breakdown and instalment amount',()=>{const r=calculate({basePremium:12000,addonPremium:1500,discount:500,taxRate:18,payments:4});assert.equal(r.premiumBeforeTax,13000);assert.equal(r.tax,2340);assert.equal(r.total,15340);assert.equal(r.paymentAmount,3835);});
+test('insurance premium estimator supports zero tax and annual payments',()=>{const r=calculate({basePremium:12000,addonPremium:0,discount:0,taxRate:0,payments:1});assert.equal(r.total,12000);assert.equal(r.paymentAmount,12000);});
+test('insurance premium estimator rejects invalid values',()=>{assert.throws(()=>calculate({basePremium:0}),/base premium/);assert.throws(()=>calculate({basePremium:100,addonPremium:-1}),/Add-on/);assert.throws(()=>calculate({basePremium:100,discount:101}),/Discount/);assert.throws(()=>calculate({basePremium:100,taxRate:101}),/tax rate/);});
+test('insurance calculator page includes SEO, structured data, formula, FAQ and safe assumptions',()=>{assert.match(html,/<title>Insurance Premium Calculator/);assert.match(html,/rel="canonical"/);assert.match(html,/"@type":"WebApplication"/);assert.match(html,/"@type":"BreadcrumbList"/);assert.match(html,/Formula and methodology/);assert.match(html,/Frequently asked questions/);assert.match(html,/does not calculate underwriting risk/);});
