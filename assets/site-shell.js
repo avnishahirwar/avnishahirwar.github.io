@@ -1,21 +1,22 @@
 (()=>{'use strict';
 /* Keep the site favicon consistent, including legacy and localized pages. */
 const ensureFavicon=()=>{
-  const icons=[...document.querySelectorAll('link[rel~="icon"]')];
-  if(!icons.length){
-    const link=document.createElement('link');
-    link.rel='icon';link.type='image/png';link.sizes='96x96';link.href='/favicon-96.png';
-    document.head.appendChild(link);
-    return;
-  }
-  for(const icon of icons){
-    const href=icon.getAttribute('href')||'';
-    let pathname='';
-    try{pathname=new URL(href,location.href).pathname.toLowerCase();}catch(_){continue;}
-    if(pathname.endsWith('.png'))icon.type='image/png';
-    else if(pathname.endsWith('.svg'))icon.type='image/svg+xml';
-    else if(pathname.endsWith('.ico'))icon.type='image/x-icon';
-  }
+  if(!document.head)return;
+  const ensure=(rel,type,href,sizes)=>{
+    const selector=`link[rel~="${rel}"][type="${type}"]`;
+    let link=document.querySelector(selector);
+    if(!link){
+      link=document.createElement('link');
+      link.rel=rel;
+      link.type=type;
+      if(sizes)link.sizes=sizes;
+      link.href=href;
+      document.head.appendChild(link);
+    }
+  };
+  // Keep a vector favicon and a 96px PNG fallback available to crawlers and browsers.
+  ensure('icon','image/svg+xml','/favicon.svg','any');
+  ensure('icon','image/png','/favicon-96.png','96x96');
 };
 ensureFavicon();
 /* Installable app metadata and a conservative offline cache for public pages only. */
