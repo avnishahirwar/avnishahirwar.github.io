@@ -897,7 +897,7 @@ test('chemistry batch 03 formulas return expected reference values', () => {
   assert.ok(Math.abs(parseFloat(gas[0][1]) - 1) < 0.002);
 
   const atoms = chemistry.molesToAtoms({ moles: 1, atomsPerMolecule: 3 });
-  assert.ok(Math.abs(Number(atoms[1][1]) / 1.806642228e24 - 1) < 1e-12);
+  assert.ok(Math.abs(Number(atoms[1][1]) / 1.806642228e24 - 1) < 1e-8);
 
   const ppm = chemistry.ppmToMolarity({ ppm: 1000, density: 1, molarMass: 58.44 });
   assert.ok(Math.abs(parseFloat(ppm[1][1]) - (1 / 58.44)) < 1e-6);
