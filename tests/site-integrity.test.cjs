@@ -299,6 +299,16 @@ test('GST calculator links to the current 309-page catalogue count', () => {
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
 });
 
+test('income tax page reserves a stable mobile header before the shared navigation replaces the legacy header', () => {
+  const tax = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
+  const earlyScript = tax.indexOf("<script>document.documentElement.classList.add('fc-js');</script>");
+  const bodyStart = tax.indexOf('<body>');
+  assert.ok(earlyScript >= 0 && earlyScript < bodyStart, 'The JS-ready class must be set in the document head');
+  assert.ok(tax.includes('html.fc-js #fc-header-reservation+header.fc-header{display:none}'));
+  assert.ok(tax.includes('<div id="fc-header-reservation" class="fc-header-reservation"'));
+  assert.ok(tax.includes('<header class="fc-header">'), 'The legacy header remains available when JavaScript is disabled');
+});
+
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
