@@ -1548,8 +1548,8 @@ test('income tax page title and heading identify the current salary-estimate tax
 
 test('RD calculator explains its end-of-month estimate and distinguishes official Post Office scheme rules', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
-  assert.ok(rd.includes('<title>RD Calculator India – Monthly Deposit & Maturity Estimate</title>'));
-  assert.ok(rd.includes('<h1>Recurring Deposit (RD) Calculator India</h1>'));
+  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
+  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
   assert.ok(rd.includes('This general estimate is not the official National Savings Recurring Deposit maturity table.'));
   assert.ok(rd.includes('https://www.nsiindia.gov.in/writereaddata/SchemeRules/RECURRINGDEPOSITSCHEMERule.pdf'));
   assert.ok(rd.includes('Is this the official Post Office RD maturity calculator?'));
