@@ -17,7 +17,7 @@ Friendly Calculator provides tools and educational information. Calculator resul
 ## Calculator categories
 
 - [Finance calculators](https://friendlycalculator.in/calculator/finance-calculators.html): Savings, deposits, investments, loans, retirement, and related estimates.
-- [Tax and payroll calculators](https://friendlycalculator.in/calculator/tax-calculators.html): Income tax, GST, TDS, salary, and payroll-related calculations.
+- [Tax and payroll calculators](https://friendlycalculator.in/calculator/tax.html): Income tax, GST, TDS, salary, and payroll-related calculations.
 - [Business calculators](https://friendlycalculator.in/calculator/business-calculators.html): Business, pricing, profit, and operating calculations.
 - [Everyday calculators](https://friendlycalculator.in/calculator/everyday-calculators.html): General mathematics, dates, conversions, health-related estimates, and daily-use tools.
 - [All calculators](https://friendlycalculator.in/calculator/site-directory.html): Canonical directory of published tools.
@@ -95,6 +95,7 @@ The site publishes selected calculator translations in Hindi (hi), Spanish (es),
 ## Methodology, policies, and publisher information
 
 - [Calculation methodology](https://friendlycalculator.in/calculator/methodology.html): General approach, formulas, and assumptions.
+- [Legal & Compliance](https://friendlycalculator.in/calculator/legal-compliance.html): Central index for privacy, terms, disclaimers, editorial policy, content licence and issue reporting.
 - [Disclaimer](https://friendlycalculator.in/calculator/disclaimer.html): Limitations and appropriate use of calculator results.
 - [Privacy policy](https://friendlycalculator.in/calculator/privacy.html): Privacy and data-handling information.
 - [Terms of use](https://friendlycalculator.in/calculator/terms.html): Website terms.
