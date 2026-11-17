@@ -23,6 +23,41 @@ const rateField=rateInput.closest('.field')||rateInput.parentElement;
 const fields=rateField?.parentElement;
 if(!from&&!to&&fields){const a=makeSelect('fromCurrency',text.from,'INR'),b=makeSelect('toCurrency',text.to,'USD');fields.insertBefore(a.wrap,rateField);fields.insertBefore(b.wrap,rateField);from=a.select;to=b.select;}
 if(!from||!to)return;
+
+// Expand the selector from the API's current supported currency list.
+// Keep bundled options as a resilient fallback when the service is unavailable.
+async function loadSupportedCurrencies(){
+ try{
+  const response=await fetch('https://api.frankfurter.dev/v2/currencies',{headers:{Accept:'application/json'},cache:'force-cache'});
+  if(!response.ok)throw new Error('Currency list unavailable');
+  const data=await response.json();
+  if(!Array.isArray(data)||!data.length)throw new Error('Currency list was empty');
+  const excluded=new Set(['XAG','XAU','XDR','XPD','XPT']);
+  const supported=data.filter(item=>item&&/^[A-Z]{3}$/.test(item.iso_code||'')&&!excluded.has(item.iso_code));
+  if(!supported.length)throw new Error('No supported currency codes returned');
+  const preferred=currencies.map(([code])=>code);
+  const byCode=new Map(supported.map(item=>[item.iso_code,item]));
+  const ordered=[...preferred.filter(code=>byCode.has(code)),...supported.map(item=>item.iso_code).filter(code=>!preferred.includes(code)).sort()];
+  let displayNames;
+  try{displayNames=new Intl.DisplayNames([window.FCLocale?.getLocale?.()||document.documentElement.lang||'en'],{type:'currency'});}catch(_){}
+  for(const select of [from,to]){
+   const selected=select.value;
+   const fragment=document.createDocumentFragment();
+   for(const code of ordered){
+    const item=byCode.get(code),option=document.createElement('option');
+    let localized='';
+    try{localized=displayNames?.of(code)||'';}catch(_){}
+    option.value=code;
+    option.textContent=code+' · '+(localized&&localized!==code?localized:item.name||code);
+    fragment.appendChild(option);
+   }
+   select.replaceChildren(fragment);
+   select.value=byCode.has(selected)?selected:(select===from?'INR':'USD');
+  }
+ }catch(_){
+  // Existing server-rendered or bundled options remain usable.
+ }
+}
 if(rateField){const label=rateField.querySelector('span,label');if(label)label.textContent=text.rate;}
 if(!status){status=document.createElement('p');status.id='rateStatus';status.className='small';status.setAttribute('role','status');status.setAttribute('aria-live','polite');rateField?.insertAdjacentElement('afterend',status);}
 const actions=$('calculate')?.parentElement;
@@ -69,5 +104,6 @@ from.addEventListener('change',loadRate);to.addEventListener('change',loadRate);
 $('reset')?.addEventListener('click',()=>{amount.value='100';loadRate();});
 amount.addEventListener('input',calculate);
 rateInput.addEventListener('input',()=>{if(!rateInput.readOnly)calculate();});
+loadSupportedCurrencies();
 loadRate();
 })();
