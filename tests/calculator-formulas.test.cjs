@@ -718,7 +718,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
   assert.match(about, /311 public calculators/);
-  assert.match(about, /Available calculators \(310 tools\)/);
+  assert.match(about, /Available calculators \(311 tools\)/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
