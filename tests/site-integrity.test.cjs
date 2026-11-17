@@ -1453,7 +1453,7 @@ test('homepage stays lightweight while all 310 calculators remain searchable and
   assert.ok(categoryNavStart >= 0 && categoryNavEnd > categoryNavStart, 'Homepage category cards must exist');
   const categoryNav = homepage.slice(categoryNavStart, categoryNavEnd);
   const categoryLinks = [...categoryNav.matchAll(/href="\/calculator\/site-directory\.html#([^"]+)"/g)].map(match => match[1]);
-  assert.equal(categoryLinks.length, 19, 'All 19 category cards' must link to the full directory');
+  assert.equal(categoryLinks.length, 19, 'All 19 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 19, 'Category card destinations must be unique');
 
   assert.equal(searchIndex.length, 310, 'All 310 calculators must remain in the deferred search index');
