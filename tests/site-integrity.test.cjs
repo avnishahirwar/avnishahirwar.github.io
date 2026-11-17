@@ -307,10 +307,10 @@ test('income tax page reserves a stable mobile header before the shared navigati
   assert.ok(tax.includes('html.fc-js #fc-header-reservation+header.fc-header{display:none}'));
   assert.ok(tax.includes('<div id="fc-header-reservation" class="fc-header-reservation"'));
   assert.ok(tax.includes('<header class="fc-header">'), 'The legacy header remains available when JavaScript is disabled');
-  assert.ok(tax.includes('<div class="fc-favourite-slot" aria-hidden="true"></div>'), 'Reserve the favourite button position before it is inserted');
+  assert.ok(tax.includes('<button type="button" class="fc-favourite-toggle" aria-pressed="false">☆ Add to favourites</button>'), 'Render the favourite control in the initial HTML to avoid inserting it after first paint');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes("const favouriteSlot=heading?.nextElementSibling?.classList.contains('fc-favourite-slot')?heading.nextElementSibling:null;"));
-  assert.ok(shell.includes('if(favouriteSlot)favouriteSlot.replaceWith(favouriteButton);'));
+  assert.ok(shell.includes("const existingFavourite=heading?.nextElementSibling?.classList.contains('fc-favourite-toggle')?heading.nextElementSibling:null;"));
+  assert.ok(shell.includes('const favouriteButton=existingFavourite||document.createElement(\'button\');'));
 });
 
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
