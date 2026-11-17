@@ -1641,7 +1641,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from directory');
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
-  assert.equal(searchIndex.length, 404);
+  assert.equal(searchIndex.length, 405);
   assert.ok(homepage.includes('405 calculators'));
 });
 
