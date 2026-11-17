@@ -141,7 +141,7 @@ test('priority calculator pages expose valid breadcrumb structured-data trails',
     ['Basic', basicCalculator, 'https://friendlycalculator.in/calculators/basic-calculator.html', 'Basic Calculator'],
     ['Scientific', scientificCalculator, 'https://friendlycalculator.in/calculators/scientific-calculator.html', 'Scientific Calculator']
   ]) {
-    const scripts = [...html.matchAll(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/g)];
+    const scripts = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
     const schemas = scripts.map((match) => JSON.parse(match[1]));
     const breadcrumb = schemas.find((schema) => schema['@type'] === 'BreadcrumbList');
     assert.ok(breadcrumb, name + ' calculator must include BreadcrumbList');
