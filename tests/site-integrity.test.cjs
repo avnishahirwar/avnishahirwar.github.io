@@ -782,7 +782,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
-  const homepageLinks = new Set(searchIndex.map(item => item.url));
+  const homepageLinks = new Set(searchIndex.filter(item => item.url.startsWith('/calculators/')).map(item => item.url));
   const directoryLinks = uniqueCalculatorLinks(directory);
   const sitemapCalculatorUrls = urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url));
   const navStart = homepage.indexOf('<nav class="home-category-index"');
@@ -791,7 +791,9 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const navCategoryCount = (nav.match(/<a href="\/calculator\/site-directory\.html#/g) || []).length;
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
-  assert.equal(homepageLinks.size, 404, 'Homepage must link to every unique calculator');
+  assert.equal(homepageLinks.size, 404, 'Homepage must link to every core calculator');
+  assert.equal(searchIndex.length, 405, 'Homepage search includes the 404 core calculators plus the international VAT calculator');
+  assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
@@ -1432,15 +1434,15 @@ test('directory category links use visible accessible names and readable search 
 });
 
 
-test('homepage search runtime validates the complete 404-item deferred catalogue', () => {
+test('homepage search runtime validates the complete 405-item deferred catalogue', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  assert.equal(searchIndex.length, 404);
-  assert.match(homepage, /items\.length!==404/);
+  assert.equal(searchIndex.length, 405);
+  assert.match(homepage, /items\.length!==405/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
-test('homepage stays lightweight while all 404 calculators remain searchable and discoverable', () => {
+test('homepage stays lightweight while all 405 calculators remain searchable and discoverable', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndexPath = path.join(root, 'assets/calculator-search-index.json');
   assert.ok(fs.existsSync(searchIndexPath), 'Deferred calculator search index must exist');
@@ -1461,10 +1463,10 @@ test('homepage stays lightweight while all 404 calculators remain searchable and
   assert.equal(categoryLinks.length, 20, 'All 20 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
-  assert.equal(searchIndex.length, 404, 'All 404 calculators must remain in the deferred search index');
-  assert.equal(new Set(searchIndex.map(item => item.url)).size, 404, 'Search index URLs must be unique');
+  assert.equal(searchIndex.length, 405, 'All 405 calculators, including the international VAT calculator, must remain in the deferred search index');
+  assert.equal(new Set(searchIndex.map(item => item.url)).size, 405, 'Search index URLs must be unique');
   for (const item of searchIndex) {
-    assert.ok(item.name && item.category && item.url.startsWith('/calculators/'), 'Search entries must have a name, category and calculator URL');
+    assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
     assert.ok(fs.existsSync(path.join(root, item.url.replace(/^\//, ''))), 'Search result target must exist: ' + item.url);
   }
   assert.match(homepage, /calculator-search-index\.json/);
@@ -1640,7 +1642,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, 404);
-  assert.ok(homepage.includes('404 calculators'));
+  assert.ok(homepage.includes('405 calculators'));
 });
 
  
