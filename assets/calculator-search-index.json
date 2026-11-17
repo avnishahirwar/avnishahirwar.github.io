@@ -2203,5 +2203,61 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "Zakat calculator zakatable wealth Nisab eligible assets liabilities 2.5 percent",
     "description": "Estimate Zakat from eligible wealth, entered liabilities and a verified Nisab threshold."
+  },
+  {
+    "name": "Annealing Temperature Calculator",
+    "url": "/calculators/annealing-temperature-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "biology dna primer tm melting temperature",
+    "description": "Estimate a short DNA primer melting temperature and a starting annealing temperature."
+  },
+  {
+    "name": "Cell Dilution Calculator",
+    "url": "/calculators/cell-dilution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cell suspension dilution concentration cells ml",
+    "description": "Calculate stock suspension and diluent volumes for a target cell concentration."
+  },
+  {
+    "name": "Cell Doubling Time Calculator",
+    "url": "/calculators/cell-doubling-time-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cell growth doubling time exponential growth",
+    "description": "Estimate cell population doubling time from two measurements."
+  },
+  {
+    "name": "DNA Concentration Calculator",
+    "url": "/calculators/dna-concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dna concentration absorbance a260 nucleic acid",
+    "description": "Estimate DNA or RNA concentration from absorbance at 260 nm."
+  },
+  {
+    "name": "Allele Frequency Calculator",
+    "url": "/calculators/allele-frequency-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "allele frequency genetics genotype p q",
+    "description": "Calculate allele frequencies from genotype counts."
+  },
+  {
+    "name": "Molarity Calculator",
+    "url": "/calculators/molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molarity mol per litre solution chemistry",
+    "description": "Calculate solution molarity from solute mass, molar mass and final volume."
+  },
+  {
+    "name": "Buffer pH Calculator",
+    "url": "/calculators/buffer-ph-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "buffer ph pka henderson hasselbalch",
+    "description": "Estimate buffer pH from pKa and conjugate acid-base concentrations."
+  },
+  {
+    "name": "Serial Dilution Calculator",
+    "url": "/calculators/serial-dilution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "serial dilution concentration dilution factor steps",
+    "description": "Calculate final concentration after repeated equal-step serial dilutions."
   }
 ]
