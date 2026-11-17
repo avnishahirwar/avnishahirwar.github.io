@@ -40,6 +40,6 @@ test('Study Calculator totals focus, breaks and weekly schedule correctly and va
   assert.match(elements.summary.textContent, /Weekly focus: 7 hr 30 min/);
   assert.match(elements.summary.textContent, /Weekly breaks: 1 hr 40 min/);
   elements.sessions.value='9';
-  elements.handlers.click();
+  elements.calculate.handlers.click();
   assert.equal(elements.daily.textContent, 'Check the entered values');
 });
