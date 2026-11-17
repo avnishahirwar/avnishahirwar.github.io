@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/generate-sitemaps.cjs
+      - run: node scripts/generate-sitemaps.cjs
       - run: node scripts/generate-sitemaps.cjs --check
       - run: node --check scripts/generate-locale-sitemaps.cjs
       - run: node scripts/generate-locale-sitemaps.cjs --check
