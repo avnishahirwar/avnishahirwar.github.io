@@ -870,3 +870,11 @@ test('Crop cost and EPS pension pages publish visible, specific FAQs for schema 
   for (const question of ['What is the EPS pension formula?', 'Should I enter gross salary?', 'Is this an official EPFO pension calculation?']) assert.ok(eps.includes('<summary>' + question + '</summary>'), 'Missing EPS FAQ: ' + question);
   assert.match(fs.readFileSync(new URL('../assets/site-shell.js', 'file://' + __filename), 'utf8'), /injectVisibleCalculatorFaqSchema/);
 });
+
+
+test('Steps-to-kilometres and number-to-words FAQs separate questions from answers', () => {
+  const steps = fs.readFileSync(new URL('../calculators/steps-to-km-calculator.html', 'file://' + __filename), 'utf8');
+  const words = fs.readFileSync(new URL('../calculators/number-to-words-indian-format.html', 'file://' + __filename), 'utf8');
+  for (const question of ['Is the distance exact?', 'Can I change the step length?', "Does this access my phone's step counter?"]) assert.ok(steps.includes('<summary>' + question + '</summary>'), 'Missing steps FAQ: ' + question);
+  for (const question of ['Does this use lakh and crore?', 'Can I enter paise or decimals?', 'Is the result suitable for legal documents?']) assert.ok(words.includes('<summary>' + question + '</summary>'), 'Missing number-to-words FAQ: ' + question);
+});
