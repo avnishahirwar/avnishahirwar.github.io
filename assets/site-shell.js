@@ -1105,9 +1105,13 @@ if(isCalculatorRoute&&main){
   const recent=readItems(recentKey).filter(item=>item.url!==pageItem.url);
   recent.unshift(pageItem);
   writeItems(recentKey,recent.slice(0,5));
-  const favouriteButton=document.createElement('button');
-  favouriteButton.type='button';
-  favouriteButton.className='fc-favourite-toggle';
+  const heading=main.querySelector('h1');
+  const existingFavourite=heading?.nextElementSibling?.classList.contains('fc-favourite-toggle')?heading.nextElementSibling:null;
+  const favouriteButton=existingFavourite||document.createElement('button');
+  if(!existingFavourite){
+    favouriteButton.type='button';
+    favouriteButton.className='fc-favourite-toggle';
+  }
   const refreshFavourite=()=>{
     const saved=readItems(favouriteKey);
     const active=saved.some(item=>item.url===pageItem.url);
@@ -1121,10 +1125,7 @@ if(isCalculatorRoute&&main){
     if(writeItems(favouriteKey,next))refreshFavourite();
     else favouriteButton.textContent='Browser storage unavailable';
   });
-  const heading=main.querySelector('h1');
-  const favouriteSlot=heading?.nextElementSibling?.classList.contains('fc-favourite-slot')?heading.nextElementSibling:null;
-  if(favouriteSlot)favouriteSlot.replaceWith(favouriteButton);
-  else if(heading)heading.insertAdjacentElement('afterend',favouriteButton);
+  if(!existingFavourite&&heading)heading.insertAdjacentElement('afterend',favouriteButton);
   refreshFavourite();
 }
 
