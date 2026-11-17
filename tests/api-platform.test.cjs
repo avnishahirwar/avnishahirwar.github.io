@@ -13,7 +13,7 @@ const secondaryAdmin = fs.readFileSync(path.join(root, 'avnish-ai/admin.html'), 
 const docs = fs.readFileSync(path.join(root, 'calculator/api.html'), 'utf8');
 const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111040834_customer_api_quota_management.sql'), 'utf8');
 const legacyMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041646_grandfather_existing_api_keys.sql'), 'utf8');
-const guardMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041933_guard_customer_api_key_mutations.sql'), 'utf8');
+const guardMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111042333_guard_customer_api_key_mutations.sql'), 'utf8');
 const revokeMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111042639_revoke_direct_api_table_access.sql'), 'utf8');
 
 const calculators = [
@@ -137,7 +137,7 @@ test('published OpenAPI specification matches the implemented calculator API', (
 
 test('API documentation uses the current public calculator catalogue count', () => {
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  assert.equal(searchIndex.length, 420);
-  assert.match(docs, /The full website directory contains 420 public calculators/);
+  assert.equal(searchIndex.length, 424);
+  assert.match(docs, /The full website directory contains 424 public calculators/);
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });
