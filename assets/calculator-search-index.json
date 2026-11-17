@@ -2609,5 +2609,152 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "complex root calculator mathematics numbers algebra calculator",
     "description": "Calculate both square roots of a complex number a + bi."
+  },
+  {
+    "name": "Arithmetic Sequence Calculator",
+    "url": "/calculators/arithmetic-sequence-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "arithmetic sequence mathematics sequence algebra numbers",
+    "description": "Find terms and the sum of a finite arithmetic sequence from its first term and common difference."
+  },
+  {
+    "name": "Geometric Sequence Calculator",
+    "url": "/calculators/geometric-sequence-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "geometric sequence mathematics sequence algebra numbers",
+    "description": "Calculate terms and the finite sum of a geometric sequence using its first term and common ratio."
+  },
+  {
+    "name": "Fibonacci Calculator",
+    "url": "/calculators/fibonacci-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "fibonacci mathematics sequence algebra numbers",
+    "description": "Find a Fibonacci number by its zero-based position and view the beginning of the sequence."
+  },
+  {
+    "name": "Harmonic Number Calculator",
+    "url": "/calculators/harmonic-number-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "harmonic number mathematics sequence algebra numbers",
+    "description": "Calculate the nth harmonic number by summing the reciprocals of the first n positive integers."
+  },
+  {
+    "name": "Pascal's Triangle Calculator",
+    "url": "/calculators/pascals-triangle-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "pascal's triangle mathematics sequence algebra numbers",
+    "description": "Generate a row of Pascal's triangle and its binomial coefficients for a selected row number."
+  },
+  {
+    "name": "Collatz Conjecture Calculator",
+    "url": "/calculators/collatz-conjecture-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "collatz conjecture mathematics sequence algebra numbers",
+    "description": "Explore the Collatz sequence for a positive integer and count the steps until it reaches 1."
+  },
+  {
+    "name": "Sum of a Linear Number Sequence Calculator",
+    "url": "/calculators/linear-number-sequence-sum-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "sum of a linear number sequence mathematics sequence algebra numbers",
+    "description": "Calculate the common difference and sum of a finite arithmetic sequence from its first and last terms."
+  },
+  {
+    "name": "Sum of Series Calculator",
+    "url": "/calculators/sum-of-series-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "sum of series mathematics sequence algebra numbers",
+    "description": "Calculate the exact sum of the first n natural numbers, squares or cubes."
+  },
+  {
+    "name": "Convolution Calculator",
+    "url": "/calculators/convolution-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "convolution mathematics sequence algebra numbers",
+    "description": "Calculate the linear discrete convolution of two finite numeric sequences."
+  },
+  {
+    "name": "Characteristic Polynomial Calculator",
+    "url": "/calculators/characteristic-polynomial-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "characteristic polynomial mathematics sequence algebra numbers",
+    "description": "Find the characteristic polynomial and eigenvalues of a real 2 × 2 matrix."
+  },
+  {
+    "name": "Birthday Paradox Calculator",
+    "url": "/calculators/birthday-paradox-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "birthday paradox mathematics sequence algebra numbers",
+    "description": "Estimate the probability that at least two people in a group share a birthday, assuming 365 equally likely days."
+  },
+  {
+    "name": "Box Method Calculator",
+    "url": "/calculators/box-method-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "box method mathematics algebra inequalities polynomials",
+    "description": "Multiply two binomials using the box method and display each partial product."
+  },
+  {
+    "name": "Diamond Problem Calculator",
+    "url": "/calculators/diamond-problem-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "diamond problem mathematics algebra inequalities polynomials",
+    "description": "Find two real or complex numbers from their sum and product."
+  },
+  {
+    "name": "Elimination Method Calculator",
+    "url": "/calculators/elimination-method-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "elimination method mathematics algebra inequalities polynomials",
+    "description": "Solve a pair of simultaneous linear equations in two variables using elimination."
+  },
+  {
+    "name": "Error Function Calculator",
+    "url": "/calculators/error-function-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "error function mathematics algebra inequalities polynomials",
+    "description": "Estimate the Gauss error function erf(x) and complementary error function erfc(x)."
+  },
+  {
+    "name": "Factoring Trinomials Calculator",
+    "url": "/calculators/factoring-trinomials-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "factoring trinomials mathematics algebra inequalities polynomials",
+    "description": "Analyze a quadratic trinomial and calculate its roots and factor form."
+  },
+  {
+    "name": "Generic Rectangle Calculator",
+    "url": "/calculators/generic-rectangle-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "generic rectangle mathematics algebra inequalities polynomials",
+    "description": "Calculate the area, perimeter and diagonal of a rectangle."
+  },
+  {
+    "name": "Graphing Inequalities on a Number Line Calculator",
+    "url": "/calculators/graphing-inequalities-number-line-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "graphing inequalities on a number line mathematics algebra inequalities polynomials",
+    "description": "Convert a one-variable inequality into interval notation and a number-line description."
+  },
+  {
+    "name": "Inequality to Interval Notation Calculator",
+    "url": "/calculators/inequality-to-interval-notation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "inequality to interval notation mathematics algebra inequalities polynomials",
+    "description": "Convert finite interval endpoints and inclusion rules into interval notation."
+  },
+  {
+    "name": "Multiplying Polynomials Calculator",
+    "url": "/calculators/multiplying-polynomials-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "multiplying polynomials mathematics algebra inequalities polynomials",
+    "description": "Multiply two finite polynomials entered as coefficient lists."
+  },
+  {
+    "name": "Square of a Binomial Calculator",
+    "url": "/calculators/square-of-a-binomial-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "square binomial algebra polynomial identity",
+    "description": "Expand the square of a binomial using the standard algebraic identity."
   }
 ]
