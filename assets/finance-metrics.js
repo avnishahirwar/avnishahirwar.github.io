@@ -3,7 +3,7 @@ function finite(v){return Number.isFinite(Number(v));}
 function positive(v,label){if(!finite(v)||Number(v)<=0)throw new Error(label+' must be greater than zero.');}
 function nonNegative(v,label){if(!finite(v)||Number(v)<0)throw new Error(label+' cannot be negative.');}
 const calculations={
-eps:v=>{positive(v.weightedAverageShares,'Weighted-average shares');if(!finite(v.netIncome)||!finite(v.preferredDividends))throw new Error('Enter valid income and dividend values.');return (Number(v.netIncome)-Number(v.preferredDividends))/Number(v.weightedAverageShares);},
+eps:v=>{positive(v.weightedAverageShares,'Weighted-average shares');nonNegative(v.preferredDividends,'Preferred dividends');if(!finite(v.netIncome)||!finite(v.preferredDividends))throw new Error('Enter valid income and dividend values.');return (Number(v.netIncome)-Number(v.preferredDividends))/Number(v.weightedAverageShares);},
 pe:v=>{nonNegative(v.sharePrice,'Share price');positive(v.eps,'Earnings per share');return Number(v.sharePrice)/Number(v.eps);},
 marketcap:v=>{nonNegative(v.sharePrice,'Share price');nonNegative(v.shares,'Shares outstanding');return Number(v.sharePrice)*Number(v.shares);},
 ev:v=>{for(const k of ['marketCap','debt','preferred','minority','cash'])nonNegative(v[k],k);return Number(v.marketCap)+Number(v.debt)+Number(v.preferred)+Number(v.minority)-Number(v.cash);},
