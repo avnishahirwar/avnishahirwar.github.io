@@ -2826,5 +2826,12 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "confidence interval calculator statistics probability data analysis calculator",
     "description": "Calculate a z-based confidence interval for a population mean using sample summary statistics."
+  },
+  {
+    "name": "VAT Calculator",
+    "url": "/international/vat-calculator.html",
+    "category": "International tools",
+    "keywords": "VAT value added tax add remove tax inclusive exclusive net gross international sales tax",
+    "description": "Add value added tax to a net price or extract the VAT component from a tax-inclusive total using a rate you enter."
   }
 ]
