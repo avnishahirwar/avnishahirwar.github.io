@@ -32,6 +32,8 @@ jobs:
         run: node --test tests/site-integrity.test.cjs
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
+      - name: Validate insurance premium calculator
+        run: node --test tests/insurance-premium-calculator.test.cjs
       - name: Validate property calculators and embeds
         run: node --test tests/property-tools.test.cjs
       - name: Validate SEO consolidation and sitemap exclusions
