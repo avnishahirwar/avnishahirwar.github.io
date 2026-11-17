@@ -2686,5 +2686,75 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "birthday paradox mathematics sequence algebra numbers",
     "description": "Estimate the probability that at least two people in a group share a birthday, assuming 365 equally likely days."
+  },
+  {
+    "name": "Absolute Value Inequalities Calculator",
+    "url": "/calculators/absolute-value-inequalities-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "absolute value inequalities mathematics algebra inequalities polynomials",
+    "description": "Solve inequalities involving the absolute value of a linear expression."
+  },
+  {
+    "name": "Box Method Calculator",
+    "url": "/calculators/box-method-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "box method mathematics algebra inequalities polynomials",
+    "description": "Multiply two binomials using the box method and display each partial product."
+  },
+  {
+    "name": "Diamond Problem Calculator",
+    "url": "/calculators/diamond-problem-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "diamond problem mathematics algebra inequalities polynomials",
+    "description": "Find two real or complex numbers from their sum and product."
+  },
+  {
+    "name": "Elimination Method Calculator",
+    "url": "/calculators/elimination-method-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "elimination method mathematics algebra inequalities polynomials",
+    "description": "Solve a pair of simultaneous linear equations in two variables using elimination."
+  },
+  {
+    "name": "Error Function Calculator",
+    "url": "/calculators/error-function-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "error function mathematics algebra inequalities polynomials",
+    "description": "Estimate the Gauss error function erf(x) and complementary error function erfc(x)."
+  },
+  {
+    "name": "Factoring Trinomials Calculator",
+    "url": "/calculators/factoring-trinomials-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "factoring trinomials mathematics algebra inequalities polynomials",
+    "description": "Analyze a quadratic trinomial and calculate its roots and factor form."
+  },
+  {
+    "name": "Generic Rectangle Calculator",
+    "url": "/calculators/generic-rectangle-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "generic rectangle mathematics algebra inequalities polynomials",
+    "description": "Calculate the area, perimeter and diagonal of a rectangle."
+  },
+  {
+    "name": "Graphing Inequalities on a Number Line Calculator",
+    "url": "/calculators/graphing-inequalities-number-line-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "graphing inequalities on a number line mathematics algebra inequalities polynomials",
+    "description": "Convert a one-variable inequality into interval notation and a number-line description."
+  },
+  {
+    "name": "Inequality to Interval Notation Calculator",
+    "url": "/calculators/inequality-to-interval-notation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "inequality to interval notation mathematics algebra inequalities polynomials",
+    "description": "Convert finite interval endpoints and inclusion rules into interval notation."
+  },
+  {
+    "name": "Multiplying Polynomials Calculator",
+    "url": "/calculators/multiplying-polynomials-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "multiplying polynomials mathematics algebra inequalities polynomials",
+    "description": "Multiply two finite polynomials entered as coefficient lists."
   }
 ]
