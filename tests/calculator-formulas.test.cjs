@@ -883,3 +883,51 @@ test('Steps-to-kilometres and number-to-words FAQs separate questions from answe
   for (const question of ['Is the distance exact?', 'Can I change the step length?', "Does this access my phone's step counter?"]) assert.ok(steps.includes('<summary>' + question + '</summary>'), 'Missing steps FAQ: ' + question);
   for (const question of ['Does this use lakh and crore?', 'Can I enter paise or decimals?', 'Is the result suitable for legal documents?']) assert.ok(words.includes('<summary>' + question + '</summary>'), 'Missing number-to-words FAQ: ' + question);
 });
+
+const chemistryEngineSource = fs.readFileSync(new URL('../assets/chemistry-calculators.js', 'file://' + __filename), 'utf8');
+const chemistryContext = {};
+vm.runInNewContext(chemistryEngineSource, chemistryContext);
+const chemistry = chemistryContext.FriendlyChemistryCalculators;
+
+test('chemistry batch 03 formulas return expected reference values', () => {
+  const avogadro = chemistry.avogadro({ moles: 1 });
+  assert.ok(Math.abs(Number(avogadro[1][1]) / 6.02214076e23 - 1) < 1e-12);
+
+  const gas = chemistry.molarMassGas({ mass: 1, temperature: 273.15, pressure: 101.325, volume: 22.414 });
+  assert.ok(Math.abs(parseFloat(gas[0][1]) - 1) < 0.002);
+
+  const atoms = chemistry.molesToAtoms({ moles: 1, atomsPerMolecule: 3 });
+  assert.ok(Math.abs(Number(atoms[1][1]) / 1.806642228e24 - 1) < 1e-12);
+
+  const ppm = chemistry.ppmToMolarity({ ppm: 1000, density: 1, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(ppm[1][1]) - (1 / 58.44)) < 1e-6);
+
+  const residence = chemistry.residenceTime({ volume: 1000, flow: 100 });
+  assert.ok(Math.abs(parseFloat(residence[0][1]) - 10) < 1e-8);
+
+  const dilution = chemistry.dilutionFactor({ stock: 1, target: 0.1, finalVolume: 100 });
+  assert.ok(Math.abs(parseFloat(dilution[0][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[1][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[2][1]) - 90) < 1e-8);
+
+  const buffer = chemistry.hendersonHasselbalch({ pKa: 4.76, base: 0.1, acid: 0.1 });
+  assert.ok(Math.abs(parseFloat(buffer[1][1]) - 4.76) < 1e-8);
+
+  const massPercent = chemistry.massPercent({ soluteMass: 10, solventMass: 90 });
+  assert.ok(Math.abs(parseFloat(massPercent[1][1]) - 10) < 1e-8);
+
+  const percentToMolarity = chemistry.percentageToMolarity({ percentWv: 5, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(percentToMolarity[1][1]) - (50 / 58.44)) < 1e-6);
+
+  const ph = chemistry.ph({ hydrogen: 0.001 });
+  assert.ok(Math.abs(parseFloat(ph[0][1]) - 3) < 1e-8);
+});
+
+test('chemistry batch 03 formulas reject invalid physical inputs', () => {
+  assert.throws(() => chemistry.molarMassGas({ mass: 1, temperature: 0, pressure: 100, volume: 1 }), /positive finite value/);
+  assert.throws(() => chemistry.molesToAtoms({ moles: 1, atomsPerMolecule: 1.5 }), /positive whole number/);
+  assert.throws(() => chemistry.dilutionFactor({ stock: 0.1, target: 1, finalVolume: 100 }), /lower than stock/);
+  assert.throws(() => chemistry.hendersonHasselbalch({ pKa: 4.7, base: 0, acid: 0.1 }), /positive finite value/);
+  assert.throws(() => chemistry.massPercent({ soluteMass: 0, solventMass: 0 }), /greater than zero/);
+  assert.throws(() => chemistry.ph({ hydrogen: 0 }), /positive finite value/);
+});
