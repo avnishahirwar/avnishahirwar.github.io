@@ -10,6 +10,8 @@ const calculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'
 const minutesToHours = fs.readFileSync(path.join(root, 'calculators/minutes-to-hours-calculator.html'), 'utf8');
 const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
 const gstCalculator = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
+const basicCalculator = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
+const scientificCalculator = fs.readFileSync(path.join(root, 'calculators/scientific-calculator.html'), 'utf8');
 const loanEmi = fs.readFileSync(path.join(root, 'calculators/loan-emi-calculator.html'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = sitemap.split('<loc>').slice(1).map(part => part.split('</loc>')[0]);
@@ -132,4 +134,19 @@ test('mobile primary navigation toggle remains beside the brand and is keyboard 
   assert.match(chrome, /\.fc-nav-toggle:focus-visible/);
   assert.match(chrome, /\.fc-global-brand\{flex:1 1 auto;min-width:0;width:auto\}/);
   assert.match(chrome, /\.fc-global-links\.fc-nav-open\{display:flex;flex-direction:column\}/);
+});
+
+test('priority calculator pages expose valid breadcrumb structured-data trails', () => {
+  for (const [name, html, url, label] of [
+    ['Basic', basicCalculator, 'https://friendlycalculator.in/calculators/basic-calculator.html', 'Basic Calculator'],
+    ['Scientific', scientificCalculator, 'https://friendlycalculator.in/calculators/scientific-calculator.html', 'Scientific Calculator']
+  ]) {
+    const scripts = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    const schemas = scripts.map((match) => JSON.parse(match[1]));
+    const breadcrumb = schemas.find((schema) => schema['@type'] === 'BreadcrumbList');
+    assert.ok(breadcrumb, name + ' calculator must include BreadcrumbList');
+    assert.equal(breadcrumb.itemListElement.length, 3, name + ' breadcrumb must include Home, Calculators and current page');
+    assert.equal(breadcrumb.itemListElement[2].item, url);
+    assert.equal(breadcrumb.itemListElement[2].name, label);
+  }
 });
