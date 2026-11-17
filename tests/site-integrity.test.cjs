@@ -293,6 +293,12 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
   assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
 });
 
+test('GST calculator links to the current 309-page catalogue count', () => {
+  const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
+  assert.ok(gst.includes('Explore all 309 calculators on Friendly Calculator.'));
+  assert.doesNotMatch(gst, /Explore all 303 calculators/);
+});
+
 test('homepage uses the same navy brand color as the shared site shell', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('--fc-blue:#101c2c;--fc-blue-dark:#20364e;'));
@@ -1496,7 +1502,11 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('<h1>Free Online Calculators for Everyone</h1>'));
+  assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
+  assert.ok(homepage.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
+  assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths.'));
+  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
