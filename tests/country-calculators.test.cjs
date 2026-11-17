@@ -194,3 +194,25 @@ test('international country hubs and directory link to new tax and payroll calcu
  assert.match(fs.readFileSync(path.join(root,'international/uk/index.html'),'utf8'),/uk-payroll-calculator\.html/);
  assert.match(fs.readFileSync(path.join(root,'international/canada/index.html'),'utf8'),/canada-payroll-calculator\.html/);
 });
+
+
+test('Canada 2026 federal income tax applies progressive brackets and tapered basic personal credit',()=>{
+ const r=calculateCanadaFederalIncomeTax(85000,{employmentIncome:85000});
+ assert.equal(r.grossFederalTax,13833.785);
+ assert.equal(r.basicPersonalAmount,16452);
+ assert.equal(r.basicPersonalCredit,2303.28);
+ assert.equal(r.employmentCredit,210.14);
+ assert.equal(r.federalIncomeTax,11320.37);
+ assert.equal(r.taxYear,2026);
+ const high=calculateCanadaFederalIncomeTax(300000);
+ assert.equal(high.basicPersonalAmount,14829);
+ assert.equal(high.employmentCredit,0);
+});
+test('Canada federal income tax rejects invalid inputs and is linked from Canada hub',()=>{
+ assert.throws(()=>calculateCanadaFederalIncomeTax(-1),RangeError);
+ assert.throws(()=>calculateCanadaFederalIncomeTax(1000,{employmentIncome:2000}),RangeError);
+ const root=path.join(__dirname,'..');
+ const html=fs.readFileSync(path.join(root,'international/canada-income-tax-calculator.html'),'utf8');
+ assert.match(html,/canada\.ca/);assert.match(html,/"@type":"FAQPage"/);assert.match(html,/rel="canonical"/);
+ assert.match(fs.readFileSync(path.join(root,'ca/index.html'),'utf8'),/canada-income-tax-calculator\.html/);
+});
