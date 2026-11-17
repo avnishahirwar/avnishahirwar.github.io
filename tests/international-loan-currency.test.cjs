@@ -8,7 +8,11 @@ const pages = [
   ['id', 'id-ID', 'IDR'],
   ['pt', 'pt-BR', 'BRL'],
   ['bn', 'bn-BD', 'BDT'],
-  ['es', 'es-ES', 'EUR']
+  ['es', 'es-ES', 'EUR'],
+  ['ar', 'ar-AE', 'AED'],
+  ['fr', 'fr-FR', 'EUR'],
+  ['ta', 'ta-IN', 'INR'],
+  ['hi', 'hi-IN', 'INR']
 ];
 
 for (const [locale, language, currency] of pages) {
@@ -16,10 +20,10 @@ for (const [locale, language, currency] of pages) {
     const file = path.join(__dirname, '..', locale, 'calculators', 'loan-emi-calculator.html');
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, /FCLocale\?\.formatCurrency\(value,code/);
-    assert.match(html, /updateCurrencyLabels/);
+    assert.match(html, /updateCurrencyLabel/);
     assert.match(html, /fc:localechange/);
     assert.match(html, /countryDefaults/);
     assert.match(html, new RegExp(`Intl\\.NumberFormat\\(locale,\\{style:'currency',currency:code`));
-    assert.doesNotMatch(html, /<label>[^<]*\\(₹\\)/);
+    assert.doesNotMatch(html, /<label[^>]*>[^<]*\\(₹\\)/);
   });
 }
