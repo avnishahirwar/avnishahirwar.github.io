@@ -1147,7 +1147,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   const allowedSizes=['normal','large','larger'];
   const initialSize=allowedSizes.includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
-  const initialMotion=read('fc-display-motion','off')==='on';
+  const initialMotion=read('fc-display-motion',(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)?'on':'off')==='on';
   const defaultLocaleSettings={
     country:window.FCLocale?.getCountry()||'IN',
     currency:window.FCLocale?.getCurrency()||'INR',
@@ -1253,7 +1253,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     if(panel.hidden)return;
     if(event.key==='Escape'){closePanel();open.focus();return;}
     if(event.key==='Tab'){
-      const focusable=Array.from(panel.querySelectorAll('button:not([disabled]),select:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(el=>el.offsetParent!==null);
+      const focusable=Array.from(panel.querySelectorAll('button:not([disabled]),select:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(el=>!el.hidden&&el.getClientRects().length>0);
       if(!focusable.length){event.preventDefault();return;}
       const first=focusable[0],last=focusable[focusable.length-1];
       if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
