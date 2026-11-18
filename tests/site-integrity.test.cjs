@@ -2117,3 +2117,30 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
   assert.ok(css.includes('body>.fc-display-panel .fc-display-status'), 'The redundant theme status line must be visually hidden in Settings.');
   assert.ok(css.includes('clip-path:inset(50%)'), 'The hidden status must use an accessible visually-hidden treatment.');
 });
+
+
+test('Settings Units typography matches the shared settings rows', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(css, /\.fc-display-units-row>\.fc-unit-control\{[^}]*font-size:14px/);
+  assert.match(css, /\.fc-display-units-row>\.fc-unit-control>select\{[^}]*min-height:40px[^}]*font:500 13px\/1\.3 system-ui,sans-serif/);
+  assert.match(shell, /addSettingRow\('fc-display-units-row',\[unitControl\]\)/);
+});
+
+test('legacy All Pages footer links are excluded while Sitemap remains', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /isFooterDirectoryLink=link=>/);
+  assert.match(shell, /!isFooterDirectoryLink\(link\)/);
+  assert.ok(shell.includes("['Sitemap','/sitemap.html']"));
+  assert.doesNotMatch(shell, /'All Pages Directory'/);
+  assert.doesNotMatch(shell, /'सभी पेज'/);
+});
+
+test('Open Assistant remains a live page action and is not moved into Settings', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /document\.body\.appendChild\(launcher\)/);
+  assert.match(shell, /document\.querySelector\('#fc-ai-launch'\)\?\.click\(\)/);
+  assert.doesNotMatch(shell, /quickActions\.appendChild\(assistant\)/);
+  assert.doesNotMatch(shell, /quickActions\.appendChild\(liveAssistant\)/);
+  assert.match(shell, /#fc-ai-lazy-launch\{position:fixed/);
+});

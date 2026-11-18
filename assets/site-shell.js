@@ -23,10 +23,15 @@ try {
     footer.classList.add('fc-global-footer');
     footer.setAttribute('aria-label','Website footer');
     const preservedLinks=[];
+    const isFooterDirectoryLink=link=>{
+      const href=(link.getAttribute('href')||'').toLowerCase();
+      const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
+      return /all-pages(?:-directory)?/.test(href)||/^(all pages(?: directory)?|सभी पेज|directorio|répertoire|diretório|دليل|direktori|ডিরেক্টরি|பட்டியல்|一覧|каталог)$/.test(label);
+    };
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
         const href=link.getAttribute('href');
-        if(href&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
+        if(href&&!isFooterDirectoryLink(link)&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
       });
     };
     collectLinks(footer);
@@ -380,17 +385,17 @@ const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.h
 
 const chrome={
 de:{home:'Startseite',login:'Anmelden',all:'Verzeichnis (Englisch)',search:'Rechner suchen',finance:'Finanzen',tax:'Steuern (Englisch)',business:'Business-Tools (Englisch)',global:'Globale Rechner (Englisch)',everyday:'Alltag (Englisch)',blog:'Blog (Englisch)',embed:'Einbetten',forBusiness:'Für Unternehmen',api:'API',plans:'Tarife',about:'Über uns',contact:'Kontakt',admin:'Admin',language:'Sprache',choose:'Website-Sprache auswählen',change:'Sprache ändern',footer:['Startseite','Verzeichnis','Finanzen','Steuern','Business','Alltag','Für Unternehmen','API','Tarife','Premium-Warteliste','Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Kontakt']},
-en:{home:'Home',login:'Login',all:'All Calculators',search:'Search Calculator',finance:'Finance',tax:'Tax',business:'Business Tools',global:'Global Calculators',everyday:'Everyday',blog:'Blog',embed:'Embed',forBusiness:'For Business',api:'API',plans:'Plans',about:'About',contact:'Contact',admin:'Admin',language:'Language',choose:'Choose website language',change:'Change language',footer:['Home','All Pages Directory','Finance','Tax','Business Tools','Everyday','For Business','API','Plans','Premium Waitlist','About','Methodology','Privacy','Terms','Disclaimer','Contact']},
-hi:{home:'होम',login:'लॉग इन',all:'सभी कैलकुलेटर',search:'कैलकुलेटर खोजें',finance:'वित्त',tax:'टैक्स',business:'बिज़नेस टूल्स',global:'वैश्विक कैलकुलेटर',everyday:'रोज़मर्रा',blog:'ब्लॉग',embed:'एम्बेड',forBusiness:'बिज़नेस सेवाएँ',api:'API',plans:'प्लान',about:'हमारे बारे में',contact:'संपर्क',admin:'एडमिन',language:'भाषा',choose:'वेबसाइट की भाषा चुनें',change:'भाषा बदलें',footer:['होम','सभी पेज','वित्त','टैक्स','बिज़नेस टूल्स','रोज़मर्रा','बिज़नेस सेवाएँ','API','प्लान','प्रीमियम वेटलिस्ट','हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','संपर्क']},
-es:{home:'Inicio',login:'Iniciar sesión',all:'Calculadoras',search:'Buscar calculadoras',finance:'Finanzas',tax:'Impuestos',business:'Herramientas de negocio',global:'Calculadoras globales',everyday:'Diario',blog:'Blog',embed:'Insertar',forBusiness:'Para empresas',api:'API',plans:'Planes',about:'Acerca de',contact:'Contacto',admin:'Admin',language:'Idioma',choose:'Elegir idioma del sitio',change:'Cambiar idioma',footer:['Inicio','Directorio','Finanzas','Impuestos','Negocios','Diario','Para empresas','API','Planes','Lista premium','Acerca de','Metodología','Privacidad','Términos','Aviso legal','Contacto']},
-fr:{home:'Accueil',login:'Connexion',all:'Calculatrices',search:'Rechercher un calculateur',finance:'Finance',tax:'Impôts',business:'Outils professionnels',global:'Calculatrices internationales',everyday:'Quotidien',blog:'Blog',embed:'Intégrer',forBusiness:'Pour les entreprises',api:'API',plans:'Offres',about:'À propos',contact:'Contact',admin:'Admin',language:'Langue',choose:'Choisir la langue du site',change:'Changer de langue',footer:['Accueil','Répertoire','Finance','Impôts','Entreprise','Quotidien','Entreprises','API','Offres','Liste premium','À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Contact']},
-pt:{home:'Início',login:'Entrar',all:'Calculadoras',search:'Pesquisar calculadoras',finance:'Finanças',tax:'Impostos',business:'Ferramentas empresariais',global:'Calculadoras globais',everyday:'Dia a dia',blog:'Blog',embed:'Incorporar',forBusiness:'Para empresas',api:'API',plans:'Planos',about:'Sobre',contact:'Contato',admin:'Admin',language:'Idioma',choose:'Escolher idioma do site',change:'Mudar idioma',footer:['Início','Diretório','Finanças','Impostos','Negócios','Dia a dia','Para empresas','API','Planos','Lista premium','Sobre','Metodologia','Privacidade','Termos','Aviso legal','Contato']},
+en:{home:'Home',login:'Login',all:'All Calculators',search:'Search Calculator',finance:'Finance',tax:'Tax',business:'Business Tools',global:'Global Calculators',everyday:'Everyday',blog:'Blog',embed:'Embed',forBusiness:'For Business',api:'API',plans:'Plans',about:'About',contact:'Contact',admin:'Admin',language:'Language',choose:'Choose website language',change:'Change language',footer:['Home','Finance','Tax','Business Tools','Everyday','For Business','API','Plans','Premium Waitlist','About','Methodology','Privacy','Terms','Disclaimer','Contact']},
+hi:{home:'होम',login:'लॉग इन',all:'सभी कैलकुलेटर',search:'कैलकुलेटर खोजें',finance:'वित्त',tax:'टैक्स',business:'बिज़नेस टूल्स',global:'वैश्विक कैलकुलेटर',everyday:'रोज़मर्रा',blog:'ब्लॉग',embed:'एम्बेड',forBusiness:'बिज़नेस सेवाएँ',api:'API',plans:'प्लान',about:'हमारे बारे में',contact:'संपर्क',admin:'एडमिन',language:'भाषा',choose:'वेबसाइट की भाषा चुनें',change:'भाषा बदलें',footer:['होम','वित्त','टैक्स','बिज़नेस टूल्स','रोज़मर्रा','बिज़नेस सेवाएँ','API','प्लान','प्रीमियम वेटलिस्ट','हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','संपर्क']},
+es:{home:'Inicio',login:'Iniciar sesión',all:'Calculadoras',search:'Buscar calculadoras',finance:'Finanzas',tax:'Impuestos',business:'Herramientas de negocio',global:'Calculadoras globales',everyday:'Diario',blog:'Blog',embed:'Insertar',forBusiness:'Para empresas',api:'API',plans:'Planes',about:'Acerca de',contact:'Contacto',admin:'Admin',language:'Idioma',choose:'Elegir idioma del sitio',change:'Cambiar idioma',footer:['Inicio','Finanzas','Impuestos','Negocios','Diario','Para empresas','API','Planes','Lista premium','Acerca de','Metodología','Privacidad','Términos','Aviso legal','Contacto']},
+fr:{home:'Accueil',login:'Connexion',all:'Calculatrices',search:'Rechercher un calculateur',finance:'Finance',tax:'Impôts',business:'Outils professionnels',global:'Calculatrices internationales',everyday:'Quotidien',blog:'Blog',embed:'Intégrer',forBusiness:'Pour les entreprises',api:'API',plans:'Offres',about:'À propos',contact:'Contact',admin:'Admin',language:'Langue',choose:'Choisir la langue du site',change:'Changer de langue',footer:['Accueil','Finance','Impôts','Entreprise','Quotidien','Entreprises','API','Offres','Liste premium','À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Contact']},
+pt:{home:'Início',login:'Entrar',all:'Calculadoras',search:'Pesquisar calculadoras',finance:'Finanças',tax:'Impostos',business:'Ferramentas empresariais',global:'Calculadoras globais',everyday:'Dia a dia',blog:'Blog',embed:'Incorporar',forBusiness:'Para empresas',api:'API',plans:'Planos',about:'Sobre',contact:'Contato',admin:'Admin',language:'Idioma',choose:'Escolher idioma do site',change:'Mudar idioma',footer:['Início','Finanças','Impostos','Negócios','Dia a dia','Para empresas','API','Planos','Lista premium','Sobre','Metodologia','Privacidade','Termos','Aviso legal','Contato']},
 ar:{home:'الرئيسية',login:'تسجيل الدخول',all:'جميع الحاسبات',search:'البحث عن حاسبة',finance:'التمويل',tax:'الضرائب',business:'أدوات الأعمال',global:'حاسبات عالمية',everyday:'اليومي',blog:'المدونة',embed:'تضمين',forBusiness:'للأعمال',api:'API',plans:'الخطط',about:'من نحن',contact:'اتصل بنا',admin:'المسؤول',language:'اللغة',choose:'اختر لغة الموقع',change:'تغيير اللغة',footer:['الرئيسية','الدليل','التمويل','الضرائب','الأعمال','اليومي','للأعمال','API','الخطط','قائمة بريميوم','من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','اتصل بنا']},
-id:{home:'Beranda',login:'Masuk',all:'Semua kalkulator',search:'Cari kalkulator',finance:'Keuangan',tax:'Pajak',business:'Alat bisnis',global:'Kalkulator global',everyday:'Sehari-hari',blog:'Blog',embed:'Sematkan',forBusiness:'Untuk bisnis',api:'API',plans:'Paket',about:'Tentang',contact:'Kontak',admin:'Admin',language:'Bahasa',choose:'Pilih bahasa situs',change:'Ubah bahasa',footer:['Beranda','Direktori','Keuangan','Pajak','Bisnis','Sehari-hari','Untuk bisnis','API','Paket','Daftar premium','Tentang','Metodologi','Privasi','Ketentuan','Penafian','Kontak']},
-bn:{home:'হোম',login:'লগ ইন',all:'সব ক্যালকুলেটর',search:'ক্যালকুলেটর খুঁজুন',finance:'অর্থ',tax:'কর',business:'ব্যবসার টুল',global:'বিশ্বব্যাপী ক্যালকুলেটর',everyday:'দৈনন্দিন',blog:'ব্লগ',embed:'এম্বেড',forBusiness:'ব্যবসার জন্য',api:'API',plans:'প্ল্যান',about:'পরিচিতি',contact:'যোগাযোগ',admin:'অ্যাডমিন',language:'ভাষা',choose:'ওয়েবসাইটের ভাষা বাছুন',change:'ভাষা পরিবর্তন',footer:['হোম','ডিরেক্টরি','অর্থ','কর','ব্যবসা','দৈনন্দিন','ব্যবসার জন্য','API','প্ল্যান','প্রিমিয়াম তালিকা','পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','যোগাযোগ']},
-ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத்து கணிப்பான்கள்',search:'கணிப்பானைத் தேடு',finance:'நிதி',tax:'வரி',business:'வணிகக் கருவிகள்',global:'உலகளாவிய கணிப்பான்கள்',everyday:'அன்றாடம்',blog:'வலைப்பதிவு',embed:'உட்பொதி',forBusiness:'வணிகங்களுக்கு',api:'API',plans:'திட்டங்கள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு',admin:'நிர்வாகம்',language:'மொழி',choose:'இணையதள மொழியைத் தேர்ந்தெடுக்கவும்',change:'மொழியை மாற்று',footer:['முகப்பு','பட்டியல்','நிதி','வரி','வணிகம்','அன்றாடம்','வணிகங்களுக்கு','API','திட்டங்கள்','பிரீமியம் பட்டியல்','எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','தொடர்பு']},
-ja:{home:'ホーム',login:'ログイン',all:'計算ツール一覧（英語）',search:'計算ツールを検索',finance:'金融',tax:'税金',business:'ビジネスツール（英語）',global:'世界向け計算ツール（英語）',everyday:'日常（英語）',blog:'ブログ（英語）',embed:'埋め込み',forBusiness:'法人向け',api:'API',plans:'プラン',about:'サイトについて',contact:'お問い合わせ',admin:'管理',language:'言語',choose:'サイトの言語を選択',change:'言語を変更',footer:['ホーム','一覧','金融','税金','ビジネス','日常','法人向け','API','プラン','プレミアム','サイトについて','計算方法','プライバシー','利用規約','免責事項','お問い合わせ']},
-ru:{home:'Главная',login:'Войти',all:'Каталог (английский)',search:'Поиск калькулятора',finance:'Финансы',tax:'Налоги',business:'Бизнес-инструменты (англ.)',global:'Международные калькуляторы',everyday:'На каждый день (англ.)',blog:'Блог (английский)',embed:'Встроить',forBusiness:'Для бизнеса',api:'API',plans:'Тарифы',about:'О проекте',contact:'Контакты',admin:'Администратор',language:'Язык',choose:'Выберите язык сайта',change:'Изменить язык',footer:['Главная','Каталог','Финансы','Налоги','Бизнес','На каждый день','Для бизнеса','API','Тарифы','Премиум','О проекте','Методология','Конфиденциальность','Условия','Отказ от ответственности','Контакты']}
+id:{home:'Beranda',login:'Masuk',all:'Semua kalkulator',search:'Cari kalkulator',finance:'Keuangan',tax:'Pajak',business:'Alat bisnis',global:'Kalkulator global',everyday:'Sehari-hari',blog:'Blog',embed:'Sematkan',forBusiness:'Untuk bisnis',api:'API',plans:'Paket',about:'Tentang',contact:'Kontak',admin:'Admin',language:'Bahasa',choose:'Pilih bahasa situs',change:'Ubah bahasa',footer:['Beranda','Keuangan','Pajak','Bisnis','Sehari-hari','Untuk bisnis','API','Paket','Daftar premium','Tentang','Metodologi','Privasi','Ketentuan','Penafian','Kontak']},
+bn:{home:'হোম',login:'লগ ইন',all:'সব ক্যালকুলেটর',search:'ক্যালকুলেটর খুঁজুন',finance:'অর্থ',tax:'কর',business:'ব্যবসার টুল',global:'বিশ্বব্যাপী ক্যালকুলেটর',everyday:'দৈনন্দিন',blog:'ব্লগ',embed:'এম্বেড',forBusiness:'ব্যবসার জন্য',api:'API',plans:'প্ল্যান',about:'পরিচিতি',contact:'যোগাযোগ',admin:'অ্যাডমিন',language:'ভাষা',choose:'ওয়েবসাইটের ভাষা বাছুন',change:'ভাষা পরিবর্তন',footer:['হোম','অর্থ','কর','ব্যবসা','দৈনন্দিন','ব্যবসার জন্য','API','প্ল্যান','প্রিমিয়াম তালিকা','পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','যোগাযোগ']},
+ta:{home:'முகப்பு',login:'உள்நுழை',all:'அனைத்து கணிப்பான்கள்',search:'கணிப்பானைத் தேடு',finance:'நிதி',tax:'வரி',business:'வணிகக் கருவிகள்',global:'உலகளாவிய கணிப்பான்கள்',everyday:'அன்றாடம்',blog:'வலைப்பதிவு',embed:'உட்பொதி',forBusiness:'வணிகங்களுக்கு',api:'API',plans:'திட்டங்கள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு',admin:'நிர்வாகம்',language:'மொழி',choose:'இணையதள மொழியைத் தேர்ந்தெடுக்கவும்',change:'மொழியை மாற்று',footer:['முகப்பு','நிதி','வரி','வணிகம்','அன்றாடம்','வணிகங்களுக்கு','API','திட்டங்கள்','பிரீமியம் பட்டியல்','எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','தொடர்பு']},
+ja:{home:'ホーム',login:'ログイン',all:'計算ツール一覧（英語）',search:'計算ツールを検索',finance:'金融',tax:'税金',business:'ビジネスツール（英語）',global:'世界向け計算ツール（英語）',everyday:'日常（英語）',blog:'ブログ（英語）',embed:'埋め込み',forBusiness:'法人向け',api:'API',plans:'プラン',about:'サイトについて',contact:'お問い合わせ',admin:'管理',language:'言語',choose:'サイトの言語を選択',change:'言語を変更',footer:['ホーム','金融','税金','ビジネス','日常','法人向け','API','プラン','プレミアム','サイトについて','計算方法','プライバシー','利用規約','免責事項','お問い合わせ']},
+ru:{home:'Главная',login:'Войти',all:'Каталог (английский)',search:'Поиск калькулятора',finance:'Финансы',tax:'Налоги',business:'Бизнес-инструменты (англ.)',global:'Международные калькуляторы',everyday:'На каждый день (англ.)',blog:'Блог (английский)',embed:'Встроить',forBusiness:'Для бизнеса',api:'API',plans:'Тарифы',about:'О проекте',contact:'Контакты',admin:'Администратор',language:'Язык',choose:'Выберите язык сайта',change:'Изменить язык',footer:['Главная','Финансы','Налоги','Бизнес','На каждый день','Для бизнеса','API','Тарифы','Премиум','О проекте','Методология','Конфиденциальность','Условия','Отказ от ответственности','Контакты']}
 };
 const nav=chrome[currentLocale]||chrome.en;
 const links=[
@@ -506,6 +511,11 @@ const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>'
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
+const isFooterDirectoryLink=link=>{
+  const href=(link.getAttribute('href')||'').toLowerCase();
+  const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
+  return /all-pages(?:-directory)?/.test(href)||/^(all pages(?: directory)?|सभी पेज|directorio|répertoire|diretório|دليل|direktori|ডিরেক্টরি|பட்டியல்|一覧|каталог)$/.test(label);
+};
 const isFooterSocialLink=link=>{
   const href=(link.getAttribute('href')||'').trim().toLowerCase();
   const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
@@ -516,7 +526,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
     // Social/contact destinations already have one dedicated icon row in the shared Footer.
-    if(href&&!isFooterSocialLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    if(href&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
@@ -1168,16 +1178,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   };
   const copy=labels[language]||labels.en;
   const activateAssistant=()=>{
-    const assistantButton=document.querySelector('#fc-ai-launch');
-    const quickActions=document.getElementById('fc-settings-quick-actions');
-    if(assistantButton&&quickActions&&!quickActions.contains(assistantButton))quickActions.appendChild(assistantButton);
-    const settingsPanel=document.getElementById('fc-display-panel');
-    const settingsTrigger=document.getElementById('fc-display-settings');
-    if(settingsPanel&&!settingsPanel.hidden){
-      settingsPanel.hidden=true;
-      settingsTrigger?.setAttribute('aria-expanded','false');
-    }
-    assistantButton?.click();
+    // The assistant is a persistent on-page floating action, independent of Settings.
+    document.querySelector('#fc-ai-launch')?.click();
   };
   const launcher=document.createElement('button');
   launcher.id='fc-ai-lazy-launch';
@@ -1461,8 +1463,6 @@ const mountSettingsQuickActions=()=>{
     quickActions.appendChild(installButton);
   }
   const installHelp=document.getElementById('fc-pwa-help');
-  const assistant=document.getElementById('fc-ai-lazy-launch');
-  const liveAssistant=document.getElementById('fc-ai-launch');
   if(installHelp){
     const helpText=installHelp.querySelector('p');
     if(helpText)helpText.textContent=copy.help;
@@ -1470,16 +1470,6 @@ const mountSettingsQuickActions=()=>{
     if(helpClose)helpClose.textContent=copy.close;
     installHelp.classList.add('fc-settings-inline-help');
     quickActions.appendChild(installHelp);
-  }
-  if(assistant){
-    assistant.textContent=copy.assistant;
-    assistant.setAttribute('aria-label',copy.assistant);
-    assistant.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(assistant);
-  }
-  if(liveAssistant){
-    liveAssistant.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(liveAssistant);
   }
   // Remove stale unlabeled controls left by older Settings panel versions.
   panel.querySelectorAll('button').forEach(button=>{
