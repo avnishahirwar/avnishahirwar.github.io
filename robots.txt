@@ -1,4 +1,5 @@
 # Public pages are crawlable by default. Keep private/admin and test paths restricted.
+Agentmap: https://friendlycalculator.in/.well-known/ard.json
 User-agent: *
 Allow: /
 Disallow: /calculator/admin.html
