@@ -17283,5 +17283,61 @@
     "category": "OTHER",
     "keywords": "what grade was i in year calculator",
     "description": "What Grade Was I in Year Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadro-s-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "avogadro number calculator moles particles molecules atoms avogadro constant",
+    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "HRA Exemption Calculator India",
+    "url": "/calculators/hra-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "hra exemption calculator india section 10 13a basic salary hra received rent paid metro non metro",
+    "description": "Calculate HRA tax exemption in India using basic salary, HRA received, rent paid and metro or non-metro status."
+  },
+  {
+    "name": "Light Year Conversion",
+    "url": "/calculators/light-year-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "light year conversion calculator convert light years kilometres kilometers astronomical units miles",
+    "description": "Convert light-years into kilometres, astronomical units and miles."
+  },
+  {
+    "name": "Square Kilometers to Acres Conversion",
+    "url": "/calculators/square-kilometers-to-acres-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "square kilometers to acres conversion calculator area square kilometres acres square metres",
+    "description": "Convert square kilometres into acres and square metres."
+  },
+  {
+    "name": "SSY Calculator",
+    "url": "/calculators/ssy-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "ssy sukanya samriddhi yojana maturity calculator india annual deposits 21 years interest rate",
+    "description": "Estimate Sukanya Samriddhi Account maturity after 21 years, with annual deposits for the first 15 years and an editable interest-rate assumption."
+  },
+  {
+    "name": "STP Calculator",
+    "url": "/calculators/stp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stp systematic transfer plan calculator source fund destination fund transfer assumed returns",
+    "description": "Model transfers from a source fund to a destination fund with separate assumed returns."
+  },
+  {
+    "name": "Torr to atm Conversion",
+    "url": "/calculators/torr-to-atm-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "torr to atm conversion calculator pressure standard atmospheres pascals",
+    "description": "Convert torr into standard atmospheres and pascals."
+  },
+  {
+    "name": "VAT Calculator",
+    "url": "/international/vat-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "vat value added tax calculator add remove tax net gross price local rate international purchases",
+    "description": "Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency."
   }
 ]
