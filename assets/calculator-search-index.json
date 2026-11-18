@@ -3036,5 +3036,75 @@
     "category": "Biology & Chemistry",
     "keywords": "pH calculator hydrogen ion concentration acidity chemistry",
     "description": "Calculate pH from hydrogen-ion concentration expressed in moles per litre."
+  },
+  {
+    "name": "Electronegativity Difference Calculator",
+    "url": "/calculators/electronegativity-difference-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electronegativity difference Pauling scale bond polarity chemistry",
+    "description": "Calculate the absolute electronegativity difference between two elements and view a cautious, approximate bond-polarity guide."
+  },
+  {
+    "name": "Percent Ionic Character Calculator",
+    "url": "/calculators/percent-ionic-character-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent ionic character electronegativity difference Pauling chemistry",
+    "description": "Estimate percent ionic character from the electronegativity difference using an empirical Pauling relationship."
+  },
+  {
+    "name": "pKa Calculator",
+    "url": "/calculators/pka-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "pKa calculator acid dissociation constant Ka logarithm",
+    "description": "Convert an acid dissociation constant Ka to pKa, or convert a pKa value back to Ka."
+  },
+  {
+    "name": "Alligation Calculator",
+    "url": "/calculators/alligation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "alligation calculator concentration mixing ratio weighted average",
+    "description": "Calculate the relative quantities of a higher-strength and lower-strength solution needed to obtain a target concentration."
+  },
+  {
+    "name": "Concentration Calculator",
+    "url": "/calculators/concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "concentration calculator mass concentration g per litre molarity",
+    "description": "Calculate mass concentration in grams per litre and, when molar mass is supplied, molarity in moles per litre."
+  },
+  {
+    "name": "Mixing Ratio Calculator",
+    "url": "/calculators/mixing-ratio-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mixing ratio calculator parts ratio mixture volume mass",
+    "description": "Split a total mixture quantity between two components using a user-supplied parts ratio."
+  },
+  {
+    "name": "Raoult's Law Calculator",
+    "url": "/calculators/raoults-law-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Raoult law calculator vapour pressure mole fraction ideal solution",
+    "description": "Estimate the vapour pressure of an ideal binary solution from solvent mole fraction and pure-solvent vapour pressure."
+  },
+  {
+    "name": "Actual Yield Calculator",
+    "url": "/calculators/actual-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "actual yield calculator percent yield theoretical yield chemistry",
+    "description": "Calculate actual product yield from theoretical yield and percent yield, or calculate percent yield from actual and theoretical yield."
+  },
+  {
+    "name": "Activation Energy Calculator",
+    "url": "/calculators/activation-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "activation energy calculator Arrhenius equation rate constants temperature",
+    "description": "Estimate activation energy from two rate constants measured at two absolute temperatures using the two-point Arrhenius equation."
+  },
+  {
+    "name": "Boiling Point Elevation Calculator",
+    "url": "/calculators/boiling-point-elevation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point elevation calculator molality ebullioscopic constant van't Hoff",
+    "description": "Estimate the boiling-point increase of a solution from molality, ebullioscopic constant and van't Hoff factor."
   }
 ]
