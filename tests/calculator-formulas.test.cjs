@@ -1040,3 +1040,52 @@ test('chemistry batch 05 formulas reject unsupported or invalid inputs', () => {
   assert.throws(() => batch05.titration({ sampleM: 0.1, sampleV: 25, analyteCoeff: 1, titrantM: 0, titrantCoeff: 1 }), /positive finite value/);
   assert.throws(() => batch05.hardness({ calcium: -1, magnesium: 2 }), /non-negative finite value/);
 });
+
+const batch06Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch06.js', 'file://' + __filename), 'utf8');
+const batch06Context = {};
+vm.runInNewContext(batch06Source, batch06Context);
+const batch06 = batch06Context.FriendlyChemistryBatch06;
+
+test('chemistry batch 06 formulas return expected reference values', () => {
+  const equilibrium = batch06.equilibrium({ a: 0.2, b: 0.2, c: 0.1, d: 0.1, na: 1, nb: 1, nc: 1, nd: 1 });
+  assert.ok(Math.abs(parseFloat(equilibrium[0][1]) - 0.25) < 1e-8);
+
+  const kp = batch06.kp({ kc: 0.5, temperature: 298.15, delta: -1 });
+  assert.ok(Math.abs(parseFloat(kp[0][1]) - (0.5 / (0.082057366 * 298.15))) < 1e-6);
+
+  const ratio = batch06.molarRatio({ known: 2, knownCoeff: 2, targetCoeff: 3 });
+  assert.ok(Math.abs(parseFloat(ratio[0][1]) - 3) < 1e-8);
+
+  const rate = batch06.rateConstant({ initial: 1, final: 0.5, time: 60 });
+  assert.ok(Math.abs(parseFloat(rate[1][1]) - 60) < 1e-5);
+
+  const quotient = batch06.reactionQuotient({ a: 0.2, b: 0.2, c: 0.1, d: 0.1, na: 1, nb: 1, nc: 1, nd: 1, kc: 1 });
+  assert.match(quotient[1][1], /Reverse direction favoured/);
+
+  const entropy = batch06.entropy({ heat: 2.5, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(entropy[0][1]) - (2500 / 298.15)) < 1e-5);
+
+  const freezing = batch06.freezing({ molality: 0.5, kf: 1.86, factor: 2, normal: 0 });
+  assert.ok(Math.abs(parseFloat(freezing[0][1]) - 1.86) < 1e-8);
+  assert.ok(Math.abs(parseFloat(freezing[1][1]) + 1.86) < 1e-8);
+
+  const gibbs = batch06.gibbs({ enthalpy: -100, entropy: -200, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(gibbs[0][1]) - (-40.37)) < 0.02);
+
+  const phase = batch06.phaseRule({ components: 2, phases: 2 });
+  assert.equal(phase[0][1], '2');
+
+  const q10 = batch06.q10({ rate1: 1, temp1: 20, rate2: 2, temp2: 30 });
+  assert.ok(Math.abs(parseFloat(q10[0][1]) - 2) < 1e-8);
+});
+
+test('chemistry batch 06 formulas reject invalid physical and stoichiometric inputs', () => {
+  assert.throws(() => batch06.equilibrium({ a: 0, b: 1, c: 1, d: 1, na: 1, nb: 1, nc: 1, nd: 1 }), /positive finite value/);
+  assert.throws(() => batch06.kp({ kc: 1, temperature: 0, delta: 1 }), /positive finite value/);
+  assert.throws(() => batch06.molarRatio({ known: 1, knownCoeff: 0, targetCoeff: 1 }), /positive whole-number coefficient/);
+  assert.throws(() => batch06.rateConstant({ initial: 1, final: 2, time: 10 }), /cannot exceed initial/);
+  assert.throws(() => batch06.reactionQuotient({ a: 1, b: 1, c: 1, d: 1, na: 1, nb: 1, nc: 1, nd: 1, kc: 0 }), /positive finite value/);
+  assert.throws(() => batch06.freezing({ molality: 1, kf: 1, factor: 0, normal: 0 }), /positive finite value/);
+  assert.throws(() => batch06.phaseRule({ components: 1, phases: 4 }), /negative degree/);
+  assert.throws(() => batch06.q10({ rate1: 1, temp1: 20, rate2: 2, temp2: 20 }), /different valid temperatures/);
+});
