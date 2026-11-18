@@ -1,0 +1,33 @@
+name: Locale coverage audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  locale-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check audit script syntax
+        run: node --check scripts/audit-locale-coverage.cjs
+      - name: Run locale coverage tests
+        run: node --test tests/locale-coverage-audit.test.cjs
+      - name: Generate public locale coverage report
+        run: node scripts/audit-locale-coverage.cjs > locale-coverage-report.md
+      - name: Upload locale coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: friendly-calculator-locale-coverage
+          path: locale-coverage-report.md
+          if-no-files-found: error
+          retention-days: 30
