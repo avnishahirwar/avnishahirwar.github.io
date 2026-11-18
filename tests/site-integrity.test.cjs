@@ -302,7 +302,7 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
   assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
 });
 
-test('GST calculator links to the current 546-page catalogue count', () => {
+test('GST calculator links to the current 562-page curated directory count', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
   assert.ok(gst.includes('Explore all 562 calculators on Friendly Calculator.'));
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
@@ -1443,7 +1443,9 @@ test('homepage search runtime validates the complete 2,479-item deferred catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   assert.equal(searchIndex.length, 2479);
-  assert.match(homepage, /items\.length!==2479/);
+  assert.match(homepage, /Array\.isArray\(items\)/);
+  assert.match(homepage, /typeof item\.name==='string'/);
+  assert.match(homepage, /typeof item\.url==='string'/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
@@ -1468,7 +1470,7 @@ test('homepage stays lightweight while all 2,478 canonical calculator pages rema
   assert.equal(categoryLinks.length, 20, 'All 20 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
-  assert.equal(searchIndex.length, 2479, 'All 546 calculators, including the international VAT calculator, must remain in the deferred search index');
+  assert.equal(searchIndex.length, 2479, 'All 2,478 canonical calculator pages plus the international VAT calculator must remain in the deferred search index');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, 2479, 'Search index URLs must be unique');
   for (const item of searchIndex) {
     assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
