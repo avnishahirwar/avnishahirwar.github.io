@@ -4728,17 +4728,17 @@
   },
   {
     "name": "Chemical Name Calculator",
-    "url": "/calculator/new-calculators.html#chemical-name-calculator",
+    "url": "/calculators/chemical-name-calculator.html",
     "category": "CHEMISTRY",
-    "keywords": "chemical name calculator",
-    "description": "Chemical Name Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "chemical name calculator chemistry science calculator",
+    "description": "Look up names for common inorganic formulas from a curated reference table."
   },
   {
     "name": "Quiz: Electron Configuration Calculator",
-    "url": "/calculator/new-calculators.html#quiz-electron-configuration-calculator",
+    "url": "/calculators/quiz-electron-configuration-calculator.html",
     "category": "CHEMISTRY",
-    "keywords": "quiz: electron configuration calculator",
-    "description": "Quiz: Electron Configuration Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "quiz: electron configuration calculator chemistry science calculator",
+    "description": "Practice ground-state electron configurations for neutral atoms with atomic numbers 1–36."
   },
   {
     "name": "Bleach Dilution Calculator",
@@ -4756,10 +4756,10 @@
   },
   {
     "name": "Net Ionic Equation Calculator",
-    "url": "/calculator/new-calculators.html#net-ionic-equation-calculator",
+    "url": "/calculators/net-ionic-equation-calculator.html",
     "category": "CHEMISTRY",
-    "keywords": "net ionic equation calculator",
-    "description": "Net Ionic Equation Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "net ionic equation calculator chemistry science calculator",
+    "description": "Cancel identical spectator species from a complete ionic equation while preserving coefficients and physical states."
   },
   {
     "name": "Two-Photon Absorption Calculator",
