@@ -73,6 +73,17 @@ const ensurePwa=()=>{
 ensurePwa();
 
 /* Offer a clear install path and explain the offline boundary. */
+const getFloatingToolsDock=()=>{
+  if(!document.body)return null;
+  let dock=document.getElementById('fc-floating-tools');
+  if(!dock){
+    dock=document.createElement('div');
+    dock.id='fc-floating-tools';
+    dock.setAttribute('aria-label','Friendly Calculator quick settings');
+    document.body.appendChild(dock);
+  }
+  return dock;
+};
 const ensurePwaInstallUi=()=>{
   if(!document.body||window.self!==window.top)return;
   if(/(?:^|\/)(?:admin|login|dashboard)(?:\/|\.|$)/i.test(location.pathname))return;
@@ -157,7 +168,9 @@ const ensurePwaInstallUi=()=>{
   });
 
   document.head.appendChild(style);
-  document.body.append(button,panel,network);
+  const dock=getFloatingToolsDock();
+  if(dock)dock.appendChild(button);
+  document.body.append(panel,network);
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensurePwaInstallUi,{once:true});
 else ensurePwaInstallUi();
@@ -350,21 +363,31 @@ const globalCalculatorsUrl=currentLocale==='ja'||currentLocale==='ru'?'/'+curren
 const languageControl='<label class="fc-language-control"><span class="fc-language-label">'+nav.language+'</span><select id="fc-language-select" aria-label="'+nav.choose+'">'+Object.entries(localeNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const currencyNames={INR:'INR · Indian Rupee',USD:'USD · US Dollar',EUR:'EUR · Euro',GBP:'GBP · British Pound',AED:'AED · UAE Dirham',CAD:'CAD · Canadian Dollar',AUD:'AUD · Australian Dollar',JPY:'JPY · Japanese Yen',SGD:'SGD · Singapore Dollar',CHF:'CHF · Swiss Franc',CNY:'CNY · Chinese Yuan',NZD:'NZD · New Zealand Dollar',SAR:'SAR · Saudi Riyal',BRL:'BRL · Brazilian Real',MXN:'MXN · Mexican Peso',ZAR:'ZAR · South African Rand',BDT:'BDT · Bangladeshi Taka',PKR:'PKR · Pakistani Rupee',IDR:'IDR · Indonesian Rupiah',THB:'THB · Thai Baht',RUB:'RUB · Russian Ruble',TRY:'TRY · Turkish Lira',KRW:'KRW · South Korean Won',VND:'VND · Vietnamese Dong',PHP:'PHP · Philippine Peso',MYR:'MYR · Malaysian Ringgit',PLN:'PLN · Polish Zloty',SEK:'SEK · Swedish Krona',NOK:'NOK · Norwegian Krone',DKK:'DKK · Danish Krone',CZK:'CZK · Czech Koruna',HUF:'HUF · Hungarian Forint',ILS:'ILS · Israeli New Shekel',NGN:'NGN · Nigerian Naira',KES:'KES · Kenyan Shilling',EGP:'EGP · Egyptian Pound',QAR:'QAR · Qatari Riyal',KWD:'KWD · Kuwaiti Dinar',OMR:'OMR · Omani Rial',LKR:'LKR · Sri Lankan Rupee',NPR:'NPR · Nepalese Rupee',BHD:'BHD · Bahraini Dinar',CLP:'CLP · Chilean Peso',COP:'COP · Colombian Peso',ARS:'ARS · Argentine Peso',UAH:'UAH · Ukrainian Hryvnia',MAD:'MAD · Moroccan Dirham',RON:'RON · Romanian Leu',BGN:'BGN · Bulgarian Lev'};
 const currencyControl='<label class="fc-currency-control"><span class="fc-language-label">Display currency</span><select id="fc-currency-select" aria-label="Display currency">'+Object.entries(currencyNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
-const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','ru-RU':'Russia · Русский','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English','tr-TR':'Türkiye · Türkçe','ko-KR':'South Korea · 한국어','vi-VN':'Vietnam · Tiếng Việt','fil-PH':'Philippines · Filipino','ms-MY':'Malaysia · Bahasa Melayu','pl-PL':'Poland · Polski','sv-SE':'Sweden · Svenska','nb-NO':'Norway · Norsk','da-DK':'Denmark · Dansk','cs-CZ':'Czechia · Čeština','hu-HU':'Hungary · Magyar','he-IL':'Israel · עברית','en-NG':'Nigeria · English','en-KE':'Kenya · English','ar-EG':'Egypt · العربية','ar-QA':'Qatar · العربية','ar-KW':'Kuwait · العربية','ar-OM':'Oman · العربية','si-LK':'Sri Lanka · සිංහල','ne-NP':'Nepal · नेपाली','es-CL':'Chile · Español','es-CO':'Colombia · Español','es-AR':'Argentina · Español','uk-UA':'Ukraine · Українська','ro-RO':'Romania · Română','ar-BH':'Bahrain · العربية','ar-MA':'Morocco · العربية'};
+const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','ru-RU':'Russia · Русский','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English','tr-TR':'Türkiye · Türkçe','ko-KR':'South Korea · 한국어','vi-VN':'Vietnam · Tiếng Việt','fil-PH':'Philippines · Filipino','ms-MY':'Malaysia · Bahasa Melayu','pl-PL':'Poland · Polski','sv-SE':'Sweden · Svenska','nb-NO':'Norway · Norsk','da-DK':'Denmark · Dansk','cs-CZ':'Czechia · Čeština','hu-HU':'Hungary · Magyar','he-IL':'Israel · עברית','en-NG':'Nigeria · English','en-KE':'Kenya · English','ar-EG':'Egypt · العربية','ar-QA':'Qatar · العربية','ar-KW':'Kuwait · العربية','ar-OM':'Oman · العربية','si-LK':'Sri Lanka · සිංහල','ne-NP':'Nepal · नेपाली','es-CL':'Chile · Español','es-CO':'Colombia · Español','es-AR':'Argentina · Español','uk-UA':'Ukraine · Українська','ro-RO':'Romania · Română','ar-BH':'Bahrain · العربية','ar-MA':'Morocco · العربية','es-MX':'Mexico · Español','en-PK':'Pakistan · English','en-SG':'Singapore · English','de-CH':'Switzerland · Deutsch','it-IT':'Italy · Italiano','nl-NL':'Netherlands · Nederlands','pt-PT':'Portugal · Português','en-IE':'Ireland · English'};
 const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧 United Kingdom',CA:'🇨🇦 Canada',AU:'🇦🇺 Australia',AE:'🇦🇪 United Arab Emirates',SA:'🇸🇦 Saudi Arabia',DE:'🇩🇪 Germany',FR:'🇫🇷 France',BR:'🇧🇷 Brazil',MX:'🇲🇽 Mexico',ID:'🇮🇩 Indonesia',PH:'🇵🇭 Philippines',NG:'🇳🇬 Nigeria',ZA:'🇿🇦 South Africa',PK:'🇵🇰 Pakistan',BD:'🇧🇩 Bangladesh',ES:'🇪🇸 Spain',JP:'🇯🇵 Japan',CN:'🇨🇳 China',RU:'🇷🇺 Russia',TR:'🇹🇷 Türkiye',KR:'🇰🇷 South Korea',VN:'🇻🇳 Vietnam',AR:'🇦🇷 Argentina',CL:'🇨🇱 Chile',CO:'🇨🇴 Colombia',SG:'🇸🇬 Singapore',NZ:'🇳🇿 New Zealand',CH:'🇨🇭 Switzerland',MY:'🇲🇾 Malaysia',IE:'🇮🇪 Ireland',IT:'🇮🇹 Italy',NL:'🇳🇱 Netherlands',PT:'🇵🇹 Portugal',PL:'🇵🇱 Poland',SE:'🇸🇪 Sweden',NO:'🇳🇴 Norway',DK:'🇩🇰 Denmark',KE:'🇰🇪 Kenya',NP:'🇳🇵 Nepal',IL:'🇮🇱 Israel',EG:'🇪🇬 Egypt',QA:'🇶🇦 Qatar',KW:'🇰🇼 Kuwait',OM:'🇴🇲 Oman'};
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div><div class="fc-settings-row" aria-label="Regional calculator settings"><div class="fc-settings-controls">'+countryControl+currencyControl+unitControl+formatControl+'</div></div></div>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
-const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation')&&existingHeader.querySelector('#fc-language-select')&&existingHeader.querySelector('#fc-currency-select')&&existingHeader.querySelector('#fc-country-select')&&existingHeader.querySelector('#fc-locale-select')&&existingHeader.querySelector('#fc-unit-system-select'));
+const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
 if(headerIsReady){if(reservedHeader)reservedHeader.remove();}
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
+// Keep regional preferences outside the global header/footer. Preserve the
+// existing selector IDs and handlers by moving these original controls into
+// a hidden staging node; the Settings panel relocates them after it is built.
+activeHeader.querySelector('.fc-language-control')?.remove();
+activeHeader.querySelector('.fc-settings-row')?.remove();
+const regionalControlsSource=document.createElement('div');
+regionalControlsSource.id='fc-regional-settings-source';
+regionalControlsSource.hidden=true;
+regionalControlsSource.innerHTML=languageControl+countryControl+currencyControl+unitControl+formatControl;
+document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
@@ -406,7 +429,7 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   window.addEventListener('resize',syncNav,{passive:true});
   activeHeader.querySelector('.fc-global-nav')?.insertBefore(toggle,primaryNav);
 }
-const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
+const routeLanguageSelect=document.getElementById('fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
@@ -1044,22 +1067,37 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ar:{open:'فتح المساعد',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
     id:{open:'Buka asisten',loading:'Memuat…',retry:'Coba lagi'},
     bn:{open:'সহায়ক খুলুন',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
-    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'}
+    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'},
+    de:{open:'Assistent öffnen',loading:'Assistent wird geladen…',retry:'Erneut versuchen'},
+    ja:{open:'アシスタントを開く',loading:'読み込み中…',retry:'再試行'},
+    ru:{open:'Открыть помощник',loading:'Загрузка помощника…',retry:'Повторить попытку'}
   };
   const copy=labels[language]||labels.en;
+  const activateAssistant=()=>{
+    const assistantButton=document.querySelector('#fc-ai-launch');
+    const quickActions=document.getElementById('fc-settings-quick-actions');
+    if(assistantButton&&quickActions&&!quickActions.contains(assistantButton))quickActions.appendChild(assistantButton);
+    const settingsPanel=document.getElementById('fc-display-panel');
+    const settingsTrigger=document.getElementById('fc-display-settings');
+    if(settingsPanel&&!settingsPanel.hidden){
+      settingsPanel.hidden=true;
+      settingsTrigger?.setAttribute('aria-expanded','false');
+    }
+    assistantButton?.click();
+  };
   const launcher=document.createElement('button');
   launcher.id='fc-ai-lazy-launch';
   launcher.type='button';
   launcher.textContent=copy.open;
   launcher.setAttribute('aria-label',copy.open);
   launcher.addEventListener('click',()=>{
-    if(window.__fcFreeAssistantLoaded){launcher.remove();document.querySelector('#fc-ai-launch')?.click();return;}
+    if(window.__fcFreeAssistantLoaded){launcher.remove();activateAssistant();return;}
     launcher.disabled=true;
     launcher.textContent=copy.loading;
     const assistantScript=document.createElement('script');
     assistantScript.src='/assets/friendly-ai-assistant.js';
     assistantScript.dataset.fcFreeAssistant='true';
-    assistantScript.onload=()=>{launcher.remove();document.querySelector('#fc-ai-launch')?.click();};
+    assistantScript.onload=()=>{launcher.remove();activateAssistant();};
     assistantScript.onerror=()=>{assistantScript.remove();launcher.disabled=false;launcher.textContent=copy.retry;};
     document.head.appendChild(assistantScript);
   });
@@ -1071,17 +1109,37 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   if(!document.body||window.self!==window.top||document.getElementById('fc-display-settings'))return;
   const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={
-    en:{open:'Display settings',title:'Display settings',theme:'Dark mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
-    hi:{open:'दिखावट सेटिंग',title:'दिखावट सेटिंग',theme:'डार्क मोड',smaller:'अ−',larger:'अ+',close:'बंद करें',themeOn:'डार्क मोड चालू',themeOff:'डार्क मोड बंद',text:'अक्षर का आकार'},
-    es:{open:'Apariencia',title:'Ajustes de pantalla',theme:'Modo oscuro',smaller:'A−',larger:'A+',close:'Cerrar',themeOn:'Modo oscuro activado',themeOff:'Modo oscuro desactivado',text:'Tamaño del texto'},
-    fr:{open:'Affichage',title:'Paramètres d’affichage',theme:'Mode sombre',smaller:'A−',larger:'A+',close:'Fermer',themeOn:'Mode sombre activé',themeOff:'Mode sombre désactivé',text:'Taille du texte'},
-    pt:{open:'Aparência',title:'Configurações de exibição',theme:'Modo escuro',smaller:'A−',larger:'A+',close:'Fechar',themeOn:'Modo escuro ativado',themeOff:'Modo escuro desativado',text:'Tamanho do texto'},
-    ar:{open:'إعدادات العرض',title:'إعدادات العرض',theme:'الوضع الداكن',smaller:'A−',larger:'A+',close:'إغلاق',themeOn:'الوضع الداكن مفعّل',themeOff:'الوضع الداكن متوقف',text:'حجم النص'},
-    id:{open:'Tampilan',title:'Pengaturan tampilan',theme:'Mode gelap',smaller:'A−',larger:'A+',close:'Tutup',themeOn:'Mode gelap aktif',themeOff:'Mode gelap nonaktif',text:'Ukuran teks'},
-    bn:{open:'প্রদর্শন সেটিংস',title:'প্রদর্শন সেটিংস',theme:'ডার্ক মোড',smaller:'অ−',larger:'অ+',close:'বন্ধ',themeOn:'ডার্ক মোড চালু',themeOff:'ডার্ক মোড বন্ধ',text:'লেখার আকার'},
-    ta:{open:'காட்சி அமைப்புகள்',title:'காட்சி அமைப்புகள்',theme:'இருண்ட பயன்முறை',smaller:'அ−',larger:'அ+',close:'மூடு',themeOn:'இருண்ட பயன்முறை இயக்கம்',themeOff:'இருண்ட பயன்முறை முடக்கம்',text:'எழுத்து அளவு'}
+    en:{open:'Settings',title:'Settings & Accessibility',region:'Language & regional settings',accessibility:'Accessibility',quick:'Quick actions',currency:'Display currency',countryFormat:'Country & format',units:'Units',theme:'Dark mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
+    hi:{open:'सेटिंग्स',title:'सेटिंग्स और सुलभता',region:'भाषा और क्षेत्र',accessibility:'सुलभता',quick:'त्वरित सुविधाएँ',currency:'प्रदर्शन मुद्रा',countryFormat:'देश और प्रारूप',units:'इकाइयाँ',theme:'डार्क मोड',smaller:'अ−',larger:'अ+',close:'बंद करें',themeOn:'डार्क मोड चालू',themeOff:'डार्क मोड बंद',text:'अक्षर का आकार'},
+    es:{open:'Ajustes',title:'Ajustes y accesibilidad',region:'Idioma y región',accessibility:'Accesibilidad',quick:'Acciones rápidas',currency:'Moneda de visualización',countryFormat:'País y formato',units:'Unidades',theme:'Modo oscuro',smaller:'A−',larger:'A+',close:'Cerrar',themeOn:'Modo oscuro activado',themeOff:'Modo oscuro desactivado',text:'Tamaño del texto'},
+    fr:{open:'Paramètres',title:'Paramètres et accessibilité',region:'Langue et région',accessibility:'Accessibilité',quick:'Actions rapides',currency:'Devise affichée',countryFormat:'Pays et format',units:'Unités',theme:'Mode sombre',smaller:'A−',larger:'A+',close:'Fermer',themeOn:'Mode sombre activé',themeOff:'Mode sombre désactivé',text:'Taille du texte'},
+    pt:{open:'Configurações',title:'Configurações e acessibilidade',region:'Idioma e região',accessibility:'Acessibilidade',quick:'Ações rápidas',currency:'Moeda de exibição',countryFormat:'País e formato',units:'Unidades',theme:'Modo escuro',smaller:'A−',larger:'A+',close:'Fechar',themeOn:'Modo escuro ativado',themeOff:'Modo escuro desativado',text:'Tamanho do texto'},
+    ar:{open:'الإعدادات',title:'الإعدادات وإمكانية الوصول',region:'اللغة والمنطقة',accessibility:'إمكانية الوصول',quick:'إجراءات سريعة',currency:'عملة العرض',countryFormat:'البلد والتنسيق',units:'الوحدات',theme:'الوضع الداكن',smaller:'A−',larger:'A+',close:'إغلاق',themeOn:'الوضع الداكن مفعّل',themeOff:'الوضع الداكن متوقف',text:'حجم النص'},
+    id:{open:'Pengaturan',title:'Pengaturan & aksesibilitas',region:'Bahasa & wilayah',accessibility:'Aksesibilitas',quick:'Aksi cepat',currency:'Mata uang tampilan',countryFormat:'Negara & format',units:'Satuan',theme:'Mode gelap',smaller:'A−',larger:'A+',close:'Tutup',themeOn:'Mode gelap aktif',themeOff:'Mode gelap nonaktif',text:'Ukuran teks'},
+    bn:{open:'সেটিংস',title:'সেটিংস ও অ্যাক্সেসিবিলিটি',region:'ভাষা ও অঞ্চল',accessibility:'অ্যাক্সেসিবিলিটি',quick:'দ্রুত কাজ',currency:'প্রদর্শনের মুদ্রা',countryFormat:'দেশ ও ফরম্যাট',units:'একক',theme:'ডার্ক মোড',smaller:'অ−',larger:'অ+',close:'বন্ধ',themeOn:'ডার্ক মোড চালু',themeOff:'ডার্ক মোড বন্ধ',text:'লেখার আকার'},
+    ta:{open:'அமைப்புகள்',title:'அமைப்புகள் மற்றும் அணுகல்தன்மை',region:'மொழி மற்றும் பகுதி',accessibility:'அணுகல்தன்மை',quick:'விரைவு செயல்கள்',currency:'காட்சி நாணயம்',countryFormat:'நாடு மற்றும் வடிவம்',units:'அலகுகள்',theme:'இருண்ட பயன்முறை',smaller:'அ−',larger:'அ+',close:'மூடு',themeOn:'இருண்ட பயன்முறை இயக்கம்',themeOff:'இருண்ட பயன்முறை முடக்கம்',text:'எழுத்து அளவு'},
+    de:{open:'Einstellungen',title:'Einstellungen & Barrierefreiheit',region:'Sprache & Region',accessibility:'Barrierefreiheit',quick:'Schnellaktionen',currency:'Anzeigewährung',countryFormat:'Land & Format',units:'Einheiten',theme:'Dunkelmodus',smaller:'A−',larger:'A+',close:'Schließen',themeOn:'Dunkelmodus an',themeOff:'Dunkelmodus aus',text:'Textgröße'},
+    ja:{open:'設定',title:'設定とアクセシビリティ',region:'言語と地域',accessibility:'アクセシビリティ',quick:'クイック操作',currency:'表示通貨',countryFormat:'国と言語形式',units:'単位',theme:'ダークモード',smaller:'A−',larger:'A+',close:'閉じる',themeOn:'ダークモード オン',themeOff:'ダークモード オフ',text:'文字サイズ'},
+    ru:{open:'Настройки',title:'Настройки и доступность',region:'Язык и регион',accessibility:'Доступность',quick:'Быстрые действия',currency:'Валюта отображения',countryFormat:'Страна и формат',units:'Единицы',theme:'Тёмная тема',smaller:'A−',larger:'A+',close:'Закрыть',themeOn:'Тёмная тема включена',themeOff:'Тёмная тема выключена',text:'Размер текста'}
   };
   const t=labels[lang]||labels.en;
+  const actionLabels={
+    en:{save:'Save',reset:'Reset',motion:'Reduce motion',motionOn:'Reduced motion on',motionOff:'Reduced motion off',saved:'Settings saved',resetDone:'Settings reset'},
+    hi:{save:'सहेजें',reset:'रीसेट',motion:'गतियाँ कम करें',motionOn:'कम गति चालू',motionOff:'कम गति बंद',saved:'सेटिंग्स सहेजी गईं',resetDone:'सेटिंग्स रीसेट हुईं'},
+    es:{save:'Guardar',reset:'Restablecer',motion:'Reducir movimiento',motionOn:'Movimiento reducido activado',motionOff:'Movimiento reducido desactivado',saved:'Ajustes guardados',resetDone:'Ajustes restablecidos'},
+    fr:{save:'Enregistrer',reset:'Réinitialiser',motion:'Réduire les animations',motionOn:'Animations réduites activées',motionOff:'Animations réduites désactivées',saved:'Paramètres enregistrés',resetDone:'Paramètres réinitialisés'},
+    pt:{save:'Salvar',reset:'Redefinir',motion:'Reduzir movimento',motionOn:'Movimento reduzido ativado',motionOff:'Movimento reduzido desativado',saved:'Configurações salvas',resetDone:'Configurações redefinidas'},
+    ar:{save:'حفظ',reset:'إعادة ضبط',motion:'تقليل الحركة',motionOn:'تقليل الحركة مفعّل',motionOff:'تقليل الحركة متوقف',saved:'تم حفظ الإعدادات',resetDone:'تمت إعادة ضبط الإعدادات'},
+    id:{save:'Simpan',reset:'Atur ulang',motion:'Kurangi gerakan',motionOn:'Gerakan dikurangi aktif',motionOff:'Gerakan dikurangi nonaktif',saved:'Pengaturan disimpan',resetDone:'Pengaturan diatur ulang'},
+    bn:{save:'সংরক্ষণ',reset:'রিসেট',motion:'অ্যানিমেশন কমান',motionOn:'কম অ্যানিমেশন চালু',motionOff:'কম অ্যানিমেশন বন্ধ',saved:'সেটিংস সংরক্ষিত',resetDone:'সেটিংস রিসেট হয়েছে'},
+    ta:{save:'சேமி',reset:'மீட்டமை',motion:'இயக்கத்தைக் குறை',motionOn:'குறைக்கப்பட்ட இயக்கம் இயக்கம்',motionOff:'குறைக்கப்பட்ட இயக்கம் முடக்கம்',saved:'அமைப்புகள் சேமிக்கப்பட்டன',resetDone:'அமைப்புகள் மீட்டமைக்கப்பட்டன'},
+    de:{save:'Speichern',reset:'Zurücksetzen',motion:'Bewegung reduzieren',motionOn:'Reduzierte Bewegung aktiviert',motionOff:'Reduzierte Bewegung deaktiviert',saved:'Einstellungen gespeichert',resetDone:'Einstellungen zurückgesetzt'},
+    ja:{save:'保存',reset:'リセット',motion:'動きを減らす',motionOn:'視覚効果を軽減しました',motionOff:'視覚効果の軽減を解除しました',saved:'設定を保存しました',resetDone:'設定をリセットしました'},
+    ru:{save:'Сохранить',reset:'Сбросить',motion:'Уменьшить анимацию',motionOn:'Уменьшенная анимация включена',motionOff:'Уменьшенная анимация выключена',saved:'Настройки сохранены',resetDone:'Настройки сброшены'}
+  };
+  Object.assign(t,actionLabels[lang]||actionLabels.en);
+  const contrastLabels={en:'High contrast',hi:'उच्च कंट्रास्ट',es:'Alto contraste',fr:'Contraste élevé',pt:'Alto contraste',ar:'تباين عالٍ',id:'Kontras tinggi',bn:'উচ্চ কনট্রাস্ট',ta:'உயர் மாறுபாடு',de:'Hoher Kontrast',ja:'高コントラスト',ru:'Высокая контрастность'};
+  t.contrast=contrastLabels[lang]||contrastLabels.en;
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
   const theme=read('fc-display-theme','');
@@ -1089,6 +1147,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   const allowedSizes=['normal','large','larger'];
   const initialSize=allowedSizes.includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
+  const initialMotion=read('fc-display-motion',(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)?'on':'off')==='on';
+  const defaultLocaleSettings={
+    country:window.FCLocale?.getCountry()||'IN',
+    currency:window.FCLocale?.getCurrency()||'INR',
+    locale:window.FCLocale?.getLocale()||'en-IN',
+    units:window.FCLocale?.getUnitSystem()||'metric'
+  };
   const applyTheme=value=>{
     document.documentElement.setAttribute('data-fc-theme',value);
     write('fc-display-theme',value);
@@ -1104,20 +1169,49 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     smaller.disabled=safe==='normal';
     larger.disabled=safe==='larger';
   };
+  const applyContrast=value=>{
+    const safe=value==='high'?'high':'normal';
+    document.documentElement.setAttribute('data-fc-contrast',safe);
+    write('fc-display-contrast',safe);
+    contrastButton.setAttribute('aria-pressed',String(safe==='high'));
+    contrastButton.textContent=t.contrast+' · '+(safe==='high'?'●':'○');
+  };
+  const applyMotion=value=>{
+    const enabled=!!value;
+    document.documentElement.classList.toggle('fc-reduce-motion',enabled);
+    document.documentElement.setAttribute('data-fc-reduce-motion',String(enabled));
+    write('fc-display-motion',enabled?'on':'off');
+    motionButton.setAttribute('aria-pressed',String(enabled));
+    motionButton.textContent=t.motion+' · '+(enabled?'●':'○');
+  };
   const open=document.createElement('button');
   open.id='fc-display-settings';
   open.type='button';
-  open.textContent=t.open;
+  open.textContent='⚙ '+t.open;
+  open.setAttribute('aria-label',t.title);
   open.setAttribute('aria-expanded','false');
   open.setAttribute('aria-controls','fc-display-panel');
+  const backdrop=document.createElement('button');
+  backdrop.type='button';
+  backdrop.className='fc-display-backdrop';
+  backdrop.setAttribute('aria-label',t.close);
+  backdrop.hidden=true;
   const panel=document.createElement('section');
   panel.id='fc-display-panel';
   panel.className='fc-display-panel';
   panel.hidden=true;
+  panel.setAttribute('role','dialog');
+  panel.setAttribute('aria-modal','true');
+  panel.setAttribute('aria-labelledby','fc-display-panel-title');
   panel.setAttribute('aria-label',t.title);
-  const heading=document.createElement('strong');heading.textContent=t.title;
+  const heading=document.createElement('strong');heading.id='fc-display-panel-title';heading.textContent=t.title;
+  const panelHead=document.createElement('div');panelHead.className='fc-display-head';
+  const closeTop=document.createElement('button');closeTop.type='button';closeTop.className='fc-display-close-top';closeTop.textContent='×';closeTop.setAttribute('aria-label',t.close);
+  panelHead.append(heading,closeTop);
   const themeButton=document.createElement('button');themeButton.type='button';themeButton.className='fc-display-action';
   themeButton.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-fc-theme')==='dark'?'light':'dark'));
+  const contrastButton=document.createElement('button');contrastButton.type='button';contrastButton.className='fc-display-action';
+  contrastButton.addEventListener('click',()=>applyContrast(document.documentElement.getAttribute('data-fc-contrast')==='high'?'normal':'high'));
   const sizeLabel=document.createElement('label');sizeLabel.className='fc-display-size-label';sizeLabel.textContent=t.text;
   const sizeRow=document.createElement('div');sizeRow.className='fc-display-size-row';
   const smaller=document.createElement('button');smaller.type='button';smaller.className='fc-display-action';smaller.textContent=t.smaller;smaller.setAttribute('aria-label',t.smaller+' '+t.text);
@@ -1126,17 +1220,237 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   smaller.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='larger'?'large':'normal'));
   larger.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='normal'?'large':'larger'));
   sizeRow.append(smaller,sizeValue,larger);
+  const motionButton=document.createElement('button');motionButton.type='button';motionButton.className='fc-display-action';
+  motionButton.addEventListener('click',()=>applyMotion(document.documentElement.getAttribute('data-fc-reduce-motion')!=='true'));
   const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const actionRow=document.createElement('div');actionRow.className='fc-display-actions';
+  const reset=document.createElement('button');reset.type='button';reset.className='fc-display-action';reset.textContent=t.reset;
+  const save=document.createElement('button');save.type='button';save.className='fc-display-save';save.textContent=t.save;
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
-  const closePanel=()=>{panel.hidden=true;open.setAttribute('aria-expanded','false');};
-  close.addEventListener('click',closePanel);
-  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)themeButton.focus();});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
-  panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
-  document.body.append(open,panel);
+  actionRow.append(reset,save);
+  let previousBodyOverflow='';
+  const closePanel=()=>{panel.hidden=true;backdrop.hidden=true;open.setAttribute('aria-expanded','false');document.body.style.overflow=previousBodyOverflow;};
+  close.addEventListener('click',()=>{closePanel();open.focus();});
+  closeTop.addEventListener('click',()=>{closePanel();open.focus();});
+  backdrop.addEventListener('click',()=>{closePanel();open.focus();});
+  const openPanel=()=>{
+    previousBodyOverflow=document.body.style.overflow;
+    panel.hidden=false;backdrop.hidden=false;document.body.style.overflow='hidden';
+    open.setAttribute('aria-expanded','true');
+    (panel.querySelector('#fc-language-select')||themeButton).focus();
+  };
+  open.addEventListener('click',()=>{if(panel.hidden)openPanel();else{closePanel();open.focus();}});
+  save.addEventListener('click',()=>{status.textContent=t.saved;closePanel();open.focus();});
+  reset.addEventListener('click',()=>{
+    const countrySelect=document.querySelector('#fc-country-select');
+    const currencySelect=document.querySelector('#fc-currency-select');
+    const localeSelect=document.querySelector('#fc-locale-select');
+    const unitSelect=document.querySelector('#fc-unit-system-select');
+    if(countrySelect){countrySelect.value=defaultLocaleSettings.country;countrySelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(currencySelect){currencySelect.value=defaultLocaleSettings.currency;currencySelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(localeSelect){localeSelect.value=defaultLocaleSettings.locale;localeSelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(unitSelect){unitSelect.value=defaultLocaleSettings.units;unitSelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    applyTheme(initialTheme);applySize('normal');applyContrast('normal');applyMotion(false);
+    status.textContent=t.resetDone;
+  });
+  document.addEventListener('keydown',event=>{
+    if(panel.hidden)return;
+    if(event.key==='Escape'){closePanel();open.focus();return;}
+    if(event.key==='Tab'){
+      const focusable=Array.from(panel.querySelectorAll('button:not([disabled]),select:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(el=>!el.hidden&&el.getClientRects().length>0);
+      if(!focusable.length){event.preventDefault();return;}
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    }
+  });
+  // Keep locale and measurement selectors out of the crowded primary navigation.
+  // Moving the original controls preserves their IDs, event listeners and saved preferences.
+  panel.append(panelHead);
+  const settingRows=[];
+  const addSettingRow=(className,controls)=>{
+    const row=document.createElement('div');
+    row.className='fc-display-setting-row '+className;
+    controls.forEach(control=>{if(control)row.append(control);});
+    if(row.children.length){panel.append(row);settingRows.push(row);}
+  };
+  const addSectionHeading=text=>{
+    const section=document.createElement('h3');
+    section.className='fc-settings-section-heading';
+    section.textContent=text;
+    panel.append(section);
+  };
+  addSectionHeading(t.region);
+  const languageControl=document.querySelector('.fc-language-control');
+  if(languageControl)addSettingRow('fc-display-language-row',[languageControl]);
+  const currencyControl=document.querySelector('.fc-currency-control');
+  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
+  const countryControl=document.querySelector('.fc-country-control');
+  const formatControl=document.querySelector('.fc-format-control');
+  const unitControl=document.querySelector('.fc-unit-control');
+  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  addSettingRow('fc-display-currency-row',[currencyControl]);
+  if(countryControl&&formatControl){
+    const countrySelect=countryControl.querySelector('select');
+    const localeSelect=formatControl.querySelector('select');
+    const countryFormatLabel=document.createElement('label');
+    countryFormatLabel.className='fc-country-format-control';
+    const countryFormatText=document.createElement('span');
+    countryFormatText.textContent=t.countryFormat;
+    const countryFormatSelect=document.createElement('select');
+    countryFormatSelect.id='fc-country-format-display';
+    countryFormatSelect.setAttribute('aria-label',t.countryFormat);
+    const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
+    Array.from(localeSelect.options).forEach(localeOption=>{
+      const locale=localeOption.value;
+      const country=locale.split('-').pop().toUpperCase();
+      if(!countryCodes.has(country))return;
+      const option=document.createElement('option');
+      option.value=country+'|'+locale;
+      option.textContent=localeOption.textContent;
+      countryFormatSelect.appendChild(option);
+    });
+    const currentValue=countrySelect.value+'|'+localeSelect.value;
+    if(!Array.from(countryFormatSelect.options).some(option=>option.value===currentValue)){
+      const option=document.createElement('option');
+      option.value=currentValue;
+      option.textContent=(countrySelect.selectedOptions[0]?.textContent||countrySelect.value)+' · '+(localeSelect.selectedOptions[0]?.textContent||localeSelect.value);
+      countryFormatSelect.appendChild(option);
+    }
+    countryFormatSelect.value=currentValue;
+    const syncCountryFormat=()=>{
+      const value=countrySelect.value+'|'+localeSelect.value;
+      if(!Array.from(countryFormatSelect.options).some(option=>option.value===value)){
+        const localeOption=Array.from(localeSelect.options).find(option=>option.value===localeSelect.value);
+        const countryOption=Array.from(countrySelect.options).find(option=>option.value===countrySelect.value);
+        const option=document.createElement('option');
+        option.value=value;
+        option.textContent=(countryOption?.textContent||countrySelect.value)+' · '+(localeOption?.textContent||localeSelect.value);
+        countryFormatSelect.appendChild(option);
+      }
+      countryFormatSelect.value=value;
+    };
+    window.addEventListener('fc:locale-ready',syncCountryFormat,{once:true});
+    window.addEventListener('fc:localechange',syncCountryFormat);
+    countryFormatSelect.addEventListener('change',()=>{
+      const [country,locale]=countryFormatSelect.value.split('|');
+      if(window.FCLocale){
+        const preferredCurrency=window.FCLocale.getCurrency();
+        countrySelect.value=country;
+        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+        localeSelect.value=locale;
+        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+        window.FCLocale.setCurrency(preferredCurrency);
+      }else{
+        countrySelect.value=country;
+        localeSelect.value=locale;
+        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+      syncCountryFormat();
+    });
+    countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
+    const compatibilityControls=document.createElement('div');
+    compatibilityControls.className='fc-locale-compat-controls';
+    compatibilityControls.setAttribute('aria-hidden','true');
+    if(countrySelect)countrySelect.tabIndex=-1;
+    if(localeSelect)localeSelect.tabIndex=-1;
+    compatibilityControls.append(countryControl,formatControl);
+    panel.appendChild(compatibilityControls);
+  }
+  addSettingRow('fc-display-units-row',[unitControl]);
+  if(settingRows.length){
+    const divider=document.createElement('div');
+    divider.className='fc-display-settings-divider';
+    divider.setAttribute('aria-hidden','true');
+    panel.append(divider);
+  }
+  addSectionHeading(t.accessibility);
+  panel.append(themeButton,contrastButton,sizeLabel,sizeRow,motionButton);
+  const quickDivider=document.createElement('div');
+  quickDivider.className='fc-display-settings-divider';
+  quickDivider.setAttribute('aria-hidden','true');
+  panel.append(quickDivider);
+  addSectionHeading(t.quick);
+  panel.append(status,actionRow,close);
+
+  const dock=getFloatingToolsDock();
+  if(dock)dock.appendChild(open);
+  document.body.append(backdrop,panel);
   applyTheme(initialTheme);
   applySize(initialSize);
+  applyContrast(read('fc-display-contrast','normal'));
+  applyMotion(initialMotion);
 })();
+
+
+/* Keep every preference and quick action in one floating Settings panel.
+   The global header and footer remain reserved for site navigation and brand content. */
+const mountSettingsQuickActions=()=>{
+  const trigger=document.getElementById('fc-display-settings');
+  const panel=document.getElementById('fc-display-panel');
+  if(!trigger||!panel||document.getElementById('fc-settings-quick-actions'))return;
+  const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+  const copy={
+    en:{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.',close:'Close',quick:'Quick actions'},
+    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'सहायक खोलें',help:'ऐप जैसे अनुभव के लिए Friendly Calculator इंस्टॉल करें। पहले खोले गए सार्वजनिक पेज ऑफलाइन उपलब्ध हो सकते हैं; नए पेजों के लिए इंटरनेट की आवश्यकता हो सकती है।',close:'बंद करें',quick:'त्वरित सुविधाएँ'},
+    es:{install:'Instalar Friendly Calculator',assistant:'Abrir asistente',help:'Instala Friendly Calculator como acceso directo. Las páginas públicas visitadas anteriormente pueden estar disponibles sin conexión.',close:'Cerrar',quick:'Acciones rápidas'},
+    fr:{install:'Installer Friendly Calculator',assistant:'Ouvrir l’assistant',help:'Installez Friendly Calculator comme raccourci. Les pages publiques déjà consultées peuvent être disponibles hors connexion.',close:'Fermer',quick:'Actions rapides'},
+    pt:{install:'Instalar Friendly Calculator',assistant:'Abrir assistente',help:'Instale o Friendly Calculator como atalho. Páginas públicas já visitadas podem ficar disponíveis offline.',close:'Fechar',quick:'Ações rápidas'},
+    ar:{install:'تثبيت Friendly Calculator',assistant:'فتح المساعد',help:'ثبّت Friendly Calculator كاختصار للتطبيق. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.',close:'إغلاق',quick:'إجراءات سريعة'},
+    id:{install:'Instal Friendly Calculator',assistant:'Buka asisten',help:'Instal Friendly Calculator sebagai pintasan aplikasi. Halaman publik yang pernah dibuka mungkin tersedia secara offline.',close:'Tutup',quick:'Aksi cepat'},
+    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'সহায়ক খুলুন',help:'অ্যাপের মতো ব্যবহারের জন্য Friendly Calculator ইনস্টল করুন। আগে দেখা পাবলিক পেজ অফলাইনে পাওয়া যেতে পারে।',close:'বন্ধ',quick:'দ্রুত কাজ'},
+    ta:{install:'Friendly Calculator நிறுவு',assistant:'உதவியாளரைத் திற',help:'செயலி போன்ற அனுபவத்திற்கு Friendly Calculator-ஐ நிறுவவும். முன்பு பார்த்த பொது பக்கங்கள் இணையமின்றி கிடைக்கலாம்.',close:'மூடு',quick:'விரைவு செயல்கள்'},
+    de:{install:'Friendly Calculator installieren',assistant:'Assistent öffnen',help:'Installieren Sie Friendly Calculator als App-Verknüpfung. Bereits besuchte öffentliche Seiten sind möglicherweise offline verfügbar.',close:'Schließen',quick:'Schnellaktionen'},
+    ja:{install:'Friendly Calculator をインストール',assistant:'アシスタントを開く',help:'アプリのように使うために Friendly Calculator をインストールします。以前に開いた公開ページはオフラインで利用できる場合があります。',close:'閉じる',quick:'クイック操作'},
+    ru:{install:'Установить Friendly Calculator',assistant:'Открыть помощник',help:'Установите Friendly Calculator как приложение. Ранее открытые общедоступные страницы могут быть доступны офлайн.',close:'Закрыть',quick:'Быстрые действия'}
+  }[language]||{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline.',close:'Close',quick:'Quick actions'};
+  const quickActions=document.createElement('div');
+  quickActions.id='fc-settings-quick-actions';
+  quickActions.className='fc-settings-quick-actions';
+  const install=document.getElementById('fc-pwa-install');
+  const installHelp=document.getElementById('fc-pwa-help');
+  const assistant=document.getElementById('fc-ai-lazy-launch');
+  const liveAssistant=document.getElementById('fc-ai-launch');
+  if(install){
+    install.textContent=copy.install;
+    install.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(install);
+  }
+  if(installHelp){
+    const helpText=installHelp.querySelector('p');
+    if(helpText)helpText.textContent=copy.help;
+    const helpClose=installHelp.querySelector('button');
+    if(helpClose)helpClose.textContent=copy.close;
+    installHelp.classList.add('fc-settings-inline-help');
+    quickActions.appendChild(installHelp);
+  }
+  if(assistant){
+    assistant.textContent=copy.assistant;
+    assistant.setAttribute('aria-label',copy.assistant);
+    assistant.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(assistant);
+  }
+  if(liveAssistant){
+    liveAssistant.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(liveAssistant);
+  }
+  const status=panel.querySelector('.fc-display-status');
+  const close=panel.querySelector('.fc-display-close');
+  const insertBefore=status||close;
+  if(insertBefore)panel.insertBefore(quickActions,insertBefore);
+  else panel.appendChild(quickActions);
+  // Keep one trigger only. Install and assistant launchers are no longer fixed overlays.
+  const dock=document.getElementById('fc-floating-tools');
+  if(dock&&trigger.parentElement!==dock)dock.appendChild(trigger);
+  trigger.textContent='⚙ '+(language==='hi'?'सेटिंग्स':language==='es'?'Ajustes':language==='fr'?'Paramètres':language==='de'?'Einstellungen':language==='ja'?'設定':language==='ru'?'Настройки':'Settings');
+  trigger.setAttribute('aria-label',panel.getAttribute('aria-label')||'Settings & Accessibility');
+  trigger.classList.remove('fc-settings-hub-trigger');
+  document.getElementById('fc-settings-hub')?.remove();
+};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSettingsQuickActions,{once:true});
+else mountSettingsQuickActions();
 
 
 // Store only calculator paths and page titles in this browser. Query strings are

@@ -182,7 +182,7 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
-test('shared header and footer expose only the requested navigation items in order', () => {
+test('shared header and footer retain navigation order while regional preferences stay outside both', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   const expectedHeader = [
@@ -191,9 +191,8 @@ test('shared header and footer expose only the requested navigation items in ord
     '[nav.finance,',
     '[nav.tax,',
     '[nav.everyday,',
-    '[nav.all,r+\'site-directory.html\']',
     '[nav.blog,',
-    '[nav.login,r+\'dashboard.html\']'
+    "[nav.login,r+'dashboard.html']"
   ];
   let last = -1;
   for (const item of expectedHeader) {
@@ -203,6 +202,12 @@ test('shared header and footer expose only the requested navigation items in ord
   }
   assert.doesNotMatch(header, /nav\.search|Search Calculator/);
   assert.match(shell, /en:\{home:'Home',login:'Login'/);
+  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'All menu and site directory link must remain available.');
+  const headerStart = shell.indexOf('h.innerHTML=');
+  const headerEnd = shell.indexOf('const reservedHeader', headerStart);
+  const headerMarkup = shell.slice(headerStart, headerEnd);
+  assert.ok(!headerMarkup.includes('fc-settings-row') && !headerMarkup.includes('languageControl'), 'Regional controls must not remain in the header.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Regional controls must move into the Settings panel.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
     "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap']",
@@ -285,7 +290,7 @@ test('brand images are crawlable, descriptive and included in the image sitemap'
     assert.ok(html.includes('src="/assets/friendly-calculator-brand-illustration.svg"') && /<img[^>]+alt="[^"]+"/.test(html));
   }
   assert.match(shell, /alt="Friendly Calculator logo"/);
-  assert.equal(shell.split('src="/assets/friendly-calculator-logo.svg"').length - 1, 2);
+  assert.equal(shell.split('src="/assets/friendly-calculator-logo.svg"').length - 1, 4);
   assert.ok(sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'));
   assert.equal(sitemap.split('<image:loc>https://friendlycalculator.in/assets/friendly-calculator-brand-illustration.svg</image:loc>').length - 1, 4);
 });
@@ -807,7 +812,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
   assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
   assert.doesNotMatch(homepage, /class="search-panel"/);
-  assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/);
+  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'The All menu must expose the site directory and global calculators.');
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
@@ -2018,11 +2023,27 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   assert.match(html, /\.fc-global-header\{/);
   assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.doesNotMatch(html, /src="\/assets\/site-shell\.js"/);
+  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+});
+
+test('unified Settings panel provides saved locale preferences, accessibility and modal controls', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
+  assert.ok(shell.includes("panel.setAttribute('aria-modal','true')"));
+  assert.ok(shell.includes("closeTop.className='fc-display-close-top'") && shell.includes('panelHead.append(heading,closeTop)'));
+  assert.ok(shell.includes("backdrop.className='fc-display-backdrop'"));
+  assert.ok(shell.includes("save.textContent=t.save") && shell.includes("reset.textContent=t.reset"));
+  assert.ok(shell.includes("applyMotion(initialMotion)") && shell.includes("fc-display-motion"));
+  assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
+  assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
+  assert.ok(css.includes('.fc-display-backdrop') && css.includes('max-height:min(85dvh,850px)'));
+  assert.ok(css.includes('fc-reduce-motion') && css.includes('width:min(380px,calc(100vw - 24px))'));
 });
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  assert.ok(script.includes("!document.getElementById('fc-pwa-install')"), 'Homepage must reuse the shared Settings panel instead of adding a duplicate install overlay.');
   for (const feature of ['fc-language-select', 'serviceWorker', 'gtm.js', 'fc-pwa-install', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
   }
