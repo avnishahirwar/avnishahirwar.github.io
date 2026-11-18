@@ -401,3 +401,14 @@ html[data-fc-theme="dark"] #fc-settings-hub .fc-pwa-help{background:#1a2a3d;colo
 #fc-settings-hub .fc-pwa-help[hidden]{display:none!important}
 #fc-settings-hub .fc-display-panel[hidden]{display:none!important}
 #fc-settings-hub .fc-display-panel:not([hidden]){display:block}
+
+
+/* User-selectable high-contrast mode for improved text and control visibility. */
+html[data-fc-contrast="high"] body{background:#fff!important;color:#000!important}
+html[data-fc-contrast="high"] a{color:#0033a0!important;text-decoration:underline!important}
+html[data-fc-contrast="high"] button,html[data-fc-contrast="high"] input,html[data-fc-contrast="high"] select,html[data-fc-contrast="high"] textarea{border:2px solid currentColor!important}
+html[data-fc-contrast="high"] :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:4px solid #ffbf00!important;outline-offset:3px!important}
+html[data-fc-theme="dark"][data-fc-contrast="high"] body{background:#000!important;color:#fff!important}
+html[data-fc-theme="dark"][data-fc-contrast="high"] a{color:#ffeb3b!important}
+html[data-fc-theme="dark"][data-fc-contrast="high"] #fc-settings-hub .fc-display-panel{background:#000!important;color:#fff!important;border:2px solid #fff!important}
+html[data-fc-theme="dark"][data-fc-contrast="high"] #fc-settings-hub .fc-settings-section-heading{color:#ffeb3b!important;border-color:#fff!important}
