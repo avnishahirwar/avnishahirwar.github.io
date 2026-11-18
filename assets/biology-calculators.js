@@ -253,6 +253,46 @@
     return vetDose(v, 5, 'The volume conversion is restricted to the U.S. 5 mg/mL feline injectable product. The U.S. feline label is for a one-time pre-surgical subcutaneous dose; repeat dosing and oral feline Metacam are not approved in the United States. This page does not supply that dose or authorize administration.');
   }
 
+  function dryMatter(v) {
+    const asFed = number(v.asFedMass);
+    const dried = number(v.dryMass);
+    const unit = ['g', 'kg', 'lb', 'oz'].includes(v.massUnit) ? v.massUnit : null;
+    if (!validPositive(asFed, 100000000) || !Number.isFinite(dried) || dried < 0 || dried > asFed || !unit) {
+      return invalid('Enter positive net as-fed mass, non-negative dry mass no greater than the as-fed mass, and one supported unit for both.');
+    }
+    const dryPercent = dried / asFed * 100;
+    return result([
+      { label: 'Net as-fed sample mass', value: asFed.toFixed(3), unit },
+      { label: 'Net dried sample mass', value: dried.toFixed(3), unit },
+      { label: 'Dry matter content', value: dryPercent.toFixed(2), unit: '% of original mass' },
+      { label: 'Moisture by difference (not a direct water measurement)', value: (100 - dryPercent).toFixed(2), unit: '%' }
+    ], [
+      'Feed/forage sample arithmetic only. This does not calculate a ration, nutrient concentration, feed intake, or feeding recommendation.',
+      'Use net sample masses, exclude container tare, choose the same mass unit for both, and follow an appropriate drying method. In some feeds, drying can remove volatile substances as well as water, so moisture by difference is not necessarily the true water content.',
+      'For consequential feed decisions, use a validated sampling and laboratory method.'
+    ]);
+  }
+
+  function feedConversion(v) {
+    const feed = number(v.feedMassKg);
+    const start = number(v.startWeightKg);
+    const end = number(v.endWeightKg);
+    const bases = { asFed: 'as-fed', dryMatter: 'dry-matter' };
+    const basis = bases[v.feedBasis];
+    if (!validPositive(feed, 1000000) || !validPositive(start, 1000000) || !validPositive(end, 1000000) || !basis) {
+      return invalid('Enter positive feed mass and starting/ending liveweights in kilograms, and select a feed basis.');
+    }
+    const gain = end - start;
+    if (gain <= 0) return invalid('Ending liveweight must exceed starting liveweight; a conventional positive-gain FCR is undefined for zero or negative gain.');
+    return result([
+      { label: 'Liveweight gain during the selected period', value: gain.toFixed(3), unit: 'kg' },
+      { label: 'Feed conversion ratio (' + basis + ' basis)', value: (feed / gain).toFixed(2), unit: 'kg ' + basis + ' feed/kg liveweight gain' }
+    ], [
+      'Descriptive ratio only, not a target, benchmark, ration assessment, or feed recommendation. Comparisons require the same species, production boundary, period, and feed basis.',
+      'Feed consumed and liveweight change must describe the same animal or defined group over the same period. This simple calculation does not adjust for feed wastage, mortality, natural feed, or weighing variation.'
+    ]);
+  }
+
   function birdAge(v) {
     const hatch = parseISODate(v.hatchDate);
     const today = parseISODate(v.today || localDateISO());
@@ -307,6 +347,8 @@
     'cat-age': catAge,
     'cat-calorie': catCalories,
     'metacam-cats': catMetacam,
+    'dry-matter': dryMatter,
+    'feed-conversion-ratio': feedConversion,
     'bird-age': birdAge,
     'quiz-dog-size': dogSizeQuiz,
     'quiz-cat-age': catAgeQuiz

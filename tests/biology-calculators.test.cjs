@@ -15,6 +15,7 @@ const pages = [
   'tramadol-for-dogs-calculator', 'cat-age-calculator', 'cat-calorie-calculator',
   'metacam-dosage-calculator-for-cats', 'quiz-cat-age-calculator', 'bird-age-calculator'
 ];
+pages.push('dry-matter-calculator', 'feed-conversion-ratio-calculator');
 
 function value(result, label) {
   const row = result.rows.find((item) => item.label.includes(label));
@@ -27,6 +28,24 @@ test('sheep gestation adds the published average and planning-window days', () =
   assert.equal(value(r, '147-day average'), '2024-05-27');
   assert.equal(value(r, '144 days'), '2024-05-24');
   assert.equal(value(r, '151 days'), '2024-05-31');
+});
+
+test('dry matter calculator uses net same-unit sample masses and labels moisture by difference', () => {
+  const r = biology.calculate('dry-matter', { asFedMass: '100', dryMass: '40', massUnit: 'g' });
+  assert.equal(value(r, 'Dry matter content'), '40.00');
+  assert.equal(value(r, 'Moisture by difference'), '60.00');
+  assert.match(r.warnings.join(' '), /volatile substances/i);
+  assert.ok(biology.calculate('dry-matter', { asFedMass: '100', dryMass: '101', massUnit: 'g' }).error);
+  assert.ok(biology.calculate('dry-matter', { asFedMass: '0', dryMass: '0', massUnit: 'g' }).error);
+});
+
+test('feed conversion ratio requires positive gain and states the selected feed basis', () => {
+  const r = biology.calculate('feed-conversion-ratio', { feedMassKg: '10', startWeightKg: '40', endWeightKg: '45', feedBasis: 'asFed' });
+  assert.equal(value(r, 'Feed conversion ratio'), '2.00');
+  assert.match(r.rows.find((row) => row.label.includes('Feed conversion ratio')).unit, /kg as-fed feed\/kg liveweight gain/);
+  assert.ok(biology.calculate('feed-conversion-ratio', { feedMassKg: '10', startWeightKg: '45', endWeightKg: '45', feedBasis: 'asFed' }).error);
+  assert.ok(biology.calculate('feed-conversion-ratio', { feedMassKg: '10', startWeightKg: '45', endWeightKg: '40', feedBasis: 'dryMatter' }).error);
+  assert.match(r.warnings.join(' '), /not a target.*benchmark/i);
 });
 
 test('dog age methods are explicit and return distinct approximate estimates', () => {

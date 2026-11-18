@@ -4392,10 +4392,10 @@
   },
   {
     "name": "Dry Matter Calculator",
-    "url": "/calculator/new-calculators.html#dry-matter-calculator",
+    "url": "/calculators/dry-matter-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dry matter calculator",
-    "description": "Dry Matter Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Calculate dry matter percentage for an animal-feed or forage sample from net as-fed and dried sample masses. This does not calculate a ration or feeding amount."
   },
   {
     "name": "Guinea Pig Years to Human Years Calculator",
@@ -4462,10 +4462,10 @@
   },
   {
     "name": "Feed Conversion Ratio Calculator",
-    "url": "/calculator/new-calculators.html#feed-conversion-ratio-calculator",
+    "url": "/calculators/feed-conversion-ratio-calculator.html",
     "category": "BIOLOGY",
     "keywords": "feed conversion ratio calculator",
-    "description": "Feed Conversion Ratio Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Calculate a descriptive feed-to-liveweight-gain ratio for the same animal or group and period. Select as-fed or dry-matter feed basis; no target is recommended."
   },
   {
     "name": "Grain Bin Calculator",
