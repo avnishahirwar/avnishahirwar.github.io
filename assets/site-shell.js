@@ -26,7 +26,7 @@ try {
     const isFooterDirectoryLink=link=>{
       const href=(link.getAttribute('href')||'').toLowerCase();
       const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
-      return /(?:^|\\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\\.html|\\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
+      return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
     };
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
@@ -514,7 +514,7 @@ const preservedFooterLinks=[];
 const isFooterDirectoryLink=link=>{
   const href=(link.getAttribute('href')||'').toLowerCase();
   const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
-  return /(?:^|\\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\\.html|\\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
+  return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
 };
 const isFooterSocialLink=link=>{
   const href=(link.getAttribute('href')||'').trim().toLowerCase();
