@@ -3456,5 +3456,54 @@
     "category": "Biology & Chemistry",
     "keywords": "cubic cell calculator crystal density lattice parameter unit cell",
     "description": "Estimate crystal density from unit-cell edge length, atoms or formula units per cell and molar mass."
+  },
+  {
+    "name": "Effective Nuclear Charge Calculator",
+    "url": "/calculators/effective-nuclear-charge-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "effective nuclear charge calculator Slater rules shielding constant",
+    "description": "Estimate effective nuclear charge for an outer-shell electron using a simplified Slater-rule shielding model."
+  },
+  {
+    "name": "Electron Configuration Calculator",
+    "url": "/calculators/electron-configuration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electron configuration calculator atomic number Aufbau principle",
+    "description": "Generate the ground-state electron configuration for neutral atoms with atomic numbers 1 through 36 using the Aufbau order and common chromium/copper exceptions."
+  },
+  {
+    "name": "Electrolysis Calculator",
+    "url": "/calculators/electrolysis-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electrolysis calculator Faraday law current mass deposition",
+    "description": "Estimate the theoretical mass deposited or released from electric current, elapsed time, molar mass and electron stoichiometry using Faraday's law."
+  },
+  {
+    "name": "Lattice Energy Calculator",
+    "url": "/calculators/lattice-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "lattice energy calculator Born Haber cycle enthalpy",
+    "description": "Estimate lattice enthalpy for a 1:1 ionic solid from formation, atomization, ionization, bond-dissociation and electron-affinity enthalpies using a Born-Haber cycle."
+  },
+  {
+    "name": "Combustion Analysis Calculator",
+    "url": "/calculators/combustion-analysis-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "combustion analysis calculator carbon hydrogen oxygen empirical formula",
+    "description": "Estimate carbon, hydrogen and oxygen mole amounts from a sample mass and the measured masses of carbon dioxide and water produced."
+  },
+  {
+    "name": "Combustion Reaction Calculator",
+    "url": "/calculators/combustion-reaction-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "combustion reaction calculator balance hydrocarbon equation",
+    "description": "Balance the complete combustion equation for a hydrocarbon from its carbon and hydrogen atom counts."
+  },
+  {
+    "name": "Miller Indices Calculator",
+    "url": "/calculators/miller-indices-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Miller indices calculator crystal plane intercepts hkl",
+    "description": "Calculate reciprocal intercepts for a crystal plane and estimate the corresponding integer Miller indices."
   }
 ]
