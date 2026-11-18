@@ -1316,10 +1316,6 @@ const mountSettingsQuickActions=()=>{
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
-  const quickHeading=document.createElement('h3');
-  quickHeading.className='fc-settings-section-heading';
-  quickHeading.textContent=copy.quick;
-  quickActions.appendChild(quickHeading);
   const install=document.getElementById('fc-pwa-install');
   const installHelp=document.getElementById('fc-pwa-help');
   const assistant=document.getElementById('fc-ai-lazy-launch');
@@ -1347,7 +1343,11 @@ const mountSettingsQuickActions=()=>{
     liveAssistant.classList.add('fc-settings-quick-action');
     quickActions.appendChild(liveAssistant);
   }
-  panel.appendChild(quickActions);
+  const status=panel.querySelector('.fc-display-status');
+  const close=panel.querySelector('.fc-display-close');
+  const insertBefore=status||close;
+  if(insertBefore)panel.insertBefore(quickActions,insertBefore);
+  else panel.appendChild(quickActions);
   // Keep one trigger only. Install and assistant launchers are no longer fixed overlays.
   const dock=document.getElementById('fc-floating-tools');
   if(dock&&trigger.parentElement!==dock)dock.appendChild(trigger);
