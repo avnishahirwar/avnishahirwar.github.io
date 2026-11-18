@@ -343,3 +343,13 @@ html[data-fc-theme="dark"] .fc-display-settings-divider{background:#34475d}
   #fc-pwa-help{bottom:max(54px,calc(env(safe-area-inset-bottom) + 46px))}
 }
 html[data-fc-theme="dark"] #fc-floating-tools #fc-display-settings{background:#142235;color:#edf3f8;border-color:#52657a}
+
+
+/* One combined country-and-locale selector, with legacy controls retained for FCLocale. */
+.fc-display-country-format-row{display:flex;align-items:center}
+.fc-display-country-format-row>.fc-country-format-control{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;width:100%;min-width:0}
+.fc-country-format-control>span{flex:0 0 auto;white-space:nowrap}
+.fc-country-format-control>select{flex:1 1 auto;width:1%;min-width:0;max-width:62%;padding:7px 8px;border:1px solid #cbd5df;border-radius:7px;background:#fff;color:#172638;font:500 12px/1.25 system-ui,sans-serif}
+.fc-locale-compat-controls{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(max-width:420px){.fc-country-format-control>select{max-width:60%;font-size:11px;padding:6px}}
+html[data-fc-theme="dark"] .fc-country-format-control>select{background:#0e1b2b;color:#edf3f8;border-color:#52657a}
