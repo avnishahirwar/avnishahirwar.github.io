@@ -132,10 +132,13 @@ const ensurePwaInstallUi=()=>{
   if(/(?:^|\/)(?:admin|login|dashboard)(?:\/|\.|$)/i.test(location.pathname))return;
   if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)return;
   if(navigator.standalone===true)return;
-  if(document.getElementById('fc-pwa-install'))return;
+  // Replace any page-specific install control with one shared footer action.
+  document.getElementById('fc-pwa-install')?.remove();
+  document.getElementById('fc-pwa-help')?.remove();
+  document.querySelectorAll('.fc-pwa-network').forEach(node=>node.remove());
 
   const style=document.createElement('style');
-  style.textContent='.fc-pwa-install{position:fixed;left:14px;bottom:14px;z-index:1500;border:1px solid #d8bd82;border-radius:999px;background:#101c2c;color:#fff;padding:10px 15px;font:700 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132135;cursor:pointer}.fc-pwa-help{position:fixed;left:14px;bottom:66px;z-index:1500;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.55 system-ui,sans-serif}.fc-pwa-help p{margin:0 0 10px}.fc-pwa-help button{border:0;border-radius:7px;background:#101c2c;color:#fff;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}.fc-pwa-network{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1600;max-width:calc(100vw - 24px);padding:9px 14px;border-radius:9px;background:#25364b;color:#fff;font:600 13px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px #07132135}';
+  style.textContent='.fc-pwa-install{position:static!important;display:inline-flex;align-items:center;justify-content:center;margin:10px 0 0;padding:10px 15px;border:1px solid #d8bd82;border-radius:999px;background:#101c2c;color:#fff;font:700 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132135;cursor:pointer}.fc-pwa-help{position:fixed;left:14px;bottom:66px;z-index:1500;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.55 system-ui,sans-serif}.fc-pwa-help p{margin:0 0 10px}.fc-pwa-help button{border:0;border-radius:7px;background:#101c2c;color:#fff;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}.fc-pwa-network{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1600;max-width:calc(100vw - 24px);padding:9px 14px;border-radius:9px;background:#25364b;color:#fff;font:600 13px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px #07132135}';
   const button=document.createElement('button');
   button.id='fc-pwa-install';
   button.type='button';
@@ -211,12 +214,12 @@ const ensurePwaInstallUi=()=>{
   });
 
   document.head.appendChild(style);
-  const dock=getFloatingToolsDock();
-  if(dock)dock.appendChild(button);
+  const footer=document.querySelector('footer.fc-global-footer');
+  const footerInner=footer?.querySelector('.fc-global-footer-inner')||footer;
+  if(footerInner)footerInner.appendChild(button);
+  else document.body.appendChild(button);
   document.body.append(panel,network);
 };
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensurePwaInstallUi,{once:true});
-else ensurePwaInstallUi();
 
 // Do not load analytics tags on the Privacy Policy URL used for consent review.
 if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
@@ -422,8 +425,12 @@ else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
 const removeDuplicateLegacyHeaders=()=>{
+  // Remove legacy navigation bars on every page, while retaining content hero headers.
   document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
-    if(legacy.querySelector('.wrap.nav,.brand,nav[aria-label="Main navigation"]'))legacy.remove();
+    if(legacy.querySelector('h1')||legacy.matches('.hero,.page-hero,.fc-page-hero'))return;
+    const isLegacyNavigation=legacy.matches('.top,.site-header')||
+      !!legacy.querySelector('.wrap.nav,.brand,.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav,nav[aria-label="Main navigation"]');
+    if(isLegacyNavigation)legacy.remove();
   });
 };
 removeDuplicateLegacyHeaders();
@@ -505,7 +512,24 @@ const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentL
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
 const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+[footerLinks[8],footerLinks[0],footerLinks[2],footerLinks[3],footerLinks[4],footerLinks[5],footerLinks[6],footerLinks[7],footerLinks[1]].map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>'
-const fs=[...document.body.children].filter(e=>e.tagName==='FOOTER');if(fs.length){fs.forEach((e,i)=>i===fs.length-1?e.replaceWith(f):e.remove());}else{document.body.append(f);}
+// Consolidate every legacy or nested footer into one direct child of body.
+const preservedFooterLinks=[];
+document.querySelectorAll('footer').forEach(oldFooter=>{
+  oldFooter.querySelectorAll('a[href]').forEach(link=>{
+    const href=link.getAttribute('href');
+    if(href&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+  });
+});
+const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
+preservedFooterLinks.forEach(link=>{
+  const href=link.getAttribute('href');
+  if(href&&!Array.from(canonicalFooterNav.querySelectorAll('a[href]')).some(existing=>existing.getAttribute('href')===href))canonicalFooterNav.appendChild(link);
+});
+document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());
+document.body.appendChild(f);
+const mountSharedInstallUi=()=>ensurePwaInstallUi();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSharedInstallUi,{once:true});
+else ensurePwaInstallUi();
 
 // Financial/YMYL transparency: make authorship, update date, limitations and primary sources visible.
 // Do not imply independent professional review or regulated credentials that have not been verified.
@@ -1413,15 +1437,10 @@ const mountSettingsQuickActions=()=>{
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
-  const install=document.getElementById('fc-pwa-install');
+  // The install action remains in the shared Footer, not inside the Settings dialog.
   const installHelp=document.getElementById('fc-pwa-help');
   const assistant=document.getElementById('fc-ai-lazy-launch');
   const liveAssistant=document.getElementById('fc-ai-launch');
-  if(install){
-    install.textContent=copy.install;
-    install.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(install);
-  }
   if(installHelp){
     const helpText=installHelp.querySelector('p');
     if(helpText)helpText.textContent=copy.help;
