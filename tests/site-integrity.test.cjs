@@ -2010,8 +2010,10 @@ test('homepage shows 24 popular calculators as responsive thumbnail-led rows', (
 
 test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<link rel="preload" href="\/assets\/site-shell\.css" as="style"/);
+  assert.match(html, /link\.rel='stylesheet'[\s\S]*link\.href='\/assets\/site-shell\.css'/);
+  assert.match(html, /requestIdleCallback\(loadShellStyles,\{timeout:1200\}\)/);
   assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
+  assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   assert.match(html, /\.fc-global-header\{/);
   assert.match(html, /src="\/assets\/homepage-shell\.js" defer/);
   assert.doesNotMatch(html, /src="\/assets\/site-shell\.js"/);
