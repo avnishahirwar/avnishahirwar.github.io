@@ -1981,3 +1981,20 @@ test('remaining chemistry calculator formulas return expected results',()=>{
  assert.throws(()=>chemistry.atom({atomicNumber:8,massNumber:7,charge:0}),/Mass number/);
  assert.throws(()=>chemistry.percentYield({actual:2,theoretical:0}),/positive/);
 });
+
+
+test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+  const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
+  const end = page.indexOf('<nav class="home-category-index"', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const section = page.slice(start, end);
+  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(routes.length, 24);
+  assert.equal(new Set(routes).size, 24);
+  for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
+  assert.match(page, /\.home-popular-list/);
+  assert.match(page, /\.home-popular-icon/);
+  assert.match(page, /\.home-popular-item/);
+});
