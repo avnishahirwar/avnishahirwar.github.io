@@ -56,7 +56,7 @@ if(!window.__fcGtmContainerLoaded){
 }
 
 /* Keep the homepage install affordance and offline notice. */
-if(document.body&&window.self===window.top&&!(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)&&navigator.standalone!==true){
+if(document.body&&window.self===window.top&&!document.getElementById('fc-pwa-install')&&!(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)&&navigator.standalone!==true){
   const style=document.createElement('style');
   style.textContent='.fc-pwa-install{position:fixed;left:14px;bottom:14px;z-index:1500;border:1px solid #d8bd82;border-radius:999px;background:#101c2c;color:#fff;padding:10px 15px;font:700 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132135;cursor:pointer}.fc-pwa-help{position:fixed;left:14px;bottom:66px;z-index:1500;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.55 system-ui,sans-serif}.fc-pwa-help p{margin:0 0 10px}.fc-pwa-help button{border:0;border-radius:7px;background:#101c2c;color:#fff;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}.fc-pwa-network{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1600;max-width:calc(100vw - 24px);padding:9px 14px;border-radius:9px;background:#25364b;color:#fff;font:600 13px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px #07132135}';
   document.head.appendChild(style);
