@@ -61,6 +61,7 @@ test('primary navigation follows category order and exposes the international hu
   const headerEnd=shell.indexOf('const reservedHeader',headerStart);
   const headerMarkup=shell.slice(headerStart,headerEnd);
   assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must precede All Calculators.');
+  assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
 test('shared footer retains policy navigation and Sitemap; regional settings stay outside chrome and Settings trigger stays in Footer', () => {
@@ -76,6 +77,7 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('footerNav.appendChild(open)'), 'The single Settings trigger must be in the shared footer.');
+  assert.ok(shell.includes("['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']"), 'Legacy footer fallback must also put Sitemap before Contact.');
   assert.ok(shell.includes("footerLinks.map(([n,u])=>") && shell.includes("'/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'"), 'Footer order must place Sitemap before Contact.');
   assert.ok(!shell.includes('dock.appendChild(open)'), 'Settings must not be mounted in the floating tools dock.');
   assert.ok(shell.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must be consolidated into one shared footer.');
