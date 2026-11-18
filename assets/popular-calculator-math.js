@@ -4,7 +4,7 @@
   function calculateStandardDeviation(raw) {
     const text = String(raw ?? '').trim();
     if (!text) throw new Error('Enter at least two numbers.');
-    if (text.length > 800) throw new Error('Keep the input under 800 characters.');
+    if (text.length > 12000) throw new Error('Keep the input under 12,000 characters.');
     const tokens = text.split(/[\\s,;]+/).filter(Boolean);
     if (tokens.length < 2) throw new Error('Enter at least two numbers.');
     if (tokens.length > 1000) throw new Error('Enter no more than 1,000 numbers.');
