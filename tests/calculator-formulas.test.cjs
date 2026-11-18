@@ -717,13 +717,13 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /512 public calculators/);
-  assert.match(about, /Available calculators \(512 tools\)/);
+  assert.match(about, /518 public calculators/);
+  assert.match(about, /Available calculators \(518 tools\)/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, 513);
+  assert.equal(searchIndex.length, 519);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.match(homepage, /Search all 513 calculators/);
+  assert.match(homepage, /Search all 519 calculators/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
