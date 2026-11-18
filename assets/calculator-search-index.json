@@ -3176,5 +3176,75 @@
     "category": "Biology & Chemistry",
     "keywords": "theoretical yield calculator reactant product molar mass stoichiometry",
     "description": "Calculate theoretical product mass from a reactant mass, molar masses and balanced-equation stoichiometric coefficients."
+  },
+  {
+    "name": "Equilibrium Constant Calculator",
+    "url": "/calculators/equilibrium-constant-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "equilibrium constant calculator Kc equilibrium concentrations stoichiometry",
+    "description": "Calculate a concentration-based equilibrium constant for a simple reaction from equilibrium concentrations and stoichiometric coefficients."
+  },
+  {
+    "name": "Kp Calculator",
+    "url": "/calculators/kp-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Kp calculator Kc gas equilibrium constant temperature delta n",
+    "description": "Estimate the gas-phase equilibrium constant Kp from Kc, absolute temperature and the change in gaseous stoichiometric moles."
+  },
+  {
+    "name": "Molar Ratio Calculator",
+    "url": "/calculators/molar-ratio-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molar ratio calculator stoichiometric mole ratio chemical equation",
+    "description": "Convert a known mole amount to another substance's mole amount using coefficients from a balanced chemical equation."
+  },
+  {
+    "name": "Rate Constant Calculator",
+    "url": "/calculators/rate-constant-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "rate constant calculator first order kinetics concentration time half life",
+    "description": "Estimate a first-order reaction rate constant from initial and later concentration and elapsed time."
+  },
+  {
+    "name": "Reaction Quotient Calculator",
+    "url": "/calculators/reaction-quotient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "reaction quotient calculator Qc Kc equilibrium direction",
+    "description": "Calculate the concentration-based reaction quotient Qc and compare it with an entered equilibrium constant to estimate the direction of change."
+  },
+  {
+    "name": "Entropy Calculator",
+    "url": "/calculators/entropy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "entropy calculator reversible heat temperature entropy change",
+    "description": "Calculate the entropy change per mole from reversible heat transfer and absolute temperature."
+  },
+  {
+    "name": "Freezing Point Depression Calculator",
+    "url": "/calculators/freezing-point-depression-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "freezing point depression calculator molality cryoscopic constant",
+    "description": "Estimate the freezing-point decrease from molality, cryoscopic constant and van't Hoff factor."
+  },
+  {
+    "name": "Gibbs Free Energy Calculator",
+    "url": "/calculators/gibbs-free-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Gibbs free energy calculator enthalpy entropy temperature",
+    "description": "Calculate Gibbs free-energy change from enthalpy change, entropy change and absolute temperature."
+  },
+  {
+    "name": "Gibbs Phase Rule Calculator",
+    "url": "/calculators/gibbs-phase-rule-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Gibbs phase rule calculator degrees freedom components phases",
+    "description": "Calculate the degrees of freedom in a non-reactive system using the classical Gibbs phase rule."
+  },
+  {
+    "name": "Q10 Calculator",
+    "url": "/calculators/q10-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Q10 calculator temperature coefficient reaction rate temperature",
+    "description": "Calculate the temperature coefficient Q10 from measured rates at two temperatures expressed in degrees Celsius."
   }
 ]
