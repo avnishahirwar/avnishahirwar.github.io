@@ -2058,12 +2058,16 @@ test('Settings trigger is in the shared footer; Language stays in the header and
   assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant layering remains intact.');
 });
 
-test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
+test('homepage uses the shared PWA install action and preserves language, analytics and accessibility controls', () => {
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
-  assert.ok(script.includes("!document.getElementById('fc-pwa-install')"), 'Homepage must reuse the shared Settings panel instead of adding a duplicate install overlay.');
-  for (const feature of ['fc-language-select', 'serviceWorker', 'gtm.js', 'fc-pwa-install', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
+  const shared = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(!script.includes("id='fc-pwa-install'") && !script.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
+  assert.ok(shared.includes("footerInner.appendChild(button)"), 'The shared shell must place the install action in the global footer.');
+  assert.ok(shared.includes("position:static!important"), 'The install action must not float over page content.');
+  for (const feature of ['fc-language-select', 'gtm.js', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
   }
+  assert.ok(shared.includes('serviceWorker.register'), 'The shared shell must retain service-worker registration.');
 });
 
 
@@ -2083,7 +2087,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
 });
 
 
-test('shared header and footer fail-safe is installed before optional page enhancements', () => {
+test('shared header and footer fail-safe normalizes legacy navigation and nested footers', () => {
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const firstEnhancement = script.indexOf('const ensureFavicon');
   const fallback = script.indexOf('fc-shell-failsafe');
@@ -2091,6 +2095,10 @@ test('shared header and footer fail-safe is installed before optional page enhan
   assert.ok(script.includes('href="/sitemap.html">Sitemap</a>'), 'Fallback header must link to Sitemap');
   assert.ok(script.includes('aria-label="Footer navigation"'), 'Fallback footer must have accessible navigation');
   assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
-  assert.ok(script.includes('document.body.appendChild(footer)'), 'A missing fallback footer must be appended after page content');
-  assert.ok(script.includes("footer.classList.add('fc-global-footer')"), 'Existing legacy footers must be upgraded instead of duplicated.');
+  assert.ok(script.includes("removeDuplicateLegacyHeaders"), 'Legacy navigation headers must be removed before rendering the shared header.');
+  assert.ok(script.includes('.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav'), 'All legacy navigation header patterns must be recognized.');
+  assert.ok(script.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must all be removed.');
+  assert.ok(script.includes('document.body.appendChild(f);'), 'Exactly one canonical footer must be appended directly to body.');
+  assert.ok(script.includes('preservedFooterLinks.forEach(link=>'), 'Useful legacy footer links must be preserved in the canonical footer.');
+  assert.ok(script.includes('footerInner.appendChild(button)'), 'The install action must be inside the shared footer.');
 });
