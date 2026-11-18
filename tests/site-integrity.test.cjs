@@ -2034,6 +2034,8 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
+  assert.match(html, /<footer class="fc-global-footer"/);
+  assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
   assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
   assert.ok(script.includes("document.createElement('footer')"));
   assert.ok(script.includes("footer.className = 'fc-global-footer'"));
