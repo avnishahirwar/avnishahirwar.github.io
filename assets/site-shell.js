@@ -179,6 +179,9 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
+// Arabic locale routes must remain right-to-left even when older page templates omit dir metadata.
+const isArabicRoute=p.startsWith('/ar/');
+if(isArabicRoute){document.documentElement.lang='ar';document.documentElement.dir='rtl';}
 const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
