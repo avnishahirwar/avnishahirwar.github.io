@@ -335,7 +335,7 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily & Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
-  assert.ok(salary.includes('Explore all 546 calculators on Friendly Calculator.'));
+  assert.ok(salary.includes('Explore the full calculator directory on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
 
