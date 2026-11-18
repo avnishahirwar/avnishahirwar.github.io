@@ -141,6 +141,20 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 .fc-favourite-toggle{display:inline-flex;align-items:center;gap:6px;margin:8px 0;padding:8px 11px;border:1px solid var(--fc-border);border-radius:6px;background:#fff;color:#24404c;font:inherit;font-weight:650;cursor:pointer}
 .fc-favourite-toggle[aria-pressed="true"]{border-color:#a98735;background:#fff9e8}
 @media(max-width:600px){.fc-home-personal{grid-template-columns:1fr}.fc-home-personal-privacy{grid-column:auto}}
+
+/* Mobile-first, thumbnail-led popular calculator list */
+.home-popular-list{display:grid;grid-template-columns:1fr;gap:0;margin:16px 0;background:#fff;border:1px solid var(--fc-border);border-radius:14px;overflow:hidden}
+.home-popular-item{display:flex;align-items:center;gap:16px;min-width:0;padding:15px 16px;color:var(--fc-ink,#172638);text-decoration:none;border-bottom:1px solid var(--fc-border);transition:background .15s ease}
+.home-popular-item:last-child{border-bottom:0}
+.home-popular-item:hover,.home-popular-item:focus-visible{background:#f7f9fb;text-decoration:none}
+.home-popular-icon{display:grid;place-items:center;flex:0 0 68px;width:68px;height:68px;border:1px solid var(--fc-border);border-radius:16px;background:#f6f8fa;font-size:2rem;line-height:1}
+.home-popular-copy{display:grid;gap:4px;min-width:0;flex:1}
+.home-popular-copy strong{font-size:1.05rem;line-height:1.35;font-weight:750;overflow-wrap:anywhere}
+.home-popular-copy small{font-size:.78rem;color:var(--fc-muted);font-weight:600}
+.home-popular-open{flex:0 0 auto;color:#176b43;font-size:.84rem;font-weight:700;white-space:nowrap}
+@media(min-width:900px){.home-popular-list{grid-template-columns:repeat(2,minmax(0,1fr))}.home-popular-item:nth-child(odd){border-right:1px solid var(--fc-border)}.home-popular-item:nth-last-child(-n+2){border-bottom:0}}
+@media(max-width:520px){.home-popular-item{gap:12px;padding:13px 12px}.home-popular-icon{flex-basis:60px;width:60px;height:60px;font-size:1.8rem}.home-popular-copy strong{font-size:1rem}.home-popular-open{font-size:.78rem}}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@id":"https://friendlycalculator.in/calculator/founder.html#person"},"email":"avnishahirwar420@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar420@gmail.com","availableLanguage":["English","Hindi","Spanish","French","Portuguese","Arabic","Indonesian","Bengali","Tamil","German (selected tools)","Japanese (selected tools)","Russian (selected tools)"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar420"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"},{"@type":"Person","@id":"https://friendlycalculator.in/calculator/founder.html#person","name":"Avnish Ahirwar","jobTitle":"Founder and Author","url":"https://friendlycalculator.in/calculator/founder.html","image":"https://friendlycalculator.in/assets/founder-avnish-profile.webp","sameAs":["https://www.linkedin.com/in/avnishahirwar420","https://www.instagram.com/avnish_ahirwar"],"worksFor":{"@id":"https://friendlycalculator.in/#organization"}}]}</script>
 
@@ -193,17 +207,131 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 </section>
 </section>
 <section class="home-learning home-popular-worldwide" aria-labelledby="popular-worldwide-title">
-<h2 id="popular-worldwide-title">Most popular calculators worldwide</h2>
-<p>Start with the calculator types people commonly use for money, math, health, education, shopping and everyday planning.</p>
-<div class="home-learning-grid">
-<article><h3><a href="/calculators/percentage-calculator.html">Percentage Calculator</a></h3><p>Work out percentages, increases, decreases and percentage change.</p></article>
-<article><h3><a href="/calculators/mortgage-calculator.html">Mortgage Calculator</a></h3><p>Estimate a home-loan payment and review the assumptions.</p></article>
-<article><h3><a href="/calculators/bmi-calculator.html">BMI Calculator</a></h3><p>Estimate body-mass index from height and weight.</p></article>
-<article><h3><a href="/calculators/age-calculator.html">Age Calculator</a></h3><p>Calculate age in years, months and days.</p></article>
-<article><h3><a href="/calculators/currency-converter-calculator.html">Currency Converter</a></h3><p>Convert supported currencies using a dated reference rate.</p></article>
-<article><h3><a href="/calculators/scientific-calculator.html">Scientific Calculator</a></h3><p>Use advanced math, trigonometry, powers and roots.</p></article>
+<h2 id="popular-worldwide-title">24 popular calculators</h2>
+<p>Quick access to frequently used calculators for finance, mathematics, tax, education and everyday tasks.</p>
+<div class="home-popular-list">
+<a class="home-popular-item" href="/calculators/percentage-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">％</span>
+<span class="home-popular-copy"><strong>Percentage Calculator</strong><small>Math</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/mortgage-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🏠</span>
+<span class="home-popular-copy"><strong>Mortgage Calculator</strong><small>Finance</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/compound-interest-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">📈</span>
+<span class="home-popular-copy"><strong>Compound Interest Calculator</strong><small>Finance</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/scientific-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🧮</span>
+<span class="home-popular-copy"><strong>Scientific Calculator</strong><small>Math</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/currency-converter-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">💱</span>
+<span class="home-popular-copy"><strong>Currency Converter Calculator</strong><small>Converters</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/gpa-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🎓</span>
+<span class="home-popular-copy"><strong>GPA Calculator</strong><small>Education</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/tip-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🧾</span>
+<span class="home-popular-copy"><strong>Tip Calculator</strong><small>Everyday</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/age-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🎂</span>
+<span class="home-popular-copy"><strong>Age Calculator</strong><small>Date & Time</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/pythagoras-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">📐</span>
+<span class="home-popular-copy"><strong>Pythagoras Calculator</strong><small>Geometry</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/loan-emi-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🏦</span>
+<span class="home-popular-copy"><strong>Loan EMI Calculator</strong><small>Finance</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/income-tax-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">💼</span>
+<span class="home-popular-copy"><strong>Income Tax Calculator</strong><small>Tax</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/gst-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🧮</span>
+<span class="home-popular-copy"><strong>GST Calculator</strong><small>Tax</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/discount-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🏷️</span>
+<span class="home-popular-copy"><strong>Discount Calculator</strong><small>Shopping</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/sip-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">💹</span>
+<span class="home-popular-copy"><strong>SIP Calculator</strong><small>Finance</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/simple-interest-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">💰</span>
+<span class="home-popular-copy"><strong>Simple Interest Calculator</strong><small>Finance</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/fraction-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">➗</span>
+<span class="home-popular-copy"><strong>Fraction Calculator</strong><small>Math</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/average-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">📉</span>
+<span class="home-popular-copy"><strong>Average Calculator</strong><small>Math</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/unit-converter.html">
+<span class="home-popular-icon" aria-hidden="true">📏</span>
+<span class="home-popular-copy"><strong>Unit Converter</strong><small>Converters</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/sales-tax-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🧾</span>
+<span class="home-popular-copy"><strong>Sales Tax Calculator</strong><small>Tax</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/paycheck-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">💵</span>
+<span class="home-popular-copy"><strong>Paycheck Calculator</strong><small>Salary</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/electricity-bill-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">⚡</span>
+<span class="home-popular-copy"><strong>Electricity Bill Calculator</strong><small>Everyday</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/sleep-time-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🌙</span>
+<span class="home-popular-copy"><strong>Sleep Time Calculator</strong><small>Time</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/pregnancy-due-date-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">🗓️</span>
+<span class="home-popular-copy"><strong>Pregnancy Due Date Calculator</strong><small>Family</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
+<a class="home-popular-item" href="/calculators/add-days-to-date-calculator.html">
+<span class="home-popular-icon" aria-hidden="true">📅</span>
+<span class="home-popular-copy"><strong>Add Days to Date Calculator</strong><small>Date & Time</small></span>
+<span class="home-popular-open" aria-hidden="true">Open&nbsp; →</span>
+</a>
 </div>
-<p><a class="home-learning-more" href="/calculator/popular-calculators.html">Explore all popular worldwide calculators →</a></p>
+<p><a class="home-learning-more" href="/calculator/popular-calculators.html">Explore all popular calculators →</a></p>
 </section>
 
 <nav class="home-category-index" aria-label="Calculator categories">
