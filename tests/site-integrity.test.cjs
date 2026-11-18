@@ -2108,7 +2108,7 @@ test('shared header and footer fail-safe normalizes legacy navigation and nested
   assert.ok(script.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must all be removed.');
   assert.ok(script.includes('document.body.appendChild(f);'), 'Exactly one canonical footer must be appended directly to body.');
   assert.ok(script.includes('preservedFooterLinks.forEach(link=>'), 'Useful legacy footer links must be preserved in the canonical footer.');
-  assert.ok(script.includes('footerInner.appendChild(button)'), 'The install action must be inside the shared footer.');
+  assert.ok(script.includes('quickActions.appendChild(installButton)'), 'The Install action must remain inside Settings Quick Actions.');
 });
 
 test('shared Footer keeps social destinations in one icon row and hides redundant theme status visually', () => {
