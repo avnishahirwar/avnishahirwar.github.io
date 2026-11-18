@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
+require(path.join(root, 'assets/chemistry-calculators.js'));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
 
@@ -1963,4 +1964,20 @@ test('three remaining safe chemistry calculators are present in pages, search an
  assert.equal(index.length,510);
  assert.match(directory,/<strong>122 tools<\/strong>/);
  assert.match(about,/509 public calculators/);
+});
+
+
+test('remaining chemistry calculator formulas return expected results',()=>{
+ const chemistry=global.FriendlyChemistryCalculators;
+ assert.ok(chemistry);
+ const atom=Object.fromEntries(chemistry.atom({atomicNumber:8,massNumber:16,charge:0}));
+ assert.equal(atom.Protons,'8');assert.equal(atom.Neutrons,'8');assert.equal(atom.Electrons,'8');
+ const yieldRows=Object.fromEntries(chemistry.percentYield({actual:8.5,theoretical:10}));
+ assert.match(yieldRows['Percent yield'],/^85/);
+ const balanced=Object.fromEntries(chemistry.balanceEquation({equation:'Fe + O2 -> Fe2O3'}));
+ assert.equal(balanced['Balanced equation'],'4 Fe + 3 O2 → 2 Fe2O3');
+ const grouped=Object.fromEntries(chemistry.balanceEquation({equation:'Al + HCl -> AlCl3 + H2'}));
+ assert.equal(grouped['Balanced equation'],'2 Al + 6 HCl → 2 AlCl3 + 3 H2');
+ assert.throws(()=>chemistry.atom({atomicNumber:8,massNumber:7,charge:0}),/Mass number/);
+ assert.throws(()=>chemistry.percentYield({actual:2,theoretical:0}),/positive/);
 });
