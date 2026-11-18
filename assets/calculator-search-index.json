@@ -4133,10 +4133,10 @@
   },
   {
     "name": "Sheep Gestation Calculator",
-    "url": "/calculator/new-calculators.html#sheep-gestation-calculator",
+    "url": "/calculators/sheep-gestation-calculator.html",
     "category": "BIOLOGY",
     "keywords": "sheep gestation calculator",
-    "description": "Sheep Gestation Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate a sheep lambing date and a broad planning window from a recorded service date. Gestation length varies by breed and individual."
   },
   {
     "name": "Swine Gestation Calculator",
@@ -4168,10 +4168,10 @@
   },
   {
     "name": "Dog Age Calculator",
-    "url": "/calculator/new-calculators.html#dog-age-calculator",
+    "url": "/calculators/dog-age-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog age calculator",
-    "description": "Dog Age Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Compare a dog’s age with an approximate human-age equivalent using a clearly named chart or research estimate."
   },
   {
     "name": "Dog BMI Calculator",
@@ -4182,17 +4182,17 @@
   },
   {
     "name": "Dog Nutrition Calculator",
-    "url": "/calculator/new-calculators.html#dog-nutrition-calculator",
+    "url": "/calculators/dog-nutrition-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog nutrition calculator",
-    "description": "Dog Nutrition Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate adult dog daily calories from body weight and a selected life-stage factor. Results are starting estimates, not a diet prescription."
   },
   {
     "name": "Dog Chocolate Toxicity Calculator",
-    "url": "/calculator/new-calculators.html#dog-chocolate-toxicity-calculator",
+    "url": "/calculators/dog-chocolate-toxicity-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog chocolate toxicity calculator",
-    "description": "Dog Chocolate Toxicity Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate methylxanthine exposure from chocolate amount and type. The result is not a diagnosis or a safe-dose determination; contact a veterinarian promptly."
   },
   {
     "name": "Dog Crate Size Calculator",
@@ -4217,10 +4217,10 @@
   },
   {
     "name": "Dog Heat Cycle Calculator",
-    "url": "/calculator/new-calculators.html#dog-heat-cycle-calculator",
+    "url": "/calculators/dog-heat-cycle-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog heat cycle calculator",
-    "description": "Dog Heat Cycle Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Track elapsed time since a dog’s last observed heat and view a broad population interval. Calendar tracking cannot identify ovulation or fertile days."
   },
   {
     "name": "Dog Life Expectancy Calculator",
@@ -4231,10 +4231,10 @@
   },
   {
     "name": "Metacam Dosage Calculator for Dogs",
-    "url": "/calculator/new-calculators.html#metacam-dosage-calculator-for-dogs",
+    "url": "/calculators/metacam-dosage-calculator-for-dogs.html",
     "category": "BIOLOGY",
     "keywords": "metacam dosage calculator for dogs",
-    "description": "Metacam Dosage Calculator for Dogs — requested calculator in the Friendly Calculator directory."
+    "description": "Convert a veterinarian-prescribed canine meloxicam dose to milligrams and, for the stated U.S. 1.5 mg/mL oral suspension, milliliters. This tool does not recommend a dose."
   },
   {
     "name": "Dog Onion Toxicity Calculator",
@@ -4252,10 +4252,10 @@
   },
   {
     "name": "Dog Raisin Toxicity Calculator",
-    "url": "/calculator/new-calculators.html#dog-raisin-toxicity-calculator",
+    "url": "/calculators/dog-raisin-toxicity-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog raisin toxicity calculator",
-    "description": "Dog Raisin Toxicity Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Summarize a reported grape or raisin exposure per kilogram of dog weight. No safe amount or reliable toxic-dose threshold is established; contact a veterinarian immediately."
   },
   {
     "name": "Dog Size Calculator",
@@ -4266,10 +4266,10 @@
   },
   {
     "name": "Dog Water Intake Calculator",
-    "url": "/calculator/new-calculators.html#dog-water-intake-calculator",
+    "url": "/calculators/dog-water-intake-calculator.html",
     "category": "BIOLOGY",
     "keywords": "dog water intake calculator",
-    "description": "Dog Water Intake Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Calculate a clinical canine maintenance-fluid reference from body weight. This is not a drinking-water target or fluid-therapy prescription."
   },
   {
     "name": "Omega-3 For Dogs Calculator",
@@ -4280,10 +4280,10 @@
   },
   {
     "name": "Quiz: Dog Size Calculator",
-    "url": "/calculator/new-calculators.html#quiz-dog-size-calculator",
+    "url": "/calculators/quiz-dog-size-calculator.html",
     "category": "BIOLOGY",
     "keywords": "quiz: dog size calculator",
-    "description": "Quiz: Dog Size Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "A short, non-clinical knowledge quiz about puppy growth tracking and dog-size estimates. It does not predict adult size."
   },
   {
     "name": "Raw Dog Food Calculator",
@@ -4294,17 +4294,17 @@
   },
   {
     "name": "Tramadol For Dogs Calculator",
-    "url": "/calculator/new-calculators.html#tramadol-for-dogs-calculator",
+    "url": "/calculators/tramadol-for-dogs-calculator.html",
     "category": "BIOLOGY",
     "keywords": "tramadol for dogs calculator",
-    "description": "Tramadol For Dogs Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Convert an individually veterinarian-prescribed canine tramadol dose into milligrams or liquid volume. No dose or treatment schedule is recommended."
   },
   {
     "name": "Cat Age Calculator",
-    "url": "/calculator/new-calculators.html#cat-age-calculator",
+    "url": "/calculators/cat-age-calculator.html",
     "category": "BIOLOGY",
     "keywords": "cat age calculator",
-    "description": "Cat Age Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate a cat’s human-age equivalent using one of two explicitly named veterinary-facing age-chart conventions."
   },
   {
     "name": "Cat Benadryl Dosage Calculator",
@@ -4322,10 +4322,10 @@
   },
   {
     "name": "Cat Calorie Calculator",
-    "url": "/calculator/new-calculators.html#cat-calorie-calculator",
+    "url": "/calculators/cat-calorie-calculator.html",
     "category": "BIOLOGY",
     "keywords": "cat calorie calculator",
-    "description": "Cat Calorie Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate daily calories for a healthy adult cat from body weight and a selected maintenance factor. Results are not a feeding prescription."
   },
   {
     "name": "Cat Chocolate Toxicity Calculator",
@@ -4371,24 +4371,24 @@
   },
   {
     "name": "Metacam Dosage Calculator for Cats",
-    "url": "/calculator/new-calculators.html#metacam-dosage-calculator-for-cats",
+    "url": "/calculators/metacam-dosage-calculator-for-cats.html",
     "category": "BIOLOGY",
     "keywords": "metacam dosage calculator for cats",
-    "description": "Metacam Dosage Calculator for Cats — requested calculator in the Friendly Calculator directory."
+    "description": "Convert a veterinarian-prescribed feline meloxicam dose to volume for the U.S. 5 mg/mL injectable product only. No dose recommendation is given."
   },
   {
     "name": "Quiz: Cat Age Calculator",
-    "url": "/calculator/new-calculators.html#quiz-cat-age-calculator",
+    "url": "/calculators/quiz-cat-age-calculator.html",
     "category": "BIOLOGY",
     "keywords": "quiz: cat age calculator",
-    "description": "Quiz: Cat Age Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "A short educational quiz about approximate cat-to-human age charts and why the estimates differ."
   },
   {
     "name": "Bird Age Calculator",
-    "url": "/calculator/new-calculators.html#bird-age-calculator",
+    "url": "/calculators/bird-age-calculator.html",
     "category": "BIOLOGY",
     "keywords": "bird age calculator",
-    "description": "Bird Age Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Calculate a companion bird’s chronological age from its recorded hatch date. This tool does not convert bird age to human years."
   },
   {
     "name": "Dry Matter Calculator",
