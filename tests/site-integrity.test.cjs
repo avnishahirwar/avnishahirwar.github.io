@@ -299,7 +299,7 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
   assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
 });
 
-test('GST calculator links to the current 512-page catalogue count', () => {
+test('GST calculator links to the current 518-page catalogue count', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
   assert.ok(gst.includes('Explore all 518 calculators on Friendly Calculator.'));
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
@@ -1465,7 +1465,7 @@ test('homepage stays lightweight while all 519 calculators remain searchable and
   assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
   assert.equal(searchIndex.length, 519, 'All 519 calculators, including the international VAT calculator, must remain in the deferred search index');
-  assert.equal(new Set(searchIndex.map(item => item.url)).size, 513, 'Search index URLs must be unique');
+  assert.equal(new Set(searchIndex.map(item => item.url)).size, 519, 'Search index URLs must be unique');
   for (const item of searchIndex) {
     assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
     assert.ok(fs.existsSync(path.join(root, item.url.replace(/^\//, ''))), 'Search result target must exist: ' + item.url);
