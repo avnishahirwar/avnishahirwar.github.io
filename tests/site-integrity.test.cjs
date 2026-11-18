@@ -1400,7 +1400,9 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
   assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
-  assert.ok(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'));
+  assert.ok(page.includes("link.href='/assets/site-shell.css'"));
+  assert.ok(page.includes("requestIdleCallback(loadShellStyles,{timeout:1200})"));
+  assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
 });
 
 
