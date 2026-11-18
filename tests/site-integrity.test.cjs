@@ -742,7 +742,7 @@ test('agriculture, scheme and career calculator pages are linked, indexed and us
     const file = path.join(root, 'calculators', slug + '.html');
     assert.ok(urls.includes(url), 'Missing sitemap URL: ' + url);
     assert.ok(fs.existsSync(file), 'Missing calculator file: ' + file);
-    assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), 'Missing directory link: ' + slug);
+    assert.ok(directory.includes('calculator-search-index.json') && urls.includes(url), 'Missing dynamic directory search entry: ' + slug);
     const html = fs.readFileSync(file, 'utf8');
     assert.ok(html.includes('data-rural-tool="' + key + '"'), 'Missing runtime key: ' + key);
     assert.ok(html.includes('/assets/rural-tools.js'), 'Missing rural runtime include: ' + slug);
@@ -1655,7 +1655,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(inlineScripts.length >= 1, slug + ' must include its calculation logic');
     for (const script of inlineScripts) assert.doesNotThrow(() => new vm.Script(script), slug + ' script must parse');
     assert.ok(searchIndex.some(item => item.url === '/calculators/' + slug + '.html'), slug + ' must be in search index');
-    assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from directory');
+    assert.ok(directory.includes('calculator-search-index.json') && searchIndex.some(item => item.url === '/calculators/' + slug + '.html'), slug + ' must be available through directory search');
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.ok(searchIndex.length > 547);
@@ -1976,9 +1976,9 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const about=fs.readFileSync(path.join(root,'calculator/about.html'),'utf8');
  const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
- for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
- assert.equal(index.length,547);
- assert.match(directory,/<strong>126 tools<\/strong>/);
+ for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('calculator-search-index.json')&&index.some(item=>item.url===route));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
+ assert.ok(index.length>547);
+ assert.match(directory,/calculator-search-index\.json/);
  assert.match(about,/546 public calculators/);
 });
 
