@@ -110,3 +110,17 @@ test('static directory navigation is crawlable and uses the canonical tax catego
   ]) assert.ok(header.includes('href="' + route + '"'), 'Missing crawlable header route: ' + route);
   assert.ok(!header.includes('/calculator/tax-calculators.html'), 'Retired tax category URL must not be in primary navigation');
 });
+
+
+test('Accessibility defaults to readable Normal Mode unless Dark Mode was explicitly saved', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const homepageShell = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shell, /const initialTheme=theme==='dark'\?'dark':'light'/);
+  assert.match(homepageShell, /if\(currentTheme!=='dark'\)currentTheme='light'/);
+  assert.match(shell, /normalModeButton\.addEventListener\('click',\(\)=>applyTheme\('light'\)\)/);
+  assert.match(homepageShell, /normal\.addEventListener\('click',\(\)=>applyTheme\('light'\)\)/);
+  assert.match(css, /html\[data-fc-theme="light"\]\{color-scheme:light\}/);
+  assert.match(css, /\.fc-theme-mode-options \.fc-display-action\[aria-pressed="true"\][\s\S]*?color:#fff!important/);
+  assert.match(css, /html\[data-fc-theme="dark"\] body>\.fc-display-panel \.fc-theme-mode-options \.fc-display-action\{[\s\S]*?color:#edf3f8!important/);
+});
