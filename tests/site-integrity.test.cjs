@@ -192,7 +192,7 @@ test('shared header and footer retain navigation order while regional preference
     '[nav.tax,',
     '[nav.everyday,',
     '[nav.blog,',
-    '[nav.login,r+\\'dashboard.html\\']'
+    "[nav.login,r+'dashboard.html']"
   ];
   let last = -1;
   for (const item of expectedHeader) {
@@ -200,8 +200,8 @@ test('shared header and footer retain navigation order while regional preference
     assert.ok(index > last, 'Header item is missing or out of order: ' + item);
     last = index;
   }
-  assert.doesNotMatch(header, /nav\\.search|Search Calculator/);
-  assert.match(shell, /en:\\{home:'Home',login:'Login'/);
+  assert.doesNotMatch(header, /nav\.search|Search Calculator/);
+  assert.match(shell, /en:\{home:'Home',login:'Login'/);
   assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'All menu and site directory link must remain available.');
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
@@ -216,6 +216,7 @@ test('shared header and footer retain navigation order while regional preference
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
   assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/sitemap.html'];"));
 });
+
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes("['Admin',r+'admin.html']"));
