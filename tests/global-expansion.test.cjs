@@ -146,7 +146,7 @@ test('Accessibility defaults to readable Normal Mode unless Dark Mode was explic
 test('Tax and Salary calculators page does not repeat Home or All Calculators in the page body', () => {
   const page = fs.readFileSync(path.join(root, 'calculator/tax.html'), 'utf8');
   const body = page.slice(page.indexOf('<main'), page.indexOf('</main>'));
-  assert.doesNotMatch(body, /<a href="\\/">Home<\\/a>/);
-  assert.doesNotMatch(body, /<a href="\\/calculator\\/site-directory\\.html">All calculators<\\/a>/i);
-  assert.match(page, /<header>[\\s\\S]*<a href="\\/">Home<\\/a>/, 'The global Header Home link must remain.');
+  assert.ok(!body.includes('<a href="/">Home</a>'), 'Remove the duplicate Home link from the page body.');
+  assert.ok(!body.includes('<a href="/calculator/site-directory.html">All calculators</a>'), 'Remove the duplicate All Calculators link from the page body.');
+  assert.ok(page.includes('<header>') && page.includes('<a href="/">Home</a>'), 'Keep the global Header Home link.');
 });
