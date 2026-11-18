@@ -2023,7 +2023,21 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   assert.match(html, /\.fc-global-header\{/);
   assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.doesNotMatch(html, /src="\/assets\/site-shell\.js"/);
+  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+});
+
+test('unified Settings panel provides saved locale preferences, accessibility and modal controls', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
+  assert.ok(shell.includes("panel.setAttribute('aria-modal','true')"));
+  assert.ok(shell.includes("backdrop.className='fc-display-backdrop'"));
+  assert.ok(shell.includes("save.textContent=t.save") && shell.includes("reset.textContent=t.reset"));
+  assert.ok(shell.includes("applyMotion(initialMotion)") && shell.includes("fc-display-motion"));
+  assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
+  assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
+  assert.ok(css.includes('.fc-display-backdrop') && css.includes('max-height:min(85dvh,850px)'));
+  assert.ok(css.includes('fc-reduce-motion') && css.includes('width:min(380px,calc(100vw - 24px))'));
 });
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
