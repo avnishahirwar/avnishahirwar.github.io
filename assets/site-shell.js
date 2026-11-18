@@ -1060,19 +1060,25 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'}
   };
   const copy=labels[language]||labels.en;
+  const activateAssistant=()=>{
+    const assistantButton=document.querySelector('#fc-ai-launch');
+    const quickActions=document.getElementById('fc-settings-quick-actions');
+    if(assistantButton&&quickActions&&!quickActions.contains(assistantButton))quickActions.appendChild(assistantButton);
+    assistantButton?.click();
+  };
   const launcher=document.createElement('button');
   launcher.id='fc-ai-lazy-launch';
   launcher.type='button';
   launcher.textContent=copy.open;
   launcher.setAttribute('aria-label',copy.open);
   launcher.addEventListener('click',()=>{
-    if(window.__fcFreeAssistantLoaded){launcher.remove();document.querySelector('#fc-ai-launch')?.click();return;}
+    if(window.__fcFreeAssistantLoaded){launcher.remove();activateAssistant();return;}
     launcher.disabled=true;
     launcher.textContent=copy.loading;
     const assistantScript=document.createElement('script');
     assistantScript.src='/assets/friendly-ai-assistant.js';
     assistantScript.dataset.fcFreeAssistant='true';
-    assistantScript.onload=()=>{launcher.remove();document.querySelector('#fc-ai-launch')?.click();};
+    assistantScript.onload=()=>{launcher.remove();activateAssistant();};
     assistantScript.onerror=()=>{assistantScript.remove();launcher.disabled=false;launcher.textContent=copy.retry;};
     document.head.appendChild(assistantScript);
   });
@@ -1244,6 +1250,53 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   applyTheme(initialTheme);
   applySize(initialSize);
 })();
+
+
+/* One shared header entry point for regional settings, accessibility and quick actions. */
+const mountSettingsAccessibilityHub=()=>{
+  const trigger=document.getElementById('fc-display-settings');
+  const panel=document.getElementById('fc-display-panel');
+  if(!trigger||!panel||document.getElementById('fc-settings-hub'))return;
+  const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
+  const copy={
+    en:{install:'Install Friendly Calculator',assistant:'Open assistant'},
+    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'सहायक खोलें'},
+    es:{install:'Instalar Friendly Calculator',assistant:'Abrir asistente'},
+    fr:{install:'Installer Friendly Calculator',assistant:'Ouvrir l’assistant'},
+    pt:{install:'Instalar Friendly Calculator',assistant:'Abrir assistente'},
+    ar:{install:'تثبيت Friendly Calculator',assistant:'فتح المساعد'},
+    id:{install:'Instal Friendly Calculator',assistant:'Buka asisten'},
+    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'সহায়ক খুলুন'},
+    ta:{install:'Friendly Calculator நிறுவு',assistant:'உதவியாளரைத் திற'},
+    de:{install:'Friendly Calculator installieren',assistant:'Assistent öffnen'},
+    ja:{install:'Friendly Calculator をインストール',assistant:'アシスタントを開く'},
+    ru:{install:'Установить Friendly Calculator',assistant:'Открыть помощник'}
+  }[language]||{install:'Install Friendly Calculator',assistant:'Open assistant'};
+  const quickActions=document.createElement('div');
+  quickActions.id='fc-settings-quick-actions';
+  quickActions.className='fc-settings-quick-actions';
+  const install=document.getElementById('fc-pwa-install');
+  const installHelp=document.getElementById('fc-pwa-help');
+  const assistant=document.getElementById('fc-ai-lazy-launch');
+  if(install){install.textContent=copy.install;quickActions.appendChild(install);}
+  if(installHelp)quickActions.appendChild(installHelp);
+  if(assistant){assistant.textContent=copy.assistant;assistant.setAttribute('aria-label',copy.assistant);quickActions.appendChild(assistant);}
+  const status=panel.querySelector('.fc-display-status');
+  if(status)panel.insertBefore(quickActions,status);
+  else panel.appendChild(quickActions);
+  const hub=document.createElement('div');
+  hub.id='fc-settings-hub';
+  hub.className='fc-settings-hub';
+  const headerRow=document.querySelector('.fc-global-header .fc-top-row');
+  if(headerRow)headerRow.appendChild(hub);
+  else document.body.appendChild(hub);
+  hub.append(trigger,panel);
+  trigger.classList.add('fc-settings-hub-trigger');
+  trigger.setAttribute('aria-label',panel.getAttribute('aria-label')||'Settings & Accessibility');
+  document.getElementById('fc-floating-tools')?.remove();
+};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSettingsAccessibilityHub,{once:true});
+else mountSettingsAccessibilityHub();
 
 
 // Store only calculator paths and page titles in this browser. Query strings are
