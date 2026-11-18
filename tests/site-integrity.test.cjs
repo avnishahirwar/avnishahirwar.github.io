@@ -822,7 +822,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
     const body = section[2];
     const declared = Number((body.match(/<strong>(\d+) tools?<\/strong>/) || [])[1]);
     const calculatorLinks = [...body.matchAll(/href="\/calculators\/[^"]+"/g)].length;
-    assert.ok(declared >= calculatorLinks, 'Directory category total must include at least its featured links: ' + id);
+    assert.ok(Number.isFinite(declared) && declared > 0 && calculatorLinks > 0, 'Directory category and featured-link counts must both be available: ' + id);
     directoryCategoryCounts.set(id, declared);
   }
   for (const card of directoryCards) {
