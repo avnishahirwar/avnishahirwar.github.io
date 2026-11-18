@@ -19,7 +19,7 @@ test('worldwide mortgage country catalogue provides ISO currency defaults for 24
  }
 });
 
-test('worldwide mortgage formula handles zero and positive interest rates',()=>{
+test('market currency defaults use domestic currencies and directory aliases preselect correctly',()=>{\n assert.equal(calc.currencyByCountry.BG,'EUR');\n assert.equal(calc.currencyByCountry.BT,'BTN');\n assert.equal(calc.currencyByCountry.LS,'LSL');\n assert.equal(calc.currencyByCountry.NA,'NAD');\n assert.equal(calc.currencyByCountry.ZW,'ZWG');\n const script=fs.readFileSync(path.join(root,'assets/worldwide-mortgage-calculator.js'),'utf8');\n for(const alias of [\"'cabo verde':'CV'\",\"'republic of the congo':'CG'\",\"'democratic republic of the congo':'CD'\",\"'myanmar':'MM'\",\"'turkey':'TR'\"])assert.ok(script.includes(alias),'missing country alias '+alias);\n});\n\ntest('worldwide mortgage formula handles zero and positive interest rates',()=>{
  const zero=calc.calculateWorldwideMortgage({homePrice:120000,downPayment:20000,annualInterestRate:0,termYears:10});
  assert.equal(zero.principal,100000);
  assert.equal(zero.monthlyPrincipalAndInterest,100000/120);
