@@ -82,7 +82,28 @@ gtag('config','G-QVWQSEDRGL');
 @media(max-width:640px){.fc-global-nav{width:92%;gap:7px;padding:10px 0}.fc-global-brand{font-size:.9rem;letter-spacing:.035em}.fc-global-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:5px 12px;justify-content:flex-start;overflow:visible;max-height:none}.fc-global-links a{font-size:.82rem;padding:5px 0}.fc-global-links .fc-admin-link{padding:5px 8px}.fc-language-control{width:100%;justify-content:flex-start}.fc-language-control select{min-width:150px}}
 @media(max-width:380px){.fc-global-links{gap:4px 10px}.fc-global-links a{font-size:.78rem}}
 </style>
-<link rel="preload" href="/assets/site-shell.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<script>
+/* Load non-critical shared shell styles after the first paint. Critical homepage
+   layout and navigation styles are already inlined above and in this page. */
+(()=> {
+  let loaded=false;
+  const loadShellStyles=()=>{
+    if(loaded)return;
+    loaded=true;
+    const link=document.createElement('link');
+    link.rel='stylesheet';
+    link.href='/assets/site-shell.css';
+    link.media='all';
+    document.head.appendChild(link);
+  };
+  const schedule=()=>{
+    if('requestIdleCallback' in window)window.requestIdleCallback(loadShellStyles,{timeout:1200});
+    else window.setTimeout(loadShellStyles,300);
+  };
+  if(document.readyState==='complete')schedule();
+  else window.addEventListener('load',schedule,{once:true});
+})();
+</script>
 <noscript><link rel="stylesheet" href="/assets/site-shell.css"></noscript>
 <style>
 :root{--fc-blue:#101c2c;--fc-blue-dark:#20364e;--fc-text:#202b36;--fc-muted:#64717d;--fc-border:#d9e0e6;--fc-bg:#f4f6f8}
