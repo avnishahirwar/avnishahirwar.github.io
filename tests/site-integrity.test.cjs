@@ -2002,3 +2002,20 @@ test('homepage shows 24 popular calculators as responsive thumbnail-led rows', (
   assert.match(page, /\.home-popular-item/);
   assert.doesNotMatch(section, /bmi-calculator\.html/i);
 });
+
+
+test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(html, /<link rel="preload" href="\/assets\/site-shell\.css" as="style"/);
+  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
+  assert.match(html, /\.fc-global-header\{/);
+  assert.match(html, /src="\/assets\/homepage-shell\.js" defer/);
+  assert.doesNotMatch(html, /src="\/assets\/site-shell\.js"/);
+});
+
+test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
+  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  for (const feature of ['fc-language-select', 'serviceWorker', 'gtm.js', 'fc-pwa-install', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
+    assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
+  }
+});
