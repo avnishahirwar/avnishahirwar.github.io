@@ -56,7 +56,9 @@ test('every public sitemap page loads the shared site header and footer shell', 
     const file = localFile(url);
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
-    if (!html.includes('/assets/site-shell.js')) failures.push(url + ' (shared shell script)');
+    const pathname = new URL(url).pathname;
+    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
+    if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
   assert.deepEqual(failures, [], 'Public pages must use the shared header/footer: ' + failures.join(', '));
@@ -1390,11 +1392,12 @@ test('hours-to-minutes page provides unit-consistent reference examples and vali
 test('basic calculator avoids retired no-op chrome script and preserves deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
   assert.equal(page.includes('/assets/site-chrome.js?v=1'), false);
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
+  assert.ok(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'));
   assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-chrome.css?v=1">'));
 });
 
-test('homepage prioritizes its visible brand illustration and keeps deferred shared shell', () => {
+test('homepage prioritizes its visible brand illustration and uses the lean homepage shell', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
