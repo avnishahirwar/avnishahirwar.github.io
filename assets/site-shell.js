@@ -1331,8 +1331,12 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   addSectionHeading(t.quick);
   panel.append(status,close);
 
-  const dock=getFloatingToolsDock();
-  if(dock)dock.appendChild(open);
+  // Settings is a footer utility, not a floating dock control.
+  const footerNav=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
+  const footer=document.querySelector('footer.fc-global-footer');
+  if(footerNav)footerNav.appendChild(open);
+  else if(footer)footer.appendChild(open);
+  else document.body.appendChild(open);
   document.body.append(backdrop,panel);
   applyTheme(initialTheme);
   document.documentElement.removeAttribute('data-fc-text-size');
@@ -1398,9 +1402,11 @@ const mountSettingsQuickActions=()=>{
   const insertBefore=status||close;
   if(insertBefore)panel.insertBefore(quickActions,insertBefore);
   else panel.appendChild(quickActions);
-  // Keep one trigger only. Install and assistant launchers are no longer fixed overlays.
-  const dock=document.getElementById('fc-floating-tools');
-  if(dock&&trigger.parentElement!==dock)dock.appendChild(trigger);
+  // Keep the single Settings trigger in the shared footer on every public page.
+  const footerNav=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
+  const footer=document.querySelector('footer.fc-global-footer');
+  if(footerNav&&trigger.parentElement!==footerNav)footerNav.appendChild(trigger);
+  else if(!footerNav&&footer&&trigger.parentElement!==footer)footer.appendChild(trigger);
   trigger.textContent='⚙ '+(language==='hi'?'सेटिंग्स':language==='es'?'Ajustes':language==='fr'?'Paramètres':language==='de'?'Einstellungen':language==='ja'?'設定':language==='ru'?'Настройки':'Settings');
   trigger.setAttribute('aria-label',panel.getAttribute('aria-label')||'Settings & Accessibility');
   trigger.classList.remove('fc-settings-hub-trigger');
