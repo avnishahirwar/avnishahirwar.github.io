@@ -160,7 +160,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 </div>
 <p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 4115 calculators across 34 categories. Search instantly or choose a category below.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
-<nav class="home-popular-tools" aria-label="18 popular calculators">
+<nav class="home-popular-tools" aria-label="24 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
 <a href="/calculators/loan-emi-calculator.html">Loan EMI Calculator</a>
 <a href="/calculators/sip-calculator.html">SIP Calculator</a>
@@ -179,6 +179,12 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <a href="/calculators/percentage-calculator.html">Percentage Calculator</a>
 <a href="/calculators/electricity-bill-calculator.html">Electricity Bill Calculator</a>
 <a href="/calculators/insurance-premium-calculator.html">Insurance Premium Calculator</a>
+<a href="/calculators/compound-interest-calculator.html">Compound Interest Calculator</a>
+<a href="/calculators/scientific-calculator.html">Scientific Calculator</a>
+<a href="/calculators/gpa-calculator.html">GPA Calculator</a>
+<a href="/calculators/gratuity-calculator.html">Tip Calculator</a>
+<a href="/calculators/mortgage-calculator.html">Mortgage Calculator</a>
+<a href="/calculators/currency-converter-calculator.html">Currency Converter</a>
 </nav>
 <section class="fc-home-personal" id="fc-home-personal" aria-label="Your saved and recent calculators">
   <div class="fc-home-personal-column">
@@ -249,7 +255,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==547)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||!items.length||!items.every(item=>item&&typeof item.name==='string'&&typeof item.url==='string'&&typeof item.category==='string'))throw new Error('Search index validation failed');return items.filter(item=>item.status!=='planned');})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -267,7 +273,7 @@ async function search(){
  const query=input.value.trim().toLocaleLowerCase();
  if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 4115 calculators across 34 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching all 546 calculators…';
+ status.textContent='Searching all available calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
