@@ -169,8 +169,8 @@ test('All Calculators is a plain header link with no dropdown markup or behavior
 
 test('shared footer has identical responsive sizing rules across all public pages', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(css, /footer\\.fc-global-footer\\{[\\s\\S]*?padding:16px 0 0!important/);
-  assert.match(css, /footer\\.fc-global-footer \\.fc-global-footer-inner\\{[\\s\\S]*?width:min\\(1440px,96%\\)!important/);
-  assert.match(css, /footer\\.fc-global-footer \\.fc-footer-top\\{[\\s\\S]*?min-height:64px!important/);
-  assert.match(css, /@media\\(max-width:760px\\)[\\s\\S]*?footer\\.fc-global-footer \\.fc-global-footer-inner\\{width:92%!important/);
+  assert.match(css, /footer\.fc-global-footer\{[\s\S]*?padding:16px 0 0!important/);
+  assert.match(css, /footer\.fc-global-footer \.fc-global-footer-inner\{[\s\S]*?width:min\(1440px,96%\)!important/);
+  assert.match(css, /footer\.fc-global-footer \.fc-footer-top\{[\s\S]*?min-height:64px!important/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?footer\.fc-global-footer \.fc-global-footer-inner\{width:92%!important/);
 });
