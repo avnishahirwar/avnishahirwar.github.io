@@ -1160,7 +1160,53 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const formatControl=document.querySelector('.fc-format-control');
   const unitControl=document.querySelector('.fc-unit-control');
   addSettingRow('fc-display-currency-row',[currencyControl]);
-  addSettingRow('fc-display-country-format-row',[countryControl,formatControl]);
+  if(countryControl&&formatControl){
+    const countrySelect=countryControl.querySelector('select');
+    const localeSelect=formatControl.querySelector('select');
+    const countryFormatLabel=document.createElement('label');
+    countryFormatLabel.className='fc-country-format-control';
+    const countryFormatText=document.createElement('span');
+    countryFormatText.textContent='Country & format';
+    const countryFormatSelect=document.createElement('select');
+    countryFormatSelect.id='fc-country-format-display';
+    countryFormatSelect.setAttribute('aria-label','Country and number/date format');
+    const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
+    Array.from(localeSelect.options).forEach(localeOption=>{
+      const locale=localeOption.value;
+      const country=locale.split('-').pop().toUpperCase();
+      if(!countryCodes.has(country))return;
+      const option=document.createElement('option');
+      option.value=country+'|'+locale;
+      option.textContent=localeOption.textContent;
+      countryFormatSelect.appendChild(option);
+    });
+    const currentValue=countrySelect.value+'|'+localeSelect.value;
+    if(!Array.from(countryFormatSelect.options).some(option=>option.value===currentValue)){
+      const option=document.createElement('option');
+      option.value=currentValue;
+      option.textContent=(countrySelect.selectedOptions[0]?.textContent||countrySelect.value)+' · '+(localeSelect.selectedOptions[0]?.textContent||localeSelect.value);
+      countryFormatSelect.appendChild(option);
+    }
+    countryFormatSelect.value=currentValue;
+    countryFormatSelect.addEventListener('change',()=>{
+      const [country,locale]=countryFormatSelect.value.split('|');
+      if(window.FCLocale){
+        window.FCLocale.setCountry(country);
+        window.FCLocale.setLocale(locale);
+      }else{
+        countrySelect.value=country;
+        localeSelect.value=locale;
+        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
+    const compatibilityControls=document.createElement('div');
+    compatibilityControls.className='fc-locale-compat-controls';
+    compatibilityControls.append(countryControl,formatControl);
+    panel.appendChild(compatibilityControls);
+  }
   addSettingRow('fc-display-units-row',[unitControl]);
   if(settingRows.length){
     const divider=document.createElement('div');
