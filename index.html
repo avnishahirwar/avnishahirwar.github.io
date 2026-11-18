@@ -249,7 +249,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||!items.length||!items.every(item=>item&&typeof item.name==='string'&&typeof item.url==='string'&&typeof item.category==='string'))throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||!items.length||!items.every(item=>item&&typeof item.name==='string'&&typeof item.url==='string'&&typeof item.category==='string'))throw new Error('Search index validation failed');if(!items.some(item=>item.url==='/international/vat-calculator.html'))items.push({name:'VAT Calculator',url:'/international/vat-calculator.html',category:'Tax & VAT',keywords:'vat value added tax international sales tax'});return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
