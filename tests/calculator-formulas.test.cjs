@@ -721,7 +721,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.match(about, /Available calculators \(535 tools\)/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, 530);
+  assert.equal(searchIndex.length, 536);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.match(homepage, /Search all 529 calculators/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
