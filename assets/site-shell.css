@@ -302,54 +302,70 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
 .fc-display-settings-divider{height:1px;background:#e2e7ec;margin:10px 0}
 html[data-fc-theme="dark"] .fc-display-settings-divider{background:#34475d}
 
-/* Unified settings hub: no floating controls over the page content. */
-
-.fc-global-header .fc-top-row{position:relative;overflow:visible}
-#fc-settings-hub{position:relative;z-index:1002;flex:0 0 auto;margin-left:auto}
-#fc-display-settings.fc-settings-hub-trigger{position:relative;left:auto;right:auto;top:auto;bottom:auto;z-index:auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;max-width:230px;padding:8px 12px;border:1px solid #d8bd82;border-radius:999px;background:#14283d;color:#fff;font:700 13px/1.2 system-ui,sans-serif;box-shadow:none;white-space:nowrap;cursor:pointer}
-#fc-settings-hub .fc-display-panel{position:absolute;left:auto;right:0;top:calc(100% + 10px);bottom:auto;width:min(400px,calc(100vw - 24px));max-height:min(74dvh,650px);overflow-y:auto;overscroll-behavior:contain;padding:16px;border:1px solid #d5dee8;border-radius:14px;background:#fff;color:#172638;box-shadow:0 14px 42px #07132135}
-#fc-settings-hub .fc-display-panel>strong{display:block;margin:0 0 12px;font-size:1.05rem}
-#fc-settings-hub .fc-settings-section-heading{margin:14px 0 8px;padding-top:9px;border-top:1px solid #e2e8ee;color:#43566b;font-size:.78rem;font-weight:800;letter-spacing:.035em;text-transform:uppercase}
-#fc-settings-hub .fc-display-setting-row{display:flex;align-items:center;gap:8px;margin:8px 0}
-#fc-settings-hub .fc-display-setting-row>label{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-width:0;font-weight:650}
-#fc-settings-hub .fc-display-setting-row select{flex:1 1 auto;min-width:0;max-width:66%;padding:8px 10px;border:1px solid #cbd5df;border-radius:8px;background:#fff;color:#172638;font:500 13px/1.3 system-ui,sans-serif}
-#fc-settings-hub .fc-country-format-control{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%}
-#fc-settings-hub .fc-country-format-control>span{white-space:nowrap;font-weight:650}
-#fc-settings-hub .fc-country-format-control>select{flex:1 1 auto;width:1%;min-width:0;max-width:68%}
-#fc-settings-hub .fc-locale-compat-controls{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-#fc-settings-hub .fc-display-size-label{display:block;margin:10px 0 7px;font-weight:700}
-#fc-settings-hub .fc-display-size-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-#fc-settings-hub .fc-display-action,#fc-settings-hub .fc-display-close{min-height:38px;border:1px solid #cbd5df;border-radius:8px;background:#f4f7f9;color:#172638;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
-#fc-settings-hub .fc-display-status{margin:8px 0;color:#64717d;font-size:.85rem}
+/* One floating Settings entry point; keep the header and footer for navigation only. */
+#fc-display-settings{
+  position:fixed!important;left:14px!important;right:auto!important;
+  bottom:max(14px,calc(env(safe-area-inset-bottom) + 10px))!important;
+  z-index:1501!important;display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;padding:10px 16px;border:1px solid #d8bd82;border-radius:999px;
+  background:#14283d;color:#fff;font:700 14px/1.2 system-ui,sans-serif;
+  box-shadow:0 5px 20px #07132145;cursor:pointer;max-width:calc(100vw - 28px)
+}
+.fc-display-panel{
+  position:fixed!important;left:14px!important;right:auto!important;
+  bottom:calc(max(14px,env(safe-area-inset-bottom)) + 68px)!important;
+  z-index:1500!important;width:min(390px,calc(100vw - 28px))!important;
+  max-height:min(72dvh,680px)!important;overflow-y:auto!important;
+  overscroll-behavior:contain;padding:15px!important;border:1px solid #d5dee8!important;
+  border-radius:14px!important;background:#fff!important;color:#172638!important;
+  box-shadow:0 12px 38px #07132145!important
+}
+.fc-display-panel[hidden]{display:none!important}
+.fc-display-panel>strong{display:block;margin:0 0 12px;font-size:1.05rem}
+.fc-settings-section-heading{margin:14px 0 8px;padding-top:9px;border-top:1px solid #e2e8ee;color:#43566b;font-size:.78rem;font-weight:800;letter-spacing:.035em;text-transform:uppercase}
+.fc-display-setting-row{display:flex;align-items:center;gap:8px;margin:8px 0}
+.fc-display-setting-row>label{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-width:0;font-weight:650}
+.fc-display-setting-row select{flex:1 1 auto;min-width:0;max-width:66%;padding:8px 10px;border:1px solid #cbd5df;border-radius:8px;background:#fff;color:#172638;font:500 13px/1.3 system-ui,sans-serif}
+.fc-country-format-control{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%}
+.fc-country-format-control>span{white-space:nowrap;font-weight:650}
+.fc-country-format-control>select{flex:1 1 auto;width:1%;min-width:0;max-width:68%}
+.fc-display-size-label{display:block;margin:10px 0 7px;font-weight:700}
+.fc-display-size-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fc-display-action,.fc-display-close{min-height:40px;border:1px solid #cbd5df;border-radius:8px;background:#f4f7f9;color:#172638;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+.fc-display-status{margin:8px 0;color:#64717d;font-size:.85rem}
 #fc-settings-quick-actions{display:grid;gap:8px;margin:8px 0}
-#fc-settings-hub .fc-pwa-install,#fc-settings-hub #fc-ai-lazy-launch,#fc-settings-hub #fc-ai-launch{position:static!important;inset:auto!important;display:flex;align-items:center;justify-content:center;width:100%;max-width:none;min-height:42px;margin:0;padding:10px 12px;border:1px solid #cbd5df;border-radius:9px;background:#14283d;color:#fff;font:700 13px/1.25 system-ui,sans-serif;box-shadow:none;cursor:pointer}
-#fc-settings-hub .fc-pwa-help{position:static!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:100%;max-width:none;margin:0;padding:12px;border:1px solid #d9e0e6;border-radius:9px;background:#f4f7f9;color:#172638;box-shadow:none;font:13px/1.5 system-ui,sans-serif}
-#fc-settings-hub .fc-pwa-help button{margin-top:8px}
-#fc-settings-hub .fc-display-close{width:100%}
-#fc-display-settings.fc-settings-hub-trigger:focus-visible,#fc-settings-hub .fc-display-action:focus-visible,#fc-settings-hub .fc-display-close:focus-visible,#fc-settings-hub .fc-pwa-install:focus-visible,#fc-settings-hub #fc-ai-lazy-launch:focus-visible,#fc-settings-hub #fc-ai-launch:focus-visible{outline:3px solid #d8bd82;outline-offset:3px}
-@media(max-width:760px){
-  #fc-display-settings.fc-settings-hub-trigger{min-height:38px;padding:7px 10px;font-size:12px}
-  #fc-settings-hub .fc-display-panel{max-height:min(76dvh,640px)}
+#fc-settings-quick-actions .fc-pwa-install,
+#fc-settings-quick-actions #fc-ai-lazy-launch,
+#fc-settings-quick-actions #fc-ai-launch{
+  position:static!important;inset:auto!important;left:auto!important;right:auto!important;
+  top:auto!important;bottom:auto!important;display:flex;align-items:center;justify-content:center;
+  width:100%!important;max-width:none!important;min-height:44px;margin:0!important;
+  padding:10px 12px;border:1px solid #cbd5df;border-radius:9px;
+  background:#14283d;color:#fff;font:700 13px/1.25 system-ui,sans-serif;
+  box-shadow:none!important;cursor:pointer
+}
+#fc-settings-quick-actions .fc-pwa-help{
+  position:static!important;inset:auto!important;display:block;width:100%!important;
+  max-width:none!important;margin:0!important;padding:12px;border:1px solid #d9e0e6;
+  border-radius:9px;background:#f4f7f9;color:#172638;box-shadow:none!important;
+  font:13px/1.5 system-ui,sans-serif
+}
+#fc-settings-quick-actions .fc-pwa-help[hidden]{display:none!important}
+#fc-display-settings:focus-visible,.fc-display-action:focus-visible,
+.fc-display-close:focus-visible,#fc-settings-quick-actions button:focus-visible{
+  outline:3px solid #d8bd82;outline-offset:3px
 }
 @media(max-width:420px){
-  #fc-display-settings.fc-settings-hub-trigger{width:40px;height:40px;min-width:40px;padding:0;font-size:0}
-  #fc-display-settings.fc-settings-hub-trigger:before{content:'⚙';font-size:20px;line-height:1}
-  #fc-settings-hub .fc-display-panel{right:-2px;width:min(380px,calc(100vw - 20px));padding:13px}
-  #fc-settings-hub .fc-display-setting-row select{max-width:62%;font-size:12px;padding:7px 8px}
-  #fc-settings-hub .fc-country-format-control>select{max-width:62%}
+  #fc-display-settings{left:12px!important;max-width:calc(100vw - 24px);font-size:13px}
+  .fc-display-panel{left:12px!important;width:calc(100vw - 24px)!important;max-height:70dvh!important;padding:13px!important}
+  .fc-display-setting-row select{max-width:62%;font-size:12px;padding:7px 8px}
+  .fc-country-format-control>select{max-width:62%}
 }
-html[data-fc-theme="dark"] #fc-settings-hub .fc-display-panel{background:#101d2b;color:#edf3f8;border-color:#465a70}
-html[data-fc-theme="dark"] #fc-settings-hub .fc-settings-section-heading{color:#bdcad7;border-color:#34475d}
-html[data-fc-theme="dark"] #fc-settings-hub .fc-display-setting-row select{background:#0b1725;color:#edf3f8;border-color:#52657a}
-html[data-fc-theme="dark"] #fc-settings-hub .fc-display-action,html[data-fc-theme="dark"] #fc-settings-hub .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
-html[data-fc-theme="dark"] #fc-settings-hub .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
-
-
-#fc-settings-hub #fc-ai-launch[aria-expanded="true"]{display:none!important}
-#fc-settings-hub .fc-pwa-help[hidden]{display:none!important}
-#fc-settings-hub .fc-display-panel[hidden]{display:none!important}
-#fc-settings-hub .fc-display-panel:not([hidden]){display:block}
-
+html[data-fc-theme="dark"] .fc-display-panel{background:#101d2b!important;color:#edf3f8!important;border-color:#465a70!important}
+html[data-fc-theme="dark"] .fc-settings-section-heading{color:#bdcad7;border-color:#34475d}
+html[data-fc-theme="dark"] .fc-display-setting-row select{background:#0b1725;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] .fc-display-action,html[data-fc-theme="dark"] .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] #fc-settings-quick-actions .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
 
 /* User-selectable high-contrast mode for improved text and control visibility. */
 html[data-fc-contrast="high"] body{background:#fff!important;color:#000!important}
