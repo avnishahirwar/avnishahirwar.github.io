@@ -72,7 +72,7 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Regional preferences must not appear in the global header.');
-  assert.ok(headerMarkup.includes('+languageControl+</nav>'), 'Language selector must be inside the header navigation after Login.');
+  assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must be inside the header navigation after Login.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
