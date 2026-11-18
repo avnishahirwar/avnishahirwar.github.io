@@ -67,8 +67,10 @@ test('shared footer retains policy navigation and Sitemap; regional and accessib
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Regional preferences must not appear in the global header.');
-  assert.ok(!headerMarkup.includes('languageControl'), 'Language selector must not appear in the global header.');
-  assert.ok(shell.includes('fc-regional-settings-source'), 'Regional controls must be staged outside the global header.');
+  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain visible in the shared header.');
+  assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
+  assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
+  assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('dock.appendChild(open)'), 'The single Settings trigger must be outside the header/footer.');
   assert.ok(shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must be inside Settings.');
 });
