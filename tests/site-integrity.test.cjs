@@ -1392,8 +1392,7 @@ test('hours-to-minutes page provides unit-consistent reference examples and vali
 test('basic calculator avoids retired no-op chrome script and preserves deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
   assert.equal(page.includes('/assets/site-chrome.js?v=1'), false);
-  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
-  assert.ok(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'));
+  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
   assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-chrome.css?v=1">'));
 });
 
@@ -1402,7 +1401,8 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
+  assert.ok(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'));
 });
 
 
