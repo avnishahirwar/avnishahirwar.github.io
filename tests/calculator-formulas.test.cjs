@@ -270,7 +270,7 @@ test('dedicated SIP page calculates both end-of-month and beginning-of-month pro
   const beginningDom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10', sipTiming: 'beginning' });
   vm.runInNewContext(script, { document: beginningDom.document, Number, Math, Intl });
   const beginningRows = resultRows(beginningDom.get('sipResult'));
-  closeTo(numericCurrency(beginningRows.find(row => row[0] === 'Illustrative estimated value')[1]), 484678.15, 0.2);
+  closeTo(numericCurrency(beginningRows.find(row => row[0] === 'Illustrative estimated value')[1]), 494678.15, 0.2);
 });
 
 test('dedicated PPF page calculates beginning-of-year annual compounding', () => {
@@ -687,7 +687,7 @@ test('SIP page exposes end-of-month and beginning-of-month calculations with mat
   const endMonth = p * ((Math.pow(1 + i, n) - 1) / i);
   const beginningMonth = endMonth * (1 + i);
   closeTo(endMonth, 460077.3789, 0.01);
-  closeTo(beginningMonth, 484678.1527, 0.01);
+  closeTo(beginningMonth, 494678.1527, 0.01);
 });
 
 
@@ -717,13 +717,13 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /483 public calculators/);
-  assert.match(about, /Available calculators \(483 tools\)/);
+  assert.match(about, /493 public calculators/);
+  assert.match(about, /Available calculators \(493 tools\)/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, 484);
+  assert.equal(searchIndex.length, 494);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.match(homepage, /Search all 484 calculators/);
+  assert.match(homepage, /Search all 494 calculators/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
