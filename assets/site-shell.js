@@ -73,6 +73,17 @@ const ensurePwa=()=>{
 ensurePwa();
 
 /* Offer a clear install path and explain the offline boundary. */
+const getFloatingToolsDock=()=>{
+  if(!document.body)return null;
+  let dock=document.getElementById('fc-floating-tools');
+  if(!dock){
+    dock=document.createElement('div');
+    dock.id='fc-floating-tools';
+    dock.setAttribute('aria-label','Friendly Calculator quick settings');
+    document.body.appendChild(dock);
+  }
+  return dock;
+};
 const ensurePwaInstallUi=()=>{
   if(!document.body||window.self!==window.top)return;
   if(/(?:^|\/)(?:admin|login|dashboard)(?:\/|\.|$)/i.test(location.pathname))return;
@@ -157,7 +168,9 @@ const ensurePwaInstallUi=()=>{
   });
 
   document.head.appendChild(style);
-  document.body.append(button,panel,network);
+  const dock=getFloatingToolsDock();
+  if(dock)dock.appendChild(button);
+  document.body.append(panel,network);
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensurePwaInstallUi,{once:true});
 else ensurePwaInstallUi();
@@ -1155,7 +1168,9 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     panel.append(divider);
   }
   panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
-  document.body.append(open,panel);
+  const dock=getFloatingToolsDock();
+  if(dock)dock.appendChild(open);
+  document.body.appendChild(panel);
   applyTheme(initialTheme);
   applySize(initialSize);
 })();
