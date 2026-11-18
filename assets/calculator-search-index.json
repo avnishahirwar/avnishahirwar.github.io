@@ -4224,10 +4224,10 @@
   },
   {
     "name": "Dog Life Expectancy Calculator",
-    "url": "/calculator/new-calculators.html#dog-life-expectancy-calculator",
+    "url": "/calculators/dog-life-expectancy-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "dog life expectancy calculator",
-    "description": "Dog Life Expectancy Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "dog life expectancy calculator biology calculator",
+    "description": "Estimate remaining years from a user-selected expected lifespan and the dog’s current age."
   },
   {
     "name": "Metacam Dosage Calculator for Dogs",
@@ -4259,10 +4259,10 @@
   },
   {
     "name": "Dog Size Calculator",
-    "url": "/calculator/new-calculators.html#dog-size-calculator",
+    "url": "/calculators/dog-size-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "dog size calculator",
-    "description": "Dog Size Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "dog size calculator biology calculator",
+    "description": "Estimate adult weight from current weight and a user-supplied fraction of expected mature growth."
   },
   {
     "name": "Dog Water Intake Calculator",
@@ -4399,17 +4399,17 @@
   },
   {
     "name": "Guinea Pig Years to Human Years Calculator",
-    "url": "/calculator/new-calculators.html#guinea-pig-years-to-human-years-calculator",
+    "url": "/calculators/guinea-pig-years-to-human-years-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "guinea pig years to human years calculator",
-    "description": "Guinea Pig Years to Human Years Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "guinea pig years to human years calculator biology calculator",
+    "description": "Convert guinea-pig age using a user-selected comparison factor."
   },
   {
     "name": "Hamster Age Calculator",
-    "url": "/calculator/new-calculators.html#hamster-age-calculator",
+    "url": "/calculators/hamster-age-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "hamster age calculator",
-    "description": "Hamster Age Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "hamster age calculator biology calculator",
+    "description": "Compare hamster age with human years using a configurable rough comparison factor."
   },
   {
     "name": "Horse Weight Calculator",
@@ -4427,10 +4427,10 @@
   },
   {
     "name": "Rabbit Color Calculator",
-    "url": "/calculator/new-calculators.html#rabbit-color-calculator",
+    "url": "/calculators/rabbit-color-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "rabbit color calculator",
-    "description": "Rabbit Color Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "rabbit color calculator biology calculator",
+    "description": "Estimate single-gene dominant/recessive outcome probabilities for a rabbit cross."
   },
   {
     "name": "Rat Cage Calculator",
@@ -4441,10 +4441,10 @@
   },
   {
     "name": "Turtle Tank Size Calculator",
-    "url": "/calculator/new-calculators.html#turtle-tank-size-calculator",
+    "url": "/calculators/turtle-tank-size-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "turtle tank size calculator",
-    "description": "Turtle Tank Size Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "turtle tank size calculator biology calculator",
+    "description": "Estimate a baseline aquarium water volume from turtle shell length."
   },
   {
     "name": "Animal Mortality Rate Calculator",
@@ -4518,10 +4518,10 @@
   },
   {
     "name": "Daily Light Integral Calculator",
-    "url": "/calculator/new-calculators.html#daily-light-integral-calculator",
+    "url": "/calculators/daily-light-integral-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "daily light integral calculator",
-    "description": "Daily Light Integral Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "daily light integral calculator biology calculator",
+    "description": "Calculate daily light integral from photosynthetic photon flux density and daily light hours."
   },
   {
     "name": "Fertilizer Calculator",
@@ -4532,10 +4532,10 @@
   },
   {
     "name": "GDU Calculator — Growing Degree Units",
-    "url": "/calculator/new-calculators.html#gdu-calculator-growing-degree-units",
+    "url": "/calculators/gdu-calculator-growing-degree-units.html",
     "category": "BIOLOGY",
-    "keywords": "gdu calculator — growing degree units",
-    "description": "GDU Calculator — Growing Degree Units — requested calculator in the Friendly Calculator directory."
+    "keywords": "gdu calculator — growing degree units biology calculator",
+    "description": "Estimate daily growing degree units from minimum, maximum and base temperatures."
   },
   {
     "name": "Grain Conversion Calculator",
@@ -4553,10 +4553,10 @@
   },
   {
     "name": "Lawn Mowing Cost Calculator",
-    "url": "/calculator/new-calculators.html#lawn-mowing-cost-calculator",
+    "url": "/calculators/lawn-mowing-cost-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "lawn mowing cost calculator",
-    "description": "Lawn Mowing Cost Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "lawn mowing cost calculator biology calculator",
+    "description": "Estimate a mowing bill from area, price per unit area and service frequency."
   },
   {
     "name": "Mulch Calculator",
@@ -4581,17 +4581,17 @@
   },
   {
     "name": "Plant Spacing Calculator",
-    "url": "/calculator/new-calculators.html#plant-spacing-calculator",
+    "url": "/calculators/plant-spacing-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "plant spacing calculator",
-    "description": "Plant Spacing Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "plant spacing calculator biology calculator",
+    "description": "Estimate plant count for a bed using square or triangular spacing."
   },
   {
     "name": "Potting Soil Calculator",
-    "url": "/calculator/new-calculators.html#potting-soil-calculator",
+    "url": "/calculators/potting-soil-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "potting soil calculator",
-    "description": "Potting Soil Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "potting soil calculator biology calculator",
+    "description": "Estimate potting mix volume for multiple cylindrical or rectangular containers."
   },
   {
     "name": "Raised Bed Soil Calculator",
@@ -4609,17 +4609,17 @@
   },
   {
     "name": "Soil Calculator",
-    "url": "/calculator/new-calculators.html#soil-calculator",
+    "url": "/calculators/soil-calculator.html",
     "category": "BIOLOGY",
-    "keywords": "soil calculator",
-    "description": "Soil Calculator — requested calculator in the Friendly Calculator directory."
+    "keywords": "soil calculator biology calculator",
+    "description": "Estimate soil volume needed to cover a measured area at a chosen depth."
   },
   {
     "name": "VPD Calculator (Vapor Pressure Deficit)",
-    "url": "/calculator/new-calculators.html#vpd-calculator-vapor-pressure-deficit",
+    "url": "/calculators/vpd-calculator-vapor-pressure-deficit.html",
     "category": "BIOLOGY",
-    "keywords": "vpd calculator (vapor pressure deficit)",
-    "description": "VPD Calculator (Vapor Pressure Deficit) — requested calculator in the Friendly Calculator directory."
+    "keywords": "vpd calculator (vapor pressure deficit) biology calculator",
+    "description": "Estimate air vapor-pressure deficit from air temperature and relative humidity."
   },
   {
     "name": "Vegetable Seed Calculator",
