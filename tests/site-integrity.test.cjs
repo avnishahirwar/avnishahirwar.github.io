@@ -2017,7 +2017,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   assert.match(html, /\.fc-global-header\{/);
-  assert.match(html, /src="\/assets\/homepage-shell\.js" defer/);
+  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
   assert.doesNotMatch(html, /src="\/assets\/site-shell\.js"/);
 });
 
@@ -2034,7 +2034,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.match(html, /src="\\/assets\\/homepage-shell\\.js" defer/);
+  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
   assert.ok(script.includes("document.createElement('footer')"));
   assert.ok(script.includes("footer.className = 'fc-global-footer'"));
   assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
