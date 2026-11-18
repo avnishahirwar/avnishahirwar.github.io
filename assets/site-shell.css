@@ -330,16 +330,16 @@ html[data-fc-theme="dark"] .fc-display-settings-divider{background:#34475d}
 #fc-floating-tools #fc-display-settings{order:0;margin:0}
 #fc-floating-tools .fc-pwa-install{order:1;margin:0}
 .fc-display-panel{left:14px;bottom:108px;width:min(340px,calc(100vw - 28px));max-height:min(68vh,520px);overflow-y:auto}
-.fc-pwa-help{left:14px;bottom:58px;width:min(340px,calc(100vw - 28px))}
+#fc-pwa-help{left:14px;bottom:58px;width:min(340px,calc(100vw - 28px))}
 @media(max-width:420px){
   #fc-floating-tools{left:12px;bottom:12px;gap:7px}
   #fc-floating-tools #fc-display-settings,#fc-floating-tools .fc-pwa-install{min-height:34px;padding:7px 10px;font-size:11px}
   .fc-display-panel{left:12px;bottom:102px;width:min(340px,calc(100vw - 24px))}
-  .fc-pwa-help{left:12px;bottom:54px;width:min(340px,calc(100vw - 24px))}
+  #fc-pwa-help{left:12px;bottom:54px;width:min(340px,calc(100vw - 24px))}
 }
 @supports (padding:max(0px)){
   #fc-floating-tools{left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom))}
   .fc-display-panel{bottom:max(102px,calc(env(safe-area-inset-bottom) + 94px))}
-  .fc-pwa-help{bottom:max(54px,calc(env(safe-area-inset-bottom) + 46px))}
+  #fc-pwa-help{bottom:max(54px,calc(env(safe-area-inset-bottom) + 46px))}
 }
 html[data-fc-theme="dark"] #fc-floating-tools #fc-display-settings{background:#142235;color:#edf3f8;border-color:#52657a}
