@@ -270,7 +270,7 @@ test('dedicated SIP page calculates both end-of-month and beginning-of-month pro
   const beginningDom = makeTestDom({ sipMonthly: '2000', sipRate: '12', sipYears: '10', sipTiming: 'beginning' });
   vm.runInNewContext(script, { document: beginningDom.document, Number, Math, Intl });
   const beginningRows = resultRows(beginningDom.get('sipResult'));
-  closeTo(numericCurrency(beginningRows.find(row => row[0] === 'Illustrative estimated value')[1]), 501678.15, 0.2);
+  closeTo(numericCurrency(beginningRows.find(row => row[0] === 'Illustrative estimated value')[1]), 464678.15, 0.2);
 });
 
 test('dedicated PPF page calculates beginning-of-year annual compounding', () => {
@@ -687,7 +687,7 @@ test('SIP page exposes end-of-month and beginning-of-month calculations with mat
   const endMonth = p * ((Math.pow(1 + i, n) - 1) / i);
   const beginningMonth = endMonth * (1 + i);
   closeTo(endMonth, 460077.3789, 0.01);
-  closeTo(beginningMonth, 501678.1527, 0.01);
+  closeTo(beginningMonth, 464678.1527, 0.01);
 });
 
 
