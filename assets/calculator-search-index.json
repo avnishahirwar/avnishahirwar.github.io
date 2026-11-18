@@ -3962,5 +3962,180 @@
     "category": "Everyday Life",
     "keywords": "minutes hours time conversion",
     "description": "Convert minutes into decimal hours and hours/minutes."
+  },
+  {
+    "name": "Acres to Hectares Converter",
+    "url": "/calculators/acres-to-hectares-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "acres hectares area conversion",
+    "description": "Convert acres into hectares and square metres."
+  },
+  {
+    "name": "Acres to Square Feet Calculator",
+    "url": "/calculators/acres-to-square-feet-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "acres square feet area conversion",
+    "description": "Convert acres into square feet."
+  },
+  {
+    "name": "Angstrom to nm Converter",
+    "url": "/calculators/angstrom-to-nanometer-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "angstrom nanometre length conversion",
+    "description": "Convert angstroms into nanometres and metres."
+  },
+  {
+    "name": "atm to Pascals Conversion",
+    "url": "/calculators/atm-to-pascals-conversion.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "atmosphere pascal pressure conversion",
+    "description": "Convert standard atmospheres into pascals and kilopascals."
+  },
+  {
+    "name": "bar to psi Conversion",
+    "url": "/calculators/bar-to-psi-conversion.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "bar psi pressure conversion",
+    "description": "Convert bar into psi and pascals."
+  },
+  {
+    "name": "Celsius to Fahrenheit Converter",
+    "url": "/calculators/celsius-to-fahrenheit-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "celsius fahrenheit temperature conversion",
+    "description": "Convert Celsius into Fahrenheit and Kelvin."
+  },
+  {
+    "name": "Fahrenheit to Celsius Converter",
+    "url": "/calculators/fahrenheit-to-celsius-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "fahrenheit celsius temperature conversion",
+    "description": "Convert Fahrenheit into Celsius and Kelvin."
+  },
+  {
+    "name": "Kelvin to Celsius Converter",
+    "url": "/calculators/kelvin-to-celsius-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "kelvin celsius temperature conversion",
+    "description": "Convert Kelvin into Celsius and Fahrenheit."
+  },
+  {
+    "name": "Feet to Miles Converter",
+    "url": "/calculators/feet-to-miles-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "feet miles length conversion",
+    "description": "Convert feet into miles, yards and metres."
+  },
+  {
+    "name": "Feet to Yards Conversion",
+    "url": "/calculators/feet-to-yards-conversion.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "feet yards length conversion",
+    "description": "Convert feet into yards and metres."
+  },
+  {
+    "name": "Foot to Centimeter Converter",
+    "url": "/calculators/foot-to-centimeter-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "feet centimetres length conversion",
+    "description": "Convert feet into centimetres and metres."
+  },
+  {
+    "name": "Gallons to Cubic Feet Converter",
+    "url": "/calculators/gallons-to-cubic-feet-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "gallons cubic feet volume conversion",
+    "description": "Convert US gallons into cubic feet and litres."
+  },
+  {
+    "name": "Gallons to Cups Converter",
+    "url": "/calculators/gallons-to-cups-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "gallons cups volume conversion",
+    "description": "Convert US gallons into cups, pints and quarts."
+  },
+  {
+    "name": "Gallons to Pints Converter",
+    "url": "/calculators/gallons-to-pints-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "gallons pints volume conversion",
+    "description": "Convert US gallons into pints and cups."
+  },
+  {
+    "name": "Gallons to Quarts Converter",
+    "url": "/calculators/gallons-to-quarts-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "gallons quarts volume conversion",
+    "description": "Convert US gallons into quarts and pints."
+  },
+  {
+    "name": "Grams to fl oz Converter",
+    "url": "/calculators/grams-to-fl-oz-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "grams fluid ounces conversion",
+    "description": "Convert grams to an approximate US fluid-ounce volume for water-like liquids."
+  },
+  {
+    "name": "Grams to lbs Converter",
+    "url": "/calculators/grams-to-lbs-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "grams pounds weight conversion",
+    "description": "Convert grams into pounds and ounces."
+  },
+  {
+    "name": "Hectares to Acres Converter",
+    "url": "/calculators/hectares-to-acres-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "hectares acres area conversion",
+    "description": "Convert hectares into acres and square metres."
+  },
+  {
+    "name": "Kilometers to Miles Calculator",
+    "url": "/calculators/kilometers-to-miles-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "kilometres miles distance conversion",
+    "description": "Convert kilometres into miles and metres."
+  },
+  {
+    "name": "Meters to Feet Converter",
+    "url": "/calculators/meters-to-feet-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "metres feet length conversion",
+    "description": "Convert metres into feet and inches."
+  },
+  {
+    "name": "Pounds to Grams Converter",
+    "url": "/calculators/pounds-to-grams-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "pounds grams weight conversion",
+    "description": "Convert pounds into grams and ounces."
+  },
+  {
+    "name": "Pounds to Ounces Converter",
+    "url": "/calculators/pounds-to-ounces-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "pounds ounces weight conversion",
+    "description": "Convert pounds into ounces and grams."
+  },
+  {
+    "name": "Radians to Degrees Converter",
+    "url": "/calculators/radians-to-degrees-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "radians degrees angle conversion",
+    "description": "Convert radians into degrees and revolutions."
+  },
+  {
+    "name": "Square Meters to Square Feet Converter",
+    "url": "/calculators/square-meters-to-square-feet-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "square metres square feet area conversion",
+    "description": "Convert square metres into square feet and square yards."
+  },
+  {
+    "name": "Yards to Meters Conversion",
+    "url": "/calculators/yards-to-meters-conversion.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "yards metres length conversion",
+    "description": "Convert yards into metres and feet."
   }
 ]
