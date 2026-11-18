@@ -722,7 +722,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.ok(new Set(searchIndex.filter(item => item.url.startsWith('/calculators/')).map(item => item.url)).size > 2000);
-  assert.ok(fs.existsSync(new URL('../international/vat-calculator.html', 'file://' + __filename)));\n  assert.ok(homepage.includes("'/international/vat-calculator.html'"));
+  assert.ok(fs.existsSync(new URL('../international/vat-calculator.html', 'file://' + __filename)));
+  assert.ok(homepage.includes("'/international/vat-calculator.html'"));
   assert.match(homepage, /Search all calculators/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
