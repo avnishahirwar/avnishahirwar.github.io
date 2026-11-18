@@ -20,6 +20,8 @@ img,svg,video,canvas,iframe{max-width:100%}img,video{height:auto}pre,code{max-wi
 .fc-global-footer{background:var(--fc-navy-deep);color:#bdc9d4;border-top:1px solid #26384b;padding:24px 0;margin-top:32px}
 .fc-global-footer-inner{width:min(1160px,94%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .fc-footer-intro{color:#fff}.fc-global-footer-links{display:flex;gap:8px 16px;flex-wrap:wrap}
+.fc-global-footer-links a[aria-current="page"]{color:#d8bd82;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-weight:800}
+.fc-all-dropdown-menu a[aria-current="page"]{background:#edf2f6;color:#8b6500;font-weight:800;text-decoration:underline}
 .fc-global-footer a{color:#e6d6b2;text-decoration:none;font-size:.86rem}.fc-global-footer a:hover{text-decoration:underline}
 .fc-global-footer small{color:#9baaba}
 .ad-slot,.ad-break,.ad,.ad-placeholder,.adsense-placeholder,.advertisement,.ad-container,[data-ad-slot],[aria-label="Advertisement space"]{display:none!important;min-height:0!important;height:0!important;margin:0!important;padding:0!important;border:0!important}
