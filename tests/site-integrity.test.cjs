@@ -2052,7 +2052,7 @@ test('Settings trigger is in the shared footer; Language stays in the header and
   assert.ok(shell.includes("document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>"), 'Only one shared footer may remain.');
   assert.ok(shell.includes("if(!label)button.remove();"), 'Stale blank buttons must be removed from the Settings panel.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Only the two labeled Normal Mode and Dark Mode controls belong in Accessibility.');
-  assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings{position:static!important'));
+  assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings') && css.includes('position:static!important'), 'Footer Settings control must be statically positioned.');
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
   assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
   assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant layering remains intact.');
@@ -2091,5 +2091,6 @@ test('shared header and footer fail-safe is installed before optional page enhan
   assert.ok(script.includes('href="/sitemap.html">Sitemap</a>'), 'Fallback header must link to Sitemap');
   assert.ok(script.includes('aria-label="Footer navigation"'), 'Fallback footer must have accessible navigation');
   assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
-  assert.ok(script.includes('document.body.append(footer)'), 'Fallback footer must be appended after page content');
+  assert.ok(script.includes('document.body.appendChild(footer)'), 'A missing fallback footer must be appended after page content');
+  assert.ok(script.includes("footer.classList.add('fc-global-footer')"), 'Existing legacy footers must be upgraded instead of duplicated.');
 });
