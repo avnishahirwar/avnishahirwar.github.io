@@ -1981,3 +1981,5 @@ test('remaining chemistry calculator formulas return expected results',()=>{
  assert.throws(()=>chemistry.atom({atomicNumber:8,massNumber:7,charge:0}),/Mass number/);
  assert.throws(()=>chemistry.percentYield({actual:2,theoretical:0}),/positive/);
 });
+
+test('remaining calculator backlog is not presented as active tools or included in the homepage search index',()=>{const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));const backlog=fs.readFileSync(path.join(root,'calculator/new-calculators.html'),'utf8');assert.equal(index.length,593);assert.equal(index.filter(item=>item.url.startsWith('/calculators/')).length,592);assert.ok(index.every(item=>item.url.startsWith('/calculators/')||item.url==='/international/vat-calculator.html'));assert.match(backlog,/<meta name="robots" content="noindex,follow">/);});
