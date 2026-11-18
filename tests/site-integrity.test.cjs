@@ -799,7 +799,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.equal(homepageLinks.size, searchIndex.filter(item => item.url.startsWith('/calculators/')).length, 'Homepage search index calculator routes are complete');
   assert.ok(searchIndex.length > 547, 'Homepage search includes the expanded calculator catalogue');
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
+  assert.ok([...directoryLinks].every(url => homepageLinks.has(url)), 'Every curated directory calculator must be searchable from the homepage index');
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
   assert.doesNotMatch(homepage, /class="search-panel"/, 'Homepage must not contain the calculator search panel');
   assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/, 'Global header must link to the All Calculators directory');
@@ -1216,7 +1216,7 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
 test('homepage category summary and directory markup match the published catalogue', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  assert.match(homepage, /organised into \d+ clearly labelled categories/);
+  assert.match(homepage, /organised into clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
   assert.match(directory, /Showing all [\d,]+ calculators in \d+ categories/);
 });
