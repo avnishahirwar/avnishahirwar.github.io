@@ -1446,7 +1446,7 @@ test('homepage search runtime validates the complete 2,479-item deferred catalog
   assert.equal(searchIndex.length, 2479);
   assert.match(homepage, /Array\.isArray\(items\)/);
   assert.match(homepage, /typeof item\.name!=='string'/);
-  assert.match(homepage, /typeof item\\.url!=='string'/);
+  assert.match(homepage, /typeof item\.url!=='string'/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
