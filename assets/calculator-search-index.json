@@ -3780,5 +3780,152 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "coin toss streak probability calculator consecutive heads run k heads in n tosses biased fair probability dynamic programming",
     "description": "Estimate the probability of at least one run of k consecutive heads in n independent tosses."
+  },
+  {
+    "name": "Astronomical Unit Calculator",
+    "url": "/calculators/astronomical-unit-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "astronomical unit au kilometres miles",
+    "description": "Convert astronomical units into kilometres and miles."
+  },
+  {
+    "name": "Feet and Inches Calculator",
+    "url": "/calculators/feet-and-inches-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "feet inches length conversion",
+    "description": "Convert feet and inches into total inches, centimetres and metres."
+  },
+  {
+    "name": "Height in Inches Calculator",
+    "url": "/calculators/height-in-inches-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "height inches feet centimetres conversion",
+    "description": "Convert a height in feet and inches into total inches and centimetres."
+  },
+  {
+    "name": "Light Year Conversion",
+    "url": "/calculators/light-year-conversion-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "light year kilometres miles conversion",
+    "description": "Convert light-years into kilometres, astronomical units and miles."
+  },
+  {
+    "name": "Square Kilometers to Acres Conversion",
+    "url": "/calculators/square-kilometers-to-acres-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square kilometres acres area conversion",
+    "description": "Convert square kilometres into acres and square metres."
+  },
+  {
+    "name": "Cubic Feet Calculator",
+    "url": "/calculators/cubic-feet-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "cubic feet volume conversion",
+    "description": "Convert cubic feet into cubic metres, US gallons and litres."
+  },
+  {
+    "name": "Cubic Meter Calculator",
+    "url": "/calculators/cubic-meter-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "cubic metre volume conversion",
+    "description": "Convert cubic metres into cubic feet, litres and US gallons."
+  },
+  {
+    "name": "Binary to Hexadecimal Converter",
+    "url": "/calculators/binary-to-hexadecimal-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "binary hexadecimal number base conversion",
+    "description": "Convert a binary integer into hexadecimal."
+  },
+  {
+    "name": "Binary to Octal Converter",
+    "url": "/calculators/binary-to-octal-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "binary octal number base conversion",
+    "description": "Convert a binary integer into octal."
+  },
+  {
+    "name": "Decimal to Hexadecimal Converter",
+    "url": "/calculators/decimal-to-hexadecimal-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "decimal hexadecimal number base conversion",
+    "description": "Convert a non-negative decimal integer into hexadecimal."
+  },
+  {
+    "name": "Decimal to Octal Converter",
+    "url": "/calculators/decimal-to-octal-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "decimal octal number base conversion",
+    "description": "Convert a non-negative decimal integer into octal."
+  },
+  {
+    "name": "Byte Conversion Calculator",
+    "url": "/calculators/byte-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "bytes kilobytes megabytes gigabytes conversion",
+    "description": "Convert bytes using decimal SI units and binary IEC units."
+  },
+  {
+    "name": "Unix Time Converter",
+    "url": "/calculators/unix-time-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "unix timestamp epoch time conversion",
+    "description": "Convert a Unix timestamp in seconds into an ISO date."
+  },
+  {
+    "name": "Years to Decades Calculator",
+    "url": "/calculators/years-to-decades-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "years decades conversion",
+    "description": "Convert years into decades."
+  },
+  {
+    "name": "Force Converter",
+    "url": "/calculators/force-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "force newtons pounds-force dynes conversion",
+    "description": "Convert force between newtons, pound-force and dynes."
+  },
+  {
+    "name": "Torr to atm Conversion",
+    "url": "/calculators/torr-to-atm-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "torr atmosphere pressure conversion",
+    "description": "Convert torr into standard atmospheres and pascals."
+  },
+  {
+    "name": "Degrees Minutes Seconds Calculator",
+    "url": "/calculators/degrees-minutes-seconds-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "degrees minutes seconds angle conversion",
+    "description": "Convert decimal degrees into degrees, minutes and seconds."
+  },
+  {
+    "name": "Million to Billion Converter",
+    "url": "/calculators/million-to-billion-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "million billion number conversion",
+    "description": "Convert millions into billions."
+  },
+  {
+    "name": "Crore to Lakh Converter",
+    "url": "/calculators/crore-to-lakh-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "crore lakh Indian number conversion",
+    "description": "Convert Indian crores into lakhs."
+  },
+  {
+    "name": "Grams To Ounces Calculator",
+    "url": "/calculators/grams-to-ounces-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "grams ounces weight conversion",
+    "description": "Convert grams into avoirdupois ounces and pounds."
+  },
+  {
+    "name": "Minutes to Hours Converter",
+    "url": "/calculators/minutes-to-hours-converter.html",
+    "category": "Everyday Life",
+    "keywords": "minutes hours time conversion",
+    "description": "Convert minutes into decimal hours and hours/minutes."
   }
 ]
