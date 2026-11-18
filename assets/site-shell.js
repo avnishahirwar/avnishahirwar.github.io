@@ -368,16 +368,26 @@ const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div><div class="fc-settings-row" aria-label="Regional calculator settings"><div class="fc-settings-controls">'+countryControl+currencyControl+unitControl+formatControl+'</div></div></div>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
-const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation')&&existingHeader.querySelector('#fc-language-select')&&existingHeader.querySelector('#fc-currency-select')&&existingHeader.querySelector('#fc-country-select')&&existingHeader.querySelector('#fc-locale-select')&&existingHeader.querySelector('#fc-unit-system-select'));
+const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
 if(headerIsReady){if(reservedHeader)reservedHeader.remove();}
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
+// Keep regional preferences outside the global header/footer. Preserve the
+// existing selector IDs and handlers by moving these original controls into
+// a hidden staging node; the Settings panel relocates them after it is built.
+activeHeader.querySelector('.fc-language-control')?.remove();
+activeHeader.querySelector('.fc-settings-row')?.remove();
+const regionalControlsSource=document.createElement('div');
+regionalControlsSource.id='fc-regional-settings-source';
+regionalControlsSource.hidden=true;
+regionalControlsSource.innerHTML=languageControl+countryControl+currencyControl+unitControl+formatControl;
+document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
@@ -419,7 +429,7 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   window.addEventListener('resize',syncNav,{passive:true});
   activeHeader.querySelector('.fc-global-nav')?.insertBefore(toggle,primaryNav);
 }
-const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
+const routeLanguageSelect=document.getElementById('fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
