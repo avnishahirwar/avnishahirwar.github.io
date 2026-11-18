@@ -179,6 +179,12 @@ if(typeof window.gtag!=='function'){
 
 }
 const p=location.pathname;
+// The locale prefix is authoritative for document language and writing direction.
+// This also repairs older localized templates that omitted or misstated lang/dir metadata.
+const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p);
+const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
+document.documentElement.lang=routeLocale;
+document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';
 const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
