@@ -81,7 +81,8 @@ test('priority pages render the shared header before shell hydration to prevent 
     assert.ok(html.includes('id="fc-language-select"'), name + ' must include the language selector');
   }
   assert.ok(shell.includes('const headerIsReady=!!(existingHeader&&existingHeader.classList.contains(\'fc-global-header\')'));
-  assert.ok(shell.includes('const activeHeader=headerIsReady?existingHeader:h;'));
+  assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'The existing shared header must be replaced with the canonical header before enhancements.');
+  assert.ok(shell.includes('const activeHeader=h;'), 'Enhancements must bind to the canonical header after normalization.');
 });
 
 test('homepage calculator search loads its index only after typing and renders a bounded result set', () => {
