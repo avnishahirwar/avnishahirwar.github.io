@@ -2,6 +2,10 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
+const path = require('node:path');
+const root = path.resolve(__dirname, '..');
+const catalogueCounts = require('./catalogue-counts.cjs')(root);
+const { canonicalCalculatorUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -717,13 +721,13 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /546 public calculators/);
-  assert.match(about, /Available calculators \(546 tools\)/);
+  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, 547);
+  assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.match(homepage, /Search all 546 calculators/);
+  assert.ok(homepage.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });

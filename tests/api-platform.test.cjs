@@ -5,6 +5,8 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
+const catalogueCounts = require('./catalogue-counts.cjs')(root);
+const { expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
 const api = fs.readFileSync(path.join(root, 'supabase/functions/calculator-api/index.ts'), 'utf8');
 const management = fs.readFileSync(path.join(root, 'supabase/functions/api-management/index.ts'), 'utf8');
 const customer = fs.readFileSync(path.join(root, 'calculator/dashboard.html'), 'utf8');
@@ -137,7 +139,7 @@ test('published OpenAPI specification matches the implemented calculator API', (
 
 test('API documentation uses the current public calculator catalogue count', () => {
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  assert.equal(searchIndex.length, 547);
-  assert.match(docs, /The full website directory contains 546 core calculator pages plus the international VAT calculator/);
+  assert.equal(searchIndex.length, expectedSearchIndexLength);
+  assert.ok(docs.includes('The full website directory contains ' + expectedCoreCalculatorCount + ' core calculator pages plus the international VAT calculator'));
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });
