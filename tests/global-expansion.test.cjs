@@ -56,11 +56,11 @@ test('primary navigation follows category order and exposes the international hu
     previous = index;
   }
   assert.match(nav, /r\+'tax\.html'/);
-  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-dropdown'), 'Global Tools and All Calculators must both remain available.');
+  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-calculators-link'), 'Global Tools and All Calculators must both remain available as links.');
   const headerStart=shell.indexOf('h.innerHTML=');
   const headerEnd=shell.indexOf('const reservedHeader',headerStart);
   const headerMarkup=shell.slice(headerStart,headerEnd);
-  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must precede All Calculators.');
+  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must precede All Calculators.');
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
@@ -105,7 +105,7 @@ test('header order places Login immediately before Language and keeps Sitemap on
   assert.ok(shell.includes("markCurrentNavigation(f.querySelector('.fc-global-footer-links'))"));
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(css.includes('.fc-global-footer-links a[aria-current="page"]'));
-  assert.ok(css.includes('.fc-all-dropdown-menu a[aria-current="page"]'));
+  assert.ok(css.includes('.fc-global-links>.fc-all-calculators-link'));
 });
 
 test('directory promotes the global hub and current tax category route', () => {
@@ -149,4 +149,28 @@ test('Tax and Salary calculators page does not repeat Home or All Calculators in
   assert.ok(!body.includes('<a href="/">Home</a>'), 'Remove the duplicate Home link from the page body.');
   assert.ok(!body.includes('<a href="/calculator/site-directory.html">All calculators</a>'), 'Remove the duplicate All Calculators link from the page body.');
   assert.ok(page.includes('<header>') && page.includes('<a href="/">Home</a>'), 'Keep the global Header Home link.');
+});
+
+
+test('All Calculators is a plain header link with no dropdown markup or behavior', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const headerStart = shell.indexOf('h.innerHTML=');
+  const headerEnd = shell.indexOf('const reservedHeader', headerStart);
+  const headerMarkup = shell.slice(headerStart, headerEnd);
+  assert.ok(headerMarkup.includes('class="fc-all-calculators-link"'));
+  assert.ok(!headerMarkup.includes('<details') && !headerMarkup.includes('<summary>'));
+  assert.ok(!headerMarkup.includes('fc-all-dropdown'));
+  const fallbackStart = shell.indexOf('header.innerHTML =');
+  const fallbackEnd = shell.indexOf('document.body.prepend(header)', fallbackStart);
+  const fallbackMarkup = shell.slice(fallbackStart, fallbackEnd);
+  assert.ok(fallbackMarkup.includes('href="/calculator/site-directory.html">All Calculators</a>'));
+  assert.ok(!fallbackMarkup.includes('<details') && !fallbackMarkup.includes('<summary>'));
+});
+
+test('shared footer has identical responsive sizing rules across all public pages', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(css, /footer\.fc-global-footer\{[\s\S]*?padding:16px 0 0!important/);
+  assert.match(css, /footer\.fc-global-footer \.fc-global-footer-inner\{[\s\S]*?width:min\(1440px,96%\)!important/);
+  assert.match(css, /footer\.fc-global-footer \.fc-footer-top\{[\s\S]*?min-height:64px!important/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?footer\.fc-global-footer \.fc-global-footer-inner\{width:92%!important/);
 });
