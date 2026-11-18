@@ -2027,3 +2027,18 @@ test('homepage-only shell preserves language, PWA, analytics and accessibility c
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
   }
 });
+
+
+test('English homepage always renders the shared footer and Sitemap link', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
+  assert.match(html, /<header class="fc-global-header">/);
+  assert.match(html, /src="\\/assets\\/homepage-shell\\.js" defer/);
+  assert.ok(script.includes("document.createElement('footer')"));
+  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
+  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
+  assert.ok(script.includes("document.body.appendChild(footer)"));
+  assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
+  assert.ok(sitemap.includes('id="sitemap-title"'));
+});
