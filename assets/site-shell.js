@@ -12,12 +12,55 @@ try {
       header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/sitemap.html">Sitemap</a></nav></div>';
       document.body.prepend(header);
     }
-    if (!document.querySelector('footer.fc-global-footer')) {
-      const footer = document.createElement('footer');
-      footer.className = 'fc-global-footer fc-shell-failsafe';
-      footer.innerHTML = '<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/disclaimer.html">Disclaimer</a><a href="/calculator/contact.html">Contact</a><a href="/sitemap.html">Sitemap</a></nav><small>© 2026 Friendly Calculator</small></div>';
-      document.body.append(footer);
+    // Normalize legacy page footers instead of appending a second footer.
+    const globalFooter=document.querySelector('footer.fc-global-footer');
+    const legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'));
+    let footer=globalFooter||legacyFooters.shift()||null;
+    if(!footer){
+      footer=document.createElement('footer');
+      document.body.appendChild(footer);
     }
+    footer.classList.add('fc-global-footer');
+    footer.setAttribute('aria-label','Website footer');
+    const preservedLinks=[];
+    const collectLinks=source=>{
+      source.querySelectorAll('a[href]').forEach(link=>{
+        const href=link.getAttribute('href');
+        if(href&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
+      });
+    };
+    collectLinks(footer);
+    legacyFooters.forEach(oldFooter=>{collectLinks(oldFooter);oldFooter.remove();});
+    const inner=document.createElement('div');
+    inner.className='fc-global-footer-inner';
+    const intro=document.createElement('div');
+    intro.className='fc-footer-intro';
+    intro.innerHTML='<img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small>';
+    const nav=document.createElement('nav');
+    nav.className='fc-global-footer-links';
+    nav.setAttribute('aria-label','Footer navigation');
+    const requiredLinks=[
+      ['About','/calculator/about.html'],['Methodology','/calculator/methodology.html'],
+      ['Privacy','/calculator/privacy.html'],['Terms','/calculator/terms.html'],
+      ['Disclaimer','/calculator/disclaimer.html'],['Legal & Compliance','/calculator/legal-compliance.html'],
+      ['Embed','/embed/'],['Contact','/calculator/contact.html'],['Sitemap','/sitemap.html']
+    ];
+    const allLinks=[...preservedLinks];
+    requiredLinks.forEach(([label,href])=>{
+      if(!allLinks.some(link=>link.getAttribute('href')===href)){
+        const link=document.createElement('a');link.href=href;link.textContent=label;allLinks.push(link);
+      }
+    });
+    allLinks.forEach(link=>nav.appendChild(link));
+    const copyright=document.createElement('small');
+    copyright.textContent='© 2026 Friendly Calculator';
+    inner.append(intro,nav,copyright);
+    footer.replaceChildren(inner);
+    if(!footer.isConnected)document.body.appendChild(footer);
+    // Keep exactly one shared footer even when a page shipped duplicate legacy markup.
+    document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>{
+      if(index>0)duplicate.remove();
+    });
   }
 } catch (error) {
   console.error('Friendly Calculator site chrome fallback failed:', error);
@@ -1397,6 +1440,11 @@ const mountSettingsQuickActions=()=>{
     liveAssistant.classList.add('fc-settings-quick-action');
     quickActions.appendChild(liveAssistant);
   }
+  // Remove stale unlabeled controls left by older Settings panel versions.
+  panel.querySelectorAll('button').forEach(button=>{
+    const label=(button.textContent||'').trim()||button.getAttribute('aria-label')||button.getAttribute('title');
+    if(!label)button.remove();
+  });
   const status=panel.querySelector('.fc-display-status');
   const close=panel.querySelector('.fc-display-close');
   const insertBefore=status||close;
