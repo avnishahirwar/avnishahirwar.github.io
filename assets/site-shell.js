@@ -388,17 +388,17 @@ const routeLanguageSelect=activeHeader.querySelector('#fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
-  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Kontakt (Englisch)'],
-  en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact'],
-  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क'],
-  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Contacto'],
-  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Contact'],
-  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Contato'],
-  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','اتصل بنا'],
-  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Kontak'],
-  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','যোগাযোগ'],
-  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தொடர்பு'],
-  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','お問い合わせ（英語）'],
+  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Kontakt (Englisch)','Sitemap (Englisch)'],
+  en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'],
+  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क','साइटमैप (अंग्रेज़ी)'],
+  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Contacto','Mapa del sitio (inglés)'],
+  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Contact','Plan du site (anglais)'],
+  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Contato','Mapa do site (inglês)'],
+  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','اتصل بنا','خريطة الموقع (بالإنجليزية)'],
+  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Kontak','Peta situs (Inggris)'],
+  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','যোগাযোগ','সাইটম্যাপ (ইংরেজি)'],
+  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தொடர்பு','தள வரைபடம் (ஆங்கிலம்)'],
+  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','お問い合わせ（英語）','サイトマップ（英語）'],
   ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)']
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/sitemap.html'];
