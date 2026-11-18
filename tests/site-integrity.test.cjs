@@ -1724,3 +1724,36 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
   assert.match(directory, /<strong>62 tools<\/strong>/);
   assert.match(about, /443 public calculators/);
 });
+
+test('ten chemistry batch 04 calculators are present in pages, search and directory', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const slugs = [
+    'electronegativity-difference-calculator',
+    'percent-ionic-character-calculator',
+    'pka-calculator',
+    'alligation-calculator',
+    'concentration-calculator',
+    'mixing-ratio-calculator',
+    'raoults-law-calculator',
+    'actual-yield-calculator',
+    'activation-energy-calculator',
+    'boiling-point-elevation-calculator'
+  ];
+  for (const slug of slugs) {
+    const route = '/calculators/' + slug + '.html';
+    const page = fs.readFileSync(path.join(root, route.slice(1)), 'utf8');
+    assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in' + route + '"'));
+    assert.match(page, /"@type":"SoftwareApplication"/);
+    assert.match(page, /<form id="calcForm"/);
+    assert.match(page, /<h2>Formula<\/h2>/);
+    assert.match(page, /Assumptions and limitations/);
+    assert.ok(directory.includes('href="' + route + '"'));
+    assert.ok(about.includes('href="' + route + '"'));
+    assert.ok(index.some(item => item.url === route));
+  }
+  assert.equal(index.length, 444);
+  assert.match(directory, /<strong>62 tools<\/strong>/);
+  assert.match(about, /443 public calculators/);
+});
