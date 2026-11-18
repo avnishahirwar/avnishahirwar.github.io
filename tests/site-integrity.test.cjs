@@ -2035,13 +2035,19 @@ test('unified Settings panel keeps Language in the header and exposes only Norma
   assert.ok(shell.includes("panel.setAttribute('aria-modal','true')"));
   assert.ok(shell.includes("closeTop.className='fc-display-close-top'") && shell.includes('panelHead.append(heading,closeTop)'));
   assert.ok(shell.includes("backdrop.className='fc-display-backdrop'"));
-  assert.ok(shell.includes("save.textContent=t.save") && shell.includes("reset.textContent=t.reset"));
+  assert.ok(shell.includes("panel.append(status,close)"), 'Settings panel must end with status and a visible Close button only.');
+  assert.ok(!shell.includes("save.textContent=t.save") && !shell.includes("reset.textContent=t.reset") && !shell.includes("actionRow"), 'Settings must not render empty Save/Reset controls.');
+  assert.ok(shell.includes("panel.scrollTop=0") && shell.includes("closeTop.focus({preventScroll:true})"), 'Settings must open at the top without focus-driven scrolling.');
+  assert.ok(shell.includes("removeDuplicateLegacyHeaders") && shell.includes("nav[aria-label=\"Main navigation\"]"), 'Only the shared navigation header may remain.');
+  assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
   assert.ok(shell.includes("primaryNav.after(languageHost.firstElementChild)"));
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"));
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
+  assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
+  assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant must layer above the Settings dock.');
 });
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {

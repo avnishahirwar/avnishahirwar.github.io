@@ -489,3 +489,105 @@ html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-dis
 @media(min-width:761px){
   .fc-top-row>.fc-language-control{align-self:center}
 }
+
+
+/* Mobile shell correction — one shared header, a non-overlapping Language row,
+   and a compact menu toggle that stays beside the brand. */
+@media(max-width:760px){
+  .fc-top-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:auto auto auto!important;
+    align-items:center!important;
+    column-gap:10px!important;
+    row-gap:8px!important;
+    flex-wrap:initial!important;
+    padding:10px 0!important;
+  }
+  .fc-top-row>.fc-global-brand{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:auto!important;
+    min-width:0!important;
+    flex:initial!important;
+    white-space:normal!important;
+  }
+  .fc-top-row>.fc-nav-toggle{
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    display:inline-flex!important;
+  }
+  .fc-top-row>.fc-language-control{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+    order:initial!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:10px!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:8px 0 0!important;
+    border:0!important;
+    border-top:1px solid #34475d!important;
+  }
+  .fc-top-row>.fc-language-control .fc-language-label{
+    flex:0 0 auto!important;
+    color:#f5f7fa!important;
+  }
+  .fc-top-row>.fc-language-control select{
+    flex:1 1 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    min-height:42px!important;
+  }
+  .fc-top-row>.fc-global-links{
+    grid-column:1/-1!important;
+    grid-row:3!important;
+    order:initial!important;
+    display:none!important;
+    width:100%!important;
+    min-width:0!important;
+    flex:none!important;
+    padding:8px 0 2px!important;
+    border-top:1px solid #34475d!important;
+  }
+  .fc-top-row>.fc-global-links.fc-nav-open{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+  }
+}
+
+/* The Settings sheet must open at its heading, not scroll to the focused
+   currency field. The mode labels remain readable at every supported width. */
+body>.fc-display-panel .fc-theme-mode-options .fc-display-action{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  min-height:48px!important;
+  padding:10px 8px!important;
+  color:#172638!important;
+  font-size:14px!important;
+  line-height:1.3!important;
+  text-align:center!important;
+  white-space:normal!important;
+  text-indent:0!important;
+  opacity:1!important;
+}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-display-action{
+  color:#edf3f8!important;
+}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-display-action[aria-pressed="true"]{
+  color:#101d2b!important;
+}
+
+/* The assistant dialog must sit above the Settings dock. */
+#fc-floating-tools{z-index:9990!important}
+#fc-ai-panel{z-index:10020!important}
+#fc-ai-launch{z-index:10019!important}
