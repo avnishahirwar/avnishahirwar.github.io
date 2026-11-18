@@ -3386,5 +3386,75 @@
     "category": "Biology & Chemistry",
     "keywords": "chemical oxygen demand COD calculator titration mg L",
     "description": "Estimate chemical oxygen demand from blank and sample titration volumes, titrant normality and sample volume."
+  },
+  {
+    "name": "Saponification Value Calculator",
+    "url": "/calculators/saponification-value-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "saponification value calculator blank sample titration normality",
+    "description": "Estimate saponification value from blank and sample titration readings, titrant normality and sample mass."
+  },
+  {
+    "name": "Degree of Unsaturation Calculator",
+    "url": "/calculators/degree-of-unsaturation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "degree of unsaturation calculator double bond equivalent DBE",
+    "description": "Calculate degree of unsaturation (double-bond equivalents) from a molecular formula's carbon, hydrogen, nitrogen and halogen counts."
+  },
+  {
+    "name": "Radiocarbon Dating Calculator",
+    "url": "/calculators/radiocarbon-dating-calculator-carbon-14-dating.html",
+    "category": "Biology & Chemistry",
+    "keywords": "radiocarbon dating calculator carbon 14 half life age",
+    "description": "Estimate elapsed time from the remaining carbon-14 fraction using its conventional half-life."
+  },
+  {
+    "name": "Calibration Curve Calculator",
+    "url": "/calculators/calibration-curve-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "calibration curve calculator standards response unknown concentration",
+    "description": "Fit a straight-line calibration from two standards and estimate an unknown concentration from its measured response."
+  },
+  {
+    "name": "Enzyme Activity Calculator",
+    "url": "/calculators/enzyme-activity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "enzyme activity calculator absorbance extinction coefficient path length",
+    "description": "Estimate enzyme activity per millilitre of sample from absorbance change, extinction coefficient, path length and reaction volumes."
+  },
+  {
+    "name": "Isoelectric Point Calculator",
+    "url": "/calculators/isoelectric-point-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "isoelectric point calculator pI pKa zwitterion",
+    "description": "Estimate an amino acid or protein group's isoelectric point by averaging the two pKa values that bracket its neutral form."
+  },
+  {
+    "name": "Michaelis-Menten Equation Calculator",
+    "url": "/calculators/michaelis-menten-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Michaelis Menten equation calculator enzyme kinetics Vmax Km",
+    "description": "Calculate initial enzyme reaction velocity from maximum velocity, substrate concentration and Michaelis constant."
+  },
+  {
+    "name": "Beer-Lambert Law Calculator",
+    "url": "/calculators/beer-lambert-law-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Beer Lambert law calculator absorbance concentration molar absorptivity",
+    "description": "Calculate solution concentration from absorbance, molar absorptivity and optical path length."
+  },
+  {
+    "name": "Crude Protein Calculator",
+    "url": "/calculators/crude-protein-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "crude protein calculator nitrogen conversion factor percentage",
+    "description": "Estimate crude protein percentage from measured nitrogen percentage and a selected nitrogen-to-protein conversion factor."
+  },
+  {
+    "name": "Cubic Cell Calculator",
+    "url": "/calculators/cubic-cell-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cubic cell calculator crystal density lattice parameter unit cell",
+    "description": "Estimate crystal density from unit-cell edge length, atoms or formula units per cell and molar mass."
   }
 ]
