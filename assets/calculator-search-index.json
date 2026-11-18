@@ -3568,5 +3568,26 @@
     "category": "Biology & Chemistry",
     "keywords": "percent yield calculator actual yield theoretical yield reaction efficiency chemistry",
     "description": "Calculate reaction percent yield from actual product yield and theoretical product yield."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadros-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Avogadro number calculator moles particles molecules atoms Avogadro constant",
+    "description": "Convert amount in moles to a count of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "Mass Concentration to Molarity Calculator",
+    "url": "/calculators/mass-concentration-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mass concentration to molarity conversion mg per litre molar mass g per mol",
+    "description": "Convert solute mass concentration in mg/L to molar and millimolar concentration using molar mass."
+  },
+  {
+    "name": "Double Bond Equivalent Calculator",
+    "url": "/calculators/double-bond-equivalent-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "double bond equivalent DBE degree of unsaturation molecular formula carbon hydrogen nitrogen halogens",
+    "description": "Calculate degree of unsaturation from carbon, hydrogen, nitrogen and halogen atom counts."
   }
 ]
