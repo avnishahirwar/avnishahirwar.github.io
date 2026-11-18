@@ -59,7 +59,7 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-dropdown'), 'All menu must expose the international calculators hub.');
 });
 
-test('shared footer retains policy navigation and Sitemap; regional and accessibility tools stay outside header and footer', () => {
+test('shared footer retains policy navigation and Sitemap; regional settings stay outside chrome and Settings trigger stays in Footer', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
@@ -71,7 +71,10 @@ test('shared footer retains policy navigation and Sitemap; regional and accessib
   assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
-  assert.ok(shell.includes('dock.appendChild(open)'), 'The single Settings trigger must be outside the header/footer.');
+  assert.ok(shell.includes('footerNav.appendChild(open)'), 'The single Settings trigger must be in the shared footer.');
+  assert.ok(!shell.includes('dock.appendChild(open)'), 'Settings must not be mounted in the floating tools dock.');
+  assert.ok(shell.includes('legacyFooters=Array.from(document.querySelectorAll(\'footer:not(.fc-global-footer)\'))'), 'Legacy footers must be consolidated into one shared footer.');
+  assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
   assert.ok(shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must be inside Settings.');
 });
 
