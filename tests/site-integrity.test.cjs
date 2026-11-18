@@ -1439,7 +1439,7 @@ test('homepage search runtime validates the complete 519-item deferred catalogue
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   assert.equal(searchIndex.length, 519);
-  assert.match(homepage, /items\.length!==513/);
+  assert.match(homepage, /items\.length!==519/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
