@@ -462,3 +462,9 @@ html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-setting-row select
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-action,html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-save{background:#d1b779;color:#101d2b;border-color:#d1b779}
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-settings-inline-help,html[data-fc-theme="dark"] body>.fc-display-panel .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
+
+
+body>.fc-display-panel .fc-display-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+body>.fc-display-panel .fc-display-head>strong{margin:0;font-size:1.12rem}
+body>.fc-display-panel .fc-display-close-top{display:inline-flex;align-items:center;justify-content:center;flex:0 0 40px;width:40px;height:40px;border:1px solid #cfd6e0;border-radius:50%;background:transparent;color:inherit;font-size:1.3rem;line-height:1;cursor:pointer}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-close-top{border-color:#52657a;color:#edf3f8}
