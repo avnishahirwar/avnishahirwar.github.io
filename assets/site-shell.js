@@ -9,7 +9,7 @@ try {
     if (!document.querySelector('header.fc-global-header')) {
       const header = document.createElement('header');
       header.className = 'fc-global-header fc-shell-failsafe';
-      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/international/">Global Tools</a><details class="fc-all-dropdown"><summary>All Calculators <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="/calculator/site-directory.html">All Calculators</a><a href="/sitemap.html">Sitemap</a></div></details><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="ja">日本語</option><option value="ru">Русский</option></select></label></nav></div>';
+      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/international/">Global Tools</a><details class="fc-all-dropdown"><summary>All Calculators <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="/calculator/site-directory.html">All Calculators</a></div></details><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="ja">日本語</option><option value="ru">Русский</option></select></label></nav></div>';
       document.body.prepend(header);
     }
     // Normalize legacy page footers instead of appending a second footer.
@@ -411,7 +411,7 @@ const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav></div></div>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
@@ -443,11 +443,7 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-if(primaryNav&&!activeHeader.querySelector('#fc-language-select')){
-  const languageHost=document.createElement('div');
-  languageHost.innerHTML=languageControl;
-  if(languageHost.firstElementChild)primaryNav.after(languageHost.firstElementChild);
-}
+// Language is the final primary-navigation control, immediately after Login.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
@@ -531,6 +527,22 @@ preservedFooterLinks.forEach(link=>{
 });
 document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());
 document.body.appendChild(f);
+// Highlight only the current destination in each navigation region. The URL,
+// not hover/focus state, determines the persistent active item.
+const normalizePath=path=>path==='/'?'/':path.replace(/\\/+$/,'')+'/';
+const currentPath=normalizePath(location.pathname);
+const markCurrentNavigation=navElement=>{
+  if(!navElement)return;
+  const items=[...navElement.querySelectorAll('a[href]')];
+  items.forEach(link=>link.removeAttribute('aria-current'));
+  const current=items.find(link=>{
+    try{return normalizePath(new URL(link.getAttribute('href'),location.origin).pathname)===currentPath;}
+    catch(_){return false;}
+  });
+  if(current)current.setAttribute('aria-current','page');
+};
+markCurrentNavigation(activeHeader.querySelector('#fc-primary-navigation'));
+markCurrentNavigation(f.querySelector('.fc-global-footer-links'));
 const mountSharedInstallUi=()=>ensurePwaInstallUi();
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSharedInstallUi,{once:true});
 else ensurePwaInstallUi();
