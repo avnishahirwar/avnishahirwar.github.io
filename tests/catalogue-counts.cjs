@@ -10,7 +10,7 @@ module.exports = function getCatalogueCounts(root) {
   const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   const coreCalculatorUrls = [...new Set(sections.flatMap(s => [...s[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])))].sort();
   const biologySection = sections.find(section => section[1] === 'biology-chemistry');
-  const biologyChemistryCount = biologySection ? [...biologySection[2].matchAll(/<a class="card" href="\\/calculators\\//g)].length : 0;
+  const biologyChemistryCount = biologySection ? [...biologySection[2].matchAll(/<a class="card" href="\/calculators\//g)].length : 0;
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const start = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(start, homepage.indexOf('</nav>', start));
