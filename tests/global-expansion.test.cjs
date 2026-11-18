@@ -60,7 +60,8 @@ test('primary navigation follows a clear category order and includes the interna
 
 test('shared footer exposes the policy navigation including Legal & Compliance while global tools stay in the header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact'\]/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
+  assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
   assert.ok(shell.includes("[nav.global,currentLocale==='ja'||currentLocale==='ru'?'/'+currentLocale+'/international/':'/international/']"));
 });
 
