@@ -5,10 +5,10 @@
     const text = String(raw ?? '').trim();
     if (!text) throw new Error('Enter at least two numbers.');
     if (text.length > 12000) throw new Error('Keep the input under 12,000 characters.');
-    const tokens = text.split(/[\\s,;]+/).filter(Boolean);
+    const tokens = text.split(/[\s,;]+/).filter(Boolean);
     if (tokens.length < 2) throw new Error('Enter at least two numbers.');
     if (tokens.length > 1000) throw new Error('Enter no more than 1,000 numbers.');
-    const numericPattern = /^[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?$/i;
+    const numericPattern = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
     const values = tokens.map(token => {
       if (!numericPattern.test(token)) throw new Error('Use only finite numbers separated by commas, spaces or new lines.');
       const value = Number(token);
