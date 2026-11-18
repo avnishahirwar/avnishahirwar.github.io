@@ -2031,6 +2031,7 @@ test('unified Settings panel provides saved locale preferences, accessibility an
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
   assert.ok(shell.includes("panel.setAttribute('aria-modal','true')"));
+  assert.ok(shell.includes("closeTop.className='fc-display-close-top'") && shell.includes('panelHead.append(heading,closeTop)'));
   assert.ok(shell.includes("backdrop.className='fc-display-backdrop'"));
   assert.ok(shell.includes("save.textContent=t.save") && shell.includes("reset.textContent=t.reset"));
   assert.ok(shell.includes("applyMotion(initialMotion)") && shell.includes("fc-display-motion"));
