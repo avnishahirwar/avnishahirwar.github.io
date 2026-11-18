@@ -591,3 +591,26 @@ html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-dis
 #fc-floating-tools{z-index:9990!important}
 #fc-ai-panel{z-index:10020!important}
 #fc-ai-launch{z-index:10019!important}
+
+
+/* Settings is a normal footer utility link, never a floating overlay. */
+footer.fc-global-footer .fc-global-footer-links #fc-display-settings{
+  position:static!important;inset:auto!important;z-index:auto!important;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:auto;max-width:100%;margin:0;padding:5px 10px;
+  border:1px solid #b99a5a;border-radius:7px;
+  background:transparent;color:#e6d6b2;
+  box-shadow:none;font:inherit;font-size:.86rem;font-weight:700;
+  line-height:1.4;white-space:normal;cursor:pointer;
+}
+footer.fc-global-footer .fc-global-footer-links #fc-display-settings:hover{
+  background:#21354a;color:#fff;text-decoration:none;
+}
+footer.fc-global-footer .fc-global-footer-links #fc-display-settings:focus-visible{
+  outline:3px solid #d8bd82;outline-offset:3px;
+}
+@media(max-width:640px){
+  footer.fc-global-footer .fc-global-footer-links #fc-display-settings{
+    justify-self:start;min-height:36px;padding:6px 11px;
+  }
+}

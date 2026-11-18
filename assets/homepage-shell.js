@@ -213,4 +213,11 @@ if (document.body && !document.querySelector('.fc-global-footer')) {
   footer.appendChild(inner);
   document.body.appendChild(footer);
 }
+
+// The homepage fallback follows the same rule: Settings is placed in the footer.
+const homepageSettingsTrigger=document.getElementById('fc-display-settings');
+const homepageFooterNav=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
+const homepageFooter=document.querySelector('footer.fc-global-footer');
+if(homepageSettingsTrigger&&homepageFooterNav)homepageFooterNav.appendChild(homepageSettingsTrigger);
+else if(homepageSettingsTrigger&&homepageFooter)homepageFooter.appendChild(homepageSettingsTrigger);
 })();

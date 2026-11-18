@@ -2028,7 +2028,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /src="\/assets\/site-shell\.js" defer/);
 });
 
-test('unified Settings panel keeps Language in the header and exposes only Normal Mode and Dark Mode', () => {
+test('Settings trigger is in the shared footer; Language stays in the header and Accessibility has two modes', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
@@ -2042,12 +2042,20 @@ test('unified Settings panel keeps Language in the header and exposes only Norma
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("primaryNav.after(languageHost.firstElementChild)"));
-  assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"));
+  assert.ok(shell.includes("primaryNav.after(languageHost.firstElementChild)"), 'Language must remain in the shared header.');
+  assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
+  assert.ok(shell.includes("footerNav.appendChild(open)") && shell.includes("footerNav.appendChild(trigger)"), 'The Settings trigger must be inserted into the shared footer, not the floating dock.');
+  assert.ok(!shell.includes("dock.appendChild(open)") && !shell.includes("dock.appendChild(trigger)"), 'Settings must not be mounted in the floating tools dock.');
+  assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
+  assert.ok(shell.includes("collectLinks(oldFooter);oldFooter.remove();"), 'Existing footer links must be preserved when duplicate legacy footers are consolidated.');
+  assert.ok(shell.includes("document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>"), 'Only one shared footer may remain.');
+  assert.ok(shell.includes("if(!label)button.remove();"), 'Stale blank buttons must be removed from the Settings panel.');
+  assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Only the two labeled Normal Mode and Dark Mode controls belong in Accessibility.');
+  assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings') && css.includes('position:static!important'), 'Footer Settings control must be statically positioned.');
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
   assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
-  assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant must layer above the Settings dock.');
+  assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant layering remains intact.');
 });
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
@@ -2069,6 +2077,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   assert.ok(script.includes("footer.className = 'fc-global-footer'"));
   assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
   assert.ok(script.includes("document.body.appendChild(footer)"));
+  assert.ok(script.includes("homepageFooterNav.appendChild(homepageSettingsTrigger)"), 'Homepage fallback Settings trigger must be moved into the footer.');
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
@@ -2082,5 +2091,6 @@ test('shared header and footer fail-safe is installed before optional page enhan
   assert.ok(script.includes('href="/sitemap.html">Sitemap</a>'), 'Fallback header must link to Sitemap');
   assert.ok(script.includes('aria-label="Footer navigation"'), 'Fallback footer must have accessible navigation');
   assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
-  assert.ok(script.includes('document.body.append(footer)'), 'Fallback footer must be appended after page content');
+  assert.ok(script.includes('document.body.appendChild(footer)'), 'A missing fallback footer must be appended after page content');
+  assert.ok(script.includes("footer.classList.add('fc-global-footer')"), 'Existing legacy footers must be upgraded instead of duplicated.');
 });
