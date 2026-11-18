@@ -389,10 +389,10 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-if(primaryNav&&!primaryNav.querySelector('#fc-language-select')){
+if(primaryNav&&!activeHeader.querySelector('#fc-language-select')){
   const languageHost=document.createElement('div');
   languageHost.innerHTML=languageControl;
-  if(languageHost.firstElementChild)primaryNav.appendChild(languageHost.firstElementChild);
+  if(languageHost.firstElementChild)primaryNav.after(languageHost.firstElementChild);
 }
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
