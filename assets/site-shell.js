@@ -1437,15 +1437,10 @@ const mountSettingsQuickActions=()=>{
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
-  const install=document.getElementById('fc-pwa-install');
+  // The install action remains in the shared Footer, not inside the Settings dialog.
   const installHelp=document.getElementById('fc-pwa-help');
   const assistant=document.getElementById('fc-ai-lazy-launch');
   const liveAssistant=document.getElementById('fc-ai-launch');
-  if(install){
-    install.textContent=copy.install;
-    install.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(install);
-  }
   if(installHelp){
     const helpText=installHelp.querySelector('p');
     if(helpText)helpText.textContent=copy.help;
