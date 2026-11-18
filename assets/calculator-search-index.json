@@ -3696,5 +3696,47 @@
     "url": "/calculators/frequency-distribution-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "frequency distribution calculator frequency table relative frequency cumulative frequency count data dataset observations statistics histogram categories percent"
+  },
+  {
+    "name": "Lumber Calculator",
+    "url": "/calculators/lumber-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "lumber board feet lumber thickness width length material estimate",
+    "description": "Estimate board feet from actual board dimensions and quantity."
+  },
+  {
+    "name": "Insulation Calculator",
+    "url": "/calculators/insulation-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "insulation area coverage packages material estimate",
+    "description": "Estimate insulation package quantities and material cost from area and package coverage."
+  },
+  {
+    "name": "Stair Calculator",
+    "url": "/calculators/stair-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "stair rise riser tread stringer staircase dimensions",
+    "description": "Estimate stair riser count, tread count, horizontal run and stringer length from entered dimensions."
+  },
+  {
+    "name": "Paver Calculator",
+    "url": "/calculators/paver-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "paver patio walkway area pieces material estimate",
+    "description": "Estimate paver quantities from paved area, paver dimensions and a cutting allowance."
+  },
+  {
+    "name": "Asphalt Calculator",
+    "url": "/calculators/asphalt-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "asphalt paving volume mass density depth estimate",
+    "description": "Estimate compacted asphalt volume and mass from pavement dimensions and an assumed density."
+  },
+  {
+    "name": "Rafter Length Calculator",
+    "url": "/calculators/rafter-length-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "rafter length roof rise run overhang angle",
+    "description": "Calculate geometric rafter length and roof angle from horizontal run, rise and overhang."
   }
 ]
