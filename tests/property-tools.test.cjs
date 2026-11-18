@@ -30,7 +30,7 @@ test('Agriculture hub links the existing rural calculators and scheme screeners'
 test('Embed wrapper allowlists calculator paths and shows attribution', () => {
   const html = read('embed/index.html');
   assert.match(html, /name="robots" content="index,follow/);
-  assert.match(html, /rel="canonical" href="https:\/\/friendlycalculator\.in\/embed\/\//);
+  assert.match(html, /rel="canonical" href="https:\/\/friendlycalculator\.in\/embed\//);
   assert.ok(html.includes(String.raw`calculators\/[a-z0-9-]+)\.html`));
   assert.match(html, /\(\?:\[a-z\]\{2\}\\\/\)\?/);
   assert.match(html, /embed=1/);
