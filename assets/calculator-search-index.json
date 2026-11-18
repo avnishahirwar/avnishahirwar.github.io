@@ -17283,5 +17283,61 @@
     "category": "OTHER",
     "keywords": "what grade was i in year calculator",
     "description": "What Grade Was I in Year Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadro-s-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "avogadro number calculator moles particles molecules atoms constant",
+    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "HRA Exemption Calculator",
+    "url": "/calculators/hra-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "hra exemption calculator india house rent allowance section 10 13a salary rent metro non metro",
+    "description": "Calculate HRA tax exemption in India using basic salary, HRA received, rent paid and metro or non-metro status."
+  },
+  {
+    "name": "Light Year Conversion Calculator",
+    "url": "/calculators/light-year-conversion-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "light year conversion calculator kilometres astronomical units miles distance",
+    "description": "Convert light-years into kilometres, astronomical units and miles."
+  },
+  {
+    "name": "Square Kilometers to Acres Converter",
+    "url": "/calculators/square-kilometers-to-acres-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "square kilometers to acres conversion converter area square metres",
+    "description": "Convert square kilometres into acres and square metres."
+  },
+  {
+    "name": "SSY Calculator",
+    "url": "/calculators/ssy-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "ssy sukanya samriddhi yojana account maturity calculator 21 years annual deposits",
+    "description": "Estimate Sukanya Samriddhi Account maturity after 21 years, with annual deposits for the first 15 years and an editable interest-rate assumption."
+  },
+  {
+    "name": "STP Calculator",
+    "url": "/calculators/stp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stp systematic transfer plan calculator source fund destination fund assumed returns",
+    "description": "Model transfers from a source fund to a destination fund with separate assumed returns."
+  },
+  {
+    "name": "Torr to atm Conversion",
+    "url": "/calculators/torr-to-atm-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "torr to atm conversion calculator pressure pascals standard atmospheres",
+    "description": "Convert torr into standard atmospheres and pascals."
+  },
+  {
+    "name": "VAT Calculator",
+    "url": "/international/vat-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "vat calculator value added tax add remove net gross price tax rate international currency",
+    "description": "Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency."
   }
 ]
