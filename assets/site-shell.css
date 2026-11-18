@@ -395,3 +395,9 @@ html[data-fc-theme="dark"] #fc-settings-hub .fc-settings-section-heading{color:#
 html[data-fc-theme="dark"] #fc-settings-hub .fc-display-setting-row select{background:#0b1725;color:#edf3f8;border-color:#52657a}
 html[data-fc-theme="dark"] #fc-settings-hub .fc-display-action,html[data-fc-theme="dark"] #fc-settings-hub .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
 html[data-fc-theme="dark"] #fc-settings-hub .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
+
+
+#fc-settings-hub #fc-ai-launch[aria-expanded="true"]{display:none!important}
+#fc-settings-hub .fc-pwa-help[hidden]{display:none!important}
+#fc-settings-hub .fc-display-panel[hidden]{display:none!important}
+#fc-settings-hub .fc-display-panel:not([hidden]){display:block}
