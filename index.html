@@ -265,7 +265,7 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 4115 calculators across 34 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse calculators across 34 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
  status.textContent='Searching calculators…';
  results.hidden=true;
