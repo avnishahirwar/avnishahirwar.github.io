@@ -812,7 +812,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
   assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
   assert.doesNotMatch(homepage, /class="search-panel"/);
-  assert.match(shell, /\[nav\.all,r\+'site-directory\.html'\]/);
+  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'The All menu must expose the site directory and global calculators.');
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
@@ -2028,6 +2028,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  assert.ok(script.includes("!document.getElementById('fc-pwa-install')"), 'Homepage must reuse the shared Settings panel instead of adding a duplicate install overlay.');
   for (const feature of ['fc-language-select', 'serviceWorker', 'gtm.js', 'fc-pwa-install', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
   }
