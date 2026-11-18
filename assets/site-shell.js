@@ -1057,7 +1057,10 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ar:{open:'فتح المساعد',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
     id:{open:'Buka asisten',loading:'Memuat…',retry:'Coba lagi'},
     bn:{open:'সহায়ক খুলুন',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
-    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'}
+    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'},
+    de:{open:'Assistent öffnen',loading:'Assistent wird geladen…',retry:'Erneut versuchen'},
+    ja:{open:'アシスタントを開く',loading:'読み込み中…',retry:'再試行'},
+    ru:{open:'Открыть помощник',loading:'Загрузка помощника…',retry:'Повторить попытку'}
   };
   const copy=labels[language]||labels.en;
   const activateAssistant=()=>{
