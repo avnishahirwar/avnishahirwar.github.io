@@ -717,7 +717,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.ok(searchIndex.length > 547);

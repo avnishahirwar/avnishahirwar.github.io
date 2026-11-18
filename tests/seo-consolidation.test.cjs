@@ -48,10 +48,14 @@ test('premium waitlist is indexable and included in the sitemap', () => {
   assert.ok(html.includes('https://friendlycalculator.in/calculator/premium-waitlist.html'));
 });
 
-test('all 546 calculator pages remain in the sitemap after category cleanup', () => {
+test('all canonical calculator pages remain in the sitemap and search index after category cleanup', () => {
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, 546);
+  const searchIndex = JSON.parse(read('assets/calculator-search-index.json'));
+  const indexedUrls = new Set(searchIndex.filter(item => item.status !== 'planned' && item.url.startsWith('/calculators/')).map(item => 'https://friendlycalculator.in' + item.url));
+  const sitemapUrls = new Set(calculatorUrls);
+  assert.equal(sitemapUrls.size, indexedUrls.size);
+  assert.deepEqual([...sitemapUrls].sort(), [...indexedUrls].sort());
 });
 
 
@@ -68,13 +72,15 @@ test('income tax WebPage structured data matches the current salary-tax calculat
 });
 
 
-test('Income Tax calculator uses the current site catalogue count', () => {
+test('Income Tax calculator links to the full directory without a hard-coded catalogue count', () => {
   const html = read('calculators/income-tax-calculator.html');
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, 546);
-  assert.ok(html.includes('Explore all 546 calculators on Friendly Calculator.'));
-  assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
+  const searchIndex = JSON.parse(read('assets/calculator-search-index.json'));
+  const indexedUrls = new Set(searchIndex.filter(item => item.status !== 'planned' && item.url.startsWith('/calculators/')).map(item => item.url));
+  assert.equal(new Set(calculatorUrls).size, indexedUrls.size);
+  assert.ok(html.includes('Explore the full calculator directory on Friendly Calculator.'));
+  assert.doesNotMatch(html, /Explore all \d+ calculators on Friendly Calculator/);
 });
 
 test('seven small-savings calculators show the current review date and RBI rate cross-check', () => {

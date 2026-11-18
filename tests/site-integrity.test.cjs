@@ -220,7 +220,7 @@ test('About page catalogue matches every published calculator page', () => {
   const countMatch = about.match(/Available calculators \(\d+ tools\)/);
   assert.ok(countMatch, 'About page must publish the calculator catalogue count');
   assert.ok(about.includes('Available calculators (' + calculatorPages.length + ' tools)'));
-  assert.match(about, /Platform:<\/strong> 546 public calculators/);
+  assert.match(about, /Platform:<\/strong> growing global calculator catalogue/);
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, calculatorPages, 'About page must link each published calculator exactly once');
   assert.doesNotMatch(about, /<ol[^>]+start=/i, 'Catalogue numbering must not restart between calculator batches');
@@ -301,10 +301,12 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
   assert.ok(pageCalculators.includes('panel.id="live-page-calculator"'));
 });
 
-test('GST calculator links to the current 546-page catalogue count', () => {
+test('GST and salary calculators link to the full calculator directory', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
-  assert.ok(gst.includes('Explore all 546 calculators on Friendly Calculator.'));
-  assert.doesNotMatch(gst, /Explore all 303 calculators/);
+  assert.ok(gst.includes('Explore the full calculator directory on Friendly Calculator.'));
+  const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
+  assert.ok(salary.includes('Explore the full calculator directory on Friendly Calculator.'));
+  assert.doesNotMatch(gst, /Explore all \d+ calculators/);
 });
 
 test('income tax page reserves a stable mobile header before the shared navigation replaces the legacy header', () => {
@@ -836,7 +838,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
@@ -1739,7 +1741,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 04 calculators are present in pages, search and directory', () => {
@@ -1772,7 +1774,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 05 calculators are present in pages, search and directory', () => {
@@ -1805,7 +1807,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 06 calculators are present in pages, search and directory', () => {
@@ -1838,7 +1840,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 07 calculators are present in pages, search and directory', () => {
@@ -1871,7 +1873,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 08 calculators are present in pages, search and directory', () => {
@@ -1904,7 +1906,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('ten chemistry batch 09 calculators are present in pages, search and directory', () => {
@@ -1937,7 +1939,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 test('seven chemistry batch 10 calculators are present in pages, search and directory', () => {
@@ -1967,7 +1969,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
   }
   assert.ok(index.length > 547);
   assert.match(directory, /calculator-search-index\.json/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /growing global calculator catalogue/);
 });
 
 
@@ -1979,7 +1981,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('calculator-search-index.json')&&index.some(item=>item.url===route));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
  assert.ok(index.length>547);
  assert.match(directory,/calculator-search-index\.json/);
- assert.match(about,/546 public calculators/);
+ assert.match(about,/growing global calculator catalogue/);
 });
 
 
