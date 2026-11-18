@@ -201,7 +201,7 @@ test('shared header and footer expose only the requested navigation items in ord
   assert.match(shell, /en:\{home:'Home',login:'Login'/);
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact']",
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap']",
     "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
@@ -1646,7 +1646,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, 2479);
-  assert.ok(homepage.includes('546 calculators'));
+  assert.ok(homepage.includes('2,479 calculators'));
 });
 
  
