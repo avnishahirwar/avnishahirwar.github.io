@@ -55,43 +55,7 @@ if(!window.__fcGtmContainerLoaded){
   else window.addEventListener('load',schedule,{once:true});
 }
 
-/* Keep the homepage install affordance and offline notice. */
-if(document.body&&window.self===window.top&&!document.getElementById('fc-pwa-install')&&!(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)&&navigator.standalone!==true){
-  const style=document.createElement('style');
-  style.textContent='.fc-pwa-install{position:fixed;left:14px;bottom:14px;z-index:1500;border:1px solid #d8bd82;border-radius:999px;background:#101c2c;color:#fff;padding:10px 15px;font:700 14px/1.2 system-ui,sans-serif;box-shadow:0 4px 18px #07132135;cursor:pointer}.fc-pwa-help{position:fixed;left:14px;bottom:66px;z-index:1500;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #d9e0e6;border-radius:12px;background:#fff;color:#172638;box-shadow:0 8px 28px #07132130;font:14px/1.55 system-ui,sans-serif}.fc-pwa-help p{margin:0 0 10px}.fc-pwa-help button{border:0;border-radius:7px;background:#101c2c;color:#fff;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}.fc-pwa-network{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:1600;max-width:calc(100vw - 24px);padding:9px 14px;border-radius:9px;background:#25364b;color:#fff;font:600 13px/1.4 system-ui,sans-serif;box-shadow:0 4px 16px #07132135}';
-  document.head.appendChild(style);
-  const install=document.createElement('button');
-  install.id='fc-pwa-install';install.type='button';install.className='fc-pwa-install';install.textContent='Install Friendly Calculator';
-  install.setAttribute('aria-expanded','false');install.setAttribute('aria-controls','fc-pwa-help');
-  const panel=document.createElement('section');
-  panel.id='fc-pwa-help';panel.className='fc-pwa-help';panel.hidden=true;panel.setAttribute('aria-label','Install and offline help');
-  const message=document.createElement('p');
-  message.textContent='Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.';
-  const close=document.createElement('button');close.type='button';close.textContent='Close';
-  close.addEventListener('click',()=>{panel.hidden=true;install.setAttribute('aria-expanded','false');});
-  panel.append(message,close);
-  let promptEvent=null;
-  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;});
-  window.addEventListener('appinstalled',()=>{install.hidden=true;panel.hidden=true;promptEvent=null;});
-  install.addEventListener('click',async()=>{
-    if(promptEvent){
-      const current=promptEvent;promptEvent=null;
-      try{await current.prompt();const choice=await current.userChoice;if(choice?.outcome==='accepted'){install.hidden=true;panel.hidden=true;return;}}
-      catch(_){message.textContent='Your browser could not open the install prompt. Use the browser menu and choose Install app or Add to Home Screen if available.';}
-    }else{
-      message.textContent=/iPad|iPhone|iPod/i.test(navigator.userAgent||'')
-        ?'On iPhone or iPad, open this page in Safari, tap Share, then choose Add to Home Screen if available.'
-        :/Android/i.test(navigator.userAgent||'')
-          ?'On Android, open the browser menu and choose Install app or Add to Home Screen if available.'
-          :'Use your browser menu or address-bar install icon if your browser offers one.';
-    }
-    panel.hidden=!panel.hidden;install.setAttribute('aria-expanded',String(!panel.hidden));
-  });
-  const network=document.createElement('div');network.className='fc-pwa-network';network.setAttribute('role','status');network.setAttribute('aria-live','polite');network.hidden=true;
-  window.addEventListener('offline',()=>{network.textContent='You are offline. Previously visited public pages may still be available on this device.';network.hidden=false;});
-  window.addEventListener('online',()=>{network.textContent='Connection restored.';network.hidden=false;window.setTimeout(()=>{network.hidden=true;},3500);});
-  document.body.append(install,panel,network);
-}
+/* The shared PWA install action is mounted once inside the global Footer by site-shell.js. */
 
 /* Keep the homepage fallback consistent with the shared two-mode Settings panel. */
 if(document.body&&!document.getElementById('fc-display-settings')){
