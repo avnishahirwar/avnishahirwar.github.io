@@ -3316,5 +3316,75 @@
     "category": "Biology & Chemistry",
     "keywords": "diffusion coefficient calculator Stokes Einstein temperature viscosity radius",
     "description": "Estimate a spherical particle's diffusion coefficient in a fluid using the Stokes-Einstein equation."
+  },
+  {
+    "name": "Electronegativity Calculator",
+    "url": "/calculators/electronegativity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electronegativity calculator Pauling bond dissociation energy",
+    "description": "Estimate the electronegativity difference between two bonded atoms from bond dissociation energies using the Pauling relationship."
+  },
+  {
+    "name": "Cell EMF Calculator",
+    "url": "/calculators/cell-emf-calculator-electromotive-force-of-a-cell.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cell EMF calculator electromotive force cathode anode potentials",
+    "description": "Calculate standard or entered cell electromotive force from cathode and anode electrode potentials."
+  },
+  {
+    "name": "Nernst Equation Calculator",
+    "url": "/calculators/nernst-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Nernst equation calculator electrode potential reaction quotient",
+    "description": "Calculate an electrode or cell potential from standard potential, reaction quotient, electron transfer and temperature."
+  },
+  {
+    "name": "Rate of Effusion Calculator",
+    "url": "/calculators/rate-of-effusion-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "rate of effusion calculator Graham law molar mass",
+    "description": "Compare gas effusion rates using Graham's law and the molar masses of two gases."
+  },
+  {
+    "name": "Half-Life Calculator",
+    "url": "/calculators/half-life-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "half life calculator exponential decay remaining amount",
+    "description": "Calculate the remaining amount of a first-order decaying quantity from its half-life and elapsed time."
+  },
+  {
+    "name": "Arrhenius Equation Calculator",
+    "url": "/calculators/arrhenius-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Arrhenius equation calculator activation energy rate constant",
+    "description": "Estimate a reaction rate constant from the pre-exponential factor, activation energy and absolute temperature."
+  },
+  {
+    "name": "Langmuir Isotherm Calculator",
+    "url": "/calculators/langmuir-isotherm-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Langmuir isotherm calculator adsorption capacity affinity concentration",
+    "description": "Estimate adsorption loading from maximum adsorption capacity, Langmuir affinity constant and equilibrium concentration."
+  },
+  {
+    "name": "Young-Laplace Equation Calculator",
+    "url": "/calculators/young-laplace-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Young Laplace equation calculator surface tension radius pressure",
+    "description": "Calculate the pressure difference across a spherical interface from surface tension and radius."
+  },
+  {
+    "name": "Radioactive Decay Calculator",
+    "url": "/calculators/radioactive-decay-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "radioactive decay calculator decay constant exponential model",
+    "description": "Calculate exponential decay from an initial quantity, decay constant and elapsed time."
+  },
+  {
+    "name": "Chemical Oxygen Demand Calculator",
+    "url": "/calculators/chemical-oxygen-demand-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "chemical oxygen demand COD calculator titration mg L",
+    "description": "Estimate chemical oxygen demand from blank and sample titration volumes, titrant normality and sample volume."
   }
 ]
