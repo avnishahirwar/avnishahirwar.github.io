@@ -3246,5 +3246,75 @@
     "category": "Biology & Chemistry",
     "keywords": "Q10 calculator temperature coefficient reaction rate temperature",
     "description": "Calculate the temperature coefficient Q10 from measured rates at two temperatures expressed in degrees Celsius."
+  },
+  {
+    "name": "STP Calculator",
+    "url": "/calculators/stp-calculator-standard-temperature-and-pressure.html",
+    "category": "Biology & Chemistry",
+    "keywords": "STP calculator standard temperature pressure ideal gas volume",
+    "description": "Calculate ideal-gas volume at specified standard temperature and pressure from amount of substance."
+  },
+  {
+    "name": "Partial Pressure Calculator",
+    "url": "/calculators/partial-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "partial pressure calculator Dalton law mole fraction gas mixture",
+    "description": "Calculate a gas component's partial pressure from its mole fraction and total mixture pressure using Dalton's law."
+  },
+  {
+    "name": "Vapor Pressure Calculator",
+    "url": "/calculators/vapor-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "vapor pressure calculator Antoine equation temperature coefficients",
+    "description": "Estimate vapour pressure from Antoine equation coefficients and temperature in degrees Celsius."
+  },
+  {
+    "name": "Vapor Pressure of Water Calculator",
+    "url": "/calculators/vapor-pressure-of-water-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "vapor pressure of water calculator saturation Antoine equation",
+    "description": "Estimate saturation vapour pressure of water between 1 °C and 100 °C using the Antoine equation."
+  },
+  {
+    "name": "Boiling Point Calculator",
+    "url": "/calculators/boiling-point-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point calculator Antoine equation pressure temperature",
+    "description": "Estimate a liquid's boiling temperature at a specified pressure by inverting the Antoine equation."
+  },
+  {
+    "name": "Boiling Point at Altitude Calculator",
+    "url": "/calculators/boiling-point-at-altitude-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point at altitude calculator elevation water temperature",
+    "description": "Estimate water's boiling point at an altitude using a standard-atmosphere pressure approximation and the Antoine equation."
+  },
+  {
+    "name": "Heat of Combustion Calculator",
+    "url": "/calculators/heat-of-combustion-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "heat of combustion calculator fuel mass specific energy",
+    "description": "Estimate energy released from a fuel mass and user-supplied specific heat of combustion."
+  },
+  {
+    "name": "Osmotic Pressure Calculator",
+    "url": "/calculators/osmotic-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "osmotic pressure calculator molarity van't Hoff factor temperature",
+    "description": "Estimate ideal osmotic pressure from solute molarity, van't Hoff factor and absolute temperature."
+  },
+  {
+    "name": "Ionic Strength Calculator",
+    "url": "/calculators/ionic-strength-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "ionic strength calculator concentration ion charge",
+    "description": "Calculate ionic strength from the concentrations and charge numbers of up to four dissolved ionic species."
+  },
+  {
+    "name": "Diffusion Coefficient Calculator",
+    "url": "/calculators/diffusion-coefficient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "diffusion coefficient calculator Stokes Einstein temperature viscosity radius",
+    "description": "Estimate a spherical particle's diffusion coefficient in a fluid using the Stokes-Einstein equation."
   }
 ]
