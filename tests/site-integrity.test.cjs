@@ -2047,6 +2047,11 @@ test('Settings trigger is in the shared footer; Language stays in the header and
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes("footerNav.appendChild(open)") && shell.includes("footerNav.appendChild(trigger)"), 'The Settings trigger must be inserted into the shared footer, not the floating dock.');
   assert.ok(!shell.includes("dock.appendChild(open)") && !shell.includes("dock.appendChild(trigger)"), 'Settings must not be mounted in the floating tools dock.');
+  assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
+  assert.ok(shell.includes("collectLinks(oldFooter);oldFooter.remove();"), 'Existing footer links must be preserved when duplicate legacy footers are consolidated.');
+  assert.ok(shell.includes("document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>"), 'Only one shared footer may remain.');
+  assert.ok(shell.includes("if(!label)button.remove();"), 'Stale blank buttons must be removed from the Settings panel.');
+  assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Only the two labeled Normal Mode and Dark Mode controls belong in Accessibility.');
   assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings{position:static!important'));
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
   assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
