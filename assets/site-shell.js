@@ -6,6 +6,12 @@ try {
     new URLSearchParams(location.search).get('embed') !== '1' &&
     !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
   if (isPublicTopPage && document.body) {
+    // Replace legacy page-level navigation/footer visually with the one shared site chrome.
+    // Keep the original nodes in the document for safe, non-destructive migration; hide them from layout and assistive technology.
+    const legacyHeaders = document.querySelectorAll('body > header:not(.fc-global-header), body > .top, body > .site-header, body > .fc-site-header');
+    legacyHeaders.forEach(node => { node.hidden = true; node.setAttribute('aria-hidden', 'true'); node.classList.add('fc-legacy-chrome'); });
+    const legacyFooters = document.querySelectorAll('body > footer:not(.fc-global-footer), body > .fc-footer, body > .site-footer');
+    legacyFooters.forEach(node => { node.hidden = true; node.setAttribute('aria-hidden', 'true'); node.classList.add('fc-legacy-chrome'); });
     if (!document.querySelector('header.fc-global-header')) {
       const header = document.createElement('header');
       header.className = 'fc-global-header fc-shell-failsafe';
