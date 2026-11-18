@@ -216,3 +216,11 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
   button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
   main table { -webkit-overflow-scrolling: touch; }
 }
+
+/* Keep the shared site chrome visible on normal public pages. Embed mode has its own explicit opt-out rule in site-shell.js. */
+body:not(.fc-embed-mode) > .fc-global-header,
+body:not(.fc-embed-mode) > .fc-global-footer {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
