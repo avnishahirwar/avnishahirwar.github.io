@@ -1123,7 +1123,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const open=document.createElement('button');
   open.id='fc-display-settings';
   open.type='button';
-  open.textContent=t.open;
+  open.textContent='⚙ '+t.open;
+  open.setAttribute('aria-label',t.title);
   open.setAttribute('aria-expanded','false');
   open.setAttribute('aria-controls','fc-display-panel');
   const panel=document.createElement('section');
@@ -1146,11 +1147,11 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
   const closePanel=()=>{panel.hidden=true;open.setAttribute('aria-expanded','false');};
   close.addEventListener('click',closePanel);
-  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)themeButton.focus();});
+  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)(panel.querySelector('#fc-language-select')||themeButton).focus();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
   // Keep locale and measurement selectors out of the crowded primary navigation.
   // Moving the original controls preserves their IDs, event listeners and saved preferences.
-  panel.append(heading,themeButton,sizeLabel,sizeRow);
+  panel.append(heading);
   const settingRows=[];
   const addSettingRow=(className,controls)=>{
     const row=document.createElement('div');
@@ -1158,10 +1159,21 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     controls.forEach(control=>{if(control)row.append(control);});
     if(row.children.length){panel.append(row);settingRows.push(row);}
   };
+  const addSectionHeading=text=>{
+    const section=document.createElement('h3');
+    section.className='fc-settings-section-heading';
+    section.textContent=text;
+    panel.append(section);
+  };
+  addSectionHeading(t.region);
+  const languageControl=document.querySelector('.fc-language-control');
+  if(languageControl)addSettingRow('fc-display-language-row',[languageControl]);
   const currencyControl=document.querySelector('.fc-currency-control');
+  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   const countryControl=document.querySelector('.fc-country-control');
   const formatControl=document.querySelector('.fc-format-control');
   const unitControl=document.querySelector('.fc-unit-control');
+  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
   addSettingRow('fc-display-currency-row',[currencyControl]);
   if(countryControl&&formatControl){
     const countrySelect=countryControl.querySelector('select');
@@ -1169,7 +1181,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     const countryFormatLabel=document.createElement('label');
     countryFormatLabel.className='fc-country-format-control';
     const countryFormatText=document.createElement('span');
-    countryFormatText.textContent='Country & format';
+    countryFormatText.textContent=t.countryFormat;
     const countryFormatSelect=document.createElement('select');
     countryFormatSelect.id='fc-country-format-display';
     countryFormatSelect.setAttribute('aria-label','Country and number/date format');
@@ -1217,6 +1229,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     divider.setAttribute('aria-hidden','true');
     panel.append(divider);
   }
+  addSectionHeading(t.accessibility);
+  panel.append(themeButton,sizeLabel,sizeRow);
+  const quickDivider=document.createElement('div');
+  quickDivider.className='fc-display-settings-divider';
+  quickDivider.setAttribute('aria-hidden','true');
+  panel.append(quickDivider);
+  addSectionHeading(t.quick);
   panel.append(status,close);
 
   const dock=getFloatingToolsDock();
