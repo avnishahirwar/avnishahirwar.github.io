@@ -263,12 +263,13 @@ if(embedMode){
       if(referrerPath!=='/embed/'&&!root.querySelector('.fc-embed-attribution')){
         const credit=document.createElement('div');
         credit.className='fc-embed-attribution';
+        const label=document.createTextNode('Powered by Friendly Calculator · ');
         const link=document.createElement('a');
-        link.href='https://friendlycalculator.in/';
+        link.href='https://friendlycalculator.in'+p;
         link.target='_blank';
         link.rel='noopener noreferrer';
-        link.textContent='Powered by Friendly Calculator';
-        credit.append(link);
+        link.textContent='View calculator page';
+        credit.append(label,link);
         root.append(credit);
       }
     }else{
@@ -640,7 +641,7 @@ if(isCalculatorRoute&&main){
     const code=document.createElement('textarea');code.readOnly=true;code.setAttribute('aria-label','Calculator embed code');
     const embedUrl=location.origin+'/embed/?src='+encodeURIComponent(p);
     const title=(main.querySelector('h1')?.textContent||'Friendly Calculator').trim();
-    code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0" referrerpolicy="strict-origin-when-cross-origin"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in/" rel="noopener">Friendly Calculator</a></p>';
+    code.value='<iframe src="'+embedUrl+'" title="'+title+' — Friendly Calculator" loading="lazy" width="100%" height="760" style="border:0" referrerpolicy="strict-origin-when-cross-origin"></iframe>\n<p>Powered by <a href="https://friendlycalculator.in'+p+'" rel="noopener">Friendly Calculator</a></p>';
     const copy=document.createElement('button');copy.type='button';copy.textContent='Copy embed code';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(code.value);copy.textContent='Embed code copied';}catch(_){code.focus();code.select();copy.textContent='Select and copy the code';}});
     actions.append(copy);const rights=document.createElement('p');rights.className='fc-content-rights';rights.textContent='© Friendly Calculator. You may save and share your own calculation results with attribution. Republishing website text, design or bulk-copying content without permission is not allowed.';panel.append(h,intro,actions,code,rights);main.append(panel);
   }
