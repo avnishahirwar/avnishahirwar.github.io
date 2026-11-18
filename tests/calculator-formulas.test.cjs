@@ -931,3 +931,61 @@ test('chemistry batch 03 formulas reject invalid physical inputs', () => {
   assert.throws(() => chemistry.massPercent({ soluteMass: 0, solventMass: 0 }), /greater than zero/);
   assert.throws(() => chemistry.ph({ hydrogen: 0 }), /positive finite value/);
 });
+
+const batch04Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch04.js', 'file://' + __filename), 'utf8');
+const batch04Context = {};
+vm.runInNewContext(batch04Source, batch04Context);
+const batch04 = batch04Context.FriendlyChemistryBatch04;
+
+test('chemistry batch 04 formulas return expected reference values', () => {
+  const en = batch04.electronegativity({ first: 2.2, second: 3.16 });
+  assert.ok(Math.abs(parseFloat(en[0][1]) - 0.96) < 1e-8);
+
+  const ionic = batch04.ionic({ difference: 1 });
+  assert.ok(Math.abs(parseFloat(ionic[0][1]) - ((1 - Math.exp(-0.25)) * 100)) < 1e-6);
+
+  const pka = batch04.pka({ ka: 1e-5, pka: NaN });
+  assert.ok(Math.abs(parseFloat(pka[0][1]) - 5) < 1e-8);
+  const ka = batch04.pka({ ka: NaN, pka: 5 });
+  assert.ok(Math.abs(Number(ka[0][1]) / 1e-5 - 1) < 1e-8);
+
+  const alligation = batch04.alligation({ high: 40, low: 10, target: 25, total: 100 });
+  assert.ok(Math.abs(parseFloat(alligation[0][1]) - 50) < 1e-8);
+  assert.ok(Math.abs(parseFloat(alligation[1][1]) - 50) < 1e-8);
+
+  const concentration = batch04.concentration({ mass: 5, volume: 1, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(concentration[0][1]) - 5) < 1e-8);
+  assert.ok(Math.abs(parseFloat(concentration[1][1]) - (5 / 58.44)) < 1e-6);
+
+  const mixing = batch04.mixing({ partsA: 2, partsB: 3, total: 10 });
+  assert.ok(Math.abs(parseFloat(mixing[0][1]) - 4) < 1e-8);
+  assert.ok(Math.abs(parseFloat(mixing[1][1]) - 6) < 1e-8);
+
+  const raoult = batch04.raoult({ solventMoles: 8, soluteMoles: 2, purePressure: 3.17 });
+  assert.ok(Math.abs(parseFloat(raoult[0][1]) - 0.8) < 1e-8);
+  assert.ok(Math.abs(parseFloat(raoult[1][1]) - 2.536) < 1e-6);
+
+  const actual = batch04.actualYield({ theoretical: 10, actual: 8, percent: NaN });
+  assert.ok(Math.abs(parseFloat(actual[0][1]) - 80) < 1e-8);
+  const estimated = batch04.actualYield({ theoretical: 10, actual: NaN, percent: 80 });
+  assert.ok(Math.abs(parseFloat(estimated[0][1]) - 8) < 1e-8);
+
+  const activation = batch04.activation({ k1: 1, t1: 300, k2: 2, t2: 310 });
+  assert.ok(Number.isFinite(parseFloat(activation[0][1])) && parseFloat(activation[0][1]) > 0);
+
+  const boiling = batch04.boiling({ molality: 0.5, kb: 0.512, factor: 2, normal: 100 });
+  assert.ok(Math.abs(parseFloat(boiling[0][1]) - 0.512) < 1e-8);
+  assert.ok(Math.abs(parseFloat(boiling[1][1]) - 100.512) < 1e-8);
+});
+
+test('chemistry batch 04 formulas reject invalid or ambiguous inputs', () => {
+  assert.throws(() => batch04.electronegativity({ first: -1, second: 2 }), /non-negative finite value/);
+  assert.throws(() => batch04.pka({ ka: 1e-5, pka: 5 }), /not both/);
+  assert.throws(() => batch04.alligation({ high: 10, low: 10, target: 10, total: 10 }), /strictly between/);
+  assert.throws(() => batch04.concentration({ mass: 1, volume: 0, molarMass: 10 }), /positive finite value/);
+  assert.throws(() => batch04.mixing({ partsA: 0, partsB: 2, total: 10 }), /positive finite value/);
+  assert.throws(() => batch04.raoult({ solventMoles: 1, soluteMoles: 0, purePressure: 3 }), /positive finite value/);
+  assert.throws(() => batch04.actualYield({ theoretical: 10, actual: 8, percent: 80 }), /either an actual yield or a percent yield/);
+  assert.throws(() => batch04.activation({ k1: 1, t1: 300, k2: 2, t2: 300 }), /different/);
+  assert.throws(() => batch04.boiling({ molality: 0, kb: 0.5, factor: 2, normal: 100 }), /positive finite value/);
+});
