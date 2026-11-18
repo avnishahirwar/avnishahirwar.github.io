@@ -2828,6 +2828,41 @@
     "description": "Calculate a z-based confidence interval for a population mean using sample summary statistics."
   },
   {
+    "name": "Power Set Calculator",
+    "url": "/calculators/power-set-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "power set subsets set theory cardinality 2^n empty set finite set",
+    "description": "Generate every subset of a finite set and calculate the power-set size, including the empty set."
+  },
+  {
+    "name": "Truth Table Generator",
+    "url": "/calculators/truth-table-generator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "truth table generator Boolean logic proposition propositional logic tautology contradiction contingent implication equivalence",
+    "description": "Generate a truth table for a Boolean expression and classify it as a tautology, contradiction or contingent statement."
+  },
+  {
+    "name": "Descartes’ Rule of Signs Calculator",
+    "url": "/calculators/descartes-rule-of-signs-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "Descartes rule signs polynomial positive negative real roots sign changes p(-x) zero multiplicity",
+    "description": "Count sign changes for p(x) and p(−x) to show possible positive and negative real-root counts under Descartes’ rule of signs."
+  },
+  {
+    "name": "Synthetic Division Calculator",
+    "url": "/calculators/synthetic-division-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "synthetic division polynomial divide quotient remainder x-c root coefficients polynomial long division",
+    "description": "Divide a polynomial by a monic linear divisor x − c using synthetic division and display quotient coefficients and remainder."
+  },
+  {
+    "name": "Consecutive Integers Calculator",
+    "url": "/calculators/consecutive-integers-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "consecutive integers sum consecutive number sum positive integer runs arithmetic sequence",
+    "description": "Find every way to write a whole-number target as a sum of two or more positive consecutive integers."
+  },
+  {
     "name": "Google AdSense Revenue Calculator",
     "url": "/calculators/google-adsense-revenue-calculator.html",
     "category": "Business & Trade",
@@ -3589,5 +3624,77 @@
     "category": "Biology & Chemistry",
     "keywords": "double bond equivalent DBE degree of unsaturation molecular formula carbon hydrogen nitrogen halogens",
     "description": "Calculate degree of unsaturation from carbon, hydrogen, nitrogen and halogen atom counts."
+  },
+  {
+    "name": "Growing Degree Units (GDU) Calculator",
+    "url": "/calculators/growing-degree-units-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "growing degree units GDU growing degree days GDD crop heat units crop development degree day agriculture daily maximum minimum base temperature cutoff"
+  },
+  {
+    "name": "Concrete Tube Volume Calculator",
+    "url": "/calculators/concrete-tube-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "concrete tube calculator sonotube concrete cylinder volume form fill round pier footing concrete quantity estimate cubic feet cubic yards diameter length"
+  },
+  {
+    "name": "Crore to Million Converter",
+    "url": "/calculators/crore-to-million-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "crore to million converter crore million Indian international number system 1 crore 10 million lakh number scale rupees"
+  },
+  {
+    "name": "Flight Carbon Footprint Calculator",
+    "url": "/calculators/flight-carbon-footprint-calculator.html",
+    "category": "Energy & Sustainability",
+    "keywords": "flight carbon footprint calculator aircraft aviation emissions air travel kg CO2e passenger kilometer passenger km carbon factor flight emissions travel sustainability"
+  },
+  {
+    "name": "Average Collection Period Calculator",
+    "url": "/calculators/average-collection-period-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "average collection period calculator receivables collection days accounts receivable days sales outstanding DSO debtor days net credit sales business accounting ratio"
+  },
+  {
+    "name": "ABV Calculator (Alcohol by Volume)",
+    "url": "/calculators/alcohol-by-volume-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "ABV alcohol by volume calculator beer brewing original gravity final gravity OG FG specific gravity fermentation alcohol by weight ABW"
+  },
+  {
+    "name": "Body Adiposity Index (BAI) Calculator",
+    "url": "/calculators/body-adiposity-index-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "BAI body adiposity index calculator hip circumference height body fat estimate non diagnostic wellness index"
+  },
+  {
+    "name": "Distributive Property Calculator",
+    "url": "/calculators/distributive-property-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "distributive property calculator expand parentheses distribute multiplication arithmetic numeric terms step by step algebra property"
+  },
+  {
+    "name": "PERT Calculator (Three-Point Estimate)",
+    "url": "/calculators/pert-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "PERT calculator three point estimate optimistic most likely pessimistic expected duration project management activity estimate time planning weighted mean"
+  },
+  {
+    "name": "Projectile Time of Flight Calculator",
+    "url": "/calculators/projectile-time-of-flight-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "projectile time of flight calculator flight time physics motion initial velocity launch angle same elevation gravity ideal trajectory"
+  },
+  {
+    "name": "Earned Run Average (ERA) Calculator",
+    "url": "/calculators/earned-run-average-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "ERA earned run average calculator baseball pitcher earned runs innings outs 9 innings pitching statistic baseball stats"
+  },
+  {
+    "name": "Frequency Distribution Calculator",
+    "url": "/calculators/frequency-distribution-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "frequency distribution calculator frequency table relative frequency cumulative frequency count data dataset observations statistics histogram categories percent"
   }
 ]
