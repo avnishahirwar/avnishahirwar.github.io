@@ -2002,3 +2002,21 @@ test('homepage shows 24 popular calculators as responsive thumbnail-led rows', (
   assert.match(page, /\.home-popular-item/);
   assert.doesNotMatch(section, /bmi-calculator\.html/i);
 });
+
+
+test('Sitemap page keeps the shared global header and footer visible', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/sitemap.html'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(page, /<script defer src="\\/assets\\/site-shell\\.js"><\\/script>/);
+  assert.match(shell, /document\\.createElement\\('header'\\)/);
+  assert.match(shell, /document\\.createElement\\('footer'\\)/);
+  assert.match(shell, /fc-global-header/);
+  assert.match(shell, /fc-global-footer/);
+  assert.match(shell, /'Sitemap'/);
+  assert.match(shell, /r\\+'sitemap\\.html'/);
+  assert.match(styles, /\\.fc-global-header\\{/);
+  assert.match(styles, /\\.fc-global-footer\\{/);
+  assert.match(shell, /fc-embed-mode/);
+  assert.match(shell, /fc-embed-mode[^\\n]*display:none!important/);
+});
