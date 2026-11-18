@@ -72,7 +72,9 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Regional preferences must not appear in the global header.');
-  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain visible in the shared header.');
+  assert.ok(headerMarkup.includes('+languageControl+</nav>'), 'Language selector must be inside the header navigation after Login.');
+  assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
+  assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
@@ -88,6 +90,21 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(shell.includes('quickActions.appendChild(installButton)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must both stay inside Settings.');
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
+});
+
+
+test('header order places Login immediately before Language and keeps Sitemap only in Footer', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const headerStart = shell.indexOf('h.innerHTML=');
+  const headerEnd = shell.indexOf('const reservedHeader', headerStart);
+  const headerMarkup = shell.slice(headerStart, headerEnd);
+  assert.ok(headerMarkup.indexOf('nav.login') < headerMarkup.indexOf('languageControl'), 'Language must follow Login.');
+  assert.doesNotMatch(headerMarkup, /href=["']\\/sitemap\\.html/);
+  assert.match(shell, /markCurrentNavigation\\(activeHeader\.querySelector/);
+  assert.match(shell, /markCurrentNavigation\\(f\.querySelector/);
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(css, /fc-global-footer-links a\\[aria-current="page"\\]/);
+  assert.match(css, /fc-all-dropdown-menu a\\[aria-current="page"\\]/);
 });
 
 test('directory promotes the global hub and current tax category route', () => {
