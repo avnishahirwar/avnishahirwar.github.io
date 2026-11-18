@@ -38,3 +38,14 @@ jobs:
             artifacts/calculator-catalogue-audit.md
             artifacts/calculator-catalogue-audit.json
           retention-days: 14
+  outbound-link-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prevent Omni Calculator outbound links
+        run: node --test tests/no-competitor-outbound-links.test.cjs
