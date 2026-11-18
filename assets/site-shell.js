@@ -529,7 +529,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());
 document.body.appendChild(f);
 // Highlight only the current destination in each navigation region. The URL,
 // not hover/focus state, determines the persistent active item.
-const normalizePath=path=>path==='/'?'/':path.replace(/\\/+$/,'')+'/';
+const normalizePath=path=>path==='/'?'/':path.replace(/\/+$/,'')+'/';
 const currentPath=normalizePath(location.pathname);
 const markCurrentNavigation=navElement=>{
   if(!navElement)return;
