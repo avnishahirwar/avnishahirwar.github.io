@@ -153,12 +153,12 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p></div></section>
 <main class="page-wrap home-main">
 <section class="home-tool-search" aria-labelledby="home-tool-search-title">
-<label id="home-tool-search-title" for="fc-home-tool-search">Search all 494 calculators</label>
+<label id="home-tool-search-title" for="fc-home-tool-search">Search all 501 calculators</label>
 <div class="home-tool-search-row">
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Try GST, EMI, SIP, percentage, age..." aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button">Clear</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 494 calculators across 20 categories. Search instantly or choose a category below.</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 501 calculators across 20 categories. Search instantly or choose a category below.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -213,7 +213,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <a href="/calculator/site-directory.html#agriculture-rural"><strong>Agriculture &amp; Rural Finance</strong><span>4 calculators</span></a>
 <a href="/calculator/site-directory.html#government-schemes"><strong>Government Schemes &amp; Eligibility</strong><span>6 calculators</span></a>
 <a href="/calculator/site-directory.html#career-salary"><strong>Career &amp; Salary Planning</strong><span>2 calculators</span></a>
-<a href="/calculator/site-directory.html#biology-chemistry"><strong>Biology &amp; Chemistry</strong><span>112 calculators</span></a>
+<a href="/calculator/site-directory.html#biology-chemistry"><strong>Biology &amp; Chemistry</strong><span>119 calculators</span></a>
 </nav>
 <figure class="fc-brand-visual"><img src="/assets/friendly-calculator-brand-illustration.svg" alt="Friendly Calculator brand illustration showing a calculator for finance, tax, business and everyday calculations" width="1200" height="630" loading="lazy" fetchpriority="low" decoding="async"><figcaption>Friendly Calculator — Practical tools for everyday calculations.</figcaption></figure>
 <section class="home-learning" aria-labelledby="global-calculators-title"><h2 id="global-calculators-title">Calculators for users worldwide</h2><p>Friendly Calculator includes general-purpose tools and selected country-oriented calculators. Tax rates, lending rules and retirement plans differ by jurisdiction; use only the tools and assumptions that match your location.</p><div class="home-learning-grid"><article><h3><a href="/calculators/mortgage-calculator.html">Mortgage Calculator</a></h3><p>Estimate a home-loan payment using your property price, deposit, interest rate and term. Add local tax and insurance amounts where relevant.</p></article><article><h3><a href="/calculators/401k-calculator.html">US 401(k) Growth Calculator</a></h3><p>Explore an illustrative retirement balance using contributions, employer match and assumed returns. Check current IRS limits and plan terms separately.</p></article><article><h3><a href="/calculators/currency-converter-calculator.html">Currency Converter</a></h3><p>Convert between supported currencies using dated reference rates, with a manual-rate fallback.</p></article><article><h3><a href="/international/vat-calculator.html">VAT Calculator</a></h3><p>Estimate VAT from a rate you enter. VAT rates and rules vary by country and product category.</p></article><article><h3><a href="/calculators/sales-tax-calculator.html">Sales Tax Calculator</a></h3><p>Calculate tax using a manually entered rate. State, county and city rules are not automatically selected.</p></article><article><h3><a href="/calculators/tip-calculator.html">Tip Calculator</a></h3><p>Calculate a tip, total bill and per-person split using your chosen percentage and currency context.</p></article></div><p><a href="/international/">Explore international calculator guidance →</a> · <a href="/international/countries/">Browse calculators by country →</a> · <a href="/calculator/tax.html">India tax and salary calculators →</a></p></section>
@@ -249,7 +249,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==494)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||items.length!==501)throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -265,9 +265,9 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 494 calculators across 20 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 501 calculators across 20 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching all 494 calculators…';
+ status.textContent='Searching all 501 calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
