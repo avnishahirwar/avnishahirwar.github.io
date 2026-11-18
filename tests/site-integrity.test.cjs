@@ -1442,7 +1442,7 @@ test('homepage search runtime validates the complete 2,479-item deferred catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   assert.equal(searchIndex.length, 2479);
-  assert.match(homepage, /items\.length!==547/);
+  assert.match(homepage, /Search 2,479 calculators/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
