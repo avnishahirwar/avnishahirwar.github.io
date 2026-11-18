@@ -2042,3 +2042,15 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
+
+
+test('shared header and footer fail-safe is installed before optional page enhancements', () => {
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const firstEnhancement = script.indexOf('const ensureFavicon');
+  const fallback = script.indexOf('fc-shell-failsafe');
+  assert.ok(fallback > 0 && fallback < firstEnhancement, 'Site chrome fallback must run before optional enhancements');
+  assert.ok(script.includes('href="/sitemap.html">Sitemap</a>'), 'Fallback header must link to Sitemap');
+  assert.ok(script.includes('aria-label="Footer navigation"'), 'Fallback footer must have accessible navigation');
+  assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
+  assert.ok(script.includes('document.body.append(footer)'), 'Fallback footer must be appended after page content');
+});

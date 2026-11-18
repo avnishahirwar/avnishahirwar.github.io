@@ -1,4 +1,27 @@
 (()=>{'use strict';
+/* Render site-wide chrome before optional enhancements run. If a later feature
+   throws, public pages still retain the shared header and footer. */
+try {
+  const isPublicTopPage = window.self === window.top &&
+    new URLSearchParams(location.search).get('embed') !== '1' &&
+    !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
+  if (isPublicTopPage && document.body) {
+    if (!document.querySelector('header.fc-global-header')) {
+      const header = document.createElement('header');
+      header.className = 'fc-global-header fc-shell-failsafe';
+      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/sitemap.html">Sitemap</a></nav></div>';
+      document.body.prepend(header);
+    }
+    if (!document.querySelector('footer.fc-global-footer')) {
+      const footer = document.createElement('footer');
+      footer.className = 'fc-global-footer fc-shell-failsafe';
+      footer.innerHTML = '<div class="fc-global-footer-inner"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="30" height="30" alt="Friendly Calculator logo"><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="fc-global-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/disclaimer.html">Disclaimer</a><a href="/calculator/contact.html">Contact</a><a href="/sitemap.html">Sitemap</a></nav><small>© 2026 Friendly Calculator</small></div>';
+      document.body.append(footer);
+    }
+  }
+} catch (error) {
+  console.error('Friendly Calculator site chrome fallback failed:', error);
+}
 /* Keep the site favicon consistent, including legacy and localized pages. */
 const ensureFavicon=()=>{
   if(!document.head)return;
