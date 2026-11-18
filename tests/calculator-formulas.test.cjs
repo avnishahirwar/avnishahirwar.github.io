@@ -1137,3 +1137,52 @@ test('chemistry batch 07 formulas reject invalid units and ranges', () => {
   assert.throws(() => batch07.ionicStrength({ c1: 0.1, z1: 0, c2: 0, z2: 0, c3: 0, z3: 0, c4: 0, z4: 0 }), /non-zero integer charge/);
   assert.throws(() => batch07.diffusion({ temperature: 298, viscosity: 0, radius: 1 }), /positive finite value/);
 });
+
+const batch08Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch08.js', 'file://' + __filename), 'utf8');
+const batch08Context = {};
+vm.runInNewContext(batch08Source, batch08Context);
+const batch08 = batch08Context.FriendlyChemistryBatch08;
+
+test('chemistry batch 08 formulas return expected reference values', () => {
+  const en = batch08.electronegativity({ ab: 400, aa: 350, bb: 250 });
+  assert.ok(parseFloat(en[0][1]) > 1 && parseFloat(en[0][1]) < 1.1);
+
+  const emf = batch08.cellEmf({ cathode: 0.34, anode: -0.76 });
+  assert.ok(Math.abs(parseFloat(emf[0][1]) - 1.1) < 1e-8);
+
+  const nernst = batch08.nernst({ standard: 1.1, electrons: 2, quotient: 1, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(nernst[0][1]) - 1.1) < 1e-8);
+
+  const effusion = batch08.effusion({ molarA: 2, molarB: 32 });
+  assert.ok(Math.abs(parseFloat(effusion[0][1]) - 4) < 1e-8);
+
+  const half = batch08.halfLife({ initial: 100, half: 10, time: 25 });
+  assert.ok(Math.abs(parseFloat(half[0][1]) - (100 * Math.pow(0.5, 2.5))) < 1e-6);
+
+  const arrhenius = batch08.arrhenius({ factor: 1e6, energy: 50, temperature: 300 });
+  assert.ok(Number(arrhenius[0][1]) > 0);
+
+  const langmuir = batch08.langmuir({ maximum: 100, affinity: 0.1, concentration: 10 });
+  assert.ok(Math.abs(parseFloat(langmuir[0][1]) - 50) < 1e-8);
+
+  const laplace = batch08.youngLaplace({ tension: 0.072, radius: 0.001 });
+  assert.ok(Math.abs(parseFloat(laplace[0][1]) - 144) < 1e-8);
+
+  const radioactive = batch08.radioactive({ initial: 100, constant: 0.0693147, time: 10 });
+  assert.ok(Math.abs(parseFloat(radioactive[0][1]) - 50) < 0.001);
+
+  const cod = batch08.cod({ blank: 10, sample: 6, normality: 0.1, volume: 50 });
+  assert.ok(Math.abs(parseFloat(cod[0][1]) - 64) < 1e-8);
+});
+
+test('chemistry batch 08 formulas reject invalid physical and model inputs', () => {
+  assert.throws(() => batch08.electronegativity({ ab: 100, aa: 350, bb: 250 }), /geometric mean/);
+  assert.throws(() => batch08.nernst({ standard: 1, electrons: 0, quotient: 1, temperature: 298 }), /positive finite value/);
+  assert.throws(() => batch08.effusion({ molarA: 0, molarB: 1 }), /positive finite value/);
+  assert.throws(() => batch08.halfLife({ initial: 100, half: 0, time: 5 }), /positive finite value/);
+  assert.throws(() => batch08.arrhenius({ factor: 1, energy: -1, temperature: 300 }), /non-negative/);
+  assert.throws(() => batch08.langmuir({ maximum: 100, affinity: 0, concentration: 1 }), /positive finite value/);
+  assert.throws(() => batch08.youngLaplace({ tension: 0.07, radius: 0 }), /positive finite value/);
+  assert.throws(() => batch08.radioactive({ initial: 1, constant: 0.1, time: -1 }), /non-negative/);
+  assert.throws(() => batch08.cod({ blank: 5, sample: 6, normality: 0.1, volume: 50 }), /between zero and the blank/);
+});
