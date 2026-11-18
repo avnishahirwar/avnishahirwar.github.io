@@ -4476,10 +4476,10 @@
   },
   {
     "name": "Livestock Fence Cost Calculator",
-    "url": "/calculator/new-calculators.html#livestock-fence-cost-calculator",
+    "url": "/calculators/livestock-fence-cost-calculator.html",
     "category": "BIOLOGY",
     "keywords": "livestock fence cost calculator",
-    "description": "Livestock Fence Cost Calculator — requested calculator in the Friendly Calculator directory."
+    "description": "Estimate a livestock fence project total from your own installed rate, gate costs, additional costs, and optional contingency. No market-price defaults are included."
   },
   {
     "name": "Acres Per Hour Calculator",

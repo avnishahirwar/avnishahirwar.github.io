@@ -293,6 +293,38 @@
     ]);
   }
 
+  function livestockFenceCost(v) {
+    const length = number(v.fenceLength);
+    const rate = number(v.installedRatePerUnit);
+    const gateCount = number(v.gateCount);
+    const gateCost = number(v.gateCost);
+    const otherCosts = number(v.otherCosts);
+    const contingencyPct = number(v.contingencyPct);
+    const lengthUnit = { ft: 'ft', m: 'm' }[v.lengthUnit];
+    const currency = String(v.currencyCode || '').trim().toUpperCase();
+    if (!validPositive(length, 10000000) || !lengthUnit || !Number.isFinite(rate) || rate < 0 || rate > 1000000 ||
+        !Number.isInteger(gateCount) || gateCount < 0 || gateCount > 100000 || !Number.isFinite(gateCost) || gateCost < 0 || gateCost > 100000000 ||
+        !Number.isFinite(otherCosts) || otherCosts < 0 || otherCosts > 1000000000000 || !Number.isFinite(contingencyPct) || contingencyPct < 0 || contingencyPct > 100 ||
+        !/^[A-Z]{3}$/.test(currency)) {
+      return invalid('Enter a positive fence length, supported unit, non-negative project costs, whole-number gate count, contingency from 0–100%, and a 3-letter currency code.');
+    }
+    const fenceCost = length * rate;
+    const gatesTotal = gateCount * gateCost;
+    const subtotal = fenceCost + gatesTotal + otherCosts;
+    const contingency = subtotal * contingencyPct / 100;
+    return result([
+      { label: 'Fence-run estimate (length × installed rate)', value: fenceCost.toFixed(2), unit: currency },
+      { label: 'Separate gate estimate', value: gatesTotal.toFixed(2), unit: currency },
+      { label: 'Other entered project costs', value: otherCosts.toFixed(2), unit: currency },
+      { label: 'Entered contingency (' + contingencyPct.toFixed(2) + '%)', value: contingency.toFixed(2), unit: currency },
+      { label: 'Estimated total project cost', value: (subtotal + contingency).toFixed(2), unit: currency }
+    ], [
+      'This is arithmetic from your own entered rate and costs, not a market-price forecast, contractor quote, or guarantee. Use the same currency for every cost input.',
+      'The installed per-length rate excludes separately entered gates and other costs. If your quote already includes them, enter zero in those separate fields to avoid double-counting.',
+      'Fence type, livestock, terrain, layout, local requirements, material availability, labor, gates, and site conditions affect actual cost. Verify local design, utility locations, and current supplier/contractor quotes before building.'
+    ]);
+  }
+
   function birdAge(v) {
     const hatch = parseISODate(v.hatchDate);
     const today = parseISODate(v.today || localDateISO());
@@ -349,6 +381,7 @@
     'metacam-cats': catMetacam,
     'dry-matter': dryMatter,
     'feed-conversion-ratio': feedConversion,
+    'livestock-fence-cost': livestockFenceCost,
     'bird-age': birdAge,
     'quiz-dog-size': dogSizeQuiz,
     'quiz-cat-age': catAgeQuiz

@@ -16,6 +16,7 @@ const pages = [
   'metacam-dosage-calculator-for-cats', 'quiz-cat-age-calculator', 'bird-age-calculator'
 ];
 pages.push('dry-matter-calculator', 'feed-conversion-ratio-calculator');
+pages.push('livestock-fence-cost-calculator');
 
 function value(result, label) {
   const row = result.rows.find((item) => item.label.includes(label));
@@ -46,6 +47,19 @@ test('feed conversion ratio requires positive gain and states the selected feed 
   assert.ok(biology.calculate('feed-conversion-ratio', { feedMassKg: '10', startWeightKg: '45', endWeightKg: '45', feedBasis: 'asFed' }).error);
   assert.ok(biology.calculate('feed-conversion-ratio', { feedMassKg: '10', startWeightKg: '45', endWeightKg: '40', feedBasis: 'dryMatter' }).error);
   assert.match(r.warnings.join(' '), /not a target.*benchmark/i);
+});
+
+test('livestock fence estimate adds user-entered line, gate, other and contingency costs', () => {
+  const inputs = { fenceLength: '100', lengthUnit: 'm', installedRatePerUnit: '10', gateCount: '2', gateCost: '50', otherCosts: '0', contingencyPct: '0', currencyCode: 'inr' };
+  const r = biology.calculate('livestock-fence-cost', inputs);
+  assert.equal(value(r, 'Fence-run estimate'), '1000.00');
+  assert.equal(value(r, 'Separate gate estimate'), '100.00');
+  assert.equal(value(r, 'Estimated total project cost'), '1100.00');
+  assert.equal(r.rows.find((row) => row.label.includes('Estimated total')).unit, 'INR');
+  assert.equal(value(biology.calculate('livestock-fence-cost', { ...inputs, contingencyPct: '10' }), 'Estimated total project cost'), '1210.00');
+  assert.ok(biology.calculate('livestock-fence-cost', { ...inputs, gateCount: '2.5' }).error);
+  assert.ok(biology.calculate('livestock-fence-cost', { ...inputs, currencyCode: 'US' }).error);
+  assert.match(r.warnings.join(' '), /avoid double-counting/i);
 });
 
 test('dog age methods are explicit and return distinct approximate estimates', () => {
