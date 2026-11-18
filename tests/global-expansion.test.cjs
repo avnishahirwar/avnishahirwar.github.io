@@ -99,12 +99,12 @@ test('header order places Login immediately before Language and keeps Sitemap on
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(headerMarkup.indexOf('nav.login') < headerMarkup.indexOf('languageControl'), 'Language must follow Login.');
-  assert.doesNotMatch(headerMarkup, /href=["']\\/sitemap\\.html/);
-  assert.match(shell, /markCurrentNavigation\\(activeHeader\.querySelector/);
-  assert.match(shell, /markCurrentNavigation\\(f\.querySelector/);
+  assert.ok(!headerMarkup.includes('/sitemap.html'), 'Header must not link to Sitemap.');
+  assert.ok(shell.includes("markCurrentNavigation(activeHeader.querySelector('#fc-primary-navigation'))"));
+  assert.ok(shell.includes("markCurrentNavigation(f.querySelector('.fc-global-footer-links'))"));
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(css, /fc-global-footer-links a\\[aria-current="page"\\]/);
-  assert.match(css, /fc-all-dropdown-menu a\\[aria-current="page"\\]/);
+  assert.ok(css.includes('.fc-global-footer-links a[aria-current="page"]'));
+  assert.ok(css.includes('.fc-all-dropdown-menu a[aria-current="page"]'));
 });
 
 test('directory promotes the global hub and current tax category route', () => {
