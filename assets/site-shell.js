@@ -1123,6 +1123,21 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ru:{open:'Настройки',title:'Настройки и доступность',region:'Язык и регион',accessibility:'Доступность',quick:'Быстрые действия',currency:'Валюта отображения',countryFormat:'Страна и формат',units:'Единицы',theme:'Тёмная тема',smaller:'A−',larger:'A+',close:'Закрыть',themeOn:'Тёмная тема включена',themeOff:'Тёмная тема выключена',text:'Размер текста'}
   };
   const t=labels[lang]||labels.en;
+  const actionLabels={
+    en:{save:'Save',reset:'Reset',motion:'Reduce motion',motionOn:'Reduced motion on',motionOff:'Reduced motion off',saved:'Settings saved',resetDone:'Settings reset'},
+    hi:{save:'सहेजें',reset:'रीसेट',motion:'गतियाँ कम करें',motionOn:'कम गति चालू',motionOff:'कम गति बंद',saved:'सेटिंग्स सहेजी गईं',resetDone:'सेटिंग्स रीसेट हुईं'},
+    es:{save:'Guardar',reset:'Restablecer',motion:'Reducir movimiento',motionOn:'Movimiento reducido activado',motionOff:'Movimiento reducido desactivado',saved:'Ajustes guardados',resetDone:'Ajustes restablecidos'},
+    fr:{save:'Enregistrer',reset:'Réinitialiser',motion:'Réduire les animations',motionOn:'Animations réduites activées',motionOff:'Animations réduites désactivées',saved:'Paramètres enregistrés',resetDone:'Paramètres réinitialisés'},
+    pt:{save:'Salvar',reset:'Redefinir',motion:'Reduzir movimento',motionOn:'Movimento reduzido ativado',motionOff:'Movimento reduzido desativado',saved:'Configurações salvas',resetDone:'Configurações redefinidas'},
+    ar:{save:'حفظ',reset:'إعادة ضبط',motion:'تقليل الحركة',motionOn:'تقليل الحركة مفعّل',motionOff:'تقليل الحركة متوقف',saved:'تم حفظ الإعدادات',resetDone:'تمت إعادة ضبط الإعدادات'},
+    id:{save:'Simpan',reset:'Atur ulang',motion:'Kurangi gerakan',motionOn:'Gerakan dikurangi aktif',motionOff:'Gerakan dikurangi nonaktif',saved:'Pengaturan disimpan',resetDone:'Pengaturan diatur ulang'},
+    bn:{save:'সংরক্ষণ',reset:'রিসেট',motion:'অ্যানিমেশন কমান',motionOn:'কম অ্যানিমেশন চালু',motionOff:'কম অ্যানিমেশন বন্ধ',saved:'সেটিংস সংরক্ষিত',resetDone:'সেটিংস রিসেট হয়েছে'},
+    ta:{save:'சேமி',reset:'மீட்டமை',motion:'இயக்கத்தைக் குறை',motionOn:'குறைக்கப்பட்ட இயக்கம் இயக்கம்',motionOff:'குறைக்கப்பட்ட இயக்கம் முடக்கம்',saved:'அமைப்புகள் சேமிக்கப்பட்டன',resetDone:'அமைப்புகள் மீட்டமைக்கப்பட்டன'},
+    de:{save:'Speichern',reset:'Zurücksetzen',motion:'Bewegung reduzieren',motionOn:'Reduzierte Bewegung aktiviert',motionOff:'Reduzierte Bewegung deaktiviert',saved:'Einstellungen gespeichert',resetDone:'Einstellungen zurückgesetzt'},
+    ja:{save:'保存',reset:'リセット',motion:'動きを減らす',motionOn:'視覚効果を軽減しました',motionOff:'視覚効果の軽減を解除しました',saved:'設定を保存しました',resetDone:'設定をリセットしました'},
+    ru:{save:'Сохранить',reset:'Сбросить',motion:'Уменьшить анимацию',motionOn:'Уменьшенная анимация включена',motionOff:'Уменьшенная анимация выключена',saved:'Настройки сохранены',resetDone:'Настройки сброшены'}
+  };
+  Object.assign(t,actionLabels[lang]||actionLabels.en);
   const contrastLabels={en:'High contrast',hi:'उच्च कंट्रास्ट',es:'Alto contraste',fr:'Contraste élevé',pt:'Alto contraste',ar:'تباين عالٍ',id:'Kontras tinggi',bn:'উচ্চ কনট্রাস্ট',ta:'உயர் மாறுபாடு',de:'Hoher Kontrast',ja:'高コントラスト',ru:'Высокая контрастность'};
   t.contrast=contrastLabels[lang]||contrastLabels.en;
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
@@ -1132,6 +1147,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   const allowedSizes=['normal','large','larger'];
   const initialSize=allowedSizes.includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
+  const initialMotion=read('fc-display-motion','off')==='on';
+  const defaultLocaleSettings={
+    country:window.FCLocale?.getCountry()||'IN',
+    currency:window.FCLocale?.getCurrency()||'INR',
+    locale:window.FCLocale?.getLocale()||'en-IN',
+    units:window.FCLocale?.getUnitSystem()||'metric'
+  };
   const applyTheme=value=>{
     document.documentElement.setAttribute('data-fc-theme',value);
     write('fc-display-theme',value);
@@ -1154,6 +1176,14 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     contrastButton.setAttribute('aria-pressed',String(safe==='high'));
     contrastButton.textContent=t.contrast+' · '+(safe==='high'?'●':'○');
   };
+  const applyMotion=value=>{
+    const enabled=!!value;
+    document.documentElement.classList.toggle('fc-reduce-motion',enabled);
+    document.documentElement.setAttribute('data-fc-reduce-motion',String(enabled));
+    write('fc-display-motion',enabled?'on':'off');
+    motionButton.setAttribute('aria-pressed',String(enabled));
+    motionButton.textContent=t.motion+' · '+(enabled?'●':'○');
+  };
   const open=document.createElement('button');
   open.id='fc-display-settings';
   open.type='button';
@@ -1161,12 +1191,20 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   open.setAttribute('aria-label',t.title);
   open.setAttribute('aria-expanded','false');
   open.setAttribute('aria-controls','fc-display-panel');
+  const backdrop=document.createElement('button');
+  backdrop.type='button';
+  backdrop.className='fc-display-backdrop';
+  backdrop.setAttribute('aria-label',t.close);
+  backdrop.hidden=true;
   const panel=document.createElement('section');
   panel.id='fc-display-panel';
   panel.className='fc-display-panel';
   panel.hidden=true;
+  panel.setAttribute('role','dialog');
+  panel.setAttribute('aria-modal','true');
+  panel.setAttribute('aria-labelledby','fc-display-panel-title');
   panel.setAttribute('aria-label',t.title);
-  const heading=document.createElement('strong');heading.textContent=t.title;
+  const heading=document.createElement('strong');heading.id='fc-display-panel-title';heading.textContent=t.title;
   const themeButton=document.createElement('button');themeButton.type='button';themeButton.className='fc-display-action';
   themeButton.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-fc-theme')==='dark'?'light':'dark'));
   const contrastButton=document.createElement('button');contrastButton.type='button';contrastButton.className='fc-display-action';
@@ -1179,12 +1217,49 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   smaller.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='larger'?'large':'normal'));
   larger.addEventListener('click',()=>applySize(document.documentElement.getAttribute('data-fc-text-size')==='normal'?'large':'larger'));
   sizeRow.append(smaller,sizeValue,larger);
+  const motionButton=document.createElement('button');motionButton.type='button';motionButton.className='fc-display-action';
+  motionButton.addEventListener('click',()=>applyMotion(document.documentElement.getAttribute('data-fc-reduce-motion')!=='true'));
   const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const actionRow=document.createElement('div');actionRow.className='fc-display-actions';
+  const reset=document.createElement('button');reset.type='button';reset.className='fc-display-action';reset.textContent=t.reset;
+  const save=document.createElement('button');save.type='button';save.className='fc-display-save';save.textContent=t.save;
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
-  const closePanel=()=>{panel.hidden=true;open.setAttribute('aria-expanded','false');};
-  close.addEventListener('click',closePanel);
-  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)(panel.querySelector('#fc-language-select')||themeButton).focus();});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
+  actionRow.append(reset,save);
+  let previousBodyOverflow='';
+  const closePanel=()=>{panel.hidden=true;backdrop.hidden=true;open.setAttribute('aria-expanded','false');document.body.style.overflow=previousBodyOverflow;};
+  close.addEventListener('click',()=>{closePanel();open.focus();});
+  backdrop.addEventListener('click',()=>{closePanel();open.focus();});
+  const openPanel=()=>{
+    previousBodyOverflow=document.body.style.overflow;
+    panel.hidden=false;backdrop.hidden=false;document.body.style.overflow='hidden';
+    open.setAttribute('aria-expanded','true');
+    (panel.querySelector('#fc-language-select')||themeButton).focus();
+  };
+  open.addEventListener('click',()=>{if(panel.hidden)openPanel();else{closePanel();open.focus();}});
+  save.addEventListener('click',()=>{status.textContent=t.saved;closePanel();open.focus();});
+  reset.addEventListener('click',()=>{
+    const countrySelect=document.querySelector('#fc-country-select');
+    const currencySelect=document.querySelector('#fc-currency-select');
+    const localeSelect=document.querySelector('#fc-locale-select');
+    const unitSelect=document.querySelector('#fc-unit-system-select');
+    if(countrySelect){countrySelect.value=defaultLocaleSettings.country;countrySelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(currencySelect){currencySelect.value=defaultLocaleSettings.currency;currencySelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(localeSelect){localeSelect.value=defaultLocaleSettings.locale;localeSelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(unitSelect){unitSelect.value=defaultLocaleSettings.units;unitSelect.dispatchEvent(new Event('change',{bubbles:true}));}
+    applyTheme(initialTheme);applySize('normal');applyContrast('normal');applyMotion(false);
+    status.textContent=t.resetDone;
+  });
+  document.addEventListener('keydown',event=>{
+    if(panel.hidden)return;
+    if(event.key==='Escape'){closePanel();open.focus();return;}
+    if(event.key==='Tab'){
+      const focusable=Array.from(panel.querySelectorAll('button:not([disabled]),select:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(el=>el.offsetParent!==null);
+      if(!focusable.length){event.preventDefault();return;}
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    }
+  });
   // Keep locale and measurement selectors out of the crowded primary navigation.
   // Moving the original controls preserves their IDs, event listeners and saved preferences.
   panel.append(heading);
@@ -1285,20 +1360,21 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     panel.append(divider);
   }
   addSectionHeading(t.accessibility);
-  panel.append(themeButton,contrastButton,sizeLabel,sizeRow);
+  panel.append(themeButton,contrastButton,sizeLabel,sizeRow,motionButton);
   const quickDivider=document.createElement('div');
   quickDivider.className='fc-display-settings-divider';
   quickDivider.setAttribute('aria-hidden','true');
   panel.append(quickDivider);
   addSectionHeading(t.quick);
-  panel.append(status,close);
+  panel.append(status,actionRow,close);
 
   const dock=getFloatingToolsDock();
   if(dock)dock.appendChild(open);
-  document.body.appendChild(panel);
+  document.body.append(backdrop,panel);
   applyTheme(initialTheme);
   applySize(initialSize);
   applyContrast(read('fc-display-contrast','normal'));
+  applyMotion(initialMotion);
 })();
 
 
