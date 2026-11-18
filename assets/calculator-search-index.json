@@ -2938,5 +2938,656 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "return on equity ROE net income average shareholders equity profitability ratio",
     "description": "Calculate return on equity using net income and average shareholders' equity for the same reporting period."
+  },
+  {
+    "name": "Molality Calculator",
+    "url": "/calculators/molality-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molality chemistry solution concentration solvent mass moles",
+    "description": "Calculate solution molality from solute mass, molar mass and solvent mass."
+  },
+  {
+    "name": "Normality Calculator",
+    "url": "/calculators/normality-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "normality chemistry equivalents solution concentration equivalent weight",
+    "description": "Calculate solution normality from solute mass, equivalent weight and final solution volume."
+  },
+  {
+    "name": "Empirical Formula Calculator",
+    "url": "/calculators/empirical-formula-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "empirical formula chemistry elemental composition mole ratio",
+    "description": "Estimate the simplest whole-number atom ratio from the masses and atomic masses of two elements."
+  },
+  {
+    "name": "Hydrogen Ion Concentration Calculator",
+    "url": "/calculators/hydrogen-ion-concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "hydrogen ion concentration pH acidity molar concentration",
+    "description": "Convert pH into hydrogen ion concentration using the standard logarithmic relationship."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadro-s-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "avogadro number constant particles moles chemistry",
+    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "Molar Mass of Gas Calculator",
+    "url": "/calculators/molar-mass-of-gas-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molar mass gas ideal gas equation pressure volume temperature",
+    "description": "Estimate a gas's molar mass from its sample mass, pressure, volume and absolute temperature using the ideal gas equation."
+  },
+  {
+    "name": "Moles to Atoms Converter",
+    "url": "/calculators/moles-to-atoms-converter.html",
+    "category": "Biology & Chemistry",
+    "keywords": "moles to atoms converter avogadro constant molecules chemistry",
+    "description": "Convert moles into the number of molecules or formula units and total atoms represented."
+  },
+  {
+    "name": "PPM to Molarity Calculator",
+    "url": "/calculators/ppm-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "ppm to molarity parts per million mass concentration density",
+    "description": "Convert a dilute mass concentration in parts per million into molarity using solution density and molar mass."
+  },
+  {
+    "name": "Residence Time Calculator",
+    "url": "/calculators/residence-time-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "residence time hydraulic retention volume flow rate detention time calculator hydraulic retention time HRT wastewater tank volume flow rate",
+    "description": "Calculate liquid residence time, also known as detention time or hydraulic retention time, from tank volume and flow rate."
+  },
+  {
+    "name": "Dilution Factor Calculator",
+    "url": "/calculators/dilution-factor-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "dilution factor stock concentration target concentration final volume",
+    "description": "Calculate the dilution factor, stock volume and diluent volume needed to prepare a target concentration."
+  },
+  {
+    "name": "Henderson-Hasselbalch Calculator",
+    "url": "/calculators/henderson-hasselbalch-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "henderson hasselbalch buffer pH pKa acid base ratio",
+    "description": "Estimate buffer pH from pKa and the ratio of conjugate-base concentration to weak-acid concentration."
+  },
+  {
+    "name": "Mass Percent Calculator",
+    "url": "/calculators/mass-percent-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mass percent weight by weight concentration solute solvent",
+    "description": "Calculate the mass percentage of a solute from the solute mass and solvent mass."
+  },
+  {
+    "name": "Percentage Concentration to Molarity Calculator",
+    "url": "/calculators/percentage-concentration-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percentage concentration to molarity w/v grams per 100 ml",
+    "description": "Convert a mass/volume percentage (% w/v) into molarity using the solute's molar mass."
+  },
+  {
+    "name": "pH Calculator",
+    "url": "/calculators/ph-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "pH calculator hydrogen ion concentration acidity chemistry",
+    "description": "Calculate pH from hydrogen-ion concentration expressed in moles per litre."
+  },
+  {
+    "name": "Electronegativity Difference Calculator",
+    "url": "/calculators/electronegativity-difference-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electronegativity difference Pauling scale bond polarity chemistry",
+    "description": "Calculate the absolute electronegativity difference between two elements and view a cautious, approximate bond-polarity guide."
+  },
+  {
+    "name": "Percent Ionic Character Calculator",
+    "url": "/calculators/percent-ionic-character-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent ionic character electronegativity difference Pauling chemistry",
+    "description": "Estimate percent ionic character from the electronegativity difference using an empirical Pauling relationship."
+  },
+  {
+    "name": "pKa Calculator",
+    "url": "/calculators/pka-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "pKa calculator acid dissociation constant Ka logarithm",
+    "description": "Convert an acid dissociation constant Ka to pKa, or convert a pKa value back to Ka."
+  },
+  {
+    "name": "Alligation Calculator",
+    "url": "/calculators/alligation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "alligation calculator concentration mixing ratio weighted average",
+    "description": "Calculate the relative quantities of a higher-strength and lower-strength solution needed to obtain a target concentration."
+  },
+  {
+    "name": "Concentration Calculator",
+    "url": "/calculators/concentration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "concentration calculator mass concentration g per litre molarity",
+    "description": "Calculate mass concentration in grams per litre and, when molar mass is supplied, molarity in moles per litre."
+  },
+  {
+    "name": "Mixing Ratio Calculator",
+    "url": "/calculators/mixing-ratio-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mixing ratio calculator parts ratio mixture volume mass",
+    "description": "Split a total mixture quantity between two components using a user-supplied parts ratio."
+  },
+  {
+    "name": "Raoult's Law Calculator",
+    "url": "/calculators/raoults-law-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Raoult law calculator vapour pressure mole fraction ideal solution",
+    "description": "Estimate the vapour pressure of an ideal binary solution from solvent mole fraction and pure-solvent vapour pressure."
+  },
+  {
+    "name": "Actual Yield Calculator",
+    "url": "/calculators/actual-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "actual yield calculator percent yield theoretical yield chemistry",
+    "description": "Calculate actual product yield from theoretical yield and percent yield, or calculate percent yield from actual and theoretical yield."
+  },
+  {
+    "name": "Activation Energy Calculator",
+    "url": "/calculators/activation-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "activation energy calculator Arrhenius equation rate constants temperature",
+    "description": "Estimate activation energy from two rate constants measured at two absolute temperatures using the two-point Arrhenius equation."
+  },
+  {
+    "name": "Boiling Point Elevation Calculator",
+    "url": "/calculators/boiling-point-elevation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point elevation calculator molality ebullioscopic constant van't Hoff",
+    "description": "Estimate the boiling-point increase of a solution from molality, ebullioscopic constant and van't Hoff factor."
+  },
+  {
+    "name": "AFR Calculator (Air-Fuel Ratio)",
+    "url": "/calculators/afr-calculator-air-fuel-ratio.html",
+    "category": "Biology & Chemistry",
+    "keywords": "air fuel ratio AFR calculator lambda stoichiometric mass ratio",
+    "description": "Calculate an air-to-fuel mass ratio and compare it with a user-supplied reference stoichiometric ratio."
+  },
+  {
+    "name": "Molecular Weight Calculator",
+    "url": "/calculators/molecular-weight-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molecular weight calculator molar mass chemical formula",
+    "description": "Estimate a compound's molar mass from a chemical formula using a built-in set of common atomic weights and parentheses."
+  },
+  {
+    "name": "Activity Coefficient Calculator",
+    "url": "/calculators/activity-coefficient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "activity coefficient calculator Davies equation ionic strength aqueous",
+    "description": "Estimate an aqueous ion activity coefficient using the Davies approximation at approximately 25 °C."
+  },
+  {
+    "name": "Buffer Capacity Calculator",
+    "url": "/calculators/buffer-capacity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "buffer capacity calculator pKa pH buffer concentration",
+    "description": "Estimate monoprotic buffer capacity from total buffer concentration, pKa and solution pH."
+  },
+  {
+    "name": "Neutralization Calculator",
+    "url": "/calculators/neutralization-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "neutralization calculator acid base stoichiometry equivalents",
+    "description": "Compare acid and base equivalents from molarity, volume and reaction stoichiometric coefficients to identify the excess side."
+  },
+  {
+    "name": "Percent Solution Calculator",
+    "url": "/calculators/percent-solution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent solution calculator mass volume percent w v",
+    "description": "Calculate mass/volume percentage concentration from solute mass and final solution volume."
+  },
+  {
+    "name": "Solution Dilution Calculator",
+    "url": "/calculators/solution-dilution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "solution dilution calculator C1V1 C2V2 stock concentration",
+    "description": "Calculate the stock-solution volume and diluent volume required to reach a target concentration and final volume."
+  },
+  {
+    "name": "Titration Calculator",
+    "url": "/calculators/titration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "titration calculator equivalence point molarity stoichiometry",
+    "description": "Calculate the volume of titrant needed at the stoichiometric equivalence point from molarities, sample volume and balanced-equation coefficients."
+  },
+  {
+    "name": "Water Hardness Calculator",
+    "url": "/calculators/water-hardness-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "water hardness calculator calcium magnesium CaCO3 mg L",
+    "description": "Estimate total water hardness as calcium carbonate equivalent from dissolved calcium and magnesium concentrations."
+  },
+  {
+    "name": "Theoretical Yield Calculator",
+    "url": "/calculators/theoretical-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "theoretical yield calculator reactant product molar mass stoichiometry",
+    "description": "Calculate theoretical product mass from a reactant mass, molar masses and balanced-equation stoichiometric coefficients."
+  },
+  {
+    "name": "Equilibrium Constant Calculator",
+    "url": "/calculators/equilibrium-constant-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "equilibrium constant calculator Kc equilibrium concentrations stoichiometry",
+    "description": "Calculate a concentration-based equilibrium constant for a simple reaction from equilibrium concentrations and stoichiometric coefficients."
+  },
+  {
+    "name": "Kp Calculator",
+    "url": "/calculators/kp-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Kp calculator Kc gas equilibrium constant temperature delta n",
+    "description": "Estimate the gas-phase equilibrium constant Kp from Kc, absolute temperature and the change in gaseous stoichiometric moles."
+  },
+  {
+    "name": "Molar Ratio Calculator",
+    "url": "/calculators/molar-ratio-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molar ratio calculator stoichiometric mole ratio chemical equation",
+    "description": "Convert a known mole amount to another substance's mole amount using coefficients from a balanced chemical equation."
+  },
+  {
+    "name": "Rate Constant Calculator",
+    "url": "/calculators/rate-constant-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "rate constant calculator first order kinetics concentration time half life",
+    "description": "Estimate a first-order reaction rate constant from initial and later concentration and elapsed time."
+  },
+  {
+    "name": "Reaction Quotient Calculator",
+    "url": "/calculators/reaction-quotient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "reaction quotient calculator Qc Kc equilibrium direction",
+    "description": "Calculate the concentration-based reaction quotient Qc and compare it with an entered equilibrium constant to estimate the direction of change."
+  },
+  {
+    "name": "Entropy Calculator",
+    "url": "/calculators/entropy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "entropy calculator reversible heat temperature entropy change",
+    "description": "Calculate the entropy change per mole from reversible heat transfer and absolute temperature."
+  },
+  {
+    "name": "Freezing Point Depression Calculator",
+    "url": "/calculators/freezing-point-depression-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "freezing point depression calculator molality cryoscopic constant",
+    "description": "Estimate the freezing-point decrease from molality, cryoscopic constant and van't Hoff factor."
+  },
+  {
+    "name": "Gibbs Free Energy Calculator",
+    "url": "/calculators/gibbs-free-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Gibbs free energy calculator enthalpy entropy temperature",
+    "description": "Calculate Gibbs free-energy change from enthalpy change, entropy change and absolute temperature."
+  },
+  {
+    "name": "Gibbs Phase Rule Calculator",
+    "url": "/calculators/gibbs-phase-rule-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Gibbs phase rule calculator degrees freedom components phases",
+    "description": "Calculate the degrees of freedom in a non-reactive system using the classical Gibbs phase rule."
+  },
+  {
+    "name": "Q10 Calculator",
+    "url": "/calculators/q10-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Q10 calculator temperature coefficient reaction rate temperature",
+    "description": "Calculate the temperature coefficient Q10 from measured rates at two temperatures expressed in degrees Celsius."
+  },
+  {
+    "name": "STP Calculator",
+    "url": "/calculators/stp-calculator-standard-temperature-and-pressure.html",
+    "category": "Biology & Chemistry",
+    "keywords": "STP calculator standard temperature pressure ideal gas volume",
+    "description": "Calculate ideal-gas volume at specified standard temperature and pressure from amount of substance."
+  },
+  {
+    "name": "Partial Pressure Calculator",
+    "url": "/calculators/partial-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "partial pressure calculator Dalton law mole fraction gas mixture",
+    "description": "Calculate a gas component's partial pressure from its mole fraction and total mixture pressure using Dalton's law."
+  },
+  {
+    "name": "Vapor Pressure Calculator",
+    "url": "/calculators/vapor-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "vapor pressure calculator Antoine equation temperature coefficients",
+    "description": "Estimate vapour pressure from Antoine equation coefficients and temperature in degrees Celsius."
+  },
+  {
+    "name": "Vapor Pressure of Water Calculator",
+    "url": "/calculators/vapor-pressure-of-water-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "vapor pressure of water calculator saturation Antoine equation",
+    "description": "Estimate saturation vapour pressure of water between 1 °C and 100 °C using the Antoine equation."
+  },
+  {
+    "name": "Boiling Point Calculator",
+    "url": "/calculators/boiling-point-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point calculator Antoine equation pressure temperature",
+    "description": "Estimate a liquid's boiling temperature at a specified pressure by inverting the Antoine equation."
+  },
+  {
+    "name": "Boiling Point at Altitude Calculator",
+    "url": "/calculators/boiling-point-at-altitude-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "boiling point at altitude calculator elevation water temperature",
+    "description": "Estimate water's boiling point at an altitude using a standard-atmosphere pressure approximation and the Antoine equation."
+  },
+  {
+    "name": "Heat of Combustion Calculator",
+    "url": "/calculators/heat-of-combustion-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "heat of combustion calculator fuel mass specific energy",
+    "description": "Estimate energy released from a fuel mass and user-supplied specific heat of combustion."
+  },
+  {
+    "name": "Osmotic Pressure Calculator",
+    "url": "/calculators/osmotic-pressure-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "osmotic pressure calculator molarity van't Hoff factor temperature",
+    "description": "Estimate ideal osmotic pressure from solute molarity, van't Hoff factor and absolute temperature."
+  },
+  {
+    "name": "Ionic Strength Calculator",
+    "url": "/calculators/ionic-strength-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "ionic strength calculator concentration ion charge",
+    "description": "Calculate ionic strength from the concentrations and charge numbers of up to four dissolved ionic species."
+  },
+  {
+    "name": "Diffusion Coefficient Calculator",
+    "url": "/calculators/diffusion-coefficient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "diffusion coefficient calculator Stokes Einstein temperature viscosity radius",
+    "description": "Estimate a spherical particle's diffusion coefficient in a fluid using the Stokes-Einstein equation."
+  },
+  {
+    "name": "Electronegativity Calculator",
+    "url": "/calculators/electronegativity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electronegativity calculator Pauling bond dissociation energy",
+    "description": "Estimate the electronegativity difference between two bonded atoms from bond dissociation energies using the Pauling relationship."
+  },
+  {
+    "name": "Cell EMF Calculator",
+    "url": "/calculators/cell-emf-calculator-electromotive-force-of-a-cell.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cell EMF calculator electromotive force cathode anode potentials",
+    "description": "Calculate standard or entered cell electromotive force from cathode and anode electrode potentials."
+  },
+  {
+    "name": "Nernst Equation Calculator",
+    "url": "/calculators/nernst-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Nernst equation calculator electrode potential reaction quotient",
+    "description": "Calculate an electrode or cell potential from standard potential, reaction quotient, electron transfer and temperature."
+  },
+  {
+    "name": "Rate of Effusion Calculator",
+    "url": "/calculators/rate-of-effusion-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "rate of effusion calculator Graham law molar mass",
+    "description": "Compare gas effusion rates using Graham's law and the molar masses of two gases."
+  },
+  {
+    "name": "Half-Life Calculator",
+    "url": "/calculators/half-life-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "half life calculator exponential decay remaining amount",
+    "description": "Calculate the remaining amount of a first-order decaying quantity from its half-life and elapsed time."
+  },
+  {
+    "name": "Arrhenius Equation Calculator",
+    "url": "/calculators/arrhenius-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Arrhenius equation calculator activation energy rate constant",
+    "description": "Estimate a reaction rate constant from the pre-exponential factor, activation energy and absolute temperature."
+  },
+  {
+    "name": "Langmuir Isotherm Calculator",
+    "url": "/calculators/langmuir-isotherm-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Langmuir isotherm calculator adsorption capacity affinity concentration",
+    "description": "Estimate adsorption loading from maximum adsorption capacity, Langmuir affinity constant and equilibrium concentration."
+  },
+  {
+    "name": "Young-Laplace Equation Calculator",
+    "url": "/calculators/young-laplace-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Young Laplace equation calculator surface tension radius pressure",
+    "description": "Calculate the pressure difference across a spherical interface from surface tension and radius."
+  },
+  {
+    "name": "Radioactive Decay Calculator",
+    "url": "/calculators/radioactive-decay-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "radioactive decay calculator decay constant exponential model",
+    "description": "Calculate exponential decay from an initial quantity, decay constant and elapsed time."
+  },
+  {
+    "name": "Chemical Oxygen Demand Calculator",
+    "url": "/calculators/chemical-oxygen-demand-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "chemical oxygen demand COD calculator titration mg L",
+    "description": "Estimate chemical oxygen demand from blank and sample titration volumes, titrant normality and sample volume."
+  },
+  {
+    "name": "Saponification Value Calculator",
+    "url": "/calculators/saponification-value-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "saponification value calculator blank sample titration normality",
+    "description": "Estimate saponification value from blank and sample titration readings, titrant normality and sample mass."
+  },
+  {
+    "name": "Degree of Unsaturation Calculator",
+    "url": "/calculators/degree-of-unsaturation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "degree of unsaturation calculator double bond equivalent DBE",
+    "description": "Calculate degree of unsaturation (double-bond equivalents) from a molecular formula's carbon, hydrogen, nitrogen and halogen counts."
+  },
+  {
+    "name": "Radiocarbon Dating Calculator",
+    "url": "/calculators/radiocarbon-dating-calculator-carbon-14-dating.html",
+    "category": "Biology & Chemistry",
+    "keywords": "radiocarbon dating calculator carbon 14 half life age",
+    "description": "Estimate elapsed time from the remaining carbon-14 fraction using its conventional half-life."
+  },
+  {
+    "name": "Calibration Curve Calculator",
+    "url": "/calculators/calibration-curve-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "calibration curve calculator standards response unknown concentration",
+    "description": "Fit a straight-line calibration from two standards and estimate an unknown concentration from its measured response."
+  },
+  {
+    "name": "Enzyme Activity Calculator",
+    "url": "/calculators/enzyme-activity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "enzyme activity calculator absorbance extinction coefficient path length",
+    "description": "Estimate enzyme activity per millilitre of sample from absorbance change, extinction coefficient, path length and reaction volumes."
+  },
+  {
+    "name": "Isoelectric Point Calculator",
+    "url": "/calculators/isoelectric-point-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "isoelectric point calculator pI pKa zwitterion",
+    "description": "Estimate an amino acid or protein group's isoelectric point by averaging the two pKa values that bracket its neutral form."
+  },
+  {
+    "name": "Michaelis-Menten Equation Calculator",
+    "url": "/calculators/michaelis-menten-equation-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Michaelis Menten equation calculator enzyme kinetics Vmax Km",
+    "description": "Calculate initial enzyme reaction velocity from maximum velocity, substrate concentration and Michaelis constant."
+  },
+  {
+    "name": "Beer-Lambert Law Calculator",
+    "url": "/calculators/beer-lambert-law-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Beer Lambert law calculator absorbance concentration molar absorptivity",
+    "description": "Calculate solution concentration from absorbance, molar absorptivity and optical path length."
+  },
+  {
+    "name": "Crude Protein Calculator",
+    "url": "/calculators/crude-protein-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "crude protein calculator nitrogen conversion factor percentage",
+    "description": "Estimate crude protein percentage from measured nitrogen percentage and a selected nitrogen-to-protein conversion factor."
+  },
+  {
+    "name": "Cubic Cell Calculator",
+    "url": "/calculators/cubic-cell-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cubic cell calculator crystal density lattice parameter unit cell",
+    "description": "Estimate crystal density from unit-cell edge length, atoms or formula units per cell and molar mass."
+  },
+  {
+    "name": "Effective Nuclear Charge Calculator",
+    "url": "/calculators/effective-nuclear-charge-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "effective nuclear charge calculator Slater rules shielding constant",
+    "description": "Estimate effective nuclear charge for an outer-shell electron using a simplified Slater-rule shielding model."
+  },
+  {
+    "name": "Electron Configuration Calculator",
+    "url": "/calculators/electron-configuration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electron configuration calculator atomic number Aufbau principle",
+    "description": "Generate the ground-state electron configuration for neutral atoms with atomic numbers 1 through 36 using the Aufbau order and common chromium/copper exceptions."
+  },
+  {
+    "name": "Electrolysis Calculator",
+    "url": "/calculators/electrolysis-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "electrolysis calculator Faraday law current mass deposition",
+    "description": "Estimate the theoretical mass deposited or released from electric current, elapsed time, molar mass and electron stoichiometry using Faraday's law."
+  },
+  {
+    "name": "Lattice Energy Calculator",
+    "url": "/calculators/lattice-energy-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "lattice energy calculator Born Haber cycle enthalpy",
+    "description": "Estimate lattice enthalpy for a 1:1 ionic solid from formation, atomization, ionization, bond-dissociation and electron-affinity enthalpies using a Born-Haber cycle."
+  },
+  {
+    "name": "Combustion Analysis Calculator",
+    "url": "/calculators/combustion-analysis-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "combustion analysis calculator carbon hydrogen oxygen empirical formula",
+    "description": "Estimate carbon, hydrogen and oxygen mole amounts from a sample mass and the measured masses of carbon dioxide and water produced."
+  },
+  {
+    "name": "Combustion Reaction Calculator",
+    "url": "/calculators/combustion-reaction-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "combustion reaction calculator balance hydrocarbon equation",
+    "description": "Balance the complete combustion equation for a hydrocarbon from its carbon and hydrogen atom counts."
+  },
+  {
+    "name": "Miller Indices Calculator",
+    "url": "/calculators/miller-indices-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Miller indices calculator crystal plane intercepts hkl",
+    "description": "Calculate reciprocal intercepts for a crystal plane and estimate the corresponding integer Miller indices."
+  },
+  {
+    "name": "Roof Pitch Calculator",
+    "url": "/calculators/roof-pitch-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roof pitch calculator rise run roof angle slope multiplier",
+    "description": "Calculate roof pitch, angle and slope multiplier from rise and horizontal run."
+  },
+  {
+    "name": "Roofing Calculator",
+    "url": "/calculators/roofing-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roofing calculator roof area roof slope roof squares material allowance",
+    "description": "Estimate sloped roof area and roofing squares from plan dimensions, roof pitch and a material allowance."
+  },
+  {
+    "name": "Roof Shingle Calculator",
+    "url": "/calculators/roof-shingle-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roof shingle calculator bundles coverage roof material cost",
+    "description": "Estimate shingle bundles and material cost from measured roof area, package coverage and a waste allowance."
+  },
+  {
+    "name": "Rebar Calculator",
+    "url": "/calculators/rebar-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "rebar calculator reinforcement steel bar weight diameter length quantity",
+    "description": "Estimate nominal reinforcing-bar mass and material cost from bar diameter, length, quantity and price per kilogram."
+  },
+  {
+    "name": "Steel Weight Calculator",
+    "url": "/calculators/steel-weight-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "steel weight calculator steel plate mass length width thickness density",
+    "description": "Estimate the mass of rectangular steel plates from dimensions, quantity and material density."
+  },
+  {
+    "name": "Fence Calculator",
+    "url": "/calculators/fence-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "fence calculator fence posts pickets rails length height spacing",
+    "description": "Estimate fence posts, pickets, rail length and face area for a straight fence run."
+  },
+  {
+    "name": "Atom Calculator",
+    "url": "/calculators/atom-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "atom calculator atomic number protons neutrons electrons isotope charge chemistry",
+    "description": "Calculate protons, neutrons and electrons from an atom's atomic number, mass number and charge."
+  },
+  {
+    "name": "Chemical Equation Balancer",
+    "url": "/calculators/chemical-equation-balancer.html",
+    "category": "Biology & Chemistry",
+    "keywords": "chemical equation balancer stoichiometry balance reaction coefficients conservation atoms",
+    "description": "Balance a chemical equation by solving elemental conservation equations for the smallest whole-number coefficients."
+  },
+  {
+    "name": "Percent Yield Calculator",
+    "url": "/calculators/percent-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent yield calculator actual yield theoretical yield reaction efficiency chemistry",
+    "description": "Calculate reaction percent yield from actual product yield and theoretical product yield."
+  },
+  {
+    "name": "Avogadro's Number Calculator",
+    "url": "/calculators/avogadros-number-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Avogadro number calculator moles particles molecules atoms Avogadro constant",
+    "description": "Convert amount in moles to a count of particles using the exact Avogadro constant."
+  },
+  {
+    "name": "Mass Concentration to Molarity Calculator",
+    "url": "/calculators/mass-concentration-to-molarity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "mass concentration to molarity conversion mg per litre molar mass g per mol",
+    "description": "Convert solute mass concentration in mg/L to molar and millimolar concentration using molar mass."
+  },
+  {
+    "name": "Double Bond Equivalent Calculator",
+    "url": "/calculators/double-bond-equivalent-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "double bond equivalent DBE degree of unsaturation molecular formula carbon hydrogen nitrogen halogens",
+    "description": "Calculate degree of unsaturation from carbon, hydrogen, nitrogen and halogen atom counts."
   }
 ]

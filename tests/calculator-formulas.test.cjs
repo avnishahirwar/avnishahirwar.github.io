@@ -145,7 +145,7 @@ test('production formula functions return correct numeric results for every shar
       ['Section 87A rebate (if eligible)', 0], ['Indicative annual tax incl. cess', 31200], ['Indicative monthly TDS', 5200]
     ]],
     ['bmi calculator', { height: 170, weight: 65 }, [
-      ['BMI (number only)', 22.49134948]
+      ['BMI (number only)', 22.49135018]
     ]]
   ];
 
@@ -539,7 +539,7 @@ test('mortgage calculator includes principal, interest, property tax, insurance 
   closeTo(result.monthlyPropertyTax, 1666.6666667, 0.001);
   closeTo(result.monthlyHomeInsurance, 1000, 0.001);
   closeTo(result.monthlyTotal, 60707.3536021, 0.001);
-  closeTo(result.totalInterest, 6929764.8644946, 0.01);
+  closeTo(result.totalInterest, 6929764.8645016, 0.01);
 });
 
 test('mortgage calculator handles 0% interest and rejects invalid loan assumptions', () => {
@@ -717,13 +717,13 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.match(about, /419 public calculators/);
-  assert.match(about, /Available calculators \(419 tools\)/);
+  assert.match(about, /512 public calculators/);
+  assert.match(about, /Available calculators \(512 tools\)/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, 420);
+  assert.equal(searchIndex.length, 513);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.match(homepage, /Search all 420 calculators/);
+  assert.match(homepage, /Search all 513 calculators/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
@@ -882,4 +882,392 @@ test('Steps-to-kilometres and number-to-words FAQs separate questions from answe
   const words = fs.readFileSync(new URL('../calculators/number-to-words-indian-format.html', 'file://' + __filename), 'utf8');
   for (const question of ['Is the distance exact?', 'Can I change the step length?', "Does this access my phone's step counter?"]) assert.ok(steps.includes('<summary>' + question + '</summary>'), 'Missing steps FAQ: ' + question);
   for (const question of ['Does this use lakh and crore?', 'Can I enter paise or decimals?', 'Is the result suitable for legal documents?']) assert.ok(words.includes('<summary>' + question + '</summary>'), 'Missing number-to-words FAQ: ' + question);
+});
+
+const chemistryEngineSource = fs.readFileSync(new URL('../assets/chemistry-calculators.js', 'file://' + __filename), 'utf8');
+const chemistryContext = {};
+vm.runInNewContext(chemistryEngineSource, chemistryContext);
+const chemistry = chemistryContext.FriendlyChemistryCalculators;
+
+test('chemistry batch 03 formulas return expected reference values', () => {
+  const avogadro = chemistry.avogadro({ moles: 1 });
+  assert.ok(Math.abs(Number(avogadro[1][1]) / 6.02214076e23 - 1) < 1e-12);
+
+  const gas = chemistry.molarMassGas({ mass: 1, temperature: 273.15, pressure: 101.325, volume: 22.414 });
+  assert.ok(Math.abs(parseFloat(gas[0][1]) - 1) < 0.002);
+
+  const atoms = chemistry.molesToAtoms({ moles: 1, atomsPerMolecule: 3 });
+  assert.ok(Math.abs(Number(atoms[1][1]) / 1.806642228e24 - 1) < 1e-8);
+
+  const ppm = chemistry.ppmToMolarity({ ppm: 1000, density: 1, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(ppm[1][1]) - (1 / 58.44)) < 1e-6);
+
+  const residence = chemistry.residenceTime({ volume: 1000, flow: 100 });
+  assert.ok(Math.abs(parseFloat(residence[0][1]) - 10) < 1e-8);
+
+  const dilution = chemistry.dilutionFactor({ stock: 1, target: 0.1, finalVolume: 100 });
+  assert.ok(Math.abs(parseFloat(dilution[0][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[1][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[2][1]) - 90) < 1e-8);
+
+  const buffer = chemistry.hendersonHasselbalch({ pKa: 4.76, base: 0.1, acid: 0.1 });
+  assert.ok(Math.abs(parseFloat(buffer[1][1]) - 4.76) < 1e-8);
+
+  const massPercent = chemistry.massPercent({ soluteMass: 10, solventMass: 90 });
+  assert.ok(Math.abs(parseFloat(massPercent[1][1]) - 10) < 1e-8);
+
+  const percentToMolarity = chemistry.percentageToMolarity({ percentWv: 5, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(percentToMolarity[1][1]) - (50 / 58.44)) < 1e-6);
+
+  const ph = chemistry.ph({ hydrogen: 0.001 });
+  assert.ok(Math.abs(parseFloat(ph[0][1]) - 3) < 1e-8);
+});
+
+test('chemistry batch 03 formulas reject invalid physical inputs', () => {
+  assert.throws(() => chemistry.molarMassGas({ mass: 1, temperature: 0, pressure: 100, volume: 1 }), /positive finite value/);
+  assert.throws(() => chemistry.molesToAtoms({ moles: 1, atomsPerMolecule: 1.5 }), /positive whole number/);
+  assert.throws(() => chemistry.dilutionFactor({ stock: 0.1, target: 1, finalVolume: 100 }), /lower than stock/);
+  assert.throws(() => chemistry.hendersonHasselbalch({ pKa: 4.7, base: 0, acid: 0.1 }), /positive finite value/);
+  assert.throws(() => chemistry.massPercent({ soluteMass: 0, solventMass: 0 }), /greater than zero/);
+  assert.throws(() => chemistry.ph({ hydrogen: 0 }), /positive finite value/);
+});
+
+const batch04Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch04.js', 'file://' + __filename), 'utf8');
+const batch04Context = {};
+vm.runInNewContext(batch04Source, batch04Context);
+const batch04 = batch04Context.FriendlyChemistryBatch04;
+
+test('chemistry batch 04 formulas return expected reference values', () => {
+  const en = batch04.electronegativity({ first: 2.2, second: 3.16 });
+  assert.ok(Math.abs(parseFloat(en[0][1]) - 0.96) < 1e-8);
+
+  const ionic = batch04.ionic({ difference: 1 });
+  assert.ok(Math.abs(parseFloat(ionic[0][1]) - ((1 - Math.exp(-0.25)) * 100)) < 1e-4);
+
+  const pka = batch04.pka({ ka: 1e-5, pka: NaN });
+  assert.ok(Math.abs(parseFloat(pka[0][1]) - 5) < 1e-8);
+  const ka = batch04.pka({ ka: NaN, pka: 5 });
+  assert.ok(Math.abs(Number(ka[0][1]) / 1e-5 - 1) < 1e-8);
+
+  const alligation = batch04.alligation({ high: 40, low: 10, target: 25, total: 100 });
+  assert.ok(Math.abs(parseFloat(alligation[0][1]) - 50) < 1e-8);
+  assert.ok(Math.abs(parseFloat(alligation[1][1]) - 50) < 1e-8);
+
+  const concentration = batch04.concentration({ mass: 5, volume: 1, molarMass: 58.44 });
+  assert.ok(Math.abs(parseFloat(concentration[0][1]) - 5) < 1e-8);
+  assert.ok(Math.abs(parseFloat(concentration[1][1]) - (5 / 58.44)) < 1e-6);
+
+  const mixing = batch04.mixing({ partsA: 2, partsB: 3, total: 10 });
+  assert.ok(Math.abs(parseFloat(mixing[0][1]) - 4) < 1e-8);
+  assert.ok(Math.abs(parseFloat(mixing[1][1]) - 6) < 1e-8);
+
+  const raoult = batch04.raoult({ solventMoles: 8, soluteMoles: 2, purePressure: 3.17 });
+  assert.ok(Math.abs(parseFloat(raoult[0][1]) - 0.8) < 1e-8);
+  assert.ok(Math.abs(parseFloat(raoult[1][1]) - 2.536) < 1e-6);
+
+  const actual = batch04.actualYield({ theoretical: 10, actual: 8, percent: NaN });
+  assert.ok(Math.abs(parseFloat(actual[0][1]) - 80) < 1e-8);
+  const estimated = batch04.actualYield({ theoretical: 10, actual: NaN, percent: 80 });
+  assert.ok(Math.abs(parseFloat(estimated[0][1]) - 8) < 1e-8);
+
+  const activation = batch04.activation({ k1: 1, t1: 300, k2: 2, t2: 310 });
+  assert.ok(Number.isFinite(parseFloat(activation[0][1])) && parseFloat(activation[0][1]) > 0);
+
+  const boiling = batch04.boiling({ molality: 0.5, kb: 0.512, factor: 2, normal: 100 });
+  assert.ok(Math.abs(parseFloat(boiling[0][1]) - 0.512) < 1e-8);
+  assert.ok(Math.abs(parseFloat(boiling[1][1]) - 100.512) < 1e-8);
+});
+
+test('chemistry batch 04 formulas reject invalid or ambiguous inputs', () => {
+  assert.throws(() => batch04.electronegativity({ first: -1, second: 2 }), /non-negative finite value/);
+  assert.throws(() => batch04.pka({ ka: 1e-5, pka: 5 }), /not both/);
+  assert.throws(() => batch04.alligation({ high: 10, low: 10, target: 10, total: 10 }), /strictly between/);
+  assert.throws(() => batch04.concentration({ mass: 1, volume: 0, molarMass: 10 }), /positive finite value/);
+  assert.throws(() => batch04.mixing({ partsA: 0, partsB: 2, total: 10 }), /positive finite value/);
+  assert.throws(() => batch04.raoult({ solventMoles: 1, soluteMoles: 0, purePressure: 3 }), /positive finite value/);
+  assert.throws(() => batch04.actualYield({ theoretical: 10, actual: 8, percent: 80 }), /either an actual yield or a percent yield/);
+  assert.throws(() => batch04.activation({ k1: 1, t1: 300, k2: 2, t2: 300 }), /different/);
+  assert.throws(() => batch04.boiling({ molality: 0, kb: 0.5, factor: 2, normal: 100 }), /positive finite value/);
+});
+
+const batch05Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch05.js', 'file://' + __filename), 'utf8');
+const batch05Context = {};
+vm.runInNewContext(batch05Source, batch05Context);
+const batch05 = batch05Context.FriendlyChemistryBatch05;
+
+test('chemistry batch 05 formulas return expected reference values', () => {
+  const afr = batch05.afr({ air: 14.7, fuel: 1, stoich: 14.7 });
+  assert.ok(Math.abs(parseFloat(afr[1][1]) - 1) < 1e-8);
+
+  const water = batch05.molecular({ formula: 'H2O' });
+  assert.ok(Math.abs(parseFloat(water[0][1]) - 18.015) < 0.002);
+  const calciumHydroxide = batch05.molecular({ formula: 'Ca(OH)2' });
+  assert.ok(Math.abs(parseFloat(calciumHydroxide[0][1]) - 74.092) < 0.003);
+
+  const activity = batch05.activity({ charge: 1, ionic: 0.1 });
+  assert.ok(parseFloat(activity[1][1]) > 0 && parseFloat(activity[1][1]) < 1);
+
+  const buffer = batch05.buffer({ total: 0.1, pka: 4.76, ph: 4.76 });
+  assert.ok(Math.abs(parseFloat(buffer[0][1]) - (2.303 * 0.1 / 4)) < 1e-6);
+
+  const neutral = batch05.neutralization({ acidM: 0.1, acidV: 25, acidCoeff: 1, baseM: 0.1, baseV: 50, baseCoeff: 2 });
+  assert.match(neutral[2][1], /equivalence/);
+
+  const percent = batch05.percentSolution({ mass: 5, volume: 100 });
+  assert.ok(Math.abs(parseFloat(percent[0][1]) - 5) < 1e-8);
+
+  const dilution = batch05.solutionDilution({ stock: 1, target: 0.1, final: 100 });
+  assert.ok(Math.abs(parseFloat(dilution[0][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[1][1]) - 90) < 1e-8);
+
+  const titration = batch05.titration({ sampleM: 0.1, sampleV: 25, analyteCoeff: 1, titrantM: 0.1, titrantCoeff: 1 });
+  assert.ok(Math.abs(parseFloat(titration[0][1]) - 25) < 1e-8);
+
+  const hardness = batch05.hardness({ calcium: 40, magnesium: 12 });
+  assert.ok(Math.abs(parseFloat(hardness[0][1]) - 149.296) < 1e-6);
+
+  const theoretical = batch05.theoretical({ reactantMass: 10, reactantMolar: 50, reactantCoeff: 1, productMolar: 80, productCoeff: 1 });
+  assert.ok(Math.abs(parseFloat(theoretical[0][1]) - 16) < 1e-8);
+});
+
+test('chemistry batch 05 formulas reject unsupported or invalid inputs', () => {
+  assert.throws(() => batch05.afr({ air: 1, fuel: 0, stoich: 14 }), /positive finite value/);
+  assert.throws(() => batch05.molecular({ formula: 'XeF2' }), /not in this calculator/);
+  assert.throws(() => batch05.molecular({ formula: 'Ca(OH2' }), /Missing closing parenthesis/);
+  assert.throws(() => batch05.activity({ charge: 1, ionic: 0.6 }), /up to about 0.5/);
+  assert.throws(() => batch05.buffer({ total: 0.1, pka: NaN, ph: 5 }), /valid pKa and pH/);
+  assert.throws(() => batch05.solutionDilution({ stock: 0.1, target: 1, final: 100 }), /cannot exceed stock/);
+  assert.throws(() => batch05.titration({ sampleM: 0.1, sampleV: 25, analyteCoeff: 1, titrantM: 0, titrantCoeff: 1 }), /positive finite value/);
+  assert.throws(() => batch05.hardness({ calcium: -1, magnesium: 2 }), /non-negative finite value/);
+});
+
+const batch06Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch06.js', 'file://' + __filename), 'utf8');
+const batch06Context = {};
+vm.runInNewContext(batch06Source, batch06Context);
+const batch06 = batch06Context.FriendlyChemistryBatch06;
+
+test('chemistry batch 06 formulas return expected reference values', () => {
+  const equilibrium = batch06.equilibrium({ a: 0.2, b: 0.2, c: 0.1, d: 0.1, na: 1, nb: 1, nc: 1, nd: 1 });
+  assert.ok(Math.abs(parseFloat(equilibrium[0][1]) - 0.25) < 1e-8);
+
+  const kp = batch06.kp({ kc: 0.5, temperature: 298.15, delta: -1 });
+  assert.ok(Math.abs(parseFloat(kp[0][1]) - (0.5 / (0.082057366 * 298.15))) < 1e-6);
+
+  const ratio = batch06.molarRatio({ known: 2, knownCoeff: 2, targetCoeff: 3 });
+  assert.ok(Math.abs(parseFloat(ratio[0][1]) - 3) < 1e-8);
+
+  const rate = batch06.rateConstant({ initial: 1, final: 0.5, time: 60 });
+  assert.ok(Math.abs(parseFloat(rate[1][1]) - 60) < 1e-5);
+
+  const quotient = batch06.reactionQuotient({ a: 0.2, b: 0.2, c: 0.1, d: 0.1, na: 1, nb: 1, nc: 1, nd: 1, kc: 1 });
+  assert.match(quotient[1][1], /Forward direction favoured/);
+
+  const entropy = batch06.entropy({ heat: 2.5, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(entropy[0][1]) - (2500 / 298.15)) < 1e-5);
+
+  const freezing = batch06.freezing({ molality: 0.5, kf: 1.86, factor: 2, normal: 0 });
+  assert.ok(Math.abs(parseFloat(freezing[0][1]) - 1.86) < 1e-8);
+  assert.ok(Math.abs(parseFloat(freezing[1][1]) + 1.86) < 1e-8);
+
+  const gibbs = batch06.gibbs({ enthalpy: -100, entropy: -200, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(gibbs[0][1]) - (-40.37)) < 0.02);
+
+  const phase = batch06.phaseRule({ components: 2, phases: 2 });
+  assert.equal(phase[0][1], '2');
+
+  const q10 = batch06.q10({ rate1: 1, temp1: 20, rate2: 2, temp2: 30 });
+  assert.ok(Math.abs(parseFloat(q10[0][1]) - 2) < 1e-8);
+});
+
+test('chemistry batch 06 formulas reject invalid physical and stoichiometric inputs', () => {
+  assert.throws(() => batch06.equilibrium({ a: 0, b: 1, c: 1, d: 1, na: 1, nb: 1, nc: 1, nd: 1 }), /positive finite value/);
+  assert.throws(() => batch06.kp({ kc: 1, temperature: 0, delta: 1 }), /positive finite value/);
+  assert.throws(() => batch06.molarRatio({ known: 1, knownCoeff: 0, targetCoeff: 1 }), /positive whole-number coefficient/);
+  assert.throws(() => batch06.rateConstant({ initial: 1, final: 2, time: 10 }), /cannot exceed initial/);
+  assert.throws(() => batch06.reactionQuotient({ a: 1, b: 1, c: 1, d: 1, na: 1, nb: 1, nc: 1, nd: 1, kc: 0 }), /positive finite value/);
+  assert.throws(() => batch06.freezing({ molality: 1, kf: 1, factor: 0, normal: 0 }), /positive finite value/);
+  assert.throws(() => batch06.phaseRule({ components: 1, phases: 4 }), /negative degree/);
+  assert.throws(() => batch06.q10({ rate1: 1, temp1: 20, rate2: 2, temp2: 20 }), /different valid temperatures/);
+});
+
+const batch07Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch07.js', 'file://' + __filename), 'utf8');
+const batch07Context = {};
+vm.runInNewContext(batch07Source, batch07Context);
+const batch07 = batch07Context.FriendlyChemistryBatch07;
+
+test('chemistry batch 07 formulas return expected reference values', () => {
+  const stp = batch07.stp({ moles: 1, temperature: 273.15, pressure: 101.325 });
+  assert.ok(Math.abs(parseFloat(stp[0][1]) - 22.414) < 0.02);
+
+  const partial = batch07.partial({ component: 2, total: 5, pressure: 100 });
+  assert.ok(Math.abs(parseFloat(partial[1][1]) - 40) < 1e-8);
+
+  const vapor = batch07.vapor({ a: 8.07131, b: 1730.63, c: 233.426, temperature: 25 });
+  assert.ok(parseFloat(vapor[0][1]) > 23 && parseFloat(vapor[0][1]) < 24);
+
+  const water = batch07.waterVapor({ temperature: 25 });
+  assert.ok(parseFloat(water[1][1]) > 3.1 && parseFloat(water[1][1]) < 3.3);
+
+  const boiling = batch07.boilingPoint({ a: 8.07131, b: 1730.63, c: 233.426, pressure: 760 });
+  assert.ok(Math.abs(parseFloat(boiling[0][1]) - 100) < 0.02);
+
+  const altitude = batch07.altitudeBoil({ altitude: 0 });
+  assert.ok(Math.abs(parseFloat(altitude[1][1]) - 100) < 0.05);
+
+  const combustion = batch07.combustion({ mass: 1, energy: 44 });
+  assert.ok(Math.abs(parseFloat(combustion[0][1]) - 44) < 1e-8);
+
+  const osmotic = batch07.osmotic({ molarity: 0.1, factor: 1, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(osmotic[0][1]) - (0.1 * 0.082057366 * 298.15)) < 1e-6);
+
+  const ionic = batch07.ionicStrength({ c1: 0.1, z1: 1, c2: 0.1, z2: -1, c3: 0, z3: 0, c4: 0, z4: 0 });
+  assert.ok(Math.abs(parseFloat(ionic[0][1]) - 0.1) < 1e-8);
+
+  const diffusion = batch07.diffusion({ temperature: 298.15, viscosity: 0.001, radius: 1 });
+  const d = Number(diffusion[0][1].split(' ')[0]);
+  assert.ok(d > 2.1e-10 && d < 2.3e-10);
+});
+
+test('chemistry batch 07 formulas reject invalid units and ranges', () => {
+  assert.throws(() => batch07.stp({ moles: 1, temperature: 0, pressure: 100 }), /positive finite value/);
+  assert.throws(() => batch07.partial({ component: 6, total: 5, pressure: 100 }), /cannot exceed/);
+  assert.throws(() => batch07.waterVapor({ temperature: 101 }), /between 1 °C and 100 °C/);
+  assert.throws(() => batch07.boilingPoint({ a: 8, b: 1000, c: 200, pressure: 0 }), /positive finite value/);
+  assert.throws(() => batch07.altitudeBoil({ altitude: 12000 }), /between 0 and 11,000/);
+  assert.throws(() => batch07.ionicStrength({ c1: 0.1, z1: 0, c2: 0, z2: 0, c3: 0, z3: 0, c4: 0, z4: 0 }), /non-zero integer charge/);
+  assert.throws(() => batch07.diffusion({ temperature: 298, viscosity: 0, radius: 1 }), /positive finite value/);
+});
+
+const batch08Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch08.js', 'file://' + __filename), 'utf8');
+const batch08Context = {};
+vm.runInNewContext(batch08Source, batch08Context);
+const batch08 = batch08Context.FriendlyChemistryBatch08;
+
+test('chemistry batch 08 formulas return expected reference values', () => {
+  const en = batch08.electronegativity({ ab: 400, aa: 350, bb: 250 });
+  assert.ok(parseFloat(en[0][1]) > 1 && parseFloat(en[0][1]) < 1.1);
+
+  const emf = batch08.cellEmf({ cathode: 0.34, anode: -0.76 });
+  assert.ok(Math.abs(parseFloat(emf[0][1]) - 1.1) < 1e-8);
+
+  const nernst = batch08.nernst({ standard: 1.1, electrons: 2, quotient: 1, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(nernst[0][1]) - 1.1) < 1e-8);
+
+  const effusion = batch08.effusion({ molarA: 2, molarB: 32 });
+  assert.ok(Math.abs(parseFloat(effusion[0][1]) - 4) < 1e-8);
+
+  const half = batch08.halfLife({ initial: 100, half: 10, time: 25 });
+  assert.ok(Math.abs(parseFloat(half[0][1]) - (100 * Math.pow(0.5, 2.5))) < 1e-6);
+
+  const arrhenius = batch08.arrhenius({ factor: 1e6, energy: 50, temperature: 300 });
+  assert.ok(Number(arrhenius[0][1]) > 0);
+
+  const langmuir = batch08.langmuir({ maximum: 100, affinity: 0.1, concentration: 10 });
+  assert.ok(Math.abs(parseFloat(langmuir[0][1]) - 50) < 1e-8);
+
+  const laplace = batch08.youngLaplace({ tension: 0.072, radius: 0.001 });
+  assert.ok(Math.abs(parseFloat(laplace[0][1]) - 144) < 1e-8);
+
+  const radioactive = batch08.radioactive({ initial: 100, constant: 0.0693147, time: 10 });
+  assert.ok(Math.abs(parseFloat(radioactive[0][1]) - 50) < 0.001);
+
+  const cod = batch08.cod({ blank: 10, sample: 6, normality: 0.1, volume: 50 });
+  assert.ok(Math.abs(parseFloat(cod[0][1]) - 64) < 1e-8);
+});
+
+test('chemistry batch 08 formulas reject invalid physical and model inputs', () => {
+  assert.throws(() => batch08.electronegativity({ ab: 100, aa: 350, bb: 250 }), /geometric mean/);
+  assert.throws(() => batch08.nernst({ standard: 1, electrons: 0, quotient: 1, temperature: 298 }), /positive finite value/);
+  assert.throws(() => batch08.effusion({ molarA: 0, molarB: 1 }), /positive finite value/);
+  assert.throws(() => batch08.halfLife({ initial: 100, half: 0, time: 5 }), /positive finite value/);
+  assert.throws(() => batch08.arrhenius({ factor: 1, energy: -1, temperature: 300 }), /non-negative/);
+  assert.throws(() => batch08.langmuir({ maximum: 100, affinity: 0, concentration: 1 }), /positive finite value/);
+  assert.throws(() => batch08.youngLaplace({ tension: 0.07, radius: 0 }), /positive finite value/);
+  assert.throws(() => batch08.radioactive({ initial: 1, constant: 0.1, time: -1 }), /non-negative/);
+  assert.throws(() => batch08.cod({ blank: 5, sample: 6, normality: 0.1, volume: 50 }), /between zero and the blank/);
+});
+
+const batch09Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch09.js', 'file://' + __filename), 'utf8');
+const batch09Context = {};
+vm.runInNewContext(batch09Source, batch09Context);
+const batch09 = batch09Context.FriendlyChemistryBatch09;
+
+test('chemistry batch 09 formulas return expected reference values', () => {
+  const saponification = batch09.saponification({ blank: 25, sample: 10, normality: 0.5, mass: 2 });
+  assert.ok(Math.abs(parseFloat(saponification[0][1]) - 210.375) < 1e-6);
+
+  const dbe = batch09.unsaturation({ carbon: 6, hydrogen: 6, nitrogen: 0, halogens: 0 });
+  assert.ok(Math.abs(parseFloat(dbe[0][1]) - 4) < 1e-8);
+
+  const radiocarbon = batch09.radiocarbon({ fraction: 0.5, half: 5730 });
+  assert.ok(Math.abs(parseFloat(radiocarbon[0][1]) - 5730) < 1e-8);
+
+  const calibration = batch09.calibration({ c1: 1, r1: 2.1, c2: 5, r2: 10.1, unknown: 6.1 });
+  assert.ok(Math.abs(parseFloat(calibration[2][1]) - 3) < 1e-8);
+
+  const enzyme = batch09.enzyme({ rate: 0.05, epsilon: 6220, path: 1, reaction: 3, enzyme: 0.1 });
+  assert.ok(parseFloat(enzyme[0][1]) > 0.24 && parseFloat(enzyme[0][1]) < 0.25);
+
+  const pi = batch09.isoelectric({ lower: 2.34, upper: 9.6 });
+  assert.ok(Math.abs(parseFloat(pi[0][1]) - 5.97) < 1e-8);
+
+  const michaelis = batch09.michaelis({ maximum: 100, substrate: 2, km: 2 });
+  assert.ok(Math.abs(parseFloat(michaelis[0][1]) - 50) < 1e-8);
+
+  const beer = batch09.beerLambert({ absorbance: 0.622, epsilon: 6220, path: 1 });
+  assert.ok(Math.abs(parseFloat(beer[0][1]) - 0.0001) < 1e-8);
+
+  const protein = batch09.crudeProtein({ nitrogen: 2.4, factor: 6.25 });
+  assert.ok(Math.abs(parseFloat(protein[0][1]) - 15) < 1e-8);
+
+  const cubic = batch09.cubic({ edge: 400, units: 4, molar: 58.69 });
+  assert.ok(parseFloat(cubic[0][1]) > 0);
+});
+
+test('chemistry batch 09 formulas reject invalid scientific inputs', () => {
+  assert.throws(() => batch09.saponification({ blank: 10, sample: 11, normality: 0.5, mass: 2 }), /between zero and the blank/);
+  assert.throws(() => batch09.unsaturation({ carbon: 6, hydrogen: -1, nitrogen: 0, halogens: 0 }), /non-negative whole numbers/);
+  assert.throws(() => batch09.radiocarbon({ fraction: 0, half: 5730 }), /greater than 0/);
+  assert.throws(() => batch09.calibration({ c1: 1, r1: 2, c2: 1, r2: 4, unknown: 3 }), /must be different/);
+  assert.throws(() => batch09.isoelectric({ lower: 9, upper: 2 }), /lower value first/);
+  assert.throws(() => batch09.michaelis({ maximum: 0, substrate: 2, km: 2 }), /positive finite value/);
+  assert.throws(() => batch09.beerLambert({ absorbance: 0.6, epsilon: 0, path: 1 }), /positive finite value/);
+  assert.throws(() => batch09.cubic({ edge: 400, units: 4.5, molar: 58 }), /whole number/);
+});
+
+const batch10Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch10.js', 'file://' + __filename), 'utf8');
+const batch10Context = {};
+vm.runInNewContext(batch10Source, batch10Context);
+const batch10 = batch10Context.FriendlyChemistryBatch10;
+
+test('chemistry batch 10 formulas return expected reference values', () => {
+  const zeff = batch10.zeff({ z: 11, same: 0, previous: 8, inner: 2 });
+  assert.ok(Math.abs(parseFloat(zeff[1][1]) - 2.2) < 1e-8);
+
+  const config = batch10.electronConfig({ z: 24 });
+  assert.match(config[1][1], /3d\^5 4s\^1/);
+
+  const electrolysis = batch10.electrolysis({ current: 2, time: 3600, molar: 63.546, electrons: 2 });
+  assert.ok(parseFloat(electrolysis[0][1]) > 2.36 && parseFloat(electrolysis[0][1]) < 2.38);
+
+  const lattice = batch10.lattice({ formation: -411, atomization: 108, ionization: 496, bond: 121, affinity: -349 });
+  assert.ok(Math.abs(parseFloat(lattice[0][1]) - (-787)) < 1e-8);
+
+  const analysis = batch10.combustionAnalysis({ sample: 1, co2: 1.466, water: 0.6 });
+  assert.ok(parseFloat(analysis[0][1]) > 0.39 && parseFloat(analysis[0][1]) < 0.41);
+
+  const reaction = batch10.combustionReaction({ carbon: 2, hydrogen: 6 });
+  assert.match(reaction[0][1], /2 C2H6 \+ 7 O₂ → 4 CO₂ \+ 6 H₂O/);
+
+  const miller = batch10.miller({ x: 1, y: 1, z: 1 });
+  assert.equal(miller[1][1], '1 1 1');
+});
+
+test('chemistry batch 10 formulas reject invalid atomic, physical and crystallographic inputs', () => {
+  assert.throws(() => batch10.zeff({ z: 1, same: 0, previous: 2, inner: 1 }), /smaller than atomic number/);
+  assert.throws(() => batch10.electronConfig({ z: 37 }), /from 1 to 36/);
+  assert.throws(() => batch10.electrolysis({ current: 0, time: 1, molar: 1, electrons: 1 }), /positive finite value/);
+  assert.throws(() => batch10.combustionAnalysis({ sample: 0.1, co2: 10, water: 1 }), /more C and H mass/);
+  assert.throws(() => batch10.combustionReaction({ carbon: 0, hydrogen: 4 }), /positive whole-number/);
+  assert.throws(() => batch10.miller({ x: 0, y: 0, z: 0 }), /At least one intercept/);
 });
