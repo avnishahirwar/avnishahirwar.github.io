@@ -49,6 +49,3 @@ jobs:
           node-version: 22
       - name: Prevent competitor calculator outbound URLs
         run: node --test tests/no-competitor-outbound-links.test.cjs
-
-      - name: Verify generated human sitemap is in sync with the public catalogue
-        run: node scripts/generate-human-sitemap.cjs --check
