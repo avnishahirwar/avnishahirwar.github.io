@@ -13,7 +13,7 @@ const secondaryAdmin = fs.readFileSync(path.join(root, 'avnish-ai/admin.html'), 
 const docs = fs.readFileSync(path.join(root, 'calculator/api.html'), 'utf8');
 const migration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111040834_customer_api_quota_management.sql'), 'utf8');
 const legacyMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041646_grandfather_existing_api_keys.sql'), 'utf8');
-const guardMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111042333_guard_customer_api_key_mutations.sql'), 'utf8');
+const guardMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111041933_guard_customer_api_key_mutations.sql'), 'utf8');
 const revokeMigration = fs.readFileSync(path.join(root, 'supabase/migrations/20261111042639_revoke_direct_api_table_access.sql'), 'utf8');
 
 const calculators = [
