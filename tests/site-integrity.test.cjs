@@ -2058,11 +2058,11 @@ test('shared header and footer fail-safe is installed before optional page enhan
 
 test('shared shell visually replaces legacy page-level headers and footers', () => {
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(script, /body > header:not\\(\\.fc-global-header\\)/);
-  assert.match(script, /body > \\.top/);
-  assert.match(script, /body > footer:not\\(\\.fc-global-footer\\)/);
-  assert.match(script, /node\\.hidden = true/);
-  assert.match(script, /node\\.setAttribute\\('aria-hidden', 'true'\\)/);
+  assert.ok(script.includes('body > header:not(.fc-global-header)'));
+  assert.ok(script.includes('body > .top'));
+  assert.ok(script.includes('body > footer:not(.fc-global-footer)'));
+  assert.ok(script.includes('node.hidden = true'));
+  assert.ok(script.includes("node.setAttribute('aria-hidden', 'true')"));
   assert.match(script, /fc-global-footer-links/);
 });
 
