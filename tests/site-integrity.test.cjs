@@ -304,7 +304,7 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
 
 test('GST calculator links to the current 546-page catalogue count', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
-  assert.ok(gst.includes('Explore all 546 calculators on Friendly Calculator.'));
+  assert.ok(gst.includes('Explore all 562 calculators on Friendly Calculator.'));
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
 });
 
@@ -334,7 +334,7 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily & Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
-  assert.ok(salary.includes('Explore all 546 calculators on Friendly Calculator.'));
+  assert.ok(salary.includes('Explore all 562 calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
 
@@ -1218,7 +1218,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into 20 clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.match(directory, /Showing all 546 calculators in 20 categories/);
+  assert.match(directory, /Showing all 562 calculators in 20 categories/);
 });
 
 
@@ -1443,11 +1443,11 @@ test('homepage search runtime validates the complete 2,479-item deferred catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   assert.equal(searchIndex.length, 2479);
-  assert.match(homepage, /items\.length!==547/);
+  assert.match(homepage, /items\.length!==2479/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
 
-test('homepage stays lightweight while all 546 calculators remain searchable and discoverable', () => {
+test('homepage stays lightweight while all 2,478 canonical calculator pages remain searchable and discoverable', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndexPath = path.join(root, 'assets/calculator-search-index.json');
   assert.ok(fs.existsSync(searchIndexPath), 'Deferred calculator search index must exist');
@@ -1468,7 +1468,7 @@ test('homepage stays lightweight while all 546 calculators remain searchable and
   assert.equal(categoryLinks.length, 20, 'All 20 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
-  assert.equal(searchIndex.length, 547, 'All 546 calculators, including the international VAT calculator, must remain in the deferred search index');
+  assert.equal(searchIndex.length, 2479, 'All 546 calculators, including the international VAT calculator, must remain in the deferred search index');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, 2479, 'Search index URLs must be unique');
   for (const item of searchIndex) {
     assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
@@ -1602,7 +1602,7 @@ test('Net Worth Calculator is indexed, discoverable and calculates assets less l
   assert.match(about, /href="\/calculators\/net-worth-calculator\.html"/);
   assert.match(finance, /href="\/calculators\/net-worth-calculator\.html"/);
   assert.ok(searchIndex.some(item => item.url === '/calculators/net-worth-calculator.html'));
-  assert.equal(searchIndex.length, 547);
+  assert.equal(searchIndex.length, 2479);
 
   const result = calculator.calculateNetWorth({
     cash: 25000, investments: 50000, otherAssets: 10000,
@@ -1646,8 +1646,8 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(directory.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from directory');
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
-  assert.equal(searchIndex.length, 547);
-  assert.ok(homepage.includes('546 calculators'));
+  assert.equal(searchIndex.length, 2479);
+  assert.ok(homepage.includes('2,479 calculators'));
 });
 
  
@@ -1725,9 +1725,9 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
+  assert.equal(index.length, 2479);
   assert.match(directory, /<strong>142 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 04 calculators are present in pages, search and directory', () => {
@@ -1758,9 +1758,9 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 05 calculators are present in pages, search and directory', () => {
@@ -1791,9 +1791,9 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 06 calculators are present in pages, search and directory', () => {
@@ -1824,9 +1824,9 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 07 calculators are present in pages, search and directory', () => {
@@ -1857,9 +1857,9 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 08 calculators are present in pages, search and directory', () => {
@@ -1890,9 +1890,9 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('ten chemistry batch 09 calculators are present in pages, search and directory', () => {
@@ -1923,9 +1923,9 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 test('seven chemistry batch 10 calculators are present in pages, search and directory', () => {
@@ -1953,9 +1953,9 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.ok(about.includes('href="' + route + '"'));
     assert.ok(index.some(item => item.url === route));
   }
-  assert.equal(index.length, 547);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
-  assert.match(about, /546 public calculators/);
+  assert.equal(index.length, 2479);
+  assert.match(directory, /<strong>142 tools<\/strong>/);
+  assert.match(about, /562 public calculators/);
 });
 
 
@@ -1965,9 +1965,9 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
- assert.equal(index.length,547);
- assert.match(directory,/<strong>126 tools<\/strong>/);
- assert.match(about,/546 public calculators/);
+ assert.equal(index.length,2479);
+ assert.match(directory,/<strong>142 tools<\/strong>/);
+ assert.match(about,/562 public calculators/);
 });
 
 
