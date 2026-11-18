@@ -623,3 +623,29 @@ body>.fc-display-panel .fc-display-status{
   clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;
   white-space:nowrap!important;border:0!important;
 }
+
+
+/* Accessibility theme controls: Normal Mode is the default and both labels
+   remain high-contrast and readable in either selected theme. */
+html[data-fc-theme="light"]{color-scheme:light}
+html[data-fc-theme="dark"]{color-scheme:dark}
+body>.fc-display-panel .fc-theme-mode-options .fc-display-action{
+  color:#172638!important;
+  background:#f2f5f8!important;
+  opacity:1!important;
+  font-weight:750!important;
+}
+body>.fc-display-panel .fc-theme-mode-options .fc-display-action[aria-pressed="true"]{
+  background:#14283d!important;
+  color:#fff!important;
+  border-color:#d1b779!important;
+  box-shadow:inset 0 0 0 1px #d1b779!important;
+}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-display-action{
+  background:#1c3046!important;
+  color:#edf3f8!important;
+}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-theme-mode-options .fc-display-action[aria-pressed="true"]{
+  background:#d1b779!important;
+  color:#101d2b!important;
+}
