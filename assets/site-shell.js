@@ -1132,6 +1132,28 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   close.addEventListener('click',closePanel);
   open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)themeButton.focus();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
+  // Keep locale and measurement selectors out of the crowded primary navigation.
+  // Moving the original controls preserves their IDs, event listeners and saved preferences.
+  const settingRows=[];
+  const addSettingRow=(className,controls)=>{
+    const row=document.createElement('div');
+    row.className='fc-display-setting-row '+className;
+    controls.forEach(control=>{if(control)row.append(control);});
+    if(row.children.length){panel.append(row);settingRows.push(row);}
+  };
+  const currencyControl=document.querySelector('.fc-currency-control');
+  const countryControl=document.querySelector('.fc-country-control');
+  const formatControl=document.querySelector('.fc-format-control');
+  const unitControl=document.querySelector('.fc-unit-control');
+  addSettingRow('fc-display-currency-row',[currencyControl]);
+  addSettingRow('fc-display-country-format-row',[countryControl,formatControl]);
+  addSettingRow('fc-display-units-row',[unitControl]);
+  if(settingRows.length){
+    const divider=document.createElement('div');
+    divider.className='fc-display-settings-divider';
+    divider.setAttribute('aria-hidden','true');
+    panel.append(divider);
+  }
   panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
   document.body.append(open,panel);
   applyTheme(initialTheme);
