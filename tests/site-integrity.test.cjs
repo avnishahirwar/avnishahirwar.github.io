@@ -2017,6 +2017,8 @@ test('Sitemap page keeps the shared global header and footer visible', () => {
   assert.ok(shell.includes("r+'sitemap.html'"));
   assert.ok(styles.includes('.fc-global-header{'));
   assert.ok(styles.includes('.fc-global-footer{'));
+  assert.ok(styles.includes('body:not(.fc-embed-mode) > .fc-global-header'));
+  assert.ok(styles.includes('body:not(.fc-embed-mode) > .fc-global-footer'));
   assert.ok(shell.includes('body.fc-embed-mode .fc-global-header'));
   assert.ok(shell.includes('body.fc-embed-mode footer'));
 });
