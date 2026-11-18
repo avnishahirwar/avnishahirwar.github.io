@@ -1089,3 +1089,51 @@ test('chemistry batch 06 formulas reject invalid physical and stoichiometric inp
   assert.throws(() => batch06.phaseRule({ components: 1, phases: 4 }), /negative degree/);
   assert.throws(() => batch06.q10({ rate1: 1, temp1: 20, rate2: 2, temp2: 20 }), /different valid temperatures/);
 });
+
+const batch07Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch07.js', 'file://' + __filename), 'utf8');
+const batch07Context = {};
+vm.runInNewContext(batch07Source, batch07Context);
+const batch07 = batch07Context.FriendlyChemistryBatch07;
+
+test('chemistry batch 07 formulas return expected reference values', () => {
+  const stp = batch07.stp({ moles: 1, temperature: 273.15, pressure: 101.325 });
+  assert.ok(Math.abs(parseFloat(stp[0][1]) - 22.414) < 0.02);
+
+  const partial = batch07.partial({ component: 2, total: 5, pressure: 100 });
+  assert.ok(Math.abs(parseFloat(partial[1][1]) - 40) < 1e-8);
+
+  const vapor = batch07.vapor({ a: 8.07131, b: 1730.63, c: 233.426, temperature: 25 });
+  assert.ok(parseFloat(vapor[0][1]) > 23 && parseFloat(vapor[0][1]) < 24);
+
+  const water = batch07.waterVapor({ temperature: 25 });
+  assert.ok(parseFloat(water[1][1]) > 3.1 && parseFloat(water[1][1]) < 3.3);
+
+  const boiling = batch07.boilingPoint({ a: 8.07131, b: 1730.63, c: 233.426, pressure: 760 });
+  assert.ok(Math.abs(parseFloat(boiling[0][1]) - 100) < 0.02);
+
+  const altitude = batch07.altitudeBoil({ altitude: 0 });
+  assert.ok(Math.abs(parseFloat(altitude[1][1]) - 100) < 0.05);
+
+  const combustion = batch07.combustion({ mass: 1, energy: 44 });
+  assert.ok(Math.abs(parseFloat(combustion[0][1]) - 44) < 1e-8);
+
+  const osmotic = batch07.osmotic({ molarity: 0.1, factor: 1, temperature: 298.15 });
+  assert.ok(Math.abs(parseFloat(osmotic[0][1]) - (0.1 * 0.082057366 * 298.15)) < 1e-6);
+
+  const ionic = batch07.ionicStrength({ c1: 0.1, z1: 1, c2: 0.1, z2: -1, c3: 0, z3: 0, c4: 0, z4: 0 });
+  assert.ok(Math.abs(parseFloat(ionic[0][1]) - 0.1) < 1e-8);
+
+  const diffusion = batch07.diffusion({ temperature: 298.15, viscosity: 0.001, radius: 1 });
+  const d = Number(diffusion[0][1].split(' ')[0]);
+  assert.ok(d > 2.1e-10 && d < 2.3e-10);
+});
+
+test('chemistry batch 07 formulas reject invalid units and ranges', () => {
+  assert.throws(() => batch07.stp({ moles: 1, temperature: 0, pressure: 100 }), /positive finite value/);
+  assert.throws(() => batch07.partial({ component: 6, total: 5, pressure: 100 }), /cannot exceed/);
+  assert.throws(() => batch07.waterVapor({ temperature: 101 }), /between 1 °C and 100 °C/);
+  assert.throws(() => batch07.boilingPoint({ a: 8, b: 1000, c: 200, pressure: 0 }), /positive finite value/);
+  assert.throws(() => batch07.altitudeBoil({ altitude: 12000 }), /between 0 and 11,000/);
+  assert.throws(() => batch07.ionicStrength({ c1: 0.1, z1: 0, c2: 0, z2: 0, c3: 0, z3: 0, c4: 0, z4: 0 }), /non-zero integer charge/);
+  assert.throws(() => batch07.diffusion({ temperature: 298, viscosity: 0, radius: 1 }), /positive finite value/);
+});
