@@ -850,7 +850,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact'\]/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
