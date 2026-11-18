@@ -158,7 +158,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Try GST, EMI, SIP, percentage, age..." enterkeyhint="search" aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button" aria-label="Clear calculator search">Clear</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 2,471 calculators across 36 categories. Search instantly or choose a category below.</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse featured calculators. Search the full catalogue or choose a category below.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -272,7 +272,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||!items.length||items.some(item=>!item||typeof item.name!=='string'||typeof item.url!=='string'))throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||!items.length||!items.every(item=>item&&typeof item.name==='string'&&typeof item.url==='string'&&typeof item.category==='string'))throw new Error('Search index validation failed');return items.filter(item=>item.status!=='planned');})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -288,9 +288,9 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 2,471 calculators across 36 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse featured calculators. Search the full catalogue or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching the calculator library…';
+ status.textContent='Searching all available calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
