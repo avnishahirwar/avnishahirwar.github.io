@@ -3696,5 +3696,89 @@
     "url": "/calculators/frequency-distribution-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "frequency distribution calculator frequency table relative frequency cumulative frequency count data dataset observations statistics histogram categories percent"
+  },
+  {
+    "name": "Cricket Chirp Temperature Estimator",
+    "url": "/calculators/crickets-chirping-thermometer-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "cricket chirp temperature chirps in 15 seconds NOAA approximate Fahrenheit Celsius insect field rule",
+    "description": "Estimate temperature from 15-second cricket chirps using NOAA’s approximate +40°F rule; results are not calibrated."
+  },
+  {
+    "name": "Countersink Depth Calculator",
+    "url": "/calculators/countersink-depth-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "countersink depth calculator countersink angle hole diameter pilot hole cone geometry machining estimate",
+    "description": "Estimate ideal conical countersink depth from the two diameters and included angle."
+  },
+  {
+    "name": "Inch-Pounds to Foot-Pounds Converter",
+    "url": "/calculators/inch-pounds-to-foot-pounds-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "inch pounds to foot pounds converter lbf in lbf ft torque moment conversion 12",
+    "description": "Convert lbf·in to lbf·ft using the exact factor of 12."
+  },
+  {
+    "name": "Dollars in Words Converter",
+    "url": "/calculators/dollars-in-words-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "dollars in words converter amount US dollars USD check writing cents words amount to words",
+    "description": "Spell USD amounts in US English and show exact cents in check-style format."
+  },
+  {
+    "name": "GMROI Calculator",
+    "url": "/calculators/gmroi-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "GMROI gross margin return on inventory investment retailer inventory cost net sales COGS",
+    "description": "Calculate gross margin return on inventory investment from same-period sales, COGS and average inventory cost."
+  },
+  {
+    "name": "Butter Stick Converter",
+    "url": "/calculators/butter-stick-converter.html",
+    "category": "Food & Cooking",
+    "keywords": "butter stick converter stick to cups tablespoons ounces grams 113.4g US butter cooking",
+    "description": "Convert US butter sticks to cups, tablespoons, weight ounces and approximate grams."
+  },
+  {
+    "name": "Body Roundness Index (BRI) Calculator",
+    "url": "/calculators/body-roundness-index-calculator.html",
+    "category": "Health, Fitness & Family",
+    "keywords": "BRI Body Roundness Index calculator waist circumference height educational non-diagnostic index",
+    "description": "Calculate the non-diagnostic BRI index from waist circumference and height; no health cutoffs are provided."
+  },
+  {
+    "name": "Multiplicative Inverse Modulo Calculator",
+    "url": "/calculators/multiplicative-inverse-modulo-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "modular inverse multiplicative inverse modulo extended Euclidean algorithm coprime gcd number theory",
+    "description": "Find a⁻¹ mod m using the extended Euclidean algorithm when gcd(a,m)=1."
+  },
+  {
+    "name": "Ground Sample Distance (GSD) Calculator",
+    "url": "/calculators/ground-sample-distance-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "GSD ground sample distance calculator photogrammetry drone height sensor width focal length pixels cm per pixel",
+    "description": "Estimate nominal nadir ground sample distance from flight height and camera geometry."
+  },
+  {
+    "name": "Impulse and Momentum Calculator",
+    "url": "/calculators/impulse-and-momentum-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "impulse momentum calculator p mv change momentum force average signed velocity mass physics SI units",
+    "description": "Calculate one-dimensional momentum, impulse and optional average net force from signed velocities."
+  },
+  {
+    "name": "Baseball OPS Calculator",
+    "url": "/calculators/ops-calculator-baseball.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "baseball OPS calculator on base percentage OBP slugging SLG hits walks hit by pitch at bats total bases",
+    "description": "Calculate OBP, slugging percentage and OPS from a consistent batting line."
+  },
+  {
+    "name": "Coin Toss Streak Probability Calculator",
+    "url": "/calculators/coin-toss-streak-probability-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "coin toss streak probability calculator consecutive heads run k heads in n tosses biased fair probability dynamic programming",
+    "description": "Estimate the probability of at least one run of k consecutive heads in n independent tosses."
   }
 ]

@@ -177,7 +177,195 @@
     return { numeric: allNumeric, total, rows };
   }
 
-  const api = { calculateGdu, calculateConcreteTube, calculateCroreToMillion, calculateFlightEmissions, calculateAverageCollectionPeriod, calculateAbv, calculateBai, calculateDistributive, calculatePert, calculateTimeOfFlight, calculateEra, calculateFrequencyDistribution, format };
+  function wholeNumber(raw, label, minimum, maximum) {
+    const value = number(raw, label);
+    if (!Number.isInteger(value) || value < minimum || value > maximum) {
+      fail(`${label} must be a whole number from ${minimum} to ${maximum}.`);
+    }
+    return value;
+  }
+
+  function calculateCricketTemperature(raw) {
+    const chirps = wholeNumber(raw.chirps, '15-second chirp count', 0, 1000);
+    const fahrenheit = chirps + 40;
+    return { chirps, fahrenheit, celsius: (fahrenheit - 32) * 5 / 9, convention: 'NOAA: 15-second count + 40°F' };
+  }
+
+  function calculateCountersinkDepth(raw) {
+    const majorDiameter = number(raw.majorDiameter, 'Countersink diameter');
+    const pilotDiameter = number(raw.pilotDiameter, 'Pilot-hole diameter');
+    const angleDegrees = number(raw.angleDegrees, 'Included angle');
+    if (majorDiameter <= 0 || pilotDiameter <= 0 || majorDiameter <= pilotDiameter) fail('Use positive diameters, with countersink diameter larger than pilot-hole diameter.');
+    if (angleDegrees <= 0 || angleDegrees >= 180) fail('Included angle must be greater than 0° and less than 180°.');
+    const depth = (majorDiameter - pilotDiameter) / (2 * Math.tan(angleDegrees * Math.PI / 360));
+    return { majorDiameter, pilotDiameter, angleDegrees, depth };
+  }
+
+  function calculateInchPounds(raw) {
+    const inchPounds = number(raw, 'Torque in lbf·in');
+    return { inchPounds, footPounds: inchPounds / 12 };
+  }
+
+  function calculateDollarWords(raw) {
+    const text = String(raw ?? '').trim();
+    if (!/^\d+(?:\.\d{1,2})?$/.test(text)) fail('Enter a non-negative USD amount with no more than two decimal places (no commas).');
+    const [whole, fraction = ''] = text.split('.');
+    const dollars = BigInt(whole);
+    if (dollars > 999999999999n) fail('The supported maximum is $999,999,999,999.99.');
+    const cents = Number((fraction + '00').slice(0, 2));
+    const small = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+    const tens = ['', '', 'twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+    const underThousand = value => {
+      let n = value;
+      const words = [];
+      if (n >= 100) { words.push(small[Math.floor(n / 100)], 'hundred'); n %= 100; }
+      if (n >= 20) { words.push(tens[Math.floor(n / 10)]); if (n % 10) words.push(small[n % 10]); }
+      else if (n > 0 || words.length === 0) words.push(small[n]);
+      return words.join(' ');
+    };
+    const integerWords = value => {
+      if (value === 0n) return 'zero';
+      let remaining = value;
+      const scales = ['', 'thousand', 'million', 'billion'];
+      const groups = [];
+      let scale = 0;
+      while (remaining > 0n) {
+        const group = Number(remaining % 1000n);
+        if (group) groups.unshift(`${underThousand(group)}${scales[scale] ? ` ${scales[scale]}` : ''}`);
+        remaining /= 1000n;
+        scale += 1;
+      }
+      return groups.join(' ');
+    };
+    const dollarWords = integerWords(dollars);
+    const centWords = integerWords(BigInt(cents));
+    return { amount: text, dollars: dollars.toString(), cents, dollarWords, centWords, checkStyle: `${dollarWords} ${dollars === 1n ? 'dollar' : 'dollars'} and ${String(cents).padStart(2, '0')}/100`, spokenStyle: `${dollarWords} ${dollars === 1n ? 'dollar' : 'dollars'} and ${centWords} ${cents === 1 ? 'cent' : 'cents'}` };
+  }
+
+  function calculateGmroi(raw) {
+    const netSales = number(raw.netSales, 'Net sales');
+    const cogs = number(raw.cogs, 'Cost of goods sold');
+    const beginningInventory = number(raw.beginningInventory, 'Beginning inventory at cost');
+    const endingInventory = number(raw.endingInventory, 'Ending inventory at cost');
+    if (netSales < 0 || cogs < 0 || beginningInventory < 0 || endingInventory < 0) fail('Sales, COGS and inventory amounts cannot be negative.');
+    const averageInventory = (beginningInventory + endingInventory) / 2;
+    if (averageInventory <= 0) fail('Average inventory at cost must be greater than zero.');
+    const grossMargin = netSales - cogs;
+    const gmroi = grossMargin / averageInventory;
+    return { netSales, cogs, beginningInventory, endingInventory, averageInventory, grossMargin, gmroi, gmroiPercent: gmroi * 100 };
+  }
+
+  function calculateButterConversion(raw) {
+    const amount = number(raw.amount, 'Butter quantity');
+    if (amount < 0) fail('Butter quantity cannot be negative.');
+    const unit = String(raw.unit ?? 'sticks');
+    const sticksPerUnit = { sticks: 1, cups: 2, tablespoons: 1 / 8, ounces: 1 / 4, grams: 1 / 113.4 };
+    if (!Object.hasOwn(sticksPerUnit, unit)) fail('Choose sticks, US cups, tablespoons, weight ounces or grams.');
+    const sticks = amount * sticksPerUnit[unit];
+    return { amount, unit, sticks, cups: sticks / 2, tablespoons: sticks * 8, weightOunces: sticks * 4, grams: sticks * 113.4 };
+  }
+
+  function calculateBri(raw) {
+    const waistCm = number(raw.waistCm, 'Waist circumference');
+    const heightCm = number(raw.heightCm, 'Height');
+    if (waistCm <= 0 || heightCm <= 0) fail('Waist circumference and height must be greater than zero.');
+    const ratio = Math.pow(waistCm / (2 * Math.PI), 2) / Math.pow(0.5 * heightCm, 2);
+    if (ratio >= 1) fail('These dimensions are outside the real-valued range of the BRI equation.');
+    return { waistCm, heightCm, ratio, bri: 364.2 - 365.5 * Math.sqrt(1 - ratio) };
+  }
+
+  function calculateModularInverse(raw) {
+    const aText = String(raw.a ?? '').trim();
+    const modulusText = String(raw.modulus ?? '').trim();
+    if (!/^[+-]?\d+$/.test(aText) || !/^\d+$/.test(modulusText)) fail('Enter integers for a and a positive modulus.');
+    const a = BigInt(aText);
+    const modulus = BigInt(modulusText);
+    if (modulus <= 1n || modulus > 1000000000000n || (a < 0n ? -a : a) > 1000000000000n) fail('Use a modulus from 2 to 1,000,000,000,000 and |a| no greater than 1,000,000,000,000.');
+    const egcd = (x, y) => {
+      if (y === 0n) return [x, 1n, 0n];
+      const [g, u, v] = egcd(y, x % y);
+      return [g, v, u - (x / y) * v];
+    };
+    let [gcd, coefficient] = egcd(a, modulus);
+    if (gcd < 0n) { gcd = -gcd; coefficient = -coefficient; }
+    if (gcd !== 1n) fail(`No multiplicative inverse exists because gcd(a, modulus) = ${gcd}.`);
+    const inverse = ((coefficient % modulus) + modulus) % modulus;
+    return { a: a.toString(), modulus: modulus.toString(), gcd: gcd.toString(), inverse: inverse.toString(), verification: (((a % modulus + modulus) % modulus) * inverse % modulus).toString() };
+  }
+
+  function calculateGsd(raw) {
+    const heightM = number(raw.heightM, 'Height above ground');
+    const sensorWidthMm = number(raw.sensorWidthMm, 'Sensor width');
+    const focalLengthMm = number(raw.focalLengthMm, 'Actual focal length');
+    const imageWidthPx = number(raw.imageWidthPx, 'Image width in pixels');
+    if (heightM <= 0 || sensorWidthMm <= 0 || focalLengthMm <= 0 || imageWidthPx <= 0) fail('Height, sensor width, focal length and image width must be greater than zero.');
+    if (!Number.isInteger(imageWidthPx) || imageWidthPx > 100000000) fail('Image width must be a whole number up to 100,000,000 pixels.');
+    const cmPerPixel = heightM * sensorWidthMm * 100 / (focalLengthMm * imageWidthPx);
+    return { heightM, sensorWidthMm, focalLengthMm, imageWidthPx, cmPerPixel, mPerPixel: cmPerPixel / 100, inchesPerPixel: cmPerPixel / 2.54 };
+  }
+
+  function calculateImpulseMomentum(raw) {
+    const mass = number(raw.mass, 'Mass');
+    const initialVelocity = number(raw.initialVelocity, 'Initial velocity');
+    const finalVelocity = number(raw.finalVelocity, 'Final velocity');
+    if (mass <= 0) fail('Mass must be greater than zero.');
+    const initialMomentum = mass * initialVelocity;
+    const finalMomentum = mass * finalVelocity;
+    const impulse = finalMomentum - initialMomentum;
+    const timeText = String(raw.deltaTime ?? '').trim();
+    let deltaTime = null;
+    let averageForce = null;
+    if (timeText) {
+      deltaTime = number(timeText, 'Elapsed time');
+      if (deltaTime <= 0) fail('Elapsed time must be greater than zero when supplied.');
+      averageForce = impulse / deltaTime;
+    }
+    return { mass, initialVelocity, finalVelocity, initialMomentum, finalMomentum, impulse, deltaTime, averageForce };
+  }
+
+  function calculateOps(raw) {
+    const count = (key, label) => wholeNumber(raw[key], label, 0, 10000000);
+    const atBats = count('atBats', 'At-bats');
+    const singles = count('singles', 'Singles');
+    const doubles = count('doubles', 'Doubles');
+    const triples = count('triples', 'Triples');
+    const homeRuns = count('homeRuns', 'Home runs');
+    const walks = count('walks', 'Walks');
+    const hitByPitch = count('hitByPitch', 'Hit by pitch');
+    const sacrificeFlies = count('sacrificeFlies', 'Sacrifice flies');
+    if (atBats <= 0) fail('At-bats must be greater than zero to calculate slugging percentage.');
+    const hits = singles + doubles + triples + homeRuns;
+    if (hits > atBats) fail('Total hits cannot exceed at-bats.');
+    const totalBases = singles + 2 * doubles + 3 * triples + 4 * homeRuns;
+    const obpDenominator = atBats + walks + hitByPitch + sacrificeFlies;
+    const onBasePercentage = (hits + walks + hitByPitch) / obpDenominator;
+    const sluggingPercentage = totalBases / atBats;
+    return { atBats, singles, doubles, triples, homeRuns, walks, hitByPitch, sacrificeFlies, hits, totalBases, onBasePercentage, sluggingPercentage, ops: onBasePercentage + sluggingPercentage };
+  }
+
+  function calculateCoinTossStreak(raw) {
+    const tosses = wholeNumber(raw.tosses, 'Number of tosses', 0, 10000);
+    const streak = wholeNumber(raw.streak, 'Target heads streak', 1, 100);
+    const headsProbability = number(raw.headsProbability, 'Probability of heads');
+    if (headsProbability < 0 || headsProbability > 1) fail('Probability of heads must be from 0 to 1.');
+    if (streak > tosses) return { tosses, streak, headsProbability, probability: 0 };
+    let states = Array(streak).fill(0);
+    states[0] = 1;
+    let hitProbability = 0;
+    for (let toss = 0; toss < tosses; toss += 1) {
+      const next = Array(streak).fill(0);
+      for (let trailingHeads = 0; trailingHeads < streak; trailingHeads += 1) {
+        const stateProbability = states[trailingHeads];
+        next[0] += stateProbability * (1 - headsProbability);
+        if (trailingHeads + 1 < streak) next[trailingHeads + 1] += stateProbability * headsProbability;
+        else hitProbability += stateProbability * headsProbability;
+      }
+      states = next;
+    }
+    return { tosses, streak, headsProbability, probability: Math.max(0, Math.min(1, hitProbability)) };
+  }
+
+  const api = { calculateGdu, calculateConcreteTube, calculateCroreToMillion, calculateFlightEmissions, calculateAverageCollectionPeriod, calculateAbv, calculateBai, calculateDistributive, calculatePert, calculateTimeOfFlight, calculateEra, calculateFrequencyDistribution, calculateCricketTemperature, calculateCountersinkDepth, calculateInchPounds, calculateDollarWords, calculateGmroi, calculateButterConversion, calculateBri, calculateModularInverse, calculateGsd, calculateImpulseMomentum, calculateOps, calculateCoinTossStreak, format };
 
   function el(tag, text, className) {
     const node = document.createElement(tag);
@@ -241,7 +429,23 @@
     const key = document.body?.dataset?.calculator;
     if (!form || !status || !output || !key) return;
     const value = name => form.elements[name]?.value ?? '';
+  const extendedRenderers = {
+    'cricket-thermometer': () => { const r = calculateCricketTemperature({ chirps: value('chirps') }); renderSimple(output, 'Cricket chirp temperature estimate', `${format(r.fahrenheit)}°F (${format(r.celsius, 6)}°C), using the NOAA +40°F convention.`, [['15-second chirp count', r.chirps], ['NOAA rule', `${r.chirps} + 40 = ${r.fahrenheit}°F`], ['Converted temperature', `${format(r.celsius, 6)}°C`]]); },
+    'countersink-depth': () => { const r = calculateCountersinkDepth({ majorDiameter: value('majorDiameter'), pilotDiameter: value('pilotDiameter'), angleDegrees: value('angleDegrees') }); renderSimple(output, 'Ideal countersink depth', `${format(r.depth)} ${value('lengthUnit')}.`, [['Countersink diameter', `${format(r.majorDiameter)} ${value('lengthUnit')}`], ['Pilot-hole diameter', `${format(r.pilotDiameter)} ${value('lengthUnit')}`], ['Included angle', `${format(r.angleDegrees)}°`], ['Ideal geometric depth', `${format(r.depth)} ${value('lengthUnit')}`]]); },
+    'inch-foot-torque': () => { const r = calculateInchPounds(value('inchPounds')); renderSimple(output, 'Torque conversion', `${format(r.inchPounds)} lbf·in = ${format(r.footPounds)} lbf·ft.`, [['Input', `${format(r.inchPounds)} lbf·in`], ['Equivalent', `${format(r.footPounds)} lbf·ft`], ['Exact factor', '12 lbf·in = 1 lbf·ft']]); },
+    'dollars-words': () => { const r = calculateDollarWords(value('amount')); renderSimple(output, 'USD amount in words', r.checkStyle, [['Check-style wording', r.checkStyle], ['Spoken wording', r.spokenStyle], ['Entered amount', `$${r.amount}`]]); },
+    'gmroi': () => { const r = calculateGmroi({ netSales: value('netSales'), cogs: value('cogs'), beginningInventory: value('beginningInventory'), endingInventory: value('endingInventory') }); renderSimple(output, 'Gross margin return on inventory investment', `${format(r.gmroi, 8)} GMROI (${format(r.gmroiPercent, 6)}%).`, [['Gross margin dollars', format(r.grossMargin)], ['Average inventory at cost', format(r.averageInventory)], ['GMROI', `${format(r.gmroi, 8)}× or ${format(r.gmroiPercent, 6)}%`]]); },
+    'butter-stick': () => { const r = calculateButterConversion({ amount: value('amount'), unit: value('unit') }); renderSimple(output, 'US butter measurement conversion', `${format(r.sticks)} stick(s) ≈ ${format(r.grams, 6)} g.`, [['Sticks', format(r.sticks)], ['US cups', format(r.cups)], ['Tablespoons', format(r.tablespoons)], ['Weight ounces', format(r.weightOunces)], ['Approximate grams', format(r.grams, 6)]]); },
+    'bri': () => { const r = calculateBri({ waistCm: value('waistCm'), heightCm: value('heightCm') }); renderSimple(output, 'Body Roundness Index (BRI)', `${format(r.bri, 6)} index points. Educational index only; not a diagnosis or health assessment.`, [['Waist circumference', `${format(r.waistCm)} cm`], ['Height', `${format(r.heightCm)} cm`], ['BRI', `${format(r.bri, 6)} points`]]); },
+    'modular-inverse': () => { const r = calculateModularInverse({ a: value('a'), modulus: value('modulus') }); renderSimple(output, 'Multiplicative inverse modulo m', `${r.inverse} is the inverse of ${r.a} modulo ${r.modulus}.`, [['a', r.a], ['Modulus m', r.modulus], ['Inverse x', r.inverse], ['Verification (a × x) mod m', r.verification]]); },
+    'gsd': () => { const r = calculateGsd({ heightM: value('heightM'), sensorWidthMm: value('sensorWidthMm'), focalLengthMm: value('focalLengthMm'), imageWidthPx: value('imageWidthPx') }); renderSimple(output, 'Nominal ground sample distance', `${format(r.cmPerPixel, 8)} cm/pixel.`, [['Height above ground', `${format(r.heightM)} m`], ['Sensor width / focal length', `${format(r.sensorWidthMm)} mm / ${format(r.focalLengthMm)} mm`], ['Image width', `${format(r.imageWidthPx)} px`], ['GSD', `${format(r.cmPerPixel, 8)} cm/px (${format(r.inchesPerPixel, 8)} in/px)`]]); },
+    'impulse-momentum': () => { const r = calculateImpulseMomentum({ mass: value('mass'), initialVelocity: value('initialVelocity'), finalVelocity: value('finalVelocity'), deltaTime: value('deltaTime') }); const rows = [['Initial momentum', `${format(r.initialMomentum)} kg·m/s`], ['Final momentum', `${format(r.finalMomentum)} kg·m/s`], ['Impulse / change in momentum', `${format(r.impulse)} N·s`]]; if (r.averageForce !== null) rows.push(['Average net force', `${format(r.averageForce)} N over ${format(r.deltaTime)} s`]); renderSimple(output, 'One-dimensional momentum and impulse', `${format(r.impulse)} N·s change in momentum${r.averageForce === null ? '' : `; average net force ${format(r.averageForce)} N`}.`, rows); },
+    'ops': () => { const r = calculateOps({ atBats: value('atBats'), singles: value('singles'), doubles: value('doubles'), triples: value('triples'), homeRuns: value('homeRuns'), walks: value('walks'), hitByPitch: value('hitByPitch'), sacrificeFlies: value('sacrificeFlies') }); renderSimple(output, 'On-base plus slugging (OPS)', `${format(r.ops, 8)} OPS.`, [['Hits', `${r.hits} in ${r.atBats} at-bats`], ['On-base percentage (OBP)', format(r.onBasePercentage, 8)], ['Slugging percentage (SLG)', format(r.sluggingPercentage, 8)], ['OPS = OBP + SLG', format(r.ops, 8)]]); },
+    'coin-toss-streak': () => { const r = calculateCoinTossStreak({ tosses: value('tosses'), streak: value('streak'), headsProbability: value('headsProbability') }); renderSimple(output, 'Probability of at least one heads streak', `${format(r.probability * 100, 8)}%`, [['Tosses', r.tosses], ['Consecutive heads target', r.streak], ['Heads probability per toss', `${format(r.headsProbability * 100, 6)}%`], ['At least one target run', `${format(r.probability * 100, 8)}%`]]); }
+  };
+
     const run = {
+      ...extendedRenderers,
       'gdu': () => renderGdu(output, calculateGdu({ highs: value('highs'), lows: value('lows'), base: value('base'), upperCap: value('upperCap') }), value('unit')),
       'concrete-tube': () => { const r = calculateConcreteTube({ diameterIn: value('diameterIn'), lengthFt: value('lengthFt'), tubeCount: value('tubeCount'), allowancePercent: value('allowancePercent') }); renderConcrete(output, r); },
       'crore-million': () => { const r = calculateCroreToMillion(value('crore')); renderSimple(output, 'Crore to million conversion', `${format(r.crore)} crore = ${format(r.million)} million.`, [['Amount in crore', format(r.crore)], ['Equivalent amount in million', format(r.million)], ['Underlying count', format(r.underlyingCount)]]); },
