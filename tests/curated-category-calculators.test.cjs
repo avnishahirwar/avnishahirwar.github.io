@@ -162,10 +162,10 @@ test('all 12 routes have a working page, formula, example, limitations, citation
     assert.match(page, /limitations|assumptions/i);
     assert.ok((page.match(/href="https?:\/\//g) || []).length >= 2, `${url} should have at least two external source links`);
   }
-  assert.equal(index.filter(item => item.url.startsWith('/calculators/')).length, 541);
-  assert.equal(index.length, 542);
-  assert.equal(new Set(index.map(item => item.url)).size, 542);
-  assert.match(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), /Search all 541 calculators/);
-  assert.match(directory, /Showing all 541 calculators/);
-  assert.match(about, /541 public calculators/);
+  assert.equal(index.filter(item => item.url.startsWith('/calculators/')).length, 567);
+  assert.equal(index.length, 568);
+  assert.equal(new Set(index.map(item => item.url)).size, 568);
+  assert.match(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), /Search all 567 calculators/);
+  assert.match(directory, /Showing all 567 calculators/);
+  assert.match(about, /567 public calculators/);
 });
