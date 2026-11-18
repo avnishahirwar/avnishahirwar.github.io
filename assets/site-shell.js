@@ -242,7 +242,7 @@ if(embedMode){
     'html,body{margin:0!important;min-height:0!important;background:#fff!important}',
     'body.fc-embed-mode .fc-global-header,body.fc-embed-mode .fc-header,body.fc-embed-mode .fc-footer,body.fc-embed-mode footer,body.fc-embed-mode .fc-global-footer,body.fc-embed-mode .fc-skip-link,body.fc-embed-mode .fc-language-notice,body.fc-embed-mode .fc-share-panel,body.fc-embed-mode .fc-export-panel,body.fc-embed-mode .fc-related-tools,body.fc-embed-mode .fc-pwa-install,body.fc-embed-mode .fc-pwa-help,body.fc-embed-mode .fc-pwa-network,body.fc-embed-mode #fc-ai-lazy-launch,body.fc-embed-mode .fc-ai-launcher{display:none!important}',
     'body.fc-embed-mode main{display:block!important;width:100%!important;max-width:none!important;min-height:0!important;margin:0!important;padding:8px!important}',
-    'body.fc-embed-mode main>*:not(.fc-embed-calculator){display:none!important}',
+    'body.fc-embed-mode:not(.fc-embed-unmatched) main>*:not(.fc-embed-calculator){display:none!important}',
     'body.fc-embed-mode main>.fc-embed-calculator{display:block!important;width:100%!important;max-width:none!important;margin:0!important}',
     'body.fc-embed-mode .fc-embed-attribution{display:block!important;margin:8px 2px 2px!important;text-align:right!important;font:12px/1.4 system-ui,sans-serif!important;color:#647487!important}',
     'body.fc-embed-mode .fc-embed-attribution a{color:#20344c!important;font-weight:700!important;text-decoration:none!important}'

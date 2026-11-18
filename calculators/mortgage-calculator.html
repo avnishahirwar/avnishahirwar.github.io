@@ -185,7 +185,7 @@ form.addEventListener('submit',event=>{
     output.appendChild(message);
   }
 });
-const refreshForLocale=()=>{if(output.childNodes.length&&typeof form.requestSubmit==='function'){localeRefresh=true;try{form.requestSubmit()}finally{localeRefresh=false}}};
+const refreshForLocale=()=>{if(!window.FCMortgage?.calculateMortgage)return;if(output.childNodes.length&&typeof form.requestSubmit==='function'){localeRefresh=true;try{form.requestSubmit()}finally{localeRefresh=false}}};
 window.addEventListener('fc:localechange',refreshForLocale);window.addEventListener('fc:locale-ready',refreshForLocale);
 })();
 </script>
