@@ -517,7 +517,7 @@ const preservedFooterLinks=[];
 const isFooterSocialLink=link=>{
   const href=(link.getAttribute('href')||'').trim().toLowerCase();
   const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
-  return /instagram\\.com|linkedin\\.com|mailto:/.test(href) ||
+  return /instagram\.com|linkedin\.com|mailto:/.test(href) ||
     /^(instagram|linkedin|email)$/.test(label);
 };
 document.querySelectorAll('footer').forEach(oldFooter=>{
