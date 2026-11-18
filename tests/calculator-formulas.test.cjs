@@ -1060,7 +1060,7 @@ test('chemistry batch 06 formulas return expected reference values', () => {
   assert.ok(Math.abs(parseFloat(rate[1][1]) - 60) < 1e-5);
 
   const quotient = batch06.reactionQuotient({ a: 0.2, b: 0.2, c: 0.1, d: 0.1, na: 1, nb: 1, nc: 1, nd: 1, kc: 1 });
-  assert.match(quotient[1][1], /Reverse direction favoured/);
+  assert.match(quotient[1][1], /Forward direction favoured/);
 
   const entropy = batch06.entropy({ heat: 2.5, temperature: 298.15 });
   assert.ok(Math.abs(parseFloat(entropy[0][1]) - (2500 / 298.15)) < 1e-5);
