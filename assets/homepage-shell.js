@@ -93,34 +93,35 @@ if(document.body&&window.self===window.top&&!document.getElementById('fc-pwa-ins
   document.body.append(install,panel,network);
 }
 
-/* Preserve accessible display preferences on the homepage. */
+/* Keep the homepage fallback consistent with the shared two-mode Settings panel. */
 if(document.body&&!document.getElementById('fc-display-settings')){
-  const open=document.createElement('button');open.id='fc-display-settings';open.type='button';open.textContent='Display settings';open.setAttribute('aria-expanded','false');open.setAttribute('aria-controls','fc-display-panel');
-  const panel=document.createElement('section');panel.id='fc-display-panel';panel.className='fc-display-panel';panel.hidden=true;panel.setAttribute('aria-label','Display settings');
-  const heading=document.createElement('strong');heading.textContent='Display settings';
-  const theme=document.createElement('button');theme.type='button';theme.className='fc-display-action';
-  const sizeLabel=document.createElement('label');sizeLabel.className='fc-display-size-label';sizeLabel.textContent='Text size';
-  const sizeRow=document.createElement('div');sizeRow.className='fc-display-size-row';
-  const smaller=document.createElement('button');smaller.type='button';smaller.className='fc-display-action';smaller.textContent='A−';smaller.setAttribute('aria-label','Decrease text size');
-  const sizeValue=document.createElement('output');sizeValue.className='fc-display-size-value';
-  const larger=document.createElement('button');larger.type='button';larger.className='fc-display-action';larger.textContent='A+';larger.setAttribute('aria-label','Increase text size');
-  const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent='Close';
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
-  const savedTheme=read('fc-display-theme','');
-  let currentTheme=savedTheme==='dark'||savedTheme==='light'?savedTheme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
-  let currentSize=['normal','large','larger'].includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
-  const applyTheme=()=>{document.documentElement.setAttribute('data-fc-theme',currentTheme);write('fc-display-theme',currentTheme);theme.textContent='Dark mode · '+(currentTheme==='dark'?'●':'○');theme.setAttribute('aria-pressed',String(currentTheme==='dark'));};
-  const applySize=()=>{document.documentElement.setAttribute('data-fc-text-size',currentSize);write('fc-display-size',currentSize);sizeValue.textContent=currentSize==='normal'?'100%':currentSize==='large'?'112.5%':'125%';smaller.disabled=currentSize==='normal';larger.disabled=currentSize==='larger';};
-  theme.addEventListener('click',()=>{currentTheme=currentTheme==='dark'?'light':'dark';applyTheme();status.textContent='Display theme updated.';});
-  smaller.addEventListener('click',()=>{currentSize=currentSize==='larger'?'large':'normal';applySize();});
-  larger.addEventListener('click',()=>{currentSize=currentSize==='normal'?'large':'larger';applySize();});
+  const open=document.createElement('button');open.id='fc-display-settings';open.type='button';open.textContent='Settings';open.setAttribute('aria-expanded','false');open.setAttribute('aria-controls','fc-display-panel');
+  const panel=document.createElement('section');panel.id='fc-display-panel';panel.className='fc-display-panel';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Settings & Accessibility');
+  const heading=document.createElement('strong');heading.textContent='Settings & Accessibility';
+  const modes=document.createElement('div');modes.className='fc-theme-mode-options';modes.setAttribute('role','group');modes.setAttribute('aria-label','Accessibility');
+  const normal=document.createElement('button');normal.type='button';normal.className='fc-display-action';normal.textContent='Normal Mode';
+  const dark=document.createElement('button');dark.type='button';dark.className='fc-display-action';dark.textContent='Dark Mode';
+  const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent='Close';
+  let currentTheme=read('fc-display-theme','');
+  if(currentTheme!=='dark'&&currentTheme!=='light')currentTheme=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  const applyTheme=value=>{
+    currentTheme=value==='dark'?'dark':'light';
+    document.documentElement.setAttribute('data-fc-theme',currentTheme);
+    write('fc-display-theme',currentTheme);
+    normal.setAttribute('aria-pressed',String(currentTheme==='light'));
+    dark.setAttribute('aria-pressed',String(currentTheme==='dark'));
+    status.textContent=currentTheme==='dark'?'Dark Mode enabled.':'Normal Mode enabled.';
+  };
+  normal.addEventListener('click',()=>applyTheme('light'));
+  dark.addEventListener('click',()=>applyTheme('dark'));
   const closePanel=()=>{panel.hidden=true;open.setAttribute('aria-expanded','false');};
-  close.addEventListener('click',closePanel);
-  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));});
+  close.addEventListener('click',()=>{closePanel();open.focus();});
+  open.addEventListener('click',()=>{panel.hidden=!panel.hidden;open.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)normal.focus();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
-  sizeRow.append(smaller,sizeValue,larger);panel.append(heading,theme,sizeLabel,sizeRow,status,close);document.body.append(open,panel);applyTheme();applySize();
+  modes.append(normal,dark);panel.append(heading,modes,status,close);document.body.append(open,panel);applyTheme(currentTheme);
 }
 
 /* Load the assistant code only after a visitor asks to open it. */
