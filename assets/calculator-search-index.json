@@ -3106,5 +3106,75 @@
     "category": "Biology & Chemistry",
     "keywords": "boiling point elevation calculator molality ebullioscopic constant van't Hoff",
     "description": "Estimate the boiling-point increase of a solution from molality, ebullioscopic constant and van't Hoff factor."
+  },
+  {
+    "name": "AFR Calculator (Air-Fuel Ratio)",
+    "url": "/calculators/afr-calculator-air-fuel-ratio.html",
+    "category": "Biology & Chemistry",
+    "keywords": "air fuel ratio AFR calculator lambda stoichiometric mass ratio",
+    "description": "Calculate an air-to-fuel mass ratio and compare it with a user-supplied reference stoichiometric ratio."
+  },
+  {
+    "name": "Molecular Weight Calculator",
+    "url": "/calculators/molecular-weight-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "molecular weight calculator molar mass chemical formula",
+    "description": "Estimate a compound's molar mass from a chemical formula using a built-in set of common atomic weights and parentheses."
+  },
+  {
+    "name": "Activity Coefficient Calculator",
+    "url": "/calculators/activity-coefficient-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "activity coefficient calculator Davies equation ionic strength aqueous",
+    "description": "Estimate an aqueous ion activity coefficient using the Davies approximation at approximately 25 °C."
+  },
+  {
+    "name": "Buffer Capacity Calculator",
+    "url": "/calculators/buffer-capacity-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "buffer capacity calculator pKa pH buffer concentration",
+    "description": "Estimate monoprotic buffer capacity from total buffer concentration, pKa and solution pH."
+  },
+  {
+    "name": "Neutralization Calculator",
+    "url": "/calculators/neutralization-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "neutralization calculator acid base stoichiometry equivalents",
+    "description": "Compare acid and base equivalents from molarity, volume and reaction stoichiometric coefficients to identify the excess side."
+  },
+  {
+    "name": "Percent Solution Calculator",
+    "url": "/calculators/percent-solution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent solution calculator mass volume percent w v",
+    "description": "Calculate mass/volume percentage concentration from solute mass and final solution volume."
+  },
+  {
+    "name": "Solution Dilution Calculator",
+    "url": "/calculators/solution-dilution-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "solution dilution calculator C1V1 C2V2 stock concentration",
+    "description": "Calculate the stock-solution volume and diluent volume required to reach a target concentration and final volume."
+  },
+  {
+    "name": "Titration Calculator",
+    "url": "/calculators/titration-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "titration calculator equivalence point molarity stoichiometry",
+    "description": "Calculate the volume of titrant needed at the stoichiometric equivalence point from molarities, sample volume and balanced-equation coefficients."
+  },
+  {
+    "name": "Water Hardness Calculator",
+    "url": "/calculators/water-hardness-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "water hardness calculator calcium magnesium CaCO3 mg L",
+    "description": "Estimate total water hardness as calcium carbonate equivalent from dissolved calcium and magnesium concentrations."
+  },
+  {
+    "name": "Theoretical Yield Calculator",
+    "url": "/calculators/theoretical-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "theoretical yield calculator reactant product molar mass stoichiometry",
+    "description": "Calculate theoretical product mass from a reactant mass, molar masses and balanced-equation stoichiometric coefficients."
   }
 ]
