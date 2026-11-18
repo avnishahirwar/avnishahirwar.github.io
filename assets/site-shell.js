@@ -1110,6 +1110,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ru:{open:'Настройки',title:'Настройки и доступность',region:'Язык и регион',accessibility:'Доступность',quick:'Быстрые действия',currency:'Валюта отображения',countryFormat:'Страна и формат',units:'Единицы',theme:'Тёмная тема',smaller:'A−',larger:'A+',close:'Закрыть',themeOn:'Тёмная тема включена',themeOff:'Тёмная тема выключена',text:'Размер текста'}
   };
   const t=labels[lang]||labels.en;
+  const contrastLabels={en:'High contrast',hi:'उच्च कंट्रास्ट',es:'Alto contraste',fr:'Contraste élevé',pt:'Alto contraste',ar:'تباين عالٍ',id:'Kontras tinggi',bn:'উচ্চ কনট্রাস্ট',ta:'உயர் மாறுபாடு',de:'Hoher Kontrast',ja:'高コントラスト',ru:'Высокая контрастность'};
+  t.contrast=contrastLabels[lang]||contrastLabels.en;
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
   const theme=read('fc-display-theme','');
@@ -1132,6 +1134,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     smaller.disabled=safe==='normal';
     larger.disabled=safe==='larger';
   };
+  const applyContrast=value=>{
+    const safe=value==='high'?'high':'normal';
+    document.documentElement.setAttribute('data-fc-contrast',safe);
+    write('fc-display-contrast',safe);
+    contrastButton.setAttribute('aria-pressed',String(safe==='high'));
+    contrastButton.textContent=t.contrast+' · '+(safe==='high'?'●':'○');
+  };
   const open=document.createElement('button');
   open.id='fc-display-settings';
   open.type='button';
@@ -1147,6 +1156,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const heading=document.createElement('strong');heading.textContent=t.title;
   const themeButton=document.createElement('button');themeButton.type='button';themeButton.className='fc-display-action';
   themeButton.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-fc-theme')==='dark'?'light':'dark'));
+  const contrastButton=document.createElement('button');contrastButton.type='button';contrastButton.className='fc-display-action';
+  contrastButton.addEventListener('click',()=>applyContrast(document.documentElement.getAttribute('data-fc-contrast')==='high'?'normal':'high'));
   const sizeLabel=document.createElement('label');sizeLabel.className='fc-display-size-label';sizeLabel.textContent=t.text;
   const sizeRow=document.createElement('div');sizeRow.className='fc-display-size-row';
   const smaller=document.createElement('button');smaller.type='button';smaller.className='fc-display-action';smaller.textContent=t.smaller;smaller.setAttribute('aria-label',t.smaller+' '+t.text);
@@ -1242,7 +1253,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     panel.append(divider);
   }
   addSectionHeading(t.accessibility);
-  panel.append(themeButton,sizeLabel,sizeRow);
+  panel.append(themeButton,contrastButton,sizeLabel,sizeRow);
   const quickDivider=document.createElement('div');
   quickDivider.className='fc-display-settings-divider';
   quickDivider.setAttribute('aria-hidden','true');
@@ -1255,6 +1266,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.body.appendChild(panel);
   applyTheme(initialTheme);
   applySize(initialSize);
+  applyContrast(read('fc-display-contrast','normal'));
 })();
 
 
