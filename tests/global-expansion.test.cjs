@@ -142,3 +142,11 @@ test('Accessibility defaults to readable Normal Mode unless Dark Mode was explic
   assert.match(css, /\.fc-theme-mode-options \.fc-display-action\[aria-pressed="true"\][\s\S]*?color:#fff!important/);
   assert.match(css, /html\[data-fc-theme="dark"\] body>\.fc-display-panel \.fc-theme-mode-options \.fc-display-action\{[\s\S]*?color:#edf3f8!important/);
 });
+
+test('Tax and Salary calculators page does not repeat Home or All Calculators in the page body', () => {
+  const page = fs.readFileSync(path.join(root, 'calculator/tax.html'), 'utf8');
+  const body = page.slice(page.indexOf('<main'), page.indexOf('</main>'));
+  assert.doesNotMatch(body, /<a href="\\/">Home<\\/a>/);
+  assert.doesNotMatch(body, /<a href="\\/calculator\\/site-directory\\.html">All calculators<\\/a>/i);
+  assert.match(page, /<header>[\\s\\S]*<a href="\\/">Home<\\/a>/, 'The global Header Home link must remain.');
+});
