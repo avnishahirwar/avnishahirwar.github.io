@@ -104,3 +104,9 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
     assert.match(html, /site-shell\.js/);
   }
 });
+
+
+test('Arabic locale routes enforce RTL document language and direction', () => {
+  assert.match(shell, /const isArabicRoute=p\\.startsWith\\('\/ar\\/'\\);/);
+  assert.match(shell, /if\\(isArabicRoute\\)\\{document\\.documentElement\\.lang='ar';document\\.documentElement\\.dir='rtl';\\}/);
+});
