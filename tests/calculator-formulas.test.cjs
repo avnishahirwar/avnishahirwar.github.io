@@ -1234,3 +1234,40 @@ test('chemistry batch 09 formulas reject invalid scientific inputs', () => {
   assert.throws(() => batch09.beerLambert({ absorbance: 0.6, epsilon: 0, path: 1 }), /positive finite value/);
   assert.throws(() => batch09.cubic({ edge: 400, units: 4.5, molar: 58 }), /whole number/);
 });
+
+const batch10Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch10.js', 'file://' + __filename), 'utf8');
+const batch10Context = {};
+vm.runInNewContext(batch10Source, batch10Context);
+const batch10 = batch10Context.FriendlyChemistryBatch10;
+
+test('chemistry batch 10 formulas return expected reference values', () => {
+  const zeff = batch10.zeff({ z: 11, same: 0, previous: 8, inner: 2 });
+  assert.ok(Math.abs(parseFloat(zeff[1][1]) - 2.2) < 1e-8);
+
+  const config = batch10.electronConfig({ z: 24 });
+  assert.match(config[1][1], /3d\^5 4s\^1/);
+
+  const electrolysis = batch10.electrolysis({ current: 2, time: 3600, molar: 63.546, electrons: 2 });
+  assert.ok(parseFloat(electrolysis[0][1]) > 2.36 && parseFloat(electrolysis[0][1]) < 2.38);
+
+  const lattice = batch10.lattice({ formation: -411, atomization: 108, ionization: 496, bond: 121, affinity: -349 });
+  assert.ok(Math.abs(parseFloat(lattice[0][1]) - (-787)) < 1e-8);
+
+  const analysis = batch10.combustionAnalysis({ sample: 1, co2: 1.466, water: 0.6 });
+  assert.ok(parseFloat(analysis[0][1]) > 0.39 && parseFloat(analysis[0][1]) < 0.41);
+
+  const reaction = batch10.combustionReaction({ carbon: 2, hydrogen: 6 });
+  assert.match(reaction[0][1], /2 C2H6 \+ 7 O₂ → 4 CO₂ \+ 6 H₂O/);
+
+  const miller = batch10.miller({ x: 1, y: 1, z: 1 });
+  assert.equal(miller[1][1], '1 1 1');
+});
+
+test('chemistry batch 10 formulas reject invalid atomic, physical and crystallographic inputs', () => {
+  assert.throws(() => batch10.zeff({ z: 1, same: 0, previous: 2, inner: 1 }), /smaller than atomic number/);
+  assert.throws(() => batch10.electronConfig({ z: 37 }), /from 1 to 36/);
+  assert.throws(() => batch10.electrolysis({ current: 0, time: 1, molar: 1, electrons: 1 }), /positive finite value/);
+  assert.throws(() => batch10.combustionAnalysis({ sample: 0.1, co2: 10, water: 1 }), /more C and H mass/);
+  assert.throws(() => batch10.combustionReaction({ carbon: 0, hydrogen: 4 }), /positive whole-number/);
+  assert.throws(() => batch10.miller({ x: 0, y: 0, z: 0 }), /At least one intercept/);
+});
