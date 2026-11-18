@@ -1349,6 +1349,9 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
     const compatibilityControls=document.createElement('div');
     compatibilityControls.className='fc-locale-compat-controls';
+    compatibilityControls.setAttribute('aria-hidden','true');
+    if(countrySelect)countrySelect.tabIndex=-1;
+    if(localeSelect)localeSelect.tabIndex=-1;
     compatibilityControls.append(countryControl,formatControl);
     panel.appendChild(compatibilityControls);
   }
