@@ -1464,7 +1464,7 @@ test('homepage stays lightweight while all 513 calculators remain searchable and
   assert.equal(categoryLinks.length, 20, 'All 20 category cards must link to the full directory');
   assert.equal(new Set(categoryLinks).size, 20, 'Category card destinations must be unique');
 
-  assert.equal(searchIndex.length, 513, 'All 510 calculators, including the international VAT calculator, must remain in the deferred search index');
+  assert.equal(searchIndex.length, 513, 'All 513 calculators, including the international VAT calculator, must remain in the deferred search index');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, 513, 'Search index URLs must be unique');
   for (const item of searchIndex) {
     assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
