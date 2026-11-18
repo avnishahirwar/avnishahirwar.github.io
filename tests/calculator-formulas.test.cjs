@@ -989,3 +989,54 @@ test('chemistry batch 04 formulas reject invalid or ambiguous inputs', () => {
   assert.throws(() => batch04.activation({ k1: 1, t1: 300, k2: 2, t2: 300 }), /different/);
   assert.throws(() => batch04.boiling({ molality: 0, kb: 0.5, factor: 2, normal: 100 }), /positive finite value/);
 });
+
+const batch05Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch05.js', 'file://' + __filename), 'utf8');
+const batch05Context = {};
+vm.runInNewContext(batch05Source, batch05Context);
+const batch05 = batch05Context.FriendlyChemistryBatch05;
+
+test('chemistry batch 05 formulas return expected reference values', () => {
+  const afr = batch05.afr({ air: 14.7, fuel: 1, stoich: 14.7 });
+  assert.ok(Math.abs(parseFloat(afr[1][1]) - 1) < 1e-8);
+
+  const water = batch05.molecular({ formula: 'H2O' });
+  assert.ok(Math.abs(parseFloat(water[0][1]) - 18.015) < 0.002);
+  const calciumHydroxide = batch05.molecular({ formula: 'Ca(OH)2' });
+  assert.ok(Math.abs(parseFloat(calciumHydroxide[0][1]) - 74.092) < 0.003);
+
+  const activity = batch05.activity({ charge: 1, ionic: 0.1 });
+  assert.ok(parseFloat(activity[1][1]) > 0 && parseFloat(activity[1][1]) < 1);
+
+  const buffer = batch05.buffer({ total: 0.1, pka: 4.76, ph: 4.76 });
+  assert.ok(Math.abs(parseFloat(buffer[0][1]) - (2.303 * 0.1 / 4)) < 1e-6);
+
+  const neutral = batch05.neutralization({ acidM: 0.1, acidV: 25, acidCoeff: 1, baseM: 0.1, baseV: 50, baseCoeff: 2 });
+  assert.match(neutral[2][1], /equivalence/);
+
+  const percent = batch05.percentSolution({ mass: 5, volume: 100 });
+  assert.ok(Math.abs(parseFloat(percent[0][1]) - 5) < 1e-8);
+
+  const dilution = batch05.solutionDilution({ stock: 1, target: 0.1, final: 100 });
+  assert.ok(Math.abs(parseFloat(dilution[0][1]) - 10) < 1e-8);
+  assert.ok(Math.abs(parseFloat(dilution[1][1]) - 90) < 1e-8);
+
+  const titration = batch05.titration({ sampleM: 0.1, sampleV: 25, analyteCoeff: 1, titrantM: 0.1, titrantCoeff: 1 });
+  assert.ok(Math.abs(parseFloat(titration[0][1]) - 25) < 1e-8);
+
+  const hardness = batch05.hardness({ calcium: 40, magnesium: 12 });
+  assert.ok(Math.abs(parseFloat(hardness[0][1]) - 149.296) < 1e-6);
+
+  const theoretical = batch05.theoretical({ reactantMass: 10, reactantMolar: 50, reactantCoeff: 1, productMolar: 80, productCoeff: 1 });
+  assert.ok(Math.abs(parseFloat(theoretical[0][1]) - 16) < 1e-8);
+});
+
+test('chemistry batch 05 formulas reject unsupported or invalid inputs', () => {
+  assert.throws(() => batch05.afr({ air: 1, fuel: 0, stoich: 14 }), /positive finite value/);
+  assert.throws(() => batch05.molecular({ formula: 'XeF2' }), /not in this calculator/);
+  assert.throws(() => batch05.molecular({ formula: 'Ca(OH2' }), /Missing closing parenthesis/);
+  assert.throws(() => batch05.activity({ charge: 1, ionic: 0.6 }), /up to about 0.5/);
+  assert.throws(() => batch05.buffer({ total: 0.1, pka: NaN, ph: 5 }), /valid pKa and pH/);
+  assert.throws(() => batch05.solutionDilution({ stock: 0.1, target: 1, final: 100 }), /cannot exceed stock/);
+  assert.throws(() => batch05.titration({ sampleM: 0.1, sampleV: 25, analyteCoeff: 1, titrantM: 0, titrantCoeff: 1 }), /positive finite value/);
+  assert.throws(() => batch05.hardness({ calcium: -1, magnesium: 2 }), /non-negative finite value/);
+});
