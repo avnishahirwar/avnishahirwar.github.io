@@ -77,7 +77,7 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(shell.includes('.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav'), 'Legacy navigation headers must be removed.');
   assert.ok(shell.includes("footerInner.appendChild(button)"), 'Install action must be placed in the shared footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
-  assert.ok(shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must be inside Settings.');
+  assert.ok(!shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install must remain in Footer while the assistant stays in Settings.');
 });
 
 test('directory promotes the global hub and current tax category route', () => {
