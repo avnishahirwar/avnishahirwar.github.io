@@ -787,7 +787,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const uniqueCalculatorLinks = html => new Set([...html.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
   const homepageLinks = new Set(searchIndex.filter(item => item.url.startsWith('/calculators/')).map(item => item.url));
-  const directoryLinks = uniqueCalculatorLinks(directory);
+  const directoryLinks = new Set([...directory.matchAll(/<a class="card" href=["'](\\/calculators\\/[^"'#]+)["']/g)].map(match => match[1]));
   const sitemapCalculatorUrls = urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url));
   const navStart = homepage.indexOf('<nav class="home-category-index"');
   const navEnd = homepage.indexOf('</nav>', navStart);
