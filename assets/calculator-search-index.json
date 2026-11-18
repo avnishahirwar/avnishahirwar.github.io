@@ -3547,5 +3547,26 @@
     "category": "Geometry, Measurement & Construction",
     "keywords": "fence calculator fence posts pickets rails length height spacing",
     "description": "Estimate fence posts, pickets, rail length and face area for a straight fence run."
+  },
+  {
+    "name": "Atom Calculator",
+    "url": "/calculators/atom-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "atom calculator atomic number protons neutrons electrons isotope charge chemistry",
+    "description": "Calculate protons, neutrons and electrons from an atom's atomic number, mass number and charge."
+  },
+  {
+    "name": "Chemical Equation Balancer",
+    "url": "/calculators/chemical-equation-balancer.html",
+    "category": "Biology & Chemistry",
+    "keywords": "chemical equation balancer stoichiometry balance reaction coefficients conservation atoms",
+    "description": "Balance a chemical equation by solving elemental conservation equations for the smallest whole-number coefficients."
+  },
+  {
+    "name": "Percent Yield Calculator",
+    "url": "/calculators/percent-yield-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "percent yield calculator actual yield theoretical yield reaction efficiency chemistry",
+    "description": "Calculate reaction percent yield from actual product yield and theoretical product yield."
   }
 ]
