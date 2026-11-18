@@ -420,7 +420,7 @@ if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
-const activeHeader=headerIsReady?existingHeader:h;
+const activeHeader=h;
 const removeDuplicateLegacyHeaders=()=>{
   // Remove legacy navigation bars on every page, while retaining content hero headers.
   document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
