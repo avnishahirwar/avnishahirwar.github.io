@@ -287,7 +287,8 @@ if(main&&!document.querySelector('.fc-skip-link')){
 }
 const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்',ja:'日本語',ru:'Русский'};
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||'en';
+const requestedUiLocale=new URLSearchParams(location.search).get('lang');
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn({en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1},requestedUiLocale)?requestedUiLocale:'en');
 const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html'};
 // The URL is the source of truth for the active language.
 // Do not auto-redirect by browser language; visitors choose explicitly.
@@ -460,17 +461,21 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
+    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)(?=\/)/,'');
     // Use GET for static hosts/CDNs that do not implement HEAD consistently.
     // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
+    const fallbackToEnglishPage=()=>{
+      const fallback=new URL(englishPath,location.origin);
+      const query=new URLSearchParams(location.search);
+      query.delete('lang');query.set('lang',next);
+      fallback.search=query.toString();
+      try{sessionStorage.setItem('fc-language-notice',(localeNames[next]||next)+' translation is not available for this page yet. The page is shown in English with the selected-language navigation.')}catch(_){}
+      location.href=fallback.pathname+(fallback.search||'')+(fallback.hash||'');
+    };
     fetch(target,{method:'GET',cache:'no-store',credentials:'same-origin'}).then(response=>{
       if(response.ok){response.body?.cancel();location.href=target;return;}
-      response.body?.cancel();
-      try{sessionStorage.setItem('fc-language-notice','This page is not yet available in the selected language. Opening that language homepage instead.')}catch(_){}
-      location.href=localeHome[next];
-    }).catch(()=>{
-      try{sessionStorage.setItem('fc-language-notice','The selected language page could not be checked. Opening that language homepage instead.')}catch(_){}
-      location.href=localeHome[next];
-    });
+      response.body?.cancel();fallbackToEnglishPage();
+    }).catch(fallbackToEnglishPage);
   });
 }
 try{
