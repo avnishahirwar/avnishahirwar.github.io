@@ -2144,3 +2144,14 @@ test('Open Assistant remains a live page action and is not moved into Settings',
   assert.doesNotMatch(shell, /quickActions\.appendChild\(liveAssistant\)/);
   assert.match(shell, /#fc-ai-lazy-launch\{position:fixed/);
 });
+
+
+test('all localized legacy page-directory footer links are filtered by path and label', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /site-directory\|page-directory\|directory/);
+  assert.match(shell, /verzeichnis\|seitenverzeichnis/);
+  assert.match(shell, /فهرس الصفحات/);
+  assert.doesNotMatch(shell, /'Startseite','Verzeichnis'/);
+  assert.doesNotMatch(shell, /'الرئيسية','الدليل'/);
+  assert.ok(shell.includes("['Sitemap','/sitemap.html']"));
+});
