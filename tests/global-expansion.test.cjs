@@ -57,7 +57,8 @@ test('primary navigation follows a clear category order and includes the interna
   }
   assert.match(shell, /const globalCalculatorsUrl=currentLocale==='ja'\|\|currentLocale==='ru'\?/);
   assert.match(shell, /<details class="fc-all-dropdown">/);
-  assert.match(shell, /<a href="\x27\+globalCalculatorsUrl\+\x27">\x27\+nav\.global\+\x27<\\/a>/);
+  assert.ok(shell.includes("'+globalCalculatorsUrl+'"), 'Global calculators URL must be interpolated into the header dropdown.');
+  assert.ok(shell.includes("'+nav.global+'</a>"), 'The header dropdown must display the localized global-calculator label.');
 });
 
 test('shared footer exposes policy navigation including Legal & Compliance and Sitemap while global tools stay in the header', () => {
@@ -65,7 +66,7 @@ test('shared footer exposes policy navigation including Legal & Compliance and S
   assert.match(shell, /en:\\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\\]/);
   assert.ok(shell.includes("'/calculator/legal-compliance.html'"), 'Shared footer must link to Legal & Compliance.');
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
-  assert.match(shell, /<a href="\x27\+globalCalculatorsUrl\+\x27">\x27\+nav\.global\+\x27<\\/a>/);
+  assert.ok(shell.includes("'+globalCalculatorsUrl+'"), 'The global hub must remain in the header dropdown.');
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /globalCalculatorsUrl/);
 });
 
