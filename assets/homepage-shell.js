@@ -139,8 +139,8 @@ if (document.body && !document.querySelector('.fc-global-footer')) {
     ['Disclaimer', '/calculator/disclaimer.html'],
     ['Legal & Compliance', '/calculator/legal-compliance.html'],
     ['Embed', '/embed/'],
-    ['Contact', '/calculator/contact.html'],
-    ['Sitemap', '/sitemap.html']
+    ['Sitemap', '/sitemap.html'],
+    ['Contact', '/calculator/contact.html']
   ];
   for (const [label, href] of links) {
     const link = document.createElement('a');

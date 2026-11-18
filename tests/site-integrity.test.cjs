@@ -206,17 +206,20 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain in the shared header.');
+  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain at the end of the shared header.');
+  assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
+  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must appear before All Calculators.');
+  assert.ok(headerMarkup.indexOf('fc-all-dropdown')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators dropdown.');
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Currency, country/format and units must move into Settings.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap']",
-    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क','साइटमैप (अंग्रेज़ी)']"
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/sitemap.html'];"));
+  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
 });
 
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
@@ -857,7 +860,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
+  assert.match(shell, /en:\\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\\]/);
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
@@ -2062,7 +2065,8 @@ test('homepage uses the shared PWA install action and preserves language, analyt
   const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
   const shared = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(!script.includes("id='fc-pwa-install'") && !script.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
-  assert.ok(shared.includes("footerInner.appendChild(button)"), 'The shared shell must place the install action in the global footer.');
+  assert.ok(shared.includes('quickActions.appendChild(installButton)'), 'The shared shell must place the install action inside Settings Quick Actions.');
+  assert.ok(!shared.includes('footerInner.appendChild(button)'), 'The install action must not be mounted in the Footer.');
   assert.ok(shared.includes("position:static!important"), 'The install action must not float over page content.');
   for (const feature of ['fc-language-select', 'gtm.js', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);

@@ -43,7 +43,7 @@ try {
       ['About','/calculator/about.html'],['Methodology','/calculator/methodology.html'],
       ['Privacy','/calculator/privacy.html'],['Terms','/calculator/terms.html'],
       ['Disclaimer','/calculator/disclaimer.html'],['Legal & Compliance','/calculator/legal-compliance.html'],
-      ['Embed','/embed/'],['Contact','/calculator/contact.html'],['Sitemap','/sitemap.html']
+      ['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
     ];
     const allLinks=[...preservedLinks];
     requiredLinks.forEach(([label,href])=>{
@@ -214,11 +214,8 @@ const ensurePwaInstallUi=()=>{
   });
 
   document.head.appendChild(style);
-  const footer=document.querySelector('footer.fc-global-footer');
-  const footerInner=footer?.querySelector('.fc-global-footer-inner')||footer;
-  if(footerInner)footerInner.appendChild(button);
-  else document.body.appendChild(button);
-  document.body.append(panel,network);
+  // The install control is mounted temporarily on body, then moved into Settings Quick Actions.
+  document.body.append(button,panel,network);
 };
 
 // Do not load analytics tags on the Privacy Policy URL used for consent review.
@@ -414,12 +411,12 @@ const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav></div></div>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><details class="fc-all-dropdown"><summary>'+nav.all+' <span aria-hidden="true">⌄</span></summary><div class="fc-all-dropdown-menu"><a href="'+r+'site-directory.html">'+nav.all+'</a><a href="/sitemap.html">Sitemap</a></div></details>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
-if(headerIsReady){if(reservedHeader)reservedHeader.remove();}
+if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader.remove();}
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
@@ -495,23 +492,23 @@ const routeLanguageSelect=document.getElementById('fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
-  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Kontakt (Englisch)','Sitemap (Englisch)'],
-  en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'],
-  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','संपर्क','साइटमैप (अंग्रेज़ी)'],
-  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Contacto','Mapa del sitio (inglés)'],
-  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Contact','Plan du site (anglais)'],
-  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Contato','Mapa do site (inglês)'],
-  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','اتصل بنا','خريطة الموقع (بالإنجليزية)'],
-  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Kontak','Peta situs (Inggris)'],
-  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','যোগাযোগ','সাইটম্যাপ (ইংরেজি)'],
-  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தொடர்பு','தள வரைபடம் (ஆங்கிலம்)'],
-  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','お問い合わせ（英語）','サイトマップ（英語）'],
+  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Sitemap (Englisch)','Kontakt (Englisch)'],
+  en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'],
+  hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क'],
+  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Mapa del sitio (inglés)','Contacto'],
+  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Plan du site (anglais)','Contact'],
+  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Mapa do site (inglês)','Contato'],
+  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','خريطة الموقع (بالإنجليزية)','اتصل بنا'],
+  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Peta situs (Inggris)','Kontak'],
+  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','সাইটম্যাপ (ইংরেজি)','যোগাযোগ'],
+  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தள வரைபடம் (ஆங்கிலம்)','தொடர்பு'],
+  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','サイトマップ（英語）','お問い合わせ（英語）'],
   ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)']
 };
-const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/sitemap.html'];
+const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+[footerLinks[8],footerLinks[0],footerLinks[2],footerLinks[3],footerLinks[4],footerLinks[5],footerLinks[6],footerLinks[7],footerLinks[1]].map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>'
+f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>'
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
 const isFooterSocialLink=link=>{
@@ -1444,7 +1441,13 @@ const mountSettingsQuickActions=()=>{
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
-  // The install action remains in the shared Footer, not inside the Settings dialog.
+  // Keep the install action and its help content together inside Settings.
+  const installButton=document.getElementById('fc-pwa-install');
+  if(installButton){
+    installButton.textContent=copy.install;
+    installButton.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(installButton);
+  }
   const installHelp=document.getElementById('fc-pwa-help');
   const assistant=document.getElementById('fc-ai-lazy-launch');
   const liveAssistant=document.getElementById('fc-ai-launch');
