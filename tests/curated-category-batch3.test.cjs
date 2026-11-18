@@ -129,11 +129,11 @@ test('all 12 pages are unique, cited, formula-complete and integrated into every
     assert.match(page, /Assumptions and limitations/);
     assert.ok((page.match(/href="https?:\/\//g) || []).length >= 2, `${url} citations`);
   }
-  assert.equal(index.filter(item => item.url.startsWith('/calculators/')).length, 541);
-  assert.equal(index.length, 542);
-  assert.equal(new Set(index.map(item => item.url)).size, 542);
-  assert.match(homepage, /Search all 541 calculators/);
-  assert.match(directory, /Showing all 541 calculators in 20 categories/);
-  assert.match(about, /541 public calculators/);
+  assert.equal(index.filter(item => item.url.startsWith('/calculators/')).length, 592);
+  assert.equal(index.length, 593);
+  assert.equal(new Set(index.map(item => item.url)).size, 593);
+  assert.match(homepage, /Search all 592 calculators/);
+  assert.match(directory, /Showing all 592 calculators in 20 categories/);
+  assert.match(about, /592 public calculators/);
   assert.equal((sitemap.match(/<url>/g) || []).length, 1487);
 });
