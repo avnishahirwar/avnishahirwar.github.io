@@ -793,7 +793,7 @@ test('homepage, directory, About and sitemap agree on the public calculator cata
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, match) => sum + Number(match[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.equal(homepageLinks.size, 567, 'Homepage must link to every core calculator');
-  assert.equal(searchIndex.length, 568, 'Homepage search includes the 546 core calculators plus the international VAT calculator');
+  assert.equal(searchIndex.length, 568, 'Homepage search includes the 567 core calculators plus the international VAT calculator');
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.equal(directoryLinks.size, homepageLinks.size, 'Directory and homepage calculator sets must match in size');
   assert.equal(new Set(sitemapCalculatorUrls).size, homepageLinks.size, 'Sitemap and homepage calculator counts must match');
