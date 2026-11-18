@@ -1186,3 +1186,51 @@ test('chemistry batch 08 formulas reject invalid physical and model inputs', () 
   assert.throws(() => batch08.radioactive({ initial: 1, constant: 0.1, time: -1 }), /non-negative/);
   assert.throws(() => batch08.cod({ blank: 5, sample: 6, normality: 0.1, volume: 50 }), /between zero and the blank/);
 });
+
+const batch09Source = fs.readFileSync(new URL('../assets/chemistry-calculators-batch09.js', 'file://' + __filename), 'utf8');
+const batch09Context = {};
+vm.runInNewContext(batch09Source, batch09Context);
+const batch09 = batch09Context.FriendlyChemistryBatch09;
+
+test('chemistry batch 09 formulas return expected reference values', () => {
+  const saponification = batch09.saponification({ blank: 25, sample: 10, normality: 0.5, mass: 2 });
+  assert.ok(Math.abs(parseFloat(saponification[0][1]) - 210.375) < 1e-6);
+
+  const dbe = batch09.unsaturation({ carbon: 6, hydrogen: 6, nitrogen: 0, halogens: 0 });
+  assert.ok(Math.abs(parseFloat(dbe[0][1]) - 4) < 1e-8);
+
+  const radiocarbon = batch09.radiocarbon({ fraction: 0.5, half: 5730 });
+  assert.ok(Math.abs(parseFloat(radiocarbon[0][1]) - 5730) < 1e-8);
+
+  const calibration = batch09.calibration({ c1: 1, r1: 2.1, c2: 5, r2: 10.1, unknown: 6.1 });
+  assert.ok(Math.abs(parseFloat(calibration[2][1]) - 3) < 1e-8);
+
+  const enzyme = batch09.enzyme({ rate: 0.05, epsilon: 6220, path: 1, reaction: 3, enzyme: 0.1 });
+  assert.ok(parseFloat(enzyme[0][1]) > 0.24 && parseFloat(enzyme[0][1]) < 0.25);
+
+  const pi = batch09.isoelectric({ lower: 2.34, upper: 9.6 });
+  assert.ok(Math.abs(parseFloat(pi[0][1]) - 5.97) < 1e-8);
+
+  const michaelis = batch09.michaelis({ maximum: 100, substrate: 2, km: 2 });
+  assert.ok(Math.abs(parseFloat(michaelis[0][1]) - 50) < 1e-8);
+
+  const beer = batch09.beerLambert({ absorbance: 0.622, epsilon: 6220, path: 1 });
+  assert.ok(Math.abs(parseFloat(beer[0][1]) - 0.0001) < 1e-8);
+
+  const protein = batch09.crudeProtein({ nitrogen: 2.4, factor: 6.25 });
+  assert.ok(Math.abs(parseFloat(protein[0][1]) - 15) < 1e-8);
+
+  const cubic = batch09.cubic({ edge: 400, units: 4, molar: 58.69 });
+  assert.ok(parseFloat(cubic[0][1]) > 0);
+});
+
+test('chemistry batch 09 formulas reject invalid scientific inputs', () => {
+  assert.throws(() => batch09.saponification({ blank: 10, sample: 11, normality: 0.5, mass: 2 }), /between zero and the blank/);
+  assert.throws(() => batch09.unsaturation({ carbon: 6, hydrogen: -1, nitrogen: 0, halogens: 0 }), /non-negative whole numbers/);
+  assert.throws(() => batch09.radiocarbon({ fraction: 0, half: 5730 }), /greater than 0/);
+  assert.throws(() => batch09.calibration({ c1: 1, r1: 2, c2: 1, r2: 4, unknown: 3 }), /must be different/);
+  assert.throws(() => batch09.isoelectric({ lower: 9, upper: 2 }), /lower value first/);
+  assert.throws(() => batch09.michaelis({ maximum: 0, substrate: 2, km: 2 }), /positive finite value/);
+  assert.throws(() => batch09.beerLambert({ absorbance: 0.6, epsilon: 0, path: 1 }), /positive finite value/);
+  assert.throws(() => batch09.cubic({ edge: 400, units: 4.5, molar: 58 }), /whole number/);
+});
