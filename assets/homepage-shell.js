@@ -136,4 +136,80 @@ if(!document.getElementById('fc-ai-lazy-launch')){
   });
   document.body.appendChild(launcher);
 }
+
+/* Keep the English homepage's existing header and add the same shared footer
+   used by calculator pages. The footer is additive and includes the Sitemap. */
+if (document.body && !document.querySelector('.fc-global-footer')) {
+  const footer = document.createElement('footer');
+  footer.className = 'fc-global-footer';
+  footer.setAttribute('aria-label', 'Website footer');
+
+  const inner = document.createElement('div');
+  inner.className = 'fc-global-footer-inner';
+
+  const intro = document.createElement('div');
+  intro.className = 'fc-footer-intro';
+  const logo = document.createElement('img');
+  logo.className = 'fc-footer-mark';
+  logo.src = '/assets/friendly-calculator-logo.svg';
+  logo.width = 30;
+  logo.height = 30;
+  logo.alt = 'Friendly Calculator logo';
+  logo.loading = 'lazy';
+  logo.decoding = 'async';
+  const brand = document.createElement('strong');
+  brand.textContent = 'FRIENDLY CALCULATOR';
+  const tagline = document.createElement('small');
+  tagline.textContent = 'Practical tools for everyday calculations.';
+  intro.append(logo, brand, document.createElement('br'), tagline);
+
+  const nav = document.createElement('nav');
+  nav.className = 'fc-global-footer-links';
+  nav.setAttribute('aria-label', 'Footer navigation');
+  const links = [
+    ['About', '/calculator/about.html'],
+    ['Methodology', '/calculator/methodology.html'],
+    ['Privacy', '/calculator/privacy.html'],
+    ['Terms', '/calculator/terms.html'],
+    ['Disclaimer', '/calculator/disclaimer.html'],
+    ['Legal & Compliance', '/calculator/legal-compliance.html'],
+    ['Embed', '/embed/'],
+    ['Contact', '/calculator/contact.html'],
+    ['Sitemap', '/sitemap.html']
+  ];
+  for (const [label, href] of links) {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = label;
+    nav.appendChild(link);
+  }
+
+  const social = document.createElement('nav');
+  social.className = 'fc-social-links';
+  social.setAttribute('aria-label', 'Social media and contact');
+  const socialLinks = [
+    ['Instagram', 'https://www.instagram.com/avnish_ahirwar'],
+    ['LinkedIn', 'https://www.linkedin.com/in/avnishahirwar415'],
+    ['Email', 'mailto:avnishahirwar415@gmail.com']
+  ];
+  for (const [label, href] of socialLinks) {
+    const link = document.createElement('a');
+    link.className = 'fc-social-link';
+    link.href = href;
+    link.setAttribute('aria-label', label);
+    link.title = label;
+    if (href.startsWith('https://')) {
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+    link.textContent = label;
+    social.appendChild(link);
+  }
+
+  const copyright = document.createElement('small');
+  copyright.textContent = '© 2026 Friendly Calculator';
+  inner.append(intro, nav, social, copyright);
+  footer.appendChild(inner);
+  document.body.appendChild(footer);
+}
 })();
