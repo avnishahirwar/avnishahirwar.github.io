@@ -202,14 +202,16 @@ test('shared header and footer retain navigation order while regional preference
   }
   assert.doesNotMatch(header, /nav\.search|Search Calculator/);
   assert.match(shell, /en:\{home:'Home',login:'Login'/);
-  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'All menu and site directory link must remain available.');
+  assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'All Calculators must remain a plain link alongside Global Tools.');
+  assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must not use dropdown markup.');
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain at the end of the shared header.');
+  assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must remain at the end of the shared header.');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
-  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must appear before All Calculators.');
-  assert.ok(headerMarkup.indexOf('fc-all-dropdown')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators dropdown.');
+  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must appear before the plain All Calculators link.');
+  assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
+  assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Currency, country/format and units must move into Settings.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
@@ -817,7 +819,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
   assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
   assert.doesNotMatch(homepage, /class="search-panel"/);
-  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'The All menu must expose the site directory and global calculators.');
+  assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
+  assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
@@ -860,7 +863,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\\]/);
+  assert.ok(shell.includes("en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact']"), 'The shared Footer must retain the approved policy links and Sitemap.');
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
@@ -1326,7 +1329,7 @@ test('business page clearly exposes live selected-calculator iframe embeds', () 
 test('display settings provide only Normal Mode and Dark Mode', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'normalModeButton', 'darkModeButton', 'aria-pressed', 'prefers-color-scheme']) {
+  for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'normalModeButton', 'darkModeButton', 'aria-pressed', "initialTheme=theme==='dark'?'dark':'light'"]) {
     assert.ok(shell.includes(token), 'Missing display setting token: ' + token);
   }
   assert.ok(!shell.includes('contrastButton') && !shell.includes('sizeLabel') && !shell.includes('motionButton'));
@@ -2045,7 +2048,7 @@ test('Settings trigger is in the shared footer; Language stays in the header and
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("primaryNav.after(languageHost.firstElementChild)"), 'Language must remain in the shared header.');
+  assert.ok(shell.includes("+languageControl+'</nav>"), 'Language must remain in the shared header after Login.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes("footerNav.appendChild(open)") && shell.includes("footerNav.appendChild(trigger)"), 'The Settings trigger must be inserted into the shared footer, not the floating dock.');
@@ -2096,7 +2099,8 @@ test('shared header and footer fail-safe normalizes legacy navigation and nested
   const firstEnhancement = script.indexOf('const ensureFavicon');
   const fallback = script.indexOf('fc-shell-failsafe');
   assert.ok(fallback > 0 && fallback < firstEnhancement, 'Site chrome fallback must run before optional enhancements');
-  assert.ok(script.includes('href="/sitemap.html">Sitemap</a>'), 'Fallback header must link to Sitemap');
+  assert.ok(script.includes("['Sitemap','/sitemap.html']"), 'Fallback Footer must link to Sitemap.');
+  assert.ok(!script.slice(script.indexOf("header.innerHTML ="),script.indexOf('document.body.prepend(header)')).includes('Sitemap'), 'Sitemap must remain out of the Header.');
   assert.ok(script.includes('aria-label="Footer navigation"'), 'Fallback footer must have accessible navigation');
   assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
   assert.ok(script.includes("removeDuplicateLegacyHeaders"), 'Legacy navigation headers must be removed before rendering the shared header.');
@@ -2142,7 +2146,8 @@ test('Open Assistant remains a live page action and is not moved into Settings',
   assert.match(shell, /document\.querySelector\('#fc-ai-launch'\)\?\.click\(\)/);
   assert.doesNotMatch(shell, /quickActions\.appendChild\(assistant\)/);
   assert.doesNotMatch(shell, /quickActions\.appendChild\(liveAssistant\)/);
-  assert.match(shell, /#fc-ai-lazy-launch\{position:fixed/);
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(styles, /#fc-ai-lazy-launch\{position:fixed/);
 });
 
 
