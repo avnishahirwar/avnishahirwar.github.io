@@ -378,6 +378,13 @@ else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigat
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
 const activeHeader=headerIsReady?existingHeader:h;
+const removeDuplicateLegacyHeaders=()=>{
+  document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
+    if(legacy.querySelector('.wrap.nav,.brand,nav[aria-label="Main navigation"]'))legacy.remove();
+  });
+};
+removeDuplicateLegacyHeaders();
+
 // Keep regional preferences outside the global header/footer. Preserve the
 // existing selector IDs and handlers by moving these original controls into
 // a hidden staging node; the Settings panel relocates them after it is built.
@@ -432,7 +439,7 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
     }
   };
   window.addEventListener('resize',syncNav,{passive:true});
-  activeHeader.querySelector('.fc-global-nav')?.insertBefore(toggle,primaryNav);
+  (activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav);
 }
 const routeLanguageSelect=document.getElementById('fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
@@ -1188,11 +1195,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   themeModes.setAttribute('aria-label',t.accessibility);
   themeModes.append(normalModeButton,darkModeButton);
   const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  const actionRow=document.createElement('div');actionRow.className='fc-display-actions';
-  const reset=document.createElement('button');reset.type='button';reset.className='fc-display-action';reset.textContent=t.reset;
-  const save=document.createElement('button');save.type='button';save.className='fc-display-save';save.textContent=t.save;
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
-  actionRow.append(reset,save);
   let previousBodyOverflow='';
   const closePanel=()=>{panel.hidden=true;backdrop.hidden=true;open.setAttribute('aria-expanded','false');document.body.style.overflow=previousBodyOverflow;};
   close.addEventListener('click',()=>{closePanel();open.focus();});
@@ -1202,22 +1205,12 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     previousBodyOverflow=document.body.style.overflow;
     panel.hidden=false;backdrop.hidden=false;document.body.style.overflow='hidden';
     open.setAttribute('aria-expanded','true');
-    (panel.querySelector('#fc-currency-select')||normalModeButton).focus();
+    panel.scrollTop=0;
+    closeTop.focus({preventScroll:true});
+    panel.scrollTop=0;
   };
   open.addEventListener('click',()=>{if(panel.hidden)openPanel();else{closePanel();open.focus();}});
-  save.addEventListener('click',()=>{status.textContent=t.saved;closePanel();open.focus();});
-  reset.addEventListener('click',()=>{
-    const countrySelect=document.querySelector('#fc-country-select');
-    const currencySelect=document.querySelector('#fc-currency-select');
-    const localeSelect=document.querySelector('#fc-locale-select');
-    const unitSelect=document.querySelector('#fc-unit-system-select');
-    if(countrySelect){countrySelect.value=defaultLocaleSettings.country;countrySelect.dispatchEvent(new Event('change',{bubbles:true}));}
-    if(currencySelect){currencySelect.value=defaultLocaleSettings.currency;currencySelect.dispatchEvent(new Event('change',{bubbles:true}));}
-    if(localeSelect){localeSelect.value=defaultLocaleSettings.locale;localeSelect.dispatchEvent(new Event('change',{bubbles:true}));}
-    if(unitSelect){unitSelect.value=defaultLocaleSettings.units;unitSelect.dispatchEvent(new Event('change',{bubbles:true}));}
-    applyTheme(initialTheme);
-    status.textContent=t.resetDone;
-  });
+
   document.addEventListener('keydown',event=>{
     if(panel.hidden)return;
     if(event.key==='Escape'){closePanel();open.focus();return;}
@@ -1336,7 +1329,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   quickDivider.setAttribute('aria-hidden','true');
   panel.append(quickDivider);
   addSectionHeading(t.quick);
-  panel.append(status,actionRow,close);
+  panel.append(status,close);
 
   const dock=getFloatingToolsDock();
   if(dock)dock.appendChild(open);
