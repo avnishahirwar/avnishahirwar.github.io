@@ -3505,5 +3505,47 @@
     "category": "Biology & Chemistry",
     "keywords": "Miller indices calculator crystal plane intercepts hkl",
     "description": "Calculate reciprocal intercepts for a crystal plane and estimate the corresponding integer Miller indices."
+  },
+  {
+    "name": "Roof Pitch Calculator",
+    "url": "/calculators/roof-pitch-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roof pitch calculator rise run roof angle slope multiplier",
+    "description": "Calculate roof pitch, angle and slope multiplier from rise and horizontal run."
+  },
+  {
+    "name": "Roofing Calculator",
+    "url": "/calculators/roofing-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roofing calculator roof area roof slope roof squares material allowance",
+    "description": "Estimate sloped roof area and roofing squares from plan dimensions, roof pitch and a material allowance."
+  },
+  {
+    "name": "Roof Shingle Calculator",
+    "url": "/calculators/roof-shingle-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "roof shingle calculator bundles coverage roof material cost",
+    "description": "Estimate shingle bundles and material cost from measured roof area, package coverage and a waste allowance."
+  },
+  {
+    "name": "Rebar Calculator",
+    "url": "/calculators/rebar-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "rebar calculator reinforcement steel bar weight diameter length quantity",
+    "description": "Estimate nominal reinforcing-bar mass and material cost from bar diameter, length, quantity and price per kilogram."
+  },
+  {
+    "name": "Steel Weight Calculator",
+    "url": "/calculators/steel-weight-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "steel weight calculator steel plate mass length width thickness density",
+    "description": "Estimate the mass of rectangular steel plates from dimensions, quantity and material density."
+  },
+  {
+    "name": "Fence Calculator",
+    "url": "/calculators/fence-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "fence calculator fence posts pickets rails length height spacing",
+    "description": "Estimate fence posts, pickets, rail length and face area for a straight fence run."
   }
 ]
