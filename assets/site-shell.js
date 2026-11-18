@@ -1147,6 +1147,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden){closePanel();open.focus();}});
   // Keep locale and measurement selectors out of the crowded primary navigation.
   // Moving the original controls preserves their IDs, event listeners and saved preferences.
+  panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
   const settingRows=[];
   const addSettingRow=(className,controls)=>{
     const row=document.createElement('div');
@@ -1167,7 +1168,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     divider.setAttribute('aria-hidden','true');
     panel.append(divider);
   }
-  panel.append(heading,themeButton,sizeLabel,sizeRow,status,close);
+
   const dock=getFloatingToolsDock();
   if(dock)dock.appendChild(open);
   document.body.appendChild(panel);
