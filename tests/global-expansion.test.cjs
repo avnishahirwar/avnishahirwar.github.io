@@ -48,7 +48,7 @@ test('primary navigation follows a clear category order and includes the interna
   const navStart = shell.indexOf('const links=[');
   const navEnd = shell.indexOf('];', navStart);
   const nav = shell.slice(navStart, navEnd);
-  const order = ['nav.home','nav.business','nav.finance','nav.tax','nav.everyday','nav.global','nav.all','nav.blog','nav.login'];
+  const order = ['nav.home','nav.business','nav.finance','nav.tax','nav.everyday','nav.blog','nav.login'];
   let previous = -1;
   for (const item of order) {
     const index = nav.indexOf(item);
@@ -56,13 +56,17 @@ test('primary navigation follows a clear category order and includes the interna
     previous = index;
   }
   assert.match(nav, /r\+'tax\.html'/);
+  assert.match(shell, /const globalCalculatorsUrl=currentLocale==='ja'\|\|currentLocale==='ru'\?/);
+  assert.match(shell, /<details class="fc-all-dropdown">/);
+  assert.ok(shell.includes("'+nav.global+'</a>"), 'Global calculators must be available in the All Calculators dropdown.');
 });
 
 test('shared footer exposes the policy navigation including Legal & Compliance while global tools stay in the header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
-  assert.ok(shell.includes("[nav.global,currentLocale==='ja'||currentLocale==='ru'?'/'+currentLocale+'/international/':'/international/']"));
+  assert.ok(shell.includes("'+globalCalculatorsUrl+'"), 'The international hub must be linked from the shared header dropdown.');
+  assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /globalCalculatorsUrl/);
 });
 
 test('directory promotes the global hub and current tax category route', () => {
