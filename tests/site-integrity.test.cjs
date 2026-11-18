@@ -8,7 +8,7 @@ require(path.join(root, 'assets/chemistry-calculators.js'));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, homepageCoreCalculatorCount } = catalogueCounts;
+const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, homepageCoreCalculatorCount } = catalogueCounts;
 
 function localFile(url, baseFile = 'index.html') {
   const parsed = new URL(url, 'https://friendlycalculator.in/' + baseFile);
@@ -1729,7 +1729,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.match(directory, /<strong>126 tools<\/strong>/);
+  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
   assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
 });
 
