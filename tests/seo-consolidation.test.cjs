@@ -73,7 +73,7 @@ test('Income Tax calculator uses the current site catalogue count', () => {
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
   assert.equal(new Set(calculatorUrls).size, 2478);
-  assert.ok(html.includes('Explore all 546 calculators on Friendly Calculator.'));
+  assert.ok(html.includes('Explore all 562 calculators on Friendly Calculator.'));
   assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
 });
 
