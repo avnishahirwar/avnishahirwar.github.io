@@ -99,7 +99,10 @@ test('local links in public pages do not point to missing files', () => {
     if (!pageFile || !fs.existsSync(pageFile)) continue;
     const html = fs.readFileSync(pageFile, 'utf8');
     const relativePage = path.relative(root, pageFile).split(path.sep).join('/');
-    for (const match of html.matchAll(/\b(?:href|src)=["']([^"']+)["']/gi)) {
+    // Only inspect rendered markup: JavaScript template strings can contain
+    // dynamically assembled href/src fragments that are not actual local links.
+    const staticMarkup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+    for (const match of staticMarkup.matchAll(/\b(?:href|src)=["']([^"']+)["']/gi)) {
       const ref = match[1].trim();
       if (!ref || /^(?:#|mailto:|tel:|javascript:|data:|https?:|\/\/)/i.test(ref)) continue;
       const target = localFile(ref, relativePage);
