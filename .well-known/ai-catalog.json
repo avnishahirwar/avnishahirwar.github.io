@@ -1,0 +1,30 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Friendly Calculator",
+    "documentationUrl": "https://friendlycalculator.in/calculator/api.html"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:friendlycalculator.in:website:calculator-directory",
+      "displayName": "Friendly Calculator — Online Calculator Directory",
+      "type": "text/html",
+      "url": "https://friendlycalculator.in/calculator/site-directory.html",
+      "description": "Public directory of free online calculators for mathematics, finance, tax, salary, conversions and everyday calculations. This entry describes a browsable website resource; it does not expose an executable API or autonomous action.",
+      "representativeQueries": [
+        "Find a free online EMI, tax or percentage calculator",
+        "Browse calculators for finance, mathematics and everyday conversions",
+        "Find a calculator for a specific everyday calculation"
+      ],
+      "tags": [
+        "online calculators",
+        "finance",
+        "tax",
+        "mathematics",
+        "conversions",
+        "India",
+        "international"
+      ]
+    }
+  ]
+}
