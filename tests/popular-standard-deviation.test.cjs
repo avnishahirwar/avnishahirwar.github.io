@@ -28,7 +28,7 @@ test('standard deviation rejects invalid, undersized and oversized input', () =>
   assert.throws(() => math.calculateStandardDeviation(''), /at least two/);
   assert.throws(() => math.calculateStandardDeviation('7'), /at least two/);
   assert.throws(() => math.calculateStandardDeviation('1, two, 3'), /finite numbers/);
-  assert.throws(() => math.calculateStandardDeviation('1, 2, 3'.repeat(120)), /under 800/);
+  assert.throws(() => math.calculateStandardDeviation('1, 2, 3'.repeat(1800)), /12,000/);
   assert.throws(() => math.calculateStandardDeviation(Array(1001).fill('1').join(',')), /1,000/);
 });
 
