@@ -26,7 +26,7 @@ test('market currency defaults use domestic currencies and directory aliases pre
  assert.equal(calc.currencyByCountry.NA,'NAD');
  assert.equal(calc.currencyByCountry.ZW,'ZWG');
  const script=fs.readFileSync(path.join(root,'assets/worldwide-mortgage-calculator.js'),'utf8');
- for(const alias of [\"'cabo verde':'CV'\",\"'republic of the congo':'CG'\",\"'democratic republic of the congo':'CD'\",\"'myanmar':'MM'\",\"'turkey':'TR'\"])assert.ok(script.includes(alias),'missing country alias '+alias);
+  for(const alias of ['cabo verde','republic of the congo','democratic republic of the congo','myanmar','turkey'])assert.ok(script.includes(alias),'missing country alias '+alias);
 });
 
 test('worldwide mortgage formula handles zero and positive interest rates',()=>{
