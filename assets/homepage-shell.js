@@ -69,8 +69,10 @@ if(document.body&&!document.getElementById('fc-display-settings')){
   const dark=document.createElement('button');dark.type='button';dark.className='fc-display-action';dark.textContent='Dark Mode';
   const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent='Close';
+  // Match every other public page: Normal Mode is the default unless the
+  // visitor has explicitly saved Dark Mode in Settings.
   let currentTheme=read('fc-display-theme','');
-  if(currentTheme!=='dark'&&currentTheme!=='light')currentTheme=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  if(currentTheme!=='dark')currentTheme='light';
   const applyTheme=value=>{
     currentTheme=value==='dark'?'dark':'light';
     document.documentElement.setAttribute('data-fc-theme',currentTheme);

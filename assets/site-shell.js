@@ -1209,8 +1209,9 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
   const theme=read('fc-display-theme','');
-  const initialTheme=theme==='dark'||theme==='light'?theme:
-    (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  // Normal Mode is the safe default on every device. Dark Mode is enabled
+  // only after the visitor explicitly selects it and that choice is saved.
+  const initialTheme=theme==='dark'?'dark':'light';
   // Accessibility offers only Normal Mode and Dark Mode.
   const defaultLocaleSettings={
     country:window.FCLocale?.getCountry()||'IN',
