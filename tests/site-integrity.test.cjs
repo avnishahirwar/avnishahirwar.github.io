@@ -206,7 +206,8 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain in the shared header.');
+  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain at the end of the shared header.');
+  assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
   assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must appear before All Calculators.');
   assert.ok(headerMarkup.indexOf('fc-all-dropdown')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators dropdown.');
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Currency, country/format and units must move into Settings.');
@@ -859,7 +860,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
+  assert.match(shell, /en:\\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\\]/);
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
