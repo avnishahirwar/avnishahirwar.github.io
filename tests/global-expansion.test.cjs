@@ -88,7 +88,9 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must be placed inside Settings Quick Actions.');
   assert.ok(!shell.includes('footerInner.appendChild(button)'), 'Install action must not be placed in the Footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
-  assert.ok(shell.includes('quickActions.appendChild(installButton)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must both stay inside Settings.');
+  assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must stay inside Settings Quick Actions.');
+  assert.ok(!shell.includes('quickActions.appendChild(assistant)') && !shell.includes('quickActions.appendChild(liveAssistant)'), 'Open Assistant must not be moved into Settings.');
+  assert.ok(shell.includes('document.body.appendChild(launcher)') && shell.includes("document.querySelector('#fc-ai-launch')?.click()"), 'Open Assistant must remain a live on-page launcher.');
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
 });
