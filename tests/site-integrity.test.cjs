@@ -2102,3 +2102,14 @@ test('shared header and footer fail-safe normalizes legacy navigation and nested
   assert.ok(script.includes('preservedFooterLinks.forEach(link=>'), 'Useful legacy footer links must be preserved in the canonical footer.');
   assert.ok(script.includes('footerInner.appendChild(button)'), 'The install action must be inside the shared footer.');
 });
+
+test('shared Footer keeps social destinations in one icon row and hides redundant theme status visually', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(shell.includes('const isFooterSocialLink=link=>'), 'Legacy social links must be identified before they are merged into Footer navigation.');
+  assert.ok(shell.includes('!isFooterSocialLink(link)'), 'Instagram, LinkedIn and email links must not be duplicated as text navigation items.');
+  assert.ok(shell.includes('class="fc-social-links"'), 'The shared Footer must retain its dedicated social icon row.');
+  assert.ok(shell.includes('aria-atomic'), 'Theme status must remain available to assistive technology.');
+  assert.ok(css.includes('body>.fc-display-panel .fc-display-status'), 'The redundant theme status line must be visually hidden in Settings.');
+  assert.ok(css.includes('clip-path:inset(50%)'), 'The hidden status must use an accessible visually-hidden treatment.');
+});
