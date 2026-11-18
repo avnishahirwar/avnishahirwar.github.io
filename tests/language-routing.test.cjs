@@ -18,7 +18,8 @@ test('language switching preserves the current route when its translation exists
   assert.match(shell, /fetch\(target,\{method:'GET',cache:'no-store',credentials:'same-origin'\}\)/);
   assert.match(shell, /response\.body\?\.cancel\(\)/);
   assert.match(shell, /if\(response\.ok\)\{response\.body\?\.cancel\(\);location\.href=target;return;\}/);
-  assert.match(shell, /location\.href=localeHome\[next\]/);
+  assert.match(shell, /fallbackToEnglishPage/);
+  assert.match(shell, /location\.href=fallback\.pathname/);
   assert.match(shell, /fc-language-notice/);
 });
 
