@@ -225,7 +225,7 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
 .fc-global-brand .fc-brand-mark{width:46px;height:46px;flex-basis:46px}
 .fc-global-brand b,.fc-footer-intro b{color:#f3c329}
 .fc-global-brand sup,.fc-footer-intro sup{font-size:.55em;vertical-align:top}
-.fc-global-brand small{display:block;margin-left:56px;margin-top:-7px;color:#e1e8ef;font-size:.72rem;font-weight:500;letter-spacing:0}
+.fc-global-brand .fc-brand-copy{display:grid;gap:2px;min-width:0;line-height:1.12;letter-spacing:0}.fc-global-brand .fc-brand-copy>span{font-weight:900;letter-spacing:.02em}.fc-global-brand .fc-brand-copy small{display:block;margin:0;color:#e1e8ef;font-size:.72rem;font-weight:500;letter-spacing:0;line-height:1.25}
 .fc-global-links{display:flex;align-items:center;justify-content:flex-end;gap:clamp(10px,1.35vw,22px);flex:1;white-space:nowrap;min-width:0}
 .fc-global-links>a{font-size:.92rem;font-weight:700;color:#f7f9fc;padding:12px 0;border-bottom:3px solid transparent}
 .fc-global-links>a:hover,.fc-global-links>a[aria-current=page]{color:#ffcf24;border-bottom-color:#ffcf24;text-decoration:none}
@@ -278,7 +278,7 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
  .fc-top-row{width:92%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
  .fc-global-brand{font-size:.94rem}
  .fc-global-brand .fc-brand-mark{width:38px;height:38px;flex-basis:38px}
- .fc-global-brand small{margin-left:48px;font-size:.66rem}
+ .fc-global-brand .fc-brand-copy small{margin:0;font-size:.66rem}
  .fc-nav-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 12px;border:1px solid #d8bd82;border-radius:7px;background:#102b48;color:#fff;font-weight:700}
  .fc-global-links{grid-column:1/-1;display:none;flex-direction:column;align-items:stretch;gap:0;padding:6px 0}
  .fc-global-links.fc-nav-open{display:flex}
