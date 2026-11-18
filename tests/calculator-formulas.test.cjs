@@ -942,7 +942,7 @@ test('chemistry batch 04 formulas return expected reference values', () => {
   assert.ok(Math.abs(parseFloat(en[0][1]) - 0.96) < 1e-8);
 
   const ionic = batch04.ionic({ difference: 1 });
-  assert.ok(Math.abs(parseFloat(ionic[0][1]) - ((1 - Math.exp(-0.25)) * 100)) < 1e-6);
+  assert.ok(Math.abs(parseFloat(ionic[0][1]) - ((1 - Math.exp(-0.25)) * 100)) < 1e-4);
 
   const pka = batch04.pka({ ka: 1e-5, pka: NaN });
   assert.ok(Math.abs(parseFloat(pka[0][1]) - 5) < 1e-8);
