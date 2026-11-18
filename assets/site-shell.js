@@ -435,7 +435,6 @@ removeDuplicateLegacyHeaders();
 // Keep regional preferences outside the global header/footer. Preserve the
 // existing selector IDs and handlers by moving these original controls into
 // a hidden staging node; the Settings panel relocates them after it is built.
-activeHeader.querySelector('.fc-language-control')?.remove();
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
