@@ -1292,51 +1292,72 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
 })();
 
 
-/* One shared header entry point for regional settings, accessibility and quick actions. */
-const mountSettingsAccessibilityHub=()=>{
+/* Keep every preference and quick action in one floating Settings panel.
+   The global header and footer remain reserved for site navigation and brand content. */
+const mountSettingsQuickActions=()=>{
   const trigger=document.getElementById('fc-display-settings');
   const panel=document.getElementById('fc-display-panel');
-  if(!trigger||!panel||document.getElementById('fc-settings-hub'))return;
+  if(!trigger||!panel||document.getElementById('fc-settings-quick-actions'))return;
   const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const copy={
-    en:{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.',close:'Close'},
-    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'सहायक खोलें',help:'ऐप जैसे अनुभव के लिए Friendly Calculator इंस्टॉल करें। पहले खोले गए सार्वजनिक पेज ऑफलाइन उपलब्ध हो सकते हैं; नए पेजों के लिए इंटरनेट की आवश्यकता हो सकती है।',close:'बंद करें'},
-    es:{install:'Instalar Friendly Calculator',assistant:'Abrir asistente',help:'Instala Friendly Calculator como acceso directo. Las páginas públicas visitadas anteriormente pueden estar disponibles sin conexión.',close:'Cerrar'},
-    fr:{install:'Installer Friendly Calculator',assistant:'Ouvrir l’assistant',help:'Installez Friendly Calculator comme raccourci. Les pages publiques déjà consultées peuvent être disponibles hors connexion.',close:'Fermer'},
-    pt:{install:'Instalar Friendly Calculator',assistant:'Abrir assistente',help:'Instale o Friendly Calculator como atalho. Páginas públicas já visitadas podem ficar disponíveis offline.',close:'Fechar'},
-    ar:{install:'تثبيت Friendly Calculator',assistant:'فتح المساعد',help:'ثبّت Friendly Calculator كاختصار للتطبيق. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.',close:'إغلاق'},
-    id:{install:'Instal Friendly Calculator',assistant:'Buka asisten',help:'Instal Friendly Calculator sebagai pintasan aplikasi. Halaman publik yang pernah dibuka mungkin tersedia secara offline.',close:'Tutup'},
-    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'সহায়ক খুলুন',help:'অ্যাপের মতো ব্যবহারের জন্য Friendly Calculator ইনস্টল করুন। আগে দেখা পাবলিক পেজ অফলাইনে পাওয়া যেতে পারে।',close:'বন্ধ'},
-    ta:{install:'Friendly Calculator நிறுவு',assistant:'உதவியாளரைத் திற',help:'செயலி போன்ற அனுபவத்திற்கு Friendly Calculator-ஐ நிறுவவும். முன்பு பார்த்த பொது பக்கங்கள் இணையமின்றி கிடைக்கலாம்.',close:'மூடு'},
-    de:{install:'Friendly Calculator installieren',assistant:'Assistent öffnen',help:'Installieren Sie Friendly Calculator als App-Verknüpfung. Bereits besuchte öffentliche Seiten sind möglicherweise offline verfügbar.',close:'Schließen'},
-    ja:{install:'Friendly Calculator をインストール',assistant:'アシスタントを開く',help:'アプリのように使うために Friendly Calculator をインストールします。以前に開いた公開ページはオフラインで利用できる場合があります。',close:'閉じる'},
-    ru:{install:'Установить Friendly Calculator',assistant:'Открыть помощник',help:'Установите Friendly Calculator как приложение. Ранее открытые общедоступные страницы могут быть доступны офлайн.',close:'Закрыть'}
-  }[language]||{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline.',close:'Close'};
+    en:{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.',close:'Close',quick:'Quick actions'},
+    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'सहायक खोलें',help:'ऐप जैसे अनुभव के लिए Friendly Calculator इंस्टॉल करें। पहले खोले गए सार्वजनिक पेज ऑफलाइन उपलब्ध हो सकते हैं; नए पेजों के लिए इंटरनेट की आवश्यकता हो सकती है।',close:'बंद करें',quick:'त्वरित सुविधाएँ'},
+    es:{install:'Instalar Friendly Calculator',assistant:'Abrir asistente',help:'Instala Friendly Calculator como acceso directo. Las páginas públicas visitadas anteriormente pueden estar disponibles sin conexión.',close:'Cerrar',quick:'Acciones rápidas'},
+    fr:{install:'Installer Friendly Calculator',assistant:'Ouvrir l’assistant',help:'Installez Friendly Calculator comme raccourci. Les pages publiques déjà consultées peuvent être disponibles hors connexion.',close:'Fermer',quick:'Actions rapides'},
+    pt:{install:'Instalar Friendly Calculator',assistant:'Abrir assistente',help:'Instale o Friendly Calculator como atalho. Páginas públicas já visitadas podem ficar disponíveis offline.',close:'Fechar',quick:'Ações rápidas'},
+    ar:{install:'تثبيت Friendly Calculator',assistant:'فتح المساعد',help:'ثبّت Friendly Calculator كاختصار للتطبيق. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.',close:'إغلاق',quick:'إجراءات سريعة'},
+    id:{install:'Instal Friendly Calculator',assistant:'Buka asisten',help:'Instal Friendly Calculator sebagai pintasan aplikasi. Halaman publik yang pernah dibuka mungkin tersedia secara offline.',close:'Tutup',quick:'Aksi cepat'},
+    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'সহায়ক খুলুন',help:'অ্যাপের মতো ব্যবহারের জন্য Friendly Calculator ইনস্টল করুন। আগে দেখা পাবলিক পেজ অফলাইনে পাওয়া যেতে পারে।',close:'বন্ধ',quick:'দ্রুত কাজ'},
+    ta:{install:'Friendly Calculator நிறுவு',assistant:'உதவியாளரைத் திற',help:'செயலி போன்ற அனுபவத்திற்கு Friendly Calculator-ஐ நிறுவவும். முன்பு பார்த்த பொது பக்கங்கள் இணையமின்றி கிடைக்கலாம்.',close:'மூடு',quick:'விரைவு செயல்கள்'},
+    de:{install:'Friendly Calculator installieren',assistant:'Assistent öffnen',help:'Installieren Sie Friendly Calculator als App-Verknüpfung. Bereits besuchte öffentliche Seiten sind möglicherweise offline verfügbar.',close:'Schließen',quick:'Schnellaktionen'},
+    ja:{install:'Friendly Calculator をインストール',assistant:'アシスタントを開く',help:'アプリのように使うために Friendly Calculator をインストールします。以前に開いた公開ページはオフラインで利用できる場合があります。',close:'閉じる',quick:'クイック操作'},
+    ru:{install:'Установить Friendly Calculator',assistant:'Открыть помощник',help:'Установите Friendly Calculator как приложение. Ранее открытые общедоступные страницы могут быть доступны офлайн.',close:'Закрыть',quick:'Быстрые действия'}
+  }[language]||{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline.',close:'Close',quick:'Quick actions'};
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
+  const quickHeading=document.createElement('h3');
+  quickHeading.className='fc-settings-section-heading';
+  quickHeading.textContent=copy.quick;
+  quickActions.appendChild(quickHeading);
   const install=document.getElementById('fc-pwa-install');
   const installHelp=document.getElementById('fc-pwa-help');
   const assistant=document.getElementById('fc-ai-lazy-launch');
-  if(install){install.textContent=copy.install;quickActions.appendChild(install);}
-  if(installHelp){const helpText=installHelp.querySelector('p');if(helpText)helpText.textContent=copy.help;const helpClose=installHelp.querySelector('button');if(helpClose)helpClose.textContent=copy.close;quickActions.appendChild(installHelp);}
-  if(assistant){assistant.textContent=copy.assistant;assistant.setAttribute('aria-label',copy.assistant);quickActions.appendChild(assistant);}
-  const status=panel.querySelector('.fc-display-status');
-  if(status)panel.insertBefore(quickActions,status);
-  else panel.appendChild(quickActions);
-  const hub=document.createElement('div');
-  hub.id='fc-settings-hub';
-  hub.className='fc-settings-hub';
-  const headerRow=document.querySelector('.fc-global-header .fc-top-row');
-  if(headerRow)headerRow.appendChild(hub);
-  else document.body.appendChild(hub);
-  hub.append(trigger,panel);
-  trigger.classList.add('fc-settings-hub-trigger');
+  const liveAssistant=document.getElementById('fc-ai-launch');
+  if(install){
+    install.textContent=copy.install;
+    install.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(install);
+  }
+  if(installHelp){
+    const helpText=installHelp.querySelector('p');
+    if(helpText)helpText.textContent=copy.help;
+    const helpClose=installHelp.querySelector('button');
+    if(helpClose)helpClose.textContent=copy.close;
+    installHelp.classList.add('fc-settings-inline-help');
+    quickActions.appendChild(installHelp);
+  }
+  if(assistant){
+    assistant.textContent=copy.assistant;
+    assistant.setAttribute('aria-label',copy.assistant);
+    assistant.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(assistant);
+  }
+  if(liveAssistant){
+    liveAssistant.classList.add('fc-settings-quick-action');
+    quickActions.appendChild(liveAssistant);
+  }
+  panel.appendChild(quickActions);
+  // Keep one trigger only. Install and assistant launchers are no longer fixed overlays.
+  const dock=document.getElementById('fc-floating-tools');
+  if(dock&&trigger.parentElement!==dock)dock.appendChild(trigger);
+  trigger.textContent='⚙ '+(language==='hi'?'सेटिंग्स':language==='es'?'Ajustes':language==='fr'?'Paramètres':language==='de'?'Einstellungen':language==='ja'?'設定':language==='ru'?'Настройки':'Settings');
   trigger.setAttribute('aria-label',panel.getAttribute('aria-label')||'Settings & Accessibility');
-  document.getElementById('fc-floating-tools')?.remove();
+  trigger.classList.remove('fc-settings-hub-trigger');
+  document.getElementById('fc-settings-hub')?.remove();
 };
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSettingsAccessibilityHub,{once:true});
-else mountSettingsAccessibilityHub();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSettingsQuickActions,{once:true});
+else mountSettingsQuickActions();
 
 
 // Store only calculator paths and page titles in this browser. Query strings are
