@@ -2054,3 +2054,21 @@ test('shared header and footer fail-safe is installed before optional page enhan
   assert.ok(script.includes("document.body.prepend(header)"), 'Fallback header must be inserted before page content');
   assert.ok(script.includes('document.body.append(footer)'), 'Fallback footer must be appended after page content');
 });
+
+
+test('shared shell visually replaces legacy page-level headers and footers', () => {
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(script, /body > header:not\\(\\.fc-global-header\\)/);
+  assert.match(script, /body > \\.top/);
+  assert.match(script, /body > footer:not\\(\\.fc-global-footer\\)/);
+  assert.match(script, /node\\.hidden = true/);
+  assert.match(script, /node\\.setAttribute\\('aria-hidden', 'true'\\)/);
+  assert.match(script, /fc-global-footer-links/);
+});
+
+test('homepage has the same static shared footer and Sitemap destination', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(html, /<footer class="fc-global-footer">/);
+  assert.match(html, /href="\\/sitemap\\.html">Sitemap<\\/a>/);
+  assert.match(html, /class="fc-global-footer-links"/);
+});
