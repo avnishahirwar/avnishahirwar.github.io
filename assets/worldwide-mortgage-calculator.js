@@ -1,6 +1,8 @@
 (function(root){'use strict';
 const currencyPairs='AW:AWG AF:AFN AO:AOA AI:XCD AX:EUR AL:ALL AD:EUR AE:AED AR:ARS AM:AMD AS:USD TF:EUR AG:XCD AU:AUD AT:EUR AZ:AZN BI:BIF BE:EUR BJ:XOF BQ:USD BF:XOF BD:BDT BG:BGN BH:BHD BS:BSD BA:BAM BL:EUR BY:BYN BZ:BZD BM:BMD BO:BOB BR:BRL BB:BBD BN:BND BT:INR BV:NOK BW:BWP CF:XAF CA:CAD CC:AUD CH:CHF CL:CLP CN:CNY CI:XOF CM:XAF CD:CDF CG:XAF CK:NZD CO:COP KM:KMF CV:CVE CR:CRC CU:CUP CW:XCG CX:AUD KY:KYD CY:EUR CZ:CZK DE:EUR DJ:DJF DM:XCD DK:DKK DO:DOP DZ:DZD EC:USD EG:EGP ER:ERN EH:MAD ES:EUR EE:EUR ET:ETB FI:EUR FJ:FJD FK:FKP FR:EUR FO:DKK FM:USD GA:XAF GB:GBP GE:GEL GG:GBP GH:GHS GI:GIP GN:GNF GP:EUR GM:GMD GW:XOF GQ:XAF GR:EUR GD:XCD GL:DKK GT:GTQ GF:EUR GU:USD GY:GYD HK:HKD HM:AUD HN:HNL HR:EUR HT:HTG HU:HUF ID:IDR IM:GBP IN:INR IO:USD IE:EUR IR:IRR IQ:IQD IS:ISK IL:ILS IT:EUR JM:JMD JE:GBP JO:JOD JP:JPY KZ:KZT KE:KES KG:KGS KH:KHR KI:AUD KN:XCD KR:KRW KW:KWD LA:LAK LB:LBP LR:LRD LY:LYD LC:XCD LI:CHF LK:LKR LS:ZAR LT:EUR LU:EUR LV:EUR MO:MOP MF:EUR MA:MAD MC:EUR MD:MDL MG:MGA MV:MVR MX:MXN MH:USD MK:MKD ML:XOF MT:EUR MM:MMK ME:EUR MN:MNT MP:USD MZ:MZN MR:MRU MS:XCD MQ:EUR MU:MUR MW:MWK MY:MYR YT:EUR NA:ZAR NC:XPF NE:XOF NF:AUD NG:NGN NI:NIO NU:NZD NL:EUR NO:NOK NP:NPR NR:AUD NZ:NZD OM:OMR PK:PKR PA:PAB PN:NZD PE:PEN PH:PHP PW:USD PG:PGK PL:PLN PR:USD KP:KPW PT:EUR PY:PYG PS:ILS PF:XPF QA:QAR RE:EUR RO:RON RU:RUB RW:RWF SA:SAR SD:SDG SN:XOF SG:SGD GS:GBP SH:SHP SJ:NOK SB:SBD SL:SLE SV:USD SM:EUR SO:SOS PM:EUR RS:RSD SS:SSP ST:STN SR:SRD SK:EUR SI:EUR SE:SEK SZ:SZL SX:XCG SC:SCR SY:SYP TC:USD TD:XAF TG:XOF TH:THB TJ:TJS TK:NZD TM:TMT TL:USD TO:TOP TT:TTD TN:TND TR:TRY TV:AUD TW:TWD TZ:TZS UG:UGX UA:UAH UM:USD UY:UYU US:USD UZ:UZS VA:EUR VC:XCD VE:VES VG:USD VI:USD VN:VND VU:VUV WF:XPF WS:WST YE:YER ZA:ZAR ZM:ZMW ZW:USD XK:EUR';
 const currencyByCountry=Object.fromEntries(currencyPairs.split(/\s+/).map(pair=>pair.split(':')));
+// Prefer each market's domestic currency where CLDR lists a shared or foreign legal-tender currency first.
+Object.assign(currencyByCountry,{BG:'EUR',BT:'BTN',LS:'LSL',NA:'NAD',ZW:'ZWG'});
 function calculateWorldwideMortgage({homePrice,downPayment,annualInterestRate,termYears,annualPropertyTax=0,annualHomeInsurance=0,monthlyMaintenance=0}){
  const values={homePrice:Number(homePrice),downPayment:Number(downPayment),annualInterestRate:Number(annualInterestRate),termYears:Number(termYears),annualPropertyTax:Number(annualPropertyTax),annualHomeInsurance:Number(annualHomeInsurance),monthlyMaintenance:Number(monthlyMaintenance)};
  for(const [key,value] of Object.entries(values))if(!Number.isFinite(value))throw new TypeError(key+' must be a finite number.');
@@ -30,7 +32,8 @@ const setCurrencyForCountry=()=>{currencyInput.value=currencyByCountry[selectedC
 countrySelect.addEventListener('change',setCurrencyForCountry);
 const hash=new URLSearchParams(location.hash.replace(/^#/,''));
 const requestedCountry=(hash.get('country')||'').trim().toLowerCase();
-const matching=codes.find(code=>names.of(code).toLowerCase()===requestedCountry);
+const countryAliases={'antigua and barbuda':'AG','bosnia and herzegovina':'BA','cabo verde':'CV','republic of the congo':'CG','democratic republic of the congo':'CD','myanmar':'MM','saint kitts and nevis':'KN','saint lucia':'LC','saint vincent and the grenadines':'VC','sao tome and principe':'ST','trinidad and tobago':'TT','turkey':'TR'};
+const matching=countryAliases[requestedCountry]||codes.find(code=>names.of(code).toLowerCase()===requestedCountry);
 const preferred=window.FCLocale?.getCountry?.();
 countrySelect.value=matching|| (codes.includes(preferred)?preferred:'IN');
 setCurrencyForCountry();
