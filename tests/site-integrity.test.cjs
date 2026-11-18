@@ -1457,7 +1457,7 @@ test('homepage stays lightweight while all 546 calculators remain searchable and
     'The homepage must not embed the full calculator catalogue');
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
   const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
-  assert.equal((popular.match(/<a\s/g) || []).length, 18, 'Homepage must show exactly 18 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 24, 'Homepage must show exactly 24 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
