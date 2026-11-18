@@ -56,7 +56,7 @@ test('primary navigation follows category order and exposes the international hu
     previous = index;
   }
   assert.match(nav, /r\+'tax\.html'/);
-  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-dropdown'), 'Global Tools and All Calculators must both remain available.');
+  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-calculators-link'), 'Global Tools and All Calculators must both remain available as links.');
   const headerStart=shell.indexOf('h.innerHTML=');
   const headerEnd=shell.indexOf('const reservedHeader',headerStart);
   const headerMarkup=shell.slice(headerStart,headerEnd);
