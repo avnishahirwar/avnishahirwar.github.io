@@ -1050,6 +1050,13 @@
     "description": "Calculate sample variance and sample standard deviation using the n − 1 denominator."
   },
   {
+    "name": "Standard Deviation Calculator",
+    "url": "/calculators/standard-deviation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "standard deviation calculator population standard deviation sample standard deviation variance mean statistics data analysis",
+    "description": "Calculate population and sample standard deviation and variance from a list of numbers."
+  },
+  {
     "name": "Z-Score Calculator",
     "url": "/calculators/z-score-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
