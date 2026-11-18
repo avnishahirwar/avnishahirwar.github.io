@@ -182,7 +182,7 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
-test('shared header and footer expose only the requested navigation items in order', () => {
+test('shared header and footer retain navigation order while regional preferences stay outside both', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   const expectedHeader = [
@@ -191,9 +191,8 @@ test('shared header and footer expose only the requested navigation items in ord
     '[nav.finance,',
     '[nav.tax,',
     '[nav.everyday,',
-    '[nav.all,r+\'site-directory.html\']',
     '[nav.blog,',
-    '[nav.login,r+\'dashboard.html\']'
+    '[nav.login,r+\\'dashboard.html\\']'
   ];
   let last = -1;
   for (const item of expectedHeader) {
@@ -201,8 +200,14 @@ test('shared header and footer expose only the requested navigation items in ord
     assert.ok(index > last, 'Header item is missing or out of order: ' + item);
     last = index;
   }
-  assert.doesNotMatch(header, /nav\.search|Search Calculator/);
-  assert.match(shell, /en:\{home:'Home',login:'Login'/);
+  assert.doesNotMatch(header, /nav\\.search|Search Calculator/);
+  assert.match(shell, /en:\\{home:'Home',login:'Login'/);
+  assert.ok(shell.includes('fc-all-dropdown') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'"), 'All menu and site directory link must remain available.');
+  const headerStart = shell.indexOf('h.innerHTML=');
+  const headerEnd = shell.indexOf('const reservedHeader', headerStart);
+  const headerMarkup = shell.slice(headerStart, headerEnd);
+  assert.ok(!headerMarkup.includes('fc-settings-row') && !headerMarkup.includes('languageControl'), 'Regional controls must not remain in the header.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Regional controls must move into the Settings panel.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
     "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap']",
@@ -211,7 +216,6 @@ test('shared header and footer expose only the requested navigation items in ord
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
   assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/sitemap.html'];"));
 });
-
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes("['Admin',r+'admin.html']"));
