@@ -514,10 +514,17 @@ const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML='<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>'+({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்கீடுகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')+'</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">'+[footerLinks[8],footerLinks[0],footerLinks[2],footerLinks[3],footerLinks[4],footerLinks[5],footerLinks[6],footerLinks[7],footerLinks[1]].map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.2 8.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6M3.7 10h3v10h-3zM9 10h2.9v1.4h.1c.4-.8 1.4-1.7 2.9-1.7 3.1 0 3.7 2 3.7 4.5V20h-3v-5.2c0-1.2 0-2.7-1.7-2.7s-2 1.3-2 2.6V20H9z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>'
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
+const isFooterSocialLink=link=>{
+  const href=(link.getAttribute('href')||'').trim().toLowerCase();
+  const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
+  return /instagram\.com|linkedin\.com|mailto:/.test(href) ||
+    /^(instagram|linkedin|email)$/.test(label);
+};
 document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
-    if(href&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    // Social/contact destinations already have one dedicated icon row in the shared Footer.
+    if(href&&!isFooterSocialLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
@@ -1261,7 +1268,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   themeModes.setAttribute('role','group');
   themeModes.setAttribute('aria-label',t.accessibility);
   themeModes.append(normalModeButton,darkModeButton);
-  const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const status=document.createElement('p');status.className='fc-display-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.setAttribute('aria-atomic','true');
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent=t.close;
   let previousBodyOverflow='';
   const closePanel=()=>{panel.hidden=true;backdrop.hidden=true;open.setAttribute('aria-expanded','false');document.body.style.overflow=previousBodyOverflow;};

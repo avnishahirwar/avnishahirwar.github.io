@@ -614,3 +614,12 @@ footer.fc-global-footer .fc-global-footer-links #fc-display-settings:focus-visib
     justify-self:start;min-height:36px;padding:6px 11px;
   }
 }
+
+/* Keep the theme state available to assistive technology without a redundant
+   visible “Dark mode off/on” line beneath the two self-describing mode buttons. */
+body>.fc-display-panel .fc-display-status{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;
+  white-space:nowrap!important;border:0!important;
+}

@@ -78,6 +78,8 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(shell.includes("footerInner.appendChild(button)"), 'Install action must be placed in the shared footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
   assert.ok(!shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install must remain in Footer while the assistant stays in Settings.');
+  assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
+  assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
 });
 
 test('directory promotes the global hub and current tax category route', () => {
