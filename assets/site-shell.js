@@ -43,7 +43,7 @@ try {
       ['About','/calculator/about.html'],['Methodology','/calculator/methodology.html'],
       ['Privacy','/calculator/privacy.html'],['Terms','/calculator/terms.html'],
       ['Disclaimer','/calculator/disclaimer.html'],['Legal & Compliance','/calculator/legal-compliance.html'],
-      ['Embed','/embed/'],['Contact','/calculator/contact.html'],['Sitemap','/sitemap.html']
+      ['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
     ];
     const allLinks=[...preservedLinks];
     requiredLinks.forEach(([label,href])=>{
