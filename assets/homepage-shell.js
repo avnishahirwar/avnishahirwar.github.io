@@ -108,7 +108,8 @@ if(document.body&&!document.getElementById('fc-display-settings')){
   const close=document.createElement('button');close.type='button';close.className='fc-display-close';close.textContent='Close';
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
-  let currentTheme=read('fc-display-theme','light')==='dark'?'dark':'light';
+  const savedTheme=read('fc-display-theme','');
+  let currentTheme=savedTheme==='dark'||savedTheme==='light'?savedTheme:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
   let currentSize=['normal','large','larger'].includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
   const applyTheme=()=>{document.documentElement.setAttribute('data-fc-theme',currentTheme);write('fc-display-theme',currentTheme);theme.textContent='Dark mode · '+(currentTheme==='dark'?'●':'○');theme.setAttribute('aria-pressed',String(currentTheme==='dark'));};
   const applySize=()=>{document.documentElement.setAttribute('data-fc-text-size',currentSize);write('fc-display-size',currentSize);sizeValue.textContent=currentSize==='normal'?'100%':currentSize==='large'?'112.5%':'125%';smaller.disabled=currentSize==='normal';larger.disabled=currentSize==='larger';};
