@@ -1226,17 +1226,36 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       countryFormatSelect.appendChild(option);
     }
     countryFormatSelect.value=currentValue;
+    const syncCountryFormat=()=>{
+      const value=countrySelect.value+'|'+localeSelect.value;
+      if(!Array.from(countryFormatSelect.options).some(option=>option.value===value)){
+        const localeOption=Array.from(localeSelect.options).find(option=>option.value===localeSelect.value);
+        const countryOption=Array.from(countrySelect.options).find(option=>option.value===countrySelect.value);
+        const option=document.createElement('option');
+        option.value=value;
+        option.textContent=(countryOption?.textContent||countrySelect.value)+' · '+(localeOption?.textContent||localeSelect.value);
+        countryFormatSelect.appendChild(option);
+      }
+      countryFormatSelect.value=value;
+    };
+    window.addEventListener('fc:locale-ready',syncCountryFormat,{once:true});
+    window.addEventListener('fc:localechange',syncCountryFormat);
     countryFormatSelect.addEventListener('change',()=>{
       const [country,locale]=countryFormatSelect.value.split('|');
       if(window.FCLocale){
-        window.FCLocale.setCountry(country);
-        window.FCLocale.setLocale(locale);
+        const preferredCurrency=window.FCLocale.getCurrency();
+        countrySelect.value=country;
+        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+        localeSelect.value=locale;
+        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+        window.FCLocale.setCurrency(preferredCurrency);
       }else{
         countrySelect.value=country;
         localeSelect.value=locale;
         countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
         localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
       }
+      syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
     addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
