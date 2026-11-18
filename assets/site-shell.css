@@ -416,3 +416,49 @@ html[data-fc-theme="dark"] body>.fc-display-panel .fc-settings-section-heading{c
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-setting-row select{background:#0b1725;color:#edf3f8;border-color:#52657a}
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-action,html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
 html[data-fc-theme="dark"] body>.fc-display-panel .fc-settings-inline-help,html[data-fc-theme="dark"] body>.fc-display-panel .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
+
+
+/* Settings sheet layout based on the supplied settings-panel.html.
+   The trigger remains a page-level floating control, never part of header/footer. */
+.fc-display-backdrop{position:fixed!important;inset:0!important;z-index:10008!important;display:block;width:100%;height:100%;margin:0;padding:0;border:0;border-radius:0;background:rgba(0,0,0,.55);cursor:default}
+.fc-display-backdrop[hidden]{display:none!important}
+body>.fc-display-panel{position:fixed!important;left:0!important;right:0!important;top:auto!important;bottom:0!important;z-index:10009!important;width:100%!important;max-width:none!important;max-height:min(85dvh,850px)!important;overflow-y:auto!important;overscroll-behavior:contain;padding:16px 16px calc(16px + env(safe-area-inset-bottom))!important;border:1px solid #d5dee8!important;border-bottom:0!important;border-radius:20px 20px 0 0!important;background:#fff!important;color:#111c2b!important;box-shadow:0 -8px 35px #07132130!important;font:14px/1.5 system-ui,sans-serif!important}
+body>.fc-display-panel[hidden]{display:none!important}
+body>.fc-display-panel>strong{display:block;margin:0 0 12px;font-size:1.12rem}
+body>.fc-display-panel .fc-settings-section-heading{margin:15px 0 8px;padding-top:10px;border-top:1px solid #e2e8ee;color:#7a6220;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+body>.fc-display-panel .fc-display-setting-row{display:flex;align-items:center;gap:8px;margin:8px 0}
+body>.fc-display-panel .fc-display-setting-row>label{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-width:0;font-weight:650}
+body>.fc-display-panel .fc-display-setting-row select{flex:1 1 auto;min-width:0;max-width:68%;padding:10px;border:1px solid #cfd6e0;border-radius:10px;background:#fff;color:#111c2b;font:500 14px/1.35 system-ui,sans-serif}
+body>.fc-display-panel .fc-country-format-control{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%}
+body>.fc-display-panel .fc-country-format-control>span{white-space:normal;font-weight:650}
+body>.fc-display-panel .fc-country-format-control>select{flex:1 1 auto;width:1%;min-width:0;max-width:68%}
+body>.fc-display-panel .fc-locale-compat-controls{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+body>.fc-display-panel .fc-display-size-label{display:block;margin:10px 0 7px;font-weight:700}
+body>.fc-display-panel .fc-display-size-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+body>.fc-display-panel .fc-display-action,body>.fc-display-panel .fc-display-close,body>.fc-display-panel .fc-display-save{min-height:42px;border:1px solid #cfd6e0;border-radius:10px;background:#f4f7f9;color:#111c2b;padding:9px 13px;font:inherit;font-weight:700;cursor:pointer}
+body>.fc-display-panel .fc-display-save{background:#111c2b;color:#fff;border-color:#111c2b}
+body>.fc-display-panel .fc-display-actions{display:flex;gap:8px;margin:16px 0 9px}
+body>.fc-display-panel .fc-display-actions button{flex:1}
+body>.fc-display-panel .fc-display-status{margin:8px 0;color:#64717d;font-size:.85rem}
+body>.fc-display-panel #fc-settings-quick-actions{display:grid;gap:8px;margin:10px 0}
+body>.fc-display-panel .fc-settings-quick-action,body>.fc-display-panel .fc-pwa-install,body>.fc-display-panel #fc-ai-lazy-launch,body>.fc-display-panel #fc-ai-launch{position:static!important;inset:auto!important;display:flex;align-items:center;justify-content:center;width:100%;max-width:none;min-height:42px;margin:0;padding:10px 12px;border:1px solid #cbd5df;border-radius:9px;background:#14283d;color:#fff;font:700 13px/1.25 system-ui,sans-serif;box-shadow:none;cursor:pointer}
+body>.fc-display-panel .fc-settings-inline-help,body>.fc-display-panel .fc-pwa-help{position:static!important;inset:auto!important;width:100%;max-width:none;margin:0;padding:12px;border:1px solid #d9e0e6;border-radius:9px;background:#f4f7f9;color:#172638;box-shadow:none;font:13px/1.5 system-ui,sans-serif}
+body>.fc-display-panel .fc-pwa-help[hidden]{display:none!important}
+body>.fc-display-panel .fc-display-close{width:100%}
+html.fc-reduce-motion *,html.fc-reduce-motion *::before,html.fc-reduce-motion *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+@media(min-width:768px){
+  body>.fc-display-panel{left:auto!important;top:0!important;right:0!important;bottom:0!important;width:min(380px,calc(100vw - 24px))!important;max-height:100dvh!important;border-radius:18px 0 0 18px!important;border-bottom:1px solid #d5dee8!important}
+}
+@media(max-width:600px){
+  #fc-floating-tools{right:12px;bottom:12px}
+  #fc-floating-tools #fc-display-settings{min-width:46px;min-height:46px;padding:9px 13px}
+  body>.fc-display-panel{max-height:85dvh!important;padding:14px 13px calc(14px + env(safe-area-inset-bottom))!important}
+  body>.fc-display-panel .fc-display-setting-row select{max-width:62%;font-size:13px;padding:9px 8px}
+  body>.fc-display-panel .fc-country-format-control>select{max-width:62%}
+}
+html[data-fc-theme="dark"] body>.fc-display-panel{background:#101d2b!important;color:#edf3f8!important;border-color:#465a70!important}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-settings-section-heading{color:#d1b779;border-color:#34475d}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-setting-row select{background:#0b1725;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-action,html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-close{background:#1c3046;color:#edf3f8;border-color:#52657a}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-display-save{background:#d1b779;color:#101d2b;border-color:#d1b779}
+html[data-fc-theme="dark"] body>.fc-display-panel .fc-settings-inline-help,html[data-fc-theme="dark"] body>.fc-display-panel .fc-pwa-help{background:#1a2a3d;color:#edf3f8;border-color:#465a70}
