@@ -5131,14 +5131,6 @@
     "description": "CIDR Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Cigarette Butts Cleanup Calculator",
-    "url": "/calculator/new-calculators.html#cigarette-butts-cleanup-calculator",
-    "category": "ECOLOGY",
-    "keywords": "cigarette butts cleanup calculator",
-    "description": "Cigarette Butts Cleanup Calculator — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
-  },
-  {
     "name": "Cigarette Calculator",
     "url": "/calculators/cigarette-calculator.html",
     "category": "HEALTH",
@@ -13823,14 +13815,6 @@
     "description": "Implied Probability Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Impostor Odds Calculator – Among Us",
-    "url": "/calculator/new-calculators.html#impostor-odds-calculator-among-us",
-    "category": "OTHER",
-    "keywords": "impostor odds calculator – among us",
-    "description": "Impostor Odds Calculator – Among Us — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
-  },
-  {
     "name": "Improper Fraction to Mixed Number Calculator",
     "url": "/calculators/improper-fraction-to-mixed-number-calculator.html",
     "category": "MATH",
@@ -15233,14 +15217,6 @@
     "category": "EVERYDAY LIFE",
     "keywords": "lead time calculator",
     "description": "Lead Time Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Lean Body Mass Calculator",
-    "url": "/calculator/new-calculators.html#lean-body-mass-calculator",
-    "category": "HEALTH",
-    "keywords": "lean body mass calculator",
-    "description": "Lean Body Mass Calculator — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
   },
   {
     "name": "Leap Year Calculator",
@@ -18873,14 +18849,6 @@
     "status": "planned"
   },
   {
-    "name": "Odds Calculator",
-    "url": "/calculator/new-calculators.html#odds-calculator",
-    "category": "STATISTICS",
-    "keywords": "odds calculator",
-    "description": "Odds Calculator — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
-  },
-  {
     "name": "Ohio Sales Tax Calculator",
     "url": "/calculators/ohio-sales-tax-calculator.html",
     "category": "FINANCE",
@@ -20683,14 +20651,6 @@
     "category": "OTHER",
     "keywords": "poker ev calculator",
     "description": "Poker EV Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Poker Odds Calculator",
-    "url": "/calculator/new-calculators.html#poker-odds-calculator",
-    "category": "OTHER",
-    "keywords": "poker odds calculator",
-    "description": "Poker Odds Calculator — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
   },
   {
     "name": "Polar Coordinates Calculator",
@@ -29300,14 +29260,6 @@
     "category": "PHYSICS",
     "keywords": "warp speed calculator",
     "description": "Warp Speed Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Warsaw Method Calculator",
-    "url": "/calculator/new-calculators.html#warsaw-method-calculator",
-    "category": "HEALTH",
-    "keywords": "warsaw method calculator",
-    "description": "Warsaw Method Calculator — requested calculator in the Friendly Calculator directory.",
-    "status": "planned"
   },
   {
     "name": "Wastewater Calculator",
