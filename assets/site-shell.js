@@ -1205,6 +1205,9 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   panel.setAttribute('aria-labelledby','fc-display-panel-title');
   panel.setAttribute('aria-label',t.title);
   const heading=document.createElement('strong');heading.id='fc-display-panel-title';heading.textContent=t.title;
+  const panelHead=document.createElement('div');panelHead.className='fc-display-head';
+  const closeTop=document.createElement('button');closeTop.type='button';closeTop.className='fc-display-close-top';closeTop.textContent='×';closeTop.setAttribute('aria-label',t.close);
+  panelHead.append(heading,closeTop);
   const themeButton=document.createElement('button');themeButton.type='button';themeButton.className='fc-display-action';
   themeButton.addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-fc-theme')==='dark'?'light':'dark'));
   const contrastButton=document.createElement('button');contrastButton.type='button';contrastButton.className='fc-display-action';
@@ -1228,6 +1231,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   let previousBodyOverflow='';
   const closePanel=()=>{panel.hidden=true;backdrop.hidden=true;open.setAttribute('aria-expanded','false');document.body.style.overflow=previousBodyOverflow;};
   close.addEventListener('click',()=>{closePanel();open.focus();});
+  closeTop.addEventListener('click',()=>{closePanel();open.focus();});
   backdrop.addEventListener('click',()=>{closePanel();open.focus();});
   const openPanel=()=>{
     previousBodyOverflow=document.body.style.overflow;
@@ -1262,7 +1266,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   });
   // Keep locale and measurement selectors out of the crowded primary navigation.
   // Moving the original controls preserves their IDs, event listeners and saved preferences.
-  panel.append(heading);
+  panel.append(panelHead);
   const settingRows=[];
   const addSettingRow=(className,controls)=>{
     const row=document.createElement('div');
