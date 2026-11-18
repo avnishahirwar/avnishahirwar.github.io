@@ -206,8 +206,10 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(!headerMarkup.includes('fc-settings-row') && !headerMarkup.includes('languageControl'), 'Regional controls must not remain in the header.');
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Regional controls must move into the Settings panel.');
+  assert.ok(shell.includes('primaryNav.after(languageHost.firstElementChild)'), 'Language selector must remain in the shared header.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Currency, country/format and units must move into Settings.');
+  assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
+  assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
     "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap']",
@@ -1318,15 +1320,15 @@ test('business page clearly exposes live selected-calculator iframe embeds', () 
 });
 
 
-test('display settings provide persistent accessible dark mode and text scaling', () => {
+test('display settings provide only Normal Mode and Dark Mode', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'fc-display-size', 'aria-pressed', 'prefers-color-scheme']) {
+  for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'normalModeButton', 'darkModeButton', 'aria-pressed', 'prefers-color-scheme']) {
     assert.ok(shell.includes(token), 'Missing display setting token: ' + token);
   }
+  assert.ok(!shell.includes('contrastButton') && !shell.includes('sizeLabel') && !shell.includes('motionButton'));
   assert.match(styles, /data-fc-theme="dark"/);
-  assert.match(styles, /data-fc-text-size="large"/);
-  assert.match(styles, /data-fc-text-size="larger"/);
+  assert.match(styles, /fc-theme-mode-options/);
   assert.match(styles, /color-scheme:dark/);
 });
 
@@ -2026,7 +2028,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /src="\/assets\/site-shell\.js" defer/);
 });
 
-test('unified Settings panel provides saved locale preferences, accessibility and modal controls', () => {
+test('unified Settings panel keeps Language in the header and exposes only Normal Mode and Dark Mode', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
@@ -2034,11 +2036,12 @@ test('unified Settings panel provides saved locale preferences, accessibility an
   assert.ok(shell.includes("closeTop.className='fc-display-close-top'") && shell.includes('panelHead.append(heading,closeTop)'));
   assert.ok(shell.includes("backdrop.className='fc-display-backdrop'"));
   assert.ok(shell.includes("save.textContent=t.save") && shell.includes("reset.textContent=t.reset"));
-  assert.ok(shell.includes("applyMotion(initialMotion)") && shell.includes("fc-display-motion"));
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(css.includes('.fc-display-backdrop') && css.includes('max-height:min(85dvh,850px)'));
-  assert.ok(css.includes('fc-reduce-motion') && css.includes('width:min(380px,calc(100vw - 24px))'));
+  assert.ok(shell.includes("primaryNav.after(languageHost.firstElementChild)"));
+  assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"));
+  assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
+  assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
 });
 
 test('homepage-only shell preserves language, PWA, analytics and accessibility controls', () => {
