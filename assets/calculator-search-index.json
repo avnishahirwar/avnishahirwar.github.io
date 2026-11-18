@@ -2999,8 +2999,8 @@
     "name": "Residence Time Calculator",
     "url": "/calculators/residence-time-calculator.html",
     "category": "Biology & Chemistry",
-    "keywords": "residence time hydraulic retention volume flow rate",
-    "description": "Estimate the average hydraulic residence time from a system's working volume and volumetric flow rate."
+    "keywords": "residence time hydraulic retention volume flow rate detention time calculator hydraulic retention time HRT wastewater tank volume flow rate",
+    "description": "Calculate liquid residence time, also known as detention time or hydraulic retention time, from tank volume and flow rate."
   },
   {
     "name": "Dilution Factor Calculator",
