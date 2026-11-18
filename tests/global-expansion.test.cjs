@@ -56,12 +56,16 @@ test('primary navigation follows category order and exposes the international hu
     previous = index;
   }
   assert.match(nav, /r\+'tax\.html'/);
-  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-dropdown'), 'All menu must expose the international calculators hub.');
+  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-dropdown'), 'Global Tools and All Calculators must both remain available.');
+  const headerStart=shell.indexOf('h.innerHTML=');
+  const headerEnd=shell.indexOf('const reservedHeader',headerStart);
+  const headerMarkup=shell.slice(headerStart,headerEnd);
+  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-dropdown'), 'Global Tools must precede All Calculators.');
 });
 
 test('shared footer retains policy navigation and Sitemap; regional settings stay outside chrome and Settings trigger stays in Footer', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Contact','Sitemap'\]/);
+  assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
@@ -72,12 +76,14 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('footerNav.appendChild(open)'), 'The single Settings trigger must be in the shared footer.');
+  assert.ok(shell.includes("footerLinks.map(([n,u])=>") && shell.includes("'/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'"), 'Footer order must place Sitemap before Contact.');
   assert.ok(!shell.includes('dock.appendChild(open)'), 'Settings must not be mounted in the floating tools dock.');
   assert.ok(shell.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must be consolidated into one shared footer.');
   assert.ok(shell.includes('.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav'), 'Legacy navigation headers must be removed.');
-  assert.ok(shell.includes("footerInner.appendChild(button)"), 'Install action must be placed in the shared footer.');
+  assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must be placed inside Settings Quick Actions.');
+  assert.ok(!shell.includes('footerInner.appendChild(button)'), 'Install action must not be placed in the Footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
-  assert.ok(!shell.includes('quickActions.appendChild(install)') && shell.includes('quickActions.appendChild(assistant)'), 'Install must remain in Footer while the assistant stays in Settings.');
+  assert.ok(shell.includes('quickActions.appendChild(installButton)') && shell.includes('quickActions.appendChild(assistant)'), 'Install and assistant actions must both stay inside Settings.');
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
 });
