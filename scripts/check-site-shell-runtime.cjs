@@ -104,7 +104,7 @@ const inspectPage = async (name, path) => {
       const value = await evaluate(expression);
       if (value && value.readyState === 'complete' && value.headerCount === 1 && value.footerCount === 1 &&
           value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions &&
-          value.shellCssLoaded && value.dockPosition === 'fixed' && value.dockLeft !== 'auto' && value.dockRight === 'auto') return value;
+          value.shellCssLoaded && value.dockPosition === 'fixed' && ['16px','12px'].includes(value.dockLeft)) return value;
       return null;
     }, 'shared shell on ' + path, 20000);
   } catch (error) {
@@ -125,8 +125,7 @@ const inspectPage = async (name, path) => {
   assert.equal(result.hasH1, true, name + ': page H1 remains visible');
   assert.equal(result.allCalculatorsIsPlainLink, true, name + ': All Calculators is a plain link');
   assert.equal(result.dockPosition, 'fixed', name + ': dock is fixed-position');
-  assert.notEqual(result.dockLeft, 'auto', name + ': dock is anchored from the left');
-  assert.equal(result.dockRight, 'auto', name + ': dock is not anchored from the right');
+  assert.ok(['16px','12px'].includes(result.dockLeft), name + ': dock is anchored at the left edge');
   process.stdout.write('PASS ' + name + ' ' + JSON.stringify(result) + '\n');
 };
 
