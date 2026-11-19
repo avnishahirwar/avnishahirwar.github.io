@@ -5,7 +5,8 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/cross-browser.yml"
-      - "tests/cross-browser-smoke.cjs"\n      - "tests/safari-smoke.cjs"
+      - "tests/cross-browser-smoke.cjs"
+      - "tests/safari-smoke.cjs"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/site-chrome.js"
@@ -72,4 +73,23 @@ jobs:
         env:
           FC_SITE_ORIGIN: https://friendlycalculator.in
           FC_BROWSER: ${{ matrix.browser }}
-        run: node tests/cross-browser-smoke.cjs\n  safari-native:\n    name: Native Safari desktop/mobile smoke tests\n    runs-on: macos-latest\n    timeout-minutes: 20\n    steps:\n      - name: Check out repository\n        uses: actions/checkout@v4\n      - name: Set up Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: 22\n      - name: Install Selenium WebDriver\n        run: npm install --no-save selenium-webdriver\n      - name: Enable Safari WebDriver\n        run: sudo safaridriver --enable\n      - name: Run native Safari smoke tests against production\n        env:\n          FC_SITE_ORIGIN: https://friendlycalculator.in\n        run: node tests/safari-smoke.cjs\n
+        run: node tests/cross-browser-smoke.cjs
+  safari-native:
+    name: Native Safari desktop/mobile smoke tests
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Selenium WebDriver
+        run: npm install --no-save selenium-webdriver
+      - name: Enable Safari WebDriver
+        run: sudo safaridriver --enable
+      - name: Run native Safari smoke tests against production
+        env:
+          FC_SITE_ORIGIN: https://friendlycalculator.in
+        run: node tests/safari-smoke.cjs
