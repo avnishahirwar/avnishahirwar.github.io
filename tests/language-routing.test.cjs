@@ -5,7 +5,7 @@ const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
 test('global language selector supports all configured locales', () => {
-  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru']) {
+  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr']) {
     assert.ok(shell.includes(locale + ':'));
   }
   assert.match(shell, /fc-language-select/);
@@ -34,7 +34,7 @@ test('Explicit language routes remain authoritative; root defaults to saved or b
 });
 
 test('Search Calculator is localized across all supported locales', () => {
-  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора']) {
+  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора','कॅल्क्युलेटर शोधा']) {
     assert.ok(shell.includes(label), 'Missing localized Search Calculator label: ' + label);
   }
 });
@@ -109,8 +109,8 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 
 test('All configured locale routes enforce their document language and writing direction', () => {
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru)\\//.exec(p);"));
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
+  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr)\\//.exec(p);"));
   assert.ok(shell.includes("document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';"));
 });
 
@@ -124,4 +124,25 @@ test('language selector lists 50 high-reach languages and only enables configure
   assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
   assert.match(shell, / — Coming soon/);
   assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
+});
+
+
+test('Marathi homepage is configured with a self-canonical route and reciprocal home hreflang', () => {
+  const page = fs.readFileSync(path.join(__dirname, '..', 'mr', 'index.html'), 'utf8');
+  assert.match(page, /<html lang="mr"/);
+  assert.match(page, /rel="canonical" href="https:\/\/friendlycalculator\.in\/mr\/index\.html"/);
+  assert.match(page, /hreflang="mr" href="https:\/\/friendlycalculator\.in\/mr\/index\.html"/);
+  assert.match(shell, /mr:{home:'मुख्यपृष्ठ'/);
+  assert.match(shell, /mr:'\/mr\/index\.html'/);
+});
+
+
+test('every homepage locale alternate cluster includes the Marathi edition and x-default', () => {
+  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html'];
+  for (const file of pages) {
+    const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
+    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','x-default']) {
+      assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
+    }
+  }
 });
