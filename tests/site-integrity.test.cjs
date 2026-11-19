@@ -213,6 +213,27 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
   assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
   assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
+  const renderedOrder = [
+    'links.slice(0,4)', 'nav.global', 'links.slice(4,5)',
+    'fc-all-calculators-link', 'links.slice(5)', 'fc-header-language-slot',
+    'primaryNav.append(...regionalMarkup.children)'
+  ];
+  let renderedLast = -1;
+  for (const token of renderedOrder) {
+    const index = shell.indexOf(token, headerStart);
+    assert.ok(index > renderedLast, 'Rendered Header order is incorrect at: ' + token);
+    renderedLast = index;
+  }
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
+  const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
+  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
+  let homepageLast = -1;
+  for (const token of homepageOrder) {
+    const index = homepageNav.indexOf(token);
+    assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
+    homepageLast = index;
+  }
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('primaryNav.append(...regionalMarkup.children)'), 'Currency, country/format and units must follow Language inside the shared Header navigation.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
