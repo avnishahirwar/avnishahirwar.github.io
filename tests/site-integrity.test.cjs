@@ -2141,15 +2141,14 @@ test('legacy All Pages footer links are excluded while Sitemap remains', () => {
   assert.doesNotMatch(shell, /'सभी पेज'/);
 });
 
-test('Open Assistant stays lazy-loaded inside Settings Quick Actions', () => {
+test('Open Assistant stays lazy-loaded as a live on-page action outside Settings', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /document\.body\.appendChild\(launcher\)/);
   assert.match(shell, /document\.querySelector\('#fc-ai-launch'\)\?\.click\(\)/);
   assert.match(shell, /const assistantLauncher=document\.getElementById\('fc-ai-lazy-launch'\)/);
-  assert.match(shell, /quickActions\.appendChild\(assistantLauncher\)/);
+  assert.doesNotMatch(shell, /quickActions\.appendChild\(assistantLauncher\)/);
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(styles, /#fc-ai-lazy-launch\{display:none\}/);
-  assert.match(styles, /body>\.fc-display-panel[^\n]*#fc-ai-lazy-launch/);
+  assert.match(styles, /#fc-ai-lazy-launch\{position:fixed;right:16px;bottom:18px/);
 });
 
 
