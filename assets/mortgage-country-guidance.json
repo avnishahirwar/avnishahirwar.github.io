@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 33,
+    "officialCountryGuides": 36,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 135
+    "pendingVerification": 132
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -696,6 +696,82 @@
           "https://www.centralbankbahamas.com/index.php/viewPDF/documents/2023-12-29-12-02-02-Press-Release-Relaxed-Lending-Rules-for-Residential-Mortgages.pdf"
         ]
       ]
+    },
+    "BB": {
+      "summary": "Barbados has a Housing Credit Fund (HCF) administered through approved financial institutions for eligible low-income households, with published affordability and term limits. This programme is distinct from ordinary commercial bank and credit-union mortgages, whose underwriting and rates are set by individual lenders. The Central Bank's financial-stability reporting describes market lending practices but should not be treated as a universal statutory LTV or debt-service cap.",
+      "rules": [
+        "Under the Central Bank of Barbados Housing Credit Fund programme, loan disbursements are based on an affordability formula that allows no more than one-third of the applicant household's gross income to service the loan.",
+        "The HCF programme sets a maximum mortgage maturity of 30 years and a maximum 15-year term for home-improvement loans. The approved financial institution applies its normal underwriting procedures and assesses income, qualification and property valuation.",
+        "The financial institution carries the full credit risk and may take the security it considers appropriate. The interest rate charged to the beneficiary is negotiated between the financial institution and the borrower; the Central Bank sets the HCF lending rate to approved institutions.",
+        "The HCF rules apply to beneficiaries of that programme, not automatically to every mortgage borrower in Barbados. The Central Bank's financial-stability reports describe observed market LTV and debt-service ratios; those observations are not universal borrower entitlements or legal caps.",
+        "The calculator does not test HCF eligibility, grant availability, bank-specific affordability, insurance, legal fees, valuation or property transfer costs."
+      ],
+      "sources": [
+        [
+          "Central Bank of Barbados: Support for Households — Housing Credit Fund terms",
+          "https://www.centralbank.org.bb/corporate-social-responsibility/support-for-households"
+        ],
+        [
+          "Central Bank of Barbados: MoneySmart — preparing to apply for a mortgage",
+          "https://www.centralbank.org.bb/news/moneysmart-ask-the-expert/ask-the-expert-how-can-i-prepare-to-apply-for-a-mortgage"
+        ],
+        [
+          "Central Bank of Barbados: 2025 Financial Stability Report",
+          "https://www.centralbank.org.bb/news/financial-stability-report/the-2025-financial-stability-report"
+        ]
+      ]
+    },
+    "BY": {
+      "summary": "Belarus's National Bank Resolution No. 149 of 29 March 2018, as amended, establishes bank lending procedures and borrower disclosures. For natural persons, the instruction prohibits foreign-currency lending and requires banks to assess creditworthiness for real-estate financing using a loan-coverage ratio (LCR) based on the loan amount and collateral value. The reviewed National Bank instruction does not prescribe a single universal LTV percentage or standard mortgage term for all banks.",
+      "rules": [
+        "Under the National Bank's Resolution No. 149 instruction, loans to natural persons in Belarus are provided in Belarusian roubles; foreign-currency loans to natural persons are not permitted.",
+        "When assessing a natural person's application for real-estate financing, the bank must apply a loan-coverage ratio (LCR), calculated using the loan amount and the value of the real estate accepted as collateral and/or other collateral under the agreement.",
+        "Banks must provide the borrower with written information on lending terms before signing a loan agreement or certain amendments. Review the interest rate, fees, repayment schedule, security and all other contract terms.",
+        "The instruction requires banks to set their own internal procedures for creditworthiness assessment, collateral valuation and loan decisions. Do not assume one universal LTV ceiling, interest rate or maximum mortgage term for all Belarusian lenders.",
+        "The calculator does not assess Belarusian housing-subsidy eligibility, state-supported housing programmes, property registration, currency conversion, legal costs, insurance or bank-specific credit approval."
+      ],
+      "sources": [
+        [
+          "National Bank of the Republic of Belarus: Resolution No. 149 — Instruction on procedure of funds provision in the form of loans and repayment (amended)",
+          "https://www.nb-rb.by/engl/legislation/documents/PP_149_477-Engl.pdf"
+        ],
+        [
+          "National Bank of the Republic of Belarus: Financial stability report and mortgage-lending regulatory context",
+          "https://www.nb-rb.by/engl/publications/finstabrep/finstab2019e.pdf"
+        ],
+        [
+          "Republic of Belarus: Law No. 345-Z on Mortgage (20 June 2008, consolidated text)",
+          "https://cis-legislation.com/document.fwx?rgn=23473"
+        ]
+      ]
+    },
+    "BZ": {
+      "summary": "Belize distinguishes bank and credit-union lending from non-bank mortgage lending. The Financial Services Commission's legislation and licensing materials identify mortgage lending by non-bank persons as a regulated activity. The Development Finance Corporation (DFC) publishes housing-finance products for eligible applicants; its public FAQ lists a 10% client contribution for its Home Mortgage product, while separate DFC housing pathways may offer higher financing subject to repayment capacity, land/title, building approvals and collateral. These are DFC product conditions, not universal national mortgage limits.",
+      "rules": [
+        "Belize's Financial Services Commission identifies mortgage lending by non-bank persons as a licensable financial-services activity. Verify that a non-bank mortgage provider holds the appropriate current licence; commercial banks and credit unions are governed under their respective legislation and supervisors.",
+        "DFC's published FAQ lists a 10% client contribution and 90% DFC contribution for its Home Mortgage product, with home-financing rates shown as a product range. Confirm the current rate, contribution, term and eligibility directly with DFC before relying on these figures.",
+        "DFC also describes specific housing-finance pathways that may provide up to 100% financing for qualifying applicants, depending on repayment capacity, land ownership or purchase, property documents and the intended construction or purchase plan. These special pathways should not be confused with the standard Home Mortgage product.",
+        "DFC may require title or lease documents, property-tax evidence, approved building plans and a bill of quantities for construction loans. Leasehold projects may require permission to mortgage from the Lands Department.",
+        "The calculator does not determine DFC programme eligibility, validate title or lease rights, calculate stamp duty, transfer tax, legal fees, insurance, valuation or local authority charges."
+      ],
+      "sources": [
+        [
+          "Belize Financial Services Commission: Types of Licences — Mortgage Lending",
+          "https://www.belizefsc.org.bz/types-of-licenses/"
+        ],
+        [
+          "Development Finance Corporation Belize: Home Loans",
+          "https://www.dfcbelize.org/loans/housing-loans/"
+        ],
+        [
+          "Development Finance Corporation Belize: Frequently Asked Questions — rates and client contribution",
+          "https://www.dfcbelize.org/who-we-are-2/faqs/"
+        ],
+        [
+          "Belize Financial Services Commission Act No. 8 of 2023",
+          "https://www.belizefsc.org.bz/wp-content/uploads/2023/04/Act-No.-8-of-2023-Financial-Services-Commission-2.pdf"
+        ]
+      ]
     }
   },
   "countries": {
@@ -757,11 +833,11 @@
     },
     "BB": {
       "countryName": "Barbados",
-      "status": "pending"
+      "status": "verified"
     },
     "BY": {
       "countryName": "Belarus",
-      "status": "pending"
+      "status": "verified"
     },
     "BE": {
       "countryName": "Belgium",
@@ -769,7 +845,7 @@
     },
     "BZ": {
       "countryName": "Belize",
-      "status": "pending"
+      "status": "verified"
     },
     "BJ": {
       "countryName": "Benin",
