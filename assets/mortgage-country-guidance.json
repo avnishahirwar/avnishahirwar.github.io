@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 18,
+    "officialCountryGuides": 21,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 150
+    "pendingVerification": 147
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -363,6 +363,71 @@
           "https://www.bsp.gov.ph/Regulations/MORB/2023_MORB/2023_MORB%20P3/2023_Part%20III_01%20Loans%20and%20Credits.pdf"
         ]
       ]
+    },
+    "AR": {
+      "summary": "Argentina's official housing-finance information describes UVA-denominated mortgage loans, where the unit is updated daily by the CER index, and the national government provides information about eligible housing purposes. BCRA's transparency regime publishes lender-reported mortgage product terms for comparison; rates and conditions vary by institution and must be checked at the time of application.",
+      "rules": [
+        "UVA is an inflation-indexed unit whose value is updated daily using CER; a UVA-denominated loan balance and payments expressed in pesos can therefore change as the unit value changes.",
+        "Official government information describes eligible purposes for certain UVA housing loans, including purchase, replacement, construction, expansion, renovation and completion of a single permanent residence, subject to each programme's terms.",
+        "BCRA's financial-product transparency regime publishes lender-reported mortgage loan terms and comparison data. Check the latest lender-specific data and the actual loan contract; published product terms are not a universal approval promise.",
+        "The calculator does not estimate UVA/CER indexation, programme eligibility, provincial or municipal taxes, notary/registry costs, insurance or lender-specific charges."
+      ],
+      "sources": [
+        [
+          "Argentina Government: How to access a UVA mortgage loan",
+          "https://www.argentina.gob.ar/como-acceder-un-credito-hipotecario-uva"
+        ],
+        [
+          "BCRA: Financial Product Transparency Regime",
+          "https://www.bcra.gob.ar/regimen-de-transparencia/"
+        ]
+      ]
+    },
+    "CL": {
+      "summary": "Chile's Financial Market Commission (CMF) explains mortgage affordability, lender underwriting, loan-rate types and its official mortgage comparison simulator. Lenders set their own approval conditions; CMF's educational material notes that some institutions recommend a dividend near 25% of income as a guideline, not a universal statutory ceiling.",
+      "rules": [
+        "Assess the proposed mortgage payment together with existing household expenses and other debts; leave room for unexpected expenses.",
+        "CMF educational material says several institutions recommend the future mortgage dividend be at most around 25% of total applicant income (or combined income with a guarantor). This is an institution-level rule of thumb, not a universal legal LTV or eligibility threshold.",
+        "Mortgage rates may be fixed, variable or mixed; compare the rate type, payment changes, fees and insurance as well as the headline rate.",
+        "Lenders independently assess income, employment, credit information and property documentation. The CMF mortgage simulator can help compare published offers, but the calculator does not include Chilean UF index movements, stamp duties, registration costs, insurance or lender-specific conditions."
+      ],
+      "sources": [
+        [
+          "CMF Educa: Mortgage repayment capacity",
+          "https://www.cmfchile.cl/educa/621/w3-article-27502.html"
+        ],
+        [
+          "CMF Educa: How to obtain a mortgage loan",
+          "https://www.cmfchile.cl/educa/621/w3-article-27376.html"
+        ],
+        [
+          "CMF: Official mortgage comparison simulator",
+          "https://servicios.cmfchile.cl/simuladorhipotecario/"
+        ]
+      ]
+    },
+    "CO": {
+      "summary": "Colombia's Law 546 of 1999 sets a specialised framework for long-term individual housing finance. It provides for UVR-denominated loans and permits peso-denominated alternatives under specified fixed-rate and amortisation conditions. The law requires lender assessment of borrower and collateral capacity; these provisions are not a promise of approval.",
+      "rules": [
+        "Long-term individual housing loans under Law 546 may be denominated in UVR; peso-denominated loans are also permitted when the statutory conditions are met, including a fixed interest rate for the full loan term and no interest capitalisation.",
+        "The law specifies a minimum amortisation term of five years and a maximum term of at least thirty years as set by the government; confirm current implementing rules and the individual lender's offer.",
+        "The law provides for full or partial prepayment without penalty for qualifying long-term housing loans, subject to the statutory framework.",
+        "Lenders must assess information about the borrower and the collateral to evaluate repayment capacity and security. The calculator does not estimate UVR indexation, housing subsidy eligibility, taxes, notary/registration costs, insurance or bank-specific fees."
+      ],
+      "sources": [
+        [
+          "Colombia: Law 546 of 1999 — official legal text",
+          "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=180"
+        ],
+        [
+          "Superintendencia Financiera de Colombia: Housing loan consumer guide",
+          "https://www.superfinanciera.gov.co/publicaciones/11240/guas-informativas-11240/"
+        ],
+        [
+          "Superintendencia Financiera de Colombia: Housing loan FAQs",
+          "https://www.superfinanciera.gov.co/preguntas-frecuentes/11/11-creditos/"
+        ]
+      ]
     }
   },
   "countries": {
@@ -392,7 +457,7 @@
     },
     "AR": {
       "countryName": "Argentina",
-      "status": "pending"
+      "status": "verified"
     },
     "AM": {
       "countryName": "Armenia",
@@ -504,7 +569,7 @@
     },
     "CL": {
       "countryName": "Chile",
-      "status": "pending"
+      "status": "verified"
     },
     "CN": {
       "countryName": "China",
@@ -512,7 +577,7 @@
     },
     "CO": {
       "countryName": "Colombia",
-      "status": "pending"
+      "status": "verified"
     },
     "KM": {
       "countryName": "Comoros",
