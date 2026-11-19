@@ -243,7 +243,7 @@ test('shared Header follows the same navigation and regional-control order on ev
     homepageLast = index;
   }
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
-  assert.ok(shell.includes('regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency, country/format and units must be inside the Settings panel.');
+  assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('regionalSettingsControls.append(countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -2170,7 +2170,7 @@ test('Settings regional controls use consistent readable typography', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional controls must retain readable touch-target sizing.');
   assert.match(shell, /regionalMarkup\.innerHTML=countryControl\+unitControl/);
-  assert.match(shell, /regionalSettingsControls\.append\(currencyControl,countryFormatLabel,unitControl\)/);
+  assert.match(shell, /regionalSettingsControls\.append\(countryFormatLabel,unitControl\)/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
 
