@@ -432,7 +432,7 @@ const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन
 const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧 United Kingdom',CA:'🇨🇦 Canada',AU:'🇦🇺 Australia',AE:'🇦🇪 United Arab Emirates',SA:'🇸🇦 Saudi Arabia',DE:'🇩🇪 Germany',FR:'🇫🇷 France',BR:'🇧🇷 Brazil',MX:'🇲🇽 Mexico',ID:'🇮🇩 Indonesia',PH:'🇵🇭 Philippines',NG:'🇳🇬 Nigeria',ZA:'🇿🇦 South Africa',PK:'🇵🇰 Pakistan',BD:'🇧🇩 Bangladesh',ES:'🇪🇸 Spain',JP:'🇯🇵 Japan',CN:'🇨🇳 China',RU:'🇷🇺 Russia',TR:'🇹🇷 Türkiye',KR:'🇰🇷 South Korea',VN:'🇻🇳 Vietnam',AR:'🇦🇷 Argentina',CL:'🇨🇱 Chile',CO:'🇨🇴 Colombia',SG:'🇸🇬 Singapore',NZ:'🇳🇿 New Zealand',CH:'🇨🇭 Switzerland',MY:'🇲🇾 Malaysia',IE:'🇮🇪 Ireland',IT:'🇮🇹 Italy',NL:'🇳🇱 Netherlands',PT:'🇵🇹 Portugal',PL:'🇵🇱 Poland',SE:'🇸🇪 Sweden',NO:'🇳🇴 Norway',DK:'🇩🇰 Denmark',KE:'🇰🇪 Kenya',NP:'🇳🇵 Nepal',IL:'🇮🇱 Israel',EG:'🇪🇬 Egypt',QA:'🇶🇦 Qatar',KW:'🇰🇼 Kuwait',OM:'🇴🇲 Oman'};
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
-const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
+const unitControlMarkup='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
 h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
@@ -454,14 +454,13 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep regional preferences outside the global header/footer. Preserve the
-// existing selector IDs and handlers by moving these original controls into
-// a hidden staging node; the Settings panel relocates them after it is built.
+// Keep the original country/format selectors in a hidden compatibility node
+// for global-locale.js, while the visible regional preferences mount in Header.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
 regionalControlsSource.hidden=true;
-regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
+regionalControlsSource.innerHTML=countryControl+formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Language is the final primary-navigation control, immediately after Login.
@@ -1324,40 +1323,27 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     }
   });
-  // Keep locale and measurement selectors out of the crowded primary navigation.
-  // Moving the original controls preserves their IDs, event listeners and saved preferences.
+  // Regional controls sit directly after Language in the shared Header.
+  // Their original hidden country/locale selects retain the FCLocale event contract.
   panel.append(panelHead);
-  const settingRows=[];
-  const addSettingRow=(className,controls)=>{
-    const row=document.createElement('div');
-    row.className='fc-display-setting-row '+className;
-    controls.forEach(control=>{if(control)row.append(control);});
-    if(row.children.length){panel.append(row);settingRows.push(row);}
-  };
-  const addSectionHeading=text=>{
-    const section=document.createElement('h3');
-    section.className='fc-settings-section-heading';
-    section.textContent=text;
-    panel.append(section);
-  };
-  addSectionHeading(t.region);
-  const currencyControl=document.querySelector('.fc-currency-control');
-  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
+  const currencyControl=document.createElement('label');
+  currencyControl.className='fc-currency-control';
+  currencyControl.innerHTML='<span class="fc-language-label"></span><select id="fc-currency-select" aria-label="Display currency">'+Object.entries(currencyNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select>';
   const countryControl=document.querySelector('.fc-country-control');
   const formatControl=document.querySelector('.fc-format-control');
-  const unitControl=document.querySelector('.fc-unit-control');
-  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  addSettingRow('fc-display-currency-row',[currencyControl]);
-  if(countryControl&&formatControl){
-    const countrySelect=countryControl.querySelector('select');
-    const localeSelect=formatControl.querySelector('select');
-    const countryFormatLabel=document.createElement('label');
-    countryFormatLabel.className='fc-country-format-control';
-    const countryFormatText=document.createElement('span');
-    countryFormatText.textContent=t.countryFormat;
-    const countryFormatSelect=document.createElement('select');
-    countryFormatSelect.id='fc-country-format-display';
-    countryFormatSelect.setAttribute('aria-label',t.countryFormat);
+  const unitControl=document.createElement('label');
+  unitControl.className='fc-unit-control';
+  unitControl.innerHTML='<span class="fc-language-label"></span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select>';
+  const countrySelect=countryControl?.querySelector('select');
+  const localeSelect=formatControl?.querySelector('select');
+  const countryFormatLabel=document.createElement('label');
+  countryFormatLabel.className='fc-country-format-control';
+  const countryFormatText=document.createElement('span');
+  countryFormatText.textContent=t.countryFormat;
+  const countryFormatSelect=document.createElement('select');
+  countryFormatSelect.id='fc-country-format-display';
+  countryFormatSelect.setAttribute('aria-label',t.countryFormat);
+  if(countrySelect&&localeSelect){
     const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
     Array.from(localeSelect.options).forEach(localeOption=>{
       const locale=localeOption.value;
@@ -1392,38 +1378,35 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     window.addEventListener('fc:localechange',syncCountryFormat);
     countryFormatSelect.addEventListener('change',()=>{
       const [country,locale]=countryFormatSelect.value.split('|');
-      if(window.FCLocale){
-        const preferredCurrency=window.FCLocale.getCurrency();
-        countrySelect.value=country;
-        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
-        localeSelect.value=locale;
-        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
-        window.FCLocale.setCurrency(preferredCurrency);
-      }else{
-        countrySelect.value=country;
-        localeSelect.value=locale;
-        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
-        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
-      }
+      const preferredCurrency=window.FCLocale?.getCurrency();
+      countrySelect.value=country;
+      localeSelect.value=locale;
+      countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+      localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      if(preferredCurrency)window.FCLocale?.setCurrency(preferredCurrency);
       syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
-    addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
+    countrySelect.tabIndex=-1;
+    localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
     compatibilityControls.className='fc-locale-compat-controls';
     compatibilityControls.setAttribute('aria-hidden','true');
-    if(countrySelect)countrySelect.tabIndex=-1;
-    if(localeSelect)localeSelect.tabIndex=-1;
     compatibilityControls.append(countryControl,formatControl);
-    panel.appendChild(compatibilityControls);
+    regionalControlsSource.appendChild(compatibilityControls);
   }
-  addSettingRow('fc-display-units-row',[unitControl]);
-  if(settingRows.length){
-    const divider=document.createElement('div');
-    divider.className='fc-display-settings-divider';
-    divider.setAttribute('aria-hidden','true');
-    panel.append(divider);
-  }
+  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
+  if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  const primaryNavigation=activeHeader.querySelector('#fc-primary-navigation');
+  const languageControlElement=primaryNavigation?.querySelector('.fc-language-control');
+  if(languageControlElement)languageControlElement.after(currencyControl,countryFormatLabel,unitControl);
+  else primaryNavigation?.append(currencyControl,countryFormatLabel,unitControl);
+  const addSectionHeading=text=>{
+    const section=document.createElement('h3');
+    section.className='fc-settings-section-heading';
+    section.textContent=text;
+    panel.append(section);
+  };
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
