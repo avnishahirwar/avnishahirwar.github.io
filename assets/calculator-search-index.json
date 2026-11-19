@@ -17353,5 +17353,19 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "wealth planner calculator millionaire billionaire wealth target current wealth annual savings assumed annual return passive income withdrawal rate long term planning",
     "description": "Model a long-term wealth target using current wealth, annual savings, an assumed return and a passive-income withdrawal rate."
+  },
+  {
+    "name": "UK VAT Calculator",
+    "url": "/calculators/uk-vat-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "UK VAT calculator value added tax standard rate 20 reduced rate 5 zero rate 0 add VAT remove VAT net gross price GBP",
+    "description": "Calculate UK VAT at standard, reduced or zero rates and add or extract VAT from a GBP amount."
+  },
+  {
+    "name": "UK Mortgage Calculator",
+    "url": "/calculators/uk-mortgage-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "UK mortgage calculator GBP property price deposit loan principal interest rate mortgage term monthly repayment total interest",
+    "description": "Estimate a UK mortgage monthly payment, total repayment and interest from property price, deposit, rate and term."
   }
 ]
