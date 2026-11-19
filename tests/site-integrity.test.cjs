@@ -848,7 +848,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse all ' + expectedCoreCalculatorCount + ' calculator tools'));
   assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
-  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
+  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators across 36 categories'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
