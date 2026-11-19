@@ -2,12 +2,13 @@
 
 const { chromium, firefox, webkit } = require('playwright');
 const assert = require('node:assert/strict');
+const { spawn } = require('node:child_process');
 const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
 const availableEngines = {
   chromium: ['Chromium', chromium],
   chrome: ['Google Chrome', chromium, { channel: 'chrome' }],
   msedge: ['Microsoft Edge', chromium, { channel: 'msedge' }],
-  opera: ['Opera', chromium, { executablePath: process.env.FC_OPERA_PATH || '/usr/bin/opera', args: ['--no-sandbox'] }],
+  opera: ['Opera', chromium, { operaCDP: true }],
   firefox: ['Firefox', firefox],
   webkit: ['WebKit', webkit]
 };
@@ -112,8 +113,29 @@ async function checkPage(browser, url, label, viewport) {
 (async () => {
   const results = [];
   for (const [name, engine] of engines) {
-    const browser = await engine.launch({ headless: true, ...(engines.find(entry => entry[0] === name)?.[2] || {}) });
+    const launchOptions = engines.find(entry => entry[0] === name)?.[2] || {};
+    let browser;
+    let operaProcess;
     try {
+      if (launchOptions.operaCDP) {
+        operaProcess = spawn(process.env.FC_OPERA_PATH || '/usr/bin/opera', [
+          '--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+          '--no-first-run', '--no-default-browser-check', '--disable-background-networking',
+          '--remote-debugging-port=9222', '--user-data-dir=/tmp/fc-opera-profile', 'about:blank'
+        ], { stdio: 'ignore' });
+        let cdpReady = false;
+        for (let attempt = 0; attempt < 40; attempt++) {
+          try {
+            const response = await fetch('http://127.0.0.1:9222/json/version');
+            if (response.ok) { cdpReady = true; break; }
+          } catch (_) {}
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        if (!cdpReady) throw new Error('Opera did not expose its Chrome DevTools Protocol endpoint');
+        browser = await chromium.connectOverCDP('http://127.0.0.1:9222');
+      } else {
+        browser = await engine.launch({ headless: true, ...launchOptions });
+      }
       for (const viewport of [{ width: 1365, height: 900 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
         const dims = await checkPage(browser, '/', name + ' homepage ' + viewport.width, viewport);
         results.push({ browser: name, page: '/', width: viewport.width, ...dims });
@@ -135,7 +157,10 @@ async function checkPage(browser, url, label, viewport) {
         await page.close();
       }
       await checkFinancialCalculatorInteractions(browser, name);
-    } finally { await browser.close(); }
+    } finally {
+      if (browser) await browser.close();
+      if (operaProcess && !operaProcess.killed) operaProcess.kill('SIGTERM');
+    }
   }
   process.stdout.write(JSON.stringify({ ok: true, results }, null, 2) + '\n');
 })().catch(error => { console.error(error); process.exitCode = 1; });
