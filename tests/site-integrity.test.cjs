@@ -2182,3 +2182,14 @@ test('homepage has the same static shared footer and Sitemap destination', () =>
   assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
   assert.ok(html.includes('class="fc-global-footer-links"'));
 });
+
+
+test('homepage critical CSS keeps the shared regional Header readable before deferred styles load', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const critical = html.match(/<style id="fc-critical-home-shell">([\\s\\S]*?)<\\/style>/)?.[1] || '';
+  assert.match(critical, /\\.fc-top-row\\{[^}]*display:flex/);
+  assert.match(critical, /\\.fc-global-links \\.fc-currency-control/);
+  assert.match(critical, /\\.fc-global-links \\.fc-country-format-control/);
+  assert.match(critical, /\\.fc-global-links \\.fc-unit-control/);
+  assert.match(critical, /@media\\(max-width:760px\\)[\\s\\S]*?\\.fc-global-links\\.fc-nav-open/);
+});
