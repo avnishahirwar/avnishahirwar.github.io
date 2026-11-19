@@ -113,3 +113,15 @@ test('All configured locale routes enforce their document language and writing d
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
   assert.ok(shell.includes("document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';"));
 });
+
+
+test('language selector lists 50 high-reach languages and only enables configured locales', () => {
+  const block = shell.match(/const localeNames=\{([^}]+)\};/);
+  assert.ok(block, 'Expected locale catalogue');
+  const codes = [...block[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  assert.equal(codes.length, 50, 'Expected exactly 50 language choices');
+  for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(codes.includes(code), 'Missing language code: '+code);
+  assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
+  assert.match(shell, / — Coming soon/);
+  assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
+});
