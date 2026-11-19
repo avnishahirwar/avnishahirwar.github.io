@@ -1441,7 +1441,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     });
     siteSettingsControls.appendChild(mirror);
   };
-  const headerLanguageControl=primaryNavigation?.querySelector('.fc-language-control');
+  const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
   [headerLanguageControl,currencyControl,countryFormatLabel,unitControl].forEach(mirrorSiteControl);
   panel.append(siteSettingsControls);
   addSectionHeading(t.accessibility);
