@@ -11,7 +11,8 @@ async function checkPage(browser, url, label, viewport) {
   page.on('pageerror', error => errors.push(error.message));
   const response = await page.goto(new URL(url, origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   assert.ok(response && response.ok(), label + ': HTTP response');
-  for (const selector of ['header.fc-global-header','footer.fc-global-footer','#fc-language-select','#fc-currency-select','#fc-country-select','#fc-locale-select','#fc-unit-system-select','#fc-ai-lazy-launch']) {
+  // Test the visible combined Country & format control. The legacy country/date selects are intentionally hidden compatibility controls.
+  for (const selector of ['header.fc-global-header','footer.fc-global-footer','#fc-language-select','#fc-currency-select','#fc-country-format-display','#fc-unit-system-select','#fc-ai-lazy-launch']) {
     await page.waitForSelector(selector, { timeout: 20000 });
   }
   const settings = page.locator('footer.fc-global-footer #fc-display-settings');
