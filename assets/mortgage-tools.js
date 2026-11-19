@@ -111,9 +111,9 @@
       const oldR = periodicRate(currentRate, 12, 12);
       const newR = periodicRate(newRate, 12, 12);
       const oldPmt = payment(principal, oldR, remainingYears * 12);
-      const newPmt = payment(principal + costs, newR, newYears * 12);
+      const newPmt = payment(principal, newR, newYears * 12);
       const monthlySaving = oldPmt - newPmt;
-      return [{ label: 'Current monthly principal and interest', value: oldPmt, kind: 'money' }, { label: 'New monthly principal and interest', value: newPmt, kind: 'money' }, { label: 'Monthly payment difference', value: monthlySaving, kind: 'money' }, { label: 'Refinance costs', value: costs, kind: 'money' }, { label: 'Simple break-even period', value: monthlySaving > 0 ? costs / monthlySaving : null, kind: 'months' }, { label: 'Interest under current loan', value: amortize(principal, oldR, oldPmt, 0, remainingYears * 12).totalInterest, kind: 'money' }, { label: 'Interest under new loan (including financed costs)', value: amortize(principal + costs, newR, newPmt, 0, newYears * 12).totalInterest, kind: 'money' }];
+      return [{ label: 'Current monthly principal and interest', value: oldPmt, kind: 'money' }, { label: 'New monthly principal and interest', value: newPmt, kind: 'money' }, { label: 'Monthly payment difference', value: monthlySaving, kind: 'money' }, { label: 'Refinance costs', value: costs, kind: 'money' }, { label: 'Simple break-even period', value: monthlySaving > 0 ? costs / monthlySaving : null, kind: 'months' }, { label: 'Interest under current loan', value: amortize(principal, oldR, oldPmt, 0, remainingYears * 12).totalInterest, kind: 'money' }, { label: 'Interest under new loan (excluding upfront costs)', value: amortize(principal, newR, newPmt, 0, newYears * 12).totalInterest, kind: 'money' }];
     }
 
     if (type === 'comparison') {
