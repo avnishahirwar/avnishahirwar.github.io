@@ -13407,11 +13407,11 @@
     "description": "Triangle Vertices Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Trig Calculator",
+    "name": "Trigonometry Calculator",
     "url": "/calculators/trig-calculator.html",
-    "category": "MATH",
-    "keywords": "trig calculator",
-    "description": "Trig Calculator — requested calculator in the Friendly Calculator directory."
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "trigonometry calculator trig calculator sine cosine tangent cotangent secant cosecant sin cos tan degrees radians angle right triangle solver opposite adjacent hypotenuse",
+    "description": "Calculate six trigonometric functions in degrees or radians and solve right-triangle sides from a hypotenuse and acute angle."
   },
   {
     "name": "Trig Degree Calculator",
