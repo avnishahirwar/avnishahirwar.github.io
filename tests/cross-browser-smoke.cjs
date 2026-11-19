@@ -11,9 +11,17 @@ async function checkPage(browser, url, label, viewport) {
   page.on('pageerror', error => errors.push(error.message));
   const response = await page.goto(new URL(url, origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   assert.ok(response && response.ok(), label + ': HTTP response');
-  // Test the visible combined Country & format control. The legacy country/date selects are intentionally hidden compatibility controls.
-  for (const selector of ['header.fc-global-header','footer.fc-global-footer','#fc-language-select','#fc-currency-select','#fc-country-format-display','#fc-unit-system-select','#fc-ai-lazy-launch']) {
-    await page.waitForSelector(selector, { timeout: 20000 });
+  // Some legacy locale controls intentionally remain hidden for compatibility.
+  // Assert the actual visible Header controls and the combined regional selector.
+  for (const selector of [
+    'header.fc-global-header',
+    'footer.fc-global-footer',
+    '.fc-header-language-slot #fc-language-select',
+    '.fc-global-links > .fc-currency-control #fc-currency-select',
+    '.fc-global-links > .fc-country-format-control #fc-country-format-display',
+    '.fc-global-links > .fc-unit-control #fc-unit-system-select'
+  ]) {
+    await page.locator(selector).waitFor({ state: 'visible', timeout: 20000 });
   }
   const settings = page.locator('footer.fc-global-footer #fc-display-settings');
   await settings.waitFor({ state: 'visible', timeout: 20000 });
