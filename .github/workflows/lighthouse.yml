@@ -124,6 +124,12 @@ jobs:
           echo "::error::Cloudflare branch preview was not published with the reserved calculator section."
           exit 1
 
+      - name: Verify shared Header/Footer and Settings on the pull-request preview in Chrome
+        if: github.event_name == 'pull_request'
+        env:
+          FC_SITE_ORIGIN: ${{ env.BASE_URL }}
+        run: node scripts/check-site-shell-runtime.cjs
+
       - name: Run Lighthouse across representative site-wide page types and languages
         shell: bash
         run: |
