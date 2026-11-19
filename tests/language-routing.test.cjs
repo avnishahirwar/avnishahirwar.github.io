@@ -281,6 +281,6 @@ test('five staged language editions have localized homepages and working basic c
     assert.ok(footerBlock.includes(locale + ':['), 'Missing footer labels for ' + locale);
     assert.match(shell, new RegExp(locale + ":'" + (locale === 'zh' ? '菜单' : locale === 'ur' ? 'مینو' : locale === 'tr' ? 'Menü' : locale === 'it' ? 'Menu' : '메뉴') + "'"));
     const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
-    for (const anchor of ['finance','tax','everyday']) assert.ok(home.includes('id=\\"' + anchor + '\\"'), locale + ' homepage missing ' + anchor + ' navigation target');
+    for (const anchor of ['finance','tax','everyday']) assert.ok(home.includes('id="' + anchor + '"'), locale + ' homepage missing ' + anchor + ' navigation target');
   }
 });
