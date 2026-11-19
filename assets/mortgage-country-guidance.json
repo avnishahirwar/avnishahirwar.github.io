@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 45,
+    "officialCountryGuides": 48,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 123
+    "pendingVerification": 120
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -997,6 +997,93 @@
           "https://www.bceao.int/fr/content/paysage-bancaire"
         ]
       ]
+    },
+    "BI": {
+      "summary": "The Bank of the Republic of Burundi (BRB) supervises banks and other authorised credit institutions, and the Banking Activities Law expressly brings mortgage credit under central-bank control, with any specific mortgage rules to be applied where separately issued. BRB's Circular No. 17/2018 prohibits banks from extending new credit to a borrower who is in default at another credit institution for 180 days or more, except where the borrower is state-guaranteed. No universal borrower LTV or maximum mortgage term is asserted here.",
+      "rules": [
+        "Burundi's Banking Activities Law No. 1/17 of 22 August 2017 treats mortgage credit as a credit operation under BRB supervision; the law states that mortgage credit may also be subject to specific legislation or regulation.",
+        "Under BRB Circular No. 17/2018, a borrower with a payment delay of 180 days or more at another operating or failed credit institution is a defaulting client. Credit institutions are prohibited from granting that client new financial assistance, including credit facilities, except for clients guaranteed by the State.",
+        "BRB's 2025 National Financial Inclusion Survey reports that real-estate/housing loans account for a substantial share of the outstanding credit stock, but it does not create a universal borrower LTV or repayment-term limit.",
+        "Banks and authorised financial institutions set product-specific mortgage rates, loan terms, equity contributions, valuation, collateral and fees subject to BRB regulation. Obtain the current written offer and verify the lender's authorisation.",
+        "The calculator does not assess BRB compliance, default status, housing-programme eligibility, property title, valuation, insurance, taxes, notarial or registration costs."
+      ],
+      "sources": [
+        [
+          "Bank of the Republic of Burundi: Law No. 1/17 of 22 August 2017 governing banking activities",
+          "https://www.brb.bi/sites/default/files/2024-09/LOI%20N%C2%B0%201_%2017%20DU%2022%20%20AOUT%202017.pdf"
+        ],
+        [
+          "Bank of the Republic of Burundi: Circular No. 17/2018 — prohibition on lending to defaulting clients",
+          "https://www.brb.bi/sites/default/files/2024-09/CIRCULAIRE%20N%C2%B0%2017_2018.pdf"
+        ],
+        [
+          "Bank of the Republic of Burundi: National Financial Inclusion Survey 2025",
+          "https://www.brb.bi/sites/default/files/2025-09/ENIF_RAPPORT%20FINAL%202025.pdf"
+        ],
+        [
+          "Bank of the Republic of Burundi: Official banking legislation and regulatory texts",
+          "https://www.brb.bi/textes_legaux_relatifs_au_secteur_bancaire"
+        ]
+      ]
+    },
+    "CV": {
+      "summary": "Cabo Verde's Decree-Law No. 6/2026 establishes general, subsidised and young-subsidised home-credit regimes. The law sets a maximum repayment term of 30 years. For the subsidised regimes, Joint Ordinance No. 14/2026 sets a maximum housing value of CVE 10 million for purchase or construction, a maximum works cost of CVE 2 million and a maximum effort ratio of two-fifths (40%); the State may subsidise up to 50% of the agreed interest rate, or 55% under the young scheme. These programme terms should not be applied to every commercial mortgage.",
+      "rules": [
+        "Decree-Law No. 6/2026 recognises general home credit, subsidised home credit and young-subsidised home credit for acquisition, construction, improvement, recovery or expansion of a permanent home. The law sets a maximum loan repayment term of 30 years.",
+        "Under Joint Ordinance No. 14/2026, access to subsidised home credit is limited to a maximum property value of CVE 10,000,000 for purchase or construction and a maximum works cost of CVE 2,000,000, subject to the programme's eligibility and exceptions.",
+        "The maximum effort ratio for subsidised permanent-home credit is two-fifths (40%). The ratio is defined by the monthly first-year principal-and-interest payment relative to one-twelfth of gross annual household income.",
+        "The State's interest subsidy may cover up to 50% of the agreed interest rate under the standard subsidised scheme and up to 55% under the young-subsidised scheme. This reduces the borrower's interest burden but does not guarantee loan approval.",
+        "For subsidised credit, Decree-Law No. 6/2026 specifies different maximum financing percentages by municipality: up to 90% of assessed property value in Praia, Sal, São Vicente and Santa Catarina, and up to 100% in other municipalities. These programme limits are not universal LTV rules for all commercial mortgages.",
+        "A separate State guarantee scheme for first-home buyers aged 18–35 is governed by Decree-Law No. 37/2025 and Joint Ordinance No. 13/2026. It has its own residence, first-home, income and loan-value conditions; do not combine it automatically with the subsidised-interest scheme.",
+        "The calculator does not determine eligibility for subsidised credit or the State guarantee, household-income certification, bank approval, property valuation, insurance, stamp duty, notarial or registration charges."
+      ],
+      "sources": [
+        [
+          "Cabo Verde Official Gazette: Decree-Law No. 6/2026 — subsidised and young-subsidised housing credit",
+          "https://boe.incv.cv/Bulletins/View?id=89524"
+        ],
+        [
+          "Cabo Verde Official Gazette: Joint Ordinance No. 14/2026 — subsidised housing-credit conditions",
+          "https://boe.incv.cv/Bulletins/View/89731"
+        ],
+        [
+          "Cabo Verde Official Gazette: Decree-Law No. 37/2025 — State guarantee for first-home buyers up to age 35",
+          "https://boe.incv.cv/Bulletins/View/88665"
+        ],
+        [
+          "Cabo Verde Official Gazette: Joint Ordinance No. 13/2026 — State guarantee implementation",
+          "https://boe.incv.cv/Bulletins/View?id=89744"
+        ],
+        [
+          "Bank of Cabo Verde: Law No. 62/VIII/2014 — financial institutions and mortgage-credit information requirements",
+          "https://www.bcv.cv/pt/O%20Banco/Sectores/Documents/Lei%20das%20Atividades%20e%20das%20Institui%C3%A7%C3%B5es%20Financeiras.pdf"
+        ]
+      ]
+    },
+    "KH": {
+      "summary": "The National Bank of Cambodia's Prakas on Credit Risk for Capital Adequacy Ratio in Deposit-taking Banks requires institutions to assess borrower repayment capacity, apply underwriting policies and prudently value property collateral for real-estate exposures. It defines how banks calculate loan-to-value (LTV), including a minimum 30% valuation haircut where residential property ownership is evidenced only by a soft title. These are prudential risk and collateral-valuation rules, not a universal borrower LTV cap or guaranteed financing percentage.",
+      "rules": [
+        "The National Bank of Cambodia's Prakas on Credit Risk for Capital Adequacy Ratio in Deposit-taking Banks requires institutions to maintain underwriting policies for real-estate exposures, including key ratios and assessment of the borrower's ability to repay.",
+        "The Prakas defines LTV as the loan amount divided by the value of the property. The loan amount includes the outstanding balance and undrawn committed amounts; the institution must use prudent and independent property valuation criteria.",
+        "For residential-property purchase exposures secured by a soft title, the property value used in the LTV denominator must be reduced by a haircut of at least 30%. For commercial-property purchase exposures secured by a soft title, the prescribed haircut is 100%.",
+        "The LTV ratio may be recalculated periodically, no less frequently than the six-month maximum interval specified in the Prakas; property values may need downward revision after extraordinary events that permanently reduce value.",
+        "These LTV valuation and risk-weight rules are prudential requirements for institutions and should not be represented as a universal statutory borrower LTV ceiling. Banks apply their own credit policies and may require hard title, additional collateral, insurance and stricter repayment tests.",
+        "The calculator does not determine title validity, soft-title acceptance, collateral valuation, borrower approval, taxes, registration, legal fees or bank-specific charges."
+      ],
+      "sources": [
+        [
+          "National Bank of Cambodia: Prakas on Credit Risk for Capital Adequacy Ratio in Deposit-taking Banks, including real-estate exposure and LTV provisions",
+          "https://web.nbc.gov.kh/download_files/legislation/prakas_eng/4B7_023_338_EN_Prakas_on_Credit_Risk_for_CAR_in_Deposit_taking_Banks.pdf"
+        ],
+        [
+          "National Bank of Cambodia: Official legislation and regulation library",
+          "https://www.nbc.gov.kh/english/legislation/"
+        ],
+        [
+          "National Bank of Cambodia: Banking supervision and prudential framework",
+          "https://www.nbc.gov.kh/english/supervision/"
+        ]
+      ]
     }
   },
   "countries": {
@@ -1110,15 +1197,15 @@
     },
     "BI": {
       "countryName": "Burundi",
-      "status": "pending"
+      "status": "verified"
     },
     "CV": {
       "countryName": "Cabo Verde",
-      "status": "pending"
+      "status": "verified"
     },
     "KH": {
       "countryName": "Cambodia",
-      "status": "pending"
+      "status": "verified"
     },
     "CM": {
       "countryName": "Cameroon",
