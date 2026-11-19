@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 36,
+    "officialCountryGuides": 39,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 132
+    "pendingVerification": 129
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -772,6 +772,78 @@
           "https://www.belizefsc.org.bz/wp-content/uploads/2023/04/Act-No.-8-of-2023-Financial-Services-Commission-2.pdf"
         ]
       ]
+    },
+    "BT": {
+      "summary": "The Royal Monetary Authority of Bhutan's Macro-Prudential Rules and Regulations set borrower-facing loan-to-value (LTV) and loan-to-income (LTI) limits for credit facilities. For property-backed lending, the rules set LTV ceilings by loan size and a maximum LTI of 70%; lenders may apply stricter internal underwriting. Check for later RMA amendments and the lender's current policy before relying on these limits.",
+      "rules": [
+        "RMA's published Macro-Prudential Rules and Regulations set maximum LTV at 70% for loans up to Nu. 50 million and 60% for loans above Nu. 50 million; loans against fixed deposits have a separate 90% ceiling.",
+        "For purchase or construction of a second or subsequent property, and for joint applications of two or more borrowers, the rules specify an LTV ceiling of 70%.",
+        "The maximum LTI is 70% unless RMA states otherwise. LTI includes the borrower's total monthly debt instalments against monthly disposable income; variable income may be counted at up to 70% of its six-month average.",
+        "The borrower must make the down payment before loan disbursement. Financial institutions determine property valuation procedures and may set stricter internal LTV/LTI limits.",
+        "The calculator does not determine RMA compliance, lender approval, housing-loan programme eligibility, land-title validity, insurance, taxes, valuation or legal costs. Confirm the current rule text and any amendments with RMA and the lender."
+      ],
+      "sources": [
+        [
+          "Royal Monetary Authority of Bhutan: Macro-Prudential Rules and Regulations 2018, Regulation 3",
+          "https://www.rma.org.bt/media/Laws_By_Laws/Macro-Prudential%20Rules%20and%20Regulations%2C%202018.pdf"
+        ],
+        [
+          "Royal Monetary Authority of Bhutan: Legislation and current regulatory listings",
+          "https://www.rma.org.bt/legislation/"
+        ],
+        [
+          "Royal Monetary Authority of Bhutan: Prudential Regulations 2024",
+          "https://www.rma.org.bt/media/Laws_By_Laws/Prudential%20Regulations%2C%202024.pdf"
+        ]
+      ]
+    },
+    "BO": {
+      "summary": "Bolivia's regulated Vivienda de Interés Social (VIS) mortgage regime is distinct from ordinary housing loans. Supreme Decree No. 1842 sets maximum annual interest rates for qualifying social-interest housing according to the property's commercial value and applies to ASFI-licensed financial entities. The published ceilings should not be generalized to every Bolivian mortgage or treated as a guaranteed bank offer.",
+      "rules": [
+        "For qualifying Vivienda de Interés Social loans, Supreme Decree No. 1842 sets maximum annual rates by property value: 5.5% up to UFV 255,000; 6.0% from UFV 255,001 to UFV 380,000; and 6.5% from UFV 380,001 to UFV 460,000.",
+        "The VIS definition is limited to a single non-commercial home for eligible households; the decree specifies value thresholds of UFV 400,000 for apartments and UFV 460,000 for houses, with qualifying land subject to a separate value condition.",
+        "The decree applies to financial entities licensed by ASFI, with the stated exception for Banco de Desarrollo Productivo S.A.M. It also sets portfolio-allocation obligations for regulated institutions; those portfolio rules are not borrower loan-to-value entitlements.",
+        "The 2026 Banco Central de Bolivia Financial Stability Report describes later amendments to minimum portfolio requirements, including Supreme Decree No. 5562. These institution-level portfolio changes should not be confused with the VIS interest-rate ceilings.",
+        "The calculator does not establish VIS eligibility, verify property value in UFV, determine subsidy or guarantee eligibility, or calculate insurance, valuation, notarial, registration and other transaction costs. Confirm the current consolidated rules with ASFI and the lender."
+      ],
+      "sources": [
+        [
+          "ASFI-hosted Bolivia Supreme Decree No. 1842 — Social Interest Housing interest-rate regime",
+          "https://www.asfi.gob.bo/sites/default/files/2025-08/Decreto%20Supremo%20N%C2%B0%201842%20de%2018%20de%20diciembre%20de%202013.pdf"
+        ],
+        [
+          "Central Bank of Bolivia: Financial Stability Report, July 2026, Annex 1 — 2026 regulatory changes",
+          "https://www.bcb.gob.bo/webdocs/politicasbcb/IEF%20jul26%20VF.pdf"
+        ],
+        [
+          "Banco Nacional de Bolivia: Social Interest Housing Credit product information",
+          "https://www.bnb.com.bo/PortalBNB/Creditos/ViviendaSocial/102"
+        ]
+      ]
+    },
+    "BA": {
+      "summary": "Bosnia and Herzegovina's mortgage market operates through banks supervised at entity level, with consumer education from the Central Bank of Bosnia and Herzegovina. The Central Bank describes common market practices such as down payments, repayment terms and affordability checks, while the Republika Srpska Banking Agency states that individual banks set their own housing-loan terms. These examples are not uniform statutory limits for every lender or entity.",
+      "rules": [
+        "The Central Bank of Bosnia and Herzegovina describes mortgage down payments commonly around 5%, 10% or 20% of property value. This is consumer guidance about market practice, not a universal legal minimum.",
+        "The Central Bank's consumer guide describes repayment periods that may extend to 25 years or until the borrower reaches retirement age (65 or less), whichever is shorter. Actual terms depend on lender policy and the borrower's circumstances.",
+        "The Central Bank says monthly instalments should not normally exceed half of gross monthly household income; banks use their own affordability criteria and consult the Central Credit Registry. Treat this as consumer guidance, not a binding nationwide debt-service cap.",
+        "The Republika Srpska Banking Agency confirms that each bank defines its own housing-loan conditions, required documentation and collateral instruments. Regulatory supervision and applicable rules also differ between the Federation of Bosnia and Herzegovina and Republika Srpska.",
+        "The calculator does not determine local entity-level legal requirements, lender approval, collateral acceptance, foreign-currency risk, property registration, insurance, taxes, notary charges or other closing costs. Confirm the applicable entity's rules and lender offer."
+      ],
+      "sources": [
+        [
+          "Central Bank of Bosnia and Herzegovina: Housing Loans and Mortgages — consumer guidance",
+          "https://www.cbbh.ba/press/edukacija/765?lang=en"
+        ],
+        [
+          "Banking Agency of Republika Srpska: Housing Loans",
+          "https://abrs.ba/en/housing-loans/"
+        ],
+        [
+          "Banking Agency of the Federation of Bosnia and Herzegovina: Credit-risk and asset regulations",
+          "https://www.fba.ba/eng/images/banke_podzakonski_2/26-0%20credit%20risk%20and%20assets.pdf"
+        ]
+      ]
     }
   },
   "countries": {
@@ -853,15 +925,15 @@
     },
     "BT": {
       "countryName": "Bhutan",
-      "status": "pending"
+      "status": "verified"
     },
     "BO": {
       "countryName": "Bolivia",
-      "status": "pending"
+      "status": "verified"
     },
     "BA": {
       "countryName": "Bosnia and Herzegovina",
-      "status": "pending"
+      "status": "verified"
     },
     "BW": {
       "countryName": "Botswana",
