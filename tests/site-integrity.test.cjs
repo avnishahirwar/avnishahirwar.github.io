@@ -2223,7 +2223,7 @@ test('homepage critical CSS keeps the shared regional Header readable before def
   const styleEnd = html.indexOf('</style>', styleStart);
   const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
   assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
-  assert.ok(css.includes('.fc-global-links>.fc-header-language-slot>.fc-language-control select') && css.includes('.fc-global-links>.fc-currency-control select') && css.includes('.fc-global-links>.fc-country-format-control select') && css.includes('.fc-global-links>.fc-unit-control select') && css.includes('height:40px!important') && css.includes('width:100%!important'), 'All Header dropdowns must share the same width and height.');
+  assert.ok(css.includes('.fc-global-links>.fc-header-language-slot{display:contents!important;}') && css.includes('.fc-global-links>.fc-header-language-slot>.fc-language-control select') && css.includes('.fc-global-links>.fc-currency-control select') && css.includes('.fc-global-links>.fc-country-format-control select') && css.includes('.fc-global-links>.fc-unit-control select') && css.includes('height:40px!important') && css.includes('width:100%!important'), 'All Header dropdowns must share the same width and height.');
   assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
   assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
   assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
