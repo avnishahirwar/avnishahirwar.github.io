@@ -1317,7 +1317,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const open=document.createElement('button');
   open.id='fc-display-settings';
   open.type='button';
-  open.textContent='⚙ '+t.open;
+  open.textContent=t.open;
   open.setAttribute('aria-label',t.title);
   open.setAttribute('aria-expanded','false');
   open.setAttribute('aria-controls','fc-display-panel');
