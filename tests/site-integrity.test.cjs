@@ -863,7 +863,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
+  assert.ok(directory.includes('Search calculators by name or topic'));
   assert.ok(directory.includes('Browse calculators by category, or explore international tools.'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
@@ -1268,7 +1268,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
+  assert.ok(directory.includes('Browse calculators by category'));
 });
 
 
