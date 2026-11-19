@@ -78,7 +78,7 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','zh','ur','tr','it','ko']"));
+  assert.ok(shell.includes("const localeCodes=['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']"));
 });
 
 
@@ -352,4 +352,10 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
   }
   const urdu = fs.readFileSync(path.join(__dirname, '..', 'ur', 'calculators', 'percentage-calculator.html'), 'utf8');
   assert.match(urdu, /<html lang="ur" dir="rtl">/);
+});
+
+
+test('sitemap hreflang grouping recognizes every published locale prefix', () => {
+  const generator = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'generate-sitemaps.cjs'), 'utf8');
+  assert.match(generator, /const LANGUAGE_PREFIXES = new Set\(\['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn'\]\);/);
 });
