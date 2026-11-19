@@ -81,6 +81,60 @@ gtag('config','G-QVWQSEDRGL');
 @media(max-width:1100px){.fc-global-nav{width:94%;align-items:flex-start;gap:8px 14px;padding:11px 0}.fc-global-brand{width:100%;font-size:.98rem}.fc-global-links{width:100%;flex:1 1 100%;justify-content:flex-start;gap:4px 15px;border-top:1px solid #e6ebef;padding-top:8px}.fc-global-links a{font-size:.85rem;padding:6px 0}.fc-language-control{padding:5px 0}.fc-language-control select{max-width:175px}}
 @media(max-width:640px){.fc-global-nav{width:92%;gap:7px;padding:10px 0}.fc-global-brand{font-size:.9rem;letter-spacing:.035em}.fc-global-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:5px 12px;justify-content:flex-start;overflow:visible;max-height:none}.fc-global-links a{font-size:.82rem;padding:5px 0}.fc-global-links .fc-admin-link{padding:5px 8px}.fc-language-control{width:100%;justify-content:flex-start}.fc-language-control select{min-width:150px}}
 @media(max-width:380px){.fc-global-links{gap:4px 10px}.fc-global-links a{font-size:.78rem}}
+
+/* Match the shared Header before the deferred site-shell stylesheet loads. */
+.fc-global-nav{width:100%;max-width:none;display:block;padding:0}
+.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex;align-items:center;gap:20px}
+.fc-global-brand{flex:0 0 auto;gap:10px;letter-spacing:.02em;font-size:1.12rem}
+.fc-global-brand .fc-brand-mark{width:46px;height:46px;flex-basis:46px}
+.fc-global-brand .fc-brand-copy{display:grid;gap:2px;min-width:0;line-height:1.12;letter-spacing:0}
+.fc-global-brand .fc-brand-copy>span{font-weight:900;letter-spacing:.02em}
+.fc-global-brand .fc-brand-copy small{display:block;margin:0;color:#e1e8ef;font-size:.72rem;font-weight:500;letter-spacing:0;line-height:1.25}
+.fc-global-links{gap:clamp(10px,1.35vw,22px);white-space:nowrap}
+.fc-global-links>a{font-size:.92rem;font-weight:700;padding:12px 0;border-bottom:3px solid transparent}
+.fc-global-links .fc-language-control{padding-left:16px;border-left:1px solid #8290a2}
+.fc-global-links .fc-currency-control,.fc-global-links .fc-country-format-control,.fc-global-links .fc-unit-control{display:inline-flex;align-items:center;gap:5px;min-width:0;color:#f7f9fc;font-size:.72rem;font-weight:700;white-space:nowrap}
+.fc-global-links .fc-currency-control select,.fc-global-links .fc-country-format-control select,.fc-global-links .fc-unit-control select{height:34px;max-width:155px;min-width:0;padding:5px 7px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .76rem/1.2 system-ui,sans-serif}
+.fc-global-links .fc-country-format-control select{width:150px}
+.fc-global-links .fc-unit-control select{width:105px}
+.fc-global-links .fc-country-format-control>span{white-space:nowrap}
+.fc-nav-toggle{display:none}
+@media(max-width:1120px){
+ .fc-top-row{width:94%;flex-wrap:wrap;gap:7px 14px;padding:10px 0}
+ .fc-global-brand{flex:1 1 auto}
+ .fc-global-links{flex:1 1 100%;justify-content:flex-start;flex-wrap:wrap;gap:5px 16px;padding:8px 0 2px;border-top:1px solid #46566b}
+ .fc-global-links .fc-currency-control,.fc-global-links .fc-country-format-control,.fc-global-links .fc-unit-control{flex:1 1 30%;justify-content:space-between}
+ .fc-global-links .fc-currency-control select,.fc-global-links .fc-country-format-control select,.fc-global-links .fc-unit-control select{width:100%;max-width:none}
+}
+@media(max-width:760px){
+ .fc-top-row{width:92%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+ .fc-global-brand{font-size:.94rem}
+ .fc-global-brand .fc-brand-mark{width:38px;height:38px;flex-basis:38px}
+ .fc-global-brand .fc-brand-copy small{font-size:.66rem}
+ .fc-nav-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 12px;border:1px solid #d8bd82;border-radius:7px;background:#102b48;color:#fff;font-weight:700}
+ .fc-global-links{grid-column:1/-1;display:none;flex-direction:column;align-items:stretch;gap:0;padding:6px 0}
+ .fc-global-links.fc-nav-open{display:flex}
+ .fc-global-links>a{padding:10px 4px;font-size:.9rem;border-bottom:1px solid #40536a}
+ .fc-global-links .fc-language-control{border:0;padding:9px 4px}
+ .fc-global-links .fc-currency-control,.fc-global-links .fc-country-format-control,.fc-global-links .fc-unit-control{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:8px 4px;border-bottom:1px solid #40536a}
+ .fc-global-links .fc-currency-control select,.fc-global-links .fc-country-format-control select,.fc-global-links .fc-unit-control select{flex:1 1 58%;width:58%;min-height:40px;max-width:68%;font-size:.84rem}
+ .fc-global-links .fc-country-format-control>span{white-space:normal}
+}
+@media(max-width:380px){.fc-global-links>a{font-size:.78rem}}
+
+
+/* Keep Language and all regional preferences visible in the first mobile Header view. */
+.fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{display:inline-flex;align-items:center;gap:8px;min-width:0;color:#f7f9fc;font-size:.78rem;font-weight:700;white-space:nowrap}
+.fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{height:40px;max-width:100%;min-width:0;padding:6px 8px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .84rem/1.2 system-ui,sans-serif}
+@media(max-width:760px){
+ .fc-top-row{grid-template-rows:auto auto auto auto auto auto!important}
+ .fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{grid-column:1/-1!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;width:100%!important;padding:7px 4px!important}
+ .fc-top-row>.fc-currency-control{grid-row:3!important}
+ .fc-top-row>.fc-country-format-control{grid-row:4!important}
+ .fc-top-row>.fc-unit-control{grid-row:5!important}
+ .fc-top-row>.fc-global-links{grid-row:6!important}
+ .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{flex:1 1 58%!important;width:58%!important;min-height:40px!important;max-width:68%!important}
+}
 </style>
 <script>
 /* Load non-critical shared shell styles after the first paint. Critical homepage

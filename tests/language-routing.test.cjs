@@ -22,13 +22,15 @@ test('language switching preserves the current route when its translation exists
   assert.match(shell, /fc-language-notice/);
 });
 
-test('URL locale remains authoritative and language switching does not auto-redirect', () => {
-  assert.match(shell, /The URL is the source of truth for the active language/);
-  assert.doesNotMatch(shell, /navigator\.languages/);
-  assert.doesNotMatch(shell, /location\.replace\(localeHome\[detected\]\)/);
+test('Explicit language routes remain authoritative; root defaults to saved or browser language', () => {
+  assert.match(shell, /const savedUiLocale=/);
+  assert.match(shell, /navigator\.languages/);
+  assert.match(shell, /const preferredUiLocale=Object\.hasOwn\(supportedUiLocales,savedUiLocale\)\?savedUiLocale:browserUiLocale/);
+  assert.match(shell, /p==='\/'\?preferredUiLocale:'en'/);
+  assert.match(shell, /if\(p==='\/'&&currentLocale!=='en'\)location\.replace\(localeHome\[currentLocale\]/);
   assert.match(shell, /routeLanguageSelect\.value=currentLocale/);
   assert.match(shell, /setItem\('fc-language-source','manual'\)/);
-  assert.doesNotMatch(shell, /localeRoutes\[p\]/);
+  assert.match(shell, /p\.startsWith\('\/hi\/'\)/);
 });
 
 test('Search Calculator is localized across all supported locales', () => {

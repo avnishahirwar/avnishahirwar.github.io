@@ -395,10 +395,15 @@ if(main&&!document.querySelector('.fc-skip-link')){
 const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்',ja:'日本語',ru:'Русский'};
 const requestedUiLocale=new URLSearchParams(location.search).get('lang');
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn({en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1},requestedUiLocale)?requestedUiLocale:'en');
+const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1};
+const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
+const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
+const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
 const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html'};
-// The URL is the source of truth for the active language.
-// Do not auto-redirect by browser language; visitors choose explicitly.
+// A saved visitor choice wins; otherwise use the browser's supported language.
+// Only the root entry point auto-selects a language; explicit page routes remain authoritative.
+if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash);
 
 const chrome={
 de:{home:'Startseite',login:'Anmelden',all:'Verzeichnis (Englisch)',search:'Rechner suchen',finance:'Finanzen',tax:'Steuern (Englisch)',business:'Business-Tools (Englisch)',global:'Globale Rechner (Englisch)',everyday:'Alltag (Englisch)',blog:'Blog (Englisch)',embed:'Einbetten',forBusiness:'Für Unternehmen',api:'API',plans:'Tarife',about:'Über uns',contact:'Kontakt',admin:'Admin',language:'Sprache',choose:'Website-Sprache auswählen',change:'Sprache ändern',footer:['Startseite','Finanzen','Steuern','Business','Alltag','Für Unternehmen','API','Tarife','Premium-Warteliste','Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Kontakt']},
@@ -430,10 +435,10 @@ const currencyNames={INR:'INR · Indian Rupee',USD:'USD · US Dollar',EUR:'EUR �
 const currencyControl='<label class="fc-currency-control"><span class="fc-language-label">Display currency</span><select id="fc-currency-select" aria-label="Display currency">'+Object.entries(currencyNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन्दी','en-US':'United States · English','en-GB':'United Kingdom · English','en-CA':'Canada · English','en-AU':'Australia · English','de-DE':'Germany · Deutsch','fr-FR':'France · Français','es-ES':'Spain · Español','pt-BR':'Brazil · Português','ar-AE':'UAE · العربية','ar-SA':'Saudi Arabia · العربية','ja-JP':'Japan · 日本語','ru-RU':'Russia · Русский','id-ID':'Indonesia · Bahasa','bn-BD':'Bangladesh · বাংলা','ta-IN':'India · தமிழ்','zh-CN':'China · 中文','en-ZA':'South Africa · English','tr-TR':'Türkiye · Türkçe','ko-KR':'South Korea · 한국어','vi-VN':'Vietnam · Tiếng Việt','fil-PH':'Philippines · Filipino','ms-MY':'Malaysia · Bahasa Melayu','pl-PL':'Poland · Polski','sv-SE':'Sweden · Svenska','nb-NO':'Norway · Norsk','da-DK':'Denmark · Dansk','cs-CZ':'Czechia · Čeština','hu-HU':'Hungary · Magyar','he-IL':'Israel · עברית','en-NG':'Nigeria · English','en-KE':'Kenya · English','ar-EG':'Egypt · العربية','ar-QA':'Qatar · العربية','ar-KW':'Kuwait · العربية','ar-OM':'Oman · العربية','si-LK':'Sri Lanka · සිංහල','ne-NP':'Nepal · नेपाली','es-CL':'Chile · Español','es-CO':'Colombia · Español','es-AR':'Argentina · Español','uk-UA':'Ukraine · Українська','ro-RO':'Romania · Română','ar-BH':'Bahrain · العربية','ar-MA':'Morocco · العربية','es-MX':'Mexico · Español','en-PK':'Pakistan · English','en-SG':'Singapore · English','de-CH':'Switzerland · Deutsch','it-IT':'Italy · Italiano','nl-NL':'Netherlands · Nederlands','pt-PT':'Portugal · Português','en-IE':'Ireland · English'};
 const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧 United Kingdom',CA:'🇨🇦 Canada',AU:'🇦🇺 Australia',AE:'🇦🇪 United Arab Emirates',SA:'🇸🇦 Saudi Arabia',DE:'🇩🇪 Germany',FR:'🇫🇷 France',BR:'🇧🇷 Brazil',MX:'🇲🇽 Mexico',ID:'🇮🇩 Indonesia',PH:'🇵🇭 Philippines',NG:'🇳🇬 Nigeria',ZA:'🇿🇦 South Africa',PK:'🇵🇰 Pakistan',BD:'🇧🇩 Bangladesh',ES:'🇪🇸 Spain',JP:'🇯🇵 Japan',CN:'🇨🇳 China',RU:'🇷🇺 Russia',TR:'🇹🇷 Türkiye',KR:'🇰🇷 South Korea',VN:'🇻🇳 Vietnam',AR:'🇦🇷 Argentina',CL:'🇨🇱 Chile',CO:'🇨🇴 Colombia',SG:'🇸🇬 Singapore',NZ:'🇳🇿 New Zealand',CH:'🇨🇭 Switzerland',MY:'🇲🇾 Malaysia',IE:'🇮🇪 Ireland',IT:'🇮🇹 Italy',NL:'🇳🇱 Netherlands',PT:'🇵🇹 Portugal',PL:'🇵🇱 Poland',SE:'🇸🇪 Sweden',NO:'🇳🇴 Norway',DK:'🇩🇰 Denmark',KE:'🇰🇪 Kenya',NP:'🇳🇵 Nepal',IL:'🇮🇱 Israel',EG:'🇪🇬 Egypt',QA:'🇶🇦 Qatar',KW:'🇰🇼 Kuwait',OM:'🇴🇲 Oman'};
-const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
+const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country &amp; format</span><select id="fc-country-select" aria-label="Choose country and format">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div></div>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'</nav>'+languageControl+'</div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
@@ -454,17 +459,25 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep regional preferences outside the global header/footer. Preserve the
-// existing selector IDs and handlers by moving these original controls into
-// a hidden staging node; the Settings panel relocates them after it is built.
+// Keep the date-format selector in a hidden compatibility node for
+// global-locale.js. Country, currency and units use their original IDs in the
+// visible Header so existing locale listeners continue to work without duplicate IDs.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
 regionalControlsSource.hidden=true;
-regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
+regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Language is the final primary-navigation control, immediately after Login.
+// Regional controls must be visible immediately after Language on every public page.
+if(primaryNav&&!activeHeader.querySelector('.fc-currency-control')){
+  const regionalMarkup=document.createElement('div');
+  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
+  const countryLabel=regionalMarkup.querySelector('.fc-country-control');
+  countryLabel?.classList.replace('fc-country-control','fc-country-format-control');
+  (activeHeader.querySelector('.fc-top-row')||primaryNav).append(...regionalMarkup.children);
+}
+// Language remains before the regional controls, immediately after Login.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
@@ -1324,40 +1337,23 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     }
   });
-  // Keep locale and measurement selectors out of the crowded primary navigation.
-  // Moving the original controls preserves their IDs, event listeners and saved preferences.
+  // Regional controls sit directly after Language in the shared Header.
+  // Their original hidden country/locale selects retain the FCLocale event contract.
   panel.append(panelHead);
-  const settingRows=[];
-  const addSettingRow=(className,controls)=>{
-    const row=document.createElement('div');
-    row.className='fc-display-setting-row '+className;
-    controls.forEach(control=>{if(control)row.append(control);});
-    if(row.children.length){panel.append(row);settingRows.push(row);}
-  };
-  const addSectionHeading=text=>{
-    const section=document.createElement('h3');
-    section.className='fc-settings-section-heading';
-    section.textContent=text;
-    panel.append(section);
-  };
-  addSectionHeading(t.region);
   const currencyControl=document.querySelector('.fc-currency-control');
-  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   const countryControl=document.querySelector('.fc-country-control');
   const formatControl=document.querySelector('.fc-format-control');
   const unitControl=document.querySelector('.fc-unit-control');
-  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  addSettingRow('fc-display-currency-row',[currencyControl]);
-  if(countryControl&&formatControl){
-    const countrySelect=countryControl.querySelector('select');
-    const localeSelect=formatControl.querySelector('select');
-    const countryFormatLabel=document.createElement('label');
-    countryFormatLabel.className='fc-country-format-control';
-    const countryFormatText=document.createElement('span');
-    countryFormatText.textContent=t.countryFormat;
-    const countryFormatSelect=document.createElement('select');
-    countryFormatSelect.id='fc-country-format-display';
-    countryFormatSelect.setAttribute('aria-label',t.countryFormat);
+  const countrySelect=countryControl?.querySelector('select');
+  const localeSelect=formatControl?.querySelector('select');
+  const countryFormatLabel=document.createElement('label');
+  countryFormatLabel.className='fc-country-format-control';
+  const countryFormatText=document.createElement('span');
+  countryFormatText.textContent=t.countryFormat;
+  const countryFormatSelect=document.createElement('select');
+  countryFormatSelect.id='fc-country-format-display';
+  countryFormatSelect.setAttribute('aria-label',t.countryFormat);
+  if(countrySelect&&localeSelect){
     const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
     Array.from(localeSelect.options).forEach(localeOption=>{
       const locale=localeOption.value;
@@ -1392,38 +1388,35 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     window.addEventListener('fc:localechange',syncCountryFormat);
     countryFormatSelect.addEventListener('change',()=>{
       const [country,locale]=countryFormatSelect.value.split('|');
-      if(window.FCLocale){
-        const preferredCurrency=window.FCLocale.getCurrency();
-        countrySelect.value=country;
-        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
-        localeSelect.value=locale;
-        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
-        window.FCLocale.setCurrency(preferredCurrency);
-      }else{
-        countrySelect.value=country;
-        localeSelect.value=locale;
-        countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
-        localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
-      }
+      const preferredCurrency=window.FCLocale?.getCurrency();
+      countrySelect.value=country;
+      localeSelect.value=locale;
+      countrySelect.dispatchEvent(new Event('change',{bubbles:true}));
+      localeSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      if(preferredCurrency)window.FCLocale?.setCurrency(preferredCurrency);
       syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
-    addSettingRow('fc-display-country-format-row',[countryFormatLabel]);
+    countrySelect.tabIndex=-1;
+    localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
     compatibilityControls.className='fc-locale-compat-controls';
     compatibilityControls.setAttribute('aria-hidden','true');
-    if(countrySelect)countrySelect.tabIndex=-1;
-    if(localeSelect)localeSelect.tabIndex=-1;
     compatibilityControls.append(countryControl,formatControl);
-    panel.appendChild(compatibilityControls);
+    regionalControlsSource.appendChild(compatibilityControls);
   }
-  addSettingRow('fc-display-units-row',[unitControl]);
-  if(settingRows.length){
-    const divider=document.createElement('div');
-    divider.className='fc-display-settings-divider';
-    divider.setAttribute('aria-hidden','true');
-    panel.append(divider);
-  }
+  if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
+  if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  const primaryNavigation=activeHeader.querySelector('#fc-primary-navigation');
+  const languageControlElement=primaryNavigation?.querySelector('.fc-language-control');
+  if(languageControlElement)languageControlElement.after(currencyControl,countryFormatLabel,unitControl);
+  else primaryNavigation?.append(currencyControl,countryFormatLabel,unitControl);
+  const addSectionHeading=text=>{
+    const section=document.createElement('h3');
+    section.className='fc-settings-section-heading';
+    section.textContent=text;
+    panel.append(section);
+  };
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
@@ -1486,13 +1479,12 @@ const mountSettingsQuickActions=()=>{
     installHelp.classList.add('fc-settings-inline-help');
     quickActions.appendChild(installHelp);
   }
-  // Keep the assistant lazy-loaded, but place its launcher inside Settings Quick Actions.
+  // Open Assistant remains a persistent on-page action, outside Settings.
   const assistantLauncher=document.getElementById('fc-ai-lazy-launch');
   if(assistantLauncher){
     assistantLauncher.textContent=copy.assistant;
     assistantLauncher.setAttribute('aria-label',copy.assistant);
-    assistantLauncher.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(assistantLauncher);
+    assistantLauncher.classList.remove('fc-settings-quick-action');
   }
   // Remove stale unlabeled controls left by older Settings panel versions.
   panel.querySelectorAll('button').forEach(button=>{

@@ -64,19 +64,23 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
-test('shared footer retains policy navigation and Sitemap; regional settings and Settings trigger stay outside chrome', () => {
+test('shared footer retains Sitemap; regional preferences follow Language in Header and Settings stays outside chrome', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(!headerMarkup.includes('fc-settings-row'), 'Regional preferences must not appear in the global header.');
-  assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must be inside the header navigation after Login.');
+  assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
+  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow the navigation as a Header control.');
+  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("(activeHeader.querySelector('.fc-top-row')||primaryNav).append(...regionalMarkup.children)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
+  assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('const activeHeader=h;'), 'Active state must target the mounted canonical header, not a replaced legacy node.');
-  assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
+  assert.ok(shell.includes('fc-regional-settings-source'), 'Original country and locale controls must remain available for locale compatibility.');
+  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'The hidden date-format selector must preserve the global locale compatibility contract without duplicate visible control IDs.');
+  assert.ok(!shell.includes("addSettingRow('fc-display-currency-row'"), 'Display currency must not be placed inside Settings & Accessibility.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('dock.appendChild(open)') && shell.includes('dock.appendChild(trigger)'), 'The single Settings trigger must be in the standalone floating dock.');
@@ -89,7 +93,7 @@ test('shared footer retains policy navigation and Sitemap; regional settings and
   assert.ok(!shell.includes('footerInner.appendChild(button)'), 'Install action must not be placed in the Footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
   assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must stay inside Settings Quick Actions.');
-  assert.ok(shell.includes('quickActions.appendChild(assistantLauncher)'), 'Open Assistant must be inside Settings Quick Actions and remain lazy-loaded.');
+  assert.ok(!shell.includes('quickActions.appendChild(assistantLauncher)'), 'Open Assistant must remain outside Settings Quick Actions.');
   assert.ok(shell.includes('document.body.appendChild(launcher)') && shell.includes("document.querySelector('#fc-ai-launch')?.click()"), 'Open Assistant must remain a live on-page launcher.');
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
@@ -175,4 +179,28 @@ test('shared footer has identical responsive sizing rules across all public page
   assert.match(css, /footer\.fc-global-footer \.fc-global-footer-inner\{[\s\S]*?width:min\(1440px,96%\)!important/);
   assert.match(css, /footer\.fc-global-footer \.fc-footer-top\{[\s\S]*?min-height:64px!important/);
   assert.match(css, /@media\(max-width:760px\)[\s\S]*?footer\.fc-global-footer \.fc-global-footer-inner\{width:92%!important/);
+});
+
+
+test('regional defaults follow the visitor browser region and preserve explicit saved choices', () => {
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.ok(locale.includes("navigator.languages?.[0]||navigator.language"), 'Browser locale must be used for first-visit regional defaults.');
+  assert.ok(locale.includes("read(COUNTRY_KEY,detectedCountry"), 'A saved country must override the detected browser country.');
+  assert.ok(locale.includes("read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency"), 'Currency must default from the selected or detected country.');
+  assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
+  assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
+});
+
+
+test('currency, country and units are mounted visibly after Language in the shared Header', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Only the date-format compatibility selector remains hidden.');
+  assert.ok(shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Visible controls are created in the required order.');
+  assert.ok(shell.includes("countryLabel?.classList.replace('fc-country-control','fc-country-format-control')"));
+  assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||primaryNav).append(...regionalMarkup.children)"), 'Regional controls must be mounted in the visible Header after Language.');
+  assert.ok(shell.includes("activeHeader.querySelector('.fc-currency-control')"), 'The mount must avoid duplicating visible controls.');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  for (const selector of ['.fc-top-row>.fc-currency-control','.fc-top-row>.fc-country-format-control','.fc-top-row>.fc-unit-control']) {
+    assert.ok(css.includes(selector), 'Missing responsive Header styling for ' + selector);
+  }
 });

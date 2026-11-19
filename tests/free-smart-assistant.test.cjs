@@ -28,3 +28,15 @@ test('assistant exposes accessible controls and safe text rendering', () => {
   assert.match(assistant, /textContent\s*=/);
   assert.match(assistant, /addEventListener\('keydown'/);
 });
+
+test('assistant quick actions include the requested seven calculator options', () => {
+  for (const label of ['Home Loan EMI', 'SIP Calculator', 'GST Calculator', 'Land Converter', 'Mortgage Calculator', 'VAT Calculator', 'Income Tax Calculator']) {
+    assert.ok(assistant.includes(label), 'Missing quick action: ' + label);
+  }
+});
+
+test('assistant directory includes international calculator pages for VAT search', () => {
+  assert.ok(assistant.includes('international\\/[^/]*calculator'));
+  assert.ok(assistant.includes('value added tax'));
+  assert.ok(assistant.includes('mortgage calculator'));
+});
