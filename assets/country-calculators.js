@@ -1,12 +1,13 @@
 (function(root){'use strict';
+function cents(n){return Math.round((n+Number.EPSILON)*100)/100;}
 function validNonNegative(value,name){const n=Number(value);if(!Number.isFinite(n)||n<0)throw new RangeError(name+' must be a non-negative number');return n;}
 function calculateGSTHST(amount,gstHstRate,provincialRate=0,mode='add'){
  const value=validNonNegative(amount,'Amount'),base=validNonNegative(gstHstRate,'GST/HST rate'),extra=validNonNegative(provincialRate,'Provincial rate');
  if(base>100||extra>100)throw new RangeError('Tax rates must not exceed 100%');
  const rate=(base+extra)/100;
- if(mode==='remove'){const net=value/(1+rate);return {net,tax:value-net,gross:value,totalRate:(base+extra)};}
+ if(mode==='remove'){const net=cents(value/(1+rate));return {net,tax:cents(value-net),gross:value,totalRate:(base+extra)};}
  if(mode!=='add')throw new RangeError('Unsupported tax mode');
- const tax=value*rate;return {net:value,tax,gross:value+tax,totalRate:base+extra};
+ const tax=cents(value*rate);return {net:value,tax,gross:cents(value+tax),totalRate:base+extra};
 }
 function calculateSDLT(price,{additionalProperty=false,nonResident=false,firstTimeBuyer=false}={}){
  const value=validNonNegative(price,'Property price');
@@ -52,7 +53,9 @@ function calculateUKTakeHome(grossAnnual,{region='england',studentLoanPlan='none
  if(studentLoanPlan!=='none'&&!Object.hasOwn(studentThresholds,studentLoanPlan))throw new RangeError('Choose a valid student loan plan');
  const studentLoan=studentLoanPlan==='none'?0:Math.max(0,gross-studentThresholds[studentLoanPlan])*0.09;
  const postgraduate=postgraduateLoan?Math.max(0,gross-21000)*0.06:0;
- return {gross,personalAllowance:allowance,taxableIncome:taxable,incomeTax,nationalInsurance,studentLoan,postgraduateLoan:postgraduate,totalDeductions:incomeTax+nationalInsurance+studentLoan+postgraduate,netAnnual:gross-incomeTax-nationalInsurance-studentLoan-postgraduate,netMonthly:(gross-incomeTax-nationalInsurance-studentLoan-postgraduate)/12,region,taxYear:'2026-27'};
+ const tax$=cents(incomeTax),ni$=cents(nationalInsurance),sl$=cents(studentLoan),pg$=cents(postgraduate);
+ const totalDeductions=cents(tax$+ni$+sl$+pg$),netAnnual=cents(gross-totalDeductions);
+ return {gross,personalAllowance:allowance,taxableIncome:taxable,incomeTax:tax$,nationalInsurance:ni$,studentLoan:sl$,postgraduateLoan:pg$,totalDeductions,netAnnual,netMonthly:cents(netAnnual/12),region,taxYear:'2026-27'};
 }
 function calculateGermanIncomeTax(taxableIncome){
  const income=Math.floor(validNonNegative(taxableIncome,'Taxable income'));
