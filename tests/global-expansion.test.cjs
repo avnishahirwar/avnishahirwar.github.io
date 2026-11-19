@@ -60,7 +60,8 @@ test('primary navigation follows category order and exposes the international hu
   const headerStart=shell.indexOf('h.innerHTML=');
   const headerEnd=shell.indexOf('const reservedHeader',headerStart);
   const headerMarkup=shell.slice(headerStart,headerEnd);
-  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must precede All Calculators.');
+  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear before Everyday.');
+  assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
@@ -72,8 +73,8 @@ test('shared footer retains Sitemap; regional preferences follow Language and Se
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
-  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow the navigation as a Header control.');
-  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("(activeHeader.querySelector('.fc-top-row')||primaryNav).append(...regionalMarkup.children)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
+  assert.ok(headerMarkup.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language selector must be inside the Header navigation after Login.');
+  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("primaryNav.append(...regionalMarkup.children)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
