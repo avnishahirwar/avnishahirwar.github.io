@@ -17,7 +17,7 @@ function calculate(input){
  let relief=0;
  if(income<=5000)relief=Math.min(taxBeforeRelief,312.89);
  else if(income<=7350)relief=Math.min(taxBeforeRelief,Math.max(0,978.62-(0.133145*income)));
- const tax=Math.max(0,taxBeforeRelief-relief);
+ const tax=Math.round(Math.max(0,taxBeforeRelief-relief)*100)/100;
  return Object.freeze({income,deductionUsed,taxBase,taxBeforeRelief,relief,tax,effectiveRate:income>0?tax/income*100:0});
 }
 root.FCBrazilIRPF2026=Object.freeze({calculate,monthlyBrackets:BRACKETS,simplifiedMonthlyDeduction:SIMPLIFIED_MONTHLY_DEDUCTION});
