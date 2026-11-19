@@ -315,3 +315,11 @@ test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are loca
     if (locale === 'ur') assert.match(html, /dir="rtl"/);
   }
 });
+
+
+test('Each staged locale homepage links to its localized Unit Converter', () => {
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    assert.ok(home.includes('/' + locale + '/calculators/unit-converter.html'), locale + ' homepage must expose its Unit Converter');
+  }
+});
