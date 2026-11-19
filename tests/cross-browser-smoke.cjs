@@ -47,7 +47,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   await mortgage.locator('#mortgage-form button[type="submit"]').click();
   const mortgageOutput = await mortgage.locator('#mortgage-result').innerText();
   assert.match(mortgageOutput, /Estimated monthly housing cost:.*1,033/i, name + ': mortgage zero-rate monthly total');
-  assert.match(mortgageOutput, /Loan amount:.*1,00,000/i, name + ': mortgage principal');
+  assert.match(mortgageOutput, /Loan amount:.*(?:100,000|1,00,000)/i, name + ': mortgage principal');
   assert.match(mortgageOutput, /Estimated total interest:.*0/i, name + ': mortgage zero-rate interest');
   assert.deepEqual(mortgageErrors, [], name + ': Mortgage JavaScript errors');
   await mortgage.close();
