@@ -2220,3 +2220,17 @@ test('homepage critical CSS keeps the shared regional Header readable before def
   assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
   assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
 });
+
+
+test('Language, currency, country/format and unit dropdowns use consistent sizing on desktop and mobile', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  for (const selector of [
+    '.fc-top-row>.fc-language-control select',
+    '.fc-global-links>.fc-currency-control select',
+    '.fc-global-links>.fc-country-format-control select',
+    '.fc-global-links>.fc-unit-control select'
+  ]) assert.ok(css.includes(selector), 'Missing shared header dropdown selector: ' + selector);
+  assert.match(css, /width:180px!important;[\s\S]*?height:44px!important/);
+  assert.match(css, /body>\.fc-display-panel \.fc-display-setting-row select,[\s\S]*?width:100%!important;[\s\S]*?height:50px!important/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?\.fc-global-links>\.fc-unit-control select[\s\S]*?width:100%!important[\s\S]*?height:48px!important/);
+});
