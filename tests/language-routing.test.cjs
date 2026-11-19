@@ -284,3 +284,34 @@ test('five staged language editions have localized homepages and working basic c
     for (const anchor of ['business','finance','tax','everyday']) assert.ok(home.includes('id="' + anchor + '"'), locale + ' homepage missing ' + anchor + ' navigation target');
   }
 });
+
+
+test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are localized and functional', () => {
+  const phrases = {
+    zh: ['在线单位换算器', '换算单位', '长度', '温度'],
+    ur: ['آن لائن اکائیوں کا کنورٹر', 'اکائیاں تبدیل کریں', 'لمبائی', 'درجہ حرارت'],
+    tr: ['Çevrimiçi Birim Dönüştürücü', 'Birimleri dönüştür', 'Uzunluk', 'Sıcaklık'],
+    it: ['Convertitore di unità online', 'Converti unità', 'Lunghezza', 'Temperatura'],
+    ko: ['온라인 단위 변환기', '단위 변환', '길이', '온도']
+  };
+  for (const [locale, expected] of Object.entries(phrases)) {
+    const file = path.join(__dirname, '..', locale, 'calculators', 'unit-converter.html');
+    assert.ok(fs.existsSync(file), 'Missing ' + locale + ' Unit Converter');
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.match(html, /name="robots" content="noindex,follow"/);
+    assert.ok(html.includes('https://friendlycalculator.in/' + locale + '/calculators/unit-converter.html'));
+    assert.match(html, /@type":"WebApplication"/);
+    assert.match(html, /id="category"/);
+    assert.match(html, /id="amount"/);
+    assert.match(html, /id="from"/);
+    assert.match(html, /id="to"/);
+    assert.match(html, /id="convert"/);
+    assert.match(html, /id="swap"/);
+    assert.match(html, /id="result"/);
+    assert.match(html, /site-shell\.js/);
+    for (const phrase of expected) assert.ok(html.includes(phrase), 'Missing localized Unit Converter phrase for ' + locale + ': ' + phrase);
+    assert.ok(!html.includes('${JSON.stringify'), 'Unresolved template marker in ' + locale);
+    if (locale === 'ur') assert.match(html, /dir="rtl"/);
+  }
+});
