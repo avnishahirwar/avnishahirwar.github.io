@@ -1016,3 +1016,85 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
     gap:8px 18px!important;
   }
 }
+
+
+/* Homepage header uses the same navigation classes but a legacy wrapper.
+   Keep its mobile type readable and let links wrap instead of shrinking. */
+@media(max-width:760px){
+  .fc-global-nav{
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    gap:9px!important;
+    width:92%!important;
+    min-width:0!important;
+    padding:10px 0!important;
+  }
+  .fc-global-nav>.fc-global-brand{
+    display:flex!important;
+    align-items:center!important;
+    width:100%!important;
+    min-width:0!important;
+    font-size:16px!important;
+    line-height:1.3!important;
+    white-space:normal!important;
+  }
+  .fc-global-nav>nav.fc-global-links{
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    flex-wrap:wrap!important;
+    gap:5px 13px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:8px 0 2px!important;
+    border-top:1px solid #34475d!important;
+    white-space:normal!important;
+  }
+  .fc-global-nav>nav.fc-global-links>a{
+    display:inline-flex!important;
+    align-items:center!important;
+    flex:0 0 auto!important;
+    min-height:36px!important;
+    margin:0!important;
+    padding:6px 0!important;
+    font-size:14px!important;
+    line-height:1.35!important;
+    white-space:nowrap!important;
+  }
+  .fc-global-nav>nav.fc-global-links>.fc-login-link{
+    display:inline-flex!important;
+    align-items:center!important;
+    min-height:36px!important;
+    padding:6px 0!important;
+    background:transparent!important;
+    border:0!important;
+    color:#e3eaf0!important;
+    font-size:14px!important;
+  }
+  .fc-global-nav>nav.fc-global-links>.fc-language-control{
+    display:flex!important;
+    flex:1 0 100%!important;
+    align-items:center!important;
+    gap:10px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:8px 0 0!important;
+    border:0!important;
+    border-top:1px solid #34475d!important;
+    font-size:14px!important;
+  }
+  .fc-global-nav>nav.fc-global-links>.fc-language-control select{
+    box-sizing:border-box!important;
+    flex:1 1 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    min-height:42px!important;
+    font-size:16px!important;
+  }
+}
