@@ -55,7 +55,7 @@ if(!window.__fcGtmContainerLoaded){
   else window.addEventListener('load',schedule,{once:true});
 }
 
-/* The shared PWA install action is mounted once inside the global Footer by site-shell.js. */
+/* The shared PWA install action is moved into Settings Quick Actions by site-shell.js. */
 
 /* Keep the homepage fallback consistent with the shared two-mode Settings panel. */
 if(document.body&&!document.getElementById('fc-display-settings')){
@@ -180,10 +180,17 @@ if (document.body && !document.querySelector('.fc-global-footer')) {
   document.body.appendChild(footer);
 }
 
-// The homepage fallback follows the same rule: Settings is placed in the footer.
+// The homepage fallback follows the shared rule: Settings lives in a standalone page-level dock.
 const homepageSettingsTrigger=document.getElementById('fc-display-settings');
-const homepageFooterNav=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
-const homepageFooter=document.querySelector('footer.fc-global-footer');
-if(homepageSettingsTrigger&&homepageFooterNav)homepageFooterNav.appendChild(homepageSettingsTrigger);
-else if(homepageSettingsTrigger&&homepageFooter)homepageFooter.appendChild(homepageSettingsTrigger);
+if(homepageSettingsTrigger){
+  let homepageToolsDock=document.getElementById('fc-floating-tools');
+  if(!homepageToolsDock){
+    homepageToolsDock=document.createElement('div');
+    homepageToolsDock.id='fc-floating-tools';
+    homepageToolsDock.setAttribute('aria-label','Friendly Calculator quick settings');
+    document.body.appendChild(homepageToolsDock);
+  }
+  if(homepageSettingsTrigger.parentElement!==homepageToolsDock)homepageToolsDock.appendChild(homepageSettingsTrigger);
+  homepageSettingsTrigger.classList.add('fc-settings-hub-trigger');
+}
 })();
