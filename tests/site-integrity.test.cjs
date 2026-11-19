@@ -182,7 +182,7 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
-test('shared header and footer retain navigation order while regional preferences stay outside both', () => {
+test('shared Header follows the same navigation and regional-control order on every page', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   const expectedHeader = [
@@ -207,12 +207,13 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow navigation in the shared Header.');
+  assert.ok(headerMarkup.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must be the first control after Login inside the shared navigation.');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
-  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must appear before the plain All Calculators link.');
+  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear after Tax and before Everyday.');
+  assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
   assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
   assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Only date-format compatibility remains hidden; currency, country and units are visible in Header.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('primaryNav.append(...regionalMarkup.children)'), 'Currency, country/format and units must follow Language inside the shared Header navigation.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
