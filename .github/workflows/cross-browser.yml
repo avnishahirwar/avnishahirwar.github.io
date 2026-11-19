@@ -51,4 +51,5 @@ jobs:
       - name: Run cross-browser smoke tests against production
         env:
           FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
