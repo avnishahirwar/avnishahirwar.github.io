@@ -222,3 +222,23 @@ test('language selector is synchronized with the canonical 50-language catalogue
   assert.equal((directory.match(/class="status-soon"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'planned').length);
   for (const locale of catalogue.locales) assert.ok(directory.includes(locale.nativeName), 'Language directory is missing ' + locale.code);
 });
+
+
+test('first translation batch has complete shared navigation and footer dictionaries but remains unpublished until routes are ready', () => {
+  const match = shell.match(/const chrome=\{([\\s\\S]*?)\n\};\nconst nav=/);
+  assert.ok(match, 'Expected shared chrome dictionaries');
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    const entry = match[1].match(new RegExp('(?:^|\\n)' + locale + ':\\{([^}]+)\\}'));
+    assert.ok(entry, 'Missing shared navigation translation for ' + locale);
+    for (const key of ['home','login','all','search','finance','tax','business','global','everyday','blog','embed','forBusiness','api','plans','about','contact','admin','language','choose','change','footer']) {
+      assert.ok(entry[1].includes(key + ':'), 'Missing ' + key + ' for ' + locale);
+    }
+    assert.equal((entry[1].match(/,/g) || []).length > 15, true);
+    assert.match(entry[1], /footer:\[/);
+  }
+  const catalogue = require('../config/language-catalogue.json');
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned',
+      locale + ' must remain disabled until its localized routes are published and reviewed');
+  }
+});
