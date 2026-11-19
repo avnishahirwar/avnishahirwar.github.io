@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 27,
+    "officialCountryGuides": 30,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 141
+    "pendingVerification": 138
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -556,6 +556,82 @@
           "https://www.bank-of-algeria.dz/stoodroa/2021/03/reglement201401.pdf"
         ]
       ]
+    },
+    "AD": {
+      "summary": "Andorra has a Government-backed first-home ownership programme for eligible residents, alongside ordinary bank mortgage products. Under the programme, the Government guarantees the mortgage during the initial seven years and pays the interest during that period; the beneficiary's payment is directed to principal. From year eight, the published rate is variable at 12-month Euribor plus a maximum 0.50%. The programme is conditional and should not be confused with standard market mortgages.",
+      "rules": [
+        "The Government's first-home programme is for habitual and permanent residence. Published eligibility includes at least seven years of legal, effective and permanent residence, no home owned in Andorra or abroad, assets below 30% of the home's price and a maximum purchase price of €600,000. Confirm the current call and full eligibility conditions before applying.",
+        "For approved programme loans, the Government guarantees 100% of the loan during the first seven years and pays interest during that period; the beneficiary's instalment is used to repay principal.",
+        "The Government's current programme page describes a monthly instalment equivalent to 33% of beneficiary income, a 12-month Euribor + 0.50% maximum variable rate from year eight, and a 20-to-50-year repayment term, subject to the borrower not exceeding age 80 at maturity.",
+        "Programme approval requires a positive bank solvency assessment and subsequent review by the National Housing Institute and relevant public authorities. Government guarantee is not automatic mortgage approval.",
+        "The calculator does not test Andorran programme eligibility, guarantee availability, tax or notarial costs, foreign-purchase restrictions, or individual bank underwriting. Standard bank mortgage conditions may differ."
+      ],
+      "sources": [
+        [
+          "Government of Andorra: First-home ownership access programme",
+          "https://www.govern.ad/es/tematiques/habitatge/programa-acces-primer-habitatge"
+        ],
+        [
+          "Government of Andorra: Programme eligibility and current operating details",
+          "https://www.govern.ad/ca/w/sis-noves-families-es-beneficien-del-programa-d-acces-al-primer-habitatge-de-propietat"
+        ],
+        [
+          "Andorran Financial Authority: Specialised credit entities and mortgage-credit activity under Law 7/2013",
+          "https://www.afa.ad/en/entitats-supervisades/entitats-financeres/entitats-financeres-no-bancaries-de-credit-especialitzat/activitats-i-serveis"
+        ]
+      ]
+    },
+    "AO": {
+      "summary": "Angola's Banco Nacional de Angola (BNA) Notice No. 09/2024 establishes a special housing-credit regime. Banco BIC's published description of the BNA scheme states a 7% annual nominal rate for eligible housing loans up to Kz 150 million and restricts the first modality to homes built after 2012. These are special-scheme conditions, not universal terms for all Angolan mortgages; the lender must assess repayment capacity and property risk.",
+      "rules": [
+        "Banco BIC describes its housing-credit product under BNA Notice No. 09/2024 as a special scheme for eligible residential properties built after 2012, with a 7% annual nominal rate for loans up to Kz 150 million. Confirm current availability, eligible property types and the applicable legal text with the bank before relying on these terms.",
+        "The special scheme is distinct from ordinary bank mortgage products. Do not assume the 7% rate, financing ceiling or eligibility applies to every bank, every property or every borrower.",
+        "BNA scheme information requires a careful assessment of the customer's financial capacity and property/project risks; banks may apply internal credit-risk rules and request valuation, legal title and supporting documents.",
+        "Budget separately for property valuation, notarial and registration formalities, insurance and applicable taxes or commissions; these may not be included in the repayment estimate.",
+        "This calculator does not determine eligibility for the BNA special scheme, validate Angolan land/property registration, calculate local taxes or fees, or predict lender approval."
+      ],
+      "sources": [
+        [
+          "Banco BIC: Special housing and construction credit regime under BNA Notice No. 09/2024",
+          "https://www.bancobic.ao/inicio/particulares/credito/credito/regime-especial-de-cr-dito-habita-o-e-constru-o"
+        ],
+        [
+          "Banco Nacional de Angola: Official website and banking regulation portal",
+          "https://www.bna.ao/"
+        ],
+        [
+          "RegAlert: Full text summary of BNA Notice No. 09/2024 (secondary legal text reference)",
+          "https://regalert.today/document/notice-no-09-2024-establishing-the-special-credit-scheme-for-housing-and-real-es-135ad8dd-d8d6-45a6-a984-36a83aef7648"
+        ]
+      ]
+    },
+    "AG": {
+      "summary": "Antigua and Barbuda mortgage terms are lender- and product-specific. Eastern Caribbean Amalgamated Bank (ECAB) publicly describes mortgage products with financing up to 90% and terms up to 30 years; its construction product may finance construction costs where land is already owned. These are ECAB product terms, not a national statutory LTV or guaranteed borrower entitlement. The Eastern Caribbean Home Mortgage Bank (ECHMB) supports regulated primary lenders and does not lend directly to individual homebuyers.",
+      "rules": [
+        "ECAB's published mortgage product describes financing up to 90% and a maximum term of 30 years. Higher financing may depend on lender criteria and mortgage indemnity insurance; the published terms are specific to ECAB and can change.",
+        "ECAB describes 100% financing of construction costs where the applicant already owns the land, subject to its lending criteria and property/security requirements. This is not a universal national rule.",
+        "ECAB's application guidance identifies income/employment evidence, bank references, property valuation and assigned property and life insurance as possible requirements. Confirm the current checklist, interest rate, fees and early-repayment conditions directly with the lender.",
+        "ECHMB provides mortgage funding to regulated primary lenders in the Eastern Caribbean Currency Union; it states that homebuyers should apply to a regulated primary lender, not directly to ECHMB.",
+        "The ECCB Office of Financial Conduct supervises market conduct for licensed financial institutions in the ECCU and provides a consumer complaint process. This calculator does not establish lender eligibility, local land-title status, legal fees, insurance costs or property taxes."
+      ],
+      "sources": [
+        [
+          "Eastern Caribbean Amalgamated Bank: Mortgage loans",
+          "https://www.ecabank.com/home/index.php?id=73"
+        ],
+        [
+          "Eastern Caribbean Home Mortgage Bank: Mortgage credit facility and approved primary lenders",
+          "https://www.echmb.com/details.php?id=2"
+        ],
+        [
+          "Eastern Caribbean Home Mortgage Bank: Frequently asked questions — ECHMB does not lend directly to individuals",
+          "https://www.echmb.com/faq.php"
+        ],
+        [
+          "ECCB Office of Financial Conduct: Consumer conduct supervision and complaints",
+          "https://www.ofcweb.eccb-centralbank.org/"
+        ]
+      ]
     }
   },
   "countries": {
@@ -573,15 +649,15 @@
     },
     "AD": {
       "countryName": "Andorra",
-      "status": "pending"
+      "status": "verified"
     },
     "AO": {
       "countryName": "Angola",
-      "status": "pending"
+      "status": "verified"
     },
     "AG": {
       "countryName": "Antigua and Barbuda",
-      "status": "pending"
+      "status": "verified"
     },
     "AR": {
       "countryName": "Argentina",
