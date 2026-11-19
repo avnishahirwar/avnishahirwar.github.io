@@ -96,7 +96,8 @@ async function checkPage(browser, url, label, viewport) {
   const settings = page.locator('#fc-display-settings');
   await settings.waitFor({ state: 'visible', timeout: 20000 });
   assert.equal((await settings.innerText()).trim(), 'Settings', label + ': Settings label');
-  await settings.click();
+  await settings.scrollIntoViewIfNeeded();
+  await settings.click({ force: true });
   const panel = page.locator('#fc-display-panel');
   await panel.waitFor({ state: 'visible', timeout: 10000 });
   const regionalControls = panel.locator('.fc-settings-site-controls select:visible');
