@@ -264,7 +264,7 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
 
 test('About page catalogue matches every canonical published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (' + expectedCoreCalculatorCount + ' tools)'));
+  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
   assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(m => m[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
