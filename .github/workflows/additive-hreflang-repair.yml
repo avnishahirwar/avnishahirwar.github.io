@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - seo/additive-hreflang-reciprocals-2026-11-16
+      - i18n/gujarati-kannada-20261119
 
 permissions:
   contents: write
