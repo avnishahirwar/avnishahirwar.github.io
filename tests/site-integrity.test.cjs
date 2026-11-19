@@ -855,7 +855,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
   const cards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculator(?:s)?<\/span>/g)];
-  const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section(?:\\s|")|<footer|<\/main>)/g)];
+  const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section(?: |")|<footer|<\/main>)/g)];
   assert.equal(cards.length, 20);
   assert.deepEqual(cards.map(m => m[1]), sections.map(m => m[1]));
   const counts = new Map();
