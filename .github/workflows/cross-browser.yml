@@ -1,0 +1,43 @@
+name: Cross-browser compatibility smoke tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/cross-browser.yml"
+      - "tests/cross-browser-smoke.cjs"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "assets/site-chrome.js"
+      - "assets/site-chrome.css"
+      - "index.html"
+      - "calculators/simple-interest-calculator.html"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-matrix:
+    name: "${{ matrix.browser }} desktop and mobile smoke tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install --no-save playwright
+          npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run cross-browser smoke tests against production
+        env:
+          FC_SITE_ORIGIN: https://friendlycalculator.in
+        run: node tests/cross-browser-smoke.cjs
