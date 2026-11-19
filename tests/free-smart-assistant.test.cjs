@@ -36,7 +36,7 @@ test('assistant quick actions include the requested seven calculator options', (
 });
 
 test('assistant directory includes international calculator pages for VAT search', () => {
-  assert.match(assistant, /\\/international\\/\[\^/\]\*calculator/);
-  assert.match(assistant, /value added tax/);
-  assert.match(assistant, /mortgage calculator/);
+  assert.ok(assistant.includes('\\\\/international\\\\/[^/]*calculator'));
+  assert.ok(assistant.includes('value added tax'));
+  assert.ok(assistant.includes('mortgage calculator'));
 });
