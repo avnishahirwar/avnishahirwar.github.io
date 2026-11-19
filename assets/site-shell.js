@@ -464,9 +464,8 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep the date-format selector in a hidden compatibility node for
-// global-locale.js. Currency, country/format and units retain their original IDs
-// and are mounted in Settings so existing locale listeners continue to work.
+// Keep legacy country/date selectors available to FCLocale while promoting the
+// visible currency, combined country/format and unit controls into the shared Header.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
@@ -474,14 +473,15 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Keep regional preference controls out of the Header; Settings mounts them below.
-if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
+// Preserve original selector IDs for the locale engine; never create duplicate controls.
+if(regionalControlsSource){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
-  // Keep regional preferences out of the Header; Settings owns these controls.
+  if(!document.querySelector('.fc-currency-control'))regionalMarkup.insertAdjacentHTML('beforeend',currencyControl);
+  if(!document.querySelector('.fc-country-control'))regionalMarkup.insertAdjacentHTML('beforeend',countryControl);
+  if(!document.querySelector('.fc-unit-control'))regionalMarkup.insertAdjacentHTML('beforeend',unitControl);
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language remains the final Header control after Login; regional preferences live in Settings.
+// Language remains first; regional selectors follow it in the shared Header.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू'};
   const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'मेनू बंद करा'};
@@ -1352,8 +1352,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     }
   });
-  // Regional controls are staged in a hidden compatibility node for FCLocale.
-  // The visible currency, country/format and units controls are mounted in Settings.
+  // Keep original country/date selectors hidden for FCLocale; show combined controls in Header.
   panel.append(panelHead);
   const currencyControl=document.querySelector('.fc-currency-control');
   const countryControl=document.querySelector('.fc-country-control');
@@ -1361,14 +1360,15 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const unitControl=document.querySelector('.fc-unit-control');
   const countrySelect=countryControl?.querySelector('select');
   const localeSelect=formatControl?.querySelector('select');
-  const countryFormatLabel=document.createElement('label');
+  const countryFormatLabel=activeHeader.querySelector('.fc-country-format-control')||document.createElement('label');
   countryFormatLabel.className='fc-country-format-control';
-  const countryFormatText=document.createElement('span');
+  const countryFormatText=countryFormatLabel.querySelector('span')||document.createElement('span');
   countryFormatText.textContent=t.countryFormat;
-  const countryFormatSelect=document.createElement('select');
+  const countryFormatSelect=countryFormatLabel.querySelector('select')||document.createElement('select');
   countryFormatSelect.id='fc-country-format-display';
   countryFormatSelect.setAttribute('aria-label',t.countryFormat);
   if(countrySelect&&localeSelect){
+    countryFormatSelect.replaceChildren();
     const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
     Array.from(localeSelect.options).forEach(localeOption=>{
       const locale=localeOption.value;
@@ -1422,8 +1422,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  // Language remains in the Header. Currency, country/format and units are
-  // displayed only inside Settings & Accessibility below.
+  // Place all regional controls directly after the Language selector.
+  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1435,7 +1435,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   addSectionHeading(t.siteSettings);
   const siteSettingsControls=document.createElement('div');
   siteSettingsControls.className='fc-settings-site-controls';
-  const mirrorSiteControl=source=>{
+  const mirrorSiteControl=(source,target=siteSettingsControls)=>{
     if(!source)return;
     const mirror=source.cloneNode(true);
     const sourceSelect=source.querySelector('select');
@@ -1451,15 +1451,17 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       sourceSelect.dispatchEvent(new Event('change',{bubbles:true}));
       sync();
     });
-    siteSettingsControls.appendChild(mirror);
+    target.appendChild(mirror);
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
-  mirrorSiteControl(headerLanguageControl);
+  mirrorSiteControl(headerLanguageControl,siteSettingsControls);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
   const regionalSettingsControls=document.createElement('div');
   regionalSettingsControls.className='fc-settings-site-controls';
-  regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl);
+  mirrorSiteControl(currencyControl,regionalSettingsControls);
+  mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
+  mirrorSiteControl(unitControl,regionalSettingsControls);
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
