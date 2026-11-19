@@ -34,3 +34,10 @@ https://friendly-calculator.pages.dev/*
 
 https://:version.friendly-calculator.pages.dev/*
   X-Robots-Tag: noindex
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+/calculator/admin.html
+  X-Robots-Tag: noindex, nofollow
+/tests/*
+  X-Robots-Tag: noindex, nofollow
