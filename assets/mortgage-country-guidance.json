@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 18,
+    "officialCountryGuides": 21,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 150
+    "pendingVerification": 147
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -363,6 +363,70 @@
           "https://www.bsp.gov.ph/Regulations/MORB/2023_MORB/2023_MORB%20P3/2023_Part%20III_01%20Loans%20and%20Credits.pdf"
         ]
       ]
+    },
+    "CN": {
+      "summary": "China's National Financial Regulatory Administration and People's Bank of China issued the 2026 trial Measures for Administration of Individual Housing Loans. They require lender assessment of identity, creditworthiness, repayment capacity, down-payment ability and acceptable security. The maximum loan term is 40 years; minimum down-payment policy is set by the authorities and lenders may set higher levels based on local market, project and borrower risk.",
+      "rules": [
+        "Under the 2026 trial measures, eligible borrowers must have legal identification, good credit, willingness and ability to repay, capacity to pay the down payment and acceptable collateral.",
+        "The minimum down-payment ratio is determined by the People's Bank of China and the National Financial Regulatory Administration; lenders may set the actual ratio based on local property-market conditions, project characteristics, credit and repayment capacity. This page does not assume one national percentage.",
+        "The maximum individual housing-loan term is 40 years. Loans with a term over one year are repaid monthly under the trial measures.",
+        "Mortgage rates are agreed by borrower and lender subject to applicable national rules and self-regulatory requirements; lenders may use differentiated risk-based pricing.",
+        "The calculator does not include Chinese deed tax, VAT, personal income tax treatment, local purchase restrictions, provident-fund loan eligibility or bank-specific underwriting."
+      ],
+      "sources": [
+        [
+          "NFRA and People's Bank of China: Trial Measures for Administration of Individual Housing Loans (28 August 2026)",
+          "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1270028&generaltype=1"
+        ],
+        [
+          "NFRA: Trial Measures — borrower conditions and down-payment policy",
+          "https://www.nfra.gov.cn/cn/view/pages/governmentDetail.html?docId=1270028&itemId=861"
+        ]
+      ]
+    },
+    "EG": {
+      "summary": "Egypt's mortgage-finance framework is supervised by the Financial Regulatory Authority (FRA) under Mortgage Finance Law No. 148 of 2001, as amended. The Egyptian Mortgage Federation's consumer FAQ describes residential finance up to 90% of appraised/agreed value and monthly-installment-to-income thresholds that vary by borrower category; these are framework/product guidance and must be confirmed with the licensed financier and current programme terms.",
+      "rules": [
+        "The Egyptian Mortgage Federation FAQ states a maximum residential mortgage-finance ratio of 90% of property value, based on the lower of the appraisal value or agreed sale price. This is federation consumer guidance, not a guarantee that every lender will offer 90%.",
+        "The same FAQ describes monthly instalment limits of 35% of monthly income for low-income borrowers and 40% for specified social-housing and other borrowers. Confirm the current applicable programme, income definition and lender underwriting before relying on these figures.",
+        "The FAQ describes mortgage finance terms that may extend to 20 years or more, with certain low-income housing programmes extending up to 30 years subject to contract and programme rules.",
+        "Mortgage finance may involve administrative, application-study, valuation, insurance and guarantee costs. The calculator does not estimate Egyptian stamp/registration costs, subsidy eligibility, currency/inflation effects or lender-specific fees.",
+        "The FRA identifies Mortgage Finance Law No. 148 of 2001 as part of the laws it supervises. Use a licensed mortgage-finance provider and check current FRA rules."
+      ],
+      "sources": [
+        [
+          "Egyptian Mortgage Federation: Mortgage-finance consumer FAQ",
+          "https://www.emfederation.com/en/faq.html"
+        ],
+        [
+          "Egyptian Financial Regulatory Authority: About FRA and laws under its supervision",
+          "https://fra.gov.eg/en/%D8%A7%D9%84%D8%AA%D8%B9%D8%B1%D9%8A%D9%81-%D8%A8%D8%A7%D9%84%D9%87%D9%8A%D8%A6%D8%A9/"
+        ]
+      ]
+    },
+    "NG": {
+      "summary": "Nigeria's National Housing Fund (NHF) is a specific government-backed housing-finance scheme administered through accredited mortgage loan originators; its eligibility rules should not be confused with the terms of every commercial mortgage. The Federal Mortgage Bank of Nigeria's published conditions require NHF contributions, documented regular income and residential-purpose use, with the property serving as security.",
+      "rules": [
+        "For the NHF scheme, FMBN's published conditions say applicants must be Nigerian and at least 18 years old, have contributed to the National Housing Fund for at least six months, and show a regular income flow sufficient to support repayment.",
+        "NHF financing is for building, purchasing or renovating residential accommodation; applicants apply through an accredited mortgage loan originator, not directly to FMBN.",
+        "The property is used as security and must comply with planning requirements, have adequate value and be insured against hazards.",
+        "FHA Mortgage Bank's published NHF product information describes a maximum repayment period of 30 years and an affordability test using about one-third of applicant income. These are scheme/product terms and must be checked against the current offer and eligibility rules.",
+        "Do not apply the NHF terms as universal limits for all Nigerian mortgages. The calculator does not determine NHF contribution history, scheme allocation, title validity, fees, insurance, state registration charges or lender-specific credit approval."
+      ],
+      "sources": [
+        [
+          "Federal Mortgage Bank of Nigeria: Conditions for NHF Loan (official PDF)",
+          "https://fmbn.gov.ng/documents/nhf_conditions.pdf"
+        ],
+        [
+          "FHA Mortgage Bank: NHF loan product and eligibility",
+          "https://fhamortgage.gov.ng/products/nhf"
+        ],
+        [
+          "Nigeria Mortgage Refinance Company: Uniform Underwriting Standards overview",
+          "https://nmrc.com.ng/understanding-nmrcs-uniform-underwriting-standards/"
+        ]
+      ]
     }
   },
   "countries": {
@@ -508,7 +572,7 @@
     },
     "CN": {
       "countryName": "China",
-      "status": "pending"
+      "status": "verified"
     },
     "CO": {
       "countryName": "Colombia",
@@ -572,7 +636,7 @@
     },
     "EG": {
       "countryName": "Egypt",
-      "status": "pending"
+      "status": "verified"
     },
     "SV": {
       "countryName": "El Salvador",
@@ -868,7 +932,7 @@
     },
     "NG": {
       "countryName": "Nigeria",
-      "status": "pending"
+      "status": "verified"
     },
     "KP": {
       "countryName": "North Korea",
