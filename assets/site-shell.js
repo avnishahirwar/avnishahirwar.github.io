@@ -1249,6 +1249,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     ru:{open:'Настройки',title:'Настройки и доступность',region:'Региональные настройки',accessibility:'Доступность',quick:'Быстрые действия',currency:'Валюта отображения',countryFormat:'Страна и формат',units:'Единицы',normalMode:'Обычный режим',theme:'Тёмная тема',smaller:'A−',larger:'A+',close:'Закрыть',themeOn:'Тёмная тема включена',themeOff:'Тёмная тема выключена',text:'Размер текста'}
   };
   const t=labels[lang]||labels.en;
+  t.siteSettings=({hi:'साइट सेटिंग्स',es:'Ajustes del sitio',fr:'Paramètres du site',de:'Website-Einstellungen',pt:'Configurações do site',ar:'إعدادات الموقع',id:'Pengaturan situs',bn:'সাইট সেটিংস',ta:'தள அமைப்புகள்',ja:'サイト設定',ru:'Настройки сайта'}[lang]||'Site Settings');
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
   const theme=read('fc-display-theme','');
@@ -1417,6 +1418,32 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     section.textContent=text;
     panel.append(section);
   };
+  // Mirror the visible Header preferences inside Settings so visitors can
+  // manage the same site-wide choices from either location.
+  addSectionHeading(t.siteSettings);
+  const siteSettingsControls=document.createElement('div');
+  siteSettingsControls.className='fc-settings-site-controls';
+  const mirrorSiteControl=source=>{
+    if(!source)return;
+    const mirror=source.cloneNode(true);
+    const sourceSelect=source.querySelector('select');
+    const mirrorSelect=mirror.querySelector('select');
+    if(!sourceSelect||!mirrorSelect)return;
+    mirrorSelect.removeAttribute('id');
+    mirrorSelect.value=sourceSelect.value;
+    const sync=()=>{mirrorSelect.value=sourceSelect.value;};
+    sourceSelect.addEventListener('change',sync);
+    window.addEventListener('fc:localechange',sync);
+    mirrorSelect.addEventListener('change',()=>{
+      sourceSelect.value=mirrorSelect.value;
+      sourceSelect.dispatchEvent(new Event('change',{bubbles:true}));
+      sync();
+    });
+    siteSettingsControls.appendChild(mirror);
+  };
+  const headerLanguageControl=primaryNavigation?.querySelector('.fc-language-control');
+  [headerLanguageControl,currencyControl,countryFormatLabel,unitControl].forEach(mirrorSiteControl);
+  panel.append(siteSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
@@ -1426,10 +1453,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   addSectionHeading(t.quick);
   panel.append(status,close);
 
-  // Keep the standalone Settings trigger in the page-level dock, outside shared Header and Footer.
-  const dock=getFloatingToolsDock();
-  if(dock)dock.appendChild(open);
-  else document.body.appendChild(open);
+  // The trigger is mounted in the shared Footer after the Footer is ready.
+  document.body.appendChild(open);
   document.body.append(backdrop,panel);
   applyTheme(initialTheme);
   document.documentElement.removeAttribute('data-fc-text-size');
@@ -1496,12 +1521,14 @@ const mountSettingsQuickActions=()=>{
   const insertBefore=status||close;
   if(insertBefore)panel.insertBefore(quickActions,insertBefore);
   else panel.appendChild(quickActions);
-  // Keep the single Settings trigger in the page-level floating dock, never in Header or Footer.
-  const dock=getFloatingToolsDock();
-  if(dock&&trigger.parentElement!==dock)dock.appendChild(trigger);
+  // Place Settings as the final Footer navigation item, matching every other link.
+  const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
+  if(footerNavigation&&trigger.parentElement!==footerNavigation)footerNavigation.appendChild(trigger);
+  else if(!footerNavigation&&trigger.parentElement!==document.body)document.body.appendChild(trigger);
+  document.getElementById('fc-floating-tools')?.remove();
   trigger.textContent='⚙ '+(language==='hi'?'सेटिंग्स':language==='es'?'Ajustes':language==='fr'?'Paramètres':language==='de'?'Einstellungen':language==='ja'?'設定':language==='ru'?'Настройки':'Settings');
   trigger.setAttribute('aria-label',panel.getAttribute('aria-label')||'Settings & Accessibility');
-  trigger.classList.add('fc-settings-hub-trigger');
+  trigger.classList.add('fc-settings-hub-trigger','fc-footer-settings-link');
   document.getElementById('fc-settings-hub')?.remove();
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSettingsQuickActions,{once:true});
