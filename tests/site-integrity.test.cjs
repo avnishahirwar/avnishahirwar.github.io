@@ -2034,7 +2034,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /src="\/assets\/site-shell\.js" defer/);
 });
 
-test('Settings trigger is in the shared footer; Language stays in the header and Accessibility has two modes', () => {
+test('Settings trigger is in a standalone floating dock; Language stays in the header and Accessibility has two modes', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
@@ -2051,14 +2051,15 @@ test('Settings trigger is in the shared footer; Language stays in the header and
   assert.ok(shell.includes("+languageControl+'</nav>"), 'Language must remain in the shared header after Login.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
-  assert.ok(shell.includes("footerNav.appendChild(open)") && shell.includes("footerNav.appendChild(trigger)"), 'The Settings trigger must be inserted into the shared footer, not the floating dock.');
-  assert.ok(!shell.includes("dock.appendChild(open)") && !shell.includes("dock.appendChild(trigger)"), 'Settings must not be mounted in the floating tools dock.');
+  assert.ok(shell.includes("dock.appendChild(open)") && shell.includes("dock.appendChild(trigger)"), 'The Settings trigger must be inserted into the standalone floating tools dock.');
+  assert.ok(!shell.includes("footerNav.appendChild(open)") && !shell.includes("footerNav.appendChild(trigger)"), 'Settings must stay outside the shared footer.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
   assert.ok(shell.includes("collectLinks(oldFooter);oldFooter.remove();"), 'Existing footer links must be preserved when duplicate legacy footers are consolidated.');
   assert.ok(shell.includes("document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>"), 'Only one shared footer may remain.');
   assert.ok(shell.includes("if(!label)button.remove();"), 'Stale blank buttons must be removed from the Settings panel.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Only the two labeled Normal Mode and Dark Mode controls belong in Accessibility.');
-  assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings') && css.includes('position:static!important'), 'Footer Settings control must be statically positioned.');
+  assert.ok(css.includes('#fc-floating-tools{position:fixed;left:16px;right:auto;bottom:16px') && css.includes('#fc-floating-tools #fc-display-settings'), 'Settings must be positioned in the bottom-left page-level dock.');
+  assert.ok(!css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings'), 'Footer must not contain Settings-specific styling.');
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
   assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
   assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant layering remains intact.');
@@ -2088,7 +2089,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   assert.ok(script.includes("footer.className = 'fc-global-footer'"));
   assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
   assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes("homepageFooterNav.appendChild(homepageSettingsTrigger)"), 'Homepage fallback Settings trigger must be moved into the footer.');
+  assert.ok(script.includes("homepageToolsDock.appendChild(homepageSettingsTrigger)"), 'Homepage fallback Settings trigger must be moved into the floating dock.');
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
@@ -2140,14 +2141,15 @@ test('legacy All Pages footer links are excluded while Sitemap remains', () => {
   assert.doesNotMatch(shell, /'सभी पेज'/);
 });
 
-test('Open Assistant remains a live page action and is not moved into Settings', () => {
+test('Open Assistant stays lazy-loaded inside Settings Quick Actions', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /document\.body\.appendChild\(launcher\)/);
   assert.match(shell, /document\.querySelector\('#fc-ai-launch'\)\?\.click\(\)/);
-  assert.doesNotMatch(shell, /quickActions\.appendChild\(assistant\)/);
-  assert.doesNotMatch(shell, /quickActions\.appendChild\(liveAssistant\)/);
+  assert.match(shell, /const assistantLauncher=document\.getElementById\('fc-ai-lazy-launch'\)/);
+  assert.match(shell, /quickActions\.appendChild\(assistantLauncher\)/);
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(styles, /#fc-ai-lazy-launch\{position:fixed/);
+  assert.match(styles, /#fc-ai-lazy-launch\{display:none\}/);
+  assert.match(styles, /body>\.fc-display-panel[^\n]*#fc-ai-lazy-launch/);
 });
 
 
