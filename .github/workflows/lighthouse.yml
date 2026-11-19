@@ -64,6 +64,9 @@ jobs:
       - name: Verify Chrome
         run: google-chrome --version
 
+      - name: Check shared-shell browser smoke test syntax
+        run: node --check scripts/check-site-shell-runtime.cjs
+
       - name: Wait for GitHub Pages to publish the updated calculator assets
         if: github.event_name == 'push'
         shell: bash
