@@ -5,12 +5,12 @@ const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
 test('global language selector supports all configured locales', () => {
-  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te']) {
+  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']) {
     assert.ok(shell.includes(locale + ':'));
   }
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
-  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1/);
+  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1,gu:1,kn:1/);
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -35,7 +35,7 @@ test('Explicit language routes remain authoritative; root defaults to saved or b
 });
 
 test('Search Calculator is localized across all supported locales', () => {
-  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора','कॅल्क्युलेटर शोधा','Tìm máy tính','కాలిక్యులేటర్‌ను వెతకండి']) {
+  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора','कॅल्क्युलेटर शोधा','Tìm máy tính','కాలిక్యులేటర్‌ను వెతకండి','કેલ્ક્યુલેટર શોધો','ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಹುಡುಕಿ']) {
     assert.ok(shell.includes(label), 'Missing localized Search Calculator label: ' + label);
   }
 });
@@ -141,10 +141,10 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 
 
 test('every homepage locale alternate cluster includes all 15 editions and x-default', () => {
-  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html','vi/index.html','te/index.html'];
+  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html','vi/index.html','te/index.html','gu/index.html','kn/index.html'];
   for (const file of pages) {
     const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','vi','te','x-default']) {
+    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','vi','te','gu','kn','x-default']) {
       assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
     }
   }
@@ -169,9 +169,18 @@ test('language directory lists exactly 50 unique language editions with accurate
   assert.match(page, /Available language editions \(15\)/);
   assert.match(page, /Planned language editions \(35\)/);
   assert.equal((page.match(/class="card"/g) || []).length, 50);
-  assert.equal((page.match(/class="status-live"/g) || []).length, 15);
-  assert.equal((page.match(/class="status-soon"/g) || []).length, 35);
+  assert.equal((page.match(/class="status-live"/g) || []).length, 17);
+  assert.equal((page.match(/class="status-soon"/g) || []).length, 33);
   assert.equal(page.split('href="/mr/index.html"').length - 1, 1, 'Marathi edition link must appear once only');
   assert.equal(page.split('href="/vi/index.html"').length - 1, 1, 'Vietnamese edition link must appear once only');
   assert.equal(page.split('href="/te/index.html"').length - 1, 1, 'Telugu edition link must appear once only');
+  assert.equal(page.split('href="/gu/index.html"').length - 1, 1, 'Gujarati edition link must appear once only');
+  assert.equal(page.split('href="/kn/index.html"').length - 1, 1, 'Kannada edition link must appear once only');
+});
+
+
+test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
+ assert.match(shell,/gu:'ગુજરાતી'/);assert.match(shell,/kn:'ಕನ್ನಡ'/);
+ assert.match(shell,/gu:1,kn:1/);assert.match(shell,/gu:'\/gu\/index.html',kn:'\/kn\/index.html'/);
+ assert.match(shell,/gu:'મુખ્ય સામગ્રી પર જાઓ'/);assert.match(shell,/kn:'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ತೆರಳಿ'/);
 });
