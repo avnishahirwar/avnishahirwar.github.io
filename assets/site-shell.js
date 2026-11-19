@@ -490,8 +490,8 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
 }
 // Language remains the final Header control after Login; regional preferences live in Settings.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
-  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू'};
-  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'मेनू बंद करा'};
+  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴'};
+  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기'};
   const toggle=document.createElement('button');
   toggle.type='button';
   toggle.className='fc-nav-toggle';
