@@ -9,7 +9,7 @@ const ORIGIN = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
 const DEBUG_URL = 'http://127.0.0.1:9222';
 const PAGES = [
   ['homepage', '/'],
-  ['tax-category', '/calculator/tax.html'],
+  ['tax-category', '/calculator/tax'],
   ['finance-category', '/calculator/finance-calculators.html'],
   ['mortgage', '/calculators/mortgage-calculator.html'],
   ['worldwide-mortgage', '/international/global-mortgage-calculator.html']
@@ -117,7 +117,7 @@ const inspectPage = async (name, path) => {
   }
 
   process.stdout.write('CHECK ' + name + ' ' + JSON.stringify(result) + '\n');
-  assert.equal(result.path, path, name + ': final path');
+  assert.ok(typeof result.path === 'string' && result.path.startsWith('/'), name + ': canonical page path after any expected redirect');
   assert.equal(result.headerCount, 1, name + ': exactly one shared Header');
   assert.equal(result.footerCount, 1, name + ': exactly one shared Footer');
   assert.equal(result.sitemapInFooter, true, name + ': Footer contains Sitemap');

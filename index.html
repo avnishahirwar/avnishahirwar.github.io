@@ -133,6 +133,13 @@ gtag('config','G-QVWQSEDRGL');
  .fc-top-row>.fc-global-links{grid-row:6!important}
  .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{flex:1 1 58%!important;width:58%!important;min-height:40px!important;max-width:68%!important}
 }
+
+/* Header regional selectors: consistent sizing before deferred styles load. */
+.fc-global-links>.fc-header-language-slot{display:contents!important}
+.fc-global-links>.fc-header-language-slot>.fc-language-control,.fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{box-sizing:border-box!important;display:flex!important;flex:0 1 174px;flex-direction:column!important;align-items:stretch!important;gap:5px!important;width:174px!important;min-width:160px!important;max-width:174px!important;padding:6px 0!important}
+.fc-global-links>.fc-header-language-slot>.fc-language-control select,.fc-global-links>.fc-currency-control select,.fc-global-links>.fc-country-format-control select,.fc-global-links>.fc-unit-control select{box-sizing:border-box!important;width:100%!important;min-width:0!important;max-width:none!important;height:44px!important;min-height:44px!important}
+@media(max-width:1120px){.fc-global-links>.fc-header-language-slot>.fc-language-control,.fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{flex:1 1 calc(50% - 10px);width:calc(50% - 10px)!important;min-width:0!important;max-width:none!important}}
+@media(max-width:760px){.fc-global-links>.fc-header-language-slot>.fc-language-control,.fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{display:flex!important;flex:1 1 100%;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-width:0!important;max-width:none!important}.fc-global-links>.fc-header-language-slot>.fc-language-control select,.fc-global-links>.fc-currency-control select,.fc-global-links>.fc-country-format-control select,.fc-global-links>.fc-unit-control select{flex:0 0 68%;width:68%!important;min-width:0!important;max-width:68%!important;height:48px!important;min-height:48px!important}}
 </style>
 <script>
 /* Load non-critical shared shell styles after the first paint. Critical homepage

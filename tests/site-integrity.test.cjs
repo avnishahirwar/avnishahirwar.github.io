@@ -243,7 +243,7 @@ test('shared Header follows the same navigation and regional-control order on ev
     homepageLast = index;
   }
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
-  assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('regionalSettingsControls.append(countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
+  assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -2093,7 +2093,7 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
-  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('regionalSettingsControls.append(countryFormatLabel,unitControl)'), 'Settings must contain mirrored Currency and regional preferences.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'), 'Settings must contain mirrored Currency and regional preferences.');
   assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
   assert.ok(shell.includes("'fc-footer-settings-link'"), 'Footer Settings must use the shared Footer link styling.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
@@ -2167,13 +2167,15 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 });
 
 
-test('Settings regional controls use consistent readable typography', () => {
+test('Header regional selectors use consistent readable sizing and Settings mirrors', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional controls must retain readable touch-target sizing.');
-  assert.match(shell, /regionalMarkup\.innerHTML=countryControl\+unitControl/);
-  assert.match(shell, /regionalSettingsControls\.append\(countryFormatLabel,unitControl\)/);
-  assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
+  assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors must share consistent dimensions.');
+  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'));
+  assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
+  assert.ok(shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)'));
+  assert.ok(shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'));
+  assert.ok(!shell.includes("addSettingRow('fc-display-units-row'"));
 });
 
 test('legacy All Pages footer links are excluded while Sitemap remains', () => {
