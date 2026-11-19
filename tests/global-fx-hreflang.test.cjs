@@ -66,7 +66,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across s
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
+ const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn','pl','ro','pa','ur','cy'];
  for(const route of routes){
   const locales=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
