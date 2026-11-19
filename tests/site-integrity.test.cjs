@@ -369,15 +369,15 @@ test('income tax page reserves a stable mobile header before the shared navigati
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
-  assert.match(rd, /<title>RD Calculator India[^<]*<\\/title>/);
+  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
   assert.ok(rd.includes('name="description" content="Estimate RD maturity in India from monthly deposit, annual rate and tenure. View total deposits, interest, a worked example and key limitations."'));
-  assert.match(rd, /<h1[^>]*>RD Calculator India[^<]*<\\/h1>/);
+  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
   assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
   assert.ok(rd.includes('₹1,41,944'));
   assert.ok(rd.includes('not official Post Office maturity quotations'));
-  assert.match(salary, /<title>[^<]*Salary Calculator[^<]*<\\/title>/i);
+  assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily &amp; Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
-  assert.match(salary, /<h1[^>]*>[^<]*Salary Calculator[^<]*<\\/h1>/i);
+  assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily &amp; Hourly Pay</h1>'));
   assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
