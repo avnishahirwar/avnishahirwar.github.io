@@ -772,6 +772,7 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
 }
 
 /* Header regional dropdown parity: equal control widths, heights and spacing. */
+.fc-global-links>.fc-header-language-slot{display:contents!important;}
 .fc-global-links>.fc-header-language-slot>.fc-language-control,
 .fc-global-links>.fc-currency-control,
 .fc-global-links>.fc-country-format-control,
