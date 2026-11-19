@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 39,
+    "officialCountryGuides": 42,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 129
+    "pendingVerification": 126
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -844,6 +844,82 @@
           "https://www.fba.ba/eng/images/banke_podzakonski_2/26-0%20credit%20risk%20and%20assets.pdf"
         ]
       ]
+    },
+    "BH": {
+      "summary": "The Central Bank of Bahrain's Rulebook distinguishes borrower affordability assessment from prudential capital treatment of residential mortgage exposures. The capital framework assigns different bank risk weights by loan-to-value (LTV) bands; those bands are not universal borrower LTV ceilings or guaranteed lending limits. Down payment, term, rate and eligibility depend on the lender and any applicable housing programme.",
+      "rules": [
+        "CBB's conventional-bank capital framework classifies first-mortgage residential-property exposures by LTV bands: up to 50%, above 50% to 60%, above 60% to 80%, above 80% to 90%, above 90% to 100%, and above 100%. These bands determine prudential risk weights for banks; they are not borrower entitlements or statutory maximum LTV limits.",
+        "The CBB Credit Risk Management Rulebook includes a Consumer Finance module with total-repayments and maximum-limit provisions. Lenders must assess the applicant's financial position and ability to service obligations; do not assume a single mortgage approval ratio applies to every product or borrower.",
+        "Published bank product examples may advertise different down payments, repayment terms and affordability criteria. Treat them as product-specific offers, not nationwide legal standards.",
+        "Check whether the lender is a CBB licensee, review the current CBB Rulebook, and obtain the written offer showing APR/profit rate, fees, repayment schedule, valuation, insurance and early-settlement terms.",
+        "The calculator does not determine CBB regulatory compliance, eligibility for government housing support, property registration, insurance, valuation or transaction costs."
+      ],
+      "sources": [
+        [
+          "Central Bank of Bahrain: Rulebook Volume 1 — Conventional Banks, CM Credit Risk Management",
+          "https://www.cbb.gov.bh/wp-content/uploads/2023/11/Vol-1_CM_Nov-2023.pdf"
+        ],
+        [
+          "Central Bank of Bahrain: Rulebook Volume 1 — Conventional Banks, CA-3 Residential Property Risk Weights",
+          "https://www.cbb.gov.bh/wp-content/uploads/2023/08/Vol-1_CA_Part-2_2023.pdf"
+        ],
+        [
+          "Central Bank of Bahrain: Rulebook Volume 1 — Conventional Banks, 2025 Credit Risk Management module index",
+          "https://www.cbb.gov.bh/wp-content/uploads/2025/03/Exposure-Limit-Rules-Volume-1.pdf"
+        ]
+      ]
+    },
+    "BD": {
+      "summary": "Bangladesh Bank's BRPD-1 Circular Letter No. 01 of 6 January 2026 sets housing-finance per-borrower ceilings according to each bank's classified housing-loan share and retains a maximum 70:30 debt-equity ratio. Banks must also be satisfied that the borrower has adequate net cash inflow to service repayments. These are bank-level prudential limits and do not guarantee an individual borrower will qualify for the maximum.",
+      "rules": [
+        "Under Bangladesh Bank's 6 January 2026 circular, the maximum housing-finance amount per borrower is BDT 40 million where classified housing loans are 5% or less of the bank's housing-finance portfolio; BDT 30 million where the share is above 5% and up to 10%; and BDT 20 million where it is above 10%.",
+        "The maximum debt-equity ratio is 70:30, meaning bank financing may not exceed 70% of the eligible housing-finance amount under this rule and the borrower contributes at least 30% equity. This is a prudential maximum, not a promise of approval.",
+        "Banks must be satisfied that the borrower has adequate net cash inflow to service the repayment schedule. Individual banks may apply stricter affordability, collateral, valuation and documentation requirements.",
+        "The 2026 circular supersedes the earlier Regulation 23 instructions identified in the letter; other existing instructions remain unchanged. Confirm the current consolidated Bangladesh Bank requirements and lender terms before relying on any maximum tenure or fees.",
+        "The calculator does not determine bank-specific portfolio limits, borrower eligibility, property-title validity, valuation, insurance, registration costs or taxes."
+      ],
+      "sources": [
+        [
+          "Bangladesh Bank: BRPD-1 Circular Letter No. 01, 6 January 2026 — Prudential Regulations for Consumer Financing, Regulation 23",
+          "https://www.bb.org.bd/mediaroom/circulars/brpd/jan062026brpd-1l01e.pdf"
+        ],
+        [
+          "Bangladesh Bank: Quarterly Review, January–March 2026 — summary of revised housing-finance limits",
+          "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf"
+        ],
+        [
+          "Bangladesh Bank: Prudential Regulations for Consumer Financing — historical framework; apply only where not superseded",
+          "https://www.bb.org.bd/mediaroom/circulars/brpd/pgfcf.pdf"
+        ]
+      ]
+    },
+    "BJ": {
+      "summary": "Benin's housing-credit market operates within the West African Monetary Union (UMOA) banking-supervision framework. Official bank product pages publish differing terms: Bank of Africa Benin describes a conventional home loan with up to 15 years and financing of 80–100% subject to repayment capacity, while Orabank Benin lists CRRH-backed products with 15-year terms and 10% personal contribution. These are lender-specific products, not universal national mortgage limits.",
+      "rules": [
+        "BCEAO's UMOA legal and regulatory compilation defines residential real-estate credit to include financing for acquisition, construction or improvement of housing and land intended for housing. This regional framework does not establish a single universal borrower LTV, rate or mortgage term for every Beninese bank.",
+        "Bank of Africa Benin publishes a conventional home loan for acquisition or construction of a principal residence, with a maximum term of 15 years and financing stated at 80–100% of the property value or construction cost, subject to repayment capacity, salary domiciliation and mandatory insurance.",
+        "Orabank Benin's CRRH mortgage product page lists a 15-year term, 10% personal contribution and an 80 million FCFA amount for its standard CRRH product; its social-housing product lists 15 million FCFA. The page also describes salary domiciliation, first-ranking mortgage security and insurance requirements.",
+        "The Orabank page publishes product-specific indicative rates and fees (7% before applicable taxes/levies for its standard CRRH product and 6% for the social-housing product). Rates, fees, availability and eligibility can change; verify the current written offer with the bank.",
+        "The calculator does not determine eligibility for a bank or CRRH programme, validate title, or calculate notarial, registration, insurance, valuation and other transaction costs."
+      ],
+      "sources": [
+        [
+          "BCEAO: Compilation of legal and regulatory texts governing banking and financial activity in UMOA — residential real-estate credit definitions",
+          "https://www.bceao.int/sites/default/files/inline-files/Recueil%20des%20textes%20l%C3%A9gaux%20et%20r%C3%A9glementaires%20r%C3%A9gissant%20l%27activit%C3%A9%20bancaire%20et%20financi%C3%A8re%20dans%20l%27UMOA%2C%20Vol.%20I%2C%20%C3%A9d.%202018.pdf"
+        ],
+        [
+          "Bank of Africa Benin: Prêt Immobilier Classique — published mortgage product conditions",
+          "https://www.boabenin.com/particuliers/prets/pret-immobilier-classique/"
+        ],
+        [
+          "Orabank Benin: Crédit Immobilier CRRH — published mortgage and social-housing product terms",
+          "https://www.orabank.net/fr/filiale/benin/particulier/offres/credits-et-facilites/credit-immobilier-crrh"
+        ],
+        [
+          "BCEAO: Banking Commission — supervision and member states including Benin",
+          "https://www.bceao.int/en/content/presentation-banking-commission"
+        ]
+      ]
     }
   },
   "countries": {
@@ -897,11 +973,11 @@
     },
     "BH": {
       "countryName": "Bahrain",
-      "status": "pending"
+      "status": "verified"
     },
     "BD": {
       "countryName": "Bangladesh",
-      "status": "pending"
+      "status": "verified"
     },
     "BB": {
       "countryName": "Barbados",
@@ -921,7 +997,7 @@
     },
     "BJ": {
       "countryName": "Benin",
-      "status": "pending"
+      "status": "verified"
     },
     "BT": {
       "countryName": "Bhutan",
