@@ -369,9 +369,9 @@ test('income tax page reserves a stable mobile header before the shared navigati
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
-  assert.match(rd, /<title>RD Calculator India[^<]*<\\/title>/);
+  assert.match(rd, /<title>RD Calculator India[^<]*<\/title>/);
   assert.ok(rd.includes('name="description" content="Estimate RD maturity in India from monthly deposit, annual rate and tenure. View total deposits, interest, a worked example and key limitations."'));
-  assert.match(rd, /<h1>RD Calculator India[^<]*<\\/h1>/);
+  assert.match(rd, /<h1[^>]*>RD Calculator India[^<]*<\/h1>/);
   assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
   assert.ok(rd.includes('₹1,41,944'));
   assert.ok(rd.includes('not official Post Office maturity quotations'));
