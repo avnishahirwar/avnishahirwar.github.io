@@ -110,7 +110,7 @@ jobs:
           slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
           for attempt in {1..30}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            base_url="$(grep -Eo "https://${slug}-[a-z0-9-]+\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
+            base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
             if [ -n "$base_url" ]; then
               html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
               if grep -q 'fc-calculator-reserved' <<<"$html"; then
