@@ -59,7 +59,7 @@ const loadCountryGuidance=()=>{
 countrySelect.addEventListener('change',()=>{setCountryDefaults();renderCountryGuidance();});
 const hash=new URLSearchParams(location.hash.replace(/^#/,''));
 const requestedCountry=(hash.get('country')||'').trim().toLowerCase();
-const countryAliases={'antigua and barbuda':'AG','bosnia and herzegovina':'BA','cabo verde':'CV','republic of the congo':'CG','democratic republic of the congo':'CD','myanmar':'MM','saint kitts and nevis':'KN','saint lucia':'LC','saint vincent and the grenadines':'VC','sao tome and principe':'ST','trinidad and tobago':'TT','turkey':'TR'};
+const countryAliases={"côte d'ivoire":'CI','antigua and barbuda':'AG','bosnia and herzegovina':'BA','cabo verde':'CV','republic of the congo':'CG','democratic republic of the congo':'CD','myanmar':'MM','saint kitts and nevis':'KN','saint lucia':'LC','saint vincent and the grenadines':'VC','sao tome and principe':'ST','trinidad and tobago':'TT','turkey':'TR'};
 const matching=countryAliases[requestedCountry]||codes.find(code=>names.of(code).toLowerCase()===requestedCountry);
 const preferred=window.FCLocale?.getCountry?.();
 countrySelect.value=matching|| (codes.includes(preferred)?preferred:'IN');
