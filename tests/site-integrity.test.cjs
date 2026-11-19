@@ -2186,7 +2186,9 @@ test('homepage has the same static shared footer and Sitemap destination', () =>
 
 test('homepage critical CSS keeps the shared regional Header readable before deferred styles load', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const critical = html.match(/<style id="fc-critical-home-shell">([\\s\\S]*?)<\\/style>/)?.[1] || '';
+  const styleStart = html.indexOf('<style id="fc-critical-home-shell">');
+  const styleEnd = html.indexOf('</style>', styleStart);
+  const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
   assert.match(critical, /\\.fc-top-row\\{[^}]*display:flex/);
   assert.match(critical, /\\.fc-global-links \\.fc-currency-control/);
   assert.match(critical, /\\.fc-global-links \\.fc-country-format-control/);
