@@ -1301,7 +1301,7 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v6/);
+  assert.match(worker, /friendly-calculator-public-v7/);
   assert.match(worker, /key !== CACHE_NAME/);
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const offline = fs.readFileSync(path.join(root, 'offline.html'), 'utf8');
