@@ -9,6 +9,7 @@ on:
       - ".github/workflows/lighthouse.yml"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
+      - "scripts/check-site-shell-runtime.cjs"
       - "assets/page-calculators.js"
       - "assets/loan-emi-calculator.js"
       - "calculators/loan-emi-calculator.html"
@@ -74,7 +75,9 @@ jobs:
             directory="$(curl -fsSL "https://friendlycalculator.in/calculator/site-directory.html?deploy=${GITHUB_SHA}" || true)"
             legal="$(curl -fsSL "https://friendlycalculator.in/calculator/legal-compliance.html?deploy=${GITHUB_SHA}" || true)"
             international="$(curl -fsSL "https://friendlycalculator.in/international/?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international"; then
+            shell="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
+            shell_css="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
+            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q 'dock.appendChild(open)' <<<"$shell" && grep -q 'quickActions.appendChild(assistantLauncher)' <<<"$shell" && grep -q '#fc-floating-tools{position:fixed;left:16px;right:auto;bottom:16px' <<<"$shell_css"; then
               echo "Production calculator assets match commit ${GITHUB_SHA}."
               exit 0
             fi
@@ -83,6 +86,10 @@ jobs:
           done
           echo "::error::Production did not publish the expected assets within 10 minutes."
           exit 1
+
+      - name: Verify shared Header/Footer and Settings dock in a real browser
+        if: github.event_name == 'push'
+        run: node scripts/check-site-shell-runtime.cjs
 
       - name: Run Lighthouse across representative site-wide page types and languages
         shell: bash
