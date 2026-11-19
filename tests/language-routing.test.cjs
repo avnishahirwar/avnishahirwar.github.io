@@ -114,7 +114,7 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
   assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\\//.exec(p);"));
-  assert.ok(shell.includes("(routeLocale==='ar'||routeLocale==='ur')?'rtl':'ltr';"));
+  assert.ok(shell.includes("document.documentElement.dir=(routeLocale==='ar'||routeLocale==='ur')?'rtl':'ltr';"));
 });
 
 
