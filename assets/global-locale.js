@@ -15,7 +15,7 @@ const COUNTRY_LOCALE={IN:'en-IN',US:'en-US',GB:'en-GB',CA:'en-CA',AU:'en-AU',AE:
 const detectedCountry=Object.hasOwn(COUNTRY_CURRENCY,browserRegion)?browserRegion:'IN';
 let country=read(COUNTRY_KEY,detectedCountry,v=>Object.hasOwn(COUNTRY_CURRENCY,v));
 let currency=read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency,v=>Object.hasOwn(CURRENCIES,v));
-let formatLocale=read(LOCALE_KEY,(browserRegion===country&&Object.hasOwn(LOCALES,browserLocale)?browserLocale:(COUNTRY_LOCALE[country]||detectedFormat)),v=>Object.hasOwn(LOCALES,v));
+let formatLocale=read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat,v=>Object.hasOwn(LOCALES,v));
 let unitSystem=read(UNIT_KEY,browserRegion==='US'?'imperial':'metric',v=>v==='metric'||v==='imperial');
 const formatNumber=(value,options={})=>new Intl.NumberFormat(formatLocale,options).format(Number(value));
 const formatCurrency=(value,code=currency,options={})=>{const selected=Object.hasOwn(CURRENCIES,code)?code:'INR';return new Intl.NumberFormat(formatLocale,{style:'currency',currency:selected,maximumFractionDigits:2,...options}).format(Number(value));};
