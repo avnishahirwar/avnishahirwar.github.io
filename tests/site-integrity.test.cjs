@@ -207,12 +207,12 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must remain at the end of the shared header.');
+  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow navigation in the shared Header.');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
   assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must appear before the plain All Calculators link.');
   assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
   assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel'), 'Currency, country/format and units must move into Settings.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Only date-format compatibility remains hidden; currency, country and units are visible in Header.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -2048,7 +2048,7 @@ test('Settings trigger is in a standalone floating dock; Language stays in the h
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("+languageControl+'</nav>"), 'Language must remain in the shared header after Login.');
+  assert.ok(shell.includes("+'</nav>'+languageControl+'</div>"), 'Language must remain in the shared header after Login.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes("dock.appendChild(open)") && shell.includes("dock.appendChild(trigger)"), 'The Settings trigger must be inserted into the standalone floating tools dock.');
@@ -2127,9 +2127,9 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 test('Header Units control uses consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(css, /\.fc-global-links>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
+  assert.match(css, /\.fc-top-row>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
   assert.match(css, /@media\(max-width:760px\)[\s\S]*?\.fc-global-links>\.fc-currency-control[\s\S]*?min-height:40px/);
-  assert.match(shell, /languageControlElement\.after\(currencyControl,countryFormatLabel,unitControl\)/);
+  assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
 
