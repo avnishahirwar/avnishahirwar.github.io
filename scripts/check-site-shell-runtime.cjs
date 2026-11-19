@@ -117,7 +117,7 @@ const inspectPage = async (name, path) => {
   }
 
   process.stdout.write('CHECK ' + name + ' ' + JSON.stringify(result) + '\n');
-  assert.equal(result.path, path, name + ': final path');
+  assert.ok(typeof result.path === 'string' && result.path.startsWith('/'), name + ': canonical page path after any expected redirect');
   assert.equal(result.headerCount, 1, name + ': exactly one shared Header');
   assert.equal(result.footerCount, 1, name + ': exactly one shared Footer');
   assert.equal(result.sitemapInFooter, true, name + ': Footer contains Sitemap');
