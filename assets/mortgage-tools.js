@@ -339,7 +339,7 @@
     output.classList.add('mortgage-tool-result');
     output.hidden = true;
     let lastRows = null;
-    button.addEventListener('click', function () {
+    const calculate = function () {
       if (!form.reportValidity()) return;
       const values = {};
       FIELD_SETS[type].forEach(key => {
@@ -357,7 +357,9 @@
         output.appendChild(message);
         output.hidden = false;
       }
-    });
+    };
+    button.addEventListener('click', calculate);
+    form.addEventListener('submit', event => { event.preventDefault(); calculate(); });
     const refresh = () => { if (lastRows) renderResult(output, lastRows, type); };
     root.addEventListener('fc:localechange', refresh);
     root.addEventListener('fc:locale-ready', refresh);
