@@ -282,11 +282,11 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)\//.exec(p);
+const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\//.exec(p);
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
 document.documentElement.lang=routeLocale;
-document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)\/)?calculators\//.test(p);
+document.documentElement.dir=(routeLocale==='ar'||routeLocale==='ur')?'rtl':'ltr';
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
@@ -388,7 +388,7 @@ if(embedMode){
 
 if(main&&!main.id)main.id='fc-main-content';
 const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\//.exec(p)||[])[1]||'en';
-const shellSkipLabels={gu:'મુખ્ય સામગ્રી પર જાઓ',kn:'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ತೆರಳಿ',de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்',ja:'メインコンテンツへ',ru:'Перейти к основному содержимому',mr:'मुख्य मजकुराकडे जा',vi:'Bỏ qua đến nội dung chính',te:'ప్రధాన విషయానికి వెళ్లండి'};
+const shellSkipLabels={pl:'Przejdź do głównej treści',ro:'Treciți la conținutul principal',pa:'ਮੁੱਖ ਸਮੱਗਰੀ ’ਤੇ ਜਾਓ',ur:'مرکزی مواد پر جائیں',cy:'Neidio i’r prif gynnwys',gu:'મુખ્ય સામગ્રી પર જાઓ',kn:'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ತೆರಳಿ',de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்',ja:'メインコンテンツへ',ru:'Перейти к основному содержимому',mr:'मुख्य मजकुराकडे जा',vi:'Bỏ qua đến nội dung chính',te:'ప్రధాన విషయానికి వెళ్లండి'};
 if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent=shellSkipLabels[shellLocaleForSkip]||'Skip to main content';document.body.prepend(skip);
 }
