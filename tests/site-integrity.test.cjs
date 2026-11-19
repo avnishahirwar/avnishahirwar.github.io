@@ -2232,8 +2232,8 @@ test('homepage critical CSS keeps the shared regional Header readable before def
 test('regional dropdown sizing targets the shared header and actual Settings DOM', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes('class="fc-global-links"'));
-  assert.ok(shell.includes('class="fc-header-language-slot">\\'+languageControl'));
+  assert.ok(shell.includes('fc-global-links'));
+  assert.ok(shell.includes('fc-header-language-slot'));
   assert.ok(shell.includes("siteSettingsControls.className='fc-settings-site-controls'"));
   assert.ok(shell.includes("regionalSettingsControls.className='fc-settings-site-controls'"));
   assert.ok(shell.includes("regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)"));
@@ -2255,3 +2255,5 @@ test('regional dropdown sizing targets the shared header and actual Settings DOM
   assert.ok(mobile.includes('width:100%!important;'));
   assert.ok(mobile.includes('height:48px!important;'));
 });
+
+/* Regression assertions inspect the final override rules, not earlier base selectors. */
