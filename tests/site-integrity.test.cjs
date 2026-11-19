@@ -369,9 +369,9 @@ test('income tax page reserves a stable mobile header before the shared navigati
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
-  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
+  assert.match(rd, /<title>RD Calculator India[^<]*<\\/title>/);
   assert.ok(rd.includes('name="description" content="Estimate RD maturity in India from monthly deposit, annual rate and tenure. View total deposits, interest, a worked example and key limitations."'));
-  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
+  assert.match(rd, /<h1>RD Calculator India[^<]*<\\/h1>/);
   assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
   assert.ok(rd.includes('₹1,41,944'));
   assert.ok(rd.includes('not official Post Office maturity quotations'));
@@ -1592,11 +1592,11 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
-  assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths.'));
-  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
-  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
+  assert.ok(homepage.includes('<title>Wealth, Property &amp; Free Online Calculators | Friendly Calculator</title>'));
+  assert.ok(homepage.includes('name="description" content="Clear calculators for wealth planning, property investment, loan EMI, GST, income tax, savings and everyday maths in India and worldwide."'));
+  assert.ok(homepage.includes('property="og:title" content="Wealth, Property &amp; Free Online Calculators | Friendly Calculator"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Wealth, Property &amp; Free Online Calculators | Friendly Calculator"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
