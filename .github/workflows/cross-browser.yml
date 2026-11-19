@@ -28,7 +28,7 @@ permissions:
   issues: read
 jobs:
   browser-matrix:
-    name: \${{ matrix.engine }} compatibility
+    name: ${{ matrix.engine }} compatibility
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -45,28 +45,28 @@ jobs:
       - name: Install Playwright
         run: npm install --no-save --no-package-lock playwright
       - name: Install browser engine
-        run: npx playwright install --with-deps \${{ matrix.engine }}
+        run: npx playwright install --with-deps ${{ matrix.engine }}
       - name: Resolve production URL
         if: github.event_name != 'pull_request'
         run: echo "FC_SITE_ORIGIN=https://friendlycalculator.in" >> "$GITHUB_ENV"
       - name: Wait for pull-request Cloudflare preview
         if: github.event_name == 'pull_request'
         env:
-          GH_TOKEN: \${{ github.token }}
-          PR_NUMBER: \${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         shell: bash
         run: |
           set -euo pipefail
           slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
           for attempt in {1..30}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            base_url="$(grep -Eo "https://\${slug}(-[a-z0-9-]+)?\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
+            base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
             if [ -n "$base_url" ] && curl -fsS "$base_url/" >/dev/null; then
               echo "FC_SITE_ORIGIN=$base_url" >> "$GITHUB_ENV"
               echo "Testing pull-request preview: $base_url"
               exit 0
             fi
-            echo "Waiting for Cloudflare preview (attempt \${attempt}/30)..."
+            echo "Waiting for Cloudflare preview (attempt ${attempt}/30)..."
             sleep 10
           done
           echo "::error::Cloudflare preview did not become available."
