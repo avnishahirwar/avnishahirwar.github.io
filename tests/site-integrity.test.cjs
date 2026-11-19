@@ -2152,7 +2152,7 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 test('Header Units control uses consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(css, /\.fc-top-row>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
+  assert.match(css, /\.fc-global-links>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
   assert.ok(css.includes('.fc-top-row>.fc-currency-control') && css.includes('min-height:40px'), 'Mobile regional controls must retain readable touch-target sizing.');
   assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
