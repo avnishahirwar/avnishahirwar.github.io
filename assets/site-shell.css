@@ -650,19 +650,23 @@ footer.fc-global-footer .fc-footer-bottom small,footer.fc-global-footer .fc-foot
 
 
 /* Regional preferences are visible in the shared Header immediately after Language. */
-.fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{display:inline-flex;align-items:center;gap:5px;min-width:0;color:#f7f9fc;font-size:.72rem;font-weight:700;white-space:nowrap}
-.fc-global-links>.fc-currency-control select,.fc-global-links>.fc-country-format-control select,.fc-global-links>.fc-unit-control select{height:34px;max-width:155px;min-width:0;padding:5px 7px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .76rem/1.2 system-ui,sans-serif}
-.fc-global-links>.fc-country-format-control select{width:150px}
-.fc-global-links>.fc-unit-control select{width:105px}
-.fc-global-links>.fc-country-format-control>span{white-space:nowrap}
-.fc-global-links>.fc-currency-control .fc-language-label,.fc-global-links>.fc-country-format-control>span,.fc-global-links>.fc-unit-control .fc-language-label{color:#f7f9fc}
-.fc-global-links>.fc-currency-control select:focus-visible,.fc-global-links>.fc-country-format-control select:focus-visible,.fc-global-links>.fc-unit-control select:focus-visible{outline:3px solid #d8bd82;outline-offset:2px}
+.fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{display:inline-flex;align-items:center;gap:5px;min-width:0;color:#f7f9fc;font-size:.72rem;font-weight:700;white-space:nowrap}
+.fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{height:34px;max-width:155px;min-width:0;padding:5px 7px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .76rem/1.2 system-ui,sans-serif}
+.fc-top-row>.fc-country-format-control select{width:150px}
+.fc-top-row>.fc-unit-control select{width:105px}
+.fc-top-row>.fc-country-format-control>span{white-space:nowrap}
+.fc-top-row>.fc-currency-control .fc-language-label,.fc-top-row>.fc-country-format-control>span,.fc-top-row>.fc-unit-control .fc-language-label{color:#f7f9fc}
+.fc-top-row>.fc-currency-control select:focus-visible,.fc-top-row>.fc-country-format-control select:focus-visible,.fc-top-row>.fc-unit-control select:focus-visible{outline:3px solid #d8bd82;outline-offset:2px}
 @media(max-width:1120px){
- .fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{flex:1 1 30%;justify-content:space-between}
- .fc-global-links>.fc-currency-control select,.fc-global-links>.fc-country-format-control select,.fc-global-links>.fc-unit-control select{width:100%;max-width:none}
+ .fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{flex:1 1 30%;justify-content:space-between}
+ .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{width:100%;max-width:none}
 }
 @media(max-width:760px){
- .fc-global-links>.fc-currency-control,.fc-global-links>.fc-country-format-control,.fc-global-links>.fc-unit-control{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:8px 4px;border-bottom:1px solid #40536a}
- .fc-global-links>.fc-currency-control select,.fc-global-links>.fc-country-format-control select,.fc-global-links>.fc-unit-control select{flex:1 1 58%;width:58%;min-height:40px;max-width:68%;font-size:.84rem}
- .fc-global-links>.fc-country-format-control>span{white-space:normal}
+  .fc-top-row>.fc-currency-control{grid-column:1/-1!important;grid-row:3!important}
+  .fc-top-row>.fc-country-format-control{grid-column:1/-1!important;grid-row:4!important}
+  .fc-top-row>.fc-unit-control{grid-column:1/-1!important;grid-row:5!important}
+  .fc-top-row>.fc-global-links{grid-row:6!important}
+ .fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:8px 4px;border-bottom:1px solid #40536a}
+ .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{flex:1 1 58%;width:58%;min-height:40px;max-width:68%;font-size:.84rem}
+ .fc-top-row>.fc-country-format-control>span{white-space:normal}
 }
