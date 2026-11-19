@@ -470,12 +470,11 @@ regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Regional controls must be visible immediately after Language on every public page.
-if(primaryNav&&!activeHeader.querySelector('.fc-currency-control')){
+if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
-  const countryLabel=regionalMarkup.querySelector('.fc-country-control');
-  countryLabel?.classList.replace('fc-country-control','fc-country-format-control');
-  primaryNav.append(...regionalMarkup.children);
+  // Keep regional preferences out of the Header; Settings owns these controls.
+  regionalControlsSource.append(...regionalMarkup.children);
 }
 // Language remains before the regional controls, immediately after Login.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
@@ -1408,10 +1407,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  const primaryNavigation=activeHeader.querySelector('#fc-primary-navigation');
-  const languageControlElement=primaryNavigation?.querySelector('.fc-language-control');
-  if(languageControlElement)languageControlElement.after(currencyControl,countryFormatLabel,unitControl);
-  else primaryNavigation?.append(currencyControl,countryFormatLabel,unitControl);
+  // Language remains in the Header. Currency, country/format and units are
+  // displayed only inside Settings & Accessibility below.
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1442,8 +1439,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     siteSettingsControls.appendChild(mirror);
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
-  [headerLanguageControl,currencyControl,countryFormatLabel,unitControl].forEach(mirrorSiteControl);
+  mirrorSiteControl(headerLanguageControl);
   panel.append(siteSettingsControls);
+  addSectionHeading(t.region);
+  const regionalSettingsControls=document.createElement('div');
+  regionalSettingsControls.className='fc-settings-site-controls';
+  regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl);
+  panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
