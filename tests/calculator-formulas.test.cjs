@@ -1279,17 +1279,17 @@ test('chemistry batch 10 formulas reject invalid atomic, physical and crystallog
 test('property investment calculator is discoverable and calculates rental returns', () => {
   const page = fs.readFileSync(new URL('../calculators/property-investment-calculator.html', 'file://' + __filename), 'utf8');
   assert.match(page, /<title>Property Investment Calculator/);
-  assert.match(page, /property-investment-calculator\\.html/);
+  assert.match(page, /property-investment-calculator\.html/);
   assert.match(page, /id="price"/);
   assert.match(page, /id="rent"/);
   assert.match(page, /annual=rent\*12/);
   assert.match(page, /net=annual-costs/);
-  assert.match(page, /annual=rent\*12/);
+  assert.match(page, /annual\/price\*100/);
   assert.match(page, /net\/down\*100/);
 });
 
 test('wealth planner calculator validates inputs and models compounding with annual savings', () => {
-  assert.match(page, /wealth-planner-calculator\.html/);
+  const page = fs.readFileSync(new URL('../calculators/wealth-planner-calculator.html', 'file://' + __filename), 'utf8');
   assert.match(page, /<title>Millionaire/);
   assert.match(page, /wealth-planner-calculator\.html/);
   assert.match(page, /id="target"/);
