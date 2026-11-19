@@ -4,7 +4,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const DEFAULT_LOCALES = ['hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'de', 'ja', 'ru'];
+const DEFAULT_LOCALES = ['hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'de', 'ja', 'ru', 'mr'];
 const SKIP_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'vendor', 'dist', 'coverage',
   'admin', 'avnish-ai', '_site'
