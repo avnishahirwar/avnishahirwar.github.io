@@ -282,16 +282,16 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p);
+const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)\//.exec(p);
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
 document.documentElement.lang=routeLocale;
 document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\/)?calculators\//.test(p);
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
 const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
-const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn'];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','pl','ro','pa','ur','cy'];
 if(localeCodes.includes(locale)){
   const categoryMap={
     '/calculator/finance-calculators.html':'finance',
@@ -387,20 +387,20 @@ if(embedMode){
 }
 
 if(main&&!main.id)main.id='fc-main-content';
-const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p)||[])[1]||'en';
+const shellLocaleForSkip=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\//.exec(p)||[])[1]||'en';
 const shellSkipLabels={gu:'મુખ્ય સામગ્રી પર જાઓ',kn:'ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ತೆರಳಿ',de:'Zum Hauptinhalt springen',hi:'मुख्य सामग्री पर जाएँ',es:'Saltar al contenido principal',fr:'Aller au contenu principal',pt:'Ir para o conteúdo principal',ar:'انتقل إلى المحتوى الرئيسي',id:'Lewati ke konten utama',bn:'মূল বিষয়বস্তুতে যান',ta:'முதன்மை உள்ளடக்கத்திற்குச் செல்லவும்',ja:'メインコンテンツへ',ru:'Перейти к основному содержимому',mr:'मुख्य मजकुराकडे जा',vi:'Bỏ qua đến nội dung chính',te:'ప్రధాన విషయానికి వెళ్లండి'};
 if(main&&!document.querySelector('.fc-skip-link')){
   const skip=document.createElement('a');skip.className='fc-skip-link';skip.href='#fc-main-content';skip.textContent=shellSkipLabels[shellLocaleForSkip]||'Skip to main content';document.body.prepend(skip);
 }
 const h=document.createElement('header');h.className='fc-global-header';
-const localeNames={en:'English',zh:'中文（普通话）',hi:'हिन्दी',es:'Español',ar:'العربية',fr:'Français',bn:'বাংলা',pt:'Português',id:'Bahasa Indonesia',ur:'اردو',ru:'Русский',de:'Deutsch',ja:'日本語',pcm:'Naijá',arz:'مصري',mr:'मराठी',vi:'Tiếng Việt',te:'తెలుగు',sw:'Kiswahili',ha:'Harshen Hausa',tr:'Türkçe',pa:'ਪੰਜਾਬੀ',fil:'Filipino',ta:'தமிழ்',yue:'粵語',wuu:'吴语',fa:'فارسی',ko:'한국어',am:'አማርኛ',th:'ไทย',jv:'Basa Jawa',it:'Italiano',gu:'ગુજરાતી',kn:'ಕನ್ನಡ',yo:'Yorùbá',bho:'भोजपुरी',nl:'Nederlands',pl:'Polski',ml:'മലയാളം',or:'ଓଡ଼ିଆ',ne:'नेपाली',si:'සිංහල',uk:'Українська',uz:'Oʻzbekcha',ps:'پښتو',so:'Soomaali',he:'עברית',my:'မြန်မာ',ro:'Română',sd:'سنڌي'};
+const localeNames={en:'English',zh:'中文（普通话）',hi:'हिन्दी',es:'Español',ar:'العربية',fr:'Français',bn:'বাংলা',pt:'Português',id:'Bahasa Indonesia',ur:'اردو',ru:'Русский',de:'Deutsch',ja:'日本語',pcm:'Naijá',arz:'مصري',mr:'मराठी',vi:'Tiếng Việt',te:'తెలుగు',sw:'Kiswahili',ha:'Harshen Hausa',tr:'Türkçe',pa:'ਪੰਜਾਬੀ',fil:'Filipino',ta:'தமிழ்',yue:'粵語',wuu:'吴语',fa:'فارسی',ko:'한국어',am:'አማርኛ',th:'ไทย',jv:'Basa Jawa',it:'Italiano',gu:'ગુજરાતી',kn:'ಕನ್ನಡ',yo:'Yorùbá',bho:'भोजपुरी',nl:'Nederlands',pl:'Polski',ml:'മലയാളം',or:'ଓଡ଼ିଆ',ne:'नेपाली',si:'සිංහල',uk:'Українська',uz:'Oʻzbekcha',ps:'پښتو',so:'Soomaali',he:'עברית',my:'မြန်မာ',ro:'Română',sd:'سنڌي',cy:'Cymraeg'};
 const requestedUiLocale=new URLSearchParams(location.search).get('lang');
-const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1,mr:1,vi:1,te:1,gu:1,kn:1};
+const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1,mr:1,vi:1,te:1,gu:1,kn:1,pl:1,ro:1,pa:1,ur:1,cy:1};
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
-const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
+const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html',pl:'/pl/index.html',ro:'/ro/index.html',pa:'/pa/index.html',ur:'/ur/index.html',cy:'/cy/index.html'};
 // A saved visitor choice wins; otherwise use the browser's supported language.
 // Only the root entry point auto-selects a language; explicit page routes remain authoritative.
 if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash);
@@ -423,6 +423,11 @@ vi:{home:'Trang chủ',login:'Đăng nhập',all:'Tất cả máy tính (tiếng
 te:{home:'ప్రధాన పేజీ',login:'లాగిన్',all:'అన్ని కాలిక్యులేటర్లు (ఆంగ్లం)',search:'కాలిక్యులేటర్‌ను వెతకండి',finance:'ఆర్థికం',tax:'పన్నులు (ఆంగ్లం)',business:'వ్యాపార సాధనాలు (ఆంగ్లం)',global:'గ్లోబల్ కాలిక్యులేటర్లు (ఆంగ్లం)',everyday:'దైనందిన (ఆంగ్లం)',blog:'బ్లాగులు (ఆంగ్లం)',embed:'పొందుపరచు',forBusiness:'వ్యాపారాల కోసం',api:'API',plans:'ప్లాన్‌లు',about:'మా గురించి (ఆంగ్లం)',contact:'సంప్రదించండి (ఆంగ్లం)',admin:'నిర్వాహకుడు',language:'భాష',choose:'వెబ్‌సైట్ భాషను ఎంచుకోండి',change:'భాషను మార్చండి',footer:['ప్రధాన పేజీ','ఆర్థికం (ఆంగ్లం)','పన్నులు (ఆంగ్లం)','వ్యాపార సాధనాలు (ఆంగ్లం)','దైనందిన (ఆంగ్లం)','వ్యాపారాల కోసం','API','ప్లాన్‌లు (ఆంగ్లం)','ప్రీమియం వెయిట్‌లిస్ట్ (ఆంగ్లం)','మా గురించి (ఆంగ్లం)','పద్ధతి (ఆంగ్లం)','గోప్యత (ఆంగ్లం)','నిబంధనలు (ఆంగ్లం)','నిరాకరణ (ఆంగ్లం)','సంప్రదించండి (ఆంగ్లం)']},
 gu:{home:'હોમ',login:'લૉગ ઇન',all:'બધા કેલ્ક્યુલેટર (અંગ્રેજી)',search:'કેલ્ક્યુલેટર શોધો',finance:'નાણાં',tax:'કર (અંગ્રેજી)',business:'વ્યવસાય સાધનો (અંગ્રેજી)',global:'વૈશ્વિક કેલ્ક્યુલેટર (અંગ્રેજી)',everyday:'રોજિંદા ઉપયોગ (અંગ્રેજી)',blog:'બ્લોગ (અંગ્રેજી)',embed:'એમ્બેડ',forBusiness:'વ્યવસાય માટે',api:'API',plans:'યોજનાઓ',about:'અમારા વિશે (અંગ્રેજી)',contact:'સંપર્ક (અંગ્રેજી)',admin:'એડમિન',language:'ભાષા',choose:'વેબસાઇટની ભાષા પસંદ કરો',change:'ભાષા બદલો',footer:['હોમ','નાણાં (અંગ્રેજી)','કર (અંગ્રેજી)','વ્યવસાય (અંગ્રેજી)','રોજિંદા ઉપયોગ (અંગ્રેજી)','વ્યવસાય માટે','API','યોજનાઓ (અંગ્રેજી)','પ્રીમિયમ વેઇટલિસ્ટ (અંગ્રેજી)','અમારા વિશે (અંગ્રેજી)','પદ્ધતિ (અંગ્રેજી)','ગોપનીયતા (અંગ્રેજી)','શરતો (અંગ્રેજી)','અસ્વીકરણ (અંગ્રેજી)','સંપર્ક (અંગ્રેજી)']},
 kn:{home:'ಮುಖಪುಟ',login:'ಲಾಗಿನ್',all:'ಎಲ್ಲಾ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗಳು (ಇಂಗ್ಲಿಷ್)',search:'ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಹುಡುಕಿ',finance:'ಹಣಕಾಸು',tax:'ತೆರಿಗೆ (ಇಂಗ್ಲಿಷ್)',business:'ವ್ಯವಹಾರ ಸಾಧನಗಳು (ಇಂಗ್ಲಿಷ್)',global:'ಜಾಗತಿಕ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗಳು (ಇಂಗ್ಲಿಷ್)',everyday:'ದೈನಂದಿನ ಬಳಕೆ (ಇಂಗ್ಲಿಷ್)',blog:'ಬ್ಲಾಗ್ (ಇಂಗ್ಲಿಷ್)',embed:'ಎಂಬೆಡ್',forBusiness:'ವ್ಯವಹಾರಗಳಿಗಾಗಿ',api:'API',plans:'ಯೋಜನೆಗಳು',about:'ನಮ್ಮ ಬಗ್ಗೆ (ಇಂಗ್ಲಿಷ್)',contact:'ಸಂಪರ್ಕ (ಇಂಗ್ಲಿಷ್)',admin:'ನಿರ್ವಾಹಕ',language:'ಭಾಷೆ',choose:'ವೆಬ್‌ಸೈಟ್ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',change:'ಭಾಷೆ ಬದಲಿಸಿ',footer:['ಮುಖಪುಟ','ಹಣಕಾಸು (ಇಂಗ್ಲಿಷ್)','ತೆರಿಗೆ (ಇಂಗ್ಲಿಷ್)','ವ್ಯವಹಾರ (ಇಂಗ್ಲಿಷ್)','ದೈನಂದಿನ ಬಳಕೆ (ಇಂಗ್ಲಿಷ್)','ವ್ಯವಹಾರಗಳಿಗಾಗಿ','API','ಯೋಜನೆಗಳು (ಇಂಗ್ಲಿಷ್)','ಪ್ರೀಮಿಯಂ ಕಾಯುವ ಪಟ್ಟಿ (ಇಂಗ್ಲಿಷ್)','ನಮ್ಮ ಬಗ್ಗೆ (ಇಂಗ್ಲಿಷ್)','ವಿಧಾನ (ಇಂಗ್ಲಿಷ್)','ಗೌಪ್ಯತೆ (ಇಂಗ್ಲಿಷ್)','ನಿಯಮಗಳು (ಇಂಗ್ಲಿಷ್)','ಹಕ್ಕುತ್ಯಾಗ (ಇಂಗ್ಲಿಷ್)','ಸಂಪರ್ಕ (ಇಂಗ್ಲಿಷ್)']},
+pl:{home:'Strona główna',login:'Zaloguj się',all:'Wszystkie kalkulatory (angielski)',search:'Szukaj kalkulatora',finance:'Finanse',tax:'Podatki (angielski)',business:'Narzędzia biznesowe (angielski)',global:'Kalkulatory globalne',everyday:'Na co dzień (angielski)',blog:'Blog (angielski)',embed:'Osadź',forBusiness:'Dla firm',api:'API',plans:'Plany',about:'O nas (angielski)',contact:'Kontakt (angielski)',admin:'Administrator',language:'Język',choose:'Wybierz język witryny',change:'Zmień język',footer:['Strona główna','Finanse','Podatki (angielski)','Biznes (angielski)','Na co dzień (angielski)','Dla firm','API','Plany','Lista premium','O nas (angielski)','Metodologia (angielski)','Prywatność (angielski)','Warunki (angielski)','Zastrzeżenia (angielski)','Kontakt (angielski)']},
+ro:{home:'Acasă',login:'Autentificare',all:'Toate calculatoarele (engleză)',search:'Caută un calculator',finance:'Finanțe',tax:'Impozite (engleză)',business:'Instrumente pentru afaceri (engleză)',global:'Calculatoare globale',everyday:'Uz zilnic (engleză)',blog:'Blog (engleză)',embed:'Încorporează',forBusiness:'Pentru companii',api:'API',plans:'Planuri',about:'Despre noi (engleză)',contact:'Contact (engleză)',admin:'Administrator',language:'Limbă',choose:'Alege limba site-ului',change:'Schimbă limba',footer:['Acasă','Finanțe','Impozite (engleză)','Afaceri (engleză)','Uz zilnic (engleză)','Pentru companii','API','Planuri','Listă premium','Despre noi (engleză)','Metodologie (engleză)','Confidențialitate (engleză)','Termeni (engleză)','Declinarea răspunderii (engleză)','Contact (engleză)']},
+pa:{home:'ਮੁੱਖ ਪੰਨਾ',login:'ਲੌਗ ਇਨ',all:'ਸਾਰੇ ਕੈਲਕੁਲੇਟਰ (ਅੰਗਰੇਜ਼ੀ)',search:'ਕੈਲਕੁਲੇਟਰ ਖੋਜੋ',finance:'ਵਿੱਤ',tax:'ਟੈਕਸ (ਅੰਗਰੇਜ਼ੀ)',business:'ਕਾਰੋਬਾਰੀ ਟੂਲ (ਅੰਗਰੇਜ਼ੀ)',global:'ਵਿਸ਼ਵਵਿਆਪੀ ਕੈਲਕੁਲੇਟਰ',everyday:'ਰੋਜ਼ਾਨਾ (ਅੰਗਰੇਜ਼ੀ)',blog:'ਬਲੌਗ (ਅੰਗਰੇਜ਼ੀ)',embed:'ਐਂਬੈਡ',forBusiness:'ਕਾਰੋਬਾਰਾਂ ਲਈ',api:'API',plans:'ਯੋਜਨਾਵਾਂ',about:'ਸਾਡੇ ਬਾਰੇ (ਅੰਗਰੇਜ਼ੀ)',contact:'ਸੰਪਰਕ (ਅੰਗਰੇਜ਼ੀ)',admin:'ਐਡਮਿਨ',language:'ਭਾਸ਼ਾ',choose:'ਵੈੱਬਸਾਈਟ ਦੀ ਭਾਸ਼ਾ ਚੁਣੋ',change:'ਭਾਸ਼ਾ ਬਦਲੋ',footer:['ਮੁੱਖ ਪੰਨਾ','ਵਿੱਤ','ਟੈਕਸ (ਅੰਗਰੇਜ਼ੀ)','ਕਾਰੋਬਾਰ (ਅੰਗਰੇਜ਼ੀ)','ਰੋਜ਼ਾਨਾ (ਅੰਗਰੇਜ਼ੀ)','ਕਾਰੋਬਾਰਾਂ ਲਈ','API','ਯੋਜਨਾਵਾਂ','ਪ੍ਰੀਮੀਅਮ ਸੂਚੀ','ਸਾਡੇ ਬਾਰੇ (ਅੰਗਰੇਜ਼ੀ)','ਤਰੀਕਾ (ਅੰਗਰੇਜ਼ੀ)','ਪਰਦੇਦਾਰੀ (ਅੰਗਰੇਜ਼ੀ)','ਸ਼ਰਤਾਂ (ਅੰਗਰੇਜ਼ੀ)','ਬੇਦਾਅਵਾ (ਅੰਗਰੇਜ਼ੀ)','ਸੰਪਰਕ (ਅੰਗਰੇਜ਼ੀ)']},
+ur:{home:'صفحۂ اول',login:'لاگ اِن',all:'تمام کیلکولیٹر (انگریزی)',search:'کیلکولیٹر تلاش کریں',finance:'مالیات',tax:'ٹیکس (انگریزی)',business:'کاروباری ٹولز (انگریزی)',global:'عالمی کیلکولیٹر',everyday:'روزمرہ (انگریزی)',blog:'بلاگ (انگریزی)',embed:'ایمبیڈ',forBusiness:'کاروبار کے لیے',api:'API',plans:'منصوبے',about:'ہمارے بارے میں (انگریزی)',contact:'رابطہ (انگریزی)',admin:'منتظم',language:'زبان',choose:'ویب سائٹ کی زبان منتخب کریں',change:'زبان تبدیل کریں',footer:['صفحۂ اول','مالیات','ٹیکس (انگریزی)','کاروبار (انگریزی)','روزمرہ (انگریزی)','کاروبار کے لیے','API','منصوبے','پریمیم فہرست','ہمارے بارے میں (انگریزی)','طریقۂ کار (انگریزی)','رازداری (انگریزی)','شرائط (انگریزی)','دستبرداری (انگریزی)','رابطہ (انگریزی)']},
+cy:{home:'Hafan',login:'Mewngofnodi',all:'Pob cyfrifiannell (Saesneg)',search:'Chwilio am gyfrifiannell',finance:'Cyllid',tax:'Trethi (Saesneg)',business:'Offer busnes (Saesneg)',global:'Cyfrifianellau byd-eang',everyday:'Bob dydd (Saesneg)',blog:'Blog (Saesneg)',embed:'Mewnblannu',forBusiness:'I fusnesau',api:'API',plans:'Cynlluniau',about:'Amdanom ni (Saesneg)',contact:'Cysylltu (Saesneg)',admin:'Gweinyddwr',language:'Iaith',choose:'Dewiswch iaith y wefan',change:'Newid iaith',footer:['Hafan','Cyllid','Trethi (Saesneg)','Busnes (Saesneg)','Bob dydd (Saesneg)','I fusnesau','API','Cynlluniau','Rhestr aros premiwm','Amdanom ni (Saesneg)','Methodoleg (Saesneg)','Preifatrwydd (Saesneg)','Telerau (Saesneg)','Ymwadiad (Saesneg)','Cysylltu (Saesneg)']},
 };
 const nav=chrome[currentLocale]||chrome.en;
 const links=[
@@ -543,6 +548,11 @@ const footerLabels={
   ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)','Реклама'],
   vi:['Giới thiệu (tiếng Anh)','Phương pháp (tiếng Anh)','Quyền riêng tư (tiếng Anh)','Điều khoản (tiếng Anh)','Tuyên bố miễn trừ (tiếng Anh)','Pháp lý & tuân thủ (tiếng Anh)','Nhúng','Sơ đồ trang (tiếng Anh)','Liên hệ (tiếng Anh)','Quảng cáo'],
   te:['మా గురించి (ఆంగ్లం)','పద్ధతి (ఆంగ్లం)','గోప్యత (ఆంగ్లం)','నిబంధనలు (ఆంగ్లం)','నిరాకరణ (ఆంగ్లం)','చట్టపరమైన సమాచారం (ఆంగ్లం)','పొందుపరచు','సైట్‌మ్యాప్ (ఆంగ్లం)','సంప్రదించండి (ఆంగ్లం)','ప్రకటనలు'],
+pl:['O nas (angielski)','Metodologia (angielski)','Prywatność (angielski)','Warunki (angielski)','Zastrzeżenia (angielski)','Prawo i zgodność (angielski)','Osadź','Mapa witryny (angielski)','Kontakt (angielski)','Reklama'],
+ro:['Despre noi (engleză)','Metodologie (engleză)','Confidențialitate (engleză)','Termeni (engleză)','Declinarea răspunderii (engleză)','Juridic și conformitate (engleză)','Încorporează','Hartă site (engleză)','Contact (engleză)','Publicitate'],
+pa:['ਸਾਡੇ ਬਾਰੇ (ਅੰਗਰੇਜ਼ੀ)','ਤਰੀਕਾ (ਅੰਗਰੇਜ਼ੀ)','ਪਰਦੇਦਾਰੀ (ਅੰਗਰੇਜ਼ੀ)','ਸ਼ਰਤਾਂ (ਅੰਗਰੇਜ਼ੀ)','ਬੇਦਾਅਵਾ (ਅੰਗਰੇਜ਼ੀ)','ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ (ਅੰਗਰੇਜ਼ੀ)','ਐਂਬੈਡ','ਸਾਈਟਮੈਪ (ਅੰਗਰੇਜ਼ੀ)','ਸੰਪਰਕ (ਅੰਗਰੇਜ਼ੀ)','ਇਸ਼ਤਿਹਾਰ'],
+ur:['ہمارے بارے میں (انگریزی)','طریقۂ کار (انگریزی)','رازداری (انگریزی)','شرائط (انگریزی)','دستبرداری (انگریزی)','قانونی معلومات (انگریزی)','ایمبیڈ','سائٹ میپ (انگریزی)','رابطہ (انگریزی)','اشتہارات'],
+cy:['Amdanom ni (Saesneg)','Methodoleg (Saesneg)','Preifatrwydd (Saesneg)','Telerau (Saesneg)','Ymwadiad (Saesneg)','Cyfreithiol a chydymffurfiaeth (Saesneg)','Mewnblannu','Map gwefan (Saesneg)','Cysylltu (Saesneg)','Hysbysebu'],
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
@@ -643,7 +653,7 @@ const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)(?=\/)/,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
   return '/'+next+(normalizedPath.startsWith('/')?normalizedPath:'/'+normalizedPath);
@@ -656,7 +666,7 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy|pl|ro|pa|ur|cy)(?=\/)/,'');
     // Use GET for static hosts/CDNs that do not implement HEAD consistently.
     // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
     const fallbackToEnglishPage=()=>{
