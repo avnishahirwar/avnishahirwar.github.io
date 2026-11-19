@@ -215,8 +215,7 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
   const renderedOrder = [
     'links.slice(0,4)', 'nav.global', 'links.slice(4,5)',
-    'fc-all-calculators-link', 'links.slice(5)', 'fc-header-language-slot',
-    'primaryNav.append(...regionalMarkup.children)'
+    'fc-all-calculators-link', 'links.slice(5)', 'fc-header-language-slot'
   ];
   let renderedLast = -1;
   for (const token of renderedOrder) {
@@ -234,7 +233,8 @@ test('shared Header follows the same navigation and regional-control order on ev
     assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
     homepageLast = index;
   }
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('primaryNav.append(...regionalMarkup.children)'), 'Currency, country/format and units must follow Language inside the shared Header navigation.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
+  assert.ok(shell.includes('regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency, country/format and units must be inside the Settings panel.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -2149,12 +2149,12 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 });
 
 
-test('Header Units control uses consistent readable typography', () => {
+test('Settings regional controls use consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(css, /\.fc-global-links>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
-  assert.ok(css.includes('.fc-global-links .fc-currency-control') && css.includes('min-height:40px'), 'Mobile regional controls must retain readable touch-target sizing.');
+  assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional controls must retain readable touch-target sizing.');
   assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
+  assert.match(shell, /regionalSettingsControls\.append\(currencyControl,countryFormatLabel,unitControl\)/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
 
