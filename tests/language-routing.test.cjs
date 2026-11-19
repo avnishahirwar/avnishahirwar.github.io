@@ -146,3 +146,14 @@ test('every homepage locale alternate cluster includes the Marathi edition and x
     }
   }
 });
+
+
+test('language directory lists exactly 50 unique language editions with accurate availability groups', () => {
+  const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
+  assert.match(page, /Available language editions \(13\)/);
+  assert.match(page, /Planned language editions \(37\)/);
+  assert.equal((page.match(/class="card"/g) || []).length, 50);
+  assert.equal((page.match(/class="status-live"/g) || []).length, 13);
+  assert.equal((page.match(/class="status-soon"/g) || []).length, 37);
+  assert.equal(page.split('href="/mr/index.html"').length - 1, 1, 'Marathi edition link must appear once only');
+});
