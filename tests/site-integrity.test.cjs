@@ -2227,3 +2227,31 @@ test('homepage critical CSS keeps the shared regional Header readable before def
   assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
   assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
 });
+
+
+test('regional dropdown sizing targets the shared header and actual Settings DOM', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('class="fc-global-links"'));
+  assert.ok(shell.includes('class="fc-header-language-slot">\\'+languageControl'));
+  assert.ok(shell.includes("siteSettingsControls.className='fc-settings-site-controls'"));
+  assert.ok(shell.includes("regionalSettingsControls.className='fc-settings-site-controls'"));
+  assert.ok(shell.includes("regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)"));
+  const headerSelector = '.fc-global-links .fc-language-control select';
+  const settingsSelector = 'body>.fc-display-panel .fc-settings-site-controls select';
+  const headerStart = css.lastIndexOf(headerSelector);
+  const settingsStart = css.lastIndexOf(settingsSelector);
+  assert.ok(headerStart >= 0, 'The visible Header Language selector must be styled');
+  assert.ok(settingsStart >= 0, 'The actual Settings dropdowns must be styled');
+  const headerRule = css.slice(headerStart, css.indexOf('}', headerStart));
+  const settingsRule = css.slice(settingsStart, css.indexOf('}', settingsStart));
+  assert.ok(headerRule.includes('width:180px!important;'));
+  assert.ok(headerRule.includes('height:44px!important;'));
+  assert.ok(settingsRule.includes('width:100%!important;'));
+  assert.ok(settingsRule.includes('height:48px!important;'));
+  const mobileStart = css.lastIndexOf('@media(max-width:760px)');
+  const mobile = css.slice(mobileStart);
+  assert.ok(mobile.includes(headerSelector));
+  assert.ok(mobile.includes('width:100%!important;'));
+  assert.ok(mobile.includes('height:48px!important;'));
+});
