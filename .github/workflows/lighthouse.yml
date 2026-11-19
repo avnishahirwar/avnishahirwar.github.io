@@ -42,6 +42,7 @@ on:
       - "assets/calculator-search-index.json"
       - "calculators/minutes-to-hours-calculator.html"
       - "tests/mobile-schema.test.cjs"
+      - "scripts/check-site-shell-runtime.cjs"
       - "_headers"
 
 permissions:
