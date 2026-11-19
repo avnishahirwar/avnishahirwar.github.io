@@ -3,7 +3,14 @@
 const { chromium, firefox, webkit } = require('playwright');
 const assert = require('node:assert/strict');
 const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
-const availableEngines = {\n  chromium: ['Chromium', chromium],\n  chrome: ['Google Chrome', chromium, { channel: 'chrome' }],\n  msedge: ['Microsoft Edge', chromium, { channel: 'msedge' }],\n  opera: ['Opera', chromium, { executablePath: process.env.FC_OPERA_PATH || '/usr/bin/opera', args: ['--no-sandbox'] }],\n  firefox: ['Firefox', firefox],\n  webkit: ['WebKit', webkit]\n};
+const availableEngines = {
+  chromium: ['Chromium', chromium],
+  chrome: ['Google Chrome', chromium, { channel: 'chrome' }],
+  msedge: ['Microsoft Edge', chromium, { channel: 'msedge' }],
+  opera: ['Opera', chromium, { executablePath: process.env.FC_OPERA_PATH || '/usr/bin/opera', args: ['--no-sandbox'] }],
+  firefox: ['Firefox', firefox],
+  webkit: ['WebKit', webkit]
+};
 const selectedBrowser = (process.env.FC_BROWSER || 'all').toLowerCase();
 const engines = selectedBrowser === 'all'
   ? Object.values(availableEngines)
