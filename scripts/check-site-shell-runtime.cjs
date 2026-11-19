@@ -97,7 +97,7 @@ const expression = [
   '  shellCssLoaded, stylesheetHrefs',
   ' };',
   '})()'
-].join('\\n');
+].join('\n');
 
 const inspectPage = async (name, path) => {
   await cdp('Page.navigate', { url: new URL(path, ORIGIN).href });
