@@ -73,13 +73,13 @@ jobs:
         run: |
           set -euo pipefail
           for attempt in {1..30}; do
-            html="$(curl -fsSL "https://friendlycalculator.in/calculators/loan-emi-calculator.html?deploy=${GITHUB_SHA}" || true)"
-            js="$(curl -fsSL "https://friendlycalculator.in/assets/loan-emi-calculator.js?deploy=${GITHUB_SHA}" || true)"
-            directory="$(curl -fsSL "https://friendlycalculator.in/calculator/site-directory.html?deploy=${GITHUB_SHA}" || true)"
-            legal="$(curl -fsSL "https://friendlycalculator.in/calculator/legal-compliance.html?deploy=${GITHUB_SHA}" || true)"
-            international="$(curl -fsSL "https://friendlycalculator.in/international/?deploy=${GITHUB_SHA}" || true)"
-            shell="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
-            shell_css="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
+            html="$(curl -fsSL "${BASE_URL}/calculators/loan-emi-calculator.html?deploy=${GITHUB_SHA}" || true)"
+            js="$(curl -fsSL "${BASE_URL}/assets/loan-emi-calculator.js?deploy=${GITHUB_SHA}" || true)"
+            directory="$(curl -fsSL "${BASE_URL}/calculator/site-directory.html?deploy=${GITHUB_SHA}" || true)"
+            legal="$(curl -fsSL "${BASE_URL}/calculator/legal-compliance.html?deploy=${GITHUB_SHA}" || true)"
+            international="$(curl -fsSL "${BASE_URL}/international/?deploy=${GITHUB_SHA}" || true)"
+            shell="$(curl -fsSL "${BASE_URL}/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
+            shell_css="$(curl -fsSL "${BASE_URL}/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
             if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q "const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links')" <<<"$shell" && grep -q "const assistantLauncher=document.getElementById('fc-ai-lazy-launch')" <<<"$shell" && grep -q "quickActions.appendChild(installButton)" <<<"$shell" && grep -q '#fc-ai-lazy-launch{position:fixed' <<<"$shell_css"; then
               echo "Production calculator assets match commit ${GITHUB_SHA}."
               exit 0
@@ -93,6 +93,26 @@ jobs:
       - name: Verify shared Header/Footer and Settings dock in a real browser
         if: github.event_name == 'push'
         run: node scripts/check-site-shell-runtime.cjs
+
+      - name: Wait for the pull-request Cloudflare preview and select audit base URL
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
+          base_url="https://${slug}.friendly-calculator.pages.dev"
+          for attempt in {1..30}; do
+            html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
+            if grep -q 'fc-calculator-reserved' <<<"$html"; then
+              echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
+              echo "Auditing pull-request preview: $base_url"
+              exit 0
+            fi
+            echo "Waiting for Cloudflare preview (attempt ${attempt}/30): $base_url"
+            sleep 10
+          done
+          echo "::error::Pull-request preview did not publish the reserved calculator section."
+          exit 1
 
       - name: Run Lighthouse across representative site-wide page types and languages
         shell: bash
@@ -126,24 +146,24 @@ jobs:
             jq -r '(.audits["layout-shift-elements"].details.items // [])[:5][] | "- " + (.node.selector // "unknown") + " — " + (.node.snippet // "") + " (score " + ((.score // 0) | tostring) + ")"' "lighthouse-results/$name.json"
             echo "LCP element ($name):"
             jq -r '.audits["largest-contentful-paint-element"].details.items[0].node.snippet // "not reported"' "lighthouse-results/$name.json"
-          done <<'URLS'
-          homepage|https://friendlycalculator.in/
-          directory|https://friendlycalculator.in/calculator/site-directory.html
-          gst-calculator|https://friendlycalculator.in/calculators/gst-calculator.html
-          loan-emi|https://friendlycalculator.in/calculators/loan-emi-calculator.html
-          minutes-to-hours|https://friendlycalculator.in/calculators/minutes-to-hours-calculator.html
-          finance-category|https://friendlycalculator.in/calculator/finance-calculators.html
-          tax-category|https://friendlycalculator.in/calculator/tax.html
-          income-tax|https://friendlycalculator.in/calculators/income-tax-calculator.html
-          sip-calculator|https://friendlycalculator.in/calculators/sip-calculator.html
-          mortgage-calculator|https://friendlycalculator.in/calculators/mortgage-calculator.html
-          methodology|https://friendlycalculator.in/calculator/methodology.html
-          about|https://friendlycalculator.in/calculator/about.html
-          international-home|https://friendlycalculator.in/international/
-          blog-home|https://friendlycalculator.in/blog/
-          hindi-home|https://friendlycalculator.in/hi/index.html
-          spanish-home|https://friendlycalculator.in/es/index.html
-          legal-compliance|https://friendlycalculator.in/calculator/legal-compliance.html
+          done <<URLS
+          homepage|${BASE_URL}/
+          directory|${BASE_URL}/calculator/site-directory.html
+          gst-calculator|${BASE_URL}/calculators/gst-calculator.html
+          loan-emi|${BASE_URL}/calculators/loan-emi-calculator.html
+          minutes-to-hours|${BASE_URL}/calculators/minutes-to-hours-calculator.html
+          finance-category|${BASE_URL}/calculator/finance-calculators.html
+          tax-category|${BASE_URL}/calculator/tax.html
+          income-tax|${BASE_URL}/calculators/income-tax-calculator.html
+          sip-calculator|${BASE_URL}/calculators/sip-calculator.html
+          mortgage-calculator|${BASE_URL}/calculators/mortgage-calculator.html
+          methodology|${BASE_URL}/calculator/methodology.html
+          about|${BASE_URL}/calculator/about.html
+          international-home|${BASE_URL}/international/
+          blog-home|${BASE_URL}/blog/
+          hindi-home|${BASE_URL}/hi/index.html
+          spanish-home|${BASE_URL}/es/index.html
+          legal-compliance|${BASE_URL}/calculator/legal-compliance.html
           URLS
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
