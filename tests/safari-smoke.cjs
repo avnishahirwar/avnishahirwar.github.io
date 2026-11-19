@@ -34,7 +34,7 @@ const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
       "return document.documentElement.scrollWidth > document.documentElement.clientWidth + 2"
     );
     if (calculatorOverflow) throw new Error('Safari: calculator horizontal overflow');
-    process.stdout.write('Safari desktop/mobile viewport smoke test passed.\\n');
+    process.stdout.write('Safari desktop/mobile viewport smoke test passed.\n');
   } finally {
     await driver.quit();
   }
