@@ -26,7 +26,7 @@ try {
     if (!document.querySelector('header.fc-global-header')) {
       const header = document.createElement('header');
       header.className = 'fc-global-header fc-shell-failsafe';
-      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/international/">Global Calculators</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blogs</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="ja">日本語</option><option value="ru">Русский</option></select></label></nav></div>';
+      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/international/">Global Calculators</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blogs</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><span class="fc-header-language-slot"><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="ja">日本語</option><option value="ru">Русский</option></select></label></span></nav></div>';
       document.body.prepend(header);
     }
     // Normalize legacy page footers instead of appending a second footer.
@@ -459,9 +459,8 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep the date-format selector in a hidden compatibility node for
-// global-locale.js. Currency, country/format and units retain their original IDs
-// and are mounted in Settings so existing locale listeners continue to work.
+// Keep legacy country/date selectors hidden for FCLocale. Visible regional
+// controls stay in the shared Header and are mirrored in Settings.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
@@ -469,14 +468,15 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Keep regional preference controls out of the Header; Settings mounts them below.
-if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
+// Keep source controls available for FCLocale before building the visible combined selector.
+if(regionalControlsSource){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
-  // Keep regional preferences out of the Header; Settings owns these controls.
+  if(!document.querySelector('.fc-currency-control'))regionalMarkup.insertAdjacentHTML('beforeend',currencyControl);
+  if(!document.querySelector('.fc-country-control'))regionalMarkup.insertAdjacentHTML('beforeend',countryControl);
+  if(!document.querySelector('.fc-unit-control'))regionalMarkup.insertAdjacentHTML('beforeend',unitControl);
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language remains the final Header control after Login; regional preferences live in Settings.
+// Language remains after Login; regional preferences follow it in the same Header navigation.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
@@ -1341,7 +1341,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     }
   });
   // Regional controls are staged in a hidden compatibility node for FCLocale.
-  // The visible currency, country/format and units controls are mounted in Settings.
+  // Currency and units are promoted into the Header; the country/date source controls remain hidden for FCLocale.
   panel.append(panelHead);
   const currencyControl=document.querySelector('.fc-currency-control');
   const countryControl=document.querySelector('.fc-country-control');
@@ -1349,14 +1349,15 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const unitControl=document.querySelector('.fc-unit-control');
   const countrySelect=countryControl?.querySelector('select');
   const localeSelect=formatControl?.querySelector('select');
-  const countryFormatLabel=document.createElement('label');
+  const countryFormatLabel=activeHeader.querySelector('.fc-country-format-control')||document.createElement('label');
   countryFormatLabel.className='fc-country-format-control';
-  const countryFormatText=document.createElement('span');
+  const countryFormatText=countryFormatLabel.querySelector('span')||document.createElement('span');
   countryFormatText.textContent=t.countryFormat;
-  const countryFormatSelect=document.createElement('select');
+  const countryFormatSelect=countryFormatLabel.querySelector('select')||document.createElement('select');
   countryFormatSelect.id='fc-country-format-display';
   countryFormatSelect.setAttribute('aria-label',t.countryFormat);
   if(countrySelect&&localeSelect){
+    countryFormatSelect.replaceChildren();
     const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
     Array.from(localeSelect.options).forEach(localeOption=>{
       const locale=localeOption.value;
@@ -1410,8 +1411,9 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  // Language remains in the Header. Currency, country/format and units are
-  // displayed only inside Settings & Accessibility below.
+  // Keep regional selectors after Language in the shared Header and mirror
+  // them in Settings & Accessibility below.
+  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1423,7 +1425,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   addSectionHeading(t.siteSettings);
   const siteSettingsControls=document.createElement('div');
   siteSettingsControls.className='fc-settings-site-controls';
-  const mirrorSiteControl=source=>{
+  const mirrorSiteControl=(source,target=siteSettingsControls)=>{
     if(!source)return;
     const mirror=source.cloneNode(true);
     const sourceSelect=source.querySelector('select');
@@ -1439,15 +1441,17 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       sourceSelect.dispatchEvent(new Event('change',{bubbles:true}));
       sync();
     });
-    siteSettingsControls.appendChild(mirror);
+    target.appendChild(mirror);
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
-  mirrorSiteControl(headerLanguageControl);
+  mirrorSiteControl(headerLanguageControl,siteSettingsControls);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
   const regionalSettingsControls=document.createElement('div');
   regionalSettingsControls.className='fc-settings-site-controls';
-  regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl);
+  mirrorSiteControl(currencyControl,regionalSettingsControls);
+  mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
+  mirrorSiteControl(unitControl,regionalSettingsControls);
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
