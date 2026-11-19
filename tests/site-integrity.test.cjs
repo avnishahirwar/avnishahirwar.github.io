@@ -2250,3 +2250,22 @@ test('visible brand text is included in accessible names and homepage feature ic
   assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
   assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
 });
+
+
+test('homepage calculator category directory heading does not contain a stale hard-coded count', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(html.includes('<h2 id="home-category-directory-title">Browse calculator categories</h2>'));
+  assert.ok(!html.includes('Browse all 19 calculator categories'));
+});
+
+test('calculator directory has specific title, description and matching Open Graph metadata', () => {
+  const html = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  assert.ok(html.includes('<title>All Calculators Directory | Friendly Calculator</title>'));
+  assert.ok(html.includes('Browse 564 free online calculators across 20 categories'));
+  assert.ok(html.includes('<meta property="og:title" content="All Calculators Directory | Friendly Calculator">'));
+});
+
+test('Lighthouse preview URL parser accepts Cloudflare Pages preview slug formats', () => {
+  const workflow = fs.readFileSync(path.join(root, '.github/workflows/lighthouse.yml'), 'utf8');
+  assert.ok(workflow.includes('https://${slug}[a-z0-9-]*\\.friendly-calculator\\.pages\\.dev'));
+});
