@@ -182,7 +182,7 @@ test('owner-designated permanent website features are protected from accidental 
 });
 
  
-test('shared header and footer retain navigation order while regional preferences stay outside both', () => {
+test('shared Header follows the same navigation and regional-control order on every page', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   const expectedHeader = [
@@ -207,12 +207,34 @@ test('shared header and footer retain navigation order while regional preference
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow navigation in the shared Header.');
+  assert.ok(headerMarkup.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must be the first control after Login inside the shared navigation.');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
-  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('fc-all-calculators-link'), 'Global Tools must appear before the plain All Calculators link.');
+  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear after Tax and before Everyday.');
+  assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
   assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
   assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Only date-format compatibility remains hidden; currency, country and units are visible in Header.');
+  const renderedOrder = [
+    'links.slice(0,4)', 'nav.global', 'links.slice(4,5)',
+    'fc-all-calculators-link', 'links.slice(5)', 'fc-header-language-slot',
+    'primaryNav.append(...regionalMarkup.children)'
+  ];
+  let renderedLast = -1;
+  for (const token of renderedOrder) {
+    const index = shell.indexOf(token, headerStart);
+    assert.ok(index > renderedLast, 'Rendered Header order is incorrect at: ' + token);
+    renderedLast = index;
+  }
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
+  const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
+  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
+  let homepageLast = -1;
+  for (const token of homepageOrder) {
+    const index = homepageNav.indexOf(token);
+    assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
+    homepageLast = index;
+  }
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('primaryNav.append(...regionalMarkup.children)'), 'Currency, country/format and units must follow Language inside the shared Header navigation.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -1263,7 +1285,8 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v4/);
+  assert.match(worker, /friendly-calculator-public-v5/);
+  assert.match(worker, /key !== CACHE_NAME/);
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const offline = fs.readFileSync(path.join(root, 'offline.html'), 'utf8');
   assert.equal(manifest.start_url, '/');
@@ -2034,7 +2057,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /src="\/assets\/site-shell\.js" defer/);
 });
 
-test('Settings trigger is in a standalone floating dock; Language stays in the header and Accessibility has two modes', () => {
+test('Settings trigger is the final Footer item; Site Settings mirrors Header controls', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
@@ -2048,18 +2071,20 @@ test('Settings trigger is in a standalone floating dock; Language stays in the h
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("+'</nav>'+languageControl+'</div>"), 'Language must remain in the shared header after Login.');
+  assert.ok(shell.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must remain inside the shared Header after Login.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
-  assert.ok(shell.includes("dock.appendChild(open)") && shell.includes("dock.appendChild(trigger)"), 'The Settings trigger must be inserted into the standalone floating tools dock.');
-  assert.ok(!shell.includes("footerNav.appendChild(open)") && !shell.includes("footerNav.appendChild(trigger)"), 'Settings must stay outside the shared footer.');
+  assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl'), 'Settings must include mirrored Site Settings controls.');
+  assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
+  assert.ok(shell.includes("'fc-footer-settings-link'"), 'Footer Settings must use the shared Footer link styling.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
   assert.ok(shell.includes("collectLinks(oldFooter);oldFooter.remove();"), 'Existing footer links must be preserved when duplicate legacy footers are consolidated.');
   assert.ok(shell.includes("document.querySelectorAll('footer.fc-global-footer').forEach((duplicate,index)=>"), 'Only one shared footer may remain.');
   assert.ok(shell.includes("if(!label)button.remove();"), 'Stale blank buttons must be removed from the Settings panel.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Only the two labeled Normal Mode and Dark Mode controls belong in Accessibility.');
-  assert.ok(css.includes('#fc-floating-tools{position:fixed;left:16px;right:auto;bottom:16px') && css.includes('#fc-floating-tools #fc-display-settings'), 'Settings must be positioned in the bottom-left page-level dock.');
-  assert.ok(!css.includes('footer.fc-global-footer .fc-global-footer-links #fc-display-settings'), 'Footer must not contain Settings-specific styling.');
+  assert.ok(css.includes('footer.fc-global-footer .fc-global-footer-links>#fc-display-settings.fc-footer-settings-link'), 'Footer Settings must be styled like the other Footer links.');
+  assert.ok(css.includes('.fc-settings-site-controls{display:grid'), 'Site Settings controls must have a responsive grid layout.');
   assert.ok(css.includes('.fc-theme-mode-options') && css.includes('fc-display-backdrop') && css.includes('width:min(380px,calc(100vw - 24px))'));
   assert.ok(css.includes('.fc-top-row>.fc-language-control{') && css.includes('grid-row:2!important'), 'Mobile Language selector must occupy its own row below the brand.');
   assert.ok(css.includes('#fc-floating-tools{z-index:9990!important}') && css.includes('#fc-ai-panel{z-index:10020!important}'), 'Assistant layering remains intact.');
@@ -2089,7 +2114,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   assert.ok(script.includes("footer.className = 'fc-global-footer'"));
   assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
   assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes("homepageToolsDock.appendChild(homepageSettingsTrigger)"), 'Homepage fallback Settings trigger must be moved into the floating dock.');
+  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'), 'Homepage fallback Settings trigger must be the final Footer navigation item.');
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
@@ -2127,8 +2152,8 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 test('Header Units control uses consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(css, /\.fc-top-row>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
-  assert.ok(css.includes('.fc-top-row>.fc-currency-control') && css.includes('min-height:40px'), 'Mobile regional controls must retain readable touch-target sizing.');
+  assert.match(css, /\.fc-global-links>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
+  assert.ok(css.includes('.fc-global-links .fc-currency-control') && css.includes('min-height:40px'), 'Mobile regional controls must retain readable touch-target sizing.');
   assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
