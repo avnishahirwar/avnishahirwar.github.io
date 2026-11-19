@@ -548,7 +548,7 @@ const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentL
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
 if(footerLinks.length!==footerPaths.length)throw new Error('Footer labels and destinations must stay aligned.');
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.',mr:'दैनंदिन गणनांसाठी उपयुक्त साधने.',vi:'Công cụ hữu ích cho các phép tính hằng ngày.',te:'రోజువారీ లెక్కల కోసం ఉపయోగకరమైన సాధనాలు.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer">Instagram</a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer">LinkedIn</a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com">Email</a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div><div class="fc-daily-counter" data-fc-daily-counter aria-live="polite">Today's visits on this device: —</div></div>`
+f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.',mr:'दैनंदिन गणनांसाठी उपयुक्त साधने.',vi:'Công cụ hữu ích cho các phép tính hằng ngày.',te:'రోజువారీ లెక్కల కోసం ఉపయోగకరమైన సాధనాలు.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer">Instagram</a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer">LinkedIn</a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com">Email</a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>`
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
 const isFooterDirectoryLink=link=>{
@@ -576,36 +576,7 @@ preservedFooterLinks.forEach(link=>{
 });
 document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());
 document.body.appendChild(f);
-  const dailyCounter=f.querySelector('[data-fc-daily-counter]');
-  if(dailyCounter){
-    const label=currentLocale==='hi'?'आज की कुल विज़िट: ':'Today\'s total visits: ';
-    dailyCounter.textContent=label+'…';
-    const countDailyVisits=async()=>{
-      try{
-        let sessionId=sessionStorage.getItem('fc-daily-visit-session');
-        if(!sessionId){
-          sessionId=crypto.randomUUID();
-          sessionStorage.setItem('fc-daily-visit-session',sessionId);
-        }
-        const response=await fetch('https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/daily-visits',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({session_id:sessionId}),
-          cache:'no-store',
-          credentials:'omit'
-        });
-        if(!response.ok)throw new Error('Daily visits request failed: '+response.status);
-        const result=await response.json();
-        if(!result||result.ok!==true||!Number.isFinite(Number(result.total_visits)))throw new Error('Invalid daily visits response');
-        dailyCounter.textContent=label+Number(result.total_visits).toLocaleString(currentLocale==='hi'?'hi-IN':'en-IN');
-      }catch(error){
-        console.warn('Friendly Calculator daily visits counter unavailable:',error);
-        dailyCounter.textContent=currentLocale==='hi'?'आज की कुल विज़िट: उपलब्ध नहीं':'Today\'s total visits: unavailable';
-      }
-    };
-    countDailyVisits();
-  }
-// Highlight only the current destination in each navigation region. The URL,
+  // Highlight only the current destination in each navigation region. The URL,
 // not hover/focus state, determines the persistent active item.
 const normalizePath=path=>path==='/'?'/':path.replace(/\/+$/,'')+'/';
 const currentPath=normalizePath(location.pathname);
