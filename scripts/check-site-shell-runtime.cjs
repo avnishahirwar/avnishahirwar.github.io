@@ -77,6 +77,9 @@ const expression = [
   ' const assistant = quick && quick.querySelector("#fc-ai-lazy-launch");',
   ' const allCalculators = header && header.querySelector(".fc-all-calculators-link");',
   ' const dockStyle = dock ? getComputedStyle(dock) : null;',
+  ' const shellCssLink = Array.from(document.querySelectorAll("link[rel=stylesheet]")).find(link => new URL(link.href, location.href).pathname === "/assets/site-shell.css");',
+  ' const shellCssLoaded = !!(shellCssLink && shellCssLink.sheet);',
+  ' const stylesheetHrefs = Array.from(document.styleSheets).map(sheet => sheet.href).filter(Boolean);',
   ' return {',
   '  readyState: document.readyState, path: location.pathname,',
   '  headerCount: document.querySelectorAll("header.fc-global-header").length,',
@@ -88,20 +91,27 @@ const expression = [
   '  assistantInQuickActions: !!quick && !!assistant && quick.contains(assistant),',
   '  hasH1: !!document.querySelector("h1"),',
   '  allCalculatorsIsPlainLink: !!allCalculators && !allCalculators.hasAttribute("aria-haspopup") && !header.querySelector(".fc-all-dropdown-menu"),',
-  '  dockPosition: dockStyle && dockStyle.position, dockLeft: dockStyle && dockStyle.left, dockRight: dockStyle && dockStyle.right',
+  '  dockPosition: dockStyle && dockStyle.position, dockLeft: dockStyle && dockStyle.left, dockRight: dockStyle && dockStyle.right, shellCssLoaded, stylesheetHrefs',
   ' };',
   '})()'
 ].join('\n');
 
 const inspectPage = async (name, path) => {
   await cdp('Page.navigate', { url: new URL(path, ORIGIN).href });
-  const result = await waitFor(async () => {
-    const value = await evaluate(expression);
-    if (value && value.readyState === 'complete' && value.headerCount === 1 && value.footerCount === 1 &&
-        value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions &&
-        value.dockPosition === 'fixed' && value.dockLeft !== 'auto' && value.dockRight === 'auto') return value;
-    return null;
-  }, 'shared shell on ' + path, 20000);
+  let result;
+  try {
+    result = await waitFor(async () => {
+      const value = await evaluate(expression);
+      if (value && value.readyState === 'complete' && value.headerCount === 1 && value.footerCount === 1 &&
+          value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions &&
+          value.shellCssLoaded && value.dockPosition === 'fixed' && value.dockLeft !== 'auto' && value.dockRight === 'auto') return value;
+      return null;
+    }, 'shared shell on ' + path, 20000);
+  } catch (error) {
+    const diagnostic = await evaluate(expression).catch(() => null);
+    process.stderr.write('DIAGNOSTIC ' + name + ' ' + JSON.stringify(diagnostic) + '\n');
+    throw error;
+  }
 
   process.stdout.write('CHECK ' + name + ' ' + JSON.stringify(result) + '\n');
   assert.equal(result.path, path, name + ': final path');
