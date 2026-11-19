@@ -80,3 +80,28 @@ test('priority calculator hreflang clusters are complete and reciprocal across s
   }
  }
 });
+
+
+test('UK Stamp Duty and National Insurance calculator translations have reciprocal hreflang and working calculator logic',()=>{
+ const published=['en','pl','ro','pa','ur','cy'];
+ const routes=['uk-stamp-duty-calculator.html','national-insurance-calculator.html'];
+ for(const route of routes){
+  for(const locale of published){
+   const file=path.join(root,locale==='en'?'':locale,'calculators',route);
+   const html=fs.readFileSync(file,'utf8');
+   const expected=published.map(code=>[code,'https://friendlycalculator.in/'+(code==='en'?'':code+'/')+'calculators/'+route]);
+   expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
+   const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
+   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   assert.deepEqual(actual,expected,locale+'/'+route);
+   assert.match(html,new RegExp('<html lang="'+locale+'"'));
+   assert.match(html,/rel="canonical"/);
+   if(route==='uk-stamp-duty-calculator.html')assert.match(html,/calculateSDLT/);
+   else assert.match(html,/getElementById\\("earnings"\\)/);
+  }
+ }
+ const urStamp=fs.readFileSync(path.join(root,'ur/calculators/uk-stamp-duty-calculator.html'),'utf8');
+ const urNi=fs.readFileSync(path.join(root,'ur/calculators/national-insurance-calculator.html'),'utf8');
+ assert.match(urStamp,/<html lang="ur" dir="rtl">/);
+ assert.match(urNi,/<html lang="ur" dir="rtl">/);
+});
