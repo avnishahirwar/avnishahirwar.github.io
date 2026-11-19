@@ -2167,13 +2167,15 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 });
 
 
-test('Settings regional controls use consistent readable typography', () => {
+test('Header regional selectors use consistent readable sizing and Settings mirrors', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional controls must retain readable touch-target sizing.');
-  assert.match(shell, /regionalMarkup\.innerHTML=countryControl\+unitControl/);
-  assert.match(shell, /regionalSettingsControls\.append\(countryFormatLabel,unitControl\)/);
-  assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
+  assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors must share consistent dimensions.');
+  assert.match(shell, /regionalMarkup\\.innerHTML=countryControl\\+unitControl/);
+  assert.match(shell, /primaryNav\\.append\\(currencyControl,countryFormatLabel,unitControl\\)/);
+  assert.match(shell, /mirrorSiteControl\\(countryFormatLabel,regionalSettingsControls\\)/);
+  assert.match(shell, /mirrorSiteControl\\(unitControl,regionalSettingsControls\\)/);
+  assert.doesNotMatch(shell, /addSettingRow\\('fc-display-units-row'/);
 });
 
 test('legacy All Pages footer links are excluded while Sitemap remains', () => {
