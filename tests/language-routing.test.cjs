@@ -135,3 +135,14 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
   assert.match(shell, /mr:{home:'मुख्यपृष्ठ'/);
   assert.match(shell, /mr:'\/mr\/index\.html'/);
 });
+
+
+test('every homepage locale alternate cluster includes the Marathi edition and x-default', () => {
+  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html'];
+  for (const file of pages) {
+    const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
+    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','x-default']) {
+      assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
+    }
+  }
+});
