@@ -3,7 +3,12 @@
 const { chromium, firefox, webkit } = require('playwright');
 const assert = require('node:assert/strict');
 const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
-const engines = [['Chromium', chromium], ['Firefox', firefox], ['WebKit', webkit]];
+const availableEngines = { chromium: ['Chromium', chromium], firefox: ['Firefox', firefox], webkit: ['WebKit', webkit] };
+const selectedBrowser = (process.env.FC_BROWSER || 'all').toLowerCase();
+const engines = selectedBrowser === 'all'
+  ? Object.values(availableEngines)
+  : availableEngines[selectedBrowser] ? [availableEngines[selectedBrowser]] : [];
+if (!engines.length) throw new Error('Unsupported FC_BROWSER: ' + selectedBrowser);
 
 async function checkPage(browser, url, label, viewport) {
   const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
@@ -11,23 +16,17 @@ async function checkPage(browser, url, label, viewport) {
   page.on('pageerror', error => errors.push(error.message));
   const response = await page.goto(new URL(url, origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   assert.ok(response && response.ok(), label + ': HTTP response');
-  // Some legacy locale controls intentionally remain hidden for compatibility.
-  // Assert the actual visible Header controls and the combined regional selector.
-  for (const selector of [
-    'header.fc-global-header',
-    'footer.fc-global-footer',
-    '.fc-header-language-slot #fc-language-select',
-    '.fc-global-links > .fc-currency-control #fc-currency-select',
-    '.fc-global-links > .fc-country-format-control #fc-country-format-display',
-    '.fc-global-links > .fc-unit-control #fc-unit-system-select'
-  ]) {
-    await page.locator(selector).waitFor({ state: 'visible', timeout: 20000 });
-  }
-  const settings = page.locator('footer.fc-global-footer #fc-display-settings');
+  await page.locator('header.fc-global-header').waitFor({ state: 'visible', timeout: 20000 });
+  await page.locator('footer.fc-global-footer').waitFor({ state: 'visible', timeout: 20000 });
+  await page.locator('#fc-primary-navigation').waitFor({ state: 'attached', timeout: 20000 });
+  const settings = page.locator('#fc-display-settings');
   await settings.waitFor({ state: 'visible', timeout: 20000 });
   assert.equal((await settings.innerText()).trim(), 'Settings', label + ': Settings label');
   await settings.click();
-  await page.locator('#fc-display-panel').waitFor({ state: 'visible', timeout: 10000 });
+  const panel = page.locator('#fc-display-panel');
+  await panel.waitFor({ state: 'visible', timeout: 10000 });
+  const regionalControls = panel.locator('.fc-settings-site-controls select:visible');
+  assert.ok(await regionalControls.count() >= 4, label + ': language, currency, country/format and units controls');
   const dims = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
   assert.ok(dims.document <= dims.viewport + 2, label + ': horizontal overflow ' + JSON.stringify(dims));
   assert.deepEqual(errors, [], label + ': uncaught JavaScript errors');
