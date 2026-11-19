@@ -98,10 +98,12 @@ const inspectPage = async (name, path) => {
   const result = await waitFor(async () => {
     const value = await evaluate(expression);
     if (value && value.readyState === 'complete' && value.headerCount === 1 && value.footerCount === 1 &&
-        value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions) return value;
+        value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions &&
+        value.dockPosition === 'fixed' && value.dockLeft !== 'auto' && value.dockRight === 'auto') return value;
     return null;
   }, 'shared shell on ' + path, 20000);
 
+  process.stdout.write('CHECK ' + name + ' ' + JSON.stringify(result) + '\n');
   assert.equal(result.path, path, name + ': final path');
   assert.equal(result.headerCount, 1, name + ': exactly one shared Header');
   assert.equal(result.footerCount, 1, name + ': exactly one shared Footer');
