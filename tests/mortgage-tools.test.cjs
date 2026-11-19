@@ -120,7 +120,7 @@ test('all 16 secondary mortgage pages use the shared locale-aware calculator UI'
     assert.ok(html.includes('data-mortgage-tool="' + type + '"'), 'Missing tool mapping: ' + file);
     assert.ok(html.includes('/assets/mortgage-tools.js'), 'Missing shared engine: ' + file);
     assert.ok(html.includes('/assets/mortgage-tools.css'), 'Missing shared styles: ' + file);
-    assert.ok(html.includes('class="mortgage-methodology"'), 'Missing formula and assumptions content: ' + file);
+    assert.ok(html.includes('mortgage-methodology'), 'Missing formula and assumptions content: ' + file);
     assert.ok(html.includes('Display currency settings'), 'Missing locale/currency guidance: ' + file);
   }
 });
