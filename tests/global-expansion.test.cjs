@@ -102,6 +102,7 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes('aria-label="Instagram" title="Instagram"') && shell.includes('aria-label="LinkedIn" title="LinkedIn"') && shell.includes('aria-label="Email" title="Email"'), 'Footer social icons must retain accessible names for Instagram, LinkedIn and Email.');
   assert.ok(shell.includes('<svg viewBox="0 0 24 24" aria-hidden="true"') && shell.includes('class="fc-social-link"'), 'Footer social links must render actual inline SVG icons, not text-only labels.');
+  assert.ok(fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('footer.fc-global-footer .fc-social-links .fc-social-link{') && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('border-radius:50%!important'), 'Footer social icon controls must retain a circular shape.');
   assert.ok(shell.includes("trigger.textContent=(language==='hi'?") && !shell.includes("trigger.textContent='⚙ '+"), 'Settings label must not include the gear symbol.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
 });
