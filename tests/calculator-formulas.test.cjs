@@ -589,7 +589,7 @@ function runExtraCalculator(slug, values) {
 
 function extraResultNumber(html, label) {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = html.match(new RegExp('<span>' + escaped + '</span><strong>₹([0-9,]+(?:\\.[0-9]+)?)</strong>'));
+  const match = html.match(new RegExp('<span>' + escaped + '</span><strong>₹([0-9,]+(?:\.[0-9]+)?)</strong>'));
   assert.ok(match, 'Missing currency result row: ' + label);
   return Number(match[1].replace(/,/g, ''));
 }
@@ -1274,4 +1274,27 @@ test('chemistry batch 10 formulas reject invalid atomic, physical and crystallog
   assert.throws(() => batch10.combustionAnalysis({ sample: 0.1, co2: 10, water: 1 }), /more C and H mass/);
   assert.throws(() => batch10.combustionReaction({ carbon: 0, hydrogen: 4 }), /positive whole-number/);
   assert.throws(() => batch10.miller({ x: 0, y: 0, z: 0 }), /At least one intercept/);
+});
+
+test('property investment calculator is discoverable and calculates rental returns', () => {
+  const page = fs.readFileSync(new URL('../calculators/property-investment-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(page, /<title>Property Investment Calculator/);
+  assert.match(page, /property-investment-calculator\\.html/);
+  assert.match(page, /id="price"/);
+  assert.match(page, /id="rent"/);
+  assert.match(page, /annual=rent\\*12/);
+  assert.match(page, /net=annual-costs/);
+  assert.match(page, /annual\\/price\\*100/);
+  assert.match(page, /net\\/down\\*100/);
+});
+
+test('wealth planner calculator validates inputs and models compounding with annual savings', () => {
+  const page = fs.readFileSync(new URL('../calculators/wealth-planner-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(page, /<title>Millionaire/);
+  assert.match(page, /wealth-planner-calculator\\.html/);
+  assert.match(page, /id="target"/);
+  assert.match(page, /id="saving"/);
+  assert.match(page, /r<=-1/);
+  assert.match(page, /balance=balance\\*\\(1\\+r\\)\\+a/);
+  assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
 });
