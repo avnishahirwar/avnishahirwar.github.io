@@ -72,14 +72,14 @@ test('shared footer retains Sitemap; regional preferences follow Language in Hea
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
-  assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must remain inside the header navigation after Login.');
-  assert.ok(shell.includes("languageControlElement.after(currencyControl,countryFormatLabel,unitControl)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
+  assert.ok(headerMarkup.includes("+'</nav>'+languageControl+'</div>"), 'Language selector must follow the navigation as a Header control.');
+  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("(activeHeader.querySelector('.fc-top-row')||primaryNav).append(...regionalMarkup.children)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('const activeHeader=h;'), 'Active state must target the mounted canonical header, not a replaced legacy node.');
   assert.ok(shell.includes('fc-regional-settings-source'), 'Original country and locale controls must remain available for locale compatibility.');
-  assert.ok(shell.includes('regionalControlsSource.appendChild(compatibilityControls)'), 'Hidden original locale controls must preserve the global locale event contract.');
+  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'The hidden date-format selector must preserve the global locale compatibility contract without duplicate visible control IDs.');
   assert.ok(!shell.includes("addSettingRow('fc-display-currency-row'"), 'Display currency must not be placed inside Settings & Accessibility.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
