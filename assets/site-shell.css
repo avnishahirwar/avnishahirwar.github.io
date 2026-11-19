@@ -649,6 +649,9 @@ footer.fc-global-footer .fc-footer-bottom small,footer.fc-global-footer .fc-foot
 @media(max-width:760px){footer.fc-global-footer{padding:14px 0 0!important;margin-top:24px!important}footer.fc-global-footer .fc-global-footer-inner{width:92%!important}footer.fc-global-footer .fc-footer-top{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:12px!important}footer.fc-global-footer .fc-global-footer-links{justify-content:flex-start!important;gap:8px 14px!important;padding:8px 0!important}footer.fc-global-footer .fc-footer-bottom{min-height:48px!important;flex-wrap:wrap!important}}
 
 
+.fc-top-row>.fc-language-control{padding-left:16px;border-left:1px solid #8290a2}
+.fc-top-row>.fc-language-control select{min-width:140px;max-width:160px;border-radius:7px;font-weight:700}
+@media(max-width:1120px){.fc-top-row>.fc-language-control{flex:1 1 100%;padding:8px 0 0;border-left:0;border-top:1px solid #46566b}.fc-top-row>.fc-language-control select{max-width:none}}
 /* Regional preferences are visible in the shared Header immediately after Language. */
 .fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{display:inline-flex;align-items:center;gap:5px;min-width:0;color:#f7f9fc;font-size:.72rem;font-weight:700;white-space:nowrap}
 .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{height:34px;max-width:155px;min-width:0;padding:5px 7px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .76rem/1.2 system-ui,sans-serif}
