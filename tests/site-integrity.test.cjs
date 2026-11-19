@@ -52,6 +52,15 @@ test('AdSense auto ads are excluded from navigation, contact and interactive cal
     assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
   }
 });
+test('Income Tax calculator reserves its dynamic form before JavaScript initialization', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
+  const pageCalculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
+  assert.match(html, /<section id="live-page-calculator" class="panel fc-calculator-reserved" aria-busy="true"/);
+  assert.match(html, /\.fc-calculator-reserved\{min-height:360px\}/);
+  assert.match(html, /@media\(max-width:640px\)\{\.fc-calculator-reserved\{min-height:500px\}/);
+  assert.match(pageCalculators, /panel\.append\(form,output\);panel\.removeAttribute\("aria-busy"\)/);
+});
+
 test('every public sitemap page loads the shared site header and footer shell', () => {
   const failures = [];
   for (const url of urls) {
