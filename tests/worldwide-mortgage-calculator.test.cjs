@@ -77,3 +77,38 @@ test('all 195 country directory entries link to the worldwide mortgage calculato
  const general=fs.readFileSync(path.join(root,'calculators/mortgage-calculator.html'),'utf8');
  assert.match(general,/href="\/international\/global-mortgage-calculator\.html"/);
 });
+
+
+test('worldwide mortgage converts nominal compounding to the selected payment interval',()=>{
+ const canada=calc.calculateWorldwideMortgage({homePrice:250000,downPayment:50000,annualInterestRate:5,termYears:25,compoundingFrequency:'semi-annually',paymentFrequency:'monthly'});
+ const rate=Math.pow(1+0.05/2,2/12)-1;
+ const expected=200000*rate/(1-Math.pow(1+rate,-300));
+ assert.ok(Math.abs(canada.paymentPerPeriod-expected)<1e-8);
+ assert.equal(canada.compoundingFrequency,'semi-annually');
+ assert.equal(canada.paymentFrequency,'monthly');
+ assert.equal(canada.paymentsPerYear,12);
+});
+test('worldwide mortgage supports semi-monthly, biweekly and weekly repayment periods',()=>{
+ const base={homePrice:180000,downPayment:30000,annualInterestRate:4.75,termYears:20,compoundingFrequency:'monthly'};
+ for(const [frequency,count] of [['semi-monthly',24],['biweekly',26],['weekly',52]]){
+  const result=calc.calculateWorldwideMortgage({...base,paymentFrequency:frequency});
+  assert.equal(result.paymentsPerYear,count);
+  assert.equal(result.periods,20*count);
+  assert.ok(result.paymentPerPeriod>0);
+  assert.ok(result.monthlyPrincipalAndInterest>0);
+  assert.ok(result.totalInterest>0);
+ }
+});
+test('worldwide mortgage rejects unsupported compounding and payment frequencies',()=>{
+ const base={homePrice:100000,downPayment:10000,annualInterestRate:5,termYears:20};
+ assert.throws(()=>calc.calculateWorldwideMortgage({...base,compoundingFrequency:'unknown'}),/compounding frequency/i);
+ assert.throws(()=>calc.calculateWorldwideMortgage({...base,paymentFrequency:'daily'}),/payment frequency/i);
+});
+test('Canada country selection defaults to semi-annual compounding and the worldwide UI exposes global repayment options',()=>{
+ const script=fs.readFileSync(path.join(root,'assets/worldwide-mortgage-calculator.js'),'utf8');
+ const html=fs.readFileSync(path.join(root,'international/global-mortgage-calculator.html'),'utf8');
+ assert.match(script,/selectedCountry\(\)==='CA'\?'semi-annually':'monthly'/);
+ for(const id of ['world-mortgage-compounding','world-mortgage-frequency'])assert.ok(html.includes('id="'+id+'"'));
+ for(const value of ['semi-monthly','biweekly','weekly','semi-annually','quarterly','annually'])assert.ok(html.includes('value="'+value+'"'));
+ assert.ok(html.includes('financial-consumer-agency/services/industry/bulletins/information-box-examples/credit-agreement-fixed-mortgage.html'));
+});
