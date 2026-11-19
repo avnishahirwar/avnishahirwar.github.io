@@ -7,8 +7,8 @@ const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const globalPage = fs.readFileSync(path.join(root, 'international', 'index.html'), 'utf8');
 
 test('homepage presents Friendly Calculator as a global free calculator platform', () => {
-  assert.match(home, /<h1>Free Online Calculators for India and Worldwide<\/h1>/);
-  assert.doesNotMatch(home, /<h1>Free Online Calculators for India<\/h1>/);
+  assert.match(home, /<h1>Make bigger decisions with better numbers\.<\/h1>/);
+  assert.doesNotMatch(home, /<h1>Free Online Calculators for India(?: and Worldwide)?<\/h1>/);
   assert.match(home, /Calculators for users worldwide/);
   assert.match(home, /\/international\//);
 });
