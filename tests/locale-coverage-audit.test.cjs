@@ -50,3 +50,9 @@ test('audit report distinguishes route coverage from translation quality', () =>
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+
+test('default locale coverage audit includes Gujarati and Kannada',()=>{
+ const {DEFAULT_LOCALES}=require('../scripts/audit-locale-coverage.cjs');
+ assert.ok(DEFAULT_LOCALES.includes('gu'));assert.ok(DEFAULT_LOCALES.includes('kn'));
+});

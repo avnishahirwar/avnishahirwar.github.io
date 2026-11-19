@@ -14,6 +14,8 @@ test('additive locale sitemap generator validates all locale segments without wr
   assert.match(output, /Locale sitemap check passed:/);
   assert.match(output, /en=\d+/);
   assert.match(output, /hi=\d+/);
+  assert.match(output, /gu=\d+/);
+  assert.match(output, /kn=\d+/);
 });
 
 test('locale sitemap generator preserves the existing all-pages sitemap', () => {
