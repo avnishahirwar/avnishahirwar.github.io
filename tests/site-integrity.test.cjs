@@ -2068,7 +2068,7 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
 
 test('homepage has the same static shared footer and Sitemap destination', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(html.includes('<footer class="fc-global-footer">'));
+  assert.match(html, /<footer class="fc-global-footer"(?:\s|>)/);
   assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
   assert.ok(html.includes('class="fc-global-footer-links"'));
 });
