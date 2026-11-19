@@ -470,7 +470,7 @@ regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Regional controls must be visible immediately after Language on every public page.
-if(primaryNav&&!primaryNav.querySelector('.fc-currency-control')){
+if(primaryNav&&!activeHeader.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   const countryLabel=regionalMarkup.querySelector('.fc-country-control');
