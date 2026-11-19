@@ -5,7 +5,7 @@ const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
 test('global language selector supports all configured locales', () => {
-  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']) {
+  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn','pl','ro','pa','ur','cy']) {
     assert.ok(shell.includes(locale + ':'));
   }
   assert.match(shell, /fc-language-select/);
@@ -35,7 +35,7 @@ test('Explicit language routes remain authoritative; root defaults to saved or b
 });
 
 test('Search Calculator is localized across all supported locales', () => {
-  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора','कॅल्क्युलेटर शोधा','Tìm máy tính','కాలిక్యులేటర్‌ను వెతకండి','કેલ્ક્યુલેટર શોધો','ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಹುಡುಕಿ']) {
+  for (const label of ['Search Calculator','Rechner suchen','कैलकुलेटर खोजें','Buscar calculadoras','Rechercher un calculateur','Pesquisar calculadoras','البحث عن حاسبة','Cari kalkulator','ক্যালকুলেটর খুঁজুন','கணிப்பானைத் தேடு','計算ツールを検索','Поиск калькулятора','कॅल्क्युलेटर शोधा','Tìm máy tính','కాలిక్యులేటర్‌ను వెతకండి','કેલ્ક્યુલેટર શોધો','ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಹುಡುಕಿ','Szukaj kalkulatora','Caută un calculator','ਕੈਲਕੁਲੇਟਰ ਖੋਜੋ','کیلکولیٹر تلاش کریں','Chwilio am gyfrifiannell']) {
     assert.ok(shell.includes(label), 'Missing localized Search Calculator label: ' + label);
   }
 });
@@ -77,8 +77,8 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
-  assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn']"));
+  assert.ok(shell.includes('bn|ta|ja|ru|pl|ro|pa|ur|cy'), 'Japanese and Russian must be recognized as calculator locales');
+  assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','pl','ro','pa','ur','cy']"));
 });
 
 
@@ -113,7 +113,7 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\\//.exec(p);"));
+  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|pl|ro|pa|ur|cy)\\//.exec(p);"));
   assert.ok(shell.includes("document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';"));
 });
 
@@ -122,8 +122,8 @@ test('language selector lists 50 high-reach languages and only enables configure
   const block = shell.match(/const localeNames=\{([^}]+)\};/);
   assert.ok(block, 'Expected locale catalogue');
   const codes = [...block[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
-  assert.equal(codes.length, 50, 'Expected exactly 50 language choices');
-  for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(codes.includes(code), 'Missing language code: '+code);
+  assert.equal(codes.length, 51, 'Expected 51 language choices after adding Welsh');
+  for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd','cy']) assert.ok(codes.includes(code), 'Missing language code: '+code);
   assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
   assert.match(shell, / — Coming soon/);
   assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
@@ -140,11 +140,11 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 });
 
 
-test('every homepage locale alternate cluster includes all 17 editions and x-default', () => {
-  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html','vi/index.html','te/index.html','gu/index.html','kn/index.html'];
+test('every homepage locale alternate cluster includes all 22 editions and x-default', () => {
+  const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html','vi/index.html','te/index.html','gu/index.html','kn/index.html','pl/index.html','ro/index.html','pa/index.html','ur/index.html','cy/index.html'];
   for (const file of pages) {
     const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','vi','te','gu','kn','x-default']) {
+    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','vi','te','gu','kn','pl','ro','pa','ur','cy','x-default']) {
       assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
     }
   }
@@ -164,18 +164,19 @@ test('Vietnamese and Telugu homepages declare localized, canonical, indexable do
   }
 });
 
-test('language directory lists exactly 50 unique language editions with accurate availability groups', () => {
+test('language directory lists 51 unique language editions with accurate availability groups', () => {
   const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
   assert.match(page, /Available language editions \(17\)/);
   assert.match(page, /Planned language editions \(33\)/);
-  assert.equal((page.match(/class="card"/g) || []).length, 50);
-  assert.equal((page.match(/class="status-live"/g) || []).length, 17);
-  assert.equal((page.match(/class="status-soon"/g) || []).length, 33);
+  assert.equal((page.match(/class="card"/g) || []).length, 51);
+  assert.equal((page.match(/class="status-live"/g) || []).length, 22);
+  assert.equal((page.match(/class="status-soon"/g) || []).length, 29);
   assert.equal(page.split('href="/mr/index.html"').length - 1, 1, 'Marathi edition link must appear once only');
   assert.equal(page.split('href="/vi/index.html"').length - 1, 1, 'Vietnamese edition link must appear once only');
   assert.equal(page.split('href="/te/index.html"').length - 1, 1, 'Telugu edition link must appear once only');
   assert.equal(page.split('href="/gu/index.html"').length - 1, 1, 'Gujarati edition link must appear once only');
   assert.equal(page.split('href="/kn/index.html"').length - 1, 1, 'Kannada edition link must appear once only');
+  for (const code of ['pl','ro','pa','ur','cy']) assert.equal(page.split('href="/'+code+'/index.html"').length - 1, 1, code+' edition link must appear once only');
 });
 
 
@@ -195,4 +196,26 @@ test('all localized basic calculator pages include reciprocal Gujarati and Kanna
 test('localized basic calculator hreflang alternates are reciprocal for Gujarati and Kannada',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
+});
+
+
+test('UK priority language homepages are localized, indexable and linked reciprocally',()=>{
+ const phrases={pl:['Darmowe kalkulatory online','Obliczenia proste'],ro:['Calculatoare online gratuite','Calcule simple'],pa:['ਮੁਫ਼ਤ ਆਨਲਾਈਨ ਕੈਲਕੁਲੇਟਰ','ਗਿਣਤੀਆਂ ਸੌਖੀਆਂ'],ur:['مفت آن لائن کیلکولیٹر','حساب کو آسان'],cy:['Cyfrifianellau ar-lein am ddim','Gwneud cyfrifiadau']};
+ for(const [locale,expected] of Object.entries(phrases)){
+  const html=fs.readFileSync(path.join(__dirname,'..',locale,'index.html'),'utf8');
+  assert.match(html,new RegExp('<html lang="'+locale+'"'));
+  assert.match(html,/rel="canonical"/);assert.match(html,/hreflang="x-default"/);
+  assert.match(html,/name="robots" content="index,follow/);assert.match(html,/assets\/site-shell\.js/);
+  for(const phrase of expected)assert.ok(html.includes(phrase),'Missing '+locale+' phrase: '+phrase);
+ }
+});
+test('UK priority basic calculators have localized UI and reciprocal hreflang',()=>{
+ const phrases={pl:['Kalkulator podstawowy','Dodawaj'],ro:['Calculator de bază','Adună'],pa:['ਬੁਨਿਆਦੀ ਕੈਲਕੁਲੇਟਰ','ਜੋੜ'],ur:['بنیادی کیلکولیٹر','جمع'],cy:['Cyfrifiannell sylfaenol','Adio']};
+ const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
+ for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');for(const code of ['pl','ro','pa','ur','cy'])assert.match(html,new RegExp('hreflang="'+code+'"'));}
+ for(const [locale,expected] of Object.entries(phrases)){
+  const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
+  assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.match(html,/data-action="equals"/);
+  for(const phrase of expected)assert.ok(html.includes(phrase),'Missing '+locale+' calculator phrase: '+phrase);
+ }
 });
