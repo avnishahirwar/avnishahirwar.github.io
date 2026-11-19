@@ -250,7 +250,7 @@ test('shared Header follows the same navigation and regional-control order on ev
   }
   assert.doesNotMatch(shell, /if\(footerLinks\.length===9\)/, 'Footer labels must be localized rather than falling back to English.');
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
+  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];"));
 });
 
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
