@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 8,
+    "officialCountryGuides": 14,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 160
+    "pendingVerification": 154
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -176,9 +176,9 @@
     "SG": {
       "summary": "Singapore home purchases can incur Buyer's Stamp Duty based on the higher of purchase price or market value. Additional Buyer's Stamp Duty depends on buyer profile and property circumstances; this mortgage estimate does not calculate those taxes.",
       "rules": [
-        "IRAS calculates Buyer's Stamp Duty using the purchase price or market value, whichever is higher, with progressive residential rates.",
-        "Additional Buyer's Stamp Duty may also apply depending on buyer profile and property count/status; check current IRAS rules before budgeting.",
-        "Mortgage financing limits and eligibility depend on property type, borrower profile and current Monetary Authority of Singapore rules; they are not inferred from this payment estimate."
+        "MAS macroprudential settings list housing-loan LTV limits of 75% for a first housing loan, 45% for a second and 35% for a third; tighter limits can apply for longer tenures or loans extending beyond retirement age.",
+        "MAS sets a 55% Total Debt Servicing Ratio cap and a 30% Mortgage Servicing Ratio cap for specified HDB-flat and executive-condominium loans. These are regulatory frameworks, not a guarantee of individual approval.",
+        "IRAS Buyer's Stamp Duty is based on the higher of purchase price or market value; Additional Buyer's Stamp Duty may also apply. The calculator does not calculate these taxes."
       ],
       "sources": [
         [
@@ -188,6 +188,118 @@
         [
           "IRAS: Stamp duty rates and taxes",
           "https://www.iras.gov.sg/quick-links/tax-rates/stamp-duty"
+        ],
+        [
+          "MAS: Current macroprudential policy settings",
+          "https://www.mas.gov.sg/publications/macroprudential-policies-in-singapore"
+        ]
+      ]
+    },
+    "BR": {
+      "summary": "Brazilian residential property finance distinguishes the SFH (Housing Finance System) and SFI (Real Estate Financing System). Conditions, eligibility and cost structures differ; banks assess the borrower's repayment capacity.",
+      "rules": [
+        "The Central Bank of Brazil explains the SFH and SFI financing systems and their different eligibility and property conditions.",
+        "Lenders assess income and existing financial commitments; the Central Bank FAQ notes that each bank applies its own income-commitment criteria.",
+        "The calculator does not determine SFH/SFI eligibility, FGTS eligibility, effective total cost (CET), property registration or local transfer taxes."
+      ],
+      "sources": [
+        [
+          "Banco Central do Brasil: Real-estate credit FAQ",
+          "https://www.bcb.gov.br/meubc/faqs/s/credito-imobiliario"
+        ],
+        [
+          "Banco Central do Brasil: Conditions for real-estate financing",
+          "https://www.bcb.gov.br/meubc/faqs/p/condicoes-para-contratar-financiamento-imobiliario"
+        ]
+      ]
+    },
+    "ZA": {
+      "summary": "South Africa's National Credit Act provides consumer protections for mortgage agreements, including a pre-agreement statement and quotation before signing. These documents should set out the deposit, instalments, interest and charges.",
+      "rules": [
+        "Request and review the pre-agreement statement and quotation before signing a mortgage agreement.",
+        "The National Credit Regulator's consumer guidance says the quotation should disclose the principal debt, interest rate, total amount payable, instalments, fees, charges and interest.",
+        "This calculator does not apply bank-specific affordability tests, transfer duty, bond registration costs or credit-life insurance."
+      ],
+      "sources": [
+        [
+          "National Credit Regulator: Consumer rights under the National Credit Act",
+          "https://www.ncr.org.za/documents/Consumer%20Rights%20as%20per%20the%20National%20Credit%20Act%20%28NCA%29%5B4%5D.pdf"
+        ],
+        [
+          "National Credit Regulator: National Credit Act brochure",
+          "https://ncr.org.za/documents/pages/Brochures/ENGLISH.pdf"
+        ]
+      ]
+    },
+    "SA": {
+      "summary": "Saudi Central Bank (SAMA) rules require mortgage providers to assess a borrower's ability to repay and prudently value the property when calculating loan-to-value. LTV treatment can vary by first-home status, beneficiary and finance-provider type.",
+      "rules": [
+        "SAMA's real-estate finance rulebook requires underwriting policies to assess ability to repay and sets out how LTV and property value are calculated.",
+        "SAMA has issued different LTV treatment for citizens' first homes and for subsequent homes, with differences between banks and real-estate finance companies. Do not treat one percentage as universal.",
+        "The calculator does not test Sharia-compliant product structure, debt-burden limits, borrower eligibility or SAMA's detailed LTV categories."
+      ],
+      "sources": [
+        [
+          "SAMA Rulebook: Real estate exposure class",
+          "https://rulebook.sama.gov.sa/en/real-estate-exposure-class"
+        ],
+        [
+          "SAMA Rulebook: Increase the maximum mortgage for citizens' first home",
+          "https://rulebook.sama.gov.sa/en/increase-maximum-mortgage-citizens-own-first-home"
+        ]
+      ]
+    },
+    "MX": {
+      "summary": "Mexico's CONDUSEF advises consumers to assess their ability to pay and compare mortgage offers, including the binding offer, commissions, limitations and final credit conditions. It also provides an official mortgage comparison simulator.",
+      "rules": [
+        "CONDUSEF recommends checking real payment capacity and comparing bank mortgage conditions before signing.",
+        "Ask for the oferta vinculante (binding offer) and compare the amount financed after commissions, exclusions and product limitations.",
+        "The calculator does not model Infonavit/Fovissste programmes, Mexican CAT (total annual cost), notary costs, local acquisition taxes or lender-specific terms."
+      ],
+      "sources": [
+        [
+          "CONDUSEF: Choosing a mortgage loan",
+          "https://www.condusef.gob.mx/?idc=848&idcat=1&p=contenido"
+        ],
+        [
+          "CONDUSEF: Official mortgage credit simulator",
+          "https://phpapps.condusef.gob.mx/condusefhipotecario/index.php"
+        ]
+      ]
+    },
+    "JP": {
+      "summary": "Japan's Ministry of Land, Infrastructure, Transport and Tourism publishes official housing-tax guidance, including the housing-loan tax deduction. Eligibility and deduction limits depend on the tax year, occupancy date, property type and energy-performance conditions.",
+      "rules": [
+        "Check the MLIT housing-tax guidance for the applicable year before estimating a housing-loan tax deduction.",
+        "The tax deduction is separate from the mortgage repayment calculation; this calculator does not estimate income-tax relief or verify property eligibility.",
+        "The official source is primarily in Japanese; consult the current tax authority guidance or a qualified local adviser for your circumstances."
+      ],
+      "sources": [
+        [
+          "MLIT Japan: Housing tax measures (2026 update)",
+          "https://www.mlit.go.jp/jutakukentiku/house/zeisei_index2.html"
+        ]
+      ]
+    },
+    "MY": {
+      "summary": "Bank Negara Malaysia (BNM) emphasizes responsible housing finance and affordability assessments. Banks determine individual lending decisions; a single universal down-payment or LTV percentage should not be assumed.",
+      "rules": [
+        "BNM says financial institutions assess income after statutory deductions, essential expenditure and other obligations to ensure borrowers can afford repayments and retain a financial buffer.",
+        "BNM states that it does not prescribe one universal housing-loan lending limit; banks make lending decisions under their own criteria and risk appetite.",
+        "Floating-rate housing-loan instalments may change when the Overnight Policy Rate changes; confirm the reference rate and reset terms with the lender."
+      ],
+      "sources": [
+        [
+          "BNM: First-time home owners continue to have access to financing",
+          "https://www.bnm.gov.my/-/first-time-home-owners-continue-to-have-access-to-financing"
+        ],
+        [
+          "BNM: Responsible lending and borrower affordability",
+          "https://www.bnm.gov.my/-/responsible-lending-guidelines-ensures-borrowers-affordability"
+        ],
+        [
+          "BNM: How monetary policy affects floating-rate housing loans",
+          "https://www.bnm.gov.my/-/monetary-policy-98-pr"
         ]
       ]
     }
@@ -287,7 +399,7 @@
     },
     "BR": {
       "countryName": "Brazil",
-      "status": "pending"
+      "status": "verified"
     },
     "BN": {
       "countryName": "Brunei",
@@ -531,7 +643,7 @@
     },
     "JP": {
       "countryName": "Japan",
-      "status": "pending"
+      "status": "verified"
     },
     "JO": {
       "countryName": "Jordan",
@@ -603,7 +715,7 @@
     },
     "MY": {
       "countryName": "Malaysia",
-      "status": "pending"
+      "status": "verified"
     },
     "MV": {
       "countryName": "Maldives",
@@ -631,7 +743,7 @@
     },
     "MX": {
       "countryName": "Mexico",
-      "status": "pending"
+      "status": "verified"
     },
     "FM": {
       "countryName": "Micronesia",
@@ -795,7 +907,7 @@
     },
     "SA": {
       "countryName": "Saudi Arabia",
-      "status": "pending"
+      "status": "verified"
     },
     "SN": {
       "countryName": "Senegal",
@@ -835,7 +947,7 @@
     },
     "ZA": {
       "countryName": "South Africa",
-      "status": "pending"
+      "status": "verified"
     },
     "KR": {
       "countryName": "South Korea",
