@@ -76,6 +76,15 @@ main :is(.ad-slot,.ad-placeholder,.advertisement,.ad-container){background:#fafb
 @media(max-width:640px){.fc-social-links{gap:12px}.fc-social-link{width:40px;height:40px}}
 
 
+/* Keep icon-only social links circular even when global footer link rules are more specific. */
+footer.fc-global-footer .fc-social-links .fc-social-link{
+  flex:0 0 38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;
+  height:38px!important;min-height:38px!important;padding:0!important;border-radius:50%!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+}
+footer.fc-global-footer .fc-social-links .fc-social-link svg{width:19px!important;height:19px!important;display:block!important;flex:none!important}
+@media(max-width:640px){footer.fc-global-footer .fc-social-links .fc-social-link{flex-basis:40px!important;width:40px!important;min-width:40px!important;max-width:40px!important;height:40px!important;min-height:40px!important}}
+
 /* Compact sharing controls on individual calculator pages */
 .fc-share-panel{margin:28px 0 8px;padding:18px 20px;border:1px solid #dfe5eb;border-radius:12px;background:#fff}
 .fc-share-panel h2{margin:0 0 4px;font-size:1.12rem;color:#172638}
