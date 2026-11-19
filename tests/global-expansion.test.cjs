@@ -200,15 +200,14 @@ test('regional defaults follow the visitor browser region and preserve explicit 
 });
 
 
-test('currency is in the shared Header and country/units remain in Settings', () => {
+test('all regional selectors follow Language in the shared Header and stay mirrored in Settings', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Only the date-format compatibility selector remains hidden.');
-  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'), 'Only country and units are staged for Settings.');
-  assert.ok(shell.includes("countryFormatLabel.className='fc-country-format-control'"), 'Country & format uses the combined Settings selector.');
+  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Original locale selector remains available to FCLocale.');
+  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'), 'Original country and units controls are staged for compatibility.');
+  assert.ok(shell.includes("countryFormatLabel.className='fc-country-format-control'"), 'Country & format uses one combined visible selector.');
   assert.ok(shell.includes('compatibilityControls.append(countryControl,formatControl)'), 'Original locale controls remain hidden for compatibility listeners.');
-  assert.ok(shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Regional controls must stay outside the Header.');
-  assert.ok(shell.includes("regionalSettingsControls.append(countryFormatLabel,unitControl)") && shell.includes("mirrorSiteControl(currencyControl)"), 'Currency is mirrored into Settings while country and units remain there.');
-  assert.ok(shell.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency must be appended immediately after Language in the Header.');
+  assert.ok(shell.includes("primaryNav.append(currencyControl,countryFormatLabel,unitControl)"), 'Currency, Country & format and Units follow Language in the Header.');
+  assert.ok(shell.includes("mirrorSiteControl(currencyControl)") && shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)"), 'All regional preferences are mirrored in Settings.');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional selectors must retain readable touch-target sizing.');
+  assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors share equal sizing.');
 });
