@@ -432,7 +432,7 @@ const formatLocales={'en-IN':'India · English (IN)','hi-IN':'India · हिन
 const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧 United Kingdom',CA:'🇨🇦 Canada',AU:'🇦🇺 Australia',AE:'🇦🇪 United Arab Emirates',SA:'🇸🇦 Saudi Arabia',DE:'🇩🇪 Germany',FR:'🇫🇷 France',BR:'🇧🇷 Brazil',MX:'🇲🇽 Mexico',ID:'🇮🇩 Indonesia',PH:'🇵🇭 Philippines',NG:'🇳🇬 Nigeria',ZA:'🇿🇦 South Africa',PK:'🇵🇰 Pakistan',BD:'🇧🇩 Bangladesh',ES:'🇪🇸 Spain',JP:'🇯🇵 Japan',CN:'🇨🇳 China',RU:'🇷🇺 Russia',TR:'🇹🇷 Türkiye',KR:'🇰🇷 South Korea',VN:'🇻🇳 Vietnam',AR:'🇦🇷 Argentina',CL:'🇨🇱 Chile',CO:'🇨🇴 Colombia',SG:'🇸🇬 Singapore',NZ:'🇳🇿 New Zealand',CH:'🇨🇭 Switzerland',MY:'🇲🇾 Malaysia',IE:'🇮🇪 Ireland',IT:'🇮🇹 Italy',NL:'🇳🇱 Netherlands',PT:'🇵🇹 Portugal',PL:'🇵🇱 Poland',SE:'🇸🇪 Sweden',NO:'🇳🇴 Norway',DK:'🇩🇰 Denmark',KE:'🇰🇪 Kenya',NP:'🇳🇵 Nepal',IL:'🇮🇱 Israel',EG:'🇪🇬 Egypt',QA:'🇶🇦 Qatar',KW:'🇰🇼 Kuwait',OM:'🇴🇲 Oman'};
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">Country</span><select id="fc-country-select" aria-label="Choose country">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">Date format</span><select id="fc-locale-select" aria-label="Date format">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
-const unitControlMarkup='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
+const unitControl='<label class="fc-unit-control"><span class="fc-language-label">Units</span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select></label>';
 h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+nav.choose+'">'+links.slice(0,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a><a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+languageControl+'</nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
@@ -460,7 +460,7 @@ activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
 regionalControlsSource.hidden=true;
-regionalControlsSource.innerHTML=countryControl+formatControl;
+regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Language is the final primary-navigation control, immediately after Login.
@@ -1326,14 +1326,10 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   // Regional controls sit directly after Language in the shared Header.
   // Their original hidden country/locale selects retain the FCLocale event contract.
   panel.append(panelHead);
-  const currencyControl=document.createElement('label');
-  currencyControl.className='fc-currency-control';
-  currencyControl.innerHTML='<span class="fc-language-label"></span><select id="fc-currency-select" aria-label="Display currency">'+Object.entries(currencyNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select>';
+  const currencyControl=document.querySelector('.fc-currency-control');
   const countryControl=document.querySelector('.fc-country-control');
   const formatControl=document.querySelector('.fc-format-control');
-  const unitControl=document.createElement('label');
-  unitControl.className='fc-unit-control';
-  unitControl.innerHTML='<span class="fc-language-label"></span><select id="fc-unit-system-select" aria-label="Measurement unit system"><option value="metric">Metric</option><option value="imperial">Imperial</option></select>';
+  const unitControl=document.querySelector('.fc-unit-control');
   const countrySelect=countryControl?.querySelector('select');
   const localeSelect=formatControl?.querySelector('select');
   const countryFormatLabel=document.createElement('label');
