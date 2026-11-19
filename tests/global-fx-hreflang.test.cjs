@@ -105,3 +105,32 @@ test('UK Stamp Duty and National Insurance calculator translations have reciproc
  assert.match(urStamp,/<html lang="ur" dir="rtl">/);
  assert.match(urNi,/<html lang="ur" dir="rtl">/);
 });
+
+
+test('UK VAT and Mortgage calculator translations have reciprocal hreflang, canonical URLs and locale direction',()=>{
+ const published=['en','pl','ro','pa','ur','cy'];
+ const routes=['uk-vat-calculator.html','uk-mortgage-calculator.html'];
+ for(const route of routes){
+  for(const locale of published){
+   const file=path.join(root,locale==='en'?'':locale,'calculators',route);
+   const html=fs.readFileSync(file,'utf8');
+   const expected=published.map(code=>[code,'https://friendlycalculator.in/'+(code==='en'?'':code+'/')+'calculators/'+route]);
+   expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
+   const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
+   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   assert.deepEqual(actual,expected,locale+'/'+route);
+   assert.match(html,new RegExp('<html lang="'+locale+'"'));
+   assert.match(html,/rel="canonical"/);
+   if(locale==='ur')assert.match(html,/<html lang="ur" dir="rtl">/);
+   else assert.match(html,new RegExp('<html lang="'+locale+'" dir="ltr">'));
+   if(route==='uk-vat-calculator.html'){
+    assert.match(html,/getElementById\(['"]amount['"]\)/);
+    assert.match(html,/gross|net|vat/i);
+    assert.match(html,/0|5|20/);
+   }else{
+    assert.match(html,/getElementById\(['"]price['"]\)/);
+    assert.match(html,/monthly|principal|interest/i);
+   }
+  }
+ }
+});
