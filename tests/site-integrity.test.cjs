@@ -2244,7 +2244,7 @@ test('homepage critical CSS keeps the shared regional Header readable before def
 
 test('homepage static Header contains each regional selector once in the approved order', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const nav = html.match(/<nav id="fc-primary-navigation"[\\s\\S]*?<\\/nav>/i)?.[0] || '';
+  const nav = html.match(/<nav id="fc-primary-navigation"[\s\S]*?<\/nav>/i)?.[0] || '';
   const ordered = ['fc-login-link', 'fc-header-language-slot', 'fc-currency-control', 'fc-country-format-control', 'fc-unit-control'];
   const positions = ordered.map(marker => nav.indexOf(marker));
   assert.ok(positions.every(position => position >= 0));
