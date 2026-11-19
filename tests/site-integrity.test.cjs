@@ -285,7 +285,7 @@ test('calculator directory exposes its curated core catalogue and keeps business
   assert.equal(new Set(links).size, links.length);
   assert.ok(links.every(url => canonicalCalculatorUrls.includes(url)));
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
   const services = directory.indexOf('<h2>Business & developer services</h2>');
   const trust = directory.indexOf('<h2>About, trust & policies</h2>');
@@ -1252,7 +1252,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into 19 clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
+  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators across 36 categories'));
 });
 
 
