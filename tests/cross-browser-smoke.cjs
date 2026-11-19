@@ -3,7 +3,7 @@
 const { chromium, firefox, webkit } = require('playwright');
 const assert = require('node:assert/strict');
 const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
-const availableEngines = { chromium: ['Chromium', chromium], firefox: ['Firefox', firefox], webkit: ['WebKit', webkit] };
+const availableEngines = {\n  chromium: ['Chromium', chromium],\n  chrome: ['Google Chrome', chromium, { channel: 'chrome' }],\n  msedge: ['Microsoft Edge', chromium, { channel: 'msedge' }],\n  opera: ['Opera', chromium, { executablePath: process.env.FC_OPERA_PATH || '/usr/bin/opera', args: ['--no-sandbox'] }],\n  firefox: ['Firefox', firefox],\n  webkit: ['WebKit', webkit]\n};
 const selectedBrowser = (process.env.FC_BROWSER || 'all').toLowerCase();
 const engines = selectedBrowser === 'all'
   ? Object.values(availableEngines)
@@ -104,7 +104,7 @@ async function checkPage(browser, url, label, viewport) {
 (async () => {
   const results = [];
   for (const [name, engine] of engines) {
-    const browser = await engine.launch({ headless: true });
+    const browser = await engine.launch({ headless: true, ...(engines.find(entry => entry[0] === name)?.[2] || {}) });
     try {
       for (const viewport of [{ width: 1365, height: 900 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
         const dims = await checkPage(browser, '/', name + ' homepage ' + viewport.width, viewport);
