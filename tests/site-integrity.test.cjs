@@ -2175,7 +2175,7 @@ test('Header regional selectors use consistent readable sizing and Settings mirr
   assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
   assert.ok(shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)'));
   assert.ok(shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'));
-  assert.doesNotMatch(shell, /addSettingRow\\('fc-display-units-row'/);
+  assert.ok(!shell.includes("addSettingRow('fc-display-units-row'"));
 });
 
 test('legacy All Pages footer links are excluded while Sitemap remains', () => {
