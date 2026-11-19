@@ -9,7 +9,7 @@ const root=path.join(__dirname,'..');
 test('worldwide mortgage country catalogue provides ISO currency defaults for 248+ markets',()=>{
  const entries=Object.entries(calc.currencyByCountry);
  assert.ok(entries.length>=248,'expected worldwide ISO country and territory coverage');
- for(const code of ['IN','US','GB','CA','AU','DE','FR','BR','JP','CN','ZA','NG','AE','SA','AF','AL','XK']){
+ for(const code of ['IN','US','GB','CA','AU','DE','FR','BR','JP','CN','ZA','NG','AE','SA','ID','KR','TH','PH','AF','AL','XK']){
   assert.ok(calc.currencyByCountry[code], 'missing country currency for '+code);
  }
  for(const [country,currency] of entries){
@@ -123,9 +123,9 @@ test('country-specific mortgage guidance registry covers all 195 directory marke
  assert.equal(names.length,195);
  const registryNames=new Set(entries.map(entry=>entry.countryName.toLowerCase()));
  for(const name of names)assert.ok(registryNames.has(name),'missing country guidance record for '+name);
- assert.equal(entries.filter(entry=>entry.status==='verified').length,14);
+ assert.equal(entries.filter(entry=>entry.status==='verified').length,18);
  assert.equal(entries.filter(entry=>entry.status==='regional-framework').length,27);
- assert.equal(entries.filter(entry=>entry.status==='pending').length,154);
+ assert.equal(entries.filter(entry=>entry.status==='pending').length,150);
  for(const info of Object.values(registry.verified)){
   assert.ok(info.sources.length>0);
   for(const source of info.sources)assert.match(source[1],/^https:\/\//);
