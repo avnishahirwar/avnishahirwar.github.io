@@ -226,15 +226,15 @@ test('shared Header follows the same navigation and regional-control order on ev
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
   const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
-  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
+  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control', 'fc-currency-control', 'fc-country-format-control', 'fc-unit-control'];
   let homepageLast = -1;
   for (const token of homepageOrder) {
     const index = homepageNav.indexOf(token);
     assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
     homepageLast = index;
   }
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
-  assert.ok(shell.includes('regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency, country/format and units must be inside the Settings panel.');
+  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Legacy locale controls must remain available to FCLocale.');
+  assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)') && shell.includes('panel.append(regionalSettingsControls)'), 'Header regional controls must also be available inside Settings.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
@@ -2222,6 +2222,7 @@ test('homepage critical CSS keeps the shared regional Header readable before def
   const styleEnd = html.indexOf('</style>', styleStart);
   const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
   assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
+  assert.ok(css.includes('.fc-global-links>.fc-currency-control select') && css.includes('height:40px!important') && css.includes('width:100%!important'), 'Header regional dropdowns must share the same width and height.');
   assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
   assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
   assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
