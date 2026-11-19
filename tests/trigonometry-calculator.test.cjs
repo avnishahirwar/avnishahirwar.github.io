@@ -20,7 +20,7 @@ test('trigonometry calculator exposes six functions and angle-unit selection', (
 
 test('trigonometry calculator handles undefined values and computes cotangent correctly', () => {
   assert.match(page, /cot:Math\.abs\(s\)<1e-12\?null:c\/s/);
-  assert.match(page, /tan: Math\.abs\(c\)<1e-12\?null:s\/c/);
+  assert.match(page, /t= Math\.abs\(c\)<1e-12\?null:s\/c/);
   assert.match(page, /Undefined/);
 });
 
