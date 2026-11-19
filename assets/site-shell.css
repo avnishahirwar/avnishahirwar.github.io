@@ -1180,3 +1180,20 @@ footer.fc-global-footer .fc-social-links>.fc-social-link:focus-visible{
     overflow-wrap:anywhere!important;
   }
 }
+
+@media(max-width:380px){
+  footer.fc-global-footer .fc-global-footer-inner{
+    box-sizing:border-box!important;
+    width:92vw!important;
+    max-width:calc(100vw - 24px)!important;
+    min-width:0!important;
+    margin-inline:auto!important;
+  }
+  footer.fc-global-footer .fc-global-footer-links{
+    box-sizing:border-box!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow-wrap:anywhere!important;
+  }
+}
