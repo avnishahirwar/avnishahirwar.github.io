@@ -46,6 +46,17 @@ test('calculator engine validates input and safely renders result text', () => {
   assert.match(source, /replaceChildren/);
 });
 
+
+test('standalone interest calculator pages expose complete social metadata', () => {
+  const simple = fs.readFileSync(new URL('../calculators/simple-interest-calculator.html', 'file://' + __filename), 'utf8');
+  const compound = fs.readFileSync(new URL('../calculators/compound-interest-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(simple, /<title>Simple Interest Calculator \| Principal, Rate &amp; Time \| Friendly Calculator<\/title>/);
+  assert.match(simple, /property="og:title" content="Simple Interest Calculator Online/);
+  assert.match(compound, /<title>Compound Interest Calculator \| Friendly Calculator<\/title>/);
+  assert.match(compound, /name="twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
+  assert.doesNotMatch(compound, /name="twitter:image" content="website"/);
+});
+
 test('calculator usage analytics records calculator name and page without sending input values', () => {
   assert.match(source, /calculator_use/);
   assert.match(source, /calculator_name:def\.title/);
