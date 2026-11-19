@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'friendly-calculator-public-v8';
+const CACHE_NAME = 'friendly-calculator-public-v9';
 const CACHE_PREFIX = 'friendly-calculator-public-';
 const OFFLINE_URL = '/offline.html';
 const PRECACHE_URLS = [
@@ -65,6 +65,25 @@ self.addEventListener('fetch', event => {
         return response;
       } catch (_) {
         return (await caches.match(request)) || (await caches.match(OFFLINE_URL));
+      }
+    })());
+    return;
+  }
+
+  // The shared site shell controls navigation and regional selectors. Always
+  // revalidate it so a previous PWA cache cannot keep an obsolete Header live.
+  if (url.pathname === '/assets/site-shell.js') {
+    event.respondWith((async () => {
+      try {
+        const freshRequest = new Request(request, { cache: 'reload' });
+        const response = await fetch(freshRequest);
+        if (isSafeResponse(response)) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      } catch (_) {
+        return (await caches.match(request)) || Response.error();
       }
     })());
     return;
