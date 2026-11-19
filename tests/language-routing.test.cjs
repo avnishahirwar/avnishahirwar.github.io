@@ -196,3 +196,25 @@ test('localized basic calculator hreflang alternates are reciprocal for Gujarati
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
 });
+
+
+test('language selector is synchronized with the canonical 50-language catalogue', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const localeNamesBlock = shell.match(/const localeNames=\\{([^}]+)\\};/);
+  const supportedBlock = shell.match(/const supportedUiLocales=\\{([^}]+)\\};/);
+  const homeBlock = shell.match(/const localeHome=\\{([^}]+)\\};/);
+  assert.ok(localeNamesBlock && supportedBlock && homeBlock, 'Expected language catalogue, enabled locale and route maps');
+  const names = [...localeNamesBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  const enabled = [...supportedBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
+  const routed = [...homeBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
+  assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
+  assert.deepEqual(routed.sort(), enabled.slice().sort());
+  assert.match(shell, /fetch\\('\\/config\\/language-catalogue\\.json'/);
+  assert.match(shell, /option\\.disabled=locale\\.status!=='available'/);
+  assert.match(shell, /option\\.textContent=locale\\.nativeName/);
+  const directory = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
+  assert.equal((directory.match(/class="status-live"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'available').length);
+  assert.equal((directory.match(/class="status-soon"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'planned').length);
+  for (const locale of catalogue.locales) assert.ok(directory.includes(locale.nativeName), 'Language directory is missing ' + locale.code);
+});
