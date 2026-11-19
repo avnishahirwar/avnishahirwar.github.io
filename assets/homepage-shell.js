@@ -180,17 +180,12 @@ if (document.body && !document.querySelector('.fc-global-footer')) {
   document.body.appendChild(footer);
 }
 
-// The homepage fallback follows the shared rule: Settings lives in a standalone page-level dock.
+// The homepage fallback follows the shared rule: Settings is the final Footer navigation item.
 const homepageSettingsTrigger=document.getElementById('fc-display-settings');
-if(homepageSettingsTrigger){
-  let homepageToolsDock=document.getElementById('fc-floating-tools');
-  if(!homepageToolsDock){
-    homepageToolsDock=document.createElement('div');
-    homepageToolsDock.id='fc-floating-tools';
-    homepageToolsDock.setAttribute('aria-label','Friendly Calculator quick settings');
-    document.body.appendChild(homepageToolsDock);
-  }
-  if(homepageSettingsTrigger.parentElement!==homepageToolsDock)homepageToolsDock.appendChild(homepageSettingsTrigger);
-  homepageSettingsTrigger.classList.add('fc-settings-hub-trigger');
+const homepageFooterNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links');
+if(homepageSettingsTrigger&&homepageFooterNavigation){
+  if(homepageSettingsTrigger.parentElement!==homepageFooterNavigation)homepageFooterNavigation.appendChild(homepageSettingsTrigger);
+  homepageSettingsTrigger.classList.add('fc-settings-hub-trigger','fc-footer-settings-link');
+  document.getElementById('fc-floating-tools')?.remove();
 }
 })();
