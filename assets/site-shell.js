@@ -460,8 +460,8 @@ const removeDuplicateLegacyHeaders=()=>{
 removeDuplicateLegacyHeaders();
 
 // Keep the date-format selector in a hidden compatibility node for
-// global-locale.js. Country, currency and units use their original IDs in the
-// visible Header so existing locale listeners continue to work without duplicate IDs.
+// global-locale.js. Currency, country/format and units retain their original IDs
+// and are mounted in Settings so existing locale listeners continue to work.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
@@ -469,14 +469,14 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Regional controls must be visible immediately after Language on every public page.
+// Keep regional preference controls out of the Header; Settings mounts them below.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language remains before the regional controls, immediately after Login.
+// Language remains the final Header control after Login; regional preferences live in Settings.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
