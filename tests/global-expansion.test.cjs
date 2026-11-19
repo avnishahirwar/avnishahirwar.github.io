@@ -75,7 +75,7 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
   assert.ok(headerMarkup.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency selector must immediately follow Language in the Header.');
   assert.ok(shell.includes("regionalMarkup.innerHTML=countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
-  assert.ok(shell.includes("regionalSettingsControls.append(countryFormatLabel,unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available inside Settings.');
+  assert.ok(shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
