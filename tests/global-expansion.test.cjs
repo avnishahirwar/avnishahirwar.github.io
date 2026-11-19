@@ -82,7 +82,7 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   assert.ok(shell.includes('const activeHeader=h;'), 'Active state must target the mounted canonical header, not a replaced legacy node.');
   assert.ok(shell.includes('fc-regional-settings-source'), 'Original country and locale controls must remain available for locale compatibility.');
   assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'The hidden date-format selector must preserve the global locale compatibility contract without duplicate visible control IDs.');
-  assert.ok(shell.includes("mirrorSiteControl(currencyControl)") && shell.includes("regionalSettingsControls.append(countryFormatLabel,unitControl)"), 'Display currency remains mirrored in Settings while Country & format and Units stay there.');
+  assert.ok(shell.includes("mirrorSiteControl(currencyControl)") && shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)"), 'Display currency, Country & format and Units remain mirrored in Settings.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final item in shared Footer navigation.');
