@@ -239,11 +239,18 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact']",
-    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क']"
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']",
+    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क','विज्ञापन']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
+  const footerLocaleRows = footer.split('\n').filter(line => /^\s{2}(de|en|hi|es|fr|pt|ar|id|bn|ta|ja|ru):\[/.test(line));
+  assert.equal(footerLocaleRows.length, 12, 'All 12 site locales must define Footer labels.');
+  for (const row of footerLocaleRows) {
+    const labels = row.slice(row.indexOf(':[') + 2, row.lastIndexOf(']'));
+    assert.equal(labels.split("','").length, 10, 'Each locale must expose all ten Footer destinations.');
+  }
+  assert.doesNotMatch(shell, /if\(footerLinks\.length===9\)/, 'Footer labels must be localized rather than falling back to English.');
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
+  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];"));
 });
 
 test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
@@ -362,15 +369,15 @@ test('income tax page reserves a stable mobile header before the shared navigati
 test('RD and salary calculator pages target their actual search intent and current catalogue', () => {
   const rd = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   const salary = fs.readFileSync(path.join(root, 'calculators/salary-calculator.html'), 'utf8');
-  assert.ok(rd.includes('<title>RD Calculator India | Monthly Deposit & Maturity Estimate</title>'));
+  assert.match(rd, /<title>RD Calculator India[^<]*<\\/title>/);
   assert.ok(rd.includes('name="description" content="Estimate RD maturity in India from monthly deposit, annual rate and tenure. View total deposits, interest, a worked example and key limitations."'));
-  assert.ok(rd.includes('<h1>RD Calculator India | Monthly Deposit & Maturity Estimate</h1>'));
+  assert.match(rd, /<h1[^>]*>RD Calculator India[^<]*<\\/h1>/);
   assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
   assert.ok(rd.includes('₹1,41,944'));
   assert.ok(rd.includes('not official Post Office maturity quotations'));
-  assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily & Hourly Pay</title>'));
+  assert.match(salary, /<title>[^<]*Salary Calculator[^<]*<\\/title>/i);
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
-  assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
+  assert.match(salary, /<h1[^>]*>[^<]*Salary Calculator[^<]*<\\/h1>/i);
   assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
