@@ -1,0 +1,1089 @@
+{
+  "version": 1,
+  "lastReviewed": "2026-11-19",
+  "coverage": {
+    "countryDirectoryEntries": 195,
+    "officialCountryGuides": 14,
+    "regionalFrameworkGuides": 27,
+    "pendingVerification": 154
+  },
+  "defaultGuidance": {
+    "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
+    "rules": [
+      "No country-specific down-payment, loan-to-value, affordability, tax or fee rule is asserted here.",
+      "Enter the interest rate, term, payment frequency and compounding method from your lender's written offer.",
+      "Local property taxes, transfer duties, insurance, subsidies, eligibility and lender charges are not automatically included."
+    ],
+    "sources": []
+  },
+  "regionalFramework": {
+    "summary": "EU mortgage-credit rules provide a shared consumer-protection framework, including lender creditworthiness assessment and standardized pre-contractual information. National law, taxes, property costs and competent authorities still differ by Member State.",
+    "rules": [
+      "EU-level rules require lenders to assess creditworthiness before granting mortgage credit; national law and supervisory practice add country-specific requirements.",
+      "Use the linked European Banking Authority directory to identify the national consumer-protection authority for this Member State.",
+      "This page does not calculate local transfer taxes, registration fees, national subsidies, affordability thresholds or lender-specific terms."
+    ],
+    "sources": [
+      [
+        "European Commission: Mortgage loans and credit in the EU",
+        "https://europa.eu/youreurope/citizens/consumers/financial-products-and-services/mortgages/index_en.htm"
+      ],
+      [
+        "European Banking Authority: National consumer-protection authorities",
+        "https://www.eba.europa.eu/activities/information-consumers/national-competent-authorities-consumer-protection"
+      ]
+    ]
+  },
+  "verified": {
+    "IN": {
+      "summary": "Reserve Bank of India guidance highlights fixed versus floating rates, benchmark resets, APR and lender fees. Housing-finance-company LTV ceilings are a separate regulated category and should not be treated as a universal down-payment rule for every lender.",
+      "rules": [
+        "Ask the lender whether the rate is fixed or floating, which benchmark applies, when it resets and how EMI or loan tenure can change.",
+        "Compare APR and all fees, including processing, legal, valuation, documentation, switching and prepayment charges; stamp duty and registration are separate purchase costs.",
+        "RBI's 2025 HFC directions set maximum LTV bands for housing finance companies: up to 90% for loans up to ₹30 lakh, 80% above ₹30 lakh to ₹75 lakh, and 75% above ₹75 lakh. These HFC-specific ceilings are not a promise of approval or a universal rule for every lender."
+      ],
+      "sources": [
+        [
+          "RBI: Home-loan borrower FAQ",
+          "https://www.rbi.org.in/scripts/FAQView.aspx?Id=77"
+        ],
+        [
+          "RBI: Floating-rate EMI loan reset FAQ (2025)",
+          "https://www.rbi.org.in/commonman/Upload/English/FAQs/PDFs/FAQRFIR10012025.pdf"
+        ],
+        [
+          "RBI: Housing Finance Company Master Directions (2025)",
+          "https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=12939"
+        ]
+      ]
+    },
+    "US": {
+      "summary": "US federal consumer rules include an ability-to-repay assessment for most residential mortgages and standardized Loan Estimate and Closing Disclosure documents. State, loan-program and lender terms can add differences.",
+      "rules": [
+        "Most lenders must make a reasonable, good-faith ability-to-repay determination using documented borrower financial information.",
+        "The Loan Estimate summarizes expected loan terms and costs; the Closing Disclosure sets out final terms and closing costs and is generally due at least three business days before closing.",
+        "This calculator does not estimate credit approval, mortgage insurance, property tax, homeowners association dues or state-specific closing costs unless you enter applicable amounts."
+      ],
+      "sources": [
+        [
+          "CFPB: Ability-to-repay rule",
+          "https://www.consumerfinance.gov/ask-cfpb/what-is-the-ability-to-repay-rule-en-1787/"
+        ],
+        [
+          "CFPB: Loan Estimate and Closing Disclosure documents",
+          "https://www.consumerfinance.gov/ask-cfpb/what-documents-should-i-receive-before-closing-on-a-mortgage-loan-en-181/"
+        ],
+        [
+          "US Code: Minimum standards for residential mortgage loans",
+          "https://uscode.house.gov/us/usc/119-124/t15/s1639c/"
+        ]
+      ]
+    },
+    "CA": {
+      "summary": "Federally regulated Canadian lenders must provide clear mortgage disclosures and an information box. The Canadian fixed-rate mortgage convention commonly uses nominal annual interest compounded semi-annually; match the actual agreement.",
+      "rules": [
+        "Review the mortgage information box and disclosure statement for rate, payment, term, fees and prepayment conditions.",
+        "The calculator preselects semi-annual compounding for Canada, but you should confirm the exact convention and payment schedule in the lender's contract.",
+        "Provincial rules, land-transfer taxes, insurance premiums and lender qualification policies are not automatically calculated."
+      ],
+      "sources": [
+        [
+          "Financial Consumer Agency of Canada: Mortgage rights and disclosures",
+          "https://www.canada.ca/en/financial-consumer-agency/services/rights-responsibilities/rights-mortgages/applying-for-mortgage.html"
+        ],
+        [
+          "FCAC: Fixed mortgage information-box example",
+          "https://www.canada.ca/en/financial-consumer-agency/services/industry/bulletins/information-box-examples/credit-agreement-fixed-mortgage.html"
+        ]
+      ]
+    },
+    "GB": {
+      "summary": "UK deposit sizes and affordability depend on lender and product. MoneyHelper describes 5%–20% as a typical deposit range, not a statutory minimum or guarantee; lenders apply their own affordability criteria.",
+      "rules": [
+        "MoneyHelper says a deposit is typically around 5%–20% of the purchase price; a larger deposit may improve available rates, but lender terms vary.",
+        "Lenders assess affordability and individual circumstances; the calculator does not determine mortgage eligibility.",
+        "Stamp Duty Land Tax in England and Northern Ireland, Land Transaction Tax in Wales and Land and Buildings Transaction Tax in Scotland have different rules and are not calculated here."
+      ],
+      "sources": [
+        [
+          "MoneyHelper: How much can you afford to borrow?",
+          "https://www.moneyhelper.org.uk/en/homes/buying-a-home/how-much-can-you-afford-to-borrow-for-a-mortgage.html"
+        ],
+        [
+          "MoneyHelper: Mortgage fees and buying costs",
+          "https://www.moneyhelper.org.uk/en/homes/buying-a-home/estimate-your-overall-buying-and-moving-costs"
+        ]
+      ]
+    },
+    "AU": {
+      "summary": "Australian home-loan comparisons use a comparison rate that combines the interest rate with most fees and charges, but excludes some government charges and conditional fees. Repayment frequency and loan features matter.",
+      "rules": [
+        "Compare the advertised interest rate with the comparison rate; the comparison rate includes most fees but not every government or conditional charge.",
+        "Check offset/redraw features, extra repayment limits, ongoing fees, fixed-rate expiry and break costs in the lender's Key Facts Sheet and contract.",
+        "The calculator does not apply state or territory transfer duty, lenders mortgage insurance or lender-specific serviceability rules."
+      ],
+      "sources": [
+        [
+          "ASIC: National Credit Code and comparison-rate explanation",
+          "https://www.asic.gov.au/regulatory-resources/credit/credit-general-conduct-obligations/national-credit-code"
+        ],
+        [
+          "Moneysmart: Choosing a home loan",
+          "https://moneysmart.gov.au/home-loans/choosing-a-home-loan"
+        ],
+        [
+          "Moneysmart: Mortgage calculator",
+          "https://moneysmart.gov.au/HOME-LOANS/MORTGAGE-CALCULATOR"
+        ]
+      ]
+    },
+    "AE": {
+      "summary": "The Central Bank of the UAE sets borrower-based mortgage measures including loan-to-value limits, debt-burden ratio caps, maximum finance amounts and loan terms. LTV treatment differs by borrower category and property purpose/value.",
+      "rules": [
+        "UAE LTV limits vary by UAE national versus expatriate, first owner-occupied home versus subsequent/investment property, and property value. Off-plan property has separate treatment.",
+        "The Central Bank framework also includes debt-burden and maximum-loan-term controls; the calculator does not decide eligibility or apply a bank's full affordability assessment.",
+        "Confirm the current CBUAE rule and your bank's terms before using any down-payment figure. No universal UAE deposit percentage is assumed here."
+      ],
+      "sources": [
+        [
+          "Central Bank of the UAE: Borrower-based mortgage measures",
+          "https://centralbank.ae/en/our-operations/financial-stability/"
+        ],
+        [
+          "CBUAE Rulebook: Regulations regarding mortgage loans",
+          "https://rulebook.centralbank.ae/en/rulebook/regulations-regarding-mortgage-loans"
+        ]
+      ]
+    },
+    "NZ": {
+      "summary": "New Zealand's Reserve Bank sets high-LVR lending speed limits for banks, not a guaranteed deposit requirement for each borrower. Banks still apply their own lending criteria.",
+      "rules": [
+        "Current settings allow up to 25% of new owner-occupier lending to be above 80% LVR and up to 10% of investor lending to be above 70% LVR; these are portfolio speed limits, not individual approval entitlements.",
+        "The Reserve Bank reviews settings over time. Check the current RBNZ rules and the lender's own affordability assessment.",
+        "The calculator does not apply DTI restrictions, first-home loan exemptions or lender-specific criteria."
+      ],
+      "sources": [
+        [
+          "Reserve Bank of New Zealand: Loan-to-value ratio restrictions",
+          "https://www.rbnz.govt.nz/en/regulation-and-supervision/oversight-of-banks/standards-and-requirements-for-banks/macroprudential-policy/loan-to-value-ratio-restrictions"
+        ],
+        [
+          "RBNZ: Understanding LVR restrictions",
+          "https://www.rbnz.govt.nz/education/explainers/loan-to-value-restrictions-explained"
+        ]
+      ]
+    },
+    "SG": {
+      "summary": "Singapore home purchases can incur Buyer's Stamp Duty based on the higher of purchase price or market value. Additional Buyer's Stamp Duty depends on buyer profile and property circumstances; this mortgage estimate does not calculate those taxes.",
+      "rules": [
+        "MAS macroprudential settings list housing-loan LTV limits of 75% for a first housing loan, 45% for a second and 35% for a third; tighter limits can apply for longer tenures or loans extending beyond retirement age.",
+        "MAS sets a 55% Total Debt Servicing Ratio cap and a 30% Mortgage Servicing Ratio cap for specified HDB-flat and executive-condominium loans. These are regulatory frameworks, not a guarantee of individual approval.",
+        "IRAS Buyer's Stamp Duty is based on the higher of purchase price or market value; Additional Buyer's Stamp Duty may also apply. The calculator does not calculate these taxes."
+      ],
+      "sources": [
+        [
+          "IRAS: Buyer's Stamp Duty",
+          "https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property/buyer%27s-stamp-duty-%28bsd%29"
+        ],
+        [
+          "IRAS: Stamp duty rates and taxes",
+          "https://www.iras.gov.sg/quick-links/tax-rates/stamp-duty"
+        ],
+        [
+          "MAS: Current macroprudential policy settings",
+          "https://www.mas.gov.sg/publications/macroprudential-policies-in-singapore"
+        ]
+      ]
+    },
+    "BR": {
+      "summary": "Brazilian residential property finance distinguishes the SFH (Housing Finance System) and SFI (Real Estate Financing System). Conditions, eligibility and cost structures differ; banks assess the borrower's repayment capacity.",
+      "rules": [
+        "The Central Bank of Brazil explains the SFH and SFI financing systems and their different eligibility and property conditions.",
+        "Lenders assess income and existing financial commitments; the Central Bank FAQ notes that each bank applies its own income-commitment criteria.",
+        "The calculator does not determine SFH/SFI eligibility, FGTS eligibility, effective total cost (CET), property registration or local transfer taxes."
+      ],
+      "sources": [
+        [
+          "Banco Central do Brasil: Real-estate credit FAQ",
+          "https://www.bcb.gov.br/meubc/faqs/s/credito-imobiliario"
+        ],
+        [
+          "Banco Central do Brasil: Conditions for real-estate financing",
+          "https://www.bcb.gov.br/meubc/faqs/p/condicoes-para-contratar-financiamento-imobiliario"
+        ]
+      ]
+    },
+    "ZA": {
+      "summary": "South Africa's National Credit Act provides consumer protections for mortgage agreements, including a pre-agreement statement and quotation before signing. These documents should set out the deposit, instalments, interest and charges.",
+      "rules": [
+        "Request and review the pre-agreement statement and quotation before signing a mortgage agreement.",
+        "The National Credit Regulator's consumer guidance says the quotation should disclose the principal debt, interest rate, total amount payable, instalments, fees, charges and interest.",
+        "This calculator does not apply bank-specific affordability tests, transfer duty, bond registration costs or credit-life insurance."
+      ],
+      "sources": [
+        [
+          "National Credit Regulator: Consumer rights under the National Credit Act",
+          "https://www.ncr.org.za/documents/Consumer%20Rights%20as%20per%20the%20National%20Credit%20Act%20%28NCA%29%5B4%5D.pdf"
+        ],
+        [
+          "National Credit Regulator: National Credit Act brochure",
+          "https://ncr.org.za/documents/pages/Brochures/ENGLISH.pdf"
+        ]
+      ]
+    },
+    "SA": {
+      "summary": "Saudi Central Bank (SAMA) rules require mortgage providers to assess a borrower's ability to repay and prudently value the property when calculating loan-to-value. LTV treatment can vary by first-home status, beneficiary and finance-provider type.",
+      "rules": [
+        "SAMA's real-estate finance rulebook requires underwriting policies to assess ability to repay and sets out how LTV and property value are calculated.",
+        "SAMA has issued different LTV treatment for citizens' first homes and for subsequent homes, with differences between banks and real-estate finance companies. Do not treat one percentage as universal.",
+        "The calculator does not test Sharia-compliant product structure, debt-burden limits, borrower eligibility or SAMA's detailed LTV categories."
+      ],
+      "sources": [
+        [
+          "SAMA Rulebook: Real estate exposure class",
+          "https://rulebook.sama.gov.sa/en/real-estate-exposure-class"
+        ],
+        [
+          "SAMA Rulebook: Increase the maximum mortgage for citizens' first home",
+          "https://rulebook.sama.gov.sa/en/increase-maximum-mortgage-citizens-own-first-home"
+        ]
+      ]
+    },
+    "MX": {
+      "summary": "Mexico's CONDUSEF advises consumers to assess their ability to pay and compare mortgage offers, including the binding offer, commissions, limitations and final credit conditions. It also provides an official mortgage comparison simulator.",
+      "rules": [
+        "CONDUSEF recommends checking real payment capacity and comparing bank mortgage conditions before signing.",
+        "Ask for the oferta vinculante (binding offer) and compare the amount financed after commissions, exclusions and product limitations.",
+        "The calculator does not model Infonavit/Fovissste programmes, Mexican CAT (total annual cost), notary costs, local acquisition taxes or lender-specific terms."
+      ],
+      "sources": [
+        [
+          "CONDUSEF: Choosing a mortgage loan",
+          "https://www.condusef.gob.mx/?idc=848&idcat=1&p=contenido"
+        ],
+        [
+          "CONDUSEF: Official mortgage credit simulator",
+          "https://phpapps.condusef.gob.mx/condusefhipotecario/index.php"
+        ]
+      ]
+    },
+    "JP": {
+      "summary": "Japan's Ministry of Land, Infrastructure, Transport and Tourism publishes official housing-tax guidance, including the housing-loan tax deduction. Eligibility and deduction limits depend on the tax year, occupancy date, property type and energy-performance conditions.",
+      "rules": [
+        "Check the MLIT housing-tax guidance for the applicable year before estimating a housing-loan tax deduction.",
+        "The tax deduction is separate from the mortgage repayment calculation; this calculator does not estimate income-tax relief or verify property eligibility.",
+        "The official source is primarily in Japanese; consult the current tax authority guidance or a qualified local adviser for your circumstances."
+      ],
+      "sources": [
+        [
+          "MLIT Japan: Housing tax measures (2026 update)",
+          "https://www.mlit.go.jp/jutakukentiku/house/zeisei_index2.html"
+        ]
+      ]
+    },
+    "MY": {
+      "summary": "Bank Negara Malaysia (BNM) emphasizes responsible housing finance and affordability assessments. Banks determine individual lending decisions; a single universal down-payment or LTV percentage should not be assumed.",
+      "rules": [
+        "BNM says financial institutions assess income after statutory deductions, essential expenditure and other obligations to ensure borrowers can afford repayments and retain a financial buffer.",
+        "BNM states that it does not prescribe one universal housing-loan lending limit; banks make lending decisions under their own criteria and risk appetite.",
+        "Floating-rate housing-loan instalments may change when the Overnight Policy Rate changes; confirm the reference rate and reset terms with the lender."
+      ],
+      "sources": [
+        [
+          "BNM: First-time home owners continue to have access to financing",
+          "https://www.bnm.gov.my/-/first-time-home-owners-continue-to-have-access-to-financing"
+        ],
+        [
+          "BNM: Responsible lending and borrower affordability",
+          "https://www.bnm.gov.my/-/responsible-lending-guidelines-ensures-borrowers-affordability"
+        ],
+        [
+          "BNM: How monetary policy affects floating-rate housing loans",
+          "https://www.bnm.gov.my/-/monetary-policy-98-pr"
+        ]
+      ]
+    }
+  },
+  "countries": {
+    "AF": {
+      "countryName": "Afghanistan",
+      "status": "pending"
+    },
+    "AL": {
+      "countryName": "Albania",
+      "status": "pending"
+    },
+    "DZ": {
+      "countryName": "Algeria",
+      "status": "pending"
+    },
+    "AD": {
+      "countryName": "Andorra",
+      "status": "pending"
+    },
+    "AO": {
+      "countryName": "Angola",
+      "status": "pending"
+    },
+    "AG": {
+      "countryName": "Antigua and Barbuda",
+      "status": "pending"
+    },
+    "AR": {
+      "countryName": "Argentina",
+      "status": "pending"
+    },
+    "AM": {
+      "countryName": "Armenia",
+      "status": "pending"
+    },
+    "AU": {
+      "countryName": "Australia",
+      "status": "verified"
+    },
+    "AT": {
+      "countryName": "Austria",
+      "status": "regional-framework"
+    },
+    "AZ": {
+      "countryName": "Azerbaijan",
+      "status": "pending"
+    },
+    "BS": {
+      "countryName": "Bahamas",
+      "status": "pending"
+    },
+    "BH": {
+      "countryName": "Bahrain",
+      "status": "pending"
+    },
+    "BD": {
+      "countryName": "Bangladesh",
+      "status": "pending"
+    },
+    "BB": {
+      "countryName": "Barbados",
+      "status": "pending"
+    },
+    "BY": {
+      "countryName": "Belarus",
+      "status": "pending"
+    },
+    "BE": {
+      "countryName": "Belgium",
+      "status": "regional-framework"
+    },
+    "BZ": {
+      "countryName": "Belize",
+      "status": "pending"
+    },
+    "BJ": {
+      "countryName": "Benin",
+      "status": "pending"
+    },
+    "BT": {
+      "countryName": "Bhutan",
+      "status": "pending"
+    },
+    "BO": {
+      "countryName": "Bolivia",
+      "status": "pending"
+    },
+    "BA": {
+      "countryName": "Bosnia and Herzegovina",
+      "status": "pending"
+    },
+    "BW": {
+      "countryName": "Botswana",
+      "status": "pending"
+    },
+    "BR": {
+      "countryName": "Brazil",
+      "status": "verified"
+    },
+    "BN": {
+      "countryName": "Brunei",
+      "status": "pending"
+    },
+    "BG": {
+      "countryName": "Bulgaria",
+      "status": "regional-framework"
+    },
+    "BF": {
+      "countryName": "Burkina Faso",
+      "status": "pending"
+    },
+    "BI": {
+      "countryName": "Burundi",
+      "status": "pending"
+    },
+    "CV": {
+      "countryName": "Cabo Verde",
+      "status": "pending"
+    },
+    "KH": {
+      "countryName": "Cambodia",
+      "status": "pending"
+    },
+    "CM": {
+      "countryName": "Cameroon",
+      "status": "pending"
+    },
+    "CA": {
+      "countryName": "Canada",
+      "status": "verified"
+    },
+    "CF": {
+      "countryName": "Central African Republic",
+      "status": "pending"
+    },
+    "TD": {
+      "countryName": "Chad",
+      "status": "pending"
+    },
+    "CL": {
+      "countryName": "Chile",
+      "status": "pending"
+    },
+    "CN": {
+      "countryName": "China",
+      "status": "pending"
+    },
+    "CO": {
+      "countryName": "Colombia",
+      "status": "pending"
+    },
+    "KM": {
+      "countryName": "Comoros",
+      "status": "pending"
+    },
+    "CG": {
+      "countryName": "Republic of the Congo",
+      "status": "pending"
+    },
+    "CD": {
+      "countryName": "Democratic Republic of the Congo",
+      "status": "pending"
+    },
+    "CR": {
+      "countryName": "Costa Rica",
+      "status": "pending"
+    },
+    "CI": {
+      "countryName": "Côte d'Ivoire",
+      "status": "pending"
+    },
+    "HR": {
+      "countryName": "Croatia",
+      "status": "regional-framework"
+    },
+    "CU": {
+      "countryName": "Cuba",
+      "status": "pending"
+    },
+    "CY": {
+      "countryName": "Cyprus",
+      "status": "regional-framework"
+    },
+    "CZ": {
+      "countryName": "Czechia",
+      "status": "regional-framework"
+    },
+    "DK": {
+      "countryName": "Denmark",
+      "status": "regional-framework"
+    },
+    "DJ": {
+      "countryName": "Djibouti",
+      "status": "pending"
+    },
+    "DM": {
+      "countryName": "Dominica",
+      "status": "pending"
+    },
+    "DO": {
+      "countryName": "Dominican Republic",
+      "status": "pending"
+    },
+    "EC": {
+      "countryName": "Ecuador",
+      "status": "pending"
+    },
+    "EG": {
+      "countryName": "Egypt",
+      "status": "pending"
+    },
+    "SV": {
+      "countryName": "El Salvador",
+      "status": "pending"
+    },
+    "GQ": {
+      "countryName": "Equatorial Guinea",
+      "status": "pending"
+    },
+    "ER": {
+      "countryName": "Eritrea",
+      "status": "pending"
+    },
+    "EE": {
+      "countryName": "Estonia",
+      "status": "regional-framework"
+    },
+    "SZ": {
+      "countryName": "Eswatini",
+      "status": "pending"
+    },
+    "ET": {
+      "countryName": "Ethiopia",
+      "status": "pending"
+    },
+    "FJ": {
+      "countryName": "Fiji",
+      "status": "pending"
+    },
+    "FI": {
+      "countryName": "Finland",
+      "status": "regional-framework"
+    },
+    "FR": {
+      "countryName": "France",
+      "status": "regional-framework"
+    },
+    "GA": {
+      "countryName": "Gabon",
+      "status": "pending"
+    },
+    "GM": {
+      "countryName": "Gambia",
+      "status": "pending"
+    },
+    "GE": {
+      "countryName": "Georgia",
+      "status": "pending"
+    },
+    "DE": {
+      "countryName": "Germany",
+      "status": "regional-framework"
+    },
+    "GH": {
+      "countryName": "Ghana",
+      "status": "pending"
+    },
+    "GR": {
+      "countryName": "Greece",
+      "status": "regional-framework"
+    },
+    "GD": {
+      "countryName": "Grenada",
+      "status": "pending"
+    },
+    "GT": {
+      "countryName": "Guatemala",
+      "status": "pending"
+    },
+    "GN": {
+      "countryName": "Guinea",
+      "status": "pending"
+    },
+    "GW": {
+      "countryName": "Guinea-Bissau",
+      "status": "pending"
+    },
+    "GY": {
+      "countryName": "Guyana",
+      "status": "pending"
+    },
+    "HT": {
+      "countryName": "Haiti",
+      "status": "pending"
+    },
+    "HN": {
+      "countryName": "Honduras",
+      "status": "pending"
+    },
+    "HU": {
+      "countryName": "Hungary",
+      "status": "regional-framework"
+    },
+    "IS": {
+      "countryName": "Iceland",
+      "status": "pending"
+    },
+    "IN": {
+      "countryName": "India",
+      "status": "verified"
+    },
+    "ID": {
+      "countryName": "Indonesia",
+      "status": "pending"
+    },
+    "IR": {
+      "countryName": "Iran",
+      "status": "pending"
+    },
+    "IQ": {
+      "countryName": "Iraq",
+      "status": "pending"
+    },
+    "IE": {
+      "countryName": "Ireland",
+      "status": "regional-framework"
+    },
+    "IL": {
+      "countryName": "Israel",
+      "status": "pending"
+    },
+    "IT": {
+      "countryName": "Italy",
+      "status": "regional-framework"
+    },
+    "JM": {
+      "countryName": "Jamaica",
+      "status": "pending"
+    },
+    "JP": {
+      "countryName": "Japan",
+      "status": "verified"
+    },
+    "JO": {
+      "countryName": "Jordan",
+      "status": "pending"
+    },
+    "KZ": {
+      "countryName": "Kazakhstan",
+      "status": "pending"
+    },
+    "KE": {
+      "countryName": "Kenya",
+      "status": "pending"
+    },
+    "KI": {
+      "countryName": "Kiribati",
+      "status": "pending"
+    },
+    "KW": {
+      "countryName": "Kuwait",
+      "status": "pending"
+    },
+    "KG": {
+      "countryName": "Kyrgyzstan",
+      "status": "pending"
+    },
+    "LA": {
+      "countryName": "Laos",
+      "status": "pending"
+    },
+    "LV": {
+      "countryName": "Latvia",
+      "status": "regional-framework"
+    },
+    "LB": {
+      "countryName": "Lebanon",
+      "status": "pending"
+    },
+    "LS": {
+      "countryName": "Lesotho",
+      "status": "pending"
+    },
+    "LR": {
+      "countryName": "Liberia",
+      "status": "pending"
+    },
+    "LY": {
+      "countryName": "Libya",
+      "status": "pending"
+    },
+    "LI": {
+      "countryName": "Liechtenstein",
+      "status": "pending"
+    },
+    "LT": {
+      "countryName": "Lithuania",
+      "status": "regional-framework"
+    },
+    "LU": {
+      "countryName": "Luxembourg",
+      "status": "regional-framework"
+    },
+    "MG": {
+      "countryName": "Madagascar",
+      "status": "pending"
+    },
+    "MW": {
+      "countryName": "Malawi",
+      "status": "pending"
+    },
+    "MY": {
+      "countryName": "Malaysia",
+      "status": "verified"
+    },
+    "MV": {
+      "countryName": "Maldives",
+      "status": "pending"
+    },
+    "ML": {
+      "countryName": "Mali",
+      "status": "pending"
+    },
+    "MT": {
+      "countryName": "Malta",
+      "status": "regional-framework"
+    },
+    "MH": {
+      "countryName": "Marshall Islands",
+      "status": "pending"
+    },
+    "MR": {
+      "countryName": "Mauritania",
+      "status": "pending"
+    },
+    "MU": {
+      "countryName": "Mauritius",
+      "status": "pending"
+    },
+    "MX": {
+      "countryName": "Mexico",
+      "status": "verified"
+    },
+    "FM": {
+      "countryName": "Micronesia",
+      "status": "pending"
+    },
+    "MD": {
+      "countryName": "Moldova",
+      "status": "pending"
+    },
+    "MC": {
+      "countryName": "Monaco",
+      "status": "pending"
+    },
+    "MN": {
+      "countryName": "Mongolia",
+      "status": "pending"
+    },
+    "ME": {
+      "countryName": "Montenegro",
+      "status": "pending"
+    },
+    "MA": {
+      "countryName": "Morocco",
+      "status": "pending"
+    },
+    "MZ": {
+      "countryName": "Mozambique",
+      "status": "pending"
+    },
+    "MM": {
+      "countryName": "Myanmar",
+      "status": "pending"
+    },
+    "NA": {
+      "countryName": "Namibia",
+      "status": "pending"
+    },
+    "NR": {
+      "countryName": "Nauru",
+      "status": "pending"
+    },
+    "NP": {
+      "countryName": "Nepal",
+      "status": "pending"
+    },
+    "NL": {
+      "countryName": "Netherlands",
+      "status": "regional-framework"
+    },
+    "NZ": {
+      "countryName": "New Zealand",
+      "status": "verified"
+    },
+    "NI": {
+      "countryName": "Nicaragua",
+      "status": "pending"
+    },
+    "NE": {
+      "countryName": "Niger",
+      "status": "pending"
+    },
+    "NG": {
+      "countryName": "Nigeria",
+      "status": "pending"
+    },
+    "KP": {
+      "countryName": "North Korea",
+      "status": "pending"
+    },
+    "MK": {
+      "countryName": "North Macedonia",
+      "status": "pending"
+    },
+    "NO": {
+      "countryName": "Norway",
+      "status": "pending"
+    },
+    "OM": {
+      "countryName": "Oman",
+      "status": "pending"
+    },
+    "PK": {
+      "countryName": "Pakistan",
+      "status": "pending"
+    },
+    "PW": {
+      "countryName": "Palau",
+      "status": "pending"
+    },
+    "PS": {
+      "countryName": "Palestine",
+      "status": "pending"
+    },
+    "PA": {
+      "countryName": "Panama",
+      "status": "pending"
+    },
+    "PG": {
+      "countryName": "Papua New Guinea",
+      "status": "pending"
+    },
+    "PY": {
+      "countryName": "Paraguay",
+      "status": "pending"
+    },
+    "PE": {
+      "countryName": "Peru",
+      "status": "pending"
+    },
+    "PH": {
+      "countryName": "Philippines",
+      "status": "pending"
+    },
+    "PL": {
+      "countryName": "Poland",
+      "status": "regional-framework"
+    },
+    "PT": {
+      "countryName": "Portugal",
+      "status": "regional-framework"
+    },
+    "QA": {
+      "countryName": "Qatar",
+      "status": "pending"
+    },
+    "RO": {
+      "countryName": "Romania",
+      "status": "regional-framework"
+    },
+    "RU": {
+      "countryName": "Russia",
+      "status": "pending"
+    },
+    "RW": {
+      "countryName": "Rwanda",
+      "status": "pending"
+    },
+    "KN": {
+      "countryName": "Saint Kitts and Nevis",
+      "status": "pending"
+    },
+    "LC": {
+      "countryName": "Saint Lucia",
+      "status": "pending"
+    },
+    "VC": {
+      "countryName": "Saint Vincent and the Grenadines",
+      "status": "pending"
+    },
+    "WS": {
+      "countryName": "Samoa",
+      "status": "pending"
+    },
+    "SM": {
+      "countryName": "San Marino",
+      "status": "pending"
+    },
+    "ST": {
+      "countryName": "Sao Tome and Principe",
+      "status": "pending"
+    },
+    "SA": {
+      "countryName": "Saudi Arabia",
+      "status": "verified"
+    },
+    "SN": {
+      "countryName": "Senegal",
+      "status": "pending"
+    },
+    "RS": {
+      "countryName": "Serbia",
+      "status": "pending"
+    },
+    "SC": {
+      "countryName": "Seychelles",
+      "status": "pending"
+    },
+    "SL": {
+      "countryName": "Sierra Leone",
+      "status": "pending"
+    },
+    "SG": {
+      "countryName": "Singapore",
+      "status": "verified"
+    },
+    "SK": {
+      "countryName": "Slovakia",
+      "status": "regional-framework"
+    },
+    "SI": {
+      "countryName": "Slovenia",
+      "status": "regional-framework"
+    },
+    "SB": {
+      "countryName": "Solomon Islands",
+      "status": "pending"
+    },
+    "SO": {
+      "countryName": "Somalia",
+      "status": "pending"
+    },
+    "ZA": {
+      "countryName": "South Africa",
+      "status": "verified"
+    },
+    "KR": {
+      "countryName": "South Korea",
+      "status": "pending"
+    },
+    "SS": {
+      "countryName": "South Sudan",
+      "status": "pending"
+    },
+    "ES": {
+      "countryName": "Spain",
+      "status": "regional-framework"
+    },
+    "LK": {
+      "countryName": "Sri Lanka",
+      "status": "pending"
+    },
+    "SD": {
+      "countryName": "Sudan",
+      "status": "pending"
+    },
+    "SR": {
+      "countryName": "Suriname",
+      "status": "pending"
+    },
+    "SE": {
+      "countryName": "Sweden",
+      "status": "regional-framework"
+    },
+    "CH": {
+      "countryName": "Switzerland",
+      "status": "pending"
+    },
+    "SY": {
+      "countryName": "Syria",
+      "status": "pending"
+    },
+    "TJ": {
+      "countryName": "Tajikistan",
+      "status": "pending"
+    },
+    "TZ": {
+      "countryName": "Tanzania",
+      "status": "pending"
+    },
+    "TH": {
+      "countryName": "Thailand",
+      "status": "pending"
+    },
+    "TL": {
+      "countryName": "Timor-Leste",
+      "status": "pending"
+    },
+    "TG": {
+      "countryName": "Togo",
+      "status": "pending"
+    },
+    "TO": {
+      "countryName": "Tonga",
+      "status": "pending"
+    },
+    "TT": {
+      "countryName": "Trinidad and Tobago",
+      "status": "pending"
+    },
+    "TN": {
+      "countryName": "Tunisia",
+      "status": "pending"
+    },
+    "TR": {
+      "countryName": "Turkey",
+      "status": "pending"
+    },
+    "TM": {
+      "countryName": "Turkmenistan",
+      "status": "pending"
+    },
+    "TV": {
+      "countryName": "Tuvalu",
+      "status": "pending"
+    },
+    "UG": {
+      "countryName": "Uganda",
+      "status": "pending"
+    },
+    "UA": {
+      "countryName": "Ukraine",
+      "status": "pending"
+    },
+    "AE": {
+      "countryName": "United Arab Emirates",
+      "status": "verified"
+    },
+    "GB": {
+      "countryName": "United Kingdom",
+      "status": "verified"
+    },
+    "US": {
+      "countryName": "United States",
+      "status": "verified"
+    },
+    "UY": {
+      "countryName": "Uruguay",
+      "status": "pending"
+    },
+    "UZ": {
+      "countryName": "Uzbekistan",
+      "status": "pending"
+    },
+    "VU": {
+      "countryName": "Vanuatu",
+      "status": "pending"
+    },
+    "VA": {
+      "countryName": "Vatican City",
+      "status": "pending"
+    },
+    "VE": {
+      "countryName": "Venezuela",
+      "status": "pending"
+    },
+    "VN": {
+      "countryName": "Vietnam",
+      "status": "pending"
+    },
+    "YE": {
+      "countryName": "Yemen",
+      "status": "pending"
+    },
+    "ZM": {
+      "countryName": "Zambia",
+      "status": "pending"
+    },
+    "ZW": {
+      "countryName": "Zimbabwe",
+      "status": "pending"
+    }
+  }
+}
