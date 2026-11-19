@@ -80,7 +80,7 @@ jobs:
             international="$(curl -fsSL "https://friendlycalculator.in/international/?deploy=${GITHUB_SHA}" || true)"
             shell="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
             shell_css="$(curl -fsSL "https://friendlycalculator.in/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q 'document.body.appendChild(dock)' <<<"$shell" && grep -q 'assistantLauncher.classList.remove(\x27fc-settings-quick-action\x27)' <<<"$shell" && grep -q '#fc-floating-tools{position:fixed;left:16px;right:auto;bottom:16px' <<<"$shell_css"; then
+            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q 'document.body.appendChild(dock)' <<<"$shell" && grep -Fq "assistantLauncher.classList.remove('fc-settings-quick-action')" <<<"$shell" && grep -q '#fc-floating-tools{position:fixed;left:16px;right:auto;bottom:16px' <<<"$shell_css"; then
               echo "Production calculator assets match commit ${GITHUB_SHA}."
               exit 0
             fi
