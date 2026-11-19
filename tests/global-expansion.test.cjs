@@ -200,7 +200,8 @@ test('currency, country and units are mounted in Settings, not in the shared Hea
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Only the date-format compatibility selector remains hidden.');
   assert.ok(shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Visible controls are created in the required order.');
-  assert.ok(shell.includes("countryLabel?.classList.replace('fc-country-control','fc-country-format-control')"));
+  assert.ok(shell.includes("countryFormatLabel.className='fc-country-format-control'"), 'Country & format uses the combined Settings selector.');
+  assert.ok(shell.includes('compatibilityControls.append(countryControl,formatControl)'), 'Original locale controls remain hidden for compatibility listeners.');
   assert.ok(shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Regional controls must stay outside the Header.');
   assert.ok(shell.includes("regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Regional controls must be mounted in Settings.');
   assert.ok(!shell.includes("primaryNav.append(...regionalMarkup.children)"), 'Regional controls must not be appended to the Header.');
