@@ -64,7 +64,7 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
-test('shared footer retains policy navigation and Sitemap; regional settings and Settings trigger stay outside chrome', () => {
+test('shared footer retains Sitemap; regional preferences follow Language in Header and Settings stays outside chrome', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
@@ -74,6 +74,7 @@ test('shared footer retains policy navigation and Sitemap; regional settings and
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
   assert.ok(headerMarkup.includes("+languageControl+'</nav>"), 'Language selector must remain inside the header navigation after Login.');
   assert.ok(shell.includes("languageControlElement.after(currencyControl,countryFormatLabel,unitControl)"), 'Currency, Country & format, and Units must appear immediately after Language in Header.');
+  assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('const activeHeader=h;'), 'Active state must target the mounted canonical header, not a replaced legacy node.');
@@ -178,4 +179,14 @@ test('shared footer has identical responsive sizing rules across all public page
   assert.match(css, /footer\.fc-global-footer \.fc-global-footer-inner\{[\s\S]*?width:min\(1440px,96%\)!important/);
   assert.match(css, /footer\.fc-global-footer \.fc-footer-top\{[\s\S]*?min-height:64px!important/);
   assert.match(css, /@media\(max-width:760px\)[\s\S]*?footer\.fc-global-footer \.fc-global-footer-inner\{width:92%!important/);
+});
+
+
+test('regional defaults follow the visitor browser region and preserve explicit saved choices', () => {
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.ok(locale.includes("navigator.languages?.[0]||navigator.language"), 'Browser locale must be used for first-visit regional defaults.');
+  assert.ok(locale.includes("read(COUNTRY_KEY,detectedCountry"), 'A saved country must override the detected browser country.');
+  assert.ok(locale.includes("read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency"), 'Currency must default from the selected or detected country.');
+  assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
+  assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
 });
