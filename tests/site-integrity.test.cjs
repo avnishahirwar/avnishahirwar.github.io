@@ -2071,7 +2071,7 @@ test('Settings trigger is the final Footer item; Site Settings mirrors Header co
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("+'</nav>'+languageControl+'</div>"), 'Language must remain in the shared header after Login.');
+  assert.ok(shell.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must remain inside the shared Header after Login.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
