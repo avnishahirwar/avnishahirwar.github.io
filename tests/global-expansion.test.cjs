@@ -65,7 +65,7 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
-test('shared footer retains Sitemap; regional preferences stay in Settings and Settings is the final Footer item', () => {
+test('shared footer retains Sitemap; regional preferences follow Language and Settings is the final Footer item', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes("en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']"));
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
