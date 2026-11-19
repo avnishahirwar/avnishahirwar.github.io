@@ -285,7 +285,7 @@ test('calculator directory exposes its curated core catalogue and keeps business
   assert.equal(new Set(links).size, links.length);
   assert.ok(links.every(url => canonicalCalculatorUrls.includes(url)));
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
   const services = directory.indexOf('<h2>Business & developer services</h2>');
   const trust = directory.indexOf('<h2>About, trust & policies</h2>');
@@ -838,23 +838,24 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
-  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(navCalculatorTotal, homepageCoreCalculatorCount, 'Homepage category counts must match their curated category cards.');
+  assert.ok(navCalculatorTotal < expectedCoreCalculatorCount, 'The homepage remains curated while the directory lists the full catalogue.');
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
   assert.doesNotMatch(homepage, /class="search-panel"/);
   assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
   assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
-  assert.ok(directory.includes('Browse all ' + expectedCoreCalculatorCount + ' calculator tools'));
-  assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
-  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
+  assert.ok(directory.includes('Browse all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculator tools'));
+  assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators by name or topic'));
+  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators across 36 categories'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
   const cards = [...directoryIndex.matchAll(/<a class="quick" href="#([^"]+)"[\s\S]*?<span>(\d+) calculator(?:s)?<\/span>/g)];
-  const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
+  const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section(?: |")|<footer|<\/main>)/g)];
   assert.equal(cards.length, 20);
   assert.deepEqual(cards.map(m => m[1]), sections.map(m => m[1]));
   const counts = new Map();
@@ -1252,7 +1253,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into 19 clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
+  assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators across 36 categories'));
 });
 
 
@@ -1688,7 +1689,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, expectedSearchIndexLength);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
 });
 
  
