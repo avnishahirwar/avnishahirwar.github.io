@@ -67,6 +67,9 @@
       const years = finite(v.termYears, 'Loan term', 1, 50);
       const target = finite(v.targetPayment, 'Payment amount', 0.01, 1e15);
       const periods = Math.round(years * 12);
+      if (target < principal / periods - 0.000001) throw new RangeError('The entered payment is too small to repay the principal over the selected term.');
+      const maximumPayment = payment(principal, periodicRate(50, 12, 12), periods);
+      if (target > maximumPayment) throw new RangeError('The implied annual rate is above the supported 50% range.');
       let low = 0, high = 0.5, annual = 0;
       for (let i = 0; i < 100; i += 1) {
         annual = (low + high) / 2;
@@ -110,7 +113,7 @@
       const oldPmt = payment(principal, oldR, remainingYears * 12);
       const newPmt = payment(principal + costs, newR, newYears * 12);
       const monthlySaving = oldPmt - newPmt;
-      return [{ label: 'Current monthly principal and interest', value: oldPmt, kind: 'money' }, { label: 'New monthly principal and interest', value: newPmt, kind: 'money' }, { label: 'Monthly payment difference', value: monthlySaving, kind: 'money' }, { label: 'Refinance costs', value: costs, kind: 'money' }, { label: 'Simple break-even period', value: monthlySaving > 0 ? costs / monthlySaving : null, kind: 'months' }, { label: 'Interest under current loan', value: amortize(principal, oldR, oldPmt, 0, remainingYears * 12).totalInterest, kind: 'money' }, { label: 'Interest under new loan (excluding costs)', value: amortize(principal, newR, payment(principal, newR, newYears * 12), 0, newYears * 12).totalInterest, kind: 'money' }];
+      return [{ label: 'Current monthly principal and interest', value: oldPmt, kind: 'money' }, { label: 'New monthly principal and interest', value: newPmt, kind: 'money' }, { label: 'Monthly payment difference', value: monthlySaving, kind: 'money' }, { label: 'Refinance costs', value: costs, kind: 'money' }, { label: 'Simple break-even period', value: monthlySaving > 0 ? costs / monthlySaving : null, kind: 'months' }, { label: 'Interest under current loan', value: amortize(principal, oldR, oldPmt, 0, remainingYears * 12).totalInterest, kind: 'money' }, { label: 'Interest under new loan (including financed costs)', value: amortize(principal + costs, newR, newPmt, 0, newYears * 12).totalInterest, kind: 'money' }];
     }
 
     if (type === 'comparison') {
@@ -132,12 +135,13 @@
       const resetCap = finite(v.resetCap, 'Maximum rate change per reset (percentage points)', 0, 20);
       const lifetimeCap = finite(v.lifetimeCap, 'Lifetime rate change cap (percentage points)', 0, 30);
       const resetYears = finite(v.resetEveryYears, 'Years between rate resets', 1, 10);
+      if (!Number.isInteger(resetYears)) throw new RangeError('Years between rate resets must be a whole number.');
       let balance = b.principal, totalInterest = 0, months = 0, currentRate = b.annualRate, currentPayment = scheduled;
       const maxMonths = b.years * 12;
       for (let month = 1; month <= maxMonths && balance > 0.000001; month += 1) {
         if (month > 1 && (month - 1) % (resetYears * 12) === 0) {
           const delta = Math.max(-resetCap, Math.min(resetCap, change));
-          currentRate = Math.max(b.annualRate - lifetimeCap, Math.min(b.annualRate + lifetimeCap, currentRate + delta));
+          currentRate = Math.max(0, Math.max(b.annualRate - lifetimeCap, Math.min(b.annualRate + lifetimeCap, currentRate + delta)));
           const remaining = maxMonths - month + 1;
           currentPayment = payment(balance, periodicRate(currentRate, b.compounds, 12), remaining);
         }
@@ -157,9 +161,10 @@
       const ioMonths = Math.round(ioYears * 12);
       const monthlyRate = periodicRate(b.annualRate, b.compounds, 12);
       const ioPayment = b.principal * monthlyRate;
-      const remainingMonths = Math.max(1, b.years * 12 - ioMonths);
-      const amortizedPayment = payment(b.principal, monthlyRate, remainingMonths);
       const ioInterest = ioPayment * ioMonths;
+      if (ioMonths >= b.years * 12) return [{ label: 'Monthly interest-only payment', value: ioPayment, kind: 'money' }, { label: 'Interest during interest-only period', value: ioInterest, kind: 'money' }, { label: 'Principal remaining at the end of the term', value: b.principal, kind: 'money' }, { label: 'Total estimated interest', value: ioInterest, kind: 'money' }];
+      const remainingMonths = b.years * 12 - ioMonths;
+      const amortizedPayment = payment(b.principal, monthlyRate, remainingMonths);
       const tail = amortize(b.principal, monthlyRate, amortizedPayment, 0, remainingMonths);
       return [{ label: 'Monthly interest-only payment', value: ioPayment, kind: 'money' }, { label: 'Monthly payment after interest-only period', value: amortizedPayment, kind: 'money' }, { label: 'Interest during interest-only period', value: ioInterest, kind: 'money' }, { label: 'Interest during repayment period', value: tail.totalInterest, kind: 'money' }, { label: 'Total estimated interest', value: ioInterest + tail.totalInterest, kind: 'money' }];
     }
