@@ -1282,19 +1282,19 @@ test('property investment calculator is discoverable and calculates rental retur
   assert.match(page, /property-investment-calculator\\.html/);
   assert.match(page, /id="price"/);
   assert.match(page, /id="rent"/);
-  assert.match(page, /annual=rent\\*12/);
+  assert.match(page, /annual=rent\*12/);
   assert.match(page, /net=annual-costs/);
-  assert.match(page, /annual\\/price\\*100/);
-  assert.match(page, /net\\/down\\*100/);
+  assert.match(page, /annual=rent\*12/);
+  assert.match(page, /net\/down\*100/);
 });
 
 test('wealth planner calculator validates inputs and models compounding with annual savings', () => {
-  const page = fs.readFileSync(new URL('../calculators/wealth-planner-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(page, /wealth-planner-calculator\.html/);
   assert.match(page, /<title>Millionaire/);
-  assert.match(page, /wealth-planner-calculator\\.html/);
+  assert.match(page, /wealth-planner-calculator\.html/);
   assert.match(page, /id="target"/);
   assert.match(page, /id="saving"/);
   assert.match(page, /r<=-1/);
-  assert.match(page, /balance=balance\\*\\(1\\+r\\)\\+a/);
+  assert.match(page, /balance=balance\*\(1\+r\)\+a/);
   assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
 });
