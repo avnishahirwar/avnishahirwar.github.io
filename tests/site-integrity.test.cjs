@@ -216,7 +216,7 @@ test('shared Header follows the same navigation and regional-control order on ev
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must be the first control after Login inside the shared navigation.');
+  assert.ok(headerMarkup.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency must immediately follow Language inside the shared navigation.');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
   assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear after Tax and before Everyday.');
   assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
@@ -2087,11 +2087,11 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language must remain inside the shared Header after Login.');
+  assert.ok(shell.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency must immediately follow Language inside the shared Header.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
-  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl') && shell.includes('regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)'), 'Settings must contain regional preferences and a mirrored Language selector.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('regionalSettingsControls.append(countryFormatLabel,unitControl)'), 'Settings must contain mirrored Currency and regional preferences.');
   assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
   assert.ok(shell.includes("'fc-footer-settings-link'"), 'Footer Settings must use the shared Footer link styling.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
@@ -2169,7 +2169,7 @@ test('Settings regional controls use consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional controls must retain readable touch-target sizing.');
-  assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
+  assert.match(shell, /regionalMarkup\.innerHTML=countryControl\+unitControl/);
   assert.match(shell, /regionalSettingsControls\.append\(currencyControl,countryFormatLabel,unitControl\)/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
