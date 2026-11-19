@@ -166,8 +166,8 @@ test('Vietnamese and Telugu homepages declare localized, canonical, indexable do
 
 test('language directory lists 51 unique language editions with accurate availability groups', () => {
   const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
-  assert.match(page, /Available language editions \(17\)/);
-  assert.match(page, /Planned language editions \(33\)/);
+  assert.match(page, /Available language editions \(22\)/);
+  assert.match(page, /Planned language editions \(29\)/);
   assert.equal((page.match(/class="card"/g) || []).length, 51);
   assert.equal((page.match(/class="status-live"/g) || []).length, 22);
   assert.equal((page.match(/class="status-soon"/g) || []).length, 29);
