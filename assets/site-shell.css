@@ -974,14 +974,6 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
     display:grid!important;
     gap:5px!important;
   }
-  footer.fc-global-footer .fc-daily-counter{
-    width:100%!important;
-    margin:6px 0 0!important;
-    padding:10px 0 0!important;
-    font-size:13px!important;
-    line-height:1.45!important;
-    overflow-wrap:anywhere!important;
-  }
   /* Keep the live assistant launcher clear of footer text; the footer reserves
      a dedicated bottom safe area while the assistant remains available. */
   #fc-ai-launch,#fc-ai-lazy-launch{
