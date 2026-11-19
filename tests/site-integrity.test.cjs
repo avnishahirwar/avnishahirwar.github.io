@@ -2160,7 +2160,7 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 test('Settings regional controls use consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:48px'), 'Settings regional controls must retain 48px touch-target sizing.');
+  assert.ok(css.includes('.fc-display-panel .fc-settings-site-controls select') && css.includes('height:48px!important') && css.includes('min-height:48px!important'), 'Settings regional controls must retain 48px touch-target sizing.');
   assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'), 'Regional controls must follow Language in the shared Header.');
   assert.ok(shell.includes('mirrorSiteControl(currencyControl,regionalSettingsControls)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'), 'Settings must mirror the Header regional controls.');
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
