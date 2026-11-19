@@ -122,6 +122,19 @@ gtag('config','G-QVWQSEDRGL');
 }
 @media(max-width:380px){.fc-global-links>a{font-size:.78rem}}
 
+
+/* Keep Language and all regional preferences visible in the first mobile Header view. */
+.fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{display:inline-flex;align-items:center;gap:8px;min-width:0;color:#f7f9fc;font-size:.78rem;font-weight:700;white-space:nowrap}
+.fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{height:40px;max-width:100%;min-width:0;padding:6px 8px;border:1px solid #718096;border-radius:6px;background:#fff;color:#172638;font:600 .84rem/1.2 system-ui,sans-serif}
+@media(max-width:760px){
+ .fc-top-row{grid-template-rows:auto auto auto auto auto auto!important}
+ .fc-top-row>.fc-currency-control,.fc-top-row>.fc-country-format-control,.fc-top-row>.fc-unit-control{grid-column:1/-1!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;width:100%!important;padding:7px 4px!important}
+ .fc-top-row>.fc-currency-control{grid-row:3!important}
+ .fc-top-row>.fc-country-format-control{grid-row:4!important}
+ .fc-top-row>.fc-unit-control{grid-row:5!important}
+ .fc-top-row>.fc-global-links{grid-row:6!important}
+ .fc-top-row>.fc-currency-control select,.fc-top-row>.fc-country-format-control select,.fc-top-row>.fc-unit-control select{flex:1 1 58%!important;width:58%!important;min-height:40px!important;max-width:68%!important}
+}
 </style>
 <script>
 /* Load non-critical shared shell styles after the first paint. Critical homepage
