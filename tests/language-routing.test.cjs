@@ -323,3 +323,33 @@ test('Each staged locale homepage links to its localized Unit Converter', () => 
     assert.ok(home.includes('/' + locale + '/calculators/unit-converter.html'), locale + ' homepage must expose its Unit Converter');
   }
 });
+
+
+test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators are linked from localized homepages', () => {
+  const locales = {
+    zh: ['百分比计算器', '计算百分比'],
+    ur: ['فیصد کیلکولیٹر', 'فیصد معلوم کریں'],
+    tr: ['Yüzde Hesaplayıcı', 'Yüzdeyi hesapla'],
+    it: ['Calcolatore percentuale', 'Calcola percentuale'],
+    ko: ['백분율 계산기', '백분율 계산']
+  };
+  for (const [locale, phrases] of Object.entries(locales)) {
+    const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'percentage-calculator.html'), 'utf8');
+    const homepage = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
+    assert.match(calculator, /name="robots" content="noindex,follow"/);
+    assert.match(calculator, /rel="canonical"/);
+    assert.match(calculator, /data-mode="of"/);
+    assert.match(calculator, /data-mode="is"/);
+    assert.match(calculator, /data-mode="change"/);
+    assert.match(calculator, /data-mode="difference"/);
+    assert.match(calculator, /site-shell\.js/);
+    for (const phrase of phrases) {
+      assert.ok(calculator.includes(phrase), 'Missing localized calculator phrase: ' + phrase);
+    }
+    assert.ok(homepage.includes(phrases[0]), 'Missing localized homepage link phrase: ' + phrases[0]);
+    assert.ok(homepage.includes('/' + locale + '/calculators/percentage-calculator.html'));
+  }
+  const urdu = fs.readFileSync(path.join(__dirname, '..', 'ur', 'calculators', 'percentage-calculator.html'), 'utf8');
+  assert.match(urdu, /<html lang="ur" dir="rtl">/);
+});
