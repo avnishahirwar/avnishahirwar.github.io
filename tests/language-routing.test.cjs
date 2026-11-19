@@ -10,6 +10,7 @@ test('global language selector supports all configured locales', () => {
   }
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
+  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1/);
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -139,7 +140,7 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 });
 
 
-test('every homepage locale alternate cluster includes the Marathi edition and x-default', () => {
+test('every homepage locale alternate cluster includes all 15 editions and x-default', () => {
   const pages = ['index.html','hi/index.html','es/index.html','fr/index.html','pt/index.html','ar/index.html','id/index.html','bn/index.html','ta/index.html','de/index.html','ja/index.html','ru/index.html','mr/index.html','vi/index.html','te/index.html'];
   for (const file of pages) {
     const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
@@ -150,10 +151,23 @@ test('every homepage locale alternate cluster includes the Marathi edition and x
 });
 
 
+
+test('Vietnamese and Telugu homepages declare localized, canonical, indexable documents', () => {
+  for (const [locale, phrases] of Object.entries({vi:['Máy tính trực tuyến miễn phí','Phạm vi ngôn ngữ'],te:['ఉచిత ఆన్‌లైన్ కాలిక్యులేటర్లు','భాషా పరిధి']})) {
+    const html = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.match(html, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
+    assert.match(html, new RegExp('hreflang="' + locale + '"'));
+    assert.match(html, /name="robots" content="index,follow/);
+    for (const phrase of phrases) assert.ok(html.includes(phrase), 'Missing localized homepage phrase: ' + phrase);
+    assert.match(html, /assets\/site-shell\.js/);
+  }
+});
+
 test('language directory lists exactly 50 unique language editions with accurate availability groups', () => {
   const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
-  assert.match(page, /Available language editions \\(15\\)/);
-  assert.match(page, /Planned language editions \\(35\\)/);
+  assert.match(page, /Available language editions \(15\)/);
+  assert.match(page, /Planned language editions \(35\)/);
   assert.equal((page.match(/class="card"/g) || []).length, 50);
   assert.equal((page.match(/class="status-live"/g) || []).length, 15);
   assert.equal((page.match(/class="status-soon"/g) || []).length, 35);
