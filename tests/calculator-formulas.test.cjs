@@ -52,6 +52,8 @@ test('standalone interest calculator pages expose complete social metadata', () 
   const compound = fs.readFileSync(new URL('../calculators/compound-interest-calculator.html', 'file://' + __filename), 'utf8');
   assert.match(simple, /<title>Simple Interest Calculator \| Principal, Rate &amp; Time \| Friendly Calculator<\/title>/);
   assert.match(simple, /property="og:title" content="Simple Interest Calculator Online/);
+  assert.ok(simple.includes('<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">'));
+  assert.ok(!simple.includes('<meta name="twitter:image" content="website">'));
   assert.match(compound, /<title>Compound Interest Calculator \| Friendly Calculator<\/title>/);
   assert.match(compound, /name="twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png"/);
   assert.doesNotMatch(compound, /name="twitter:image" content="website"/);
