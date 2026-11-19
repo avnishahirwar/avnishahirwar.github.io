@@ -1103,30 +1103,6 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
 
 
 /* Footer social links: show the brand/contact glyphs directly, without button boxes. */
-footer.fc-global-footer .fc-social-links>.fc-social-link,
-@media(min-width:761px){
-  footer.fc-global-footer .fc-social-links>.fc-social-link{
-    box-sizing:content-box!important;
-    display:inline-flex!important;
-    flex:0 0 auto!important;
-    align-items:center!important;
-    justify-content:center!important;
-    width:auto!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:auto!important;
-    min-height:0!important;
-    margin:0!important;
-    padding:4px!important;
-    border:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    outline:0!important;
-    font-size:0!important;
-    line-height:1!important;
-  }
-}
 footer.fc-global-footer .fc-social-links>.fc-social-link{
   box-sizing:content-box!important;
   display:inline-flex!important;
