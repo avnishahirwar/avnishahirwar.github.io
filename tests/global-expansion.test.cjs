@@ -190,3 +190,17 @@ test('regional defaults follow the visitor browser region and preserve explicit 
   assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
   assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
 });
+
+
+test('currency, country and units are mounted visibly after Language in the shared Header', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Only the date-format compatibility selector remains hidden.');
+  assert.ok(shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Visible controls are created in the required order.');
+  assert.ok(shell.includes("countryLabel?.classList.replace('fc-country-control','fc-country-format-control')"));
+  assert.ok(shell.includes('primaryNav.append(...regionalMarkup.children)'), 'Regional controls must be mounted in the visible primary Header.');
+  assert.ok(shell.includes("primaryNav.querySelector('.fc-currency-control')"), 'The mount must avoid duplicating visible controls.');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  for (const selector of ['.fc-global-links>.fc-currency-control','.fc-global-links>.fc-country-format-control','.fc-global-links>.fc-unit-control']) {
+    assert.ok(css.includes(selector), 'Missing responsive Header styling for ' + selector);
+  }
+});
