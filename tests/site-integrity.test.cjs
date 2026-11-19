@@ -838,16 +838,17 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
-  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(navCalculatorTotal, homepageCoreCalculatorCount, 'Homepage category counts must match their curated category cards.');
+  assert.ok(navCalculatorTotal < expectedCoreCalculatorCount, 'The homepage remains curated while the directory lists the full catalogue.');
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
   assert.doesNotMatch(homepage, /class="search-panel"/);
   assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
   assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
-  assert.ok(directory.includes('Browse all ' + expectedCoreCalculatorCount + ' calculator tools'));
-  assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
+  assert.ok(directory.includes('Browse all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculator tools'));
+  assert.ok(directory.includes('Search ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators by name or topic'));
   assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators across 36 categories'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
@@ -1688,7 +1689,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, expectedSearchIndexLength);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.ok(homepageCoreCalculatorCount > 0 && homepageCoreCalculatorCount < expectedCoreCalculatorCount, 'Homepage category links remain a curated subset; the complete directory contains every published calculator.');
 });
 
  
