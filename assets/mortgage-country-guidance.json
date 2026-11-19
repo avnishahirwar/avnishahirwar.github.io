@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 24,
+    "officialCountryGuides": 27,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 144
+    "pendingVerification": 141
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -492,20 +492,84 @@
           "https://nmrc.com.ng/understanding-nmrcs-uniform-underwriting-standards/"
         ]
       ]
+    },
+    "AF": {
+      "summary": "Da Afghanistan Bank (DAB) publishes the Law on Mortgage of Immovable Property and supervises the banking and credit-registration framework. DAB's credit registry gathers borrower and guarantor information from banks and microfinance institutions to support credit-risk decisions. The public DAB material reviewed does not establish one nationwide retail mortgage loan-to-value ceiling, borrower debt-service cap or standard repayment term; terms must be confirmed with a licensed lender and checked against applicable property and mortgage law.",
+      "rules": [
+        "DAB lists the Law on Mortgage of Immovable Property among Afghanistan's banking and financial laws. Confirm that the property title, mortgage documentation, registration and enforcement process comply with the applicable law before relying on a financing estimate.",
+        "DAB's Public Credit Registration System collects borrower identification, background and guarantee information from commercial banks and participating microfinance institutions and supplies credit reports to relevant financial institutions.",
+        "DAB also describes an electronic register for mortgages of movable property used in banking transactions. DAB clarifies that this movable-property register does not create or transfer real-estate ownership rights; do not confuse it with registration of a mortgage over a home.",
+        "The DAB sources reviewed do not establish a universal residential mortgage LTV ratio, debt-service-to-income cap or standard maximum term. Lender-specific underwriting, collateral valuation, income evidence, fees and repayment terms must be confirmed directly.",
+        "This calculator does not assess local title validity, legal enforceability, lender availability, currency or exchange-rate risk, or any bank's credit decision."
+      ],
+      "sources": [
+        [
+          "Da Afghanistan Bank: Laws — includes Law of Mortgage on Immovable Property",
+          "https://dab.gov.af/index.php/laws"
+        ],
+        [
+          "Da Afghanistan Bank: Public Credit Registration and Financial Services Development",
+          "https://www.dab.gov.af/directorate-general-public-credit-registration-and-financial-services-development"
+        ]
+      ]
+    },
+    "AL": {
+      "summary": "The Bank of Albania regulates consumer and mortgage credit. Its amended Regulation 48/2015, effective 12 February 2025, sets pre-contractual and contractual disclosure and conduct standards. In May 2025 the Supervisory Council approved upper limits for residential mortgage loan-to-value (LTV) and debt-service-to-income (DSTI), differentiated by property type and loan currency. The public announcement does not state the numeric ceilings, so this calculator does not invent a single national percentage.",
+      "rules": [
+        "Banks and licensed non-bank financial institutions are subject to the Bank of Albania's Regulation 48/2015 on consumer and mortgage credit, which sets standards for pre-contractual and contractual information and the arrangement of mortgage credit.",
+        "The amended Regulation 48/2015 entered into force on 12 February 2025; the Bank of Albania notes that Article 15/1 requirements entered into force on 1 May 2025.",
+        "On 7 May 2025, the Bank of Albania announced upper limits for LTV and debt-service-to-income on residential real-estate loans. The limits are differentiated according to property type and loan currency; the announcement does not publish the numerical ceilings, so confirm the applicable limit with the lender and current regulation.",
+        "Compare the lender's effective borrowing cost, interest-rate reset terms, fees, required own contribution, collateral valuation and early-repayment conditions. Bank product terms may differ and are not universal national rules.",
+        "The calculator does not assess Albanian credit eligibility, property-title status, notary/registration costs, taxes or the applicable LTV/DSTI ceiling for an individual loan."
+      ],
+      "sources": [
+        [
+          "Bank of Albania: Regulation 48/2015 on consumer credit and mortgage credit (integrated version)",
+          "https://www.bankofalbania.org/About_the_Bank/Legislation/Regulation_On_Consumer_Credit_and_Mortgage_Credit.html"
+        ],
+        [
+          "Bank of Albania: Supervisory Council decisions, 7 May 2025 — residential mortgage LTV and DSTI limits",
+          "https://www.bankofalbania.org/Press/Supervisory_Council_decisions/Other_decisions/Decisions_by_the_Supervisory_Council_7_May_2025.html"
+        ]
+      ]
+    },
+    "DZ": {
+      "summary": "Algerian home-finance terms are product- and lender-specific. Official bank products published by Crédit Populaire d'Algérie (CPA) and Banque de Développement Local (BDL) describe financing that can reach 90% for specified products, subject to borrower capacity and eligibility; CPA's particular product describes a possible term up to 40 years, while BDL describes up to 35 years. These are individual bank-product terms, not a universal national entitlement or LTV rule. Bank of Algeria prudential capital rules must not be mistaken for borrower-facing down-payment limits.",
+      "rules": [
+        "CPA's published product for purchasing a home from a private individual describes financing up to 90% of the purchase price, generally at least 10% own contribution, and repayment up to 40 years subject to applicant age and repayment capacity. It also describes a possible own-contribution waiver for qualifying applicants under 40, subject to debt capacity. These are terms of that specific CPA product, not a rule for every Algerian lender.",
+        "BDL's real-estate loan page describes financing up to 90% and monthly repayment up to 35 years for eligible individuals with regular income. The amount granted depends on income and age and the selected product.",
+        "CPA's published product requires a stable and regular income, legal capacity and a first-ranking notarised mortgage; it also describes monthly instalments, insurance and fees. Confirm current product terms and charges with the lender before using any percentage or term.",
+        "Bank of Algeria Regulation 2014-01 includes an 80% property-value condition for a preferential regulatory risk-weight treatment of certain residential mortgage exposures. This is a bank capital-risk classification condition, not a universal borrower LTV cap or a promise of 80% financing.",
+        "The calculator does not determine eligibility for CPA/BDL products, Islamic finance terms, property-title validity, notarial and registration costs, insurance, subsidies or bank-specific approval."
+      ],
+      "sources": [
+        [
+          "Crédit Populaire d'Algérie: Real-estate loan for purchase from a private individual",
+          "https://www.cpa-bank.dz/index.php/en/individuals/real-estate-loans/a-real-estate-loan-for-buying-a-property-from-a-private-individual"
+        ],
+        [
+          "Banque de Développement Local: Real-estate loan",
+          "https://www.bdl.dz/en/real-estate-loan/"
+        ],
+        [
+          "Bank of Algeria: Regulation 2014-01 — prudential risk weighting for residential real-estate loans",
+          "https://www.bank-of-algeria.dz/stoodroa/2021/03/reglement201401.pdf"
+        ]
+      ]
     }
   },
   "countries": {
     "AF": {
       "countryName": "Afghanistan",
-      "status": "pending"
+      "status": "verified"
     },
     "AL": {
       "countryName": "Albania",
-      "status": "pending"
+      "status": "verified"
     },
     "DZ": {
       "countryName": "Algeria",
-      "status": "pending"
+      "status": "verified"
     },
     "AD": {
       "countryName": "Andorra",
