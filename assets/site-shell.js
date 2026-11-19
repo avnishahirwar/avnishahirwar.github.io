@@ -673,6 +673,26 @@ if(languageSelect){
     }).catch(fallbackToEnglishPage);
   });
 }
+// Keep the visible selector synchronized with the canonical 50-language catalogue.
+fetch('/config/language-catalogue.json',{cache:'force-cache',credentials:'same-origin'})
+  .then(response=>response.ok?response.json():null)
+  .then(catalogue=>{
+    if(!catalogue||!Array.isArray(catalogue.locales))return;
+    const select=document.getElementById('fc-language-select');
+    if(!select)return;
+    const fragment=document.createDocumentFragment();
+    catalogue.locales.forEach(locale=>{
+      if(!locale||typeof locale.code!=='string'||typeof locale.nativeName!=='string')return;
+      const option=document.createElement('option');
+      option.value=locale.code;
+      option.textContent=locale.nativeName+(locale.status==='available'?'':' — Coming soon');
+      option.disabled=locale.status!=='available';
+      fragment.appendChild(option);
+    });
+    if(fragment.childNodes.length!==catalogue.total)return;
+    select.replaceChildren(fragment);
+    select.value=currentLocale;
+  }).catch(()=>{});
 try{
   const notice=sessionStorage.getItem('fc-language-notice');
   if(notice){sessionStorage.removeItem('fc-language-notice');const n=document.createElement('p');n.className='fc-language-notice';n.setAttribute('role','status');n.textContent=notice;const target=document.querySelector('main')||document.body;target.prepend(n);}
