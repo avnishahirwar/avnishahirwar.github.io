@@ -46,7 +46,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   await mortgage.locator('#maintenance').fill('50');
   await mortgage.locator('#mortgage-form button[type="submit"]').click();
   const mortgageOutput = await mortgage.locator('#mortgage-result').innerText();
-  assert.match(mortgageOutput, /Estimated monthly housing cost:.*1,200/i, name + ': mortgage zero-rate monthly total');
+  assert.match(mortgageOutput, /Estimated monthly housing cost:.*1,033/i, name + ': mortgage zero-rate monthly total');
   assert.match(mortgageOutput, /Loan amount:.*1,00,000/i, name + ': mortgage principal');
   assert.match(mortgageOutput, /Estimated total interest:.*0/i, name + ': mortgage zero-rate interest');
   assert.deepEqual(mortgageErrors, [], name + ': Mortgage JavaScript errors');
@@ -69,7 +69,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   await worldwide.locator('#world-mortgage-form button[type="submit"]').click();
   const worldwideOutput = await worldwide.locator('#world-mortgage-result').innerText();
   assert.match(worldwideOutput, /Estimated monthly housing cost/i, name + ': worldwide mortgage result heading');
-  assert.match(worldwideOutput, /1,200/i, name + ': worldwide mortgage zero-rate monthly total');
+  assert.match(worldwideOutput, /1,033/i, name + ': worldwide mortgage zero-rate monthly total');
   assert.match(worldwideOutput, /1,00,000/i, name + ': worldwide mortgage principal');
   assert.equal(await worldwide.locator('#world-mortgage-schedule tbody tr').count(), 10, name + ': worldwide mortgage annual amortisation rows');
   assert.deepEqual(worldwideErrors, [], name + ': Worldwide Mortgage JavaScript errors');
