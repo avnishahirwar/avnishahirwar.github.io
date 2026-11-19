@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 30,
+    "officialCountryGuides": 33,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 138
+    "pendingVerification": 135
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -632,6 +632,70 @@
           "https://www.ofcweb.eccb-centralbank.org/"
         ]
       ]
+    },
+    "AM": {
+      "summary": "Armenia's Law on Home Mortgage (25 October 2017) regulates borrower and lender relations, disclosures and home-mortgage contracts. The Central Bank of Armenia also publishes minimum criteria for certain residential loans to receive preferential 50/75% risk-weight treatment; those prudential criteria should not be mistaken for a universal legal LTV or affordability ceiling for every mortgage. The National Mortgage Company publishes separate underwriting rules for participating financial institutions under its refinancing programmes.",
+      "rules": [
+        "Armenia's Law on Home Mortgage regulates disclosure by mortgagees, formation of home-mortgage contracts and related consumer protections. Review the effective annual interest rate, all contract terms, fees, insurance and early-repayment provisions before signing.",
+        "The Central Bank's minimum criteria for certain mortgage loans to qualify for preferential risk-weight treatment include a loan amount not exceeding 70% of the lower of market value or purchase price, monthly mortgage payments not exceeding 40% of borrower income, and total regular loan payments not exceeding 50%. These are bank prudential risk-weight criteria for qualifying loans, not a universal statutory maximum for every mortgage.",
+        "The National Mortgage Company's published underwriting standards for participating financial institutions under its programmes specify a maximum total debt-to-income ratio of 45% in standard cases, with up to 60% for specified non-standard acquisition or construction loans. These programme rules are not necessarily the terms of every lender or loan.",
+        "Banks assess income, existing liabilities, property valuation and collateral; insurance and documentation requirements may apply. Confirm the exact product and programme rules with the lender.",
+        "The calculator does not establish Armenian mortgage eligibility, calculate state subsidy entitlement, verify property registration, or include notary, registration, insurance and lender fees."
+      ],
+      "sources": [
+        [
+          "ARLIS: Law of the Republic of Armenia on Home Mortgage (25 October 2017)",
+          "https://www.arlis.am/en/acts/182320/download/act"
+        ],
+        [
+          "Central Bank of Armenia: Regulation 2 — minimum requirements for mortgage loans with 50/75% risk weight",
+          "https://cba.am/Storage/EN/regulations/Regulation_2.pdf"
+        ],
+        [
+          "National Mortgage Company: Rules and regulations for participating financial institutions",
+          "https://nmc.am/rules-regulations/2024/ref%20karg%20angl.pdf"
+        ]
+      ]
+    },
+    "AZ": {
+      "summary": "Azerbaijan's Mortgage and Credit Guarantee Fund (MCGF) publishes conditions for ordinary and preferential mortgage loans funded through the Fund. For these specific Fund-backed programmes, ordinary mortgages may finance up to 85% of appraised value and preferential mortgages up to 90%, with programme-specific maximum amounts, terms and interest-rate ceilings. These conditions do not describe every commercial mortgage product in Azerbaijan.",
+      "rules": [
+        "For MCGF-funded mortgages, the official Fund page states a maximum loan-to-value of 85% for ordinary mortgages and 90% for preferential mortgages, corresponding to minimum own contributions of 15% and 10%, respectively.",
+        "The Fund lists maximum loan amounts of AZN 150,000 for ordinary mortgages and AZN 100,000 for preferential mortgages. Maximum terms are 25 years and 30 years, respectively.",
+        "The Fund lists maximum annual interest rates of 8% for ordinary and 4% for preferential unsecured loans, and 7% for ordinary and 3.7% for preferential secured loans. Confirm the current product and guarantee fee with the authorized bank and Fund.",
+        "The Fund states that monthly mortgage payments generally must not exceed 70% of the borrower's total monthly income, and the borrower must retain a minimum amount for family living expenses. Official income, independent property appraisal, state registration of the mortgage and property insurance are required under the Fund programme.",
+        "Eligibility for preferential mortgages is restricted to specified categories and the preferential benefit can generally be used once. The calculator does not determine category eligibility, guarantee approval, local purchase taxes, valuation costs or lender-specific fees."
+      ],
+      "sources": [
+        [
+          "Mortgage and Credit Guarantee Fund of Azerbaijan: Mortgage loan terms and conditions",
+          "https://mcgf.gov.az/en/ipoteka-krediti"
+        ],
+        [
+          "Mortgage and Credit Guarantee Fund of Azerbaijan: Guarantee mechanism and application stages",
+          "https://mcgf.gov.az/en/zemant-mexanizmi"
+        ]
+      ]
+    },
+    "BS": {
+      "summary": "The Central Bank of The Bahamas issued revised residential mortgage lending guidance on 29 December 2023. It removed mortgage indemnity insurance as a Central Bank stipulation for borrowers to qualify for a reduced equity contribution; in the absence of insurance the baseline minimum down payment was 15%, while lenders may set lower requirements under their own risk frameworks. Personal lending, including residential mortgages, remains subject to a prudent total debt-service ratio limit of 50%.",
+      "rules": [
+        "The Central Bank's 29 December 2023 guidance removed mortgage indemnity insurance as a required condition for qualifying for a reduced residential mortgage down payment. Where that insurance is not used, the baseline minimum equity contribution was 15%; lenders may set lower down-payment requirements under their internal borrower-risk frameworks.",
+        "The Central Bank directs lenders to keep a borrower's total debt-service ratio within a prudent 50% limit, subject to stated exceptions for certain debt restructurings or consolidations that do not increase outstanding obligations.",
+        "Lenders must continue to assess the loan-to-value ratio prudently against the appraised value of the property. The 60%, 80% and above-80% LTV bands cited in the Central Bank release determine bank capital risk weights; they are not individual borrower LTV entitlements or universal lending caps.",
+        "A lender may apply stricter underwriting, property valuation, insurance, income verification and down-payment requirements. Confirm the current policy and fees with the bank or credit union.",
+        "The calculator does not determine eligibility, mortgage indemnity insurance availability, property insurance, stamp duty, conveyancing, valuation or other Bahamian closing costs."
+      ],
+      "sources": [
+        [
+          "Central Bank of The Bahamas: Relaxed Lending Rules for Residential Mortgages (29 December 2023)",
+          "https://www.centralbankbahamas.com/index.php/news/press-releases/relaxed-lending-rules-for-residential-mortgages"
+        ],
+        [
+          "Central Bank of The Bahamas: Official PDF of the 29 December 2023 mortgage guidance",
+          "https://www.centralbankbahamas.com/index.php/viewPDF/documents/2023-12-29-12-02-02-Press-Release-Relaxed-Lending-Rules-for-Residential-Mortgages.pdf"
+        ]
+      ]
     }
   },
   "countries": {
@@ -665,7 +729,7 @@
     },
     "AM": {
       "countryName": "Armenia",
-      "status": "pending"
+      "status": "verified"
     },
     "AU": {
       "countryName": "Australia",
@@ -677,11 +741,11 @@
     },
     "AZ": {
       "countryName": "Azerbaijan",
-      "status": "pending"
+      "status": "verified"
     },
     "BS": {
       "countryName": "Bahamas",
-      "status": "pending"
+      "status": "verified"
     },
     "BH": {
       "countryName": "Bahrain",
