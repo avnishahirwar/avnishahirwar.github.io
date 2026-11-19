@@ -18,7 +18,7 @@ async function inspect(browserType, route, viewport) {
     const response = await page.goto(ORIGIN + route, { waitUntil: 'domcontentloaded', timeout: 45000 });
     assert.ok(response && response.status() < 400, browserType.name() + ' ' + route + ': successful HTTP response');
     await page.waitForFunction(() => document.readyState === 'complete', { timeout: 30000 });
-    await page.waitForFunction(() => document.querySelector('header.fc-global-header') && document.querySelector('footer.fc-global-footer'), { timeout: 20000 });
+    await page.waitForFunction(() => document.querySelector('header.fc-global-header') && document.querySelector('footer.fc-global-footer') && document.getElementById('fc-display-settings')?.closest('footer.fc-global-footer'), { timeout: 20000 });
     const state = await page.evaluate(() => {
       const settings = document.getElementById('fc-display-settings');
       const language = document.getElementById('fc-language-select');
