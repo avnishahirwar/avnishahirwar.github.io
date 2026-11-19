@@ -92,12 +92,12 @@ test('UK Stamp Duty and National Insurance calculator translations have reciproc
    const expected=published.map(code=>[code,'https://friendlycalculator.in/'+(code==='en'?'':code+'/')+'calculators/'+route]);
    expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
-   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
    assert.deepEqual(actual,expected,locale+'/'+route);
    assert.match(html,new RegExp('<html lang="'+locale+'"'));
    assert.match(html,/rel="canonical"/);
    if(route==='uk-stamp-duty-calculator.html')assert.match(html,/calculateSDLT/);
-   else assert.match(html,/getElementById\\("earnings"\\)/);
+   else assert.match(html,/\\$\\(['"]earnings['"]\\)/);
   }
  }
  const urStamp=fs.readFileSync(path.join(root,'ur/calculators/uk-stamp-duty-calculator.html'),'utf8');
