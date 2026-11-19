@@ -208,3 +208,13 @@ test('currency, country and units are mounted in Settings, not in the shared Hea
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional selectors must retain readable touch-target sizing.');
 });
+
+
+test('all shared Header regional selectors use equal dimensions on desktop and mobile', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  for (const control of ['fc-language-control', 'fc-currency-control', 'fc-country-format-control', 'fc-unit-control']) {
+    assert.ok(css.includes('.fc-global-links>.' + control), 'Missing shared Header sizing rule for ' + control);
+  }
+  assert.match(css, /\.fc-global-links>\.fc-language-control select,[\s\S]*?\.fc-global-links>\.fc-unit-control select\{[\s\S]*?width:180px!important[\s\S]*?height:40px!important/);
+  assert.match(css, /@media\(max-width:1120px\)[\s\S]*?\.fc-global-links>\.fc-language-control select,[\s\S]*?\.fc-global-links>\.fc-unit-control select\{[\s\S]*?width:100%!important[\s\S]*?height:48px!important/);
+});
