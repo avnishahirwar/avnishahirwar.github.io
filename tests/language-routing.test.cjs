@@ -166,8 +166,8 @@ test('Vietnamese and Telugu homepages declare localized, canonical, indexable do
 
 test('language directory lists exactly 50 unique language editions with accurate availability groups', () => {
   const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
-  assert.match(page, /Available language editions \(15\)/);
-  assert.match(page, /Planned language editions \(35\)/);
+  assert.match(page, /Available language editions \(17\)/);
+  assert.match(page, /Planned language editions \(33\)/);
   assert.equal((page.match(/class="card"/g) || []).length, 50);
   assert.equal((page.match(/class="status-live"/g) || []).length, 17);
   assert.equal((page.match(/class="status-soon"/g) || []).length, 33);
@@ -187,6 +187,12 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 
 
 test('all localized basic calculator pages include reciprocal Gujarati and Kannada alternates',()=>{
+ const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
+ for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
+});
+
+
+test('localized basic calculator hreflang alternates are reciprocal for Gujarati and Kannada',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
 });
