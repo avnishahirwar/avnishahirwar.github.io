@@ -242,6 +242,13 @@ test('shared Header follows the same navigation and regional-control order on ev
     "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']",
     "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क','विज्ञापन']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
+  const footerLocaleRows = [...footer.matchAll(/^\\s{2}(de|en|hi|es|fr|pt|ar|id|bn|ta|ja|ru):\\[(.*)\\],?$/gm)];
+  assert.equal(footerLocaleRows.length, 12, 'All 12 site locales must define Footer labels.');
+  for (const row of footerLocaleRows) {
+    const labels = row[2].match(/'(?:[^'\\\\]|\\\\.)*'/g) || [];
+    assert.equal(labels.length, 10, row[1] + ' Footer must expose all ten destinations.');
+  }
+  assert.doesNotMatch(shell, /if\\(footerLinks\\.length===9\\)/, 'Footer labels must be localized rather than falling back to English.');
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
   assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'];"));
 });
