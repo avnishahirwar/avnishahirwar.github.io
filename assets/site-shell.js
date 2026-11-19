@@ -459,16 +459,25 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep the original country/format selectors in a hidden compatibility node
-// for global-locale.js, while the visible regional preferences mount in Header.
+// Keep the date-format selector in a hidden compatibility node for
+// global-locale.js. Country, currency and units use their original IDs in the
+// visible Header so existing locale listeners continue to work without duplicate IDs.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
 regionalControlsSource.hidden=true;
-regionalControlsSource.innerHTML=countryControl+currencyControl+unitControl+formatControl;
+regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Language is the final primary-navigation control, immediately after Login.
+// Regional controls must be visible immediately after Language on every public page.
+if(primaryNav&&!primaryNav.querySelector('.fc-currency-control')){
+  const regionalMarkup=document.createElement('div');
+  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
+  const countryLabel=regionalMarkup.querySelector('.fc-country-control');
+  countryLabel?.classList.replace('fc-country-control','fc-country-format-control');
+  primaryNav.append(...regionalMarkup.children);
+}
+// Language remains before the regional controls, immediately after Login.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
