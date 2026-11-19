@@ -2124,12 +2124,13 @@ test('shared Footer keeps social destinations in one icon row and hides redundan
 });
 
 
-test('Settings Units typography matches the shared settings rows', () => {
+test('Header Units control uses consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(css, /\.fc-display-units-row>\.fc-unit-control\{[^}]*font-size:14px/);
-  assert.match(css, /\.fc-display-units-row>\.fc-unit-control>select\{[^}]*min-height:40px[^}]*font:500 13px\/1\.3 system-ui,sans-serif/);
-  assert.match(shell, /addSettingRow\('fc-display-units-row',\[unitControl\]\)/);
+  assert.match(css, /\.fc-global-links>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?\.fc-global-links>\.fc-currency-control[\s\S]*?min-height:40px/);
+  assert.match(shell, /languageControlElement\.after\(currencyControl,countryFormatLabel,unitControl\)/);
+  assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
 
 test('legacy All Pages footer links are excluded while Sitemap remains', () => {
