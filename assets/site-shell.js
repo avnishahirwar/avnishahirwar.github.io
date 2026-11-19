@@ -395,10 +395,15 @@ if(main&&!document.querySelector('.fc-skip-link')){
 const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',de:'Deutsch',hi:'हिन्दी',es:'Español',fr:'Français',pt:'Português',ar:'العربية',id:'Bahasa Indonesia',bn:'বাংলা',ta:'தமிழ்',ja:'日本語',ru:'Русский'};
 const requestedUiLocale=new URLSearchParams(location.search).get('lang');
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn({en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1},requestedUiLocale)?requestedUiLocale:'en');
+const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1,ru:1};
+const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
+const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
+const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
 const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html'};
-// The URL is the source of truth for the active language.
-// Do not auto-redirect by browser language; visitors choose explicitly.
+// A saved visitor choice wins; otherwise use the browser's supported language.
+// Only the root entry point auto-selects a language; explicit page routes remain authoritative.
+if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash);
 
 const chrome={
 de:{home:'Startseite',login:'Anmelden',all:'Verzeichnis (Englisch)',search:'Rechner suchen',finance:'Finanzen',tax:'Steuern (Englisch)',business:'Business-Tools (Englisch)',global:'Globale Rechner (Englisch)',everyday:'Alltag (Englisch)',blog:'Blog (Englisch)',embed:'Einbetten',forBusiness:'Für Unternehmen',api:'API',plans:'Tarife',about:'Über uns',contact:'Kontakt',admin:'Admin',language:'Sprache',choose:'Website-Sprache auswählen',change:'Sprache ändern',footer:['Startseite','Finanzen','Steuern','Business','Alltag','Für Unternehmen','API','Tarife','Premium-Warteliste','Über uns','Methodik','Datenschutz','Nutzungsbedingungen','Haftungsausschluss','Kontakt']},
