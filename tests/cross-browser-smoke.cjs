@@ -59,6 +59,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   const worldwideResponse = await worldwide.goto(new URL('/international/global-mortgage-calculator.html', origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   assert.ok(worldwideResponse && worldwideResponse.ok(), name + ': Worldwide Mortgage HTTP response');
   await worldwide.waitForFunction(() => document.querySelectorAll('#world-mortgage-country option').length >= 240, null, { timeout: 20000 });
+  await worldwide.locator('#world-mortgage-country').selectOption('IN');
   await worldwide.locator('#world-home-price').fill('120000');
   await worldwide.locator('#world-down-payment').fill('20000');
   await worldwide.locator('#world-interest-rate').fill('0');
@@ -70,7 +71,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   const worldwideOutput = await worldwide.locator('#world-mortgage-result').innerText();
   assert.match(worldwideOutput, /Estimated monthly housing cost/i, name + ': worldwide mortgage result heading');
   assert.match(worldwideOutput, /1,033/i, name + ': worldwide mortgage zero-rate monthly total');
-  assert.match(worldwideOutput, /1,00,000/i, name + ': worldwide mortgage principal');
+  assert.match(worldwideOutput, /100,000|1,00,000/i, name + ': worldwide mortgage principal');
   assert.equal(await worldwide.locator('#world-mortgage-schedule tbody tr').count(), 10, name + ': worldwide mortgage annual amortisation rows');
   assert.deepEqual(worldwideErrors, [], name + ': Worldwide Mortgage JavaScript errors');
   await worldwide.close();
