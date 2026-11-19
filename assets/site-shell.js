@@ -469,14 +469,14 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Keep regional preference controls out of the Header; Settings mounts them below.
+// Keep source controls available for FCLocale before building the visible combined selector.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
-  // Keep regional preferences out of the Header; Settings owns these controls.
+  // Preserve original control IDs and listeners while the controls are promoted into the Header.
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language remains the final Header control after Login; regional preferences live in Settings.
+// Language remains after Login; regional preferences follow it in the same Header navigation.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню'};
   const closeText={en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Закрыть меню'};
@@ -1341,7 +1341,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     }
   });
   // Regional controls are staged in a hidden compatibility node for FCLocale.
-  // The visible currency, country/format and units controls are mounted in Settings.
+  // Currency and units are promoted into the Header; the country/date source controls remain hidden for FCLocale.
   panel.append(panelHead);
   const currencyControl=document.querySelector('.fc-currency-control');
   const countryControl=document.querySelector('.fc-country-control');
@@ -1412,6 +1412,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
   // Language remains in the Header. Currency, country/format and units are
   // displayed only inside Settings & Accessibility below.
+  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1423,7 +1424,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   addSectionHeading(t.siteSettings);
   const siteSettingsControls=document.createElement('div');
   siteSettingsControls.className='fc-settings-site-controls';
-  const mirrorSiteControl=source=>{
+  const mirrorSiteControl=(source,target=siteSettingsControls)=>{
     if(!source)return;
     const mirror=source.cloneNode(true);
     const sourceSelect=source.querySelector('select');
@@ -1439,15 +1440,17 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       sourceSelect.dispatchEvent(new Event('change',{bubbles:true}));
       sync();
     });
-    siteSettingsControls.appendChild(mirror);
+    target.appendChild(mirror);
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
-  mirrorSiteControl(headerLanguageControl);
+  mirrorSiteControl(headerLanguageControl,siteSettingsControls);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
   const regionalSettingsControls=document.createElement('div');
   regionalSettingsControls.className='fc-settings-site-controls';
-  regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl);
+  mirrorSiteControl(currencyControl,regionalSettingsControls);
+  mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
+  mirrorSiteControl(unitControl,regionalSettingsControls);
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
