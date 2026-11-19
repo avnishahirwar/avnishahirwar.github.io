@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, chrome, msedge, firefox, webkit, opera]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -47,7 +47,27 @@ jobs:
         run: |
           npm init -y
           npm install --no-save playwright
-          npx playwright install --with-deps ${{ matrix.browser }}
+          case "${{ matrix.browser }}" in
+            chrome)
+              npx playwright install --with-deps chromium
+              npx playwright install chrome
+              ;;
+            msedge)
+              npx playwright install --with-deps chromium
+              npx playwright install msedge
+              ;;
+            opera)
+              npx playwright install --with-deps chromium
+              curl -fsSL https://deb.opera.com/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/opera-archive-keyring.gpg
+              echo "deb [signed-by=/usr/share/keyrings/opera-archive-keyring.gpg] https://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera-stable.list
+              sudo apt-get update
+              sudo apt-get install -y opera-stable
+              echo "FC_OPERA_PATH=$(command -v opera)" >> "$GITHUB_ENV"
+              ;;
+            *)
+              npx playwright install --with-deps "${{ matrix.browser }}"
+              ;;
+          esac
       - name: Run cross-browser smoke tests against production
         env:
           FC_SITE_ORIGIN: https://friendlycalculator.in
