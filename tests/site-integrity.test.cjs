@@ -2160,3 +2160,23 @@ test('all localized legacy page-directory footer links are filtered by path and 
   assert.doesNotMatch(shell, /'الرئيسية','الدليل'/);
   assert.ok(shell.includes("['Sitemap','/sitemap.html']"));
 });
+
+
+test('shared shell visually replaces legacy page-level headers and footers', () => {
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(script.includes('body > header:not(.fc-global-header)'));
+  assert.ok(script.includes('body > .top'));
+  assert.ok(script.includes('body > footer:not(.fc-global-footer)'));
+  assert.ok(script.includes('node.hidden = true'));
+  assert.ok(script.includes("node.setAttribute('aria-hidden', 'true')"));
+  assert.ok(script.includes('const hasPageContent = !!node.querySelector'));
+  assert.ok(script.includes('navNodes.forEach'), 'Only legacy navigation should be hidden when the header also contains page content');
+  assert.match(script, /fc-global-footer-links/);
+});
+
+test('homepage has the same static shared footer and Sitemap destination', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(html, /<footer class="fc-global-footer"(?:\s|>)/);
+  assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
+  assert.ok(html.includes('class="fc-global-footer-links"'));
+});
