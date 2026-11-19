@@ -274,13 +274,13 @@ test('five staged language editions have localized homepages and working basic c
     }
   }
   assert.match(shell, /zh\|ur\|tr\|it\|ko/);
-  assert.match(shell, /zh:'\\/zh\\/index\.html',ur:'\\/ur\\/index\.html',tr:'\\/tr\\/index\.html',it:'\\/it\\/index\.html',ko:'\\/ko\\/index\.html'/);
+  assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
   assert.match(shell, /ur\|fa\|ps\|he\|sd/);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
   for (const locale of ['zh','ur','tr','it','ko']) {
     assert.ok(footerBlock.includes(locale + ':['), 'Missing footer labels for ' + locale);
     assert.match(shell, new RegExp(locale + ":'" + (locale === 'zh' ? '菜单' : locale === 'ur' ? 'مینو' : locale === 'tr' ? 'Menü' : locale === 'it' ? 'Menu' : '메뉴') + "'"));
     const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
-    for (const anchor of ['finance','tax','everyday']) assert.ok(home.includes('id="' + anchor + '"'), locale + ' homepage missing ' + anchor + ' navigation target');
+    for (const anchor of ['business','finance','tax','everyday']) assert.ok(home.includes('id="' + anchor + '"'), locale + ' homepage missing ' + anchor + ' navigation target');
   }
 });
