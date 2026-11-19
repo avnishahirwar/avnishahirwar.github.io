@@ -10,8 +10,8 @@ try {
     // Keep the original nodes in the document for safe, non-destructive migration; hide them from layout and assistive technology.
     const legacyHeaders = document.querySelectorAll('body > header:not(.fc-global-header), body > .top, body > .site-header, body > .fc-site-header');
     legacyHeaders.forEach(node => { node.hidden = true; node.setAttribute('aria-hidden', 'true'); node.classList.add('fc-legacy-chrome'); });
-    const legacyFooters = document.querySelectorAll('body > footer:not(.fc-global-footer), body > .fc-footer, body > .site-footer');
-    legacyFooters.forEach(node => { node.hidden = true; node.setAttribute('aria-hidden', 'true'); node.classList.add('fc-legacy-chrome'); });
+    const legacyTopLevelFooters = document.querySelectorAll('body > footer:not(.fc-global-footer), body > .fc-footer, body > .site-footer');
+    legacyTopLevelFooters.forEach(node => { node.hidden = true; node.setAttribute('aria-hidden', 'true'); node.classList.add('fc-legacy-chrome'); });
     if (!document.querySelector('header.fc-global-header')) {
       const header = document.createElement('header');
       header.className = 'fc-global-header fc-shell-failsafe';
