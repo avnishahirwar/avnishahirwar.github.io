@@ -54,7 +54,11 @@ async function inspect(browserType, route, viewport) {
   } finally { await context.close(); await browser.close(); }
 }
 (async () => {
-  for (const engine of [chromium, firefox, webkit]) {
+  const engines = { chromium, firefox, webkit };
+  const selectedName = process.env.PLAYWRIGHT_ENGINE;
+  const selectedEngines = selectedName ? [engines[selectedName]] : [chromium, firefox, webkit];
+  if (selectedEngines.some(engine => !engine)) throw new Error('Unsupported PLAYWRIGHT_ENGINE: ' + selectedName);
+  for (const engine of selectedEngines) {
     for (const route of ROUTES) await inspect(engine, route, { width: 1365, height: 900 });
     await inspect(engine, '/', { width: 375, height: 812 });
     await inspect(engine, '/', { width: 320, height: 720 });
