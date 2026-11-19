@@ -940,20 +940,20 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
   footer.fc-global-footer .fc-social-links>.fc-social-link{
     box-sizing:border-box!important;
     display:inline-flex!important;
-    flex:0 0 auto!important;
+    flex:0 0 42px!important;
     align-items:center!important;
     justify-content:center!important;
-    width:auto!important;
-    min-width:84px!important;
-    max-width:100%!important;
-    height:40px!important;
-    min-height:40px!important;
-    padding:0 13px!important;
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0!important;
     border:1px solid #8293a7!important;
-    border-radius:999px!important;
-    font-size:14px!important;
-    line-height:1.2!important;
-    white-space:nowrap!important;
+    border-radius:50%!important;
+    font-size:0!important;
+    line-height:1!important;
+    white-space:normal!important;
     overflow:visible!important;
   }
   footer.fc-global-footer .fc-footer-bottom{
@@ -998,13 +998,18 @@ html[data-fc-theme="dark"] .fc-display-panel .fc-settings-site-controls select{
 @media(min-width:761px){
   footer.fc-global-footer .fc-social-links>.fc-social-link{
     box-sizing:border-box!important;
-    flex:0 0 auto!important;
-    width:auto!important;
-    min-width:84px!important;
-    height:38px!important;
-    padding:0 12px!important;
-    border-radius:999px!important;
-    white-space:nowrap!important;
+    display:inline-flex!important;
+    flex:0 0 42px!important;
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0!important;
+    border-radius:50%!important;
+    font-size:0!important;
+    line-height:1!important;
+    white-space:normal!important;
   }
   footer.fc-global-footer .fc-footer-bottom>div{
     display:flex!important;
