@@ -203,7 +203,7 @@ test('currency, country and units are mounted in Settings, not in the shared Hea
   assert.ok(shell.includes("countryFormatLabel.className='fc-country-format-control'"), 'Country & format uses the combined Settings selector.');
   assert.ok(shell.includes('compatibilityControls.append(countryControl,formatControl)'), 'Original locale controls remain hidden for compatibility listeners.');
   assert.ok(shell.includes("primaryNav.append(currencyControl,countryFormatLabel,unitControl)"), 'Regional controls must be appended after Language in the Header.');
-  assert.ok(shell.includes("regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Regional controls must be mounted in Settings.');
+  assert.ok(shell.includes("mirrorSiteControl(currencyControl,regionalSettingsControls)") && shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)") && shell.includes("panel.append(regionalSettingsControls)"), 'Regional controls must be mirrored in Settings.');
   assert.ok(css.includes('.fc-global-links>.fc-language-control select') && css.includes('.fc-global-links>.fc-unit-control select') && css.includes('height:40px!important'), 'All four Header dropdowns must use consistent dimensions.');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(css.includes('.fc-settings-site-controls select') && css.includes('min-height:40px'), 'Settings regional selectors must retain readable touch-target sizing.');
