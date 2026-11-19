@@ -267,7 +267,7 @@
       const steps=document.createElement("ol");rows.forEach(([label,value,suffix])=>{const li=document.createElement("li");li.textContent=label+": "+(formatResult(value,suffix));steps.appendChild(li)});solution.appendChild(steps);
       output.appendChild(solution);
       output.style.display="block";if(!localeRefresh&&typeof window.gtag==="function")window.gtag("event","calculator_used",{calculator_name:def.title,calculator_page:location.pathname})});
-    panel.append(form,output);if(!existingPanel){const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);}
+    panel.append(form,output);panel.removeAttribute("aria-busy");if(!existingPanel){const header=h1.closest("header");if(header&&header.parentNode)header.insertAdjacentElement("afterend",panel);else h1.insertAdjacentElement("afterend",panel);}
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
