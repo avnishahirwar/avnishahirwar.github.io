@@ -1593,9 +1593,9 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
-  assert.ok(homepage.includes('<title>Wealth, Property &amp;amp; Free Online | Friendly Calc</title>'));
+  assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
   assert.ok(homepage.includes('name="description" content="Clear calculators for wealth planning, property investment, loan EMI, GST, income tax, savings and everyday maths in India and worldwide."'));
-  assert.ok(homepage.includes('property="og:title" content="Wealth, Property &amp; Free Online Calculators | Friendly Calculator"'));
+  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));

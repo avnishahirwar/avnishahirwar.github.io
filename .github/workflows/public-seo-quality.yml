@@ -1,0 +1,25 @@
+name: Public SEO metadata quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  public-seo-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check public page metadata
+        run: node scripts/repair-public-social-metadata.cjs --check
+      - name: Run SEO publication tests
+        run: node --test tests/public-seo-quality.test.cjs
