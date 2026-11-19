@@ -699,3 +699,6 @@ html[data-fc-theme="dark"] .fc-settings-site-controls select{background:#0e1b2b;
 @media(max-width:760px){
   footer.fc-global-footer .fc-global-footer-links>#fc-display-settings.fc-footer-settings-link{min-height:32px!important}
 }
+
+/* Keep the language selector in the same ordered navigation flow as all regional controls. */
+.fc-header-language-slot{display:contents}
