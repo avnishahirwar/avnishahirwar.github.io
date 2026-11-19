@@ -577,7 +577,34 @@ preservedFooterLinks.forEach(link=>{
 document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());
 document.body.appendChild(f);
   const dailyCounter=f.querySelector('[data-fc-daily-counter]');
-  if(dailyCounter){try{const day=new Date().toISOString().slice(0,10),key='fc-daily-visits-'+day,seen='fc-daily-seen-'+day;let count=Number(localStorage.getItem(key)||0);if(!sessionStorage.getItem(seen)){count+=1;localStorage.setItem(key,String(count));sessionStorage.setItem(seen,'1')}dailyCounter.textContent=(currentLocale==='hi'?'आज इस डिवाइस पर विज़िट: ':'Today\'s visits on this device: ')+count;}catch(_){dailyCounter.textContent=currentLocale==='hi'?'दैनिक visitor counter उपलब्ध नहीं है।':'Daily visitor counter unavailable.'}}
+  if(dailyCounter){
+    const label=currentLocale==='hi'?'आज की कुल विज़िट: ':'Today\'s total visits: ';
+    dailyCounter.textContent=label+'…';
+    const countDailyVisits=async()=>{
+      try{
+        let sessionId=sessionStorage.getItem('fc-daily-visit-session');
+        if(!sessionId){
+          sessionId=crypto.randomUUID();
+          sessionStorage.setItem('fc-daily-visit-session',sessionId);
+        }
+        const response=await fetch('https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/daily-visits',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({session_id:sessionId}),
+          cache:'no-store',
+          credentials:'omit'
+        });
+        if(!response.ok)throw new Error('Daily visits request failed: '+response.status);
+        const result=await response.json();
+        if(!result||result.ok!==true||!Number.isFinite(Number(result.total_visits)))throw new Error('Invalid daily visits response');
+        dailyCounter.textContent=label+Number(result.total_visits).toLocaleString(currentLocale==='hi'?'hi-IN':'en-IN');
+      }catch(error){
+        console.warn('Friendly Calculator daily visits counter unavailable:',error);
+        dailyCounter.textContent=currentLocale==='hi'?'आज की कुल विज़िट: उपलब्ध नहीं':'Today\'s total visits: unavailable';
+      }
+    };
+    countDailyVisits();
+  }
 // Highlight only the current destination in each navigation region. The URL,
 // not hover/focus state, determines the persistent active item.
 const normalizePath=path=>path==='/'?'/':path.replace(/\/+$/,'')+'/';
