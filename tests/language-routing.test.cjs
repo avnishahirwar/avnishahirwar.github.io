@@ -242,3 +242,38 @@ test('first translation batch has complete shared navigation and footer dictiona
       locale + ' must remain disabled until its localized routes are published and reviewed');
   }
 });
+
+
+test('five staged language editions have localized homepages and working basic calculators without premature indexing', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const expected = {
+    zh: ['让计算更简单、更清晰。', '基础计算器', '计算方法'],
+    ur: ['حساب کو آسان اور واضح بنائیں۔', 'بنیادی کیلکولیٹر', 'حساب کیسے کام کرتا ہے'],
+    tr: ['Hesaplamayı daha anlaşılır hâle getirin.', 'Temel hesap makinesi', 'Nasıl çalışır?'],
+    it: ['Rendi i calcoli più semplici e chiari.', 'Calcolatore di base', 'Come funziona'],
+    ko: ['계산을 더 쉽고 명확하게.', '기본 계산기', '계산 방식']
+  };
+  for (const [locale, phrases] of Object.entries(expected)) {
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned');
+    const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'basic-calculator.html'), 'utf8');
+    assert.match(home, new RegExp('<html lang="' + locale + '"'));
+    assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
+    assert.match(home, /name="robots" content="noindex,follow"/);
+    assert.match(calculator, /name="robots" content="noindex,follow"/);
+    assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
+    assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
+    for (const phrase of phrases) {
+      assert.ok(home.includes(phrase) || calculator.includes(phrase), 'Missing localized phrase for ' + locale + ': ' + phrase);
+    }
+    assert.match(calculator, /data-action="equals"/);
+    assert.match(calculator, /site-shell\.js/);
+    if (locale === 'ur') {
+      assert.match(home, /dir="rtl"/);
+      assert.match(calculator, /dir="rtl"/);
+    }
+  }
+  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  assert.match(shell, /zh:'\\/zh\\/index\.html',ur:'\\/ur\\/index\.html',tr:'\\/tr\\/index\.html',it:'\\/it\\/index\.html',ko:'\\/ko\\/index\.html'/);
+  assert.match(shell, /ur\|fa\|ps\|he\|sd/);
+});
