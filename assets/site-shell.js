@@ -1411,6 +1411,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
   // Keep regional selectors after Language in the shared Header and mirror
   // them in Settings & Accessibility below.
   if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
@@ -1443,7 +1444,6 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     });
     target.appendChild(mirror);
   };
-  const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
   mirrorSiteControl(headerLanguageControl,siteSettingsControls);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
