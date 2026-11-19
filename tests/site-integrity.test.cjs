@@ -2189,9 +2189,9 @@ test('homepage critical CSS keeps the shared regional Header readable before def
   const styleStart = html.indexOf('<style id="fc-critical-home-shell">');
   const styleEnd = html.indexOf('</style>', styleStart);
   const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
-  assert.match(critical, /\\.fc-top-row\\{[^}]*display:flex/);
-  assert.match(critical, /\\.fc-global-links \\.fc-currency-control/);
-  assert.match(critical, /\\.fc-global-links \\.fc-country-format-control/);
-  assert.match(critical, /\\.fc-global-links \\.fc-unit-control/);
-  assert.match(critical, /@media\\(max-width:760px\\)[\\s\\S]*?\\.fc-global-links\\.fc-nav-open/);
+  assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
+  assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
+  assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
+  assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
+  assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
 });
