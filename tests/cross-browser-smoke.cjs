@@ -24,7 +24,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   assert.equal((await compound.locator('#final').innerText()).trim(), expectedCompoundText, name + ': compound interest default calculation');
   await compound.locator('#rate').fill('0');
   await compound.locator('#calculate').click();
-  assert.match(await compound.locator('#final').innerText(), /100,000/ , name + ': compound interest zero-rate boundary');
+  assert.match(await compound.locator('#final').innerText(), /100,000|1,00,000/ , name + ': compound interest zero-rate boundary');
   await compound.locator('#principal').fill('0');
   await compound.locator('#calculate').click();
   assert.match(await compound.locator('#status').innerText(), /principal above zero/i, name + ': compound interest invalid principal validation');
