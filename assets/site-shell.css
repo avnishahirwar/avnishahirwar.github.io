@@ -702,3 +702,11 @@ html[data-fc-theme="dark"] .fc-settings-site-controls select{background:#0e1b2b;
 
 /* Keep the language selector in the same ordered navigation flow as all regional controls. */
 .fc-header-language-slot{display:contents}
+
+.fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
+
+.fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
+
+.fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
+
+.fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
