@@ -128,9 +128,9 @@ test('country-specific mortgage guidance registry covers all 195 directory marke
  assert.equal(entries.filter(entry=>entry.status==='pending').length,160);
  for(const info of Object.values(registry.verified)){
   assert.ok(info.sources.length>0);
-  for(const source of info.sources)assert.match(source[1],/^https:\\/\\//);
+  for(const source of info.sources)assert.match(source[1],/^https:\/\//);
  }
- for(const source of registry.regionalFramework.sources)assert.match(source[1],/^https:\\/\\//);
+ for(const source of registry.regionalFramework.sources)assert.match(source[1],/^https:\/\//);
 });
 test('mortgage country guidance panel loads safely and displays official sources for the selected country',()=>{
  const html=fs.readFileSync(path.join(root,'international/global-mortgage-calculator.html'),'utf8');
@@ -138,8 +138,8 @@ test('mortgage country guidance panel loads safely and displays official sources
  assert.match(html,/id="world-mortgage-country-guidance"/);
  assert.match(html,/id="world-mortgage-guidance-status"/);
  assert.match(html,/id="world-mortgage-guidance-sources"/);
- assert.match(script,/mortgage-country-guidance\\.json/);
- assert.match(script,/createElement\\('a'\\)/);
+ assert.match(script,/mortgage-country-guidance\.json/);
+ assert.match(script,/createElement\('a'\)/);
  assert.match(script,/noopener noreferrer/);
  assert.match(script,/regional-framework/);
  assert.match(script,/Country-specific verification pending/);
