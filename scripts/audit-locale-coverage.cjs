@@ -4,7 +4,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const DEFAULT_LOCALES = ['zh', 'hi', 'es', 'ar', 'fr', 'bn', 'pt', 'id', 'ur', 'ru', 'de', 'ja', 'pcm', 'arz', 'mr', 'vi', 'te', 'sw', 'ha', 'tr', 'pa', 'fil', 'ta', 'yue', 'wuu', 'fa', 'ko', 'am', 'th', 'jv', 'it', 'gu', 'kn', 'yo', 'bho', 'nl', 'pl', 'ml', 'or', 'ne', 'si', 'uk', 'uz', 'ps', 'so', 'he', 'my', 'ro', 'sd'];
+const LANGUAGE_CATALOGUE = require('../config/language-catalogue.json');
+const DEFAULT_LOCALES = LANGUAGE_CATALOGUE.locales.filter(locale => locale.code !== LANGUAGE_CATALOGUE.defaultLocale).map(locale => locale.code);
 const SKIP_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'vendor', 'dist', 'coverage',
   'admin', 'avnish-ai', '_site'
