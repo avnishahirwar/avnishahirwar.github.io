@@ -2063,6 +2063,8 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
   assert.ok(script.includes('body > footer:not(.fc-global-footer)'));
   assert.ok(script.includes('node.hidden = true'));
   assert.ok(script.includes("node.setAttribute('aria-hidden', 'true')"));
+  assert.ok(script.includes('const hasPageContent = !!node.querySelector'));
+  assert.ok(script.includes('navNodes.forEach'), 'Only legacy navigation should be hidden when the header also contains page content');
   assert.match(script, /fc-global-footer-links/);
 });
 
