@@ -52,7 +52,9 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('default locale coverage audit includes Gujarati and Kannada',()=>{
+test('default locale coverage audit tracks all 49 non-English languages in the 50-language catalogue',()=>{
  const {DEFAULT_LOCALES}=require('../scripts/audit-locale-coverage.cjs');
- assert.ok(DEFAULT_LOCALES.includes('gu'));assert.ok(DEFAULT_LOCALES.includes('kn'));
+ assert.equal(DEFAULT_LOCALES.length,49);
+ assert.equal(new Set(DEFAULT_LOCALES).size,49);
+ for(const locale of ['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(DEFAULT_LOCALES.includes(locale),'Missing locale: '+locale);
 });
