@@ -64,7 +64,7 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
-test('shared footer retains Sitemap; regional preferences follow Language in Header and Settings stays outside chrome', () => {
+test('shared footer retains Sitemap; regional preferences follow Language and Settings is the final Footer item', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
@@ -83,10 +83,12 @@ test('shared footer retains Sitemap; regional preferences follow Language in Hea
   assert.ok(!shell.includes("addSettingRow('fc-display-currency-row'"), 'Display currency must not be placed inside Settings & Accessibility.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
-  assert.ok(shell.includes('dock.appendChild(open)') && shell.includes('dock.appendChild(trigger)'), 'The single Settings trigger must be in the standalone floating dock.');
+  assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final item in shared Footer navigation.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl'), 'Settings must provide mirrors for language, currency, country/format and units.');
+  assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not be mounted in a floating dock.');
   assert.ok(shell.includes("['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']"), 'Legacy footer fallback must also put Sitemap before Contact.');
   assert.ok(shell.includes("footerLinks.map(([n,u])=>") && shell.includes("'/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'"), 'Footer order must place Sitemap before Contact.');
-  assert.ok(!shell.includes('footerNav.appendChild(open)') && !shell.includes('footerNav.appendChild(trigger)'), 'Settings must not be mounted in the shared footer.');
+  assert.ok(shell.includes("'fc-footer-settings-link'"), 'Settings must use the Footer navigation link styling.');
   assert.ok(shell.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must be consolidated into one shared footer.');
   assert.ok(shell.includes('.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav'), 'Legacy navigation headers must be removed.');
   assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must be placed inside Settings Quick Actions.');
