@@ -17,6 +17,7 @@ on:
     paths:
       - ".github/workflows/cross-browser.yml"
       - "tests/cross-browser-smoke.cjs"
+      - "tests/safari-smoke.cjs"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/site-chrome.js"
