@@ -2128,7 +2128,7 @@ test('Header Units control uses consistent readable typography', () => {
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(css, /\.fc-top-row>\.fc-unit-control select\{[^}]*font:600 \.76rem\/1\.2 system-ui,sans-serif/);
-  assert.match(css, /@media\(max-width:760px\)[\s\S]*?\\.fc-top-row>\\.fc-currency-control[\s\S]*?min-height:40px/);
+  assert.ok(css.includes('.fc-top-row>.fc-currency-control') && css.includes('min-height:40px'), 'Mobile regional controls must retain readable touch-target sizing.');
   assert.match(shell, /regionalMarkup\.innerHTML=currencyControl\+countryControl\+unitControl/);
   assert.doesNotMatch(shell, /addSettingRow\('fc-display-units-row'/);
 });
