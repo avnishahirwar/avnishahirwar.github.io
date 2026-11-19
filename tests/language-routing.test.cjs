@@ -155,5 +155,5 @@ test('language directory lists exactly 50 unique language editions with accurate
   assert.equal((page.match(/class="card"/g) || []).length, 50);
   assert.equal((page.match(/class="status-live"/g) || []).length, 13);
   assert.equal((page.match(/class="status-soon"/g) || []).length, 37);
-  assert.equal((page.match(/मराठी · Marathi/g) || []).length, 1, 'Marathi must appear once only');
+  assert.equal(page.split('href="/mr/index.html"').length - 1, 1, 'Marathi edition link must appear once only');
 });
