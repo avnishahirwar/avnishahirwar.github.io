@@ -15,7 +15,7 @@ const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
     await driver.wait(async () => settings.isDisplayed() && settings.isEnabled(), 10000);
     if ((await settings.getText()).trim() !== 'Settings') throw new Error('Safari: Settings label mismatch');
     await driver.executeScript('arguments[0].scrollIntoView({ block: "center" });', settings);
-    await settings.click();
+    await driver.executeScript('arguments[0].click();', settings);
     await driver.wait(async () => {
       const panel = await driver.findElement(By.css('#fc-display-panel'));
       return panel.isDisplayed();
