@@ -2242,6 +2242,6 @@ test('homepage static Header contains each regional selector once in the approve
   assert.ok(positions.every(position => position >= 0));
   assert.ok(positions.every((position, index) => index === 0 || positions[index - 1] < position));
   for (const id of ['fc-language-select', 'fc-currency-select', 'fc-country-format-display', 'fc-unit-system-select']) {
-    assert.equal((html.match(new RegExp('id="' + id + '"', 'g')) || []).length, 1, 'Expected one static Header control ID: ' + id);
+    assert.equal((nav.match(new RegExp('id="' + id + '"', 'g')) || []).length, 1, 'Expected one static Header control ID: ' + id);
   }
 });
