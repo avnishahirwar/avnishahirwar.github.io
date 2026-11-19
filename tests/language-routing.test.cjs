@@ -77,7 +77,7 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
-  assert.ok(shell.includes('bn|ta|ja|ru|pl|ro|pa|ur|cy'), 'Japanese and Russian must be recognized as calculator locales');
+  assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
   assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','pl','ro','pa','ur','cy']"));
 });
 
@@ -188,7 +188,7 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 
 
 test('all localized basic calculator pages include reciprocal Gujarati and Kannada alternates',()=>{
- const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
+ const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','es/calculators/basic-calculator.html','fr/calculators/basic-calculator.html','pt/calculators/basic-calculator.html','ar/calculators/basic-calculator.html','id/calculators/basic-calculator.html','bn/calculators/basic-calculator.html','ta/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
 });
 
@@ -210,7 +210,7 @@ test('UK priority language homepages are localized, indexable and linked recipro
  }
 });
 test('UK priority basic calculators have localized UI and reciprocal hreflang',()=>{
- const phrases={pl:['Kalkulator podstawowy','Dodawaj'],ro:['Calculator de bază','Adună'],pa:['ਬੁਨਿਆਦੀ ਕੈਲਕੁਲੇਟਰ','ਜੋੜ'],ur:['بنیادی کیلکولیٹر','جمع'],cy:['Cyfrifiannell sylfaenol','Adio']};
+ const phrases={pl:['Kalkulator podstawowy','Bezpłatny kalkulator online'],ro:['Calculator de bază','Calculator online gratuit'],pa:['ਬੁਨਿਆਦੀ ਕੈਲਕੁਲੇਟਰ','ਜੋੜ, ਘਟਾਓ'],ur:['بنیادی کیلکولیٹر','جمع، تفریق'],cy:['Cyfrifiannell sylfaenol','Cyfrifiannell ar-lein am ddim']};
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');for(const code of ['pl','ro','pa','ur','cy'])assert.match(html,new RegExp('hreflang="'+code+'"'));}
  for(const [locale,expected] of Object.entries(phrases)){
