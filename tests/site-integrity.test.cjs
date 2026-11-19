@@ -2057,7 +2057,7 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.match(html, /src="\/assets\/site-shell\.js" defer/);
 });
 
-test('Settings trigger is the final Footer item; Site Settings mirrors Header controls', () => {
+test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(shell.includes("panel.setAttribute('role','dialog')"));
@@ -2075,7 +2075,7 @@ test('Settings trigger is the final Footer item; Site Settings mirrors Header co
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
-  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl'), 'Settings must include mirrored Site Settings controls.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl') && shell.includes('regionalSettingsControls.append(currencyControl,countryFormatLabel,unitControl)'), 'Settings must contain regional preferences and a mirrored Language selector.');
   assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
   assert.ok(shell.includes("'fc-footer-settings-link'"), 'Footer Settings must use the shared Footer link styling.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
