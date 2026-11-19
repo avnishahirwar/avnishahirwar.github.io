@@ -112,3 +112,35 @@ test('Canada country selection defaults to semi-annual compounding and the world
  for(const value of ['semi-monthly','biweekly','weekly','semi-annually','quarterly','annually'])assert.ok(html.includes('value="'+value+'"'));
  assert.ok(html.includes('financial-consumer-agency/services/industry/bulletins/information-box-examples/credit-agreement-fixed-mortgage.html'));
 });
+
+
+test('country-specific mortgage guidance registry covers all 195 directory markets with explicit evidence status',()=>{
+ const registry=JSON.parse(fs.readFileSync(path.join(root,'assets/mortgage-country-guidance.json'),'utf8'));
+ const directory=fs.readFileSync(path.join(root,'international/countries/index.html'),'utf8');
+ const names=[...directory.matchAll(/href="\/international\/global-mortgage-calculator\.html#country=([^"]+)"/g)].map(match=>decodeURIComponent(match[1]).toLowerCase());
+ const entries=Object.values(registry.countries);
+ assert.equal(entries.length,195);
+ assert.equal(names.length,195);
+ const registryNames=new Set(entries.map(entry=>entry.countryName.toLowerCase()));
+ for(const name of names)assert.ok(registryNames.has(name),'missing country guidance record for '+name);
+ assert.equal(entries.filter(entry=>entry.status==='verified').length,8);
+ assert.equal(entries.filter(entry=>entry.status==='regional-framework').length,27);
+ assert.equal(entries.filter(entry=>entry.status==='pending').length,160);
+ for(const info of Object.values(registry.verified)){
+  assert.ok(info.sources.length>0);
+  for(const source of info.sources)assert.match(source[1],/^https:\\/\\//);
+ }
+ for(const source of registry.regionalFramework.sources)assert.match(source[1],/^https:\\/\\//);
+});
+test('mortgage country guidance panel loads safely and displays official sources for the selected country',()=>{
+ const html=fs.readFileSync(path.join(root,'international/global-mortgage-calculator.html'),'utf8');
+ const script=fs.readFileSync(path.join(root,'assets/worldwide-mortgage-calculator.js'),'utf8');
+ assert.match(html,/id="world-mortgage-country-guidance"/);
+ assert.match(html,/id="world-mortgage-guidance-status"/);
+ assert.match(html,/id="world-mortgage-guidance-sources"/);
+ assert.match(script,/mortgage-country-guidance\\.json/);
+ assert.match(script,/createElement\\('a'\\)/);
+ assert.match(script,/noopener noreferrer/);
+ assert.match(script,/regional-framework/);
+ assert.match(script,/Country-specific verification pending/);
+});
