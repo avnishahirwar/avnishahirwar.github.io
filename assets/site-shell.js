@@ -282,16 +282,16 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p);
+const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\//.exec(p);
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
 document.documentElement.lang=routeLocale;
-document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\/)?calculators\//.test(p);
+document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
 const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
-const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn'];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','zh','ur','tr','it','ko'];
 if(localeCodes.includes(locale)){
   const categoryMap={
     '/calculator/finance-calculators.html':'finance',
@@ -399,8 +399,8 @@ const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
-const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
+const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html',zh:'/zh/index.html',ur:'/ur/index.html',tr:'/tr/index.html',it:'/it/index.html',ko:'/ko/index.html'};
 // A saved visitor choice wins; otherwise use the browser's supported language.
 // Only the root entry point auto-selects a language; explicit page routes remain authoritative.
 if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash);
