@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 42,
+    "officialCountryGuides": 45,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 126
+    "pendingVerification": 123
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -920,6 +920,83 @@
           "https://www.bceao.int/en/content/presentation-banking-commission"
         ]
       ]
+    },
+    "BW": {
+      "summary": "The Bank of Botswana's Basel II capital directive provides preferential risk-weight treatment for qualifying residential mortgage exposures. It specifies conditions including borrower repayment capacity, professional property valuation, insurance and an LTV threshold for the preferential risk weight. These are bank capital-treatment rules, not a universal borrower entitlement or a standalone legal maximum for every mortgage product.",
+      "rules": [
+        "Under paragraph 4.16 of the Bank of Botswana's Basel II directive, qualifying residential-property claims up to P10 million receive a 35% risk weight when the stated conditions are met.",
+        "For that preferential capital treatment, the financed property must be fully secured by mortgage, used for residential purposes, valued under strict rules, insured against fire and other perils, and the bank must assess the borrower's repayment capacity from sources beyond the property collateral.",
+        "The qualifying LTV threshold is 90%; where LTV exceeds 90%, the excess portion is risk-weighted at 75%. This is a prudential capital-risk rule and should not be described as a universal statutory borrower LTV cap or guarantee of approval.",
+        "Property valuation must be carried out by an accredited valuer and the Bank of Botswana directive requires reassessment at least every three years, or more frequently where market conditions are volatile.",
+        "Banks set their own mortgage pricing, affordability criteria, tenure, fees and additional security requirements. Confirm the current directive and written loan offer with the lender; the calculator does not determine eligibility or transaction costs."
+      ],
+      "sources": [
+        [
+          "Bank of Botswana: Directive on the Revised International Convergence of Capital Measurement and Capital Standards for Botswana (Basel II), paragraphs 4.16–4.17",
+          "https://www.bankofbotswana.bw/sites/default/files/Directive-on-the-Revised-International-Convergence-of-Capital-Measurement-and-Capital-Standards_0.pdf"
+        ],
+        [
+          "Bank of Botswana: Guidelines on the Revised International Convergence of Capital Measurement and Capital Standards for Botswana",
+          "https://www.bankofbotswana.bw/sites/default/files/GUIDELINES-ON-CAPITAL-MEASUREMENT-AND-CAPITAL-STANDARDS-FOR-BOTSWANA-%28DG-MDP-Edits-Aug-3-2015%29.pdf"
+        ]
+      ]
+    },
+    "BN": {
+      "summary": "Brunei Darussalam's central bank (BDCB) sets a Total Debt Service Ratio (TDSR) framework for bank credit to individuals. For net monthly income from BND 1,750 to below BND 10,000, the general TDSR threshold is 60%, while banks may increase it up to 70% for qualifying property purchase or construction financing secured by that property. BIBD currently advertises home-financing tenures up to 25 years and a maximum 70% TDSR for eligible income bands, subject to its own policy.",
+      "rules": [
+        "BDCB Notice No. BU/N-9/2017/44 applies to banks and individual credit facilities. It defines TDSR as total monthly debt obligations divided by net monthly income and requires banks to verify existing and proposed debt commitments.",
+        "For net monthly income from BND 1,750 to below BND 10,000, the notice sets a general TDSR threshold not exceeding 60%. A bank may raise the limit to a maximum of 70% for financing the purchase or construction of immovable property when the financing is secured by that property.",
+        "For net monthly income of BND 10,000 or more, and below BND 1,750, the notice refers to the bank's internal credit policy. Banks must maintain prudent repayment-capacity assessments and may apply stricter thresholds.",
+        "BIBD's published home-financing product currently states a term of up to 25 years and a maximum 70% TDSR for net monthly income of BND 1,750 or above, subject to bank policy. This is a lender product condition, not a universal tenure or approval guarantee.",
+        "Section 40 of the Banking Act 2024 also limits the aggregate amount of certain bank loans secured by immovable property relative to deposits, with a higher limit possible for specialist banks with prior written BDCB consent. This is a bank-level portfolio restriction, not a borrower LTV limit.",
+        "The calculator does not determine BDCB compliance, BIBD eligibility, land title, valuation, takaful/insurance, legal fees or property transfer costs. Confirm the current notice and lender offer before relying on the figures."
+      ],
+      "sources": [
+        [
+          "Brunei Darussalam Central Bank: Notice No. BU/N-9/2017/44 — Amendment No. 1, Total Debt Service Ratio",
+          "https://cms.bdcb.gov.bn/storage/uploads/regulatories/17111192042748120.pdf"
+        ],
+        [
+          "Brunei Darussalam Central Bank: Banking Act, Chapter 95, Revised Edition 2024, section 40",
+          "https://www.bdcb.gov.bn/docs/regulatory/banking/Banking%20Act%2C%20Cap%2095.pdf"
+        ],
+        [
+          "BIBD: Home Financing — current product features, tenure and TDSR",
+          "https://bibd.com.bn/personal-banking/personal-financing/home-financing"
+        ],
+        [
+          "Brunei Darussalam Central Bank: Responsible Debt Management, National Financial Literacy Day 2025",
+          "https://www.bdcb.gov.bn/publications/details?id=01k2h2rpyx5xh0k1a6a5rz5266"
+        ]
+      ]
+    },
+    "BF": {
+      "summary": "Burkina Faso's mortgage market operates within the West African Monetary Union (UMOA) banking and financial-services framework supervised regionally by BCEAO and the UMOA Banking Commission. BCEAO classifies residential real-estate credit as financing for acquisition, construction or improvement of housing and land intended for housing. From 1 June 2026, the UMOA usury-rate ceiling is 14% per year for banks and 24% for financial credit institutions and microfinance institutions; this is a general credit ceiling, not a mortgage rate offer or borrower entitlement.",
+      "rules": [
+        "BCEAO's UMOA regulatory compilation defines residential real-estate credit to include acquisition, construction or improvement of residential buildings and purchase of land intended for housing. It distinguishes these from commercial real-estate financing.",
+        "BCEAO Notice No. 007-12-2025 sets the UMOA usury-rate ceiling effective 1 June 2026 at 14.0% per year for banks and 24.0% per year for financial credit institutions, microfinance institutions and other economic agents. This is a general legal ceiling for credit pricing, not a typical mortgage rate or a guaranteed lender offer.",
+        "Banks and financial institutions operating in Burkina Faso are part of the UMOA regional supervisory framework. Confirm the institution's current authorisation and the applicable lender terms before applying.",
+        "BCEAO's 2026 bank-conditions publication reports lending conditions across UMOA institutions; actual rates, fees, repayment periods, down payments and collateral remain dependent on the institution and borrower profile.",
+        "The calculator does not determine eligibility for a housing programme, lender approval, collateral/title validity, valuation, insurance, notarial or registration fees, or property taxes."
+      ],
+      "sources": [
+        [
+          "BCEAO: Notice No. 007-12-2025 — UMOA usury-rate ceiling, effective 1 June 2026",
+          "https://www.bceao.int/index.php/fr/reglementations/avis-no007-12-2025-aux-etablissements-de-credit-et-aux-institutions-de"
+        ],
+        [
+          "BCEAO: Compilation of legal and regulatory texts governing banking and financial activity in UMOA — residential real-estate credit definitions",
+          "https://www.bceao.int/sites/default/files/inline-files/Recueil%20des%20textes%20l%C3%A9gaux%20et%20r%C3%A9glementaires%20r%C3%A9gissant%20l%27activit%C3%A9%20bancaire%20et%20financi%C3%A8re%20dans%20l%27UMOA%2C%20Vol.%20I%2C%20%C3%A9d.%202018.pdf"
+        ],
+        [
+          "BCEAO: Credit conditions applied by UMOA credit institutions in the first half of 2026",
+          "https://www.bceao.int/fr/documents/conditions-debitrices-et-creditrices-appliquees-par-les-etablissements-de-credit-de-lumoa"
+        ],
+        [
+          "BCEAO: Banking landscape in UMOA — licensed institutions in Burkina Faso",
+          "https://www.bceao.int/fr/content/paysage-bancaire"
+        ]
+      ]
     }
   },
   "countries": {
@@ -1013,7 +1090,7 @@
     },
     "BW": {
       "countryName": "Botswana",
-      "status": "pending"
+      "status": "verified"
     },
     "BR": {
       "countryName": "Brazil",
@@ -1021,7 +1098,7 @@
     },
     "BN": {
       "countryName": "Brunei",
-      "status": "pending"
+      "status": "verified"
     },
     "BG": {
       "countryName": "Bulgaria",
@@ -1029,7 +1106,7 @@
     },
     "BF": {
       "countryName": "Burkina Faso",
-      "status": "pending"
+      "status": "verified"
     },
     "BI": {
       "countryName": "Burundi",
