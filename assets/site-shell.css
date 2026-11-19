@@ -710,3 +710,7 @@ html[data-fc-theme="dark"] .fc-settings-site-controls select{background:#0e1b2b;
 .fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
 
 .fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
+
+/* Premium wealth-intelligence direction: navy-black, restrained gold, editorial contrast. */
+:root{--fc-luxe-gold:#d4af37;--fc-luxe-ink:#07101b}
+.fc-global-header{background:#070b12!important;border-bottom-color:#4d3a16!important}.fc-global-links>a:hover,.fc-global-links>a[aria-current=page]{color:#e5c35b!important;border-bottom-color:#e5c35b!important}.fc-global-brand b{color:#e5c35b!important}.fc-global-footer{background:#070b12!important;border-top-color:#4d3a16!important}.fc-global-footer a{color:#e5d19a!important}.fc-global-footer a:hover{color:#fff!important}.fc-settings-row{background:#0b1420!important;border-top-color:#4d3a16!important}.fc-feature-card:hover{box-shadow:0 12px 30px #d4af3720}
