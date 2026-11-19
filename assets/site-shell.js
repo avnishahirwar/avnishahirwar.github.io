@@ -1486,13 +1486,12 @@ const mountSettingsQuickActions=()=>{
     installHelp.classList.add('fc-settings-inline-help');
     quickActions.appendChild(installHelp);
   }
-  // Keep the assistant lazy-loaded, but place its launcher inside Settings Quick Actions.
+  // Open Assistant remains a persistent on-page action, outside Settings.
   const assistantLauncher=document.getElementById('fc-ai-lazy-launch');
   if(assistantLauncher){
     assistantLauncher.textContent=copy.assistant;
     assistantLauncher.setAttribute('aria-label',copy.assistant);
-    assistantLauncher.classList.add('fc-settings-quick-action');
-    quickActions.appendChild(assistantLauncher);
+    assistantLauncher.classList.remove('fc-settings-quick-action');
   }
   // Remove stale unlabeled controls left by older Settings panel versions.
   panel.querySelectorAll('button').forEach(button=>{
