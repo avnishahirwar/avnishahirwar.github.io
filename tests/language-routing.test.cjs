@@ -278,6 +278,6 @@ test('five staged language editions have localized homepages and working basic c
   assert.match(shell, /ur\|fa\|ps\|he\|sd/);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
   for (const locale of ['zh','ur','tr','it','ko']) {
-    assert.ok(footerBlock.includes(locale + ':[), 'Missing footer labels for ' + locale);
+    assert.ok(footerBlock.includes(locale + ':['), 'Missing footer labels for ' + locale);
   }
 });
