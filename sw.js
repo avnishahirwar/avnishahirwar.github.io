@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'friendly-calculator-public-v5';
+const CACHE_NAME = 'friendly-calculator-public-v6';
 const CACHE_PREFIX = 'friendly-calculator-public-';
 const OFFLINE_URL = '/offline.html';
 const PRECACHE_URLS = [
