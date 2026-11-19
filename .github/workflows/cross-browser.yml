@@ -72,4 +72,6 @@ jobs:
           echo "::error::Cloudflare preview did not become available."
           exit 1
       - name: Run desktop and mobile compatibility checks
+        env:
+          PLAYWRIGHT_ENGINE: ${{ matrix.engine }}
         run: node scripts/check-cross-browser.cjs
