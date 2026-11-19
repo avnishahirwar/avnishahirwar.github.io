@@ -2255,3 +2255,5 @@ test('regional dropdown sizing targets the shared header and actual Settings DOM
   assert.ok(mobile.includes('width:100%!important;'));
   assert.ok(mobile.includes('height:48px!important;'));
 });
+
+/* Regression assertions inspect the final override rules, not earlier base selectors. */
