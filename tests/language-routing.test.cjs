@@ -200,19 +200,23 @@ test('localized basic calculator hreflang alternates are reciprocal for Gujarati
 
 test('language selector is synchronized with the canonical 50-language catalogue', () => {
   const catalogue = require('../config/language-catalogue.json');
-  const localeNamesBlock = shell.match(/const localeNames=\\{([^}]+)\\};/);
-  const supportedBlock = shell.match(/const supportedUiLocales=\\{([^}]+)\\};/);
-  const homeBlock = shell.match(/const localeHome=\\{([^}]+)\\};/);
-  assert.ok(localeNamesBlock && supportedBlock && homeBlock, 'Expected language catalogue, enabled locale and route maps');
-  const names = [...localeNamesBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
-  const enabled = [...supportedBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
-  const routed = [...homeBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  const objectBody = key => {
+    const start = shell.indexOf(key);
+    assert.notEqual(start, -1, 'Missing ' + key);
+    const bodyStart = start + key.length;
+    const end = shell.indexOf('};', bodyStart);
+    assert.notEqual(end, -1, 'Unclosed ' + key);
+    return shell.slice(bodyStart, end);
+  };
+  const names = [...objectBody('const localeNames={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  const enabled = [...objectBody('const supportedUiLocales={').matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
+  const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
   assert.deepEqual(routed.sort(), enabled.slice().sort());
-  assert.match(shell, /fetch\\('\\/config\\/language-catalogue\\.json'/);
-  assert.match(shell, /option\\.disabled=locale\\.status!=='available'/);
-  assert.match(shell, /option\\.textContent=locale\\.nativeName/);
+  assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
+  assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
+  assert.ok(shell.includes('option.textContent=locale.nativeName'));
   const directory = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
   assert.equal((directory.match(/class="status-live"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'available').length);
   assert.equal((directory.match(/class="status-soon"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'planned').length);
