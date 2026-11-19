@@ -52,6 +52,8 @@ jobs:
     name: Lighthouse mobile audit
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      BASE_URL: https://friendlycalculator.in
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
