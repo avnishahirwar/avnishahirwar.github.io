@@ -17339,5 +17339,19 @@
     "category": "Tax, Salary & Payroll",
     "keywords": "vat calculator value added tax add remove tax inclusive net price international",
     "description": "Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency."
+  },
+  {
+    "name": "Property Investment Calculator",
+    "url": "/calculators/property-investment-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "property investment calculator rental yield gross rental yield annual net cash flow cash on cash return purchase price monthly rent annual property costs",
+    "description": "Estimate gross rental yield, annual net cash flow and cash-on-cash return from entered property price, rent, own cash and annual costs."
+  },
+  {
+    "name": "Wealth Planner Calculator",
+    "url": "/calculators/wealth-planner-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "wealth planner calculator millionaire billionaire wealth target current wealth annual savings assumed annual return passive income withdrawal rate long term planning",
+    "description": "Model a long-term wealth target using current wealth, annual savings, an assumed return and a passive-income withdrawal rate."
   }
 ]

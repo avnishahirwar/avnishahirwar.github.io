@@ -521,22 +521,22 @@ const routeLanguageSelect=document.getElementById('fc-language-select');
 const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
-  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Sitemap (Englisch)','Kontakt (Englisch)'],
+  de:['Über uns (Englisch)','Methodik (Englisch)','Datenschutz (Englisch)','Nutzungsbedingungen (Englisch)','Haftungsausschluss (Englisch)','Recht & Compliance (Englisch)','Einbetten','Sitemap (Englisch)','Kontakt (Englisch)','Werbung'],
   en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising'],
   hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क','विज्ञापन'],
-  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Mapa del sitio (inglés)','Contacto'],
-  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Plan du site (anglais)','Contact'],
-  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Mapa do site (inglês)','Contato'],
-  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','خريطة الموقع (بالإنجليزية)','اتصل بنا'],
-  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Peta situs (Inggris)','Kontak'],
-  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','সাইটম্যাপ (ইংরেজি)','যোগাযোগ'],
-  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தள வரைபடம் (ஆங்கிலம்)','தொடர்பு'],
-  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','サイトマップ（英語）','お問い合わせ（英語）'],
-  ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)']
+  es:['Acerca de','Metodología','Privacidad','Términos','Aviso legal','Legal y cumplimiento (inglés)','Insertar','Mapa del sitio (inglés)','Contacto','Publicidad'],
+  fr:['À propos','Méthodologie','Confidentialité','Conditions','Avertissement','Droit et conformité (anglais)','Intégrer','Plan du site (anglais)','Contact','Publicité'],
+  pt:['Sobre','Metodologia','Privacidade','Termos','Aviso legal','Jurídico e conformidade (inglês)','Incorporar','Mapa do site (inglês)','Contato','Publicidade'],
+  ar:['من نحن','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','الشؤون القانونية والامتثال (بالإنجليزية)','تضمين','خريطة الموقع (بالإنجليزية)','اتصل بنا','الإعلانات'],
+  id:['Tentang','Metodologi','Privasi','Ketentuan','Penafian','Hukum & Kepatuhan (Inggris)','Sematkan','Peta situs (Inggris)','Kontak','Iklan'],
+  bn:['পরিচিতি','পদ্ধতি','গোপনীয়তা','শর্তাবলি','দায় অস্বীকার','আইন ও সম্মতি (ইংরেজি)','এম্বেড','সাইটম্যাপ (ইংরেজি)','যোগাযোগ','বিজ্ঞাপন'],
+  ta:['எங்களைப் பற்றி','முறை','தனியுரிமை','விதிமுறைகள்','மறுப்பு','சட்டம் மற்றும் இணக்கம் (ஆங்கிலம்)','உட்பொதி','தள வரைபடம் (ஆங்கிலம்)','தொடர்பு','விளம்பரம்'],
+  ja:['サイトについて（英語）','計算方法（英語）','プライバシー（英語）','利用規約（英語）','免責事項（英語）','法務・コンプライアンス（英語）','埋め込み','サイトマップ（英語）','お問い合わせ（英語）','広告'],
+  ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)','Реклама'],
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
-if(footerLinks.length===9)footerLinks.push([currentLocale==='hi'?'विज्ञापन':'Advertising','/calculator/advertise.html']);
+if(footerLinks.length!==footerPaths.length)throw new Error('Footer labels and destinations must stay aligned.');
 const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer">Instagram</a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer">LinkedIn</a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com">Email</a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div><div class="fc-daily-counter" data-fc-daily-counter aria-live="polite">Today's visits on this device: —</div></div>`
 // Consolidate every legacy or nested footer into one direct child of body.
