@@ -37,7 +37,26 @@ for(const code of codes){const option=document.createElement('option');option.va
 const formatter=()=>{const code=(currencyInput.value||'USD').trim().toUpperCase();return new Intl.NumberFormat(window.FCLocale?.getLocale?.()||navigator.language||'en',{style:'currency',currency:code,maximumFractionDigits:2});};
 const selectedCountry=()=>codes.includes(countrySelect.value)?countrySelect.value:'US';
 const setCountryDefaults=()=>{currencyInput.value=currencyByCountry[selectedCountry()]||'USD';compoundingSelect.value=selectedCountry()==='CA'?'semi-annually':'monthly';};
-countrySelect.addEventListener('change',setCountryDefaults);
+const guidanceStatus=$('world-mortgage-guidance-status'),guidanceSummary=$('world-mortgage-guidance-summary'),guidanceRules=$('world-mortgage-guidance-rules'),guidanceReviewed=$('world-mortgage-guidance-reviewed'),guidanceSources=$('world-mortgage-guidance-sources');
+let mortgageGuidance=null;
+const renderCountryGuidance=()=>{
+ if(!mortgageGuidance){guidanceStatus.textContent='Loading official country guidance…';return;}
+ const market=mortgageGuidance.countries[selectedCountry()];
+ const status=market?.status||'pending';
+ const info=status==='verified'?mortgageGuidance.verified[selectedCountry()]:status==='regional-framework'?mortgageGuidance.regionalFramework:mortgageGuidance.defaultGuidance;
+ const labels={verified:'Official country guidance verified', 'regional-framework':'Regional framework available · national details vary',pending:'Country-specific verification pending'};
+ guidanceStatus.textContent=labels[status]||labels.pending;guidanceStatus.dataset.status=status;
+ guidanceSummary.textContent=info.summary;
+ guidanceRules.replaceChildren();
+ for(const rule of info.rules||[]){const item=document.createElement('li');item.textContent=rule;guidanceRules.appendChild(item);}
+ guidanceSources.replaceChildren();
+ for(const source of info.sources||[]){const item=document.createElement('li'),link=document.createElement('a');link.href=source[1];link.textContent=source[0];link.target='_blank';link.rel='noopener noreferrer';item.appendChild(link);guidanceSources.appendChild(item);}
+ guidanceReviewed.textContent='Guidance register reviewed '+mortgageGuidance.lastReviewed+'. Verify current rules and lender terms before making a decision.';
+};
+const loadCountryGuidance=()=>{
+ fetch('/assets/mortgage-country-guidance.json',{cache:'force-cache'}).then(response=>{if(!response.ok)throw new Error('Guidance data unavailable');return response.json();}).then(data=>{mortgageGuidance=data;renderCountryGuidance();}).catch(()=>{guidanceStatus.textContent='Official country guidance could not be loaded. Treat this as a general estimate and check your local regulator and lender.';guidanceStatus.dataset.status='pending';});
+};
+countrySelect.addEventListener('change',()=>{setCountryDefaults();renderCountryGuidance();});
 const hash=new URLSearchParams(location.hash.replace(/^#/,''));
 const requestedCountry=(hash.get('country')||'').trim().toLowerCase();
 const countryAliases={'antigua and barbuda':'AG','bosnia and herzegovina':'BA','cabo verde':'CV','republic of the congo':'CG','democratic republic of the congo':'CD','myanmar':'MM','saint kitts and nevis':'KN','saint lucia':'LC','saint vincent and the grenadines':'VC','sao tome and principe':'ST','trinidad and tobago':'TT','turkey':'TR'};
@@ -45,6 +64,7 @@ const matching=countryAliases[requestedCountry]||codes.find(code=>names.of(code)
 const preferred=window.FCLocale?.getCountry?.();
 countrySelect.value=matching|| (codes.includes(preferred)?preferred:'IN');
 setCountryDefaults();
+loadCountryGuidance();
 const currencyValid=()=>{try{formatter();return true;}catch(_){return false;}};
 const money=n=>formatter().format(n);
 function drawSchedule(data,principal){
