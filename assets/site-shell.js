@@ -1337,8 +1337,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     }
   });
-  // Regional controls sit directly after Language in the shared Header.
-  // Their original hidden country/locale selects retain the FCLocale event contract.
+  // Regional controls are staged in a hidden compatibility node for FCLocale.
+  // The visible currency, country/format and units controls are mounted in Settings.
   panel.append(panelHead);
   const currencyControl=document.querySelector('.fc-currency-control');
   const countryControl=document.querySelector('.fc-country-control');
