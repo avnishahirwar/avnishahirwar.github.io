@@ -74,7 +74,7 @@ test('shared footer retains Sitemap; regional preferences follow Language and Se
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
   assert.ok(headerMarkup.includes("+'<span class=\"fc-header-language-slot\">'+languageControl+'</span></nav>"), 'Language selector must be inside the Header navigation after Login.');
-  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Legacy locale controls must remain staged for FCLocale.');
+  assert.ok(shell.includes("regionalControlsSource.innerHTML=formatControl") && shell.includes("if(!document.querySelector('.fc-country-control'))regionalMarkup.insertAdjacentHTML('beforeend',countryControl)") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Legacy country/date controls must remain staged for FCLocale without duplicating visible Header controls.');
   assert.ok(shell.includes("primaryNav.append(currencyControl,countryFormatLabel,unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Regional preference controls must follow Language in the Header and remain available in Settings.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
