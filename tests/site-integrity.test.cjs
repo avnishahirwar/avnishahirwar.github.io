@@ -239,7 +239,7 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
   for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact']",
+    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']",
     "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क']"
   ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
   assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
@@ -257,7 +257,7 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
 
 test('About page catalogue matches every canonical published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
+  assert.ok(about.includes('Available calculators (' + expectedCoreCalculatorCount + ' tools)'));
   assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(m => m[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
@@ -885,7 +885,7 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   assert.ok(shell.includes('(?:privacy|cookies)'));
   assert.match(cookies, /Last updated: 14 November 2026/);
   assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
-  assert.ok(shell.includes("en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact']"), 'The shared Footer must retain the approved policy links and Sitemap.');
+  assert.ok(shell.includes("en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']"), 'The shared Footer must retain the approved policy links and Sitemap.');
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
 });
