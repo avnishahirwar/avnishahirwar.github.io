@@ -1,6 +1,17 @@
 name: Cross-browser compatibility smoke tests
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/cross-browser.yml"
+      - "tests/cross-browser-smoke.cjs"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "assets/site-chrome.js"
+      - "assets/site-chrome.css"
+      - "index.html"
+      - "calculators/simple-interest-calculator.html"
   pull_request:
     paths:
       - ".github/workflows/cross-browser.yml"
