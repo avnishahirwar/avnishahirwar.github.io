@@ -97,7 +97,7 @@ test('UK Stamp Duty and National Insurance calculator translations have reciproc
    assert.match(html,new RegExp('<html lang="'+locale+'"'));
    assert.match(html,/rel="canonical"/);
    if(route==='uk-stamp-duty-calculator.html')assert.match(html,/calculateSDLT/);
-   else assert.match(html,/\\$\\(['"]earnings['"]\\)/);
+   else assert.match(html,/\$\(['"]earnings['"]\)/);
   }
  }
  const urStamp=fs.readFileSync(path.join(root,'ur/calculators/uk-stamp-duty-calculator.html'),'utf8');
@@ -124,11 +124,11 @@ test('UK VAT and Mortgage calculator translations have reciprocal hreflang, cano
    if(locale==='ur')assert.match(html,/<html lang="ur" dir="rtl">/);
    else assert.match(html,new RegExp('<html lang="'+locale+'" dir="ltr">'));
    if(route==='uk-vat-calculator.html'){
-    assert.match(html,/getElementById\(['"]amount['"]\)/);
+    assert.match(html,/\$\(['"]amount['"]\)/);
     assert.match(html,/gross|net|vat/i);
     assert.match(html,/0|5|20/);
    }else{
-    assert.match(html,/getElementById\(['"]price['"]\)/);
+    assert.match(html,/\$\(['"]price['"]\)/);
     assert.match(html,/monthly|principal|interest/i);
    }
   }
