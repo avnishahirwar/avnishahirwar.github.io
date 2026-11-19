@@ -69,14 +69,14 @@ const expression = [
   '(() => {',
   ' const header = document.querySelector("header.fc-global-header");',
   ' const footer = document.querySelector("footer.fc-global-footer");',
-  ' const dock = document.getElementById("fc-floating-tools");',
   ' const settings = document.getElementById("fc-display-settings");',
   ' const panel = document.getElementById("fc-display-panel");',
   ' const quick = panel && panel.querySelector("#fc-settings-quick-actions");',
   ' const install = quick && quick.querySelector("#fc-pwa-install");',
-  ' const assistant = quick && quick.querySelector("#fc-ai-lazy-launch");',
+  ' const assistant = document.getElementById("fc-ai-lazy-launch");',
+  ' const footerNav = footer && footer.querySelector(".fc-global-footer-links");',
   ' const allCalculators = header && header.querySelector(".fc-all-calculators-link");',
-  ' const dockStyle = dock ? getComputedStyle(dock) : null;',
+  ' const assistantStyle = assistant ? getComputedStyle(assistant) : null;',
   ' const shellCssLink = Array.from(document.querySelectorAll("link[rel=stylesheet]")).find(link => new URL(link.href, location.href).pathname === "/assets/site-shell.css");',
   ' const shellCssLoaded = !!(shellCssLink && shellCssLink.sheet);',
   ' const stylesheetHrefs = Array.from(document.styleSheets).map(sheet => sheet.href).filter(Boolean);',
@@ -85,13 +85,16 @@ const expression = [
   '  headerCount: document.querySelectorAll("header.fc-global-header").length,',
   '  footerCount: document.querySelectorAll("footer.fc-global-footer").length,',
   '  sitemapInFooter: !!footer && Array.from(footer.querySelectorAll("a")).some(a => { try { return new URL(a.href, location.href).pathname === "/sitemap.html"; } catch (_) { return false; } }),',
-  '  settingsInDock: !!dock && !!settings && settings.parentElement === dock,',
+  '  settingsInDock: !!document.getElementById("fc-floating-tools") && !!settings && settings.parentElement === document.getElementById("fc-floating-tools"),',
   '  settingsInFooter: !!settings && !!settings.closest("footer.fc-global-footer"),',
+  '  settingsLastInFooter: !!settings && !!footerNav && settings.parentElement === footerNav && footerNav.lastElementChild === settings,',
   '  installInQuickActions: !!quick && !!install && quick.contains(install),',
   '  assistantInQuickActions: !!quick && !!assistant && quick.contains(assistant),',
+  '  assistantOnPage: !!assistant && document.body.contains(assistant) && !(quick && quick.contains(assistant)),',
+  '  assistantPosition: assistantStyle && assistantStyle.position,',
   '  hasH1: !!document.querySelector("h1"),',
   '  allCalculatorsIsPlainLink: !!allCalculators && !allCalculators.hasAttribute("aria-haspopup") && !header.querySelector(".fc-all-dropdown-menu"),',
-  '  dockPosition: dockStyle && dockStyle.position, dockLeft: dockStyle && dockStyle.left, dockRight: dockStyle && dockStyle.right, shellCssLoaded, stylesheetHrefs',
+  '  shellCssLoaded, stylesheetHrefs',
   ' };',
   '})()'
 ].join('\n');
@@ -103,8 +106,8 @@ const inspectPage = async (name, path) => {
     result = await waitFor(async () => {
       const value = await evaluate(expression);
       if (value && value.readyState === 'complete' && value.headerCount === 1 && value.footerCount === 1 &&
-          value.settingsInDock && value.installInQuickActions && value.assistantInQuickActions &&
-          value.shellCssLoaded && value.dockPosition === 'fixed' && ['16px','12px'].includes(value.dockLeft)) return value;
+          value.settingsInFooter && value.settingsLastInFooter && value.installInQuickActions &&
+          value.assistantOnPage && value.assistantPosition === 'fixed' && value.shellCssLoaded) return value;
       return null;
     }, 'shared shell on ' + path, 20000);
   } catch (error) {
@@ -118,14 +121,15 @@ const inspectPage = async (name, path) => {
   assert.equal(result.headerCount, 1, name + ': exactly one shared Header');
   assert.equal(result.footerCount, 1, name + ': exactly one shared Footer');
   assert.equal(result.sitemapInFooter, true, name + ': Footer contains Sitemap');
-  assert.equal(result.settingsInDock, true, name + ': Settings trigger is in the floating dock');
-  assert.equal(result.settingsInFooter, false, name + ': Settings trigger is outside Footer');
+  assert.equal(result.settingsInDock, false, name + ': no obsolete floating Settings dock');
+  assert.equal(result.settingsInFooter, true, name + ': Settings trigger is in Footer');
+  assert.equal(result.settingsLastInFooter, true, name + ': Settings is the final Footer navigation item');
   assert.equal(result.installInQuickActions, true, name + ': Install action is inside Settings');
-  assert.equal(result.assistantInQuickActions, true, name + ': Assistant action is inside Settings');
+  assert.equal(result.assistantInQuickActions, false, name + ': Assistant remains outside Settings');
+  assert.equal(result.assistantOnPage, true, name + ': Open Assistant remains on the page');
+  assert.equal(result.assistantPosition, 'fixed', name + ': Open Assistant remains a persistent floating action');
   assert.equal(result.hasH1, true, name + ': page H1 remains visible');
   assert.equal(result.allCalculatorsIsPlainLink, true, name + ': All Calculators is a plain link');
-  assert.equal(result.dockPosition, 'fixed', name + ': dock is fixed-position');
-  assert.ok(['16px','12px'].includes(result.dockLeft), name + ': dock is anchored at the left edge');
   process.stdout.write('PASS ' + name + ' ' + JSON.stringify(result) + '\n');
 };
 
