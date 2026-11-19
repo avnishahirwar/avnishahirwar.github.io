@@ -1422,8 +1422,6 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
   if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  // Place all regional controls directly after the Language selector.
-  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1454,6 +1452,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     target.appendChild(mirror);
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
+  // Place all regional controls directly after the Language selector.
+  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
   mirrorSiteControl(headerLanguageControl,siteSettingsControls);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
