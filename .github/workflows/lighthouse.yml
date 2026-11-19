@@ -96,24 +96,29 @@ jobs:
         if: github.event_name == 'push'
         run: node scripts/check-site-shell-runtime.cjs
 
-      - name: Wait for the pull-request Cloudflare preview and select audit base URL
+      - name: Select an available pull-request preview for Lighthouse
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
-          base_url="https://${slug}.friendly-calculator.pages.dev"
-          for attempt in {1..30}; do
-            html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
-            if grep -q 'fc-calculator-reserved' <<<"$html"; then
-              echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
-              echo "Auditing pull-request preview: $base_url"
-              exit 0
-            fi
-            echo "Waiting for Cloudflare preview (attempt ${attempt}/30): $base_url"
-            sleep 10
+          cloudflare_url="https://${slug}.friendly-calculator.pages.dev"
+          netlify_url="https://deploy-preview-${{ github.event.pull_request.number }}--avnishahirwar.netlify.app"
+          for base_url in "$cloudflare_url" "$netlify_url"; do
+            echo "Checking preview: $base_url"
+            for attempt in {1..6}; do
+              homepage="$(curl -fsSL "$base_url/" || true)"
+              calculator="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
+              if grep -q 'fc-country-format-control' <<<"$homepage" && grep -q 'Income Tax' <<<"$calculator"; then
+                echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
+                echo "Auditing pull-request preview: $base_url"
+                exit 0
+              fi
+              echo "Waiting for preview (attempt ${attempt}/6): $base_url"
+              sleep 10
+            done
           done
-          echo "::error::Pull-request preview did not publish the reserved calculator section."
+          echo "::error::No pull-request preview exposed the expected Header and Income Tax page."
           exit 1
 
       - name: Run Lighthouse across representative site-wide page types and languages
