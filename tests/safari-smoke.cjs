@@ -12,7 +12,9 @@ const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
     await driver.wait(until.elementLocated(By.css('header.fc-global-header')), 20000);
     await driver.wait(until.elementLocated(By.css('footer.fc-global-footer')), 20000);
     const settings = await driver.findElement(By.css('#fc-display-settings'));
+    await driver.wait(async () => settings.isDisplayed() && settings.isEnabled(), 10000);
     if ((await settings.getText()).trim() !== 'Settings') throw new Error('Safari: Settings label mismatch');
+    await driver.executeScript('arguments[0].scrollIntoView({ block: "center" });', settings);
     await settings.click();
     await driver.wait(async () => {
       const panel = await driver.findElement(By.css('#fc-display-panel'));
