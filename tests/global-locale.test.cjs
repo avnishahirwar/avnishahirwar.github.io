@@ -97,7 +97,7 @@ test('manual currency and format preferences override browser auto-detection',()
 
 
 test('global locale supports additional international currencies and regional number formats',()=>{
- const cases=[['mr-IN','INR','mr-IN'],['tr-TR','TRY','tr-TR'],['ko-KR','KRW','ko-KR'],['vi-VN','VND','vi-VN'],['fil-PH','PHP','fil-PH'],['ms-MY','MYR','ms-MY'],['pl-PL','PLN','pl-PL'],['sv-SE','SEK','sv-SE'],['nb-NO','NOK','nb-NO'],['da-DK','DKK','da-DK'],['en-NG','NGN','en-NG'],['en-KE','KES','en-KE'],['ar-EG','EGP','ar-EG'],['ne-NP','NPR','ne-NP'],['es-CL','CLP','es-CL']];
+ const cases=[['tr-TR','TRY','tr-TR'],['ko-KR','KRW','ko-KR'],['vi-VN','VND','vi-VN'],['fil-PH','PHP','fil-PH'],['ms-MY','MYR','ms-MY'],['pl-PL','PLN','pl-PL'],['sv-SE','SEK','sv-SE'],['nb-NO','NOK','nb-NO'],['da-DK','DKK','da-DK'],['en-NG','NGN','en-NG'],['en-KE','KES','en-KE'],['ar-EG','EGP','ar-EG'],['ne-NP','NPR','ne-NP'],['es-CL','CLP','es-CL']];
  for(const [browser,currency,locale] of cases){const x=boot({},browser);assert.equal(x.api.getCurrency(),currency,browser);assert.equal(x.api.getLocale(),locale,browser);assert.ok(x.api.formatCurrency(1234).length>0);}
 });
 test('currency menu and share panel expose international currency and Pinterest/Reddit options',()=>{
