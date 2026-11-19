@@ -710,3 +710,86 @@ html[data-fc-theme="dark"] .fc-settings-site-controls select{background:#0e1b2b;
 .fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
 
 .fc-daily-counter{width:min(1440px,96%);margin:8px auto 0;padding:9px 0 2px;border-top:1px solid #354960;color:#b9c8d5;font-size:.78rem;text-align:center}
+
+
+/* Unified sizing for every regional dropdown: consistent control height,
+   full-width fields in Settings, and predictable mobile navigation rows. */
+.fc-top-row>.fc-language-control select,
+.fc-global-links>.fc-currency-control select,
+.fc-global-links>.fc-country-format-control select,
+.fc-global-links>.fc-unit-control select{
+  box-sizing:border-box!important;
+  width:180px!important;
+  min-width:180px!important;
+  max-width:180px!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:9px 34px 9px 12px!important;
+  border:1px solid #cbd5df!important;
+  border-radius:9px!important;
+  font:600 14px/1.3 system-ui,sans-serif!important;
+}
+body>.fc-display-panel .fc-display-setting-row>label,
+body>.fc-display-panel .fc-country-format-control,
+body>.fc-display-panel .fc-display-units-row>.fc-unit-control{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:6px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+body>.fc-display-panel .fc-display-setting-row select,
+body>.fc-display-panel .fc-country-format-control>select,
+body>.fc-display-panel .fc-display-units-row>.fc-unit-control>select{
+  box-sizing:border-box!important;
+  display:block!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:50px!important;
+  min-height:50px!important;
+  padding:10px 12px!important;
+  border:1px solid #cbd5df!important;
+  border-radius:9px!important;
+  font:600 15px/1.3 system-ui,sans-serif!important;
+}
+body>.fc-display-panel .fc-country-format-control>span,
+body>.fc-display-panel .fc-display-units-row>.fc-unit-control>.fc-language-label{
+  white-space:normal!important;
+  width:100%!important;
+}
+@media(max-width:760px){
+  .fc-top-row>.fc-language-control,
+  .fc-global-links>.fc-currency-control,
+  .fc-global-links>.fc-country-format-control,
+  .fc-global-links>.fc-unit-control{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    gap:6px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:8px 4px!important;
+  }
+  .fc-top-row>.fc-language-control select,
+  .fc-global-links>.fc-currency-control select,
+  .fc-global-links>.fc-country-format-control select,
+  .fc-global-links>.fc-unit-control select{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:48px!important;
+    min-height:48px!important;
+  }
+  body>.fc-display-panel .fc-display-setting-row select,
+  body>.fc-display-panel .fc-country-format-control>select,
+  body>.fc-display-panel .fc-display-units-row>.fc-unit-control>select{
+    height:50px!important;
+    min-height:50px!important;
+  }
+}
