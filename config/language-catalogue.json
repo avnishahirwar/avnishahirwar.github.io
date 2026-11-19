@@ -1,0 +1,357 @@
+{
+  "version": 1,
+  "total": 50,
+  "defaultLocale": "en",
+  "locales": [
+    {
+      "code": "en",
+      "name": "English",
+      "nativeName": "English",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "zh",
+      "name": "Chinese (Mandarin)",
+      "nativeName": "中文（普通话）",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "nativeName": "हिन्दी",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "nativeName": "Español",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "ar",
+      "name": "Arabic",
+      "nativeName": "العربية",
+      "direction": "rtl",
+      "status": "available"
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "nativeName": "Français",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "bn",
+      "name": "Bengali",
+      "nativeName": "বাংলা",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "pt",
+      "name": "Portuguese",
+      "nativeName": "Português",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "nativeName": "Bahasa Indonesia",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "ur",
+      "name": "Urdu",
+      "nativeName": "اردو",
+      "direction": "rtl",
+      "status": "planned"
+    },
+    {
+      "code": "ru",
+      "name": "Russian",
+      "nativeName": "Русский",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "nativeName": "Deutsch",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "nativeName": "日本語",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "pcm",
+      "name": "Nigerian Pidgin",
+      "nativeName": "Naijá",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "arz",
+      "name": "Egyptian Arabic",
+      "nativeName": "مصري",
+      "direction": "rtl",
+      "status": "planned"
+    },
+    {
+      "code": "mr",
+      "name": "Marathi",
+      "nativeName": "मराठी",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "vi",
+      "name": "Vietnamese",
+      "nativeName": "Tiếng Việt",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "te",
+      "name": "Telugu",
+      "nativeName": "తెలుగు",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "sw",
+      "name": "Swahili",
+      "nativeName": "Kiswahili",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ha",
+      "name": "Hausa",
+      "nativeName": "Harshen Hausa",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "tr",
+      "name": "Turkish",
+      "nativeName": "Türkçe",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "pa",
+      "name": "Punjabi",
+      "nativeName": "ਪੰਜਾਬੀ",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "fil",
+      "name": "Filipino",
+      "nativeName": "Filipino",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ta",
+      "name": "Tamil",
+      "nativeName": "தமிழ்",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "yue",
+      "name": "Cantonese",
+      "nativeName": "粵語",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "wuu",
+      "name": "Wu Chinese",
+      "nativeName": "吴语",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "fa",
+      "name": "Persian",
+      "nativeName": "فارسی",
+      "direction": "rtl",
+      "status": "planned"
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "nativeName": "한국어",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "am",
+      "name": "Amharic",
+      "nativeName": "አማርኛ",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "nativeName": "ไทย",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "jv",
+      "name": "Javanese",
+      "nativeName": "Basa Jawa",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "it",
+      "name": "Italian",
+      "nativeName": "Italiano",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "gu",
+      "name": "Gujarati",
+      "nativeName": "ગુજરાતી",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "kn",
+      "name": "Kannada",
+      "nativeName": "ಕನ್ನಡ",
+      "direction": "ltr",
+      "status": "available"
+    },
+    {
+      "code": "yo",
+      "name": "Yoruba",
+      "nativeName": "Yorùbá",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "bho",
+      "name": "Bhojpuri",
+      "nativeName": "भोजपुरी",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "nl",
+      "name": "Dutch",
+      "nativeName": "Nederlands",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "nativeName": "Polski",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ml",
+      "name": "Malayalam",
+      "nativeName": "മലയാളം",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "or",
+      "name": "Odia",
+      "nativeName": "ଓଡ଼ିଆ",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ne",
+      "name": "Nepali",
+      "nativeName": "नेपाली",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "si",
+      "name": "Sinhala",
+      "nativeName": "සිංහල",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "uk",
+      "name": "Ukrainian",
+      "nativeName": "Українська",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "uz",
+      "name": "Uzbek",
+      "nativeName": "Oʻzbekcha",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ps",
+      "name": "Pashto",
+      "nativeName": "پښتو",
+      "direction": "rtl",
+      "status": "planned"
+    },
+    {
+      "code": "so",
+      "name": "Somali",
+      "nativeName": "Soomaali",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "he",
+      "name": "Hebrew",
+      "nativeName": "עברית",
+      "direction": "rtl",
+      "status": "planned"
+    },
+    {
+      "code": "my",
+      "name": "Burmese",
+      "nativeName": "မြန်မာ",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "ro",
+      "name": "Romanian",
+      "nativeName": "Română",
+      "direction": "ltr",
+      "status": "planned"
+    },
+    {
+      "code": "sd",
+      "name": "Sindhi",
+      "nativeName": "سنڌي",
+      "direction": "rtl",
+      "status": "planned"
+    }
+  ]
+}

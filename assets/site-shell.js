@@ -282,16 +282,16 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p);
+const routeLocaleMatch=/^\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\//.exec(p);
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
 document.documentElement.lang=routeLocale;
-document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\/)?calculators\//.test(p);
+document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';
+const isCalculatorRoute=/^\/(?:(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
 const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
-const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn'];
+const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','zh','ur','tr','it','ko'];
 if(localeCodes.includes(locale)){
   const categoryMap={
     '/calculator/finance-calculators.html':'finance',
@@ -399,8 +399,8 @@ const supportedUiLocales={en:1,de:1,hi:1,es:1,fr:1,pt:1,ar:1,id:1,bn:1,ta:1,ja:1
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
-const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
-const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html'};
+const currentLocale=p.startsWith('/hi/')?'hi':(/^\/(de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
+const localeHome={en:'/',de:'/de/index.html',hi:'/hi/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',gu:'/gu/index.html',kn:'/kn/index.html',zh:'/zh/index.html',ur:'/ur/index.html',tr:'/tr/index.html',it:'/it/index.html',ko:'/ko/index.html'};
 // A saved visitor choice wins; otherwise use the browser's supported language.
 // Only the root entry point auto-selects a language; explicit page routes remain authoritative.
 if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash);
@@ -423,6 +423,13 @@ vi:{home:'Trang chủ',login:'Đăng nhập',all:'Tất cả máy tính (tiếng
 te:{home:'ప్రధాన పేజీ',login:'లాగిన్',all:'అన్ని కాలిక్యులేటర్లు (ఆంగ్లం)',search:'కాలిక్యులేటర్‌ను వెతకండి',finance:'ఆర్థికం',tax:'పన్నులు (ఆంగ్లం)',business:'వ్యాపార సాధనాలు (ఆంగ్లం)',global:'గ్లోబల్ కాలిక్యులేటర్లు (ఆంగ్లం)',everyday:'దైనందిన (ఆంగ్లం)',blog:'బ్లాగులు (ఆంగ్లం)',embed:'పొందుపరచు',forBusiness:'వ్యాపారాల కోసం',api:'API',plans:'ప్లాన్‌లు',about:'మా గురించి (ఆంగ్లం)',contact:'సంప్రదించండి (ఆంగ్లం)',admin:'నిర్వాహకుడు',language:'భాష',choose:'వెబ్‌సైట్ భాషను ఎంచుకోండి',change:'భాషను మార్చండి',footer:['ప్రధాన పేజీ','ఆర్థికం (ఆంగ్లం)','పన్నులు (ఆంగ్లం)','వ్యాపార సాధనాలు (ఆంగ్లం)','దైనందిన (ఆంగ్లం)','వ్యాపారాల కోసం','API','ప్లాన్‌లు (ఆంగ్లం)','ప్రీమియం వెయిట్‌లిస్ట్ (ఆంగ్లం)','మా గురించి (ఆంగ్లం)','పద్ధతి (ఆంగ్లం)','గోప్యత (ఆంగ్లం)','నిబంధనలు (ఆంగ్లం)','నిరాకరణ (ఆంగ్లం)','సంప్రదించండి (ఆంగ్లం)']},
 gu:{home:'હોમ',login:'લૉગ ઇન',all:'બધા કેલ્ક્યુલેટર (અંગ્રેજી)',search:'કેલ્ક્યુલેટર શોધો',finance:'નાણાં',tax:'કર (અંગ્રેજી)',business:'વ્યવસાય સાધનો (અંગ્રેજી)',global:'વૈશ્વિક કેલ્ક્યુલેટર (અંગ્રેજી)',everyday:'રોજિંદા ઉપયોગ (અંગ્રેજી)',blog:'બ્લોગ (અંગ્રેજી)',embed:'એમ્બેડ',forBusiness:'વ્યવસાય માટે',api:'API',plans:'યોજનાઓ',about:'અમારા વિશે (અંગ્રેજી)',contact:'સંપર્ક (અંગ્રેજી)',admin:'એડમિન',language:'ભાષા',choose:'વેબસાઇટની ભાષા પસંદ કરો',change:'ભાષા બદલો',footer:['હોમ','નાણાં (અંગ્રેજી)','કર (અંગ્રેજી)','વ્યવસાય (અંગ્રેજી)','રોજિંદા ઉપયોગ (અંગ્રેજી)','વ્યવસાય માટે','API','યોજનાઓ (અંગ્રેજી)','પ્રીમિયમ વેઇટલિસ્ટ (અંગ્રેજી)','અમારા વિશે (અંગ્રેજી)','પદ્ધતિ (અંગ્રેજી)','ગોપનીયતા (અંગ્રેજી)','શરતો (અંગ્રેજી)','અસ્વીકરણ (અંગ્રેજી)','સંપર્ક (અંગ્રેજી)']},
 kn:{home:'ಮುಖಪುಟ',login:'ಲಾಗಿನ್',all:'ಎಲ್ಲಾ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗಳು (ಇಂಗ್ಲಿಷ್)',search:'ಕ್ಯಾಲ್ಕುಲೇಟರ್ ಹುಡುಕಿ',finance:'ಹಣಕಾಸು',tax:'ತೆರಿಗೆ (ಇಂಗ್ಲಿಷ್)',business:'ವ್ಯವಹಾರ ಸಾಧನಗಳು (ಇಂಗ್ಲಿಷ್)',global:'ಜಾಗತಿಕ ಕ್ಯಾಲ್ಕುಲೇಟರ್‌ಗಳು (ಇಂಗ್ಲಿಷ್)',everyday:'ದೈನಂದಿನ ಬಳಕೆ (ಇಂಗ್ಲಿಷ್)',blog:'ಬ್ಲಾಗ್ (ಇಂಗ್ಲಿಷ್)',embed:'ಎಂಬೆಡ್',forBusiness:'ವ್ಯವಹಾರಗಳಿಗಾಗಿ',api:'API',plans:'ಯೋಜನೆಗಳು',about:'ನಮ್ಮ ಬಗ್ಗೆ (ಇಂಗ್ಲಿಷ್)',contact:'ಸಂಪರ್ಕ (ಇಂಗ್ಲಿಷ್)',admin:'ನಿರ್ವಾಹಕ',language:'ಭಾಷೆ',choose:'ವೆಬ್‌ಸೈಟ್ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',change:'ಭಾಷೆ ಬದಲಿಸಿ',footer:['ಮುಖಪುಟ','ಹಣಕಾಸು (ಇಂಗ್ಲಿಷ್)','ತೆರಿಗೆ (ಇಂಗ್ಲಿಷ್)','ವ್ಯವಹಾರ (ಇಂಗ್ಲಿಷ್)','ದೈನಂದಿನ ಬಳಕೆ (ಇಂಗ್ಲಿಷ್)','ವ್ಯವಹಾರಗಳಿಗಾಗಿ','API','ಯೋಜನೆಗಳು (ಇಂಗ್ಲಿಷ್)','ಪ್ರೀಮಿಯಂ ಕಾಯುವ ಪಟ್ಟಿ (ಇಂಗ್ಲಿಷ್)','ನಮ್ಮ ಬಗ್ಗೆ (ಇಂಗ್ಲಿಷ್)','ವಿಧಾನ (ಇಂಗ್ಲಿಷ್)','ಗೌಪ್ಯತೆ (ಇಂಗ್ಲಿಷ್)','ನಿಯಮಗಳು (ಇಂಗ್ಲಿಷ್)','ಹಕ್ಕುತ್ಯಾಗ (ಇಂಗ್ಲಿಷ್)','ಸಂಪರ್ಕ (ಇಂಗ್ಲಿಷ್)']},
+
+zh:{home:'首页',login:'登录',all:'所有计算器',search:'搜索计算器',finance:'金融',tax:'税务',business:'商业工具',global:'全球计算器',everyday:'日常工具',blog:'博客',embed:'嵌入',forBusiness:'企业服务',api:'API',plans:'套餐',about:'关于我们',contact:'联系我们',admin:'管理',language:'语言',choose:'选择网站语言',change:'更改语言',footer:['首页','金融','税务','商业工具','日常工具','企业服务','API','套餐','高级版候补名单','关于我们','计算方法','隐私政策','使用条款','免责声明','联系我们']},
+ur:{home:'صفحۂ اول',login:'لاگ اِن',all:'تمام کیلکولیٹرز',search:'کیلکولیٹر تلاش کریں',finance:'مالیات',tax:'ٹیکس',business:'کاروباری ٹولز',global:'عالمی کیلکولیٹرز',everyday:'روزمرہ',blog:'بلاگ',embed:'ایمبیڈ',forBusiness:'کاروبار کے لیے',api:'API',plans:'منصوبے',about:'ہمارے بارے میں',contact:'رابطہ',admin:'منتظم',language:'زبان',choose:'ویب سائٹ کی زبان منتخب کریں',change:'زبان تبدیل کریں',footer:['صفحۂ اول','مالیات','ٹیکس','کاروباری ٹولز','روزمرہ','کاروبار کے لیے','API','منصوبے','پریمیم انتظار فہرست','ہمارے بارے میں','طریقۂ کار','رازداری','شرائط','دستبرداری','رابطہ']},
+tr:{home:'Ana Sayfa',login:'Giriş Yap',all:'Tüm Hesaplayıcılar',search:'Hesaplayıcı Ara',finance:'Finans',tax:'Vergi',business:'İş Araçları',global:'Küresel Hesaplayıcılar',everyday:'Günlük',blog:'Blog',embed:'Yerleştir',forBusiness:'İşletmeler İçin',api:'API',plans:'Planlar',about:'Hakkımızda',contact:'İletişim',admin:'Yönetici',language:'Dil',choose:'Web sitesi dilini seçin',change:'Dili değiştir',footer:['Ana Sayfa','Finans','Vergi','İş Araçları','Günlük','İşletmeler İçin','API','Planlar','Premium Bekleme Listesi','Hakkımızda','Yöntem','Gizlilik','Koşullar','Sorumluluk Reddi','İletişim']},
+it:{home:'Home',login:'Accedi',all:'Tutti i calcolatori',search:'Cerca un calcolatore',finance:'Finanza',tax:'Tasse',business:'Strumenti aziendali',global:'Calcolatori globali',everyday:'Quotidiano',blog:'Blog',embed:'Incorpora',forBusiness:'Per le aziende',api:'API',plans:'Piani',about:'Chi siamo',contact:'Contatti',admin:'Amministrazione',language:'Lingua',choose:'Scegli la lingua del sito',change:'Cambia lingua',footer:['Home','Finanza','Tasse','Strumenti aziendali','Quotidiano','Per le aziende','API','Piani','Lista d’attesa Premium','Chi siamo','Metodo','Privacy','Termini','Esclusione di responsabilità','Contatti']},
+ko:{home:'홈',login:'로그인',all:'전체 계산기',search:'계산기 검색',finance:'금융',tax:'세금',business:'비즈니스 도구',global:'글로벌 계산기',everyday:'일상',blog:'블로그',embed:'퍼가기',forBusiness:'기업용',api:'API',plans:'요금제',about:'소개',contact:'문의',admin:'관리자',language:'언어',choose:'웹사이트 언어 선택',change:'언어 변경',footer:['홈','금융','세금','비즈니스 도구','일상','기업용','API','요금제','프리미엄 대기 목록','소개','산정 방법','개인정보 처리방침','이용약관','면책 조항','문의']}
+
 };
 const nav=chrome[currentLocale]||chrome.en;
 const links=[
@@ -483,8 +490,8 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
 }
 // Language and Display currency follow Login in the shared Header; Country & format and Units remain in Settings.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
-  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू'};
-  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'मेनू बंद करा'};
+  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴'};
+  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기'};
   const toggle=document.createElement('button');
   toggle.type='button';
   toggle.className='fc-nav-toggle';
@@ -543,12 +550,17 @@ const footerLabels={
   ru:['О проекте (англ.)','Методология (англ.)','Конфиденциальность (англ.)','Условия (англ.)','Отказ от ответственности (англ.)','Право и соответствие (англ.)','Встроить','Контакты (англ.)','Карта сайта (англ.)','Реклама'],
   vi:['Giới thiệu (tiếng Anh)','Phương pháp (tiếng Anh)','Quyền riêng tư (tiếng Anh)','Điều khoản (tiếng Anh)','Tuyên bố miễn trừ (tiếng Anh)','Pháp lý & tuân thủ (tiếng Anh)','Nhúng','Sơ đồ trang (tiếng Anh)','Liên hệ (tiếng Anh)','Quảng cáo'],
   te:['మా గురించి (ఆంగ్లం)','పద్ధతి (ఆంగ్లం)','గోప్యత (ఆంగ్లం)','నిబంధనలు (ఆంగ్లం)','నిరాకరణ (ఆంగ్లం)','చట్టపరమైన సమాచారం (ఆంగ్లం)','పొందుపరచు','సైట్‌మ్యాప్ (ఆంగ్లం)','సంప్రదించండి (ఆంగ్లం)','ప్రకటనలు'],
+  zh:['关于我们','计算方法','隐私政策','使用条款','免责声明','法律与合规','嵌入','网站地图','联系我们','广告'],
+  ur:['ہمارے بارے میں','طریقۂ کار','رازداری','شرائط','دستبرداری','قانونی اور تعمیل','ایمبیڈ','سائٹ میپ','رابطہ','اشتہارات'],
+  tr:['Hakkımızda','Yöntem','Gizlilik','Koşullar','Sorumluluk Reddi','Hukuk ve Uyumluluk','Yerleştir','Site Haritası','İletişim','Reklam'],
+  it:['Chi siamo','Metodo','Privacy','Termini','Esclusione di responsabilità','Note legali e conformità','Incorpora','Mappa del sito','Contatti','Pubblicità'],
+  ko:['소개','산정 방법','개인정보 처리방침','이용약관','면책 조항','법률 및 규정 준수','퍼가기','사이트맵','문의','광고'],
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
 if(footerLinks.length!==footerPaths.length)throw new Error('Footer labels and destinations must stay aligned.');
 const f=document.createElement('footer');f.className='fc-global-footer';
-f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.',mr:'दैनंदिन गणनांसाठी उपयुक्त साधने.',vi:'Công cụ hữu ích cho các phép tính hằng ngày.',te:'రోజువారీ లెక్కల కోసం ఉపయోగకరమైన సాధనాలు.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M5.2 3.5a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM3.4 9h3.6v11.5H3.4zM9.1 9h3.4v1.6h.1a3.7 3.7 0 0 1 3.3-1.8c3.5 0 4.2 2.3 4.2 5.2v6.5h-3.6v-5.8c0-1.4 0-3.2-2-3.2s-2.2 1.5-2.2 3.1v5.9H9.1z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>`
+f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.',mr:'दैनंदिन गणनांसाठी उपयुक्त साधने.',vi:'Công cụ hữu ích cho các phép tính hằng ngày.',te:'రోజువారీ లెక్కల కోసం ఉపయోగకరమైన సాధనాలు.',zh:'日常计算的实用工具。',ur:'روزمرہ حساب کے لیے مفید ٹولز۔',tr:'Günlük hesaplamalar için pratik araçlar.',it:'Strumenti pratici per i calcoli quotidiani.',ko:'일상 계산을 위한 실용적인 도구.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M5.2 3.5a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM3.4 9h3.6v11.5H3.4zM9.1 9h3.4v1.6h.1a3.7 3.7 0 0 1 3.3-1.8c3.5 0 4.2 2.3 4.2 5.2v6.5h-3.6v-5.8c0-1.4 0-3.2-2-3.2s-2.2 1.5-2.2 3.1v5.9H9.1z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>`
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
 const isFooterDirectoryLink=link=>{
@@ -673,6 +685,26 @@ if(languageSelect){
     }).catch(fallbackToEnglishPage);
   });
 }
+// Keep the visible selector synchronized with the canonical 50-language catalogue.
+fetch('/config/language-catalogue.json',{cache:'force-cache',credentials:'same-origin'})
+  .then(response=>response.ok?response.json():null)
+  .then(catalogue=>{
+    if(!catalogue||!Array.isArray(catalogue.locales))return;
+    const select=document.getElementById('fc-language-select');
+    if(!select)return;
+    const fragment=document.createDocumentFragment();
+    catalogue.locales.forEach(locale=>{
+      if(!locale||typeof locale.code!=='string'||typeof locale.nativeName!=='string')return;
+      const option=document.createElement('option');
+      option.value=locale.code;
+      option.textContent=locale.nativeName+(locale.status==='available'?'':' — Coming soon');
+      option.disabled=locale.status!=='available';
+      fragment.appendChild(option);
+    });
+    if(fragment.childNodes.length!==catalogue.total)return;
+    select.replaceChildren(fragment);
+    select.value=currentLocale;
+  }).catch(()=>{});
 try{
   const notice=sessionStorage.getItem('fc-language-notice');
   if(notice){sessionStorage.removeItem('fc-language-notice');const n=document.createElement('p');n.className='fc-language-notice';n.setAttribute('role','status');n.textContent=notice;const target=document.querySelector('main')||document.body;target.prepend(n);}

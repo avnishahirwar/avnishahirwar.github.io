@@ -78,7 +78,7 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn']"));
+  assert.ok(shell.includes("const localeCodes=['hi','es','fr','pt','ar','id','bn','ta','ja','ru','vi','te','gu','kn','zh','ur','tr','it','ko']"));
 });
 
 
@@ -113,8 +113,8 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)\\//.exec(p);"));
-  assert.ok(shell.includes("document.documentElement.dir=routeLocale==='ar'?'rtl':'ltr';"));
+  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\\//.exec(p);"));
+  assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
 });
 
 
@@ -195,4 +195,131 @@ test('all localized basic calculator pages include reciprocal Gujarati and Kanna
 test('localized basic calculator hreflang alternates are reciprocal for Gujarati and Kannada',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
+});
+
+
+test('language selector is synchronized with the canonical 50-language catalogue', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const objectBody = key => {
+    const start = shell.indexOf(key);
+    assert.notEqual(start, -1, 'Missing ' + key);
+    const bodyStart = start + key.length;
+    const end = shell.indexOf('};', bodyStart);
+    assert.notEqual(end, -1, 'Unclosed ' + key);
+    return shell.slice(bodyStart, end);
+  };
+  const names = [...objectBody('const localeNames={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  const enabled = [...objectBody('const supportedUiLocales={').matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
+  const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
+  assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
+  assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
+  assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
+  assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
+  assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
+  assert.ok(shell.includes('option.textContent=locale.nativeName'));
+  const directory = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
+  assert.equal((directory.match(/class="status-live"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'available').length);
+  assert.equal((directory.match(/class="status-soon"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'planned').length);
+  for (const locale of catalogue.locales) assert.ok(directory.includes(locale.nativeName), 'Language directory is missing ' + locale.code);
+});
+
+
+test('first translation batch has complete shared navigation and footer dictionaries but remains unpublished until routes are ready', () => {
+  const match = shell.match(/const chrome=\{([\s\S]*?)\n\};\nconst nav=/);
+  assert.ok(match, 'Expected shared chrome dictionaries');
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    const entry = match[1].match(new RegExp('(?:^|\\n)' + locale + ':\\{([^}]+)\\}'));
+    assert.ok(entry, 'Missing shared navigation translation for ' + locale);
+    for (const key of ['home','login','all','search','finance','tax','business','global','everyday','blog','embed','forBusiness','api','plans','about','contact','admin','language','choose','change','footer']) {
+      assert.ok(entry[1].includes(key + ':'), 'Missing ' + key + ' for ' + locale);
+    }
+    assert.equal((entry[1].match(/,/g) || []).length > 15, true);
+    assert.match(entry[1], /footer:\[/);
+  }
+  const catalogue = require('../config/language-catalogue.json');
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned',
+      locale + ' must remain disabled until its localized routes are published and reviewed');
+  }
+});
+
+
+test('five staged language editions have localized homepages and working basic calculators without premature indexing', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const expected = {
+    zh: ['让计算更简单、更清晰。', '基础计算器', '计算方法'],
+    ur: ['حساب کو آسان اور واضح بنائیں۔', 'بنیادی کیلکولیٹر', 'حساب کیسے کام کرتا ہے'],
+    tr: ['Hesaplamayı daha anlaşılır hâle getirin.', 'Temel hesap makinesi', 'Nasıl çalışır?'],
+    it: ['Rendi i calcoli più semplici e chiari.', 'Calcolatore di base', 'Come funziona'],
+    ko: ['계산을 더 쉽고 명확하게.', '기본 계산기', '계산 방식']
+  };
+  for (const [locale, phrases] of Object.entries(expected)) {
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned');
+    const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'basic-calculator.html'), 'utf8');
+    assert.match(home, new RegExp('<html lang="' + locale + '"'));
+    assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
+    assert.match(home, /name="robots" content="noindex,follow"/);
+    assert.match(calculator, /name="robots" content="noindex,follow"/);
+    assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
+    assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
+    for (const phrase of phrases) {
+      assert.ok(home.includes(phrase) || calculator.includes(phrase), 'Missing localized phrase for ' + locale + ': ' + phrase);
+    }
+    assert.match(calculator, /data-action="equals"/);
+    assert.match(calculator, /site-shell\.js/);
+    if (locale === 'ur') {
+      assert.match(home, /dir="rtl"/);
+      assert.match(calculator, /dir="rtl"/);
+    }
+  }
+  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
+  assert.match(shell, /ur\|fa\|ps\|he\|sd/);
+  const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    assert.ok(footerBlock.includes(locale + ':['), 'Missing footer labels for ' + locale);
+    assert.match(shell, new RegExp(locale + ":'" + (locale === 'zh' ? '菜单' : locale === 'ur' ? 'مینو' : locale === 'tr' ? 'Menü' : locale === 'it' ? 'Menu' : '메뉴') + "'"));
+    const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    for (const anchor of ['business','finance','tax','everyday']) assert.ok(home.includes('id="' + anchor + '"'), locale + ' homepage missing ' + anchor + ' navigation target');
+  }
+});
+
+
+test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are localized and functional', () => {
+  const phrases = {
+    zh: ['在线单位换算器', '换算单位', '长度', '温度'],
+    ur: ['آن لائن اکائیوں کا کنورٹر', 'اکائیاں تبدیل کریں', 'لمبائی', 'درجہ حرارت'],
+    tr: ['Çevrimiçi Birim Dönüştürücü', 'Birimleri dönüştür', 'Uzunluk', 'Sıcaklık'],
+    it: ['Convertitore di unità online', 'Converti unità', 'Lunghezza', 'Temperatura'],
+    ko: ['온라인 단위 변환기', '단위 변환', '길이', '온도']
+  };
+  for (const [locale, expected] of Object.entries(phrases)) {
+    const file = path.join(__dirname, '..', locale, 'calculators', 'unit-converter.html');
+    assert.ok(fs.existsSync(file), 'Missing ' + locale + ' Unit Converter');
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, new RegExp('<html lang="' + locale + '"'));
+    assert.match(html, /name="robots" content="noindex,follow"/);
+    assert.ok(html.includes('https://friendlycalculator.in/' + locale + '/calculators/unit-converter.html'));
+    assert.match(html, /@type":"WebApplication"/);
+    assert.match(html, /id="category"/);
+    assert.match(html, /id="amount"/);
+    assert.match(html, /id="from"/);
+    assert.match(html, /id="to"/);
+    assert.match(html, /id="convert"/);
+    assert.match(html, /id="swap"/);
+    assert.match(html, /id="result"/);
+    assert.match(html, /site-shell\.js/);
+    for (const phrase of expected) assert.ok(html.includes(phrase), 'Missing localized Unit Converter phrase for ' + locale + ': ' + phrase);
+    assert.ok(!html.includes('${JSON.stringify'), 'Unresolved template marker in ' + locale);
+    if (locale === 'ur') assert.match(html, /dir="rtl"/);
+  }
+});
+
+
+test('Each staged locale homepage links to its localized Unit Converter', () => {
+  for (const locale of ['zh','ur','tr','it','ko']) {
+    const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
+    assert.ok(home.includes('/' + locale + '/calculators/unit-converter.html'), locale + ' homepage must expose its Unit Converter');
+  }
 });

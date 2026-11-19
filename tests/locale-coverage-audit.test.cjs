@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { auditLocaleCoverage, renderMarkdown } = require('../scripts/audit-locale-coverage.cjs');
+const languageCatalogue = require('../config/language-catalogue.json');
 
 function write(root, file, html = '<!doctype html><html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/' + file + '"><script src="/assets/site-shell.js"></script></head><body></body></html>') {
   const target = path.join(root, file);
@@ -52,7 +53,23 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('default locale coverage audit includes Gujarati and Kannada',()=>{
- const {DEFAULT_LOCALES}=require('../scripts/audit-locale-coverage.cjs');
- assert.ok(DEFAULT_LOCALES.includes('gu'));assert.ok(DEFAULT_LOCALES.includes('kn'));
+test('canonical language catalogue defines 50 unique locales, 17 available editions and correct writing directions', () => {
+  const { DEFAULT_LOCALES } = require('../scripts/audit-locale-coverage.cjs');
+  const locales = languageCatalogue.locales;
+  const codes = locales.map(locale => locale.code);
+  assert.equal(languageCatalogue.total, 50);
+  assert.equal(locales.length, 50);
+  assert.equal(new Set(codes).size, 50);
+  assert.equal(codes[0], 'en');
+  assert.equal(locales.filter(locale => locale.status === 'available').length, 17);
+  assert.equal(locales.filter(locale => locale.status === 'planned').length, 33);
+  assert.equal(DEFAULT_LOCALES.length, 49);
+  assert.deepEqual(DEFAULT_LOCALES, codes.filter(code => code !== 'en'));
+  for (const locale of locales) {
+    assert.ok(locale.name && locale.nativeName, 'Missing language label: ' + locale.code);
+    assert.ok(['ltr', 'rtl'].includes(locale.direction), 'Invalid writing direction: ' + locale.code);
+  }
+  for (const code of ['ar', 'arz', 'ur', 'fa', 'ps', 'he', 'sd']) {
+    assert.equal(locales.find(locale => locale.code === code).direction, 'rtl');
+  }
 });
