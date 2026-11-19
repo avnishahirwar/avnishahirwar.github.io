@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 14,
+    "officialCountryGuides": 18,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 154
+    "pendingVerification": 150
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -300,6 +300,67 @@
         [
           "BNM: How monetary policy affects floating-rate housing loans",
           "https://www.bnm.gov.my/-/monetary-policy-98-pr"
+        ]
+      ]
+    },
+    "ID": {
+      "summary": "Bank Indonesia's October 2026 policy report extends a temporary 100% LTV/FTV ceiling for property financing from 1 January through 31 December 2027, but only at banks meeting specified non-performing loan/financing criteria. This is a conditional macroprudential ceiling, not a borrower's entitlement or a promise of full-value financing.",
+      "rules": [
+        "The temporary 100% LTV/FTV ceiling applies to property financing at banks meeting specified NPL/NPF criteria and is extended for contracts from 1 January to 31 December 2027.",
+        "A 100% regulatory ceiling does not mean a lender must finance the full purchase price; the lender still applies its own underwriting, valuation and borrower assessment.",
+        "The calculator does not include Indonesian BPHTB, notary/PPAT, insurance, administrative fees, subsidy eligibility or bank-specific requirements."
+      ],
+      "sources": [
+        [
+          "Bank Indonesia: Monetary Policy Report — Quarter III 2026 (property LTV/FTV extension)",
+          "https://www.bi.go.id/en/publikasi/laporan/Pages/Laporan-Kebijakan-Moneter-Triwulan-III-2026.aspx"
+        ]
+      ]
+    },
+    "KR": {
+      "summary": "South Korea's Financial Services Commission announced a 2026 household-debt plan that includes regional and borrower-category-specific mortgage restrictions. Rules vary by location, property, loan purpose and lender type; the calculator does not determine eligibility.",
+      "rules": [
+        "The Financial Services Commission's 2026 plan continues quantitative management of household debt and adds separate management targets for home-mortgage lending.",
+        "Some restrictions apply specifically to multi-home owners and apartment mortgages in the Seoul metropolitan and speculation-regulated areas; exemptions and transition rules may apply.",
+        "For online P2P mortgage loans, from 2 April 2026 the FSC specifies LTV limits of 40% in Seoul metropolitan/speculation-regulated areas and 70% in non-regulated areas, with additional property-value loan caps. These are not universal bank-mortgage limits.",
+        "Confirm the current FSC/FSS rules and lender assessment for the property's exact location and the borrower's circumstances. The calculator does not calculate Korean acquisition tax, registration costs or policy-loan eligibility."
+      ],
+      "sources": [
+        [
+          "Financial Services Commission: Government Unveils 2026 Household Debt Management Plan (1 April 2026)",
+          "https://www.fsc.go.kr/eng/pr010101/86609?curPage=1&srchBeginDt=&srchCtgry=&srchEndDt=&srchKey=&srchText="
+        ]
+      ]
+    },
+    "TH": {
+      "summary": "The Bank of Thailand announced a temporary relaxation of residential-mortgage LTV ceilings for contracts made from 1 July 2026 through 30 June 2027. The 100% ceiling applies only to specified property-price and loan-sequence categories and does not guarantee lender approval.",
+      "rules": [
+        "For contracts signed from 1 July 2026 to 30 June 2027, the temporary 100% LTV ceiling applies to homes valued below THB 10 million from the second housing-loan contract onward, and homes valued at THB 10 million or more from the first contract onward.",
+        "This is a temporary regulatory ceiling, not a requirement that banks lend 100% or an assurance that a borrower qualifies; lenders still assess credit risk and repayment capacity.",
+        "The calculator does not include Thai transfer and mortgage registration fees, taxes, insurance, lender charges or other borrower-specific conditions."
+      ],
+      "sources": [
+        [
+          "Bank of Thailand: Extension of temporary LTV relaxation through 30 June 2027 (14 May 2026)",
+          "https://www.bot.or.th/en/news-and-media/news/news-20260514.html"
+        ],
+        [
+          "Bank of Thailand: Mortgage loan consumer explanation",
+          "https://www.bot.or.th/en/satang-story/managing-debt/mortgage-loan.html"
+        ]
+      ]
+    },
+    "PH": {
+      "summary": "Bangko Sentral ng Pilipinas prudential rules distinguish bank-level real-estate exposure limits from an individual household's mortgage eligibility. The residential loans of individual households for owner-occupied housing are treated separately from the aggregate bank portfolio cap; this is not an individual LTV allowance.",
+      "rules": [
+        "BSP's Manual of Regulations for Banks sets a prudential limit on certain banks' aggregate real-estate loan exposures, while excluding specified loans to individual households for acquisition, construction or improvement of housing they will occupy.",
+        "That portfolio-level exclusion must not be interpreted as a guaranteed individual loan amount, deposit percentage or LTV limit. Banks apply their own underwriting and applicable consumer-credit rules.",
+        "The calculator does not include Philippine documentary stamp tax, local transfer tax, registration fees, mortgage redemption insurance, Pag-IBIG eligibility or lender-specific charges."
+      ],
+      "sources": [
+        [
+          "Bangko Sentral ng Pilipinas: Manual of Regulations for Banks — Part III, Loans and Credits, Section 363-A",
+          "https://www.bsp.gov.ph/Regulations/MORB/2023_MORB/2023_MORB%20P3/2023_Part%20III_01%20Loans%20and%20Credits.pdf"
         ]
       ]
     }
@@ -615,7 +676,7 @@
     },
     "ID": {
       "countryName": "Indonesia",
-      "status": "pending"
+      "status": "verified"
     },
     "IR": {
       "countryName": "Iran",
@@ -855,7 +916,7 @@
     },
     "PH": {
       "countryName": "Philippines",
-      "status": "pending"
+      "status": "verified"
     },
     "PL": {
       "countryName": "Poland",
@@ -951,7 +1012,7 @@
     },
     "KR": {
       "countryName": "South Korea",
-      "status": "pending"
+      "status": "verified"
     },
     "SS": {
       "countryName": "South Sudan",
@@ -995,7 +1056,7 @@
     },
     "TH": {
       "countryName": "Thailand",
-      "status": "pending"
+      "status": "verified"
     },
     "TL": {
       "countryName": "Timor-Leste",
