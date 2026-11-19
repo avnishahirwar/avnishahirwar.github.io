@@ -35,7 +35,7 @@ async function inspect(browserType, route, viewport) {
         viewportWidth: window.innerWidth,
         documentWidth: Math.max(root.scrollWidth, body.scrollWidth),
         horizontalOverflow: Math.max(root.scrollWidth, body.scrollWidth) > window.innerWidth + 1,
-        overflowingElements: Array.from(document.querySelectorAll('body *')).map(el => { const rect = el.getBoundingClientRect(); return { tag: el.tagName, id: el.id, className: typeof el.className === 'string' ? el.className.slice(0, 90) : '', left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width), scrollWidth: el.scrollWidth, clientWidth: el.clientWidth }; }).filter(el => el.right > window.innerWidth + 1 || el.left < -1 || el.scrollWidth > el.clientWidth + 2).slice(0, 12),
+        overflowingElements: Array.from(document.querySelectorAll('body *')).map(el => { const rect = el.getBoundingClientRect(); return { tag: el.tagName, id: el.id, className: typeof el.className === 'string' ? el.className.slice(0, 90) : '', href: el.getAttribute('href'), text: (el.innerText || '').slice(0, 90), parent: el.parentElement ? el.parentElement.tagName + '.' + (typeof el.parentElement.className === 'string' ? el.parentElement.className.slice(0, 70) : '') : '', left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width), scrollWidth: el.scrollWidth, clientWidth: el.clientWidth }; }).filter(el => el.right > window.innerWidth + 1 || el.left < -1 || el.scrollWidth > el.clientWidth + 2).slice(0, 12),
         twitterImage: document.querySelector('meta[name="twitter:image"]')?.content || null
       };
     });
