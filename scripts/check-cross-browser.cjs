@@ -35,9 +35,11 @@ async function inspect(browserType, route, viewport) {
         viewportWidth: window.innerWidth,
         documentWidth: Math.max(root.scrollWidth, body.scrollWidth),
         horizontalOverflow: Math.max(root.scrollWidth, body.scrollWidth) > window.innerWidth + 1,
+        overflowingElements: Array.from(document.querySelectorAll('body *')).map(el => { const rect = el.getBoundingClientRect(); return { tag: el.tagName, id: el.id, className: typeof el.className === 'string' ? el.className.slice(0, 90) : '', left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width), scrollWidth: el.scrollWidth, clientWidth: el.clientWidth }; }).filter(el => el.right > window.innerWidth + 1 || el.left < -1 || el.scrollWidth > el.clientWidth + 2).slice(0, 12),
         twitterImage: document.querySelector('meta[name="twitter:image"]')?.content || null
       };
     });
+    process.stdout.write('DIAGNOSTIC ' + browserType.name() + ' ' + route + ' ' + viewport.width + ' ' + JSON.stringify(state) + '\\n');
     assert.equal(state.headerCount, 1, browserType.name() + ' ' + route + ': one shared header');
     assert.equal(state.footerCount, 1, browserType.name() + ' ' + route + ': one shared footer');
     assert.equal(state.hasMain, true, browserType.name() + ' ' + route + ': main landmark');
