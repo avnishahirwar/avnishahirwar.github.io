@@ -111,6 +111,8 @@ test('all 16 secondary mortgage pages use the shared locale-aware calculator UI'
     'mortgage-refinance-calculator.html': 'refinance',
     'simple-mortgage-calculator.html': 'simple'
   };
+  const css = fs.readFileSync(path.join(root, 'assets/mortgage-tools.css'), 'utf8');
+  assert.ok(css.includes('.out.mortgage-tool-result{display:block}'), 'The result panel must override the legacy hidden output style.');
   for (const [file, type] of Object.entries(pages)) {
     const html = fs.readFileSync(path.join(root, 'calculators', file), 'utf8');
     assert.ok(html.includes('data-mortgage-tool="' + type + '"'), 'Missing tool mapping: ' + file);
