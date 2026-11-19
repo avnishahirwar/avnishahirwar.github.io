@@ -3,9 +3,9 @@
   "lastReviewed": "2026-11-19",
   "coverage": {
     "countryDirectoryEntries": 195,
-    "officialCountryGuides": 48,
+    "officialCountryGuides": 51,
     "regionalFrameworkGuides": 27,
-    "pendingVerification": 120
+    "pendingVerification": 117
   },
   "defaultGuidance": {
     "summary": "Country-specific mortgage rules have not yet been verified against an official source for this market. Use this as a general repayment estimate only; confirm the applicable lending, tax, fee and eligibility rules with the local regulator and lender.",
@@ -1084,6 +1084,113 @@
           "https://www.nbc.gov.kh/english/supervision/"
         ]
       ]
+    },
+    "CM": {
+      "summary": "Cameroon is part of CEMAC, where BEAC and the Central African Banking Commission (COBAC) supervise banking institutions and regional rules govern effective interest-rate disclosure, usury and publication of bank conditions. The public Crédit Foncier du Cameroun (CFC) publishes several housing-loan products with different borrower, down-payment, rate and tenor conditions. CFC product terms are lender-specific and should not be treated as nationwide statutory mortgage limits.",
+      "rules": [
+        "CEMAC Regulation No. 04/19 requires effective global rate (TEG) determination, addresses usury and requires publication of bank conditions across the regional monetary union. BEAC Instruction No. 004/2021 sets the calculation, declaration and publication procedures for TEG and bank conditions.",
+        "Cameroon's public Crédit Foncier du Cameroun (CFC) publishes an ordinary classic housing loan with financing up to XAF 150 million, repayment up to 25 years, 6% TTC interest and a minimum 20% personal contribution, subject to repayment capacity and the institution's risk-coverage conditions.",
+        "CFC also publishes a young classic housing loan for eligible clients under 35, with a maximum project/loan amount of XAF 50 million, repayment up to 30 years and a product rate of 3.75% or 4% TTC depending on income. Eligibility and security conditions apply; this is a specific CFC product, not a universal national rate or entitlement.",
+        "COBAC supervises credit institutions in the six CEMAC states, including Cameroon. Confirm that the lender is authorised and review its current TEG, fees, insurance, collateral and early-repayment terms.",
+        "Mortgage security and the creation/perfection of mortgages are also governed by the OHADA Uniform Act on the Organisation of Securities, which applies to member states. Property-title registration and local transaction charges still require country-specific review.",
+        "The calculator does not determine CFC eligibility, bank approval, property-title validity, insurance, land registration, notarial fees or taxes."
+      ],
+      "sources": [
+        [
+          "Crédit Foncier du Cameroun: Prêt Foncier Classique — official product terms",
+          "https://creditfoncier.cm/index.php/fr/produits-prets/pret-foncier-classique"
+        ],
+        [
+          "Crédit Foncier du Cameroun: Prêt Foncier Classique Ordinaire — amount, term, rate and contribution",
+          "https://www.creditfoncier.cm/fr/produits-prets/pret-foncier-classique/pret-foncier-classique-ordinaire.html"
+        ],
+        [
+          "Crédit Foncier du Cameroun: Prêt Foncier Classique Jeune — product-specific terms",
+          "https://www.creditfoncier.cm/fr/?Itemid=246&id=5&option=com_djcatalog2&view=item"
+        ],
+        [
+          "BEAC: CEMAC Regulation No. 04/19 — TEG, usury and publication of bank conditions",
+          "https://www.beac.int/wp-content/uploads/2020/12/R%C3%A8glement-N%C2%B004-relatif-au-TEG-1.pdf"
+        ],
+        [
+          "BEAC: Instruction No. 004/2021 — calculation and publication of TEG and bank conditions",
+          "https://www.beac.int/wp-content/uploads/2021/12/Instruction-du-Gouverneur-N%C2%B0004-2021_compressed.pdf"
+        ],
+        [
+          "BEAC: COBAC — supervisory mandate and six CEMAC member states",
+          "https://www.beac.int/supervision-bancaire/la-commission-bancaire/presentation/"
+        ],
+        [
+          "OHADA: Uniform Act on the Organisation of Securities — mortgages and other security rights",
+          "https://www.ohada.org/organisation-des-suretes/"
+        ]
+      ]
+    },
+    "CF": {
+      "summary": "The Central African Republic is part of CEMAC. Banks and credit institutions fall under the regional BEAC/COBAC supervisory framework, while the CEMAC rules on effective global rates (TEG), usury and publication of bank conditions apply across the union. Mortgage security is also subject to the OHADA Uniform Act on the Organisation of Securities. The official sources reviewed do not establish a single nationwide borrower LTV ceiling or standard mortgage term; lender products and property-registration requirements must be checked individually.",
+      "rules": [
+        "BEAC is the common central bank for the six CEMAC states, including the Central African Republic, and provides the resources for COBAC's banking-supervision mission.",
+        "COBAC supervises credit institutions in the Central African Republic and the other CEMAC states, including licensing oversight, prudential supervision and enforcement of regional banking rules.",
+        "CEMAC Regulation No. 04/19 governs effective global rate (TEG) calculation, the repression of usury and publication of bank conditions. BEAC Instruction No. 004/2021 sets procedures for calculating, reporting and publishing TEG and bank conditions.",
+        "The OHADA Uniform Act on the Organisation of Securities recognises mortgages as security rights over immovable property and sets the regional legal framework for their creation and enforcement. National land-title and property-registration processes remain important.",
+        "No universal borrower LTV percentage, standard mortgage term or guaranteed interest rate is asserted for the Central African Republic in this guide. Obtain a current written offer from a COBAC-supervised institution and verify title, collateral valuation, fees and insurance.",
+        "The calculator does not determine bank approval, title registration, legal enforceability, valuation, insurance, taxes, notarial or land-registry costs."
+      ],
+      "sources": [
+        [
+          "BEAC: The BEAC — common central bank for CEMAC member states, including the Central African Republic",
+          "https://www.beac.int/beac/la-beac/"
+        ],
+        [
+          "BEAC: COBAC presentation — supervisory mandate and CEMAC member states",
+          "https://www.beac.int/supervision-bancaire/la-commission-bancaire/presentation/"
+        ],
+        [
+          "BEAC: CEMAC Regulation No. 04/19 — TEG, usury and publication of bank conditions",
+          "https://www.beac.int/wp-content/uploads/2020/12/R%C3%A8glement-N%C2%B004-relatif-au-TEG-1.pdf"
+        ],
+        [
+          "BEAC: Instruction No. 004/2021 — calculation and publication of TEG and bank conditions",
+          "https://www.beac.int/wp-content/uploads/2021/12/Instruction-du-Gouverneur-N%C2%B0004-2021_compressed.pdf"
+        ],
+        [
+          "OHADA: Uniform Act on the Organisation of Securities — mortgages and other security rights",
+          "https://www.ohada.org/organisation-des-suretes/"
+        ]
+      ]
+    },
+    "TD": {
+      "summary": "Chad is part of CEMAC. Its banks and microfinance institutions are supervised under the regional BEAC/COBAC framework, and the CEMAC rules on effective global rates (TEG), usury and publication of bank conditions apply. Mortgage security is also governed by the OHADA Uniform Act on the Organisation of Securities. The official regional rules do not set a single Chad-wide borrower LTV ceiling or standard mortgage term; lender availability and product terms should be verified directly.",
+      "rules": [
+        "BEAC is the common central bank for the six CEMAC states, including Chad, and supports COBAC's banking-supervision mission.",
+        "COBAC supervises banks and other regulated financial institutions in Chad, including prudential oversight and enforcement of regional banking rules.",
+        "CEMAC Regulation No. 04/19 governs effective global rate (TEG) calculation, the repression of usury and publication of bank conditions. BEAC Instruction No. 004/2021 specifies how TEG and bank conditions are calculated, declared and published.",
+        "The OHADA Uniform Act on the Organisation of Securities recognises mortgages as security rights over immovable property and provides the regional framework for their creation and enforcement. Local land-title and registration procedures remain relevant.",
+        "No universal borrower LTV percentage, standard mortgage term or guaranteed mortgage rate is asserted for Chad in this guide. Confirm that the lender is authorised, and request a current written offer showing TEG, fees, insurance, repayment schedule and collateral conditions.",
+        "The calculator does not determine lender approval, housing-programme eligibility, title validity, collateral valuation, insurance, taxes, notarial or land-registry costs."
+      ],
+      "sources": [
+        [
+          "BEAC: The BEAC — common central bank for CEMAC member states, including Chad",
+          "https://www.beac.int/beac/la-beac/"
+        ],
+        [
+          "BEAC: COBAC presentation — supervisory mandate and CEMAC member states",
+          "https://www.beac.int/supervision-bancaire/la-commission-bancaire/presentation/"
+        ],
+        [
+          "BEAC: CEMAC Regulation No. 04/19 — TEG, usury and publication of bank conditions",
+          "https://www.beac.int/wp-content/uploads/2020/12/R%C3%A8glement-N%C2%B004-relatif-au-TEG-1.pdf"
+        ],
+        [
+          "BEAC: Instruction No. 004/2021 — calculation and publication of TEG and bank conditions",
+          "https://www.beac.int/wp-content/uploads/2021/12/Instruction-du-Gouverneur-N%C2%B0004-2021_compressed.pdf"
+        ],
+        [
+          "OHADA: Uniform Act on the Organisation of Securities — mortgages and other security rights",
+          "https://www.ohada.org/organisation-des-suretes/"
+        ]
+      ]
     }
   },
   "countries": {
@@ -1209,7 +1316,7 @@
     },
     "CM": {
       "countryName": "Cameroon",
-      "status": "pending"
+      "status": "verified"
     },
     "CA": {
       "countryName": "Canada",
@@ -1217,11 +1324,11 @@
     },
     "CF": {
       "countryName": "Central African Republic",
-      "status": "pending"
+      "status": "verified"
     },
     "TD": {
       "countryName": "Chad",
-      "status": "pending"
+      "status": "verified"
     },
     "CL": {
       "countryName": "Chile",

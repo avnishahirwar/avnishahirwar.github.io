@@ -123,9 +123,9 @@ test('country-specific mortgage guidance registry covers all 195 directory marke
  assert.equal(names.length,195);
  const registryNames=new Set(entries.map(entry=>entry.countryName.toLowerCase()));
  for(const name of names)assert.ok(registryNames.has(name),'missing country guidance record for '+name);
- assert.equal(entries.filter(entry=>entry.status==='verified').length,48);
+ assert.equal(entries.filter(entry=>entry.status==='verified').length,51);
  assert.equal(entries.filter(entry=>entry.status==='regional-framework').length,27);
- assert.equal(entries.filter(entry=>entry.status==='pending').length,120);
+ assert.equal(entries.filter(entry=>entry.status==='pending').length,117);
  for(const info of Object.values(registry.verified)){
   assert.ok(info.sources.length>0);
   for(const source of info.sources)assert.match(source[1],/^https:\/\//);
