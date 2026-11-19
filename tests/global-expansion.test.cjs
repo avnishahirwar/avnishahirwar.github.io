@@ -64,7 +64,7 @@ test('primary navigation follows category order and exposes the international hu
   assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
 });
 
-test('shared footer retains policy navigation and Sitemap; regional settings stay outside chrome and Settings trigger stays in Footer', () => {
+test('shared footer retains policy navigation and Sitemap; regional settings and Settings trigger stay outside chrome', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(shell, /en:\['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact'\]/);
   assert.ok(shell.includes("'/sitemap.html'"), 'Shared footer must link to the complete sitemap.');
@@ -79,17 +79,17 @@ test('shared footer retains policy navigation and Sitemap; regional settings sta
   assert.ok(shell.includes('fc-regional-settings-source'), 'Currency, country/format and units must be staged for Settings outside the header.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
-  assert.ok(shell.includes('footerNav.appendChild(open)'), 'The single Settings trigger must be in the shared footer.');
+  assert.ok(shell.includes('dock.appendChild(open)') && shell.includes('dock.appendChild(trigger)'), 'The single Settings trigger must be in the standalone floating dock.');
   assert.ok(shell.includes("['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']"), 'Legacy footer fallback must also put Sitemap before Contact.');
   assert.ok(shell.includes("footerLinks.map(([n,u])=>") && shell.includes("'/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html'"), 'Footer order must place Sitemap before Contact.');
-  assert.ok(!shell.includes('dock.appendChild(open)'), 'Settings must not be mounted in the floating tools dock.');
+  assert.ok(!shell.includes('footerNav.appendChild(open)') && !shell.includes('footerNav.appendChild(trigger)'), 'Settings must not be mounted in the shared footer.');
   assert.ok(shell.includes("document.querySelectorAll('footer').forEach(oldFooter=>oldFooter.remove());"), 'Nested and duplicate footers must be consolidated into one shared footer.');
   assert.ok(shell.includes('.site-brand,.site-nav,.site-nav-wrap,.site-links,.nav'), 'Legacy navigation headers must be removed.');
   assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must be placed inside Settings Quick Actions.');
   assert.ok(!shell.includes('footerInner.appendChild(button)'), 'Install action must not be placed in the Footer.');
   assert.ok(shell.includes('if(!label)button.remove();'), 'Blank legacy buttons must not remain in Settings.');
   assert.ok(shell.includes('quickActions.appendChild(installButton)'), 'Install action must stay inside Settings Quick Actions.');
-  assert.ok(!shell.includes('quickActions.appendChild(assistant)') && !shell.includes('quickActions.appendChild(liveAssistant)'), 'Open Assistant must not be moved into Settings.');
+  assert.ok(shell.includes('quickActions.appendChild(assistantLauncher)'), 'Open Assistant must be inside Settings Quick Actions and remain lazy-loaded.');
   assert.ok(shell.includes('document.body.appendChild(launcher)') && shell.includes("document.querySelector('#fc-ai-launch')?.click()"), 'Open Assistant must remain a live on-page launcher.');
   assert.ok(shell.includes('const isFooterSocialLink=link=>') && shell.includes('!isFooterSocialLink(link)'), 'Social/contact links must appear only in the dedicated icon row, not duplicated in footer text links.');
   assert.ok(shell.includes("status.setAttribute('aria-atomic','true')") && fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8').includes('clip-path:inset(50%)'), 'Theme status remains accessible but is not repeated visibly under the mode buttons.');
