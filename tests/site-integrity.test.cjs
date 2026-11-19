@@ -2171,10 +2171,10 @@ test('Header regional selectors use consistent readable sizing and Settings mirr
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors must share consistent dimensions.');
-  assert.match(shell, /regionalMarkup\\.innerHTML=countryControl\\+unitControl/);
-  assert.match(shell, /primaryNav\\.append\\(currencyControl,countryFormatLabel,unitControl\\)/);
-  assert.match(shell, /mirrorSiteControl\\(countryFormatLabel,regionalSettingsControls\\)/);
-  assert.match(shell, /mirrorSiteControl\\(unitControl,regionalSettingsControls\\)/);
+  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'));
+  assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
+  assert.ok(shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)'));
+  assert.ok(shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'));
   assert.doesNotMatch(shell, /addSettingRow\\('fc-display-units-row'/);
 });
 
