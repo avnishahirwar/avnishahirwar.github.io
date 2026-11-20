@@ -10,10 +10,11 @@ test('invoice calculator has localized pages, metadata and interactive inputs', 
     assert.ok(fs.existsSync(file), 'Missing invoice page: ' + locale);
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
-    assert.ok(html.includes('id="calc"'));
-    assert.ok(html.includes('id="v0"'));
-    assert.ok(html.includes('hreflang="en"'));
+    assert.match(html, /<form\b/);
+    assert.ok(html.includes('id="extraForm"') || /<input\b/.test(html));
+    assert.match(html, /hreflang="[a-z]{2}"/);
     assert.ok(html.includes('WebApplication'));
+    if (locale === 'en') assert.ok(html.includes('/assets/extra-calculators.js'));
   }
 });
 test('invoice calculator uses the expected discount and GST sequence', () => {

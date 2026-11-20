@@ -225,7 +225,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
 
 
 test('first translation batch has complete shared navigation and footer dictionaries but remains unpublished until routes are ready', () => {
-  const match = shell.match(/const chrome=\{([\s\S]*?)\n\};\nconst nav=/);
+  const match = shell.match(/const chrome=\{([\s\S]*?)\n\};/);
   assert.ok(match, 'Expected shared chrome dictionaries');
   for (const locale of ['zh','ur','tr','it','ko']) {
     const entry = match[1].match(new RegExp('(?:^|\\n)' + locale + ':\\{([^}]+)\\}'));

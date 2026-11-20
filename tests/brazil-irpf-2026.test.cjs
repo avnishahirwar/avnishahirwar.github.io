@@ -38,6 +38,6 @@ test('Brazil IRPF 2026 uses the greater of entered eligible deductions and the s
 });
 
 test('Brazil IRPF 2026 rejects negative or non-finite input', () => {
-  assert.throws(() => calculator().calculate({ monthlyTaxableIncome: -1, monthlyDeductions: 0 }), RangeError);
-  assert.throws(() => calculator().calculate({ monthlyTaxableIncome: 1000, monthlyDeductions: Infinity }), RangeError);
+  assert.throws(() => calculator().calculate({ monthlyTaxableIncome: -1, monthlyDeductions: 0 }), error => error.name === 'RangeError');
+  assert.throws(() => calculator().calculate({ monthlyTaxableIncome: 1000, monthlyDeductions: Infinity }), error => error.name === 'RangeError');
 });

@@ -33,7 +33,7 @@ function runRuralTool(key, values) {
   const output = new Element();
   const chart = new Element();
   const sliderHost = new Element();
-  const fields = new Map(Object.entries(values).map(([id, value]) => [id, { value: String(value) }]));
+  const fields = new Map(Object.entries(values).map(([id, value]) => [id, { value: String(value), addEventListener() {} }]));
   const document = {
     documentElement: { lang: 'en' },
     querySelector: () => root,
