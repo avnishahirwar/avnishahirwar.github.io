@@ -2065,20 +2065,19 @@ test('remaining chemistry calculator formulas return expected results',()=>{
 });
 
 
-test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+test('homepage shows 16 curated popular calculators linked to the live catalogue', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
-  const end = page.indexOf('<nav class="home-category-index"', start);
-  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const start = page.indexOf('<nav class="home-popular-tools"');
+  const end = page.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator links exist');
   const section = page.slice(start, end);
-  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(routes.length, 24);
-  assert.equal(new Set(routes).size, 24);
+  const routes = [...section.matchAll(/<a href="([^"]+)">/g)].map(match => match[1]);
+  assert.equal(routes.length, 16);
+  assert.equal(new Set(routes).size, 16);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
-  assert.match(page, /\.home-popular-list/);
-  assert.match(page, /\.home-popular-icon/);
-  assert.match(page, /\.home-popular-item/);
+  assert.match(section, /Compound Interest Calculator/);
+  assert.match(section, /Simple Interest Calculator/);
   assert.doesNotMatch(section, /bmi-calculator\.html/i);
 });
 
