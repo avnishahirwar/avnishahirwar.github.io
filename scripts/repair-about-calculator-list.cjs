@@ -56,6 +56,7 @@ function main() {
 
   const unique = new Map(pages.map(page => [page.pathname, page.name]));
   const sorted = [...unique.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const countLabel = sorted.length.toLocaleString('en-IN');
   const list = '<h2>Available calculators</h2>\n<ol>\n' +
     sorted.map(([url, name]) => '<li><a href="' + escapeHtml(url) + '">' + escapeHtml(name) + '</a></li>').join('\n') +
     '\n</ol>';
@@ -64,13 +65,18 @@ function main() {
   if (!sectionPattern.test(current)) throw new Error('Could not locate the About page calculator catalogue.');
 
   if (process.argv.includes('--write')) {
-    fs.writeFileSync(ABOUT_PATH, current.replace(sectionPattern, list));
+    let updated = current.replace(sectionPattern, list);
+    updated = updated.replace(/\\b[\\d,]+ public calculators in the core catalogue\\b/, countLabel + ' public calculators in the core catalogue');
+    updated = updated.replace(/(<strong>Platform:<\\/strong>\\s*)[\\d,]+ public calculators/, '$1' + countLabel + ' public calculators');
+    fs.writeFileSync(ABOUT_PATH, updated);
   }
 
   const after = process.argv.includes('--write') ? fs.readFileSync(ABOUT_PATH, 'utf8') : current;
   const links = [...after.matchAll(/<li><a href="(\/calculators\/[^"]+)">([^<]+)<\/a><\/li>/g)].map(match => [match[1], decode(match[2])]);
   const expected = sorted;
-  const matches = links.length === expected.length && links.every((item, index) =>
+  const countMatches = after.includes(countLabel + ' public calculators in the core catalogue') &&
+    after.includes('<strong>Platform:</strong> ' + countLabel + ' public calculators');
+  const matches = countMatches && links.length === expected.length && links.every((item, index) =>
     item[0] === expected[index][0] && item[1] === expected[index][1]);
   console.log('About page catalogue: ' + expected.length + ' canonical calculator links; ' +
     (matches ? 'complete' : 'repair required') + (process.argv.includes('--write') ? ' after write' : '') + '.');
