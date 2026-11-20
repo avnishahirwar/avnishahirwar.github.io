@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
@@ -64,6 +65,7 @@ test('Income Tax calculator loads its focused calculator bundle instead of the f
   assert.doesNotMatch(html, /assets\/page-calculators\.js/);
   assert.match(focused, /income tax calculator india/);
   assert.match(focused, /Income Tax Calculator \(Tax Year 2026–27\)/);
+  assert.doesNotThrow(() => new vm.Script(focused), 'focused Income Tax bundle must be valid JavaScript');
 });
 
 test('Income Tax calculator reserves its dynamic form before JavaScript initialization', () => {
