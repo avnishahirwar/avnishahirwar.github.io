@@ -78,7 +78,11 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']"));
+  const localeCodesBlock = shell.match(/const localeCodes=\\[([^\\]]+)\\]/);
+  assert.ok(localeCodesBlock, 'Shared shell declares all localized route codes');
+  const routeCodes = [...localeCodesBlock[1].matchAll(/["']([a-z]{2,3})["']/g)].map(match => match[1]).sort();
+  const catalogue = require('../config/language-catalogue.json');
+  assert.deepEqual(routeCodes, catalogue.locales.map(locale => locale.code).sort());
 });
 
 
@@ -113,7 +117,14 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\\//.exec(p);"));
+  const routeStart = shell.indexOf('const routeLocaleMatch=');
+  const routeEnd = shell.indexOf('.exec(p);', routeStart);
+  const routeSource = shell.slice(routeStart, routeEnd);
+  const routePattern = routeSource.match(/\\(([^)]+)\\)/);
+  assert.ok(routePattern, 'Shared shell declares explicit locale path prefixes');
+  const routeCodes = routePattern[1].split('|').sort();
+  const catalogue = require('../config/language-catalogue.json');
+  assert.deepEqual(routeCodes, catalogue.locales.filter(locale => locale.code !== 'uk').map(locale => locale.code).sort());
   assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
 });
 
@@ -213,7 +224,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
-  assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
+  assert.deepEqual(routed.sort(), catalogue.locales.filter(locale => locale.code !== 'uk').map(locale => locale.code).sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
