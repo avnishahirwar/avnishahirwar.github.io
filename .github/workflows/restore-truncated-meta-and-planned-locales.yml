@@ -23,6 +23,8 @@ jobs:
         run: node scripts/restore-truncated-meta-and-planned-locales.cjs --write
       - name: Add missing public social metadata
         run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Regenerate searchable human sitemap
+        run: node scripts/generate-human-sitemap.cjs
       - name: Regenerate all-pages and locale sitemaps
         run: |
           node scripts/generate-sitemaps.cjs
@@ -33,6 +35,7 @@ jobs:
           node scripts/repair-public-social-metadata.cjs --check
           node scripts/generate-sitemaps.cjs --check
           node scripts/generate-locale-sitemaps.cjs --check
+          node --test tests/human-sitemap.test.cjs
       - name: Run focused SEO tests
         run: node --test tests/seo-repair-regression.test.cjs tests/planned-locale-indexing.test.cjs
       - name: Commit reviewed-branch SEO repairs
