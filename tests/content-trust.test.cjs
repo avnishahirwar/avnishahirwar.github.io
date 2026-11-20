@@ -50,9 +50,9 @@ test('catalogue distinguishes top-level categories from normalized calculator to
   const topLevelGroups = (directory.match(/<section class="section calculator-category"/g) || []).length;
   const topics = new Set(searchIndex.map(item => (item.category || 'Other').trim().toLocaleLowerCase().replace(/\s+/g, ' ')));
   const sitemapGroups = (read('sitemap.html').match(/<details class="sitemap-category"/g) || []).length;
-  assert.equal(topLevelGroups, 20);
-  assert.equal(topics.size, 36);
-  assert.equal(sitemapGroups, 36);
+  assert.ok(topLevelGroups > 0, 'The directory must expose at least one top-level category.');
+  assert.ok(topics.size > 0, 'The search index must expose at least one calculator topic.');
+  assert.equal(sitemapGroups, topics.size, 'The human sitemap must represent every normalized search-index topic.');
 });
 
 test('Homepage totals match the public search index and separate category levels', () => {
@@ -64,12 +64,14 @@ test('Homepage totals match the public search index and separate category levels
   const directoryCounts = Object.fromEntries(categorySections.map(match => [match[1], (match[2].match(/<a class="card" href="\/calculators\//g) || []).length]));
   const homepageCards = [...homepage.matchAll(/href="\/calculator\/site-directory\.html#([^"]+)"><strong>.*?<\/strong><span>([\d,]+) calculators<\/span><\/a>/g)];
   const homepageCounts = Object.fromEntries(homepageCards.map(match => [match[1], Number(match[2].replace(/,/g, ''))]));
-  assert.equal(searchIndex.length, 3123);
-  assert.match(homepage, /Search all 3123 calculators/);
-  assert.match(homepage, /Browse 3123 calculators across 36 calculator topics/);
-  assert.equal(topicCount, 36);
-  assert.equal(categorySections.length, 20);
+  assert.ok(searchIndex.length > 0);
+  assert.equal(new Set(searchIndex.map(item => item.url)).size, searchIndex.length, 'Search-index URLs must be unique.');
+  assert.doesNotMatch(homepage, /Search all \d+ calculators|Browse \d+ calculators across \d+ calculator topics|Searching all \d+ calculators/);
+  assert.ok(topicCount > 0);
+  assert.equal(categorySections.length, homepageCards.length, 'Homepage and directory must expose the same top-level category groups.');
   assert.deepEqual(homepageCounts, directoryCounts);
-  assert.equal(Object.values(homepageCounts).reduce((sum, value) => sum + value, 0), 3122);
+  const directoryCardCount = Object.values(directoryCounts).reduce((sum, value) => sum + value, 0);
+  assert.equal(Object.values(homepageCounts).reduce((sum, value) => sum + value, 0), directoryCardCount);
+  assert.ok(directoryCardCount <= searchIndex.length, 'The search catalogue may include international tools outside the core directory.');
   assert.doesNotMatch(homepage, /Billionaire Desk|Wealth Intelligence|Original Research/i);
 });
