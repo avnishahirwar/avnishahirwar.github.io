@@ -2076,33 +2076,29 @@ test('remaining chemistry calculator formulas return expected results',()=>{
 });
 
 
-test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+test('homepage shows 19 curated popular calculator shortcuts from the searchable catalogue', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
-  const end = page.indexOf('<nav class="home-category-index"', start);
-  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const start = page.indexOf('<nav class="home-popular-tools"');
+  const end = page.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator shortcuts exist');
   const section = page.slice(start, end);
-  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(routes.length, 24);
-  assert.equal(new Set(routes).size, 24);
+  const routes = [...section.matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(routes.length, 19);
+  assert.equal(new Set(routes).size, 19);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
-  assert.match(page, /\.home-popular-list/);
-  assert.match(page, /\.home-popular-icon/);
-  assert.match(page, /\.home-popular-item/);
-  assert.doesNotMatch(section, /bmi-calculator\.html/i);
+  assert.match(section, /Friendship Calculator/);
+  assert.match(page, /\.home-popular-tools/);
 });
 
 
-test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
+test('homepage keeps the shared stylesheet and defers non-critical shared scripts', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /link\.rel='stylesheet'[\s\S]*link\.href='\/assets\/site-shell\.css'/);
-  assert.match(html, /requestIdleCallback\(loadShellStyles,\{timeout:1200\}\)/);
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
-  assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
+  assert.match(html, /<link rel="stylesheet" href="\/assets\/site-shell\.css">/);
   assert.match(html, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  assert.ok(html.includes('src="/assets/homepage-personal-tools.js" defer'));
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(html, /requestIdleCallback\(inject,\{timeout:8000\}\)/);
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
