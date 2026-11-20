@@ -1311,3 +1311,20 @@ test('wealth planner calculator validates inputs and models compounding with ann
   assert.match(page, /balance=balance\*\(1\+r\)\+a/);
   assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
 });
+
+
+test('homepage search matcher requires relevant name, keyword phrase or category matches', () => {
+  const matcher = require('../assets/calculator-search-matcher.js');
+  const match = (item, query) => {
+    const stopWords = new Set(['calculator', 'calculators', 'calculate', 'online', 'free', 'the', 'for', 'a', 'an', 'of', 'and', 'tool', 'tools']);
+    const terms = matcher.normalize(query).split(' ').filter(Boolean).filter(term => !stopWords.has(term));
+    return matcher.getCalculatorMatch(item, terms, query, item.category);
+  };
+
+  assert.notEqual(match({ name: 'Home Loan EMI Calculator', keywords: 'home loan monthly payment', category: 'Loans' }, 'loan emi'), null);
+  assert.equal(match({ name: 'Personal Loan Calculator', keywords: 'loan repayment', category: 'Loans' }, 'loan emi'), null);
+  assert.notEqual(match({ name: 'GST Calculator', keywords: 'goods and services tax', category: 'Tax' }, 'gst'), null);
+  assert.notEqual(match({ name: 'Fixed Deposit Calculator', keywords: 'fixed deposit maturity', category: 'Savings' }, 'fixed deposit'), null);
+  assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
+  assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
+});

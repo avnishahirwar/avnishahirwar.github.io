@@ -1521,7 +1521,7 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
   assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
-  assert.match(homepage, /function matchesAllTerms\(terms,tokens,field\)/);
+  assert.ok(homepage.includes('FriendlyCalculatorSearchMatcher.getCalculatorMatch'));
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
@@ -1586,38 +1586,33 @@ test('human sitemap contains every canonical search-index URL once and is reprod
 });
 
 
-test('homepage search requires all query terms to match coherently within one field', () => {
+test('homepage search requires precise name, keyword phrase or category matches', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const vm = require('node:vm');
-  const matcher = homepage.match(/function matchesAllTerms\(terms,tokens,field\)\{[\s\S]*?\n\}/);
-  const scorer = homepage.match(/function getCalculatorMatch\(item,terms,query\)\{[\s\S]*?\n\}/);
-  assert.ok(matcher && scorer, 'Homepage must define testable all-term matching and scoring helpers');
-  const getCalculatorMatch = vm.runInNewContext(matcher[0] + '\n' + scorer[0] + '\ngetCalculatorMatch', {
-    normalize: value => String(value || '').toLowerCase(),
-    displayCategory: value => value || 'Other',
-    synonyms: {}
-  });
-  const splitFieldMatch = {
-    name: 'Home Loan Calculator',
-    keywords: 'mortgage emi repayment',
-    category: 'Finance',
-    description: 'Estimate a monthly mortgage repayment.'
+  const matcher = require('../assets/calculator-search-matcher.js');
+  const stopWords = new Set(['calculator', 'calculators', 'calculate', 'online', 'free', 'the', 'for', 'a', 'an', 'of', 'and', 'tool', 'tools']);
+  const getMatch = (item, query) => {
+    const terms = matcher.normalize(query).split(' ').filter(Boolean).filter(term => !stopWords.has(term));
+    return matcher.getCalculatorMatch(item, terms, query, item.category);
   };
-  assert.equal(getCalculatorMatch(splitFieldMatch, ['loan', 'tax'], 'loan tax'), null,
-    'A name match and an unrelated keyword must not be combined');
-  assert.ok(getCalculatorMatch({
-    name: 'Loan EMI Calculator', keywords: 'loan emi repayment',
-    category: 'Finance', description: 'Estimate a monthly loan payment.'
-  }, ['loan', 'emi'], 'loan emi') > 0);
-  assert.ok(getCalculatorMatch({
-    name: 'Monthly Salary Calculator', keywords: 'income salary tax',
-    category: 'Tax Salary Payroll', description: 'Estimate take-home pay.'
-  }, ['salary', 'tax'], 'salary tax') > 0);
-  assert.match(homepage, /const nameMatch=matchesAllTerms\(terms,name\.split/);
-  assert.match(homepage, /const keywordMatch=matchesAllTerms\(terms,keywords\.split/);
-  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\)return null/);
-});
 
+  assert.ok(homepage.includes('FriendlyCalculatorSearchMatcher.getCalculatorMatch'));
+  assert.equal(getMatch({
+    name: 'Home Loan Calculator', keywords: 'mortgage emi repayment',
+    category: 'Finance', description: 'Estimate a tax repayment.'
+  }, 'loan tax'), null, 'A name match and an unrelated description must not be combined');
+  assert.ok(getMatch({
+    name: 'Loan EMI Calculator', keywords: 'loan emi repayment',
+    category: 'Finance'
+  }, 'loan emi') > 0);
+  assert.ok(getMatch({
+    name: 'Monthly Salary Calculator', keywords: 'salary tax income',
+    category: 'Tax Salary Payroll'
+  }, 'salary tax') > 0);
+  assert.equal(getMatch({
+    name: 'Personal Loan Calculator', keywords: 'loan repayment',
+    category: 'Loans'
+  }, 'loan emi'), null, 'A category match must not hide a missing query term');
+});
 
 test('homepage calculator search results region has a valid accessible role', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -2335,4 +2330,21 @@ test('homepage language coverage copy matches the currently published locale cat
   assert.match(html, /17 currently published language editions/);
   assert.match(html, /planned 50-language rollout is still in progress/);
   assert.match(html, /Coverage varies by language and page/);
+});
+
+
+test('homepage calculator search matcher avoids unrelated cross-field matches', () => {
+  const matcher = require(path.join(root, 'assets/calculator-search-matcher.js'));
+  const match = (item, query) => {
+    const terms = matcher.normalize(query).split(/\s+/).filter(Boolean)
+      .filter(term => !['calculator', 'calculators', 'calculate', 'online', 'free', 'the', 'for', 'a', 'an', 'of', 'and', 'tool', 'tools'].includes(term));
+    return matcher.getCalculatorMatch(item, terms, query, item.category);
+  };
+
+  assert.notEqual(match({ name: 'Home Loan EMI Calculator', keywords: 'home loan monthly payment', category: 'Loans' }, 'loan emi'), null);
+  assert.equal(match({ name: 'Personal Loan Calculator', keywords: 'loan repayment', category: 'Loans' }, 'loan emi'), null);
+  assert.notEqual(match({ name: 'GST Calculator', keywords: 'goods and services tax', category: 'Tax' }, 'gst'), null);
+  assert.notEqual(match({ name: 'Fixed Deposit Calculator', keywords: 'fixed deposit maturity', category: 'Savings' }, 'fixed deposit'), null);
+  assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
+  assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
 });
