@@ -318,7 +318,7 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 2481 calculators across 34 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse the full calculator catalogue. Search instantly or choose a category below.';return;}
  lastQuery=query;
  status.textContent='Searching the calculator catalogue…';
  results.hidden=true;
