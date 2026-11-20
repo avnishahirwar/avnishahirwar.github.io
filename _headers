@@ -41,3 +41,9 @@ https://:version.friendly-calculator.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 /tests/*
   X-Robots-Tag: noindex, nofollow
+/map.html
+  X-Robots-Tag: noindex, follow
+/maps.html
+  X-Robots-Tag: noindex, follow
+/seo-meta-tags.html
+  X-Robots-Tag: noindex, follow
