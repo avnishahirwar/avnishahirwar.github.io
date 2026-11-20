@@ -28,6 +28,7 @@ function normalizeHomepage(file, isAvailable) {
   if (!canonical.test(clean)) throw new Error('Missing canonical link: ' + file);
   const updated = isAvailable ? clean.replace(canonical, match => match + '\n' + alternateLinks()) : clean;
   if (updated !== original) {
+    console.log('Homepage needs hreflang normalization: ' + file);
     if (process.argv.includes('--write')) fs.writeFileSync(absolute, updated);
     return true;
   }
@@ -42,6 +43,7 @@ function normalizeUkHub() {
   if (!canonical.test(clean)) throw new Error('Missing UK hub canonical link.');
   const updated = clean;
   if (updated !== original) {
+    console.log('UK hub needs hreflang cleanup.');
     if (process.argv.includes('--write')) fs.writeFileSync(file, updated);
     return true;
   }
