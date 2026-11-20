@@ -868,6 +868,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.deepEqual(searchUrls, expectedSearchIndexUrls);
   assert.deepEqual(sitemapCalc, canonicalCalculatorUrls);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
+  assert.ok(searchIndex.some(item => item.name === 'UK Student Loan Calculator' && item.url === '/international/uk-student-loan-calculator.html'));
+  assert.ok(searchIndex.some(item => item.name === 'US Home Affordability Calculator' && item.url === '/international/us-home-affordability-calculator.html'));
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
@@ -1548,7 +1550,12 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.equal(new Set(searchIndex.map(item => item.url)).size, expectedSearchIndexLength);
   for (const item of searchIndex) {
-    assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || item.url === '/international/vat-calculator.html'), 'Search entries must have a name, category and valid calculator URL');
+    const internationalSearchUrls = new Set([
+      '/international/vat-calculator.html',
+      '/international/uk-student-loan-calculator.html',
+      '/international/us-home-affordability-calculator.html'
+    ]);
+    assert.ok(item.name && item.category && (item.url.startsWith('/calculators/') || internationalSearchUrls.has(item.url)), 'Search entries must have a name, category and valid calculator URL');
     assert.ok(fs.existsSync(path.join(root, item.url.replace(/^\//, ''))), 'Search result target must exist: ' + item.url);
   }
   assert.match(homepage, /calculator-search-index\.json/);
