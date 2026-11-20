@@ -285,7 +285,7 @@ test('five staged language editions have localized homepages and working basic c
       assert.match(calculator, /dir="rtl"/);
     }
   }
-  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  for (const locale of ['zh','ur','tr','it','ko']) assert.ok(shell.includes(locale + ':'));
   assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
   assert.match(shell, /ur\|fa\|ps\|he\|sd/);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
