@@ -50,7 +50,7 @@ test('calculator engine validates input and safely renders result text', () => {
 test('standalone interest calculator pages expose complete social metadata', () => {
   const simple = fs.readFileSync(new URL('../calculators/simple-interest-calculator.html', 'file://' + __filename), 'utf8');
   const compound = fs.readFileSync(new URL('../calculators/compound-interest-calculator.html', 'file://' + __filename), 'utf8');
-  assert.match(simple, /<title>Simple Interest Calculator \\| Principal \\| Friendly Calc<\\/title>/);
+  assert.match(simple, /<title>Simple Interest Calculator \| Principal \| Friendly Calc<\/title>/);
   assert.match(simple, /property="og:title" content="Simple Interest Calculator Online/);
   assert.ok(simple.includes('<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">'));
   assert.ok(!simple.includes('<meta name="twitter:image" content="website">'));
