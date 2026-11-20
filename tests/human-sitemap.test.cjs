@@ -38,7 +38,7 @@ test('human sitemap generator reproduces the checked-in complete catalogue witho
 
 
 test('human sitemap initializes its visible total from the generated catalogue on page load', () => {
- assert.match(client, /const total=Number\\(document\\.querySelector/);
+ assert.ok(client.includes("const total=Number(document.querySelector('[data-sitemap-total]')?.dataset.sitemapTotal||0);"));
  assert.ok(client.includes("\\nfilter();\\n})();"), 'The initial count refresh must run after event listeners are registered');
- assert.match(client, /status\\.textContent=query\\?visible\\.toLocaleString\\(\\)\\+['"] matching calculator entries\\.['"]:total\\.toLocaleString\\(\\)/);
+ assert.ok(client.includes("status.textContent=query?visible.toLocaleString()+' matching calculator entries.':total.toLocaleString()+' entries across '+groups.length+' categories.';"));
 });
