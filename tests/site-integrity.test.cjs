@@ -1565,12 +1565,12 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
 
 test('homepage single-word search matches calculator names and explicit aliases, not unrelated keyword mentions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(homepage, /const nameMatch=terms\\.every\\(term=>matchesField\\(term,nameTokens,name\\)\\)/);
-  assert.match(homepage, /const keywordMatch=\\(query\\.includes\\(' '\\)&&keywords\\.includes\\(query\\)\\)/);
-  assert.match(homepage, /terms\\.length===1&&\\(synonyms\\[terms\\[0\\]\\]\\|\\|\\[\\]\\)\\.some/);
-  assert.match(homepage, /if\\(!nameMatch&&!keywordMatch&&!categoryOnlyMatch\\)continue/);
-  assert.doesNotMatch(homepage, /\\[item\\.name,item\\.category,item\\.keywords,item\\.description\\]/);
-  assert.match(homepage, /setSearchMode\\(false\\)/);
+  assert.match(homepage, /const nameMatch=terms\.every\(term=>matchesField\(term,nameTokens,name\)\)/);
+  assert.match(homepage, /const keywordMatch=\(query\.includes\(' '\)&&keywords\.includes\(query\)\)/);
+  assert.match(homepage, /terms\.length===1&&\(synonyms\[terms\[0\]\]\|\|\[\]\)\.some/);
+  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!categoryOnlyMatch\)continue/);
+  assert.doesNotMatch(homepage, /\[item\.name,item\.category,item\.keywords,item\.description\]/);
+  assert.match(homepage, /setSearchMode\(false\)/);
 });
 
 test('homepage calculator search results region has a valid accessible role', () => {
