@@ -11,6 +11,9 @@ const expected = [...new Set([...sitemap.matchAll(/<loc>(https:\/\/friendlycalcu
 const actual = new Set(index.map(item => item.url));
 const missing = expected.filter(url => !actual.has(url));
 const extra = index.map(item => item.url).filter(url => !expected.includes(url) && url !== '/international/vat-calculator.html');
+const report = { searchIndexCount: index.length, sitemapCalculatorUrlCount: expected.length, missingCount: missing.length, extraCount: extra.length, missing, extra };
+const reportArg = process.argv.find(arg => arg.startsWith('--report='));
+if (reportArg) fs.writeFileSync(reportArg.slice('--report='.length), JSON.stringify(report, null, 2));
 console.log('Search-index coverage: ' + index.length + ' entries; sitemap calculator URLs: ' + expected.length + '; missing: ' + missing.length + '; extra: ' + extra.length + '.');
 if (missing.length) {
   console.log('Missing from search index:');
