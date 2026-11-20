@@ -11,7 +11,7 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const SKIP = new Set(['.git', '.github', 'node_modules', 'tests', 'vendor', '_site', 'admin', 'avnish-ai']);
 const write = process.argv.includes('--write');
-const stats = { homepageUkTagsCorrected: 0, homepageUkCanonicalized: 0, sipEnTagsCorrected: 0, sipHiTagsCorrected: 0, emiRedirectAlternateTagsRemoved: 0, filesChanged: 0 };
+const stats = { homepageUkTagsCorrected: 0, homepageUkCanonicalized: 0, homepageUkDuplicatesRemoved: 0, sipEnTagsCorrected: 0, sipHiTagsCorrected: 0, emiRedirectAlternateTagsRemoved: 0, filesChanged: 0 };
 
 function walk(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -35,9 +35,16 @@ for (const file of walk(ROOT)) {
   }
 
   const nonCanonicalUkTag = '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/index.html">';
+  const canonicalUkTag = '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">';
   if (html.includes(nonCanonicalUkTag)) {
-    html = html.replaceAll(nonCanonicalUkTag, '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">');
-    stats.homepageUkCanonicalized += (html.split('<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">').length - 1);
+    if (html.includes(canonicalUkTag)) {
+      html = html.replace(nonCanonicalUkTag + '\\n', '');
+      html = html.replace(nonCanonicalUkTag, '');
+      stats.homepageUkDuplicatesRemoved++;
+    } else {
+      html = html.replaceAll(nonCanonicalUkTag, canonicalUkTag);
+      stats.homepageUkCanonicalized += (original.split(nonCanonicalUkTag).length - 1);
+    }
   }
 
   if (rel === 'calculators/sip-5000-monthly-calculator.html' || rel === 'hi/calculators/sip-5000-monthly-calculator.html') {
