@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/cross-browser.yml"
       - "tests/cross-browser-smoke.cjs"
+      - "tests/safari-smoke.cjs"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/site-chrome.js"
@@ -16,6 +17,7 @@ on:
     paths:
       - ".github/workflows/cross-browser.yml"
       - "tests/cross-browser-smoke.cjs"
+      - "tests/safari-smoke.cjs"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/site-chrome.js"
@@ -35,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, chrome, msedge, firefox, webkit, opera]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -47,9 +49,48 @@ jobs:
         run: |
           npm init -y
           npm install --no-save playwright
-          npx playwright install --with-deps ${{ matrix.browser }}
+          case "${{ matrix.browser }}" in
+            chrome)
+              npx playwright install --with-deps chromium
+              npx playwright install chrome
+              ;;
+            msedge)
+              npx playwright install --with-deps chromium
+              npx playwright install msedge
+              ;;
+            opera)
+              npx playwright install --with-deps chromium
+              curl -fsSL https://deb.opera.com/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/opera-archive-keyring.gpg
+              echo "deb [signed-by=/usr/share/keyrings/opera-archive-keyring.gpg] https://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera-stable.list
+              sudo apt-get update
+              sudo apt-get install -y opera-stable gsettings-desktop-schemas dbus-x11
+              echo "FC_OPERA_PATH=$(command -v opera)" >> "$GITHUB_ENV"
+              ;;
+            *)
+              npx playwright install --with-deps "${{ matrix.browser }}"
+              ;;
+          esac
       - name: Run cross-browser smoke tests against production
         env:
           FC_SITE_ORIGIN: https://friendlycalculator.in
           FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
+  safari-native:
+    name: Native Safari desktop/mobile smoke tests
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Selenium WebDriver
+        run: npm install --no-save selenium-webdriver
+      - name: Enable Safari WebDriver
+        run: sudo safaridriver --enable
+      - name: Run native Safari smoke tests against production
+        env:
+          FC_SITE_ORIGIN: https://friendlycalculator.in
+        run: node tests/safari-smoke.cjs
