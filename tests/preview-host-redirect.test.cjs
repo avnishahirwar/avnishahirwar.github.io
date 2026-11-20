@@ -38,3 +38,27 @@ test("production and unrelated Pages hosts are not redirected", async () => {
     assert.equal(await response.text(), "next");
   }
 });
+
+test("Netlify deploy-preview host redirects to production and preserves path/query", async () => {
+  const source = fs.readFileSync(path.join(__dirname, "../netlify/edge-functions/preview-host-redirect.js"), "utf8");
+  const encoded = Buffer.from(source).toString("base64");
+  const { default: handler, config } = await import(`data:text/javascript;base64,${encoded}`);
+  assert.equal(config.path, "/*");
+  const response = await handler(
+    new Request("https://deploy-preview-700--avnishahirwar.netlify.app/calculators/basic-calculator.html?value=9"),
+    { next: () => new Response("next") }
+  );
+  assert.equal(response.status, 301);
+  assert.equal(response.headers.get("location"), "https://friendlycalculator.in/calculators/basic-calculator.html?value=9");
+});
+
+test("Netlify production alias is not redirected", async () => {
+  const source = fs.readFileSync(path.join(__dirname, "../netlify/edge-functions/preview-host-redirect.js"), "utf8");
+  const encoded = Buffer.from(source).toString("base64");
+  const { default: handler } = await import(`data:text/javascript;base64,${encoded}`);
+  const response = await handler(
+    new Request("https://avnishahirwar.netlify.app/"),
+    { next: () => new Response("next") }
+  );
+  assert.equal(await response.text(), "next");
+});
