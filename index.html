@@ -297,6 +297,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <section class="home-note"><strong>About these tools:</strong> Calculators provide estimates based on the values and assumptions entered. Review each tool's method and limitations; verify important financial, tax or health decisions with the relevant official source or a qualified professional.</section>
 </main>
 
+<script src="/assets/calculator-search-matcher.js"></script>
 <script>
 (()=>{'use strict';
 const input=document.getElementById('fc-home-tool-search');
@@ -362,25 +363,8 @@ function render(items,raw){
  results.hidden=unique.length===0;
  status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+' in '+groups.size+' categories.':'No matching calculators found. Try a shorter name or topic.';
 }
-function matchesAllTerms(terms,tokens,field){
- return terms.every(term=>tokens.some(token=>token.startsWith(term))||
-  (synonyms[term]||[]).some(alias=>field.includes(normalize(alias))));
-}
 function getCalculatorMatch(item,terms,query){
- const name=normalize(item.name);
- const keywords=normalize(item.keywords);
- const category=normalize(displayCategory(item.category));
- const description=normalize(item.description);
- const nameMatch=matchesAllTerms(terms,name.split(' ').filter(Boolean),name);
- const keywordMatch=matchesAllTerms(terms,keywords.split(' ').filter(Boolean),keywords);
- const descriptionMatch=matchesAllTerms(terms,description.split(' ').filter(Boolean),description);
- const categoryOnlyMatch=matchesAllTerms(terms,category.split(' ').filter(Boolean),category);
- if(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch)return null;
- let score=nameMatch?120*terms.length:keywordMatch?60*terms.length:descriptionMatch?40*terms.length:25*terms.length;
- if(name===query)score+=1000;
- else if(name.startsWith(query))score+=500;
- else if(name.includes(query))score+=300;
- return score;
+ return window.FriendlyCalculatorSearchMatcher.getCalculatorMatch(item,terms,query,displayCategory(item.category));
 }
 
 async function search(){
