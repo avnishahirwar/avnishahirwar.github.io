@@ -59,7 +59,7 @@ test('Income Tax calculator reserves its dynamic form before JavaScript initiali
   assert.match(html, /\.fc-calculator-reserved\{min-height:520px\}/);
   assert.match(html, /@media\(max-width:640px\)\{\.fc-calculator-reserved\{min-height:680px\}/);
   assert.match(pageCalculators, /panel\.append\(form,output\);panel\.removeAttribute\("aria-busy"\)/);
-  assert.match(pageCalculators, /pageAliases\[normalizedPath\]\|\|pageAliases\[normalizedPath\+"\\.html"\]/);
+  assert.ok(pageCalculators.includes('pageAliases[normalizedPath]||pageAliases[normalizedPath+".html"]'));
 });
 
 test('every public sitemap page loads the shared site header and footer shell', () => {
