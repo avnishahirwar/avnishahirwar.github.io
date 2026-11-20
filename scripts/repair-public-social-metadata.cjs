@@ -64,7 +64,7 @@ function inspectAndRepair(relPath, html) {
 
   let updated = html;
   if (relPath === 'index.html') {
-    const homeTitle = 'Free Online Calculators | Friendly Calculator';
+    const homeTitle = 'Free Online Calculators India & Worldwide | EMI, GST & Tax';
     updated = updated.replace(/<title\b[^>]*>[\s\S]*?<\/title>/i, `<title>${homeTitle}</title>`);
     const existingOgTitle = getMeta(updated, 'og:title', 'property');
     if (existingOgTitle) updated = updated.replace(existingOgTitle.tag, `<meta property="og:title" content="${homeTitle}">`);
