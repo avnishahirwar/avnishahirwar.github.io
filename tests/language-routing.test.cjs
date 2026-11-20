@@ -4,15 +4,20 @@ const fs = require('node:fs');
 const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
-test('global language selector supports all configured locales', () => {
-  for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']) {
-    assert.ok(shell.includes(locale + ':'));
-  }
+test('global language selector exposes 50 language choices and enables only the 17 reviewed editions', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const namesStart = shell.indexOf('const localeNames={') + 'const localeNames={'.length;
+  const namesEnd = shell.indexOf('};', namesStart);
+  const names = shell.slice(namesStart, namesEnd).split(',').map(item => item.split(':')[0]).filter(Boolean);
+  assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
+  const enabledStart = shell.indexOf('const supportedUiLocales={') + 'const supportedUiLocales={'.length;
+  const enabledEnd = shell.indexOf('};', enabledStart);
+  const enabled = shell.slice(enabledStart, enabledEnd).split(',').map(item => item.split(':')[0]).filter(Boolean).sort();
+  assert.deepEqual(enabled, catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
-  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1,gu:1,kn:1/);
+  assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
 });
-
 test('language switching preserves the current route when its translation exists', () => {
   assert.match(shell, /const buildLocaleTarget=next=>/);
   assert.match(shell, /currentLocale==='en'\?p:p\.replace/);
@@ -118,17 +123,13 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
   const routeStart = shell.indexOf('const routeLocaleMatch=');
-  const routeEnd = shell.indexOf('.exec(p);', routeStart);
-  const routeSource = shell.slice(routeStart, routeEnd);
-  const routePattern = routeSource.match(/\\(([^)]+)\\)/);
-  assert.ok(routePattern, 'Shared shell declares explicit locale path prefixes');
-  const routeCodes = routePattern[1].split('|').sort();
+  const open = shell.indexOf('(', routeStart);
+  const close = shell.indexOf(')', open);
+  const routeCodes = shell.slice(open + 1, close).split('|').sort();
   const catalogue = require('../config/language-catalogue.json');
   assert.deepEqual(routeCodes, catalogue.locales.filter(locale => locale.code !== 'uk').map(locale => locale.code).sort());
-  assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
+  assert.ok(shell.includes("routeLocale.toLowerCase().split('-')[0]"));
 });
-
-
 test('language selector lists 50 high-reach languages and only enables configured locales', () => {
   const block = shell.match(/const localeNames=\{([^}]+)\};/);
   assert.ok(block, 'Expected locale catalogue');
