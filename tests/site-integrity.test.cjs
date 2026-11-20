@@ -21,6 +21,20 @@ function localFile(url, baseFile = 'index.html') {
   return target;
 }
 
+test('both shared shells load one production-only AdSense Auto Ads publisher and ads.txt stays authorized', () => {
+  const sharedShell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const homepageShell = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const adsTxt = fs.readFileSync(path.join(root, 'ads.txt'), 'utf8');
+  for (const shell of [sharedShell, homepageShell]) {
+    assert.match(shell, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=ca-pub-7201974268016404/);
+    assert.match(shell, /location\.hostname === 'friendlycalculator\.in'/);
+    assert.match(shell, /window\.self === window\.top/);
+    assert.match(shell, /get\('embed'\) !== '1'/);
+  }
+  assert.match(adsTxt, /^google\.com, pub-7201974268016404, DIRECT, f08c47fec0942fa0$/m);
+  assert.equal((adsTxt.match(/pub-\d+/g) || []).filter(id => id === 'pub-7201974268016404').length, 1);
+});
+
 test('international hub hero links meet the dark-header contrast style', () => {
   const html = fs.readFileSync(path.join(root, 'international/index.html'), 'utf8');
   assert.match(html, /\.hero\s+\.links\s+a\s*\{[^}]*color:\s*#e6d6b2/i);
