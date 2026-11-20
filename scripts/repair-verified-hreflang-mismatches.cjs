@@ -30,7 +30,7 @@ for (const file of walk(ROOT)) {
 
   const ukTag = '<link rel="alternate" hreflang="uk" href="https://friendlycalculator.in/uk/index.html">';
   if (html.includes(ukTag)) {
-    html = html.replaceAll(ukTag, '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/index.html">');
+    html = html.replaceAll(ukTag, '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">');
     stats.homepageUkTagsCorrected += (original.split(ukTag).length - 1);
   }
 
