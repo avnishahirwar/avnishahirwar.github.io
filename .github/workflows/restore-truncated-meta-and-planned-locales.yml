@@ -45,6 +45,7 @@ jobs:
           node scripts/repair-public-social-metadata.cjs --check
           node scripts/generate-sitemaps.cjs --check
           node scripts/generate-locale-sitemaps.cjs --check
+          node scripts/generate-reciprocal-hreflang.cjs --check
           node --test tests/human-sitemap.test.cjs
       - name: Run focused SEO tests
         run: |
