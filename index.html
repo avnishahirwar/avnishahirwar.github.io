@@ -305,12 +305,12 @@ let lastQuery='';
 const stopWords=new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
 const synonyms={gst:['goods and services tax'],emi:['loan installment','loan instalment'],sip:['systematic investment plan'],fd:['fixed deposit'],rd:['recurring deposit'],ppf:['public provident fund'],vat:['value added tax'],bmi:['body mass index'],roi:['return on investment'],hra:['house rent allowance'],tds:['tax deducted at source']};
 const normalize=value=>String(value||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const restrictedSearchContent=/\b(?:gun|firearm|bullet|ammo|ammunition|knife|knives|sword|weapon|alcohol|beer|wine|liquor|intoxicat|blood alcohol|\bbac\b|drug|cannabis|marijuana|casino|gambling|betting|wager|poker|lottery)\b/i;\nconst escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-searchfix3',{credentials:'same-origin',cache:'no-store'})
    .then(response=>{if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
-   .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Invalid search index');return items.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&x.url.startsWith('/'));})
+   .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Invalid search index');return items.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&x.url.startsWith('/')&&!restrictedSearchContent.test([x.name,x.category,x.keywords,x.description].join(' ')));})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
