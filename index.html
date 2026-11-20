@@ -362,6 +362,27 @@ function render(items,raw){
  results.hidden=unique.length===0;
  status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+' in '+groups.size+' categories.':'No matching calculators found. Try a shorter name or topic.';
 }
+function matchesAllTerms(terms,tokens,field){
+ return terms.every(term=>tokens.some(token=>token.startsWith(term))||
+  (synonyms[term]||[]).some(alias=>field.includes(normalize(alias))));
+}
+function getCalculatorMatch(item,terms,query){
+ const name=normalize(item.name);
+ const keywords=normalize(item.keywords);
+ const category=normalize(displayCategory(item.category));
+ const description=normalize(item.description);
+ const nameMatch=matchesAllTerms(terms,name.split(' ').filter(Boolean),name);
+ const keywordMatch=matchesAllTerms(terms,keywords.split(' ').filter(Boolean),keywords);
+ const descriptionMatch=matchesAllTerms(terms,description.split(' ').filter(Boolean),description);
+ const categoryOnlyMatch=matchesAllTerms(terms,category.split(' ').filter(Boolean),category);
+ if(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch)return null;
+ let score=nameMatch?120*terms.length:keywordMatch?60*terms.length:descriptionMatch?40*terms.length:25*terms.length;
+ if(name===query)score+=1000;
+ else if(name.startsWith(query))score+=500;
+ else if(name.includes(query))score+=300;
+ return score;
+}
+
 async function search(){
  const raw=input.value.trim();const query=normalize(raw);
  if(!query){lastQuery='';setSearchMode(false);results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
@@ -373,26 +394,8 @@ async function search(){
   const items=await loadCatalogue();if(lastQuery!==query)return;
   const matches=[];
   for(const item of items){
-   const name=normalize(item.name);
-   const keywords=normalize(item.keywords);
-   const category=normalize(displayCategory(item.category));
-   const nameTokens=name.split(' ').filter(Boolean);
-   const keywordTokens=keywords.split(' ').filter(Boolean);
-   const categoryTokens=category.split(' ').filter(Boolean);
-   const matchesField=(term,tokens,field)=>tokens.some(token=>token.startsWith(term))||
-    (synonyms[term]||[]).some(alias=>field.includes(normalize(alias)));
-   const categoryOnlyMatch=query===category||terms.every(term=>categoryTokens.some(token=>token.startsWith(term)));
-   let score=0,ok=true;
-   for(const term of terms){
-    const inName=matchesField(term,nameTokens,name);
-    const inKeywords=matchesField(term,keywordTokens,keywords);
-    if(!inName&&!inKeywords&&!categoryOnlyMatch){ok=false;break;}
-    score+=inName?120:inKeywords?60:25;
-   }
-   if(!ok)continue;
-   if(name===query)score+=1000;
-   else if(name.startsWith(query))score+=500;
-   else if(name.includes(query))score+=300;
+   const score=getCalculatorMatch(item,terms,query);
+   if(score===null)continue;
    matches.push({...item,_score:score});
   }
   matches.sort((a,b)=>b._score-a._score||a.name.localeCompare(b.name));render(matches,raw);

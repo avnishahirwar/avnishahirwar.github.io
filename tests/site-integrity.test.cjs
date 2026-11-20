@@ -1518,7 +1518,8 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
-  assert.match(homepage, /items\.some\(item=>!item/);
+  assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
+  assert.match(homepage, /function matchesAllTerms\(terms,tokens,field\)/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
@@ -1534,7 +1535,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     'The homepage must not embed the full calculator catalogue');
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
   const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
-  assert.equal((popular.match(/<a\s/g) || []).length, 18, 'Homepage must show exactly 18 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 19, 'Homepage must show exactly 19 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
@@ -1562,6 +1563,54 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     assert.doesNotThrow(() => new vm.Script(script[1]), 'Homepage inline script ' + (index + 1) + ' must parse');
   }
 });
+
+test('human sitemap contains every canonical search-index URL once and is reproducibly generated', () => {
+  const humanSitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
+  const entries = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const urls = [...humanSitemap.matchAll(/<li class="sitemap-item" data-search="[^"]*"><a href="([^"]+)">/g)]
+    .map(match => match[1]);
+  assert.equal(urls.length, entries.length);
+  assert.equal(new Set(urls).size, urls.length);
+  assert.deepEqual([...urls].sort(), entries.map(entry => entry.url).sort());
+  const categories = new Set(entries.map(entry => (entry.category || 'Other').trim().toLocaleLowerCase('en')));
+  assert.equal((humanSitemap.match(/<details class="sitemap-category"/g) || []).length, categories.size);
+  const { renderHumanSitemap } = require('../scripts/generate-human-sitemap.cjs');
+  assert.equal(renderHumanSitemap(humanSitemap, entries), humanSitemap);
+});
+
+
+test('homepage search requires all query terms to match coherently within one field', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const vm = require('node:vm');
+  const matcher = homepage.match(/function matchesAllTerms\(terms,tokens,field\)\{[\s\S]*?\n\}/);
+  const scorer = homepage.match(/function getCalculatorMatch\(item,terms,query\)\{[\s\S]*?\n\}/);
+  assert.ok(matcher && scorer, 'Homepage must define testable all-term matching and scoring helpers');
+  const getCalculatorMatch = vm.runInNewContext(matcher[0] + '\n' + scorer[0] + '\ngetCalculatorMatch', {
+    normalize: value => String(value || '').toLowerCase(),
+    displayCategory: value => value || 'Other',
+    synonyms: {}
+  });
+  const splitFieldMatch = {
+    name: 'Home Loan Calculator',
+    keywords: 'mortgage emi repayment',
+    category: 'Finance',
+    description: 'Estimate a monthly mortgage repayment.'
+  };
+  assert.equal(getCalculatorMatch(splitFieldMatch, ['loan', 'tax'], 'loan tax'), null,
+    'A name match and an unrelated keyword must not be combined');
+  assert.ok(getCalculatorMatch({
+    name: 'Loan EMI Calculator', keywords: 'loan emi repayment',
+    category: 'Finance', description: 'Estimate a monthly loan payment.'
+  }, ['loan', 'emi'], 'loan emi') > 0);
+  assert.ok(getCalculatorMatch({
+    name: 'Monthly Salary Calculator', keywords: 'income salary tax',
+    category: 'Tax Salary Payroll', description: 'Estimate take-home pay.'
+  }, ['salary', 'tax'], 'salary tax') > 0);
+  assert.match(homepage, /const nameMatch=matchesAllTerms\(terms,name\.split/);
+  assert.match(homepage, /const keywordMatch=matchesAllTerms\(terms,keywords\.split/);
+  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\)return null/);
+});
+
 
 test('homepage calculator search results region has a valid accessible role', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
