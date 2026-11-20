@@ -6,7 +6,7 @@ const root = require('node:path').resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { expectedSearchIndexLength } = catalogueCounts;
 
-test('Study Calculator is indexed, discoverable and uses the published catalogue count', () => {
+test('Study Calculator is indexed and discoverable through the dynamic homepage search', () => {
   const index = JSON.parse(fs.readFileSync(root + '/assets/calculator-search-index.json', 'utf8'));
   const page = fs.readFileSync(root + '/calculators/study-calculator.html', 'utf8');
   const directory = fs.readFileSync(root + '/calculator/site-directory.html', 'utf8');
@@ -14,7 +14,8 @@ test('Study Calculator is indexed, discoverable and uses the published catalogue
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(index.some(item => item.name === 'Study Calculator' && item.url === '/calculators/study-calculator.html'));
   assert.match(directory, /href="\/calculators\/study-calculator\.html"/);
-  assert.ok(home.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.match(home, /id="fc-home-tool-search" type="search"/);
+  assert.match(home, /Search all calculators/);
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /rel="canonical"/);
   assert.match(page, /EducationalApplication/);
