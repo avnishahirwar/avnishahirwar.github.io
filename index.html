@@ -382,7 +382,7 @@ async function search(){
    const matchesField=(term,tokens,field)=>tokens.some(token=>token.startsWith(term))||
     (synonyms[term]||[]).some(alias=>field.includes(normalize(alias)));
    const nameMatch=terms.every(term=>matchesField(term,nameTokens,name));
-   const keywordMatch=keywords.includes(query)||
+   const keywordMatch=(query.includes(' ')&&keywords.includes(query))||
     (terms.length===1&&(synonyms[terms[0]]||[]).some(alias=>keywords.includes(normalize(alias))));
    const categoryOnlyMatch=query===category||
     (terms.length>1&&terms.every(term=>categoryTokens.some(token=>token.startsWith(term))));
