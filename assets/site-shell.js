@@ -489,7 +489,7 @@ const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Preserve original locale controls for FCLocale; visible controls are promoted into the Header.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=countryControl+unitControl;
+  regionalMarkup.innerHTML=countryControl+(preserveStaticHomepageHeader?'':unitControl);
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
 }
