@@ -1518,7 +1518,7 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
-  assert.match(homepage, /items\.some\(item=>!item/);
+  assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
@@ -1534,7 +1534,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     'The homepage must not embed the full calculator catalogue');
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
   const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
-  assert.equal((popular.match(/<a\s/g) || []).length, 18, 'Homepage must show exactly 18 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 19, 'Homepage must show exactly 19 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
@@ -1562,6 +1562,17 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     assert.doesNotThrow(() => new vm.Script(script[1]), 'Homepage inline script ' + (index + 1) + ' must parse');
   }
 });
+
+test('homepage search returns only calculator-name, exact keyword-phrase or category matches', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.match(homepage, /const nameMatch=terms\.every\(term=>matchesField\(term,nameTokens,name\)\)/);
+  assert.match(homepage, /const keywordMatch=\(query\.includes\(' '\)&&keywords\.includes\(query\)\)/);
+  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!categoryOnlyMatch\)continue/);
+  assert.doesNotMatch(homepage, /\[item\.name,item\.category,item\.keywords,item\.description\]/);
+  assert.match(homepage, /\.home-main\.fc-search-active> :not\(\.home-tool-search\)/);
+  assert.match(homepage, /setSearchMode\(false\)/);
+});
+
 
 test('homepage calculator search results region has a valid accessible role', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
