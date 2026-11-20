@@ -2288,7 +2288,7 @@ test('homepage search accepts the generated catalogue without a hard-coded entry
   assert.ok(Array.isArray(searchIndex) && searchIndex.length > 0, 'Generated search index must be a non-empty array.');
   assert.equal(new Set(searchIndex.map(item => item.url)).size, searchIndex.length, 'Search index URLs must be unique.');
   assert.ok(searchIndex.every(item => item && typeof item.name === 'string' && item.name.trim() && typeof item.url === 'string' && item.url.startsWith('/') && typeof item.category === 'string'), 'Every search record must include a name, local URL and category.');
-  assert.doesNotMatch(homepage, /items\\.length!==\\d+/, 'Homepage search must not depend on a fixed catalogue size.');
+  assert.doesNotMatch(homepage, /items\.length!==\d+/, 'Homepage search must not depend on a fixed catalogue size.');
   assert.ok(homepage.includes('new Set(items.map(item=>item.url)).size!==items.length'), 'Runtime validation must reject duplicate URLs.');
-  assert.doesNotMatch(homepage, /Search all \\d+ calculators|Browse \\d+ calculators across \\d+ categories/, 'Homepage labels must not advertise stale hard-coded totals.');
+  assert.doesNotMatch(homepage, /Search all \d+ calculators|Browse \d+ calculators across \d+ categories/, 'Homepage labels must not advertise stale hard-coded totals.');
 });
