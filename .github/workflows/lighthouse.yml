@@ -163,6 +163,12 @@ jobs:
             jq -r '(.audits["layout-shift-elements"].details.items // [])[:5][] | "- " + (.node.selector // "unknown") + " — " + (.node.snippet // "") + " (score " + ((.score // 0) | tostring) + ")"' "lighthouse-results/$name.json"
             echo "LCP element ($name):"
             jq -r '.audits["largest-contentful-paint-element"].details.items[0].node.snippet // "not reported"' "lighthouse-results/$name.json"
+            echo "Redirect chain details ($name):"
+            jq -r '(.audits.redirects.details.items // [])[:8][] | "- " + (.url // "unknown URL") + " -> " + (.redirectTarget // .finalUrl // "redirect target not reported")' "lighthouse-results/$name.json"
+            echo "Render-blocking resource details ($name):"
+            jq -r '(.audits["render-blocking-resources"].details.items // [])[:8][] | "- " + (.url // .request.url // "unknown URL") + " (" + (((.wastedMs // 0) | round) | tostring) + " ms)"' "lighthouse-results/$name.json"
+            echo "CLS audit diagnostics ($name):"
+            jq -r '{layout_shift_elements: .audits["layout-shift-elements"].details.items[:8], layout_shift_culprits: .audits["layout-shift-culprits"].details.items[:8], layout_shifts: .audits["layout-shifts"].details.items[:8]} | to_entries[] | .key as $key | (.value // [])[]? | "- " + $key + ": " + ((.node.selector // .node.snippet // .url // .reason // .summary // "diagnostic detail unavailable") | tostring)' "lighthouse-results/$name.json"
           done <<URLS
           homepage|${BASE_URL}/
           directory|${BASE_URL}/calculator/site-directory.html
