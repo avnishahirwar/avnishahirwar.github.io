@@ -52,6 +52,11 @@ test('AdSense auto ads are excluded from navigation, contact and interactive cal
     assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
   }
 });
+test('shared shell does not inject the full calculator catalogue when a focused bundle is present', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /\['\/assets\/page-calculators\.js','\/assets\/income-tax-calculator\.js'\]/);
+});
+
 test('Income Tax calculator loads its focused calculator bundle instead of the full catalogue bundle', () => {
   const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
   const focused = fs.readFileSync(path.join(root, 'assets/income-tax-calculator.js'), 'utf8');
