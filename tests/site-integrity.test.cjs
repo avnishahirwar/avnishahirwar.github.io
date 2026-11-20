@@ -404,7 +404,8 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily &amp; Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
-  assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
+  assert.ok(salary.includes('Explore the full calculator catalogue on Friendly Calculator.'));
+  assert.doesNotMatch(salary, /Explore all \\d+ calculators on Friendly Calculator/);
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
 
@@ -1283,7 +1284,8 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
 test('homepage category summary and directory markup match the published catalogue', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  assert.match(homepage, /organised into clearly labelled categories/);
+  assert.ok(homepage.includes('<nav class="home-category-index"'));
+  assert.ok(homepage.includes('home-category-directory'));
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse calculators by category'));
 });
@@ -1470,9 +1472,8 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
-  assert.ok(page.includes("link.href='/assets/site-shell.css'"));
-  assert.ok(page.includes("requestIdleCallback(loadShellStyles,{timeout:1200})"));
+  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
   assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
 });
 
@@ -1622,9 +1623,9 @@ test('homepage exposes crawlable internal links to Hindi and Arabic language edi
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
   assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
-  assert.ok(homepage.includes('name="description" content="Clear calculators for wealth planning, property investment, loan EMI, GST, income tax, savings and everyday maths in India and worldwide."'));
+  assert.ok(homepage.includes('name="description" content="Free online calculators for users worldwide, including loan EMI, tax, savings, business, maths and everyday calculations."'));
   assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
-  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators | Friendly Calculator"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
