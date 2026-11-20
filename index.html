@@ -300,7 +300,7 @@ let lastQuery='';
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 function loadCatalogue(){
  if(!cataloguePromise){
-  cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
+  cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'no-store'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
    .then(items=>{if(!Array.isArray(items)||!items.length||items.some(item=>!item||typeof item.name!=='string'||typeof item.url!=='string'||!item.url.startsWith('/')))throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
