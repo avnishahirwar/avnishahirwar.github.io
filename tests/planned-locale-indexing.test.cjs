@@ -21,6 +21,7 @@ test('planned language editions are not indexable until reviewed translations ar
   const pages = walk(root);
   const failures = [];
   for (const file of pages) {
+    if (file === 'uk/index.html') continue; // UK country hub, not Ukrainian language content.
     const locale = file.split('/')[0];
     if (!planned.includes(locale)) continue;
     const html = fs.readFileSync(path.join(root, file), 'utf8');
@@ -28,6 +29,13 @@ test('planned language editions are not indexable until reviewed translations ar
     if (!/noindex/i.test(robots)) failures.push(file);
   }
   assert.deepEqual(failures, [], 'Planned locale pages must carry noindex until translation QA is complete');
+});
+
+test('United Kingdom country hub stays indexable and is not treated as Ukrainian locale content', () => {
+  const html = fs.readFileSync(path.join(root, 'uk/index.html'), 'utf8');
+  assert.match(html, /<html lang="en-GB">/);
+  assert.match(html, /<meta name="robots" content="index,follow/);
+  assert.match(html, /hreflang="en-GB"/);
 });
 
 test('generated sitemaps do not list planned locale routes', () => {
