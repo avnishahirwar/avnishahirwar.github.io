@@ -228,7 +228,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
-  assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
+  assert.deepEqual(routed.sort(), catalogue.locales.map(locale => locale.code).sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
