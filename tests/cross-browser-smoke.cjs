@@ -137,7 +137,7 @@ async function checkPage(browser, url, label, viewport) {
     assert.ok(metric.selectRight <= panelRight + 2, label + ': Settings selector must stay inside the panel');
   }
   if (viewport.width <= 760) {
-    await page.locator('button.fc-display-backdrop').click({ force: true });
+    await page.locator('button.fc-display-close-top').click();
     await panel.waitFor({ state: 'hidden', timeout: 10000 });
     const navToggle = page.locator('button.fc-nav-toggle');
     await navToggle.click();
