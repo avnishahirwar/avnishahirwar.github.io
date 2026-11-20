@@ -2334,7 +2334,7 @@ test('homepage language coverage copy matches the currently published locale cat
 test('homepage calculator search matcher avoids unrelated cross-field matches', () => {
   const matcher = require(path.join(root, 'assets/calculator-search-matcher.js'));
   const match = (item, query) => {
-    const terms = matcher.normalize(query).split(/\\s+/).filter(Boolean)
+    const terms = matcher.normalize(query).split(/\s+/).filter(Boolean)
       .filter(term => !['calculator', 'calculators', 'calculate', 'online', 'free', 'the', 'for', 'a', 'an', 'of', 'and', 'tool', 'tools'].includes(term));
     return matcher.getCalculatorMatch(item, terms, query, item.category);
   };
