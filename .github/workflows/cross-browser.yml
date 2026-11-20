@@ -70,9 +70,9 @@ jobs:
               npx playwright install --with-deps "${{ matrix.browser }}"
               ;;
           esac
-      - name: Run cross-browser smoke tests against production
+      - name: Run cross-browser smoke tests against PR preview or production
         env:
-          FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_SITE_ORIGIN: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--avnishahirwar.netlify.app', github.event.pull_request.number) || 'https://friendlycalculator.in' }}
           FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
   safari-native:
@@ -90,7 +90,7 @@ jobs:
         run: npm install --no-save selenium-webdriver
       - name: Enable Safari WebDriver
         run: sudo safaridriver --enable
-      - name: Run native Safari smoke tests against production
+      - name: Run native Safari smoke tests against PR preview or production
         env:
-          FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_SITE_ORIGIN: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--avnishahirwar.netlify.app', github.event.pull_request.number) || 'https://friendlycalculator.in' }}
         run: node tests/safari-smoke.cjs
