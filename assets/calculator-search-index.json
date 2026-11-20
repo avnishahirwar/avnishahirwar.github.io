@@ -21875,5 +21875,19 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "wealth goal calculator target wealth monthly investing current savings inflation assumed return timeline",
     "description": "Estimate a possible timeline toward a custom wealth goal using current savings, monthly contributions, assumed returns and inflation."
+  },
+  {
+    "name": "UK Student Loan Calculator",
+    "url": "/international/uk-student-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "uk student loan calculator student loan repayment plan 1 plan 2 plan 4 plan 5 postgraduate loan threshold income united kingdom",
+    "description": "Estimate UK student-loan repayments from income and selected repayment plan assumptions. Check current official thresholds and payroll rules."
+  },
+  {
+    "name": "US Home Affordability Calculator",
+    "url": "/international/us-home-affordability-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "us home affordability calculator mortgage affordability home price monthly income debt to income dti down payment interest rate property tax homeowners insurance",
+    "description": "Estimate a home purchase price from household income, debts, down payment and assumed mortgage costs."
   }
 ]

@@ -5,7 +5,16 @@ module.exports = function getCatalogueCounts(root) {
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
   const canonicalCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/')))].sort();
-  const expectedSearchIndexUrls = [...new Set([...canonicalCalculatorUrls, ...(sitemapUrls.some(url => new URL(url).pathname === '/international/vat-calculator.html') ? ['/international/vat-calculator.html'] : [])])].sort();
+  const searchableInternationalPaths = [
+    '/international/vat-calculator.html',
+    '/international/uk-student-loan-calculator.html',
+    '/international/us-home-affordability-calculator.html'
+  ];
+  const expectedSearchIndexUrls = [...new Set([
+    ...canonicalCalculatorUrls,
+    ...searchableInternationalPaths.filter(pathname =>
+      sitemapUrls.some(url => new URL(url).pathname === pathname))
+  ])].sort();
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   const coreCalculatorUrls = [...new Set(sections.flatMap(s => [...s[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])))].sort();

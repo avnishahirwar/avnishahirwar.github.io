@@ -28,8 +28,9 @@ test('shared footer exposes sitemap in every supported language',()=>{
 
 test('human sitemap generator reproduces the checked-in complete catalogue without changing the site shell',()=>{
  assert.equal(renderHumanSitemap(html,entries),html);
- assert.match(html,/data-sitemap-total="3127"/);
- assert.ok(html.includes('<strong>3,127</strong> public catalogue entries'));
+ assert.match(html,/data-sitemap-total="3129"/);
+ assert.ok(html.includes('<strong>3,129</strong> public catalogue entries'));
  assert.ok(html.includes('<strong>3,126</strong> calculator pages'));
+ assert.ok(html.includes('<strong>3</strong> international entries'));
  assert.ok(html.includes('<strong>36</strong> catalogue categories'));
 });
