@@ -885,7 +885,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const counts = new Map();
   for (const section of sections) {
     const id = section[1], body = section[2];
-    const declared = Number((body.match(/<strong>(\d+) tools?<\/strong>/) || [])[1]);
+    const declaration = body.match(/<strong>(\d+) (?:tools|calculators?)(?: \+ (\d+) shortcut)?<\/strong>/);
+    const declared = declaration ? Number(declaration[1]) + Number(declaration[2] || 0) : NaN;
     const count = [...body.matchAll(/href="\/calculators\/[^"]+"/g)].length;
     assert.equal(declared, count);
     counts.set(id, declared);
