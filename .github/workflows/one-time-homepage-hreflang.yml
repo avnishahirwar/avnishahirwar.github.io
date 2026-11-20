@@ -33,3 +33,5 @@ jobs:
           git push origin "HEAD:refs/heads/$BRANCH"
 
 # Retry after correcting the script's escaping.
+
+# Retry after making the locale normalizer idempotent.
