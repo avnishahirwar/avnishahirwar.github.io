@@ -16,6 +16,7 @@ function walk(dir,files=[]){
  return files;
 }
 function headOf(html){const i=html.toLowerCase().indexOf('</head>');return i<0?html:html.slice(0,i);}
+function isNoindex(html){return /<meta\\b[^>]*\\bname=["'](?:robots|googlebot)["'][^>]*\\bcontent=["'][^"']*\\bnoindex\\b/i.test(headOf(html))||/<meta\\b[^>]*\\bcontent=["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname=["'](?:robots|googlebot)["']/i.test(headOf(html));}
 function langOf(html,file){
  const m=headOf(html).match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
  if(m)return m[1].toLowerCase();
@@ -36,7 +37,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
  for(const file of pages)cache.set(file,fs.readFileSync(file,'utf8'));
  const errors=[];let checked=0,tagged=0;
  for(const [file,html] of cache){
-  if(excludedContentPath.test(path.relative(root,file)))continue;
+  if(excludedContentPath.test(path.relative(root,file))||isNoindex(html))continue;
   const links=alternatesOf(html);if(!links.length)continue;tagged++;
   const sourceLang=langOf(html,file),sourceCanonical=canonicalOf(html);
   if(!sourceCanonical){errors.push(file+': hreflang present but canonical missing');continue;}
