@@ -85,7 +85,7 @@ test('every public sitemap page loads the shared site header and footer shell', 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const pathname = new URL(url).pathname;
-    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
+    const expectedShell = '/assets/site-shell.js';
     if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
@@ -250,15 +250,7 @@ test('shared Header follows the same navigation and regional-control order on ev
     renderedLast = index;
   }
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
-  const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
-  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
-  let homepageLast = -1;
-  for (const token of homepageOrder) {
-    const index = homepageNav.indexOf(token);
-    assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
-    homepageLast = index;
-  }
+  assert.ok(homepage.includes('/assets/site-shell.js'), 'Homepage must load the canonical shared Header/Footer shell.');
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
   assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
