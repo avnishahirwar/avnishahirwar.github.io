@@ -22,6 +22,10 @@ jobs:
         run: node scripts/repair-public-social-metadata.cjs --write
       - name: Verify all public pages now have social metadata
         run: node scripts/repair-public-social-metadata.cjs --check
+      - name: Add missing calculator search-index entries
+        run: node scripts/repair-calculator-search-index.cjs --write
+      - name: Verify the complete calculator search index
+        run: node scripts/repair-calculator-search-index.cjs --check
       - name: Commit metadata-only repairs to the open SEO pull request
         env:
           BRANCH: seo/repair-public-social-metadata
