@@ -31,3 +31,5 @@ jobs:
           git add sitemap.html
           git commit -m "Refresh human sitemap from the full calculator index"
           git push origin "HEAD:refs/heads/$BRANCH"
+
+# Retry after fixing the sitemap container boundary.
