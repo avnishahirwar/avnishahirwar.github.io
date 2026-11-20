@@ -13,6 +13,7 @@ const SKIP_DIRS = new Set([
 const SKIP_FILES = new Set(['404.html', 'offline.html']);
 const SKIP_PATHS = new Set([
   'calculator/admin.html',
+  'uk/index.html', // United Kingdom country hub, not a Ukrainian locale edition.
   'google09d3278d6d57b1a4.html',
   'map.html',
   'maps.html',
