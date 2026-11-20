@@ -24,14 +24,14 @@ test('planned language editions are not indexable until reviewed translations ar
     const locale = file.split('/')[0];
     if (!planned.includes(locale)) continue;
     const html = fs.readFileSync(path.join(root, file), 'utf8');
-    const robots = (html.match(/<meta\\b(?=[^>]*\\bname=["']robots["'])[^>]*>/i) || [])[0] || '';
+    const robots = (html.match(/<meta\b(?=[^>]*\bname=["']robots["'])[^>]*>/i) || [])[0] || '';
     if (!/noindex/i.test(robots)) failures.push(file);
   }
   assert.deepEqual(failures, [], 'Planned locale pages must carry noindex until translation QA is complete');
 });
 
 test('generated sitemaps do not list planned locale routes', () => {
-  for (const file of fs.readdirSync(root).filter(name => /^sitemap.*\\.xml$/.test(name))) {
+  for (const file of fs.readdirSync(root).filter(name => /^sitemap.*\.xml$/.test(name))) {
     const xml = fs.readFileSync(path.join(root, file), 'utf8');
     for (const locale of planned) {
       assert.doesNotMatch(xml, new RegExp('https://friendlycalculator\\.in/' + locale + '/'), file + ' contains planned locale ' + locale);
