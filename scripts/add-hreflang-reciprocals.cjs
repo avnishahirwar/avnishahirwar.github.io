@@ -38,8 +38,8 @@ function canonicalOf(html) {
   } catch { return null; }
 }
 function isNoindex(html) {
-  return /<meta\\b[^>]*\\bname=["'](?:robots|googlebot)["'][^>]*\\bcontent=["'][^"']*\\bnoindex\\b/i.test(html) ||
-    /<meta\\b[^>]*\\bcontent=["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname=["'](?:robots|googlebot)["']/i.test(html);
+  return /<meta\b[^>]*\bname=["'](?:robots|googlebot)["'][^>]*\bcontent=["'][^"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent=["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname=["'](?:robots|googlebot)["']/i.test(html);
 }
 function linksOf(html) {
   return [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
