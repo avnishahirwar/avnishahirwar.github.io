@@ -3,44 +3,109 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const languageCatalogue = require('../config/language-catalogue.json');
 
-const DEFAULT_LOCALES = ['hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'de', 'ja', 'ru'];
-const SKIP_DIRS = new Set(['.git', 'node_modules', '.github', 'vendor', 'dist', 'coverage', 'artifacts']);
+const DEFAULT_LOCALES = languageCatalogue.locales
+  .map(locale => locale.code)
+  .filter(code => code !== languageCatalogue.defaultLocale);
+const SKIP_DIRS = new Set([
+  '.git', '.github', 'node_modules', 'vendor', 'dist', 'coverage',
+  'artifacts', 'admin', 'avnish-ai', 'tests'
+]);
+const SKIP_FILES = new Set(['404.html', 'offline.html']);
 
 function walkHtml(root, relative = '') {
   const absolute = path.join(root, relative);
   if (!fs.existsSync(absolute)) return [];
-  return fs.readdirSync(absolute, { withFileTypes: true }).flatMap((entry) => {
+  return fs.readdirSync(absolute, { withFileTypes: true }).flatMap(entry => {
     if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) return [];
+      if (entry.name.startsWith('.') || SKIP_DIRS.has(entry.name)) return [];
       return walkHtml(root, path.join(relative, entry.name));
     }
-    return entry.isFile() && entry.name.toLowerCase().endsWith('.html')
-      ? [path.join(relative, entry.name).split(path.sep).join('/')]
-      : [];
+    if (!entry.isFile() || !entry.name.toLowerCase().endsWith('.html') ||
+        SKIP_FILES.has(entry.name.toLowerCase())) return [];
+    return [path.join(relative, entry.name).split(path.sep).join('/')];
+  });
+}
+
+function readPublicPages(root, files) {
+  const pages = [];
+  let excludedNoindexPageCount = 0;
+  for (const file of files) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    const noindex = /<meta\b[^>]*(?:name\s*=\s*["'](?:robots|googlebot)["'][^>]*content\s*=\s*["'][^"']*\bnoindex\b|content\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*name\s*=\s*["'](?:robots|googlebot)["'])/i.test(html);
+    if (noindex) {
+      excludedNoindexPageCount++;
+      continue;
+    }
+    pages.push({ file, html });
+  }
+  return { pages, excludedNoindexPageCount };
+}
+
+function localePrefix(file, localeSet) {
+  const first = file.split('/')[0];
+  return localeSet.has(first) ? first : null;
+}
+
+function hasHreflang(html, locale, urlPath) {
+  const tags = html.match(/<link\b[^>]*\brel\s*=\s*["']alternate["'][^>]*>/gi) || [];
+  return tags.some(tag => {
+    const lang = tag.match(/\bhreflang\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase();
+    const href = tag.match(/\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (lang !== locale) return false;
+    try {
+      const url = new URL(href, 'https://friendlycalculator.in');
+      return url.origin === 'https://friendlycalculator.in' &&
+        url.pathname.replace(/index\.html$/, '') === urlPath.replace(/index\.html$/, '');
+    } catch {
+      return false;
+    }
   });
 }
 
 function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
   const allHtml = walkHtml(root);
+  const { pages, excludedNoindexPageCount } = readPublicPages(root, allHtml);
   const localeSet = new Set(locales);
-  const englishPages = allHtml.filter((file) => !localeSet.has(file.split('/')[0]));
+  const englishPages = pages.filter(page => !localePrefix(page.file, localeSet));
   const byLocale = {};
+
   for (const locale of locales) {
-    const present = new Set(allHtml.filter((file) => file.startsWith(locale + '/'))
-      .map((file) => file.slice(locale.length + 1)));
-    const missing = englishPages.filter((file) => !present.has(file));
+    const present = pages.filter(page => localePrefix(page.file, localeSet) === locale);
+    const presentPaths = new Set(present.map(page => page.file.slice(locale.length + 1)));
+    const missing = englishPages.filter(page => !presentPaths.has(page.file));
+    let missingLangCount = 0;
+    let missingSiteShellCount = 0;
+    let missingHreflangCount = 0;
+
+    for (const page of present) {
+      const lang = page.html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase();
+      if (lang !== locale.toLowerCase()) missingLangCount++;
+      if (!/\/assets\/site-shell\.js(?:[?#"'])/i.test(page.html)) missingSiteShellCount++;
+      const englishPath = page.file.slice(locale.length + 1);
+      if (!hasHreflang(page.html, 'en', englishPath)) missingHreflangCount++;
+    }
+
     byLocale[locale] = {
-      translatedPageCount: present.size,
+      translatedPageCount: present.length,
       englishPageCount: englishPages.length,
-      coveragePercent: englishPages.length ? Number(((englishPages.length - missing.length) / englishPages.length * 100).toFixed(1)) : 0,
+      coveragePercent: englishPages.length
+        ? Number(((englishPages.length - missing.length) / englishPages.length * 100).toFixed(1))
+        : 0,
       missingCount: missing.length,
-      missingPages: missing.sort()
+      missingPages: missing.map(page => page.file).sort(),
+      missingLangCount,
+      missingSiteShellCount,
+      missingHreflangCount
     };
   }
+
   return {
     generatedAt: new Date().toISOString(),
     englishPageCount: englishPages.length,
+    publicIndexableEnglishPageCount: englishPages.length,
+    excludedNoindexPageCount,
     htmlPageCount: allHtml.length,
     locales: byLocale
   };
@@ -48,20 +113,20 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
 
 function renderMarkdown(report) {
   const rows = Object.entries(report.locales).map(([locale, data]) =>
-    `| ${locale} | ${data.translatedPageCount} | ${data.englishPageCount} | ${data.coveragePercent}% | ${data.missingCount} |`
+    `| ${locale} | ${data.translatedPageCount} | ${data.englishPageCount} | ${data.coveragePercent}% | ${data.missingCount} | ${data.missingLangCount} | ${data.missingSiteShellCount} | ${data.missingHreflangCount} |`
   );
   return [
     '# Locale page coverage audit',
     '',
     `Generated: ${report.generatedAt}`,
     '',
-    `English/root HTML pages: **${report.englishPageCount}**. Total HTML files: **${report.htmlPageCount}**.`,
+    `Public indexable English/root HTML pages: **${report.publicIndexableEnglishPageCount}**. Total HTML files: **${report.htmlPageCount}**. Excluded noindex pages: **${report.excludedNoindexPageCount}**.`,
     '',
-    '| Locale | Existing locale pages | English pages | Path coverage | Missing paths |',
-    '|---|---:|---:|---:|---:|',
+    '| Locale | Existing locale pages | English pages | Path coverage | Missing paths | Missing lang | Missing site shell | Missing English hreflang |',
+    '|---|---:|---:|---:|---:|---:|---:|---:|',
     ...rows,
     '',
-    'This is a route-coverage audit, not a translation-quality or legal/financial accuracy certification.',
+    'This audit measures route coverage and technical locale signals only. It does not certify that visible copy is translated accurately or that jurisdiction-specific content is correct.',
     'A matching HTML path may still contain untranslated text. Review page language, metadata, labels, FAQs, structured data and jurisdiction-specific assumptions before marking a locale complete.',
     ''
   ].join('\n');
