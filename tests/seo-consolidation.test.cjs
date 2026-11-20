@@ -70,13 +70,13 @@ test('income tax WebPage structured data matches the current salary-tax calculat
 });
 
 
-test('Income Tax calculator uses the current site catalogue count', () => {
+test('Income Tax calculator links to the directory without a hard-coded catalogue count', () => {
   const html = read('calculators/income-tax-calculator.html');
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
   assert.equal(new Set(calculatorUrls).size, canonicalCalculatorUrls.length);
-  assert.ok(html.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
-  assert.ok(!html.includes('Explore all 186 calculators on Friendly Calculator.'));
+  assert.ok(html.includes('Explore the complete calculator directory to browse all current calculators.'));
+  assert.doesNotMatch(html, /Explore all \\d+ calculators on Friendly Calculator\\./);
 });
 
 test('seven small-savings calculators show the current review date and RBI rate cross-check', () => {
