@@ -14,20 +14,20 @@ function alternateLinks() {
     return '<link rel="alternate" hreflang="' + locale.code + '" href="' + href + '">';
   });
   links.push('<link rel="alternate" hreflang="x-default" href="' + ORIGIN + '/">');
-  return links.join('\\n');
+  return links.join('\n');
 }
 function removeAlternates(html) {
-  return html.replace(/<link\\b(?=[^>]*\\brel\\s*=\\s*["']alternate["'])(?=[^>]*\\bhreflang\\s*=)[^>]*>\\s*/gi, '');
+  return html.replace(/<link\b(?=[^>]*\brel\s*=\s*["']alternate["'])(?=[^>]*\bhreflang\s*=)[^>]*>\s*/gi, '');
 }
 function normalizeHomepage(file, isAvailable) {
   const absolute = path.join(ROOT, file);
   if (!fs.existsSync(absolute)) throw new Error('Missing locale homepage: ' + file);
   const original = fs.readFileSync(absolute, 'utf8');
   const clean = removeAlternates(original);
-  const links = isAvailable ? alternateLinks() + '\\n' : '';
-  const canonical = /<link\\b(?=[^>]*\\brel\\s*=\\s*["']canonical["'])[^>]*>/i;
+  const links = isAvailable ? alternateLinks() + '\n' : '';
+  const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i;
   if (!canonical.test(clean)) throw new Error('Missing canonical link: ' + file);
-  const updated = clean.replace(canonical, match => match + '\\n' + links.trimEnd());
+  const updated = clean.replace(canonical, match => match + '\n' + links.trimEnd());
   if (updated !== original) {
     if (process.argv.includes('--write')) fs.writeFileSync(absolute, updated);
     return true;
@@ -40,10 +40,10 @@ function normalizeUkHub() {
   const original = fs.readFileSync(file, 'utf8');
   const clean = removeAlternates(original);
   const self = '<link rel="alternate" hreflang="en-GB" href="' + ORIGIN + '/uk/index.html">';
-  const canonical = /<link\\b(?=[^>]*\\brel\\s*=\\s*["']canonical["'])[^>]*>/i;
+  const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i;
   if (!canonical.test(clean)) throw new Error('Missing UK hub canonical link.');
-  const langFixed = clean.replace(/<html\\b([^>]*)\\blang=["']uk["']/i, '<html$1lang="en-GB"');
-  const updated = langFixed.replace(canonical, match => match + '\\n' + self);
+  const langFixed = clean.replace(/<html\b([^>]*)\blang=["']uk["']/i, '<html$1lang="en-GB"');
+  const updated = langFixed.replace(canonical, match => match + '\n' + self);
   if (updated !== original) {
     if (process.argv.includes('--write')) fs.writeFileSync(file, updated);
     return true;
