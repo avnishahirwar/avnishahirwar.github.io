@@ -8,6 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://friendlycalculator.in';
 const DEFAULT_IMAGE = `${ORIGIN}/og-friendly-calculator.png`;
 const EXCLUDED_PREFIXES = ['admin/', 'avnish-ai/', 'calculator/admin.html', 'calculator/dashboard.html', 'tests/'];
+const EXCLUDED_CONTENT_PATH = /(?:alcohol|beer|wine|cocktail|cigarette|nicotine|tobacco|vape|liquor|cannabis|marijuana|cbd|thc|weed|meth|cocaine|opioid)/i;
 
 function walk(dir, relative = '') {
   const files = [];
@@ -52,7 +53,7 @@ function publicCanonical(relPath) {
 
 function inspectAndRepair(relPath, html) {
   const robots = getMeta(html, 'robots');
-  if ((robots && /\bnoindex\b/i.test(robots.value)) || EXCLUDED_PREFIXES.some(prefix => relPath.startsWith(prefix))) {
+  if (EXCLUDED_CONTENT_PATH.test(relPath) || (robots && /\bnoindex\b/i.test(robots.value)) || EXCLUDED_PREFIXES.some(prefix => relPath.startsWith(prefix))) {
     return { html, skipped: true, changed: false };
   }
 
