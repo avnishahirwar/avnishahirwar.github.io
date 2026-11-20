@@ -16,7 +16,7 @@ function walk(dir,files=[]){
  return files;
 }
 function headOf(html){const i=html.toLowerCase().indexOf('</head>');return i<0?html:html.slice(0,i);}
-function isNoindex(html){return /<meta\\b[^>]*\\bname=["'](?:robots|googlebot)["'][^>]*\\bcontent=["'][^"']*\\bnoindex\\b/i.test(headOf(html))||/<meta\\b[^>]*\\bcontent=["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname=["'](?:robots|googlebot)["']/i.test(headOf(html));}
+function isNoindex(html){return /<meta\b[^>]*\bname=["'](?:robots|googlebot)["'][^>]*\bcontent=["'][^"']*\bnoindex\b/i.test(headOf(html))||/<meta\b[^>]*\bcontent=["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname=["'](?:robots|googlebot)["']/i.test(headOf(html));}
 function langOf(html,file){
  const m=headOf(html).match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
  if(m)return m[1].toLowerCase();
