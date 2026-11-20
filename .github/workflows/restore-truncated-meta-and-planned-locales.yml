@@ -40,7 +40,9 @@ jobs:
           node scripts/generate-sitemaps.cjs
           node scripts/generate-locale-sitemaps.cjs
       - name: Audit search index coverage against XML sitemap
-        run: node scripts/audit-search-index-sitemap.cjs
+        run: |
+          node --check scripts/audit-search-index-sitemap.cjs
+          node scripts/audit-search-index-sitemap.cjs
       - name: Verify metadata and planned locale exclusions
         run: |
           node scripts/restore-truncated-meta-and-planned-locales.cjs --check
