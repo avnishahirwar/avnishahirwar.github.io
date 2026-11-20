@@ -27,7 +27,7 @@ test('homepage has a readable search title, canonical URL, and social preview', 
   assert.doesNotMatch(title[1], /&amp;amp;/i, 'title must not be double escaped');
   assert.ok(title[1].length >= 30 && title[1].length <= 60, 'title is within a useful display length');
   assert.match(html, /<link\s+rel="canonical"\s+href="https:\/\/friendlycalculator\.in\/"/i);
-  assert.match(html, /<meta\s+property="og:title"\s+content="Free Online Calculators \| Friendly Calculator"/i);
+  assert.match(html, /<meta\s+property="og:title"\s+content="India and Global Calculators \| EMI, GST and Tax"/i);
   assert.match(html, /<meta\s+name="twitter:card"\s+content="summary_large_image"/i);
 });
 
