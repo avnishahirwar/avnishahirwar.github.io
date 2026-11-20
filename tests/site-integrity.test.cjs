@@ -1286,7 +1286,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.ok(homepage.includes('<nav class="home-category-index"'));
   assert.ok(homepage.includes('class="home-category-index"'));
-  assert.ok(homepage.includes('Browse popular calculators'));
+  assert.ok(homepage.includes('home-category-directory'));
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse calculators by category'));
 });
