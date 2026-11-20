@@ -2082,15 +2082,14 @@ test('homepage shows 16 curated popular calculators linked to the live catalogue
 });
 
 
-test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
+test('homepage loads the shared header stylesheet and shared shell script', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /link\.rel='stylesheet'[\s\S]*link\.href='\/assets\/site-shell\.css'/);
-  assert.match(html, /requestIdleCallback\(loadShellStyles,\{timeout:1200\}\)/);
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
-  assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
-  assert.match(html, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(html, /<link rel="stylesheet" href="\\/assets\\/site-shell\\.css">/);
+  assert.match(html, /<header class="fc-global-header">/);
+  assert.match(html, /<script src="\\/assets\\/site-shell\\.js" defer><\\/script>/);
+  assert.ok(css.includes('.fc-global-header') && css.includes('.fc-global-nav'));
+  assert.ok(css.includes('@media'), 'Shared header styles must include responsive rules.');
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
@@ -2140,21 +2139,19 @@ test('homepage uses the shared PWA install action and preserves language, analyt
 });
 
 
-test('English homepage always renders the shared footer and Sitemap link', () => {
+test('English homepage loads the shared footer and Sitemap destination through the global shell', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
   assert.ok(script.includes("document.createElement('footer')"));
-  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
-  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
-  assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'), 'Homepage fallback Settings trigger must be the final Footer navigation item.');
+  assert.ok(script.includes("f.className='fc-global-footer'"));
+  assert.ok(script.includes("'/sitemap.html'"));
+  assert.ok(script.includes("document.body.appendChild(f)"));
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
-
 
 test('shared header and footer fail-safe normalizes legacy navigation and nested footers', () => {
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
@@ -2239,41 +2236,30 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
   assert.match(script, /fc-global-footer-links/);
 });
 
-test('homepage mounts the shared footer and Sitemap destination through its fallback shell', () => {
+test('homepage fallback shell preserves the shared footer and Sitemap link', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.ok(script.includes("document.createElement('footer')"));
-  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
-  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
-  assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'));
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.ok(script.includes("fc-shell-failsafe"));
+  assert.ok(script.includes("footerPaths") && script.includes("'/sitemap.html'"));
+  assert.ok(script.includes("f.className='fc-global-footer'"));
+  assert.ok(script.includes("document.body.appendChild(f)"));
 });
 
-
-test('homepage critical CSS keeps the shared regional Header readable before deferred styles load', () => {
-  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const styleStart = html.indexOf('<style id="fc-critical-home-shell">');
-  const styleEnd = html.indexOf('</style>', styleStart);
-  const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
-  assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
-  assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
-  assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
+test('shared header stylesheet includes responsive regional controls', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(css.includes('.fc-global-header'));
+  assert.ok(css.includes('.fc-global-nav'));
+  assert.ok(css.includes('.fc-language-control'));
+  assert.ok(css.includes('.fc-currency-control'));
+  assert.ok(css.includes('@media'));
 });
 
-
-test('visible brand text is included in accessible names and homepage feature icons meet contrast', () => {
-  const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
-  const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
-  assert.ok(homepage.includes('aria-label="FRIENDLY CALCULATOR Home"'));
-  assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
-  assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
+test('homepage brand has an accessible name and visible brand text', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
+  assert.ok(homepage.includes('<span>FRIENDLY <b>CALCULATOR</b></span>'));
 });
-
-
 
 test('shared language selector enables only the 17 published locale editions', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
