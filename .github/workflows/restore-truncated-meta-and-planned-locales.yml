@@ -97,10 +97,3 @@ jobs:
           done
           echo "Unable to push reviewed-branch SEO repairs after three safe retries."
           exit 1
-              sleep 2
-            done
-            echo "Unable to push reviewed-branch SEO repairs after three safe retries."
-            exit 1
-          else
-            echo "No SEO repair changes were needed."
-          fi
