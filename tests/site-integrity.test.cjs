@@ -1617,10 +1617,10 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
+  assert.ok(homepage.includes('<title>Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
   assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."'));
-  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
-  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('property="og:title" content="Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
