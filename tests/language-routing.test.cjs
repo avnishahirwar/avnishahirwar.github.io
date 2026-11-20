@@ -83,9 +83,11 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  const localeCodesBlock = shell.match(/const localeCodes=\\[([^\\]]+)\\]/);
-  assert.ok(localeCodesBlock, 'Shared shell declares all localized route codes');
-  const routeCodes = [...localeCodesBlock[1].matchAll(/["']([a-z]{2,3})["']/g)].map(match => match[1]).sort();
+  const localeCodesStart = shell.indexOf('const localeCodes=[');
+  const localeCodesEnd = shell.indexOf('];', localeCodesStart);
+  assert.ok(localeCodesStart >= 0 && localeCodesEnd > localeCodesStart, 'Shared shell declares all localized route codes');
+  const routeCodes = shell.slice(localeCodesStart + 'const localeCodes=['.length, localeCodesEnd)
+    .split(',').map(item => item.replace(/["']/g, '').trim()).filter(Boolean).sort();
   const catalogue = require('../config/language-catalogue.json');
   assert.deepEqual(routeCodes, catalogue.locales.map(locale => locale.code).sort());
 });
