@@ -73,9 +73,9 @@ for (const [route, pages] of pageMap) {
       return '<link rel="alternate" hreflang="' + code + '" href="' + target.canonical + '">';
     }).join('\n');
     const cleanHead = page.html
-      .replace(/<!-- fc-hreflang-start -->[\\s\\S]*?<!-- fc-hreflang-end -->/gi, '')
-      .replace(/\\s*<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["'][^"']+["'])[^>]*>\\s*/gi, '');
-    const next = cleanHead.replace(/\\s*<\\/head>/i, '\\n<!-- fc-hreflang-start -->\\n' + tags + '\\n<!-- fc-hreflang-end -->\\n</head>');
+      .replace(/<!-- fc-hreflang-start -->[\s\S]*?<!-- fc-hreflang-end -->/gi, '')
+      .replace(/\s*<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, '');
+    const next = cleanHead.replace(/\s*<\/head>/i, '\n<!-- fc-hreflang-start -->\n' + tags + '\n<!-- fc-hreflang-end -->\n</head>');
     if (next !== page.html) {
       if (check) {
         needsRepair++;
