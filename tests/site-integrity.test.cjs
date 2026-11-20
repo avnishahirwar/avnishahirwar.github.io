@@ -2261,6 +2261,17 @@ test('homepage brand has an accessible name and visible brand text', () => {
   assert.ok(homepage.includes('<span>FRIENDLY <b>CALCULATOR</b></span>'));
 });
 
+test('homepage exposes all 50 language choices and disables planned editions', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'config/language-catalogue.json'), 'utf8'));
+  const select = html.match(/<select id="fc-language-select"[^>]*>([\\s\\S]*?)<\\/select>/);
+  assert.ok(select, 'Homepage language selector exists.');
+  const options = [...select[1].matchAll(/<option value="([^"]+)"([^>]*)>/g)];
+  assert.equal(options.length, 50);
+  const enabled = options.filter(option => !/\\bdisabled\\b/.test(option[2])).map(option => option[1]).sort();
+  const expected = catalogue.locales.filter(item => item.status === 'available').map(item => item.code).sort();
+  assert.deepEqual(enabled, expected);
+});
 test('shared language selector enables only the 17 published locale editions', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'config/language-catalogue.json'), 'utf8'));
