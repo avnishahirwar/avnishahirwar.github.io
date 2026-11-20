@@ -69,6 +69,8 @@ function repairTruncatedMetadata(rel, html) {
   return updated;
 }
 function markPlannedNoindex(rel, html) {
+  // /uk/ is the United Kingdom country hub (en-GB), not a Ukrainian locale page.
+  if (rel === 'uk/index.html') return html;
   const locale = rel.split('/')[0];
   if (!planned.has(locale)) return html;
   const tag = findTag(html, /<meta\b(?=[^>]*\bname\s*=\s*["']robots["'])[^>]*>/i);
