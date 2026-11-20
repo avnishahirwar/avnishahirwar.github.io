@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const languages = ['hi','es','fr','pt','ar','id','bn','ta','de'];
+const languages = ['hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','mr','vi','te','gu','kn'];
 const files = [];
 function walk(dir) {
   if (!fs.existsSync(dir)) return;

@@ -6,10 +6,11 @@ const root=path.resolve(__dirname,'..');
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const page=fs.readFileSync(path.join(root,'calculator/why-friendly-calculator.html'),'utf8');
 test('homepage presents Friendly Calculator consistently as an India and worldwide calculator platform',()=>{
- assert.ok(home.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
+ assert.ok(home.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
  assert.match(home,/<meta property="og:site_name" content="Friendly Calculator">/);
  assert.match(home,/"@type":"WebSite","@id":"https:\/\/friendlycalculator\.in\/#website","name":"Friendly Calculator"/);
- assert.match(home,/A calculator website for India, Madhya Pradesh and worldwide users/);
+ assert.match(home,/<meta name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths\. India-focused tools and selected international calculators\."/);
+ assert.match(home,/Calculators for users worldwide/);
  assert.match(home,/why-friendly-calculator\.html/);
 });
 test('brand discovery page targets regional and multilingual intent without unsupported popularity claims',()=>{
