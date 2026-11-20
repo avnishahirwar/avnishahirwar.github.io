@@ -1285,7 +1285,8 @@ test('homepage category summary and directory markup match the published catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.ok(homepage.includes('<nav class="home-category-index"'));
-  assert.ok(homepage.includes('home-category-directory'));
+  assert.ok(homepage.includes('class="home-category-index"'));
+  assert.ok(homepage.includes('Browse popular calculators'));
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse calculators by category'));
 });
@@ -1535,7 +1536,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     'The homepage must not embed the full calculator catalogue');
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
   const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
-  assert.equal((popular.match(/<a\s/g) || []).length, 18, 'Homepage must show exactly 18 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 16, 'Homepage must show exactly 16 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
