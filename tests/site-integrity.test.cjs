@@ -2239,11 +2239,15 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
   assert.match(script, /fc-global-footer-links/);
 });
 
-test('homepage has the same static shared footer and Sitemap destination', () => {
+test('homepage mounts the shared footer and Sitemap destination through its fallback shell', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<footer class="fc-global-footer"(?:\s|>)/);
-  assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
-  assert.ok(html.includes('class="fc-global-footer-links"'));
+  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
+  assert.ok(script.includes("document.createElement('footer')"));
+  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
+  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
+  assert.ok(script.includes("document.body.appendChild(footer)"));
+  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'));
 });
 
 
@@ -2269,6 +2273,19 @@ test('visible brand text is included in accessible names and homepage feature ic
   assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
 });
 
+
+
+test('shared language selector enables only the 17 published locale editions', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'config/language-catalogue.json'), 'utf8'));
+  const line = shell.match(/const supportedUiLocales=\{([^}]+)\};/);
+  assert.ok(line, 'supported locale set exists');
+  const enabled = [...line[1].matchAll(/([a-z]{2,3}):1/g)].map(match => match[1]).sort();
+  const expected = catalogue.locales.filter(item => item.status === 'available').map(item => item.code).sort();
+  assert.deepEqual(enabled, expected);
+  assert.equal(enabled.length, 17);
+  assert.match(shell, /\(Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'\)/);
+});
 
 test('homepage language coverage copy matches the currently published locale catalogue', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
