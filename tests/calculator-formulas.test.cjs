@@ -1311,3 +1311,13 @@ test('wealth planner calculator validates inputs and models compounding with ann
   assert.match(page, /balance=balance\*\(1\+r\)\+a/);
   assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
 });
+
+
+test('fuel cost page avoids stale catalogue totals and template placeholders', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/fuel-cost-calculator.html'), 'utf8');
+  assert.match(page, /Explore more free calculators in the complete directory\./);
+  assert.match(page, /vehicle efficiency and an assumed fuel price/);
+  assert.match(page, /not a live fuel-price quote/);
+  assert.match(page, /Enter vehicle mileage in km\/L/);
+  assert.doesNotMatch(page, /186 browser-based tools|n2 assumption|live n2 quote/);
+});
