@@ -736,7 +736,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.match(about, /Avnish Ahirwar/);
   assert.ok(about.includes('broad catalogue of public calculators and selected international tools'));
   assert.ok(about.includes('<h2>Available calculators</h2>'));
-  const linkedPages = [...about.matchAll(/<li><a href="\\/calculators\\/([^"]+)">/g)].map(match => match[1]).sort();
+  const linkedPages = [...about.matchAll(new RegExp('<li><a href="/calculators/([^"]+)">', 'g'))].map(match => match[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
