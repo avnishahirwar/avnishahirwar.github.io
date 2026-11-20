@@ -211,7 +211,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="Search 3,126 calculators: GST, EMI, SIP, percentage, age..." aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button">Clear</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 3,126 calculator tools across 36 catalogue categories, organised into clearly labelled categories. Explore 20 main sections below.</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">Browse 3,126 calculator tools across 20 featured categories, organised into clearly labelled groups.</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -318,7 +318,7 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 3,126 calculator tools across 36 catalogue categories, organised into clearly labelled categories. Explore 20 main sections below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 3,126 calculator tools across 20 featured categories, organised into clearly labelled groups.';return;}
  lastQuery=query;
  status.textContent='Searching all 3,126 calculators…';
  results.hidden=true;
