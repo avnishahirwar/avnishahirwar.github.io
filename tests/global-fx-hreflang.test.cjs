@@ -68,6 +68,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across p
  for(const route of routes){
   const expected=expectedCluster(route);
   for(const [locale] of expected){
+   if(locale==='x-default')continue;
    const file=path.join(locale==='en'?'':locale,'calculators',route).split(path.sep).join('/');
    assert.deepEqual(actualCluster(file),expected,file);
   }
