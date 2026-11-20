@@ -42,7 +42,13 @@ jobs:
       - name: Audit search index coverage against XML sitemap
         run: |
           node --check scripts/audit-search-index-sitemap.cjs
-          node scripts/audit-search-index-sitemap.cjs
+          node scripts/audit-search-index-sitemap.cjs --report=/tmp/search-index-sitemap-audit.json
+      - name: Upload search-index coverage audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-index-sitemap-audit
+          path: /tmp/search-index-sitemap-audit.json
+          if-no-files-found: error
       - name: Verify metadata and planned locale exclusions
         run: |
           node scripts/restore-truncated-meta-and-planned-locales.cjs --check
