@@ -57,7 +57,7 @@ function hasHreflang(html, locale, urlPath) {
     try {
       const url = new URL(href, 'https://friendlycalculator.in');
       return url.origin === 'https://friendlycalculator.in' &&
-        url.pathname.replace(/index\.html$/, '') === urlPath.replace(/index\.html$/, '');
+        url.pathname.replace(/index\.html$/, '').replace(/\\/$/, '') === ('/' + urlPath).replace(/index\\.html$/, '').replace(/\\/$/, '');
     } catch {
       return false;
     }
