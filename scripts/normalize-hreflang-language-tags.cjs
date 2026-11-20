@@ -34,7 +34,7 @@ function normalizeTag(tag) {
   // /uk/index.html is an alias; the UK edition declares /uk/ as canonical.
   // Use the canonical URL so reciprocal hreflang validation can succeed.
   if (pathname === '/uk/index.html') tag = tag.replace(href, 'https://friendlycalculator.in/uk/');
-  if (lang === 'uk' && /^\\/uk(?:\\/|$)/i.test(pathname)) next = 'en-gb';
+  if (lang === 'uk' && (pathname === '/uk' || pathname.startsWith('/uk/'))) next = 'en-gb';
   if (pathname === '/calculators/sip-5000-monthly-calculator.html' && lang === 'en') next = 'en-in';
   if (pathname === '/hi/calculators/sip-5000-monthly-calculator.html' && lang === 'hi') next = 'hi-in';
   return next === lang ? tag : tag.replace(/(\bhreflang=[\"'])[^\"']+([\"'])/i, '$1' + next + '$2');
