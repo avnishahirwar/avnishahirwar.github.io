@@ -35,12 +35,12 @@ jobs:
         run: |
           node --check scripts/generate-reciprocal-hreflang.cjs
           node scripts/generate-reciprocal-hreflang.cjs
-      - name: Audit search index coverage against XML sitemap
-        run: node scripts/audit-search-index-sitemap.cjs
       - name: Regenerate all-pages and locale sitemaps
         run: |
           node scripts/generate-sitemaps.cjs
           node scripts/generate-locale-sitemaps.cjs
+      - name: Audit search index coverage against XML sitemap
+        run: node scripts/audit-search-index-sitemap.cjs
       - name: Verify metadata and planned locale exclusions
         run: |
           node scripts/restore-truncated-meta-and-planned-locales.cjs --check
