@@ -27,6 +27,10 @@ jobs:
         run: node scripts/restore-truncated-meta-and-planned-locales.cjs --write
       - name: Add missing public social metadata
         run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Add missing calculator links to About and directory
+        run: |
+          node --check scripts/repair-catalogue-internal-links.cjs
+          node scripts/repair-catalogue-internal-links.cjs
       - name: Regenerate searchable human sitemap
         run: |
           node --check scripts/generate-human-sitemap.cjs
@@ -53,6 +57,7 @@ jobs:
         run: |
           node scripts/restore-truncated-meta-and-planned-locales.cjs --check
           node scripts/repair-public-social-metadata.cjs --check
+          node scripts/repair-catalogue-internal-links.cjs --check
           node scripts/generate-sitemaps.cjs --check
           node scripts/generate-locale-sitemaps.cjs --check
           node scripts/generate-reciprocal-hreflang.cjs --check
