@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'friendly-calculator-public-v9';
+const CACHE_NAME = 'friendly-calculator-public-v10';
 const CACHE_PREFIX = 'friendly-calculator-public-';
 const OFFLINE_URL = '/offline.html';
 const PRECACHE_URLS = [
@@ -57,7 +57,7 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        const response = await fetch(request);
+        const response = await fetch(new Request(request, { cache: 'reload' }));
         if (isSafeResponse(response)) {
           const cache = await caches.open(CACHE_NAME);
           await cache.put(request, response.clone());
@@ -65,6 +65,25 @@ self.addEventListener('fetch', event => {
         return response;
       } catch (_) {
         return (await caches.match(request)) || (await caches.match(OFFLINE_URL));
+      }
+    })());
+    return;
+  }
+
+  // The calculator catalogue changes as tools are added. Revalidate it on every
+  // request so an older PWA cache cannot keep search results out of date.
+  if (url.pathname === '/assets/calculator-search-index.json') {
+    event.respondWith((async () => {
+      try {
+        const freshRequest = new Request(request, { cache: 'reload' });
+        const response = await fetch(freshRequest);
+        if (isSafeResponse(response)) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      } catch (_) {
+        return (await caches.match(request)) || Response.error();
       }
     })());
     return;
