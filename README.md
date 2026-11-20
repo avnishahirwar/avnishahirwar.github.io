@@ -2,6 +2,8 @@
 
 Friendly Calculator is a static, browser-first collection of online calculators and explanatory pages. The public site is served from this repository with GitHub Pages and the custom domain configured in `CNAME`.
 
+**Official live website:** [Friendly Calculator](https://friendlycalculator.in/)
+
 ## Use the source code
 
 The original application source code in this repository is available under the MIT License in [`LICENSE`](LICENSE). You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of that software, subject to the license notice and terms.
