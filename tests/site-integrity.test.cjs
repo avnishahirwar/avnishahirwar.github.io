@@ -1617,7 +1617,7 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
+  assert.ok(homepage.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
   assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."'));
   assert.ok(homepage.includes('property="og:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
@@ -2118,14 +2118,16 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
 });
 
 test('homepage uses the shared PWA install action and preserves language, analytics and accessibility controls', () => {
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const shared = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(!script.includes("id='fc-pwa-install'") && !script.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
+  assert.ok(!homepage.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
   assert.ok(shared.includes('quickActions.appendChild(installButton)'), 'The shared shell must place the install action inside Settings Quick Actions.');
   assert.ok(!shared.includes('footerInner.appendChild(button)'), 'The install action must not be mounted in the Footer.');
-  assert.ok(shared.includes("position:static!important"), 'The install action must not float over page content.');
-  for (const feature of ['fc-language-select', 'gtm.js', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
-    assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
+  assert.ok(shared.includes('position:static!important'), 'The install action must not float over page content.');
+  assert.ok(homepage.includes('fc-language-select'));
+  assert.ok(homepage.includes('gtag('), 'Homepage analytics configuration remains present.');
+  for (const feature of ['fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
+    assert.ok(shared.includes(feature), 'Missing shared-shell feature: ' + feature);
   }
   assert.ok(shared.includes('serviceWorker.register'), 'The shared shell must retain service-worker registration.');
 });
