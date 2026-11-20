@@ -92,3 +92,4 @@ Disallow: /avnish-ai/
 # Keep the original all-pages sitemap and expose the additive locale index.
 Sitemap: https://friendlycalculator.in/sitemap.xml
 Sitemap: https://friendlycalculator.in/sitemap-locales.xml
+Sitemap: https://friendlycalculator.in/sitemap-uk-us.xml
