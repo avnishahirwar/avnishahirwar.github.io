@@ -26,6 +26,10 @@ jobs:
         run: node scripts/repair-calculator-search-index.cjs --write
       - name: Verify the complete calculator search index
         run: node scripts/repair-calculator-search-index.cjs --check
+      - name: Rebuild the public human sitemap
+        run: node scripts/repair-human-sitemap.cjs --write
+      - name: Verify the public human sitemap
+        run: node scripts/repair-human-sitemap.cjs --check
       - name: Rebuild the complete About page calculator list
         run: node scripts/repair-about-calculator-list.cjs --write
       - name: Verify the About page calculator list
