@@ -36,6 +36,10 @@ jobs:
           node --test tests/public-seo-quality.test.cjs
       - name: Verify reciprocal hreflang repair is complete and additive
         run: node --test tests/international-seo-diagnostic.test.cjs
+      - name: Report additive SEO repair totals
+        run: |
+          node scripts/repair-public-social-metadata.cjs --check
+          node scripts/add-hreflang-reciprocals.cjs
       - name: Commit additive HTML metadata and hreflang updates
         run: |
           git config user.name "github-actions[bot]"
