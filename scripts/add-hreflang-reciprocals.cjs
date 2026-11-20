@@ -37,6 +37,10 @@ function canonicalOf(html) {
     return url.origin === ORIGIN && !url.search && !url.hash ? url.href : null;
   } catch { return null; }
 }
+function isNoindex(html) {
+  return /<meta\\b[^>]*\\bname=["'](?:robots|googlebot)["'][^>]*\\bcontent=["'][^"']*\\bnoindex\\b/i.test(html) ||
+    /<meta\\b[^>]*\\bcontent=["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname=["'](?:robots|googlebot)["']/i.test(html);
+}
 function linksOf(html) {
   return [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
     .filter(tag => /\brel=["']alternate["']/i.test(tag))
@@ -62,10 +66,11 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedConflict: 0, skippedNoHead: 0, skippedRestrictedContent: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedConflict: 0, skippedNoHead: 0, skippedRestrictedContent: 0, skippedNoindex: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (EXCLUDED_CONTENT_PATH.test(path.relative(ROOT, sourceFile))) { stats.skippedRestrictedContent++; continue; }
+    if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
     const sourceLang = langOf(sourceHtml, sourceFile);
     const sourceCanonical = canonicalOf(sourceHtml);
     if (!sourceCanonical) continue;
@@ -77,6 +82,7 @@ function main() {
       if (EXCLUDED_CONTENT_PATH.test(path.relative(ROOT, target))) { stats.skippedRestrictedContent++; continue; }
       if (target === sourceFile) continue;
       const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
+      if (isNoindex(targetHtml)) { stats.skippedNoindex++; continue; }
       if (langOf(targetHtml, target) !== link.lang) { stats.skippedLanguageMismatch++; continue; }
       if (canonicalOf(targetHtml) !== new URL(link.href, ORIGIN).href) { stats.skippedCanonicalMismatch++; continue; }
       const existing = linksOf(targetHtml).filter(item => item.lang === sourceLang);
