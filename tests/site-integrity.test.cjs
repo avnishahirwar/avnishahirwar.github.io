@@ -1518,6 +1518,9 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
+  assert.match(homepage, /items\.some\(item=>!/);
+  assert.doesNotMatch(homepage, /2481|34 categories/);
+  assert.match(homepage, /Search all calculators/);
   assert.match(homepage, /items\.some\(item=>!item/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
