@@ -11,8 +11,10 @@ const aboutPath = path.join(ROOT, 'calculator/about.html');
 const directoryPath = path.join(ROOT, 'calculator/site-directory.html');
 let about = fs.readFileSync(aboutPath, 'utf8');
 let directory = fs.readFileSync(directoryPath, 'utf8');
-about = about.replace(/<!-- fc-catalogue-additions-start -->[\s\S]*?<!-- fc-catalogue-additions-end -->/g, '');
-directory = directory.replace(/<!-- fc-directory-additions-start -->[\s\S]*?<!-- fc-directory-additions-end -->/g, '');
+if (!check) {
+  about = about.replace(/<!-- fc-catalogue-additions-start -->[\\s\\S]*?<!-- fc-catalogue-additions-end -->/g, '');
+  directory = directory.replace(/<!-- fc-directory-additions-start -->[\\s\\S]*?<!-- fc-directory-additions-end -->/g, '');
+}
 const aboutListStart = about.indexOf('<h2>Available calculators</h2>');
 const aboutOlStart = about.indexOf('<ol>', aboutListStart);
 const aboutOlEnd = about.indexOf('</ol>', aboutOlStart);
