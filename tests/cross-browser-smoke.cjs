@@ -124,6 +124,22 @@ async function checkPage(browser, url, label, viewport) {
   const dims = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
   assert.ok(dims.document <= dims.viewport + 2, label + ': horizontal overflow ' + JSON.stringify(dims));
   assert.deepEqual(errors, [], label + ': uncaught JavaScript errors');
+
+  // Exercise the homepage search on desktop and mobile, not just the shared shell.
+  if ([1365, 390].includes(viewport.width)) {
+    const searchInput = page.locator('#fc-home-tool-search');
+    await searchInput.fill('GST');
+    const gstResult = page.locator('#fc-home-search-results .home-search-result').filter({ hasText: 'GST Calculator' }).first();
+    await gstResult.waitFor({ state: 'visible', timeout: 15000 });
+    assert.match(await gstResult.getAttribute('href'), /gst-calculator/i, label + ': GST search result destination');
+    assert.match(await page.locator('#fc-home-search-status').innerText(), /matching calculators/i, label + ': search status feedback');
+    await page.locator('#fc-home-search-clear').click();
+    await page.waitForFunction(() => {
+      const results = document.getElementById('fc-home-search-results');
+      const main = document.querySelector('main.home-main');
+      return !!results && results.hidden && !(main && main.classList.contains('fc-search-active'));
+    }, null, { timeout: 10000 });
+  }
   await page.close();
   return dims;
 }
