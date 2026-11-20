@@ -308,7 +308,7 @@ const normalize=value=>String(value||'').normalize('NFKD').toLowerCase().replace
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
-  cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-1448',{credentials:'same-origin',cache:'default'})
+  cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-searchfix1',{credentials:'same-origin',cache:'no-store'})
    .then(response=>{if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
    .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Invalid search index');return items.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&x.url.startsWith('/'));})
    .catch(error=>{cataloguePromise=null;throw error;});
@@ -319,10 +319,20 @@ function render(items,raw){
  const seen=new Set();const unique=[];
  for(const item of items){if(!seen.has(item.url)){seen.add(item.url);unique.push(item);}}
  const shown=unique.slice(0,15);
- results.innerHTML=shown.map(item=>'<a class="home-search-result" href="'+escapeHtml(item.url)+'"><strong>'+escapeHtml(item.name)+'</strong><span>'+escapeHtml(item.category||'Calculator')+'</span></a>').join('');
+ const groups=new Map();
+ for(const item of shown){
+  const category=String(item.category||'Other calculators').trim()||'Other calculators';
+  if(!groups.has(category))groups.set(category,[]);
+  groups.get(category).push(item);
+ }
+ results.innerHTML=Array.from(groups,([category,groupItems])=>
+  '<section class="home-search-group"><h3 class="home-search-group-title">'+escapeHtml(category)+' <span>'+groupItems.length+' result'+(groupItems.length===1?'':'s')+'</span></h3><div class="home-search-group-items">'+
+  groupItems.map(item=>'<a class="home-search-result" href="'+escapeHtml(item.url)+'"><strong>'+escapeHtml(item.name)+'</strong></a>').join('')+
+  '</div></section>'
+ ).join('');
  if(unique.length>shown.length)results.insertAdjacentHTML('beforeend','<p class="home-search-more"><a href="/calculator/site-directory.html#siteSearch">View all '+unique.length+' matching calculators in the directory →</a></p>');
  results.hidden=unique.length===0;
- status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+'.':'No matching calculators found. Try a shorter name or topic.';
+ status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+' in '+groups.size+' categories.':'No matching calculators found. Try a shorter name or topic.';
 }
 async function search(){
  const raw=input.value.trim();const query=normalize(raw);
