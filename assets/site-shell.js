@@ -1,4 +1,24 @@
 (()=>{'use strict';
+/* Load the AdSense Auto Ads library on public production pages only.
+   Google controls whether and where an ad is shown; this only makes the
+   publisher library available. Never load it on previews, embeds or admin routes. */
+try {
+  const publicProductionPage = location.hostname === 'friendlycalculator.in' &&
+    window.self === window.top &&
+    new URLSearchParams(location.search).get('embed') !== '1' &&
+    !/^\\/(?:admin|avnish-ai\\/admin|calculator\\/(?:admin|dashboard|login))(?:\\/|$)/i.test(location.pathname);
+  if (publicProductionPage && document.head &&
+      !document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
+    const adsense = document.createElement('script');
+    adsense.async = true;
+    adsense.crossOrigin = 'anonymous';
+    adsense.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404';
+    document.head.appendChild(adsense);
+  }
+} catch (error) {
+  console.warn('Friendly Calculator Auto Ads loader could not be initialized:', error);
+}
+
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
 try {
