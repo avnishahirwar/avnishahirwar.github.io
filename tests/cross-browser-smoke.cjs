@@ -148,14 +148,16 @@ async function checkPage(browser, url, label, viewport) {
       const labelRect = label?.getBoundingClientRect();
       const select = control.querySelector('select');
       const selectRect = select?.getBoundingClientRect();
-      return labelRect && selectRect ? { controlClass: control.className, label: label.textContent.trim(), controlWidth: controlRect.width, controlLeft: controlRect.left, labelTop: labelRect.top, selectTop: selectRect.top, selectLeft: selectRect.left, selectWidth: selectRect.width, selectRight: selectRect.right, selectHeight: selectRect.height } : null;
+      const controlStyle = getComputedStyle(control);
+      const controlInnerWidth = controlRect.width - parseFloat(controlStyle.paddingLeft || '0') - parseFloat(controlStyle.paddingRight || '0');
+      return labelRect && selectRect ? { controlClass: control.className, label: label.textContent.trim(), controlWidth: controlRect.width, controlInnerWidth, labelTop: labelRect.top, selectTop: selectRect.top, selectWidth: selectRect.width, selectRight: selectRect.right, selectHeight: selectRect.height } : null;
     }));
     assert.equal(headerMetrics.filter(Boolean).length, 4, label + ': all four Header preference controls are visible');
     const navRight = await page.locator('#fc-primary-navigation').evaluate(element => element.getBoundingClientRect().right);
     for (const metric of headerMetrics) {
       assert.ok(metric.selectTop > metric.labelTop, label + ': Header labels must sit above their selectors');
       assert.ok(metric.selectHeight >= 46, label + ': Header selectors must remain comfortably tappable');
-      assert.ok(metric.selectWidth >= metric.controlWidth - 2, label + ': Header selectors must fill their control width ' + JSON.stringify(metric));
+      assert.ok(metric.selectWidth >= metric.controlInnerWidth - 2, label + ': Header selectors must fill their available inner width ' + JSON.stringify(metric));
       assert.ok(metric.selectRight <= navRight + 2, label + ': Header selector must stay inside the navigation viewport');
     }
   }
