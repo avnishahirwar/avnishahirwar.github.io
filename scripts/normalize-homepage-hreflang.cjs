@@ -38,11 +38,9 @@ function normalizeUkHub() {
   if (!fs.existsSync(file)) throw new Error('Missing UK country hub.');
   const original = fs.readFileSync(file, 'utf8');
   const clean = removeAlternates(original);
-  const self = '<link rel="alternate" hreflang="en-GB" href="' + ORIGIN + '/uk/index.html">';
   const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i;
   if (!canonical.test(clean)) throw new Error('Missing UK hub canonical link.');
-  const langFixed = clean.replace(/<html\b([^>]*)\blang=["']uk["']/i, '<html$1lang="en-GB"');
-  const updated = langFixed.replace(canonical, match => match + '\n' + self);
+  const updated = clean;
   if (updated !== original) {
     if (process.argv.includes('--write')) fs.writeFileSync(file, updated);
     return true;
@@ -58,7 +56,7 @@ function main() {
   const ukChanged = normalizeUkHub();
   console.log('Checked ' + homepageFiles.length + ' locale homepages: ' + available.length +
     ' indexable editions receive reciprocal hreflang clusters; ' + planned.length +
-    ' planned noindex editions have no hreflang alternates. UK country hub self-declares en-GB. Files needing changes: ' +
+    ' planned noindex editions have no hreflang alternates. UK hub hreflang tags are withheld until the /uk/ language-versus-country route conflict is resolved. Files needing changes: ' +
     (changed + (ukChanged ? 1 : 0)) + (process.argv.includes('--write') ? ' (written).' : '.'));
   if ((process.argv.includes('--check') || !process.argv.includes('--write')) && changed + (ukChanged ? 1 : 0) > 0) process.exitCode = 1;
 }
