@@ -1519,7 +1519,7 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
   assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
-  assert.match(homepage, /function matchesAllTerms\(terms,tokens,field\)/);
+  assert.match(homepage, /FriendlyCalculatorSearchMatcher\.getCalculatorMatch/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
@@ -2328,4 +2328,21 @@ test('homepage language coverage copy matches the currently published locale cat
   assert.match(html, /17 currently published language editions/);
   assert.match(html, /planned 50-language rollout is still in progress/);
   assert.match(html, /Coverage varies by language and page/);
+});
+
+
+test('homepage calculator search matcher avoids unrelated cross-field matches', () => {
+  const matcher = require(path.join(root, 'assets/calculator-search-matcher.js'));
+  const match = (item, query) => {
+    const terms = matcher.normalize(query).split(/\\s+/).filter(Boolean)
+      .filter(term => !['calculator', 'calculators', 'calculate', 'online', 'free', 'the', 'for', 'a', 'an', 'of', 'and', 'tool', 'tools'].includes(term));
+    return matcher.getCalculatorMatch(item, terms, query, item.category);
+  };
+
+  assert.notEqual(match({ name: 'Home Loan EMI Calculator', keywords: 'home loan monthly payment', category: 'Loans' }, 'loan emi'), null);
+  assert.equal(match({ name: 'Personal Loan Calculator', keywords: 'loan repayment', category: 'Loans' }, 'loan emi'), null);
+  assert.notEqual(match({ name: 'GST Calculator', keywords: 'goods and services tax', category: 'Tax' }, 'gst'), null);
+  assert.notEqual(match({ name: 'Fixed Deposit Calculator', keywords: 'fixed deposit maturity', category: 'Savings' }, 'fixed deposit'), null);
+  assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
+  assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
 });
