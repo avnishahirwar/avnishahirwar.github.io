@@ -34,14 +34,21 @@ test('homepage has a readable search title, canonical URL, and social preview', 
 
 test('basic calculator targets its Search Console query with a concise, accurate snippet', () => {
   const html = fs.readFileSync(path.join(ROOT, 'calculators', 'basic-calculator.html'), 'utf8');
-  const title = html.match(/<title>(.*?)<\\/title>/i);
-  const description = html.match(/<meta\\s+name="description"\\s+content="([^"]+)"/i);
+  const titleStart = html.indexOf('<title>');
+  const titleEnd = html.indexOf('</title>', titleStart);
+  const title = titleStart >= 0 && titleEnd > titleStart ? html.slice(titleStart + 7, titleEnd) : '';
+  const descriptionPrefix = '<meta name="description" content="';
+  const descriptionStart = html.indexOf(descriptionPrefix);
+  const descriptionEnd = descriptionStart >= 0 ? html.indexOf('"', descriptionStart + descriptionPrefix.length) : -1;
+  const description = descriptionEnd > descriptionStart
+    ? html.slice(descriptionStart + descriptionPrefix.length, descriptionEnd)
+    : '';
   assert.ok(title, 'basic calculator has a title');
-  assert.match(title[1], /basic calculator online free/i);
-  assert.ok(title[1].length >= 30 && title[1].length <= 60, 'title is within a useful display length');
+  assert.match(title, /basic calculator online free/i);
+  assert.ok(title.length >= 30 && title.length <= 60, 'title is within a useful display length');
   assert.ok(description, 'basic calculator has a meta description');
-  assert.match(description[1], /addition, subtraction, multiplication, division/i);
-  assert.match(html, /<link\\s+rel="canonical"\\s+href="https:\\/\\/friendlycalculator\\.in\\/calculators\\/basic-calculator\\.html"/i);
+  assert.match(description, /addition, subtraction, multiplication, division/i);
+  assert.ok(html.includes('<link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html">'));
 });
 
 test('source code license is MIT and does not claim editorial content or brand assets', () => {
