@@ -1,0 +1,33 @@
+name: One-time human sitemap refresh
+on:
+  push:
+    branches:
+      - fix/run-human-sitemap
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the calculator fix branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/50-locale-regression-and-search-index
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerate the human sitemap from the public search index
+        run: node scripts/generate-human-sitemap.cjs --write
+      - name: Verify sitemap completeness
+        run: node scripts/generate-human-sitemap.cjs --check
+      - name: Commit the refreshed human sitemap
+        env:
+          BRANCH: fix/50-locale-regression-and-search-index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.html
+          git commit -m "Refresh human sitemap from the full calculator index"
+          git push origin "HEAD:refs/heads/$BRANCH"
