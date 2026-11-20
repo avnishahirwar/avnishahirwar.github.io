@@ -155,7 +155,7 @@ async function checkPage(browser, url, label, viewport) {
     for (const metric of headerMetrics) {
       assert.ok(metric.selectTop > metric.labelTop, label + ': Header labels must sit above their selectors');
       assert.ok(metric.selectHeight >= 46, label + ': Header selectors must remain comfortably tappable');
-      assert.ok(metric.selectWidth >= metric.controlWidth - 2, label + ': Header selectors must fill their control width');
+      assert.ok(metric.selectWidth >= metric.controlWidth - 2, label + ': Header selectors must fill their control width ' + JSON.stringify(metric));
       assert.ok(metric.selectRight <= navRight + 2, label + ': Header selector must stay inside the navigation viewport');
     }
   }
