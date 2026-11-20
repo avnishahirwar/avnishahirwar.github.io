@@ -1,0 +1,48 @@
+name: Restore truncated SEO metadata and stage planned locales safely
+
+on:
+  push:
+    branches:
+      - seo/restore-meta-and-exclude-planned-locales-2026-11-20
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: "!contains(github.event.head_commit.message, '[locale-seo-repair-complete]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore truncated metadata and noindex planned locale pages
+        run: node scripts/restore-truncated-meta-and-planned-locales.cjs --write
+      - name: Add missing public social metadata
+        run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Regenerate all-pages and locale sitemaps
+        run: |
+          node scripts/generate-sitemaps.cjs
+          node scripts/generate-locale-sitemaps.cjs
+      - name: Verify metadata and planned locale exclusions
+        run: |
+          node scripts/restore-truncated-meta-and-planned-locales.cjs --check
+          node scripts/repair-public-social-metadata.cjs --check
+          node scripts/generate-sitemaps.cjs --check
+          node scripts/generate-locale-sitemaps.cjs --check
+      - name: Run focused SEO tests
+        run: node --test tests/public-seo-quality.test.cjs tests/planned-locale-indexing.test.cjs
+      - name: Commit reviewed-branch SEO repairs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: restore complete metadata and exclude planned locales [locale-seo-repair-complete]"
+            git push
+          else
+            echo "No SEO repair changes were needed."
+          fi
