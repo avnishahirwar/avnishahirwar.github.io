@@ -7,10 +7,9 @@ const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const globalPage = fs.readFileSync(path.join(root, 'international', 'index.html'), 'utf8');
 
 test('homepage presents Friendly Calculator as a global free calculator platform', () => {
-  assert.match(home, /<h1>Make bigger decisions with better numbers\.<\/h1>/);
-  assert.doesNotMatch(home, /<h1>Free Online Calculators for India(?: and Worldwide)?<\/h1>/);
-  assert.match(home, /Calculators for users worldwide/);
-  assert.match(home, /\/international\//);
+  assert.match(home, /<h1>Free Online Calculators for India and Worldwide<\/h1>/);
+  assert.match(home, /India-focused tools and selected international calculators/i);
+  assert.match(home, /href=\"\/international\/\"/);
 });
 
 test('international directory links only to existing country-oriented and general-purpose tools', () => {

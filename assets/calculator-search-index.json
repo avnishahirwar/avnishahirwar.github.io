@@ -21847,5 +21847,33 @@
     "category": "Geometry, Measurement & Construction",
     "keywords": "size to weight calculator rectangular box construction solid cuboid dimensions density mass weight",
     "description": "Estimate the mass of a solid rectangular block from its dimensions and material density."
+  },
+  {
+    "name": "Passive Income Calculator",
+    "url": "/calculators/passive-income-calculator.html",
+    "category": "Finance",
+    "keywords": "passive income calculator",
+    "description": "Estimate the investment corpus needed for a target passive income and model a path using current investments, monthly contributions, return and inflation"
+  },
+  {
+    "name": "Property Cash-on-Cash Return Calculator | Friendly Calc",
+    "url": "/calculators/property-cash-on-cash-calculator.html",
+    "category": "Finance",
+    "keywords": "property cash-on-cash return calculator | friendly calc",
+    "description": "Estimate rental yield, net operating income, cap rate and cash-on-cash return for a property using rent, vacancy, costs and annual debt service."
+  },
+  {
+    "name": "Property Flip Profit Calculator",
+    "url": "/calculators/property-flip-profit-calculator.html",
+    "category": "Finance",
+    "keywords": "property flip profit calculator",
+    "description": "Estimate property renovation flip profit, total project cost, return on cash invested and annualized return using purchase, renovation, holding and selling"
+  },
+  {
+    "name": "Wealth Goal Calculator",
+    "url": "/calculators/wealth-goal-calculator.html",
+    "category": "Finance",
+    "keywords": "wealth goal calculator",
+    "description": "Estimate how long monthly investing may take to reach a millionaire or custom wealth goal after inflation, using transparent assumptions and a year-by-year"
   }
 ]

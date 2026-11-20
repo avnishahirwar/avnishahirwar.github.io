@@ -10,6 +10,25 @@ if(main&&!document.querySelector('.fc-skip-link')){
   document.body.prepend(skip);
 }
 
+/* Site-wide AdSense Auto Ads: one publisher ID, production public pages only.
+   Google independently controls whether and where ads are displayed. */
+try {
+  const publicProductionPage = location.hostname === 'friendlycalculator.in' &&
+    window.self === window.top &&
+    new URLSearchParams(location.search).get('embed') !== '1' &&
+    !/^\/(?:admin|avnish-ai\/admin|calculator\/(?:admin|dashboard|login))(?:\/|$)/i.test(location.pathname);
+  if (publicProductionPage && document.head &&
+      !document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"][src*="ca-pub-7201974268016404"]')) {
+    const adsense = document.createElement('script');
+    adsense.async = true;
+    adsense.crossOrigin = 'anonymous';
+    adsense.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404';
+    document.head.appendChild(adsense);
+  }
+} catch (error) {
+  console.warn('Friendly Calculator Auto Ads loader could not be initialized:', error);
+}
+
 /* Keep the homepage language selector working without loading calculator-page code. */
 const homes={en:'/',hi:'/hi/index.html',de:'/de/index.html',es:'/es/index.html',fr:'/fr/index.html',pt:'/pt/index.html',ar:'/ar/index.html',id:'/id/index.html',bn:'/bn/index.html',ta:'/ta/index.html',ja:'/ja/index.html',ru:'/ru/index.html'};
 const languageSelect=document.getElementById('fc-language-select');
