@@ -31,7 +31,10 @@ test('US country hub is self-canonical, scoped to US tools and cites official US
 test('UK country hub uses UK tax-year scope and UK-specific calculators and sources',()=>{
  const html=fs.readFileSync(path.join(root,'uk/index.html'),'utf8');
  assert.match(html,/rel="canonical" href="https:\/\/friendlycalculator\.in\/uk\//);
- assert.match(html,/hreflang="en-GB"/);assert.match(html,/6 April 2026 to 5 April 2027/);
+ // /uk/ currently collides with the ISO language code for Ukrainian. Do not publish a false en-GB hreflang cluster until the user approves a separate country-hub path.
+ assert.match(html,/<html lang="uk"/);
+ assert.doesNotMatch(html,/hreflang=/);
+ assert.match(html,/6 April 2026 to 5 April 2027/);
  assert.match(html,/uk-income-tax-calculator\.html/);assert.match(html,/uk-payroll-calculator\.html/);assert.match(html,/uk-stamp-duty-calculator\.html/);
  assert.match(html,/gov\.uk/);
  assert.doesNotMatch(html,/GST Calculator|PPF Calculator|HRA Exemption/);
