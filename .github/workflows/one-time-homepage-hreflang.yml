@@ -35,3 +35,5 @@ jobs:
 # Retry after correcting the script's escaping.
 
 # Retry after making the locale normalizer idempotent.
+
+# Rerun after preserving the UK path collision instead of assigning a false locale.
