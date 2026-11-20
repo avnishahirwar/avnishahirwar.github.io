@@ -456,11 +456,16 @@ const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
-if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader.remove();}
+const preserveStaticHomepageHeader=headerIsReady&&location.pathname==='/'&&currentLocale==='en'&&existingHeader.hasAttribute('data-fc-static-homepage');
+if(preserveStaticHomepageHeader){
+  // The homepage ships its complete Header in HTML. Keep that exact node so
+  // deferred shell initialization cannot move the page when replacing it.
+  if(reservedHeader)reservedHeader.remove();
+}else if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader.remove();}
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
-const activeHeader=h;
+const activeHeader=preserveStaticHomepageHeader?existingHeader:h;
 const removeDuplicateLegacyHeaders=()=>{
   // Remove legacy navigation bars on every page, while retaining content hero headers.
   document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
@@ -484,7 +489,7 @@ const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
 // Preserve original locale controls for FCLocale; visible controls are promoted into the Header.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=countryControl+unitControl;
+  regionalMarkup.innerHTML=countryControl+(preserveStaticHomepageHeader?'':unitControl);
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
 }
@@ -1391,24 +1396,26 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const unitControl=document.querySelector('.fc-unit-control');
   const countrySelect=countryControl?.querySelector('select');
   const localeSelect=formatControl?.querySelector('select');
-  const countryFormatLabel=document.createElement('label');
+  const countryFormatLabel=activeHeader.querySelector('.fc-country-format-control')||document.createElement('label');
   countryFormatLabel.className='fc-country-format-control';
-  const countryFormatText=document.createElement('span');
+  const countryFormatText=countryFormatLabel.querySelector('span')||document.createElement('span');
   countryFormatText.textContent=t.countryFormat;
-  const countryFormatSelect=document.createElement('select');
+  const countryFormatSelect=countryFormatLabel.querySelector('select')||document.createElement('select');
   countryFormatSelect.id='fc-country-format-display';
   countryFormatSelect.setAttribute('aria-label',t.countryFormat);
   if(countrySelect&&localeSelect){
-    const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
-    Array.from(localeSelect.options).forEach(localeOption=>{
-      const locale=localeOption.value;
-      const country=locale.split('-').pop().toUpperCase();
-      if(!countryCodes.has(country))return;
-      const option=document.createElement('option');
-      option.value=country+'|'+locale;
-      option.textContent=localeOption.textContent;
-      countryFormatSelect.appendChild(option);
-    });
+    if(!countryFormatSelect.options.length){
+      const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
+      Array.from(localeSelect.options).forEach(localeOption=>{
+        const locale=localeOption.value;
+        const country=locale.split('-').pop().toUpperCase();
+        if(!countryCodes.has(country))return;
+        const option=document.createElement('option');
+        option.value=country+'|'+locale;
+        option.textContent=localeOption.textContent;
+        countryFormatSelect.appendChild(option);
+      });
+    }
     const currentValue=countrySelect.value+'|'+localeSelect.value;
     if(!Array.from(countryFormatSelect.options).some(option=>option.value===currentValue)){
       const option=document.createElement('option');
@@ -1441,7 +1448,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       if(preferredCurrency)window.FCLocale?.setCurrency(preferredCurrency);
       syncCountryFormat();
     });
-    countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    if(!countryFormatLabel.contains(countryFormatText))countryFormatLabel.append(countryFormatText,countryFormatSelect);
     countrySelect.tabIndex=-1;
     localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');

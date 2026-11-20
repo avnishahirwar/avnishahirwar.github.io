@@ -82,6 +82,7 @@ const expression = [
   ' const stylesheetHrefs = Array.from(document.styleSheets).map(sheet => sheet.href).filter(Boolean);',
   ' return {',
   '  readyState: document.readyState, path: location.pathname,',
+  '  homepageHeaderPreserved: location.pathname === "/" && !!header && header.hasAttribute("data-fc-static-homepage"),',
   '  headerCount: document.querySelectorAll("header.fc-global-header").length,',
   '  footerCount: document.querySelectorAll("footer.fc-global-footer").length,',
   '  sitemapInFooter: !!footer && Array.from(footer.querySelectorAll("a")).some(a => { try { return new URL(a.href, location.href).pathname === "/sitemap.html"; } catch (_) { return false; } }),',
@@ -119,6 +120,7 @@ const inspectPage = async (name, path) => {
   process.stdout.write('CHECK ' + name + ' ' + JSON.stringify(result) + '\n');
   assert.ok(typeof result.path === 'string' && result.path.startsWith('/'), name + ': canonical page path after any expected redirect');
   assert.equal(result.headerCount, 1, name + ': exactly one shared Header');
+  if (name === 'homepage') assert.equal(result.homepageHeaderPreserved, true, 'homepage: initial server-rendered Header survives deferred shell initialization');
   assert.equal(result.footerCount, 1, name + ': exactly one shared Footer');
   assert.equal(result.sitemapInFooter, true, name + ': Footer contains Sitemap');
   assert.equal(result.settingsInDock, false, name + ': no obsolete floating Settings dock');
