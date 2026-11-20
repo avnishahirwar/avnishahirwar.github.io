@@ -52,6 +52,15 @@ test('AdSense auto ads are excluded from navigation, contact and interactive cal
     assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
   }
 });
+test('Income Tax calculator loads its focused calculator bundle instead of the full catalogue bundle', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
+  const focused = fs.readFileSync(path.join(root, 'assets/income-tax-calculator.js'), 'utf8');
+  assert.match(html, /assets\/income-tax-calculator\.js/);
+  assert.doesNotMatch(html, /assets\/page-calculators\.js/);
+  assert.match(focused, /income tax calculator india/);
+  assert.match(focused, /Income Tax Calculator \(Tax Year 2026–27\)/);
+});
+
 test('Income Tax calculator reserves its dynamic form before JavaScript initialization', () => {
   const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
   const pageCalculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
