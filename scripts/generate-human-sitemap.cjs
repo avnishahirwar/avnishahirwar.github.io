@@ -90,6 +90,7 @@ function renderHumanSitemap(template, entries) {
   if (categoriesStart < 0 || categoriesEnd < 0) throw new Error('Could not locate sitemap category content.');
   html = html.slice(0, categoriesStart) + renderCategoryGroups(groups) + html.slice(categoriesEnd + '</div>'.length);
   html = html.replace(/data-sitemap-total="\d+"/, 'data-sitemap-total="' + entries.length + '"');
+  html = html.replace(/(<p class="fc-sitemap-status"[^>]*>)[\s\S]*?(<\/p>)/, '$1' + entries.length.toLocaleString('en-US') + ' entries across ' + groups.length.toLocaleString('en-US') + ' categories.$2');
   return html;
 }
 
