@@ -210,7 +210,7 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/">
 </head>
 <body>
-<header class="fc-global-header"><div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="FRIENDLY CALCULATOR Home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Choose website language"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Choose website language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="mr">मराठी (Marathi)</option><option value="vi">Tiếng Việt (Vietnamese)</option><option value="gu">ગુજરાતી (Gujarati)</option><option value="kn">ಕನ್ನಡ (Kannada)</option><option value="te">తెలుగు (Telugu)</option><option value="de">Deutsch (selected tools)</option><option value="ja">日本語 (selected tools)</option><option value="ru">Русский (selected tools)</option></select></label></nav></div></header>
+<header class="fc-global-header"><div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="FRIENDLY CALCULATOR Home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo" decoding="async"> <span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Choose website language"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/international/">Global Calculators</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blogs</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Choose website language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="fr">Français</option><option value="pt">Português</option><option value="ar">العربية</option><option value="id">Bahasa Indonesia</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="mr">मराठी (Marathi)</option><option value="vi">Tiếng Việt (Vietnamese)</option><option value="gu">ગુજરાતી (Gujarati)</option><option value="kn">ಕನ್ನಡ (Kannada)</option><option value="te">తెలుగు (Telugu)</option><option value="de">Deutsch (selected tools)</option><option value="ja">日本語 (selected tools)</option><option value="ru">Русский (selected tools)</option></select></label></nav></div></header>
 <section class="home-intro"><div class="page-wrap"><h1>Free Online Calculators for India and Worldwide</h1><p>Use free calculators for loan EMI, income tax, GST, salary, savings, business and everyday maths. India-focused tools and selected international calculators explain their formulas, inputs and assumptions.</p><p class="home-featured-tool"><a href="/calculators/basic-calculator.html">Open the free basic calculator</a> <span>for addition, subtraction, multiplication, division and percentages.</span></p>
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p></div></section>
 <main class="page-wrap home-main">
@@ -381,15 +381,13 @@ async function search(){
    const categoryTokens=category.split(' ').filter(Boolean);
    const matchesField=(term,tokens,field)=>tokens.some(token=>token.startsWith(term))||
     (synonyms[term]||[]).some(alias=>field.includes(normalize(alias)));
-   const categoryOnlyMatch=query===category||terms.every(term=>categoryTokens.some(token=>token.startsWith(term)));
-   let score=0,ok=true;
-   for(const term of terms){
-    const inName=matchesField(term,nameTokens,name);
-    const inKeywords=matchesField(term,keywordTokens,keywords);
-    if(!inName&&!inKeywords&&!categoryOnlyMatch){ok=false;break;}
-    score+=inName?120:inKeywords?60:25;
-   }
-   if(!ok)continue;
+   const nameMatch=terms.every(term=>matchesField(term,nameTokens,name));
+   const keywordMatch=(query.includes(' ')&&keywords.includes(query))||
+    (terms.length===1&&(synonyms[terms[0]]||[]).some(alias=>keywords.includes(normalize(alias))));
+   const categoryOnlyMatch=query===category||
+    (terms.length>1&&terms.every(term=>categoryTokens.some(token=>token.startsWith(term))));
+   if(!nameMatch&&!keywordMatch&&!categoryOnlyMatch)continue;
+   const score=(nameMatch?120:keywordMatch?60:25)*terms.length;
    if(name===query)score+=1000;
    else if(name.startsWith(query))score+=500;
    else if(name.includes(query))score+=300;
