@@ -1519,7 +1519,7 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
   assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
-  assert.match(homepage, /FriendlyCalculatorSearchMatcher\.getCalculatorMatch/);
+  assert.ok(homepage.includes('FriendlyCalculatorSearchMatcher.getCalculatorMatch'));
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
