@@ -336,7 +336,7 @@ setMeta('meta[name="twitter:image"]','content','https://friendlycalculator.in/og
 if(p.includes('/calculators/compound-interest-calculator.html')&&p.split('/').length>3){document.getElementById('v3')?.closest('label')?.remove();}
 // Native calculator pages already ship their own accessible calculator UI; do not inject a second shared calculator.
 if(p.startsWith('/calculators/')&&!document.querySelector('[data-fc-native-calculator]')){
-  if(![...document.scripts].some(s=>(s.src||'').includes('/assets/page-calculators.js'))){
+  if(![...document.scripts].some(s=>['/assets/page-calculators.js','/assets/income-tax-calculator.js'].some(bundle=>(s.src||'').includes(bundle)))){
     const calcScript=document.createElement('script');calcScript.src='/assets/page-calculators.js';calcScript.defer=true;document.head.appendChild(calcScript);
   }
 }

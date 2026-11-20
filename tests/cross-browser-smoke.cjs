@@ -39,6 +39,24 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   assert.deepEqual(compoundErrors, [], name + ': Compound Interest JavaScript errors');
   await compound.close();
 
+  // Income Tax: verify the focused bundle renders the calculator and keeps the default zero-tax boundary.
+  const incomeTax = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const incomeTaxErrors = [];
+  incomeTax.on('pageerror', error => incomeTaxErrors.push(error.message));
+  const incomeTaxResponse = await incomeTax.goto(new URL('/calculators/income-tax-calculator.html', origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  assert.ok(incomeTaxResponse && incomeTaxResponse.ok(), name + ': Income Tax HTTP response');
+  await incomeTax.waitForSelector('#live-page-calculator form', { timeout: 20000 });
+  const incomeTaxBundles = await incomeTax.evaluate(() => ({
+    focused: [...document.scripts].some(script => (script.src || '').includes('/assets/income-tax-calculator.js')),
+    shared: [...document.scripts].some(script => (script.src || '').includes('/assets/page-calculators.js'))
+  }));
+  assert.notEqual(incomeTaxBundles.focused, incomeTaxBundles.shared, name + ': exactly one Income Tax calculator bundle is loaded');
+  await incomeTax.locator('#live-page-calculator button[type="submit"]').click();
+  const incomeTaxResult = await incomeTax.locator('#live-page-calculator tbody tr').filter({ hasText: 'Estimated tax including surcharge and cess' }).locator('td').innerText();
+  assert.match(incomeTaxResult, /0(?:\\.00)?/, name + ': Income Tax zero-tax rebate boundary');
+  assert.deepEqual(incomeTaxErrors, [], name + ': Income Tax JavaScript errors');
+  await incomeTax.close();
+
   // General mortgage: test zero-rate amortisation plus entered monthly housing costs.
   const mortgage = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const mortgageErrors = [];

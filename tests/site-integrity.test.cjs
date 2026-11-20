@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
@@ -52,6 +53,21 @@ test('AdSense auto ads are excluded from navigation, contact and interactive cal
     assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
   }
 });
+test('shared shell does not inject the full calculator catalogue when a focused bundle is present', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /\['\/assets\/page-calculators\.js','\/assets\/income-tax-calculator\.js'\]/);
+});
+
+test('Income Tax calculator loads its focused calculator bundle instead of the full catalogue bundle', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
+  const focused = fs.readFileSync(path.join(root, 'assets/income-tax-calculator.js'), 'utf8');
+  assert.match(html, /assets\/income-tax-calculator\.js/);
+  assert.doesNotMatch(html, /assets\/page-calculators\.js/);
+  assert.match(focused, /income tax calculator india/);
+  assert.match(focused, /Income Tax Calculator \(Tax Year 2026–27\)/);
+  try { new vm.Script(focused, { filename: 'assets/income-tax-calculator.js' }); } catch (error) { assert.fail(error.stack); }
+});
+
 test('Income Tax calculator reserves its dynamic form before JavaScript initialization', () => {
   const html = fs.readFileSync(path.join(root, 'calculators/income-tax-calculator.html'), 'utf8');
   const pageCalculators = fs.readFileSync(path.join(root, 'assets/page-calculators.js'), 'utf8');
