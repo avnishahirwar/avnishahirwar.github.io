@@ -24,7 +24,9 @@ jobs:
       - name: Add missing public social metadata
         run: node scripts/repair-public-social-metadata.cjs --write
       - name: Regenerate searchable human sitemap
-        run: node scripts/generate-human-sitemap.cjs
+        run: |
+          node --check scripts/generate-human-sitemap.cjs
+          node scripts/generate-human-sitemap.cjs
       - name: Regenerate all-pages and locale sitemaps
         run: |
           node scripts/generate-sitemaps.cjs
