@@ -395,7 +395,7 @@ if(main&&!document.querySelector('.fc-skip-link')){
 const h=document.createElement('header');h.className='fc-global-header';
 const localeNames={en:'English',zh:'中文（普通话）',hi:'हिन्दी',es:'Español',ar:'العربية',fr:'Français',bn:'বাংলা',pt:'Português',id:'Bahasa Indonesia',ur:'اردو',ru:'Русский',de:'Deutsch',ja:'日本語',pcm:'Naijá',arz:'مصري',mr:'मराठी',vi:'Tiếng Việt',te:'తెలుగు',sw:'Kiswahili',ha:'Harshen Hausa',tr:'Türkçe',pa:'ਪੰਜਾਬੀ',fil:'Filipino',ta:'தமிழ்',yue:'粵語',wuu:'吴语',fa:'فارسی',ko:'한국어',am:'አማርኛ',th:'ไทย',jv:'Basa Jawa',it:'Italiano',gu:'ગુજરાતી',kn:'ಕನ್ನಡ',yo:'Yorùbá',bho:'भोजपुरी',nl:'Nederlands',pl:'Polski',ml:'മലയാളം',or:'ଓଡ଼ିଆ',ne:'नेपाली',si:'සිංහල',uk:'Українська',uz:'Oʻzbekcha',ps:'پښتو',so:'Soomaali',he:'עברית',my:'မြန်မာ',ro:'Română',sd:'سنڌي'};
 const requestedUiLocale=new URLSearchParams(location.search).get('lang');
-const supportedUiLocales={en:1,zh:1,hi:1,es:1,ar:1,fr:1,bn:1,pt:1,id:1,ur:1,ru:1,de:1,ja:1,pcm:1,arz:1,mr:1,vi:1,te:1,sw:1,ha:1,tr:1,pa:1,fil:1,ta:1,yue:1,wuu:1,fa:1,ko:1,am:1,th:1,jv:1,it:1,gu:1,kn:1,yo:1,bho:1,nl:1,pl:1,ml:1,or:1,ne:1,si:1,uk:1,uz:1,ps:1,so:1,he:1,my:1,ro:1,sd:1};
+const supportedUiLocales={en:1,hi:1,es:1,ar:1,fr:1,bn:1,pt:1,id:1,ru:1,de:1,ja:1,mr:1,vi:1,te:1,ta:1,gu:1,kn:1};
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
@@ -655,7 +655,7 @@ const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)(?=\/)/,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
   return '/'+next+(normalizedPath.startsWith('/')?normalizedPath:'/'+normalizedPath);
@@ -668,7 +668,7 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)(?=\/)/,'');
     // Use GET for static hosts/CDNs that do not implement HEAD consistently.
     // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
     const fallbackToEnglishPage=()=>{
