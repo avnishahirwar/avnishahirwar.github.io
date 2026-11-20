@@ -730,21 +730,23 @@ test('Income Tax calculator explanation matches the expanded Tax Year 2026–27 
   assert.match(html, /Tax Year 2026–27/);
 });
 
-test('About and Contact pages show consistent ownership, catalogue count and the actual contact route', () => {
+test('About and Contact pages show consistent ownership and the actual contact route', () => {
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
-  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
+  assert.ok(about.includes('broad catalogue of public calculators'));
+  assert.ok(about.includes('<strong>Platform:</strong> free browser-based calculator library'));
+  assert.ok(about.includes('<h2>Available calculators</h2>'));
+  const aboutLinks = [...about.matchAll(/<li><a href="(\/calculators\/[^"]+)">/g)].map(match => match[1]).sort();
+  assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.ok(homepage.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.ok(homepage.includes('Browse the full calculator catalogue'));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
-
 test('Privacy policy does not claim Google CMP is live before account-side publication', () => {
   const privacy = fs.readFileSync(new URL('../calculator/privacy.html', 'file://' + __filename), 'utf8');
   assert.match(privacy, /Google <strong>Privacy &amp; messaging<\/strong>/);
@@ -1310,4 +1312,17 @@ test('wealth planner calculator validates inputs and models compounding with ann
   assert.match(page, /r<=-1/);
   assert.match(page, /balance=balance\*\(1\+r\)\+a/);
   assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
+});
+
+test('yards-to-acres conversion uses 4,840 square yards per acre', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/yards-to-acres-calculator.html'), 'utf8');
+  const prefix = 'window.FC_EQUATION_CONFIG="';
+  const start = page.indexOf(prefix);
+  const end = page.indexOf('";', start);
+  assert.ok(start >= 0 && end > start, 'yards-to-acres page exposes its equation configuration');
+  const raw = page.slice(start + prefix.length, end);
+  const config = JSON.parse(raw.replaceAll(String.fromCharCode(92), ''));
+  assert.equal(config.equations.find(item => item.lhs === 'acres').formula, 'yards/4840');
+  assert.equal(config.equations.find(item => item.lhs === 'yards').formula, 'acres*4840');
+  assert.ok(page.includes('9,680 square yards') && page.includes('2 acres'), 'page includes a worked conversion example');
 });
