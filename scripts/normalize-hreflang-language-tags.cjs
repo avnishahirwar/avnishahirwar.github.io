@@ -20,21 +20,21 @@ function walk(dir, files = []) {
   return files;
 }
 function isNoindex(html) {
-  return /<meta\\b[^>]*\\bname=[\"'](?:robots|googlebot)[\"'][^>]*\\bcontent=[\"'][^\"']*\\bnoindex\\b/i.test(html) ||
-    /<meta\\b[^>]*\\bcontent=[\"'][^\"']*\\bnoindex\\b[^\"']*[\"'][^>]*\\bname=[\"'](?:robots|googlebot)[\"']/i.test(html);
+  return /<meta\b[^>]*\bname=[\"'](?:robots|googlebot)[\"'][^>]*\bcontent=[\"'][^\"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent=[\"'][^\"']*\bnoindex\b[^\"']*[\"'][^>]*\bname=[\"'](?:robots|googlebot)[\"']/i.test(html);
 }
 function normalizeTag(tag) {
-  if (!/\\brel=[\"']alternate[\"']/i.test(tag) || !/\\bhreflang=/i.test(tag)) return tag;
-  const lang = (tag.match(/\\bhreflang=[\"']([^\"']+)[\"']/i) || [])[1]?.toLowerCase();
-  const href = (tag.match(/\\bhref=[\"']([^\"']+)[\"']/i) || [])[1];
+  if (!/\brel=[\"']alternate[\"']/i.test(tag) || !/\bhreflang=/i.test(tag)) return tag;
+  const lang = (tag.match(/\bhreflang=[\"']([^\"']+)[\"']/i) || [])[1]?.toLowerCase();
+  const href = (tag.match(/\bhref=[\"']([^\"']+)[\"']/i) || [])[1];
   if (!lang || !href) return tag;
   let pathname;
   try { pathname = new URL(href, 'https://friendlycalculator.in').pathname; } catch { return tag; }
   let next = lang;
-  if (lang === 'uk' && /^\\/uk(?:\\/|$)/i.test(pathname)) next = 'en-gb';
+  if (lang === 'uk' && /^\/uk(?:\/|$)/i.test(pathname)) next = 'en-gb';
   if (pathname === '/calculators/sip-5000-monthly-calculator.html' && lang === 'en') next = 'en-in';
   if (pathname === '/hi/calculators/sip-5000-monthly-calculator.html' && lang === 'hi') next = 'hi-in';
-  return next === lang ? tag : tag.replace(/(\\bhreflang=[\"'])[^\\"']+([\"'])/i, '$1' + next + '$2');
+  return next === lang ? tag : tag.replace(/(\bhreflang=[\"'])[^\"']+([\"'])/i, '$1' + next + '$2');
 }
 let scanned = 0, changed = 0, skipped = 0;
 for (const file of walk(ROOT)) {
@@ -43,7 +43,7 @@ for (const file of walk(ROOT)) {
   const html = fs.readFileSync(file, 'utf8');
   if (isNoindex(html)) { skipped++; continue; }
   scanned++;
-  const updated = html.replace(/<link\\b[^>]*>/gi, normalizeTag);
+  const updated = html.replace(/<link\b[^>]*>/gi, normalizeTag);
   if (updated !== html) {
     changed++;
     if (write) fs.writeFileSync(file, updated);
