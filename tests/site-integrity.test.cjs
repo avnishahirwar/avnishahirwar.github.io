@@ -2292,3 +2292,10 @@ test('mobile Language, currency, country/format and unit selectors stay full-wid
   assert.ok(mobileRules.includes('min-height:46px!important'), 'Mobile selects must remain comfortably tappable.');
   assert.ok(mobileRules.includes('grid-template-columns:minmax(0,1fr)!important'), 'Settings mirrors must use a single responsive column.');
 });
+
+test('country and format setting explains that website language is independent', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('Sets regional number and date formatting. Website language stays unchanged.'));
+  assert.ok(shell.includes('countryFormatSelect.setAttribute(\'aria-description\',countryFormatHelpText)'));
+  assert.ok(shell.includes('fc-country-format-help'));
+});
