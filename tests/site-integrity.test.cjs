@@ -2265,7 +2265,7 @@ test('visible brand text is included in accessible names and homepage feature ic
   const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
   const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
-  assert.ok(homepage.includes('aria-label="FRIENDLY CALCULATOR Home"'));
+  assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
   assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
   assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
 });
