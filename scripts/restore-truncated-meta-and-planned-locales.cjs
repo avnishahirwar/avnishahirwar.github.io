@@ -29,7 +29,7 @@ function findTag(html, expression) {
 }
 function attr(tag, name) {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = tag.match(new RegExp('\\b' + escaped + '\\s*=\\s*(["\\'])(.*?)\\1', 'i'));
+  const match = tag.match(new RegExp("\\b" + escaped + "\\s*=\\s*([\"\'])(.*?)\\1", "i"));
   return match ? match[2] : '';
 }
 function replaceTag(html, current, replacement) {
