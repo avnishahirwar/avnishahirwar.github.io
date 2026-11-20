@@ -456,11 +456,16 @@ const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
-if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader.remove();}
+const preserveStaticHomepageHeader=headerIsReady&&location.pathname==='/'&&currentLocale==='en';
+if(preserveStaticHomepageHeader){
+  // The homepage ships its complete Header in HTML. Keep that exact node so
+  // deferred shell initialization cannot move the page when replacing it.
+  if(reservedHeader)reservedHeader.remove();
+}else if(headerIsReady){existingHeader.replaceWith(h);if(reservedHeader)reservedHeader.remove();}
 else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigation)existingHeader.remove();}
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
-const activeHeader=h;
+const activeHeader=preserveStaticHomepageHeader?existingHeader:h;
 const removeDuplicateLegacyHeaders=()=>{
   // Remove legacy navigation bars on every page, while retaining content hero headers.
   document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
