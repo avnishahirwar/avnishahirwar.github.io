@@ -1288,7 +1288,7 @@
   {
     "name": "Avogadro's Number Calculator",
     "url": "/calculators/avogadros-number-calculator.html",
-    "category": "Updated: 18 November 2026. Educational estimate only; verify important work independently.",
+    "category": "CHEMISTRY",
     "keywords": "avogadros number calculator avogadro convert amount moles count particles exact constant",
     "description": "Convert amount in moles to a count of particles using the exact Avogadro constant."
   },
@@ -15593,7 +15593,7 @@
   {
     "name": "STP Calculator",
     "url": "/calculators/stp-calculator-standard-temperature-and-pressure.html",
-    "category": "Updated: 18 November 2026. Educational estimate only; verify important scientific and engineering decisions independently.",
+    "category": "CHEMISTRY",
     "keywords": "stp calculator standard temperature pressure calculate ideal gas volume specified amount substance",
     "description": "Calculate ideal-gas volume at specified standard temperature and pressure from amount of substance."
   },
