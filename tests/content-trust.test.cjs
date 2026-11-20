@@ -60,9 +60,9 @@ test('Homepage totals match the public search index and separate category levels
   const searchIndex = JSON.parse(read('assets/calculator-search-index.json'));
   const topicCount = new Set(searchIndex.map(item => (item.category || 'Other').trim().toLocaleLowerCase().replace(/\s+/g, ' '))).size;
   const directory = read('calculator/site-directory.html');
-  const categorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\\s\\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\\/main>)/g)];
-  const directoryCounts = Object.fromEntries(categorySections.map(match => [match[1], (match[2].match(/<a class="card" href="\\/calculators\\//g) || []).length]));
-  const homepageCards = [...homepage.matchAll(/href="\\/calculator\\/site-directory\\.html#([^"]+)"><strong>.*?<\\/strong><span>([\\d,]+) calculators<\\/span><\\/a>/g)];
+  const categorySections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
+  const directoryCounts = Object.fromEntries(categorySections.map(match => [match[1], (match[2].match(/<a class="card" href="\/calculators\//g) || []).length]));
+  const homepageCards = [...homepage.matchAll(/href="\/calculator\/site-directory\.html#([^"]+)"><strong>.*?<\/strong><span>([\d,]+) calculators<\/span><\/a>/g)];
   const homepageCounts = Object.fromEntries(homepageCards.map(match => [match[1], Number(match[2].replace(/,/g, ''))]));
   assert.equal(searchIndex.length, 3123);
   assert.match(homepage, /Search all 3123 calculators/);
