@@ -65,7 +65,7 @@ test('Income Tax calculator loads its focused calculator bundle instead of the f
   assert.doesNotMatch(html, /assets\/page-calculators\.js/);
   assert.match(focused, /income tax calculator india/);
   assert.match(focused, /Income Tax Calculator \(Tax Year 2026–27\)/);
-  assert.doesNotThrow(() => new vm.Script(focused), 'focused Income Tax bundle must be valid JavaScript');
+  try { new vm.Script(focused, { filename: 'assets/income-tax-calculator.js' }); } catch (error) { assert.fail(error.stack); }
 });
 
 test('Income Tax calculator reserves its dynamic form before JavaScript initialization', () => {
