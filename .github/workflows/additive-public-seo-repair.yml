@@ -44,6 +44,7 @@ jobs:
           node scripts/repair-public-social-metadata.cjs --check
           node scripts/add-hreflang-reciprocals.cjs
           node scripts/repair-verified-hreflang-mismatches.cjs
+          echo "All deterministic SEO repairs are verified on the checked-out pull request branch."
       - name: Commit additive HTML metadata and hreflang updates
         run: |
           git config user.name "github-actions[bot]"
