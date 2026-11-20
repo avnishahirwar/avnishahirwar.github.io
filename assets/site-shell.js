@@ -456,7 +456,7 @@ const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
 const headerIsReady=!!(existingHeader&&existingHeader.classList.contains('fc-global-header')&&existingHeader.querySelector('.fc-global-nav #fc-primary-navigation'));
-const preserveStaticHomepageHeader=headerIsReady&&location.pathname==='/'&&currentLocale==='en';
+const preserveStaticHomepageHeader=headerIsReady&&location.pathname==='/'&&currentLocale==='en'&&existingHeader.hasAttribute('data-fc-static-homepage');
 if(preserveStaticHomepageHeader){
   // The homepage ships its complete Header in HTML. Keep that exact node so
   // deferred shell initialization cannot move the page when replacing it.
