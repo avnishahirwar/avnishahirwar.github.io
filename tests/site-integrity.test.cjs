@@ -1257,7 +1257,7 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
 test('homepage category summary and directory markup match the published catalogue', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  assert.match(homepage, /organised into 19 clearly labelled categories/);
+  assert.match(homepage, /organised into 20 clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Showing all ' + expectedCoreCalculatorCount + ' calculators in 20 categories'));
 });

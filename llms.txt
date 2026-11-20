@@ -61,9 +61,9 @@ Friendly Calculator provides tools and educational information. Calculator resul
 ## Educational guides
 
 - [English finance and calculator guides](https://friendlycalculator.in/blog/): Tax, savings, borrowing, salary, and calculation explainers.
-- [Old vs new tax regime guide](https://friendlycalculator.in/blog/old-vs-new-tax-regime.html): Compare tax-regime concepts and assumptions.
-- [SIP vs FD guide](https://friendlycalculator.in/blog/sip-vs-fd.html): Understand differences in risk, liquidity, and return assumptions.
-- [Home-loan prepayment guide](https://friendlycalculator.in/blog/home-loan-prepayment.html): Understand repayment and prepayment concepts.
+- [Old vs new tax regime guide](https://friendlycalculator.in/blog/old-vs-new-tax-regime-india-comparison.html): Compare tax-regime concepts and assumptions.
+- [SIP vs FD guide](https://friendlycalculator.in/blog/sip-vs-fd-comparison-india.html): Understand differences in risk, liquidity, and return assumptions.
+- [Home-loan prepayment guide](https://friendlycalculator.in/blog/home-loan-emi-tenure-prepayment-guide.html): Understand repayment and prepayment concepts.
 - [Hindi guides index](https://friendlycalculator.in/hi/guides/index.html): Hindi examples for home-loan EMI, SIP, and income tax.
 - [Hindi ₹10 lakh home-loan example](https://friendlycalculator.in/hi/guides/home-loan-10-lakh-emi-20-years.html): Worked EMI example with stated assumptions.
 - [Hindi ₹5,000 SIP example](https://friendlycalculator.in/hi/guides/sip-5000-10-years.html): Illustrative SIP projection.

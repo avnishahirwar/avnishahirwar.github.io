@@ -7,10 +7,10 @@ const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const globalPage = fs.readFileSync(path.join(root, 'international', 'index.html'), 'utf8');
 
 test('homepage presents the current wealth and property positioning while retaining global access', () => {
-  assert.match(home, /<h1>Make bigger decisions with better numbers\.<\/h1>/);
+  assert.match(home, /<h1>Free calculators for finance, tax and everyday decisions\.<\/h1>/);
   assert.doesNotMatch(home, /<h1>Free Online Calculators for India(?: and Worldwide)?<\/h1>/);
   assert.match(home, /Calculators for users worldwide/);
-  assert.match(home, /WEALTH INTELLIGENCE/);
+  assert.match(home, /FREE CALCULATORS/);
   assert.match(home, /\/international\//);
 });
 
