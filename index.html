@@ -298,7 +298,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==2481)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -314,7 +314,7 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 2481 calculators across 34 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse the full catalogue across 20 main categories and 36 calculator topics. Search instantly or choose a category below.';return;}
  lastQuery=query;
  status.textContent='Searching the calculator catalogue…';
  results.hidden=true;
