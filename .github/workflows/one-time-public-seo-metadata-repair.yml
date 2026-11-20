@@ -1,4 +1,4 @@
-name: One-time public SEO metadata repair
+name: One-time public SEO metadata repair # refreshed after catalogue expansion
 on:
   push:
     branches:
