@@ -1645,6 +1645,8 @@ test('income tax page title and heading identify the current salary-estimate tax
   assert.ok(tax.includes('<title>Income Tax Calculator India 2026–27 | Salary Tax Estimate</title>'));
   assert.ok(tax.includes('<h1>Income Tax Calculator India for Tax Year 2026–27</h1>'));
   assert.ok(tax.includes('name="description" content="Estimate Indian salary income tax for Tax Year 2026–27'));
+  assert.match(tax, /Explore the complete calculator directory to browse all current calculators/);
+  assert.doesNotMatch(tax, /Explore all \\d+ calculators on Friendly Calculator/);
 });
 
 
