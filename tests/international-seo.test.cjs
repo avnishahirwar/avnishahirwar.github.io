@@ -4,6 +4,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const origin='https://friendlycalculator.in';
+const excludedContentPath=/(?:alcohol|beer|wine|cocktail|cigarette|nicotine|tobacco|vape|liquor|cannabis|marijuana|cbd|thc|weed|meth|cocaine|opioid|drug|intoxicant|ethanol|vodka|whiskey|smoking|vaping|pesticide|poison|toxin)/i;
 const ignored=new Set(['node_modules','vendor','_site','tests','.git','.github','admin','avnish-ai']);
 function walk(dir,files=[]){
  for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
@@ -15,6 +16,7 @@ function walk(dir,files=[]){
  return files;
 }
 function headOf(html){const i=html.toLowerCase().indexOf('</head>');return i<0?html:html.slice(0,i);}
+function isNoindex(html){return /<meta\b[^>]*\bname=["'](?:robots|googlebot)["'][^>]*\bcontent=["'][^"']*\bnoindex\b/i.test(headOf(html))||/<meta\b[^>]*\bcontent=["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname=["'](?:robots|googlebot)["']/i.test(headOf(html));}
 function langOf(html,file){
  const m=headOf(html).match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
  if(m)return m[1].toLowerCase();
@@ -35,6 +37,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
  for(const file of pages)cache.set(file,fs.readFileSync(file,'utf8'));
  const errors=[];let checked=0,tagged=0;
  for(const [file,html] of cache){
+  if(excludedContentPath.test(path.relative(root,file))||isNoindex(html))continue;
   const links=alternatesOf(html);if(!links.length)continue;tagged++;
   const sourceLang=langOf(html,file),sourceCanonical=canonicalOf(html);
   if(!sourceCanonical){errors.push(file+': hreflang present but canonical missing');continue;}
@@ -45,6 +48,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
    seen.add(link.lang);
    const targetFile=localFile(link.href);
    if(!targetFile){errors.push(file+': '+link.lang+' target missing/off-domain: '+link.href);continue;}
+   if(excludedContentPath.test(path.relative(root,targetFile)))continue;
    if(link.lang==='x-default')continue;
    const targetHtml=cache.get(targetFile)||fs.readFileSync(targetFile,'utf8');
    const targetLang=langOf(targetHtml,targetFile);

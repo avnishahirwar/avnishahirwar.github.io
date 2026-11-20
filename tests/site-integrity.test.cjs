@@ -85,7 +85,7 @@ test('every public sitemap page loads the shared site header and footer shell', 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const pathname = new URL(url).pathname;
-    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
+    const expectedShell = '/assets/site-shell.js';
     if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
@@ -250,15 +250,7 @@ test('shared Header follows the same navigation and regional-control order on ev
     renderedLast = index;
   }
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
-  const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
-  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
-  let homepageLast = -1;
-  for (const token of homepageOrder) {
-    const index = homepageNav.indexOf(token);
-    assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
-    homepageLast = index;
-  }
+  assert.ok(homepage.includes('/assets/site-shell.js'), 'Homepage must load the canonical shared Header/Footer shell.');
   assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
   assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
@@ -879,9 +871,9 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
-  assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.ok(directory.includes('Search calculators by name or topic'));
-  assert.ok(directory.includes('Browse calculators by category, or explore international tools.'));
+  assert.ok(directory.includes('Find all Friendly Calculator tools, calculator categories, business services, API information, support and policies in one organized directory.'));
+  assert.ok(/placeholder="Search [0-9,]+ calculators by name or topic/.test(directory));
+  assert.ok(/all 3125 calculators are organised into 20 clear categories.*explore international calculators separately/.test(directory));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
@@ -893,14 +885,19 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const counts = new Map();
   for (const section of sections) {
     const id = section[1], body = section[2];
-    const declared = Number((body.match(/<strong>(\d+) tools?<\/strong>/) || [])[1]);
+    const declaration = body.match(/<strong>(\d+) (?:tools|calculators?)(?: \+ (\d+) shortcut)?<\/strong>/);
+    const declared = declaration ? Number(declaration[1]) + Number(declaration[2] || 0) : NaN;
     const count = [...body.matchAll(/href="\/calculators\/[^"]+"/g)].length;
     assert.equal(declared, count);
     counts.set(id, declared);
   }
   for (const card of cards) assert.equal(Number(card[2]), counts.get(card[1]));
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>129 calculators<\/span><\/a>/);
+  const homepageMathCategory = homepage.match(/href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>([\d,]+) calculators<\/span><\/a>/);
+  const directoryMathCard = cards.find(card => card[1] === 'math-statistics');
+  assert.ok(homepageMathCategory, 'Homepage must expose the Mathematics category count.');
+  assert.ok(directoryMathCard, 'Directory must expose the Mathematics category card.');
+  assert.equal(Number(homepageMathCategory[1].replace(/,/g, '')), Number(directoryMathCard[2]), 'Homepage and directory Mathematics counts must match.');
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
@@ -1470,9 +1467,9 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
-  assert.ok(page.includes("link.href='/assets/site-shell.css'"));
-  assert.ok(page.includes("requestIdleCallback(loadShellStyles,{timeout:1200})"));
+  assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
+  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(page.includes('<script src="/assets/homepage-personal-tools.js" defer></script>'));
   assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
 });
 
@@ -1518,6 +1515,9 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
+  assert.match(homepage, /items\.some\(item=>!/);
+  assert.doesNotMatch(homepage, /2481|34 categories/);
+  assert.match(homepage, /Search all calculators/);
   assert.match(homepage, /items\.some\(item=>!item/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
@@ -1620,11 +1620,11 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
-  assert.ok(homepage.includes('name="description" content="Clear calculators for wealth planning, property investment, loan EMI, GST, income tax, savings and everyday maths in India and worldwide."'));
-  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
-  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
+  assert.ok(homepage.includes('<title>Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
+  assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."'));
+  assert.ok(homepage.includes('property="og:title" content="Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Free Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
@@ -2065,33 +2065,33 @@ test('remaining chemistry calculator formulas return expected results',()=>{
 });
 
 
-test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+test('homepage exposes 18 popular calculators as responsive crawlable links', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
-  const end = page.indexOf('<nav class="home-category-index"', start);
-  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const start = page.indexOf('<nav class="home-popular-tools"');
+  const end = page.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator navigation exists');
   const section = page.slice(start, end);
-  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(routes.length, 24);
-  assert.equal(new Set(routes).size, 24);
+  const routes = [...section.matchAll(/<a href="([^"]+)">/g)].map(match => match[1]);
+  assert.equal(routes.length, 18);
+  assert.equal(new Set(routes).size, 18);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
-  assert.match(page, /\.home-popular-list/);
-  assert.match(page, /\.home-popular-icon/);
-  assert.match(page, /\.home-popular-item/);
-  assert.doesNotMatch(section, /bmi-calculator\.html/i);
+  assert.match(page, /\.home-popular-tools/);
+  assert.match(page, /\.home-popular-tools a/);
 });
 
 
-test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
+test('homepage loads shared header styles and shell behavior without removing navigation', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /link\.rel='stylesheet'[\s\S]*link\.href='\/assets\/site-shell\.css'/);
-  assert.match(html, /requestIdleCallback\(loadShellStyles,\{timeout:1200\}\)/);
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
-  assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
-  assert.match(html, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(html.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
+  assert.ok(html.includes('<header class="fc-global-header">'));
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(css, /\.fc-global-header/);
+  assert.match(css, /\.fc-global-nav/);
+  assert.match(css, /@media\s*\(max-width:\s*760px\)/);
+  assert.ok(shell.includes("header.className = 'fc-global-header fc-shell-failsafe'") || shell.includes("header.className='fc-global-header fc-shell-failsafe'"));
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
@@ -2141,17 +2141,16 @@ test('homepage uses the shared PWA install action and preserves language, analyt
 });
 
 
-test('English homepage always renders the shared footer and Sitemap link', () => {
+test('English homepage retains its shared header and the shell injects a Sitemap footer link', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
   assert.ok(script.includes("document.createElement('footer')"));
-  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
-  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
+  assert.ok(script.includes("footer.classList.add('fc-global-footer')"));
+  assert.ok(script.includes("['Sitemap','/sitemap.html']"));
   assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'), 'Homepage fallback Settings trigger must be the final Footer navigation item.');
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
@@ -2240,24 +2239,25 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
   assert.match(script, /fc-global-footer-links/);
 });
 
-test('homepage has the same static shared footer and Sitemap destination', () => {
+test('homepage shared shell supplies the global footer and Sitemap destination', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<footer class="fc-global-footer"(?:\s|>)/);
-  assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
-  assert.ok(html.includes('class="fc-global-footer-links"'));
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.ok(shell.includes("footer.classList.add('fc-global-footer')"));
+  assert.ok(shell.includes("['Sitemap','/sitemap.html']"));
+  assert.ok(shell.includes("document.body.appendChild(footer)"));
 });
 
 
-test('homepage critical CSS keeps the shared regional Header readable before deferred styles load', () => {
+test('shared shell stylesheet defines responsive global navigation and regional controls', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const styleStart = html.indexOf('<style id="fc-critical-home-shell">');
-  const styleEnd = html.indexOf('</style>', styleStart);
-  const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
-  assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
-  assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
-  assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(html.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
+  assert.match(css, /\.fc-global-header/);
+  assert.match(css, /\.fc-global-nav/);
+  assert.match(css, /\.fc-global-links/);
+  assert.match(css, /\.fc-language-control|\.fc-global-links/);
+  assert.match(css, /@media\s*\(max-width:\s*760px\)/);
 });
 
 
@@ -2265,9 +2265,9 @@ test('visible brand text is included in accessible names and homepage feature ic
   const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
   const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
-  assert.ok(homepage.includes('aria-label="FRIENDLY CALCULATOR Home"'));
-  assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
-  assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
+  assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
+  assert.ok(homepage.includes('alt="Friendly Calculator logo"'));
+  assert.ok(homepage.includes('<span>FRIENDLY <b>CALCULATOR</b></span>'));
 });
 
 

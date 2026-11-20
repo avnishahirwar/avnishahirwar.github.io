@@ -1,0 +1,48 @@
+name: One-time public metadata repair
+
+on:
+  push:
+    branches:
+      - fix/homepage-search-catalogue-guard-2026-11-20
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: "!contains(github.event.head_commit.message, '[metadata-repair-complete]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate repair script
+        run: node --check scripts/repair-public-social-metadata.cjs
+      - name: Add missing public social metadata and canonicals
+        run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Verify metadata coverage
+        run: node scripts/repair-public-social-metadata.cjs --check
+      - name: Run public SEO publication tests
+        run: node --test tests/public-seo-quality.test.cjs
+      - name: Normalize valid locale tags on indexable pages
+        run: node scripts/normalize-hreflang-language-tags.cjs --write
+      - name: Add only safe hreflang reciprocal links
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Verify additive hreflang repair
+        run: node --test tests/international-seo-diagnostic.test.cjs
+      - name: Run full indexable-page hreflang audit
+        run: node --test tests/international-seo.test.cjs
+      - name: Commit additive HTML metadata repairs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: repair missing public metadata [metadata-repair-complete]"
+            git push
+          else
+            echo "No additional metadata repairs were needed."
+          fi

@@ -740,7 +740,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.ok(homepage.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.ok(homepage.includes('Search all calculators'));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
