@@ -1236,3 +1236,15 @@ main pre{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
     max-width:100%;
   }
 }
+
+
+/* Explain the regional selector without implying it changes the website language. */
+.fc-country-format-help{
+  display:block;
+  margin-top:5px;
+  color:#64717d;
+  font-size:.78rem;
+  line-height:1.45;
+  font-weight:400;
+}
+body.fc-dark-mode .fc-country-format-help{color:#bdc9d4}
