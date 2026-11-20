@@ -4,17 +4,19 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const entries=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
+const restricted=/alcohol|beer|wine|cocktail|cigarette|nicotine|tobacco|vape|liquor|cannabis|marijuana|cbd|thc|weed|meth|cocaine|opioid|drug|intoxicant|ethanol|vodka|whiskey|smoking|vaping|pesticide|poison|toxin/i;
+const publicEntries=entries.filter(entry=>![entry.name,entry.url,entry.category,entry.keywords,entry.description].some(value=>restricted.test(String(value||''))));
 const html=fs.readFileSync(path.join(root,'sitemap.html'),'utf8');
 const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
 
 test('human sitemap lists every public calculator catalogue URL exactly once',()=>{
  const urls=[...html.matchAll(/<li class="sitemap-item" data-search="[^"]*"><a href="([^"]+)">/g)].map(m=>m[1]);
- assert.equal(urls.length,entries.length);
+ assert.equal(urls.length,publicEntries.length);
  assert.equal(new Set(urls).size,urls.length);
- assert.deepEqual([...urls].sort(),entries.map(x=>x.url).sort());
+ assert.deepEqual([...urls].sort(),publicEntries.map(x=>x.url).sort());
 });
 test('human sitemap groups every catalogue category and has indexable metadata',()=>{
- const categories=new Set(entries.map(x=>x.category||'Other'));
+ const categories=new Set(publicEntries.map(x=>x.category||'Other'));
  assert.equal((html.match(/<details class="sitemap-category"/g)||[]).length,categories.size);
  assert.match(html,/<meta name="robots" content="index,follow/);
  assert.match(html,/<link rel="canonical" href="https:\/\/friendlycalculator\.in\/sitemap\.html"/);
