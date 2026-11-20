@@ -27,10 +27,14 @@ jobs:
         run: node scripts/repair-public-social-metadata.cjs --check
       - name: Run public SEO publication tests
         run: node --test tests/public-seo-quality.test.cjs
+      - name: Normalize valid locale tags on indexable pages
+        run: node scripts/normalize-hreflang-language-tags.cjs --write
       - name: Add only safe hreflang reciprocal links
         run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Verify additive hreflang repair
         run: node --test tests/international-seo-diagnostic.test.cjs
+      - name: Run full indexable-page hreflang audit
+        run: node --test tests/international-seo.test.cjs
       - name: Commit additive HTML metadata repairs
         run: |
           git config user.name "github-actions[bot]"
