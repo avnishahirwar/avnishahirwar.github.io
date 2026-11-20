@@ -1563,6 +1563,26 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   }
 });
 
+test('homepage search requires all query terms to match coherently within one field', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const vm = require('node:vm');
+  const helper = homepage.match(/function matchesAllTerms\\(terms,tokens,field\\)\\{[\\s\\S]*?\\n\\}/);
+  assert.ok(helper, 'Homepage must define the shared all-terms matcher');
+  const matchesAllTerms = vm.runInNewContext('(' + helper[0] + ')', {
+    normalize: value => String(value).toLowerCase(),
+    synonyms: {}
+  });
+  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan'], 'home loan'), false,
+    'A partial name match must not be combined with unrelated keywords');
+  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan', 'tax'], 'home loan tax'), true);
+  assert.equal(matchesAllTerms(['loan', 'emi'], ['home', 'loan', 'emi', 'calculator'], 'home loan emi'), true);
+  assert.equal(matchesAllTerms(['salary', 'tax'], ['salary', 'tax', 'payroll'], 'salary tax payroll'), true);
+  assert.match(homepage, /const nameMatch=matchesAllTerms\\(terms,nameTokens,name\\)/);
+  assert.match(homepage, /const keywordMatch=matchesAllTerms\\(terms,keywordTokens,keywords\\)/);
+  assert.match(homepage, /if\\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\\)continue/);
+});
+
+
 test('homepage calculator search results region has a valid accessible role', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(homepage, /id="fc-home-search-results"[^>]*role="region"[^>]*aria-label="Calculator search results"/);
