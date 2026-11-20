@@ -872,7 +872,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Find all Friendly Calculator tools, calculator categories, business services, API information, support and policies in one organized directory.'));
-  assert.ok(/placeholder="Search [\\d,]+ calculators by name or topic/.test(directory));
+  assert.ok(/placeholder="Search [0-9,]+ calculators by name or topic/.test(directory));
   assert.ok(/all 3125 calculators are organised into 20 clear categories[\\s\\S]*explore international calculators separately/.test(directory));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
