@@ -21847,5 +21847,12 @@
     "category": "Geometry, Measurement & Construction",
     "keywords": "size to weight calculator rectangular box construction solid cuboid dimensions density mass weight",
     "description": "Estimate the mass of a solid rectangular block from its dimensions and material density."
+  },
+  {
+    "name": "Friendship Calculator",
+    "url": "/calculators/friendship-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "friendship calculator fun friendship score two names friends entertainment",
+    "description": "Generate a playful friendship score from two names for entertainment only."
   }
 ]
