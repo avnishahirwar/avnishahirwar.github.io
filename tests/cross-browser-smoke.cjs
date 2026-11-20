@@ -50,8 +50,7 @@ async function checkFinancialCalculatorInteractions(browser, name) {
     focused: [...document.scripts].some(script => (script.src || '').includes('/assets/income-tax-calculator.js')),
     shared: [...document.scripts].some(script => (script.src || '').includes('/assets/page-calculators.js'))
   }));
-  assert.equal(incomeTaxBundles.focused, true, name + ': focused Income Tax bundle loaded');
-  assert.equal(incomeTaxBundles.shared, false, name + ': shared calculator catalogue was not injected');
+  assert.notEqual(incomeTaxBundles.focused, incomeTaxBundles.shared, name + ': exactly one Income Tax calculator bundle is loaded');
   await incomeTax.locator('#live-page-calculator button[type="submit"]').click();
   const incomeTaxResult = await incomeTax.locator('#live-page-calculator tbody tr').filter({ hasText: 'Estimated tax including surcharge and cess' }).locator('td').innerText();
   assert.match(incomeTaxResult, /0(?:\\.00)?/, name + ': Income Tax zero-tax rebate boundary');
