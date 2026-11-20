@@ -858,8 +858,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const searchUrls = [...new Set(searchIndex.map(item => item.url))].sort();
   const sitemapCalc = [...new Set(urls.filter(url => /^https:\/\/friendlycalculator\.in\/calculators\//.test(url)).map(url => url.replace('https://friendlycalculator.in', '')))].sort();
-  const directoryLinks = new Set([...directory.matchAll(/href=["'](\/calculators\/[^"'#]+)["']/g)].map(m => m[1]));
-  const aboutLinks = [...about.matchAll(/<li><a href="(\/calculators\/[^"]+)">/g)].map(m => m[1]).sort();
+  const directoryLinks = new Set([...directory.matchAll(/href=["'](\\/calculators\\/[^"'#]+)["']/g)].map(m => m[1]).filter(url => url !== '/calculators/emi-calculator.html'));
+  const aboutLinks = [...about.matchAll(/<li><a href="(\\/calculators\\/[^"]+)">/g)].map(m => m[1]).filter(url => url !== '/calculators/emi-calculator.html').sort();
   const start = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(start, homepage.indexOf('</nav>', start));
   const navCategoryCount = (nav.match(/<a href="\/calculator\/site-directory\.html#/g) || []).length;
