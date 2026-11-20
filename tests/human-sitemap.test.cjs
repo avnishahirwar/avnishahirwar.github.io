@@ -6,6 +6,7 @@ const root=path.resolve(__dirname,'..');
 const entries=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
 const html=fs.readFileSync(path.join(root,'sitemap.html'),'utf8');
 const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+const client=fs.readFileSync(path.join(root,'assets/human-sitemap.js'),'utf8');
 const { renderHumanSitemap } = require('../scripts/generate-human-sitemap.cjs');
 
 test('human sitemap lists every public calculator catalogue URL exactly once',()=>{
@@ -33,4 +34,11 @@ test('human sitemap generator reproduces the checked-in complete catalogue witho
  assert.ok(html.includes('<strong>3,126</strong> calculator pages'));
  assert.ok(html.includes('<strong>3</strong> international entries'));
  assert.ok(html.includes('<strong>36</strong> catalogue categories'));
+});
+
+
+test('human sitemap initializes its visible total from the generated catalogue on page load', () => {
+ assert.ok(client.includes("const total=Number(document.querySelector('[data-sitemap-total]')?.dataset.sitemapTotal||0);"));
+ assert.ok(client.lastIndexOf('filter();') > client.indexOf("document.querySelectorAll('.sitemap-category-index a')"), 'The initial count refresh must run after event listeners are registered');
+ assert.ok(client.includes("status.textContent=query?visible.toLocaleString()+' matching calculator entries.':total.toLocaleString()+' entries across '+groups.length+' categories.';"));
 });
