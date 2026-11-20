@@ -1442,6 +1442,11 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    const countryFormatHelpText=currentLocale==='hi'
+      ?'यह देश/क्षेत्र के अनुसार संख्या और तारीख का प्रारूप बदलता है; वेबसाइट की भाषा अलग रहती है।'
+      :'Sets regional number and date formatting. Website language stays unchanged.';
+    countryFormatSelect.title=countryFormatHelpText;
+    countryFormatSelect.setAttribute('aria-description',countryFormatHelpText);
     countrySelect.tabIndex=-1;
     localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
@@ -1473,6 +1478,16 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     if(!sourceSelect||!mirrorSelect)return;
     mirrorSelect.removeAttribute('id');
     mirrorSelect.value=sourceSelect.value;
+    if(source.classList.contains('fc-country-format-control')){
+      const help=document.createElement('small');
+      help.className='fc-country-format-help';
+      help.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('hi')
+        ?'यह देश/क्षेत्र के अनुसार संख्या और तारीख का प्रारूप बदलता है; वेबसाइट की भाषा अलग रहती है।'
+        :'Sets regional number and date formatting. Website language stays unchanged.';
+      help.id='fc-country-format-help';
+      mirrorSelect.setAttribute('aria-describedby',help.id);
+      mirror.appendChild(help);
+    }
     const sync=()=>{mirrorSelect.value=sourceSelect.value;};
     sourceSelect.addEventListener('change',sync);
     window.addEventListener('fc:localechange',sync);
