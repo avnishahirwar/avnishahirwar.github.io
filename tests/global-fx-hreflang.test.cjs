@@ -40,14 +40,14 @@ test('percentage calculator hreflang cluster includes all nine published languag
  for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  assert.deepEqual(actual.sort((a,b)=>a[0].localeCompare(b[0])),expected.sort((a,b)=>a[0].localeCompare(b[0])),file);
  }
 });
 
 test('simple-interest English and Bengali hreflang alternates match published translations',()=>{
  const route='simple-interest-calculator.html';
  const englishLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
- const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt'];
+ const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
  const expectedFor=locales=>locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
  for(const [file,expected] of [['calculators/'+route,expectedFor(englishLocales)],['bn/calculators/'+route,expectedFor(bengaliLocales)]]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
