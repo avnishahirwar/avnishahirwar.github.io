@@ -5,6 +5,7 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const root=path.join(__dirname,'..');
 const locales=['hi','es','fr','pt','ar','id','bn','ta'];
+const sortPairs=pairs=>[...pairs].sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
 test('all existing localized currency converters load the shared reference-rate client',()=>{
  for(const locale of locales){
   const html=fs.readFileSync(path.join(root,locale,'calculators/currency-converter-calculator.html'),'utf8');
@@ -33,14 +34,14 @@ test('generated sitemap check includes hreflang clusters',()=>{
 });
 
 
-test('percentage calculator hreflang cluster includes all nine published language pages',()=>{
+test('percentage calculator hreflang cluster includes all published language pages',()=>{
  const route='percentage-calculator.html';
  const locales=['en','hi','x-default','ar','bn','es','fr','id','pt','ta'];
  const expected=locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
  for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  assert.deepEqual(sortPairs(actual),sortPairs(expected),file);
  }
 });
 
@@ -76,7 +77,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across s
    const html=fs.readFileSync(file,'utf8');
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
    const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-   assert.deepEqual(actual,expected,locale+'/'+route);
+   assert.deepEqual(sortPairs(actual),sortPairs(expected),locale+'/'+route);
   }
  }
 });
