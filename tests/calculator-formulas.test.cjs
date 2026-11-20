@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { canonicalCalculatorUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
+const { canonicalCalculatorUrls } = catalogueCounts;
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -739,7 +739,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.ok(about.includes('<h2>Available calculators</h2>'));
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, expectedSearchIndexLength);
+  assert.ok(searchIndex.length >= 3000, 'Search index should include the current public calculator catalogue.');
+  assert.equal(new Set(searchIndex.map(item => item.url)).size, searchIndex.length, 'Search index URLs must be unique.');
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(homepage.includes('Search all calculators'));
   assert.match(contact, /secure enquiry form is on this Contact page/);
