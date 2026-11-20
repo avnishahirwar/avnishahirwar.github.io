@@ -75,3 +75,11 @@ test('new UK and US calculator URLs are listed in the additive country sitemap',
   const robots = read('robots.txt');
   assert.ok(robots.includes('Sitemap: https://friendlycalculator.in/sitemap-uk-us.xml'));
 });
+
+test('UK and US hubs cite official guidance for the newly added local-tax and student-loan tools', () => {
+  const uk = read('uk/index.html');
+  const us = read('us/index.html');
+  assert.ok(uk.includes('https://www.gov.uk/council-tax'));
+  assert.ok(us.includes('https://studentaid.gov/manage-loans/repayment'));
+  assert.ok(us.includes('https://www.usa.gov/property-taxes'));
+});
