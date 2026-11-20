@@ -99,7 +99,7 @@ test('every public sitemap page loads the shared site header and footer shell', 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const pathname = new URL(url).pathname;
-    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
+    const expectedShell = '/assets/site-shell.js';
     if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
