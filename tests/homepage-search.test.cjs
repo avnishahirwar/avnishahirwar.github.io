@@ -22,6 +22,8 @@ test('homepage calculator search inline script parses and loads the fresh catalo
   assert.match(script, /calculator-search-index\.json\?v=20261120-searchfix5/);
   assert.match(script, /cache:'no-store'/);
   assert.match(script, /restrictedSearchContent/);
+  assert.match(script, /items\\.some\\(item=>!item/);
+  assert.match(script, /new Set\\(items\\.map\\(item=>item\\.url\\)\\)/);
   assert.match(script, /home-search-group/);
   assert.match(script, /input\.addEventListener\('input'/);
 });
