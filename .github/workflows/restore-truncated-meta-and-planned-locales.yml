@@ -34,7 +34,7 @@ jobs:
           node scripts/generate-sitemaps.cjs --check
           node scripts/generate-locale-sitemaps.cjs --check
       - name: Run focused SEO tests
-        run: node --test tests/public-seo-quality.test.cjs tests/global-expansion.test.cjs tests/site-integrity.test.cjs tests/planned-locale-indexing.test.cjs
+        run: node --test tests/seo-repair-regression.test.cjs tests/planned-locale-indexing.test.cjs
       - name: Commit reviewed-branch SEO repairs
         run: |
           git config user.name "github-actions[bot]"
