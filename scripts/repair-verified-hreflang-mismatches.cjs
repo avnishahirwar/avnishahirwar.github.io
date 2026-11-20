@@ -34,6 +34,14 @@ for (const file of walk(ROOT)) {
     stats.homepageUkTagsCorrected += (original.split(ukTag).length - 1);
   }
 
+  const upperCaseUkTag = '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">';
+  const lowerCaseUkTag = '<link rel="alternate" hreflang="en-gb" href="https://friendlycalculator.in/uk/">';
+  if (html.includes(upperCaseUkTag) && html.includes(lowerCaseUkTag)) {
+    html = html.replace(upperCaseUkTag + '\\n', '');
+    html = html.replace(upperCaseUkTag, '');
+    stats.homepageUkDuplicatesRemoved++;
+  }
+
   const nonCanonicalUkTag = '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/index.html">';
   const canonicalUkTag = '<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/uk/">';
   if (html.includes(nonCanonicalUkTag)) {
