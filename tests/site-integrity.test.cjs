@@ -871,9 +871,9 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
-  assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.ok(directory.includes('Search calculators by name or topic'));
-  assert.ok(directory.includes('Browse calculators by category, or explore international tools.'));
+  assert.ok(directory.includes('Find all Friendly Calculator tools, calculator categories, business services, API information, support and policies in one organized directory.'));
+  assert.ok(/placeholder="Search [\\d,]+ calculators by name or topic/.test(directory));
+  assert.ok(/all 3125 calculators are organised into 20 clear categories[\\s\\S]*explore international calculators separately/.test(directory));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
