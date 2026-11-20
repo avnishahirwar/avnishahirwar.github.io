@@ -52,11 +52,13 @@ test('property-tax calculator applies assessment ratio and exemptions before loc
   assert.match(html, /market\*ratio\/100/);
   assert.match(html, /Math\.max\(0,assessed-exemption\)/);
   assert.match(html, /taxable\*rate\/100/);
+  assert.match(html, /market<=0/);
 });
 
 test('council-tax calculator uses user-entered local bill and does not assume a universal band rate', () => {
   const html = read('international/uk-council-tax-calculator.html');
   assert.match(html, /bill\*\(1-discount\/100\)/);
+  assert.match(html, /bill<=0/);
   assert.match(html, /Enter the annual amount on your latest council bill/);
   assert.match(html, /does not look up council rates/);
 });
