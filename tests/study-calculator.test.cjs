@@ -3,8 +3,6 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const root = require('node:path').resolve(__dirname, '..');
-const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { } = catalogueCounts;
 
 test('Study Calculator is indexed, discoverable and uses the published catalogue count', () => {
   const index = JSON.parse(fs.readFileSync(root + '/assets/calculator-search-index.json', 'utf8'));
