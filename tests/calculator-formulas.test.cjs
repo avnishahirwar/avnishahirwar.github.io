@@ -1311,3 +1311,16 @@ test('wealth planner calculator validates inputs and models compounding with ann
   assert.match(page, /balance=balance\*\(1\+r\)\+a/);
   assert.match(page, /target wealth multiplied by the withdrawal-rate assumption/);
 });
+
+test('yards-to-acres conversion uses 4,840 square yards per acre', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/yards-to-acres-calculator.html'), 'utf8');
+  const prefix = 'window.FC_EQUATION_CONFIG="';
+  const start = page.indexOf(prefix);
+  const end = page.indexOf('";', start);
+  assert.ok(start >= 0 && end > start, 'yards-to-acres page exposes its equation configuration');
+  const raw = page.slice(start + prefix.length, end);
+  const config = JSON.parse(raw.replaceAll(String.fromCharCode(92), ''));
+  assert.equal(config.equations.find(item => item.lhs === 'acres').formula, 'yards/4840');
+  assert.equal(config.equations.find(item => item.lhs === 'yards').formula, 'acres*4840');
+  assert.ok(page.includes('9,680 square yards') && page.includes('2 acres'), 'page includes a worked conversion example');
+});
