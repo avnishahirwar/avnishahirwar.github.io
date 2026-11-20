@@ -31,6 +31,19 @@ test('homepage has a readable search title, canonical URL, and social preview', 
   assert.match(html, /<meta\s+name="twitter:card"\s+content="summary_large_image"/i);
 });
 
+
+test('basic calculator targets its Search Console query with a concise, accurate snippet', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'calculators', 'basic-calculator.html'), 'utf8');
+  const title = html.match(/<title>(.*?)<\\/title>/i);
+  const description = html.match(/<meta\\s+name="description"\\s+content="([^"]+)"/i);
+  assert.ok(title, 'basic calculator has a title');
+  assert.match(title[1], /basic calculator online free/i);
+  assert.ok(title[1].length >= 30 && title[1].length <= 60, 'title is within a useful display length');
+  assert.ok(description, 'basic calculator has a meta description');
+  assert.match(description[1], /addition, subtraction, multiplication, division/i);
+  assert.match(html, /<link\\s+rel="canonical"\\s+href="https:\\/\\/friendlycalculator\\.in\\/calculators\\/basic-calculator\\.html"/i);
+});
+
 test('source code license is MIT and does not claim editorial content or brand assets', () => {
   const license = fs.readFileSync(path.join(ROOT, 'LICENSE'), 'utf8');
   const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
