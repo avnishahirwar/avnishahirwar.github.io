@@ -114,7 +114,8 @@
     if(document.querySelector("[data-fc-native-calculator]"))return;
     const key=h1.textContent.trim().toLowerCase();
     const pageAliases={"/calculators/home-loan-emi-calculator.html":"loan emi calculator","/calculators/loan-to-value-calculator.html":"loan to value calculator","/calculators/cogs-calculator.html":"cogs calculator","/calculators/fd-calculator.html":"fixed deposit calculator","/calculators/epf-pf-calculator.html":"epf / pf calculator","/calculators/profit-loss-calculator.html":"profit & loss calculator","/calculators/income-tax-calculator.html":"income tax calculator india","/calculators/bmi-calculator.html":"bmi calculator"};
-    const lookupKey=pageAliases[location.pathname]||(key==="gst calculator india"?"gst calculator":key);
+    const normalizedPath=location.pathname.replace(/\/+$/,"");
+    const lookupKey=pageAliases[normalizedPath]||pageAliases[normalizedPath+".html"]||(key==="gst calculator india"?"gst calculator":key);
     const def=definitions[lookupKey]; if(!def)return;
     const existingPanel=document.getElementById("live-page-calculator");
     const panel=existingPanel||document.createElement("section"); panel.id="live-page-calculator";panel.className=existingPanel?existingPanel.className:"panel";panel.style.scrollMarginTop="100px";
