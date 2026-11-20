@@ -299,143 +299,62 @@ const clear=document.getElementById('fc-home-search-clear');
 const status=document.getElementById('fc-home-search-status');
 const results=document.getElementById('fc-home-search-results');
 if(!input||!clear||!status||!results)return;
-let cataloguePromise=null;
-let debounceTimer=0;
+let cataloguePromise;
+let timer=0;
 let lastQuery='';
-const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const stopWords=new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
+const synonyms={gst:['goods and services tax'],emi:['loan installment','loan instalment'],sip:['systematic investment plan'],fd:['fixed deposit'],rd:['recurring deposit'],ppf:['public provident fund'],vat:['value added tax'],bmi:['body mass index'],roi:['return on investment'],hra:['house rent allowance'],tds:['tax deducted at source']};
+const normalize=value=>String(value||'').normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
-  cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'no-store'})
-   .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||!items.length||items.some(item=>!item||typeof item.name!=='string'||typeof item.url!=='string'||!item.url.startsWith('/')))throw new Error('Search index validation failed');return items;})
+  cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-1448',{credentials:'same-origin',cache:'default'})
+   .then(response=>{if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
+   .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Invalid search index');return items.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&x.url.startsWith('/'));})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
 }
-const stopWords=new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
-const categoryAliases={
- 'FINANCE':'Savings, Investment & Retirement','FINANCE ':'Savings, Investment & Retirement','SAVINGS, INVESTMENT & RETIREMENT':'Savings, Investment & Retirement',
- 'MATH':'Mathematics, Numbers & Statistics','STATISTICS':'Mathematics, Numbers & Statistics','MATHEMATICS, NUMBERS & STATISTICS':'Mathematics, Numbers & Statistics',
- 'CONVERSION':'Converters, Data & Technology','CONVERTERS, DATA & TECHNOLOGY':'Converters, Data & Technology',
- 'HEALTH':'Health, Fitness & Family','HEALTH, FITNESS & FAMILY':'Health, Fitness & Family',
- 'EVERYDAY LIFE':'Home, Travel & Everyday Costs','HOME, TRAVEL & EVERYDAY COSTS':'Home, Travel & Everyday Costs',
- 'BIOLOGY':'Biology & Chemistry','CHEMISTRY':'Biology & Chemistry','BIOLOGY & CHEMISTRY':'Biology & Chemistry',
- 'CONSTRUCTION':'Geometry, Measurement & Construction','GEOMETRY, MEASUREMENT & CONSTRUCTION':'Geometry, Measurement & Construction',
- 'SPORTS':'Health, Fitness & Family','FOOD':'Food & Cooking','FOOD & COOKING':'Food & Cooking',
- 'ECOLOGY':'Energy & Sustainability','ENERGY & SUSTAINABILITY':'Energy & Sustainability',
- 'BUSINESS & TRADE':'Business, Sales & Operations','BUSINESS, SALES & OPERATIONS':'Business, Sales & Operations',
- 'TAX, SALARY & PAYROLL':'Tax, Salary & Payroll','LOANS, EMI & CREDIT':'Loans, EMI & Credit',
- 'INSURANCE & PROTECTION':'Insurance & Protection','ASTRONOMY & SPACE':'Astronomy & Space',
- 'ASTROLOGY & NUMEROLOGY':'Astrology & Numerology','DATE, TIME & WORK':'Date, Time & Work',
- 'GEOMETRY, MEASUREMENT & CONSTRUCTION':'Geometry, Measurement & Construction',
- 'AGRICULTURE & RURAL FINANCE':'Agriculture & Rural Finance','GOVERNMENT SCHEMES & ELIGIBILITY':'Government Schemes & Eligibility',
- 'CAREER & SALARY PLANNING':'Career & Salary Planning','EDUCATION & ACADEMIC TOOLS':'Education & Academic Tools',
- 'PHYSICS':'Education & Academic Tools','OTHER':'Education & Academic Tools','CALCULATOR':'Mathematics, Numbers & Statistics'
-};
-const categoryFor=item=>{
- const text=(item.name+' '+(item.keywords||'')+' '+(item.description||'')).toLocaleLowerCase();
- const has=re=>re.test(text);
- if(has(/\b(insurance|premium|policy|coverage|sum assured)\b/))return 'Insurance & Protection';
- if(has(/\b(gst|goods and services tax|vat|sales tax|income tax|tax|tds|payroll|paycheck|withholding|paye|national insurance)\b/))return 'Tax, Salary & Payroll';
- if(has(/\b(loan|emi|mortgage|lending|credit|debt|repayment|amortization|amortisation|apr)\b/))return 'Loans, EMI & Credit';
- if(has(/\b(sip|swp|stp|mutual fund|investment|investing|fixed deposit|fd calculator|recurring deposit|rd calculator|ppf|epf|provident fund|retirement|pension|savings|compound interest)\b/))return 'Savings, Investment & Retirement';
- if(has(/\b(business|sales|profit|margin|markup|break even|break-even|revenue|invoice|inventory|commerce|trade|commission)\b/))return 'Business, Sales & Operations';
- if(has(/\b(astrology|zodiac|horoscope|numerology|life path number)\b/))return 'Astrology & Numerology';
- if(has(/\b(astronomy|planet|orbit|star distance|light year|space)\b/))return 'Astronomy & Space';
- if(has(/\b(date|time|age|duration|days between|working days|time zone|calendar|hours worked)\b/))return 'Date, Time & Work';
- if(has(/\b(convert|conversion|converter|unit|currency|exchange rate|data transfer|bytes|bits|temperature conversion)\b/))return 'Converters, Data & Technology';
- if(has(/\b(area|volume|length|perimeter|geometry|triangle|circle|construction|concrete|brick|roof|paint coverage|flooring)\b/))return 'Geometry, Measurement & Construction';
- if(has(/\b(electricity|energy|solar|carbon|emission|fuel efficiency|renewable|sustainability|ecology)\b/))return 'Energy & Sustainability';
- if(has(/\b(recipe|cooking|food|kitchen|calorie intake|ingredient|baking|nutrition facts)\b/))return 'Food & Cooking';
- if(has(/\b(agriculture|crop|farm|irrigation|fertilizer|yield per acre|rural finance)\b/))return 'Agriculture & Rural Finance';
- if(has(/\b(government scheme|eligibility|subsidy|benefit|pension scheme|scholarship|ration)\b/))return 'Government Schemes & Eligibility';
- if(has(/\b(career|salary negotiation|hourly wage|overtime|experience|notice period|job offer)\b/))return 'Career & Salary Planning';
- if(has(/\b(bmi|body mass|fitness|heart rate|pregnancy|baby|family|health|calorie|body fat|due date)\b/))return 'Health, Fitness & Family';
- if(has(/\b(biology|chemistry|molecule|atom|ph|concentration|dilution|chemical|genetics)\b/))return 'Biology & Chemistry';
- const original=String(item.category||'').trim().toUpperCase();
- return categoryAliases[original]||'Mathematics, Numbers & Statistics';
-};
-const synonyms={
- gst:['goods and services tax','tax'],emi:['equated monthly instalment','equated monthly installment','loan instalment','loan installment'],
- sip:['systematic investment plan'],swp:['systematic withdrawal plan'],stp:['systematic transfer plan'],
- fd:['fixed deposit'],rd:['recurring deposit'],ppf:['public provident fund'],epf:['employee provident fund','provident fund'],
- vat:['value added tax'],ni:['national insurance'],payg:['pay as you go tax'],401k:['401 k','retirement'],
- mortgage:['home loan'],bmi:['body mass index'],roi:['return on investment'],cagr:['compound annual growth rate'],
- hra:['house rent allowance'],tds:['tax deducted at source'],gstin:['goods and services tax identification number']
-};
-const normalize=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const tokenCandidates=token=>[token,...(synonyms[token]||[]).map(normalize)];
-function render(items,query){
- const unique=[];const seen=new Set();
+function render(items,raw){
+ const seen=new Set();const unique=[];
  for(const item of items){if(!seen.has(item.url)){seen.add(item.url);unique.push(item);}}
- const grouped=new Map();
- for(const item of unique){
-  const category=categoryFor(item);
-  if(!grouped.has(category))grouped.set(category,[]);
-  grouped.get(category).push(item);
- }
- const rankedGroups=[...grouped.entries()].map(([category,entries])=>({category,entries:entries.slice(0,4)}))
-  .sort((a,b)=>(b.entries[0]._score||0)-(a.entries[0]._score||0)||a.category.localeCompare(b.category));
- let shown=0;
- results.innerHTML=rankedGroups.map(group=>{
-  if(shown>=12)return '';
-  const entries=group.entries.slice(0,12-shown);shown+=entries.length;
-  return '<section class="home-search-group"><h3 class="home-search-group-title">'+escapeHtml(group.category)+'<span>'+group.entries.length+' shown</span></h3><div class="home-search-group-items">'+entries.map(item=>'<a class="home-search-result" href="'+escapeHtml(item.url)+'"><strong>'+escapeHtml(item.name)+'</strong><span>'+escapeHtml(group.category)+'</span></a>').join('')+'</div></section>';
- }).join('');
- if(unique.length>shown)results.insertAdjacentHTML('beforeend','<p class="home-search-more"><a href="/calculator/site-directory.html#siteSearch">Browse all '+unique.length+' matching calculators in the directory →</a></p>');
+ const shown=unique.slice(0,15);
+ results.innerHTML=shown.map(item=>'<a class="home-search-result" href="'+escapeHtml(item.url)+'"><strong>'+escapeHtml(item.name)+'</strong><span>'+escapeHtml(item.category||'Calculator')+'</span></a>').join('');
+ if(unique.length>shown.length)results.insertAdjacentHTML('beforeend','<p class="home-search-more"><a href="/calculator/site-directory.html#siteSearch">View all '+unique.length+' matching calculators in the directory →</a></p>');
  results.hidden=unique.length===0;
- status.textContent=unique.length
-  ? unique.length+' relevant result'+(unique.length===1?'':'s')+' for “'+query+'”, grouped into '+grouped.size+' categor'+(grouped.size===1?'y':'ies')+'. Showing '+shown+'.'
-  : 'No matching calculators found. Try a different name or topic.';
+ status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+'.':'No matching calculators found. Try a shorter name or topic.';
 }
 async function search(){
- const raw=input.value.trim();
- const query=normalize(raw);
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Search by calculator name or topic, or choose a category below.';return;}
- const terms=query.split(/\s+/).filter(term=>!stopWords.has(term));
- if(!terms.length){status.textContent='Type a specific calculator name or topic to see relevant results.';results.hidden=true;results.replaceChildren();return;}
- lastQuery=query;
- status.textContent='Searching relevant calculators…';
- results.hidden=true;
+ const raw=input.value.trim();const query=normalize(raw);
+ if(!query){lastQuery='';results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
+ const terms=query.split(/\\s+/).filter(x=>!stopWords.has(x));
+ if(!terms.length){status.textContent='Type a calculator name or topic.';results.replaceChildren();results.hidden=true;return;}
+ lastQuery=query;status.textContent='Searching 3,124 calculators…';results.hidden=true;
  try{
-  const items=await loadCatalogue();
-  if(lastQuery!==query)return;
+  const items=await loadCatalogue();if(lastQuery!==query)return;
   const matches=[];
-  const seen=new Set();
   for(const item of items){
-   if(seen.has(item.url))continue;
-   const name=normalize(item.name),category=normalize(categoryFor(item));
-   const keywords=normalize(item.keywords),description=normalize(item.description);
-   const hay=name+' '+category+' '+keywords+' '+description;
-   let matched=true,score=0;
+   const name=normalize(item.name),hay=normalize([item.name,item.category,item.keywords,item.description].join(' '));
+   let score=0,ok=true;
    for(const term of terms){
-    const candidates=tokenCandidates(term);
-    const hit=candidates.some(candidate=>hay.includes(candidate));
-    if(!hit){matched=false;break;}
-    if(candidates.some(candidate=>name.includes(candidate)))score+=180;
-    else if(candidates.some(candidate=>keywords.includes(candidate)))score+=55;
-    else if(candidates.some(candidate=>category.includes(candidate)))score+=42;
-    else score+=12;
+    const options=[term,...(synonyms[term]||[]).map(normalize)];
+    if(!options.some(v=>hay.includes(v))){ok=false;break;}
+    score+=options.some(v=>name.includes(v))?100:10;
    }
-   if(!matched)continue;
-   const phrase=name.includes(query);
-   if(name===query)score+=1200;
-   else if(name.startsWith(query))score+=800;
-   else if(phrase)score+=600;
-   const nameHits=terms.filter(term=>tokenCandidates(term).some(candidate=>name.includes(candidate))).length;
-   score+=nameHits*35;
+   if(!ok)continue;
+   if(name===query)score+=1000;else if(name.startsWith(query))score+=500;else if(name.includes(query))score+=300;
    matches.push({...item,_score:score});
-   seen.add(item.url);
   }
-  matches.sort((a,b)=>b._score-a._score||a.name.localeCompare(b.name));
-  render(matches,raw);
- }catch(_){
-  status.textContent='Search could not load the calculator catalogue. Please try again or browse the full directory.';
-  results.innerHTML='<p><a href="/calculator/site-directory.html">Open the complete calculator directory →</a></p>';
+  matches.sort((a,b)=>b._score-a._score||a.name.localeCompare(b.name));render(matches,raw);
+ }catch(error){
+  status.textContent='Search catalogue could not load. Check your connection and tap to retry.';
+  results.innerHTML='<button type="button" class="home-search-retry">Retry search</button><p><a href="/calculator/site-directory.html#siteSearch">Open the complete calculator directory →</a></p>';
   results.hidden=false;
+  const retry=results.querySelector('.home-search-retry');if(retry)retry.addEventListener('click',()=>{cataloguePromise=null;search();});
  }
 }
-input.addEventListener('input',()=>{window.clearTimeout(debounceTimer);debounceTimer=window.setTimeout(search,120);});
+input.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(search,100);});
+input.addEventListener('search',search);
 clear.addEventListener('click',()=>{input.value='';search();input.focus();});
 })();
 </script>
