@@ -2285,15 +2285,17 @@ test('homepage language coverage copy matches the currently published locale cat
 test('homepage ships its complete regional Header before deferred shared-shell initialization', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const headerStart = html.indexOf('<header class="fc-global-header">');
+  const headerStart = html.indexOf('<header class="fc-global-header"');
   const headerEnd = html.indexOf('</header>', headerStart);
   const header = headerStart >= 0 && headerEnd > headerStart ? html.slice(headerStart, headerEnd) : '';
+  assert.ok(header.includes('data-fc-static-homepage="true"'), 'The initial homepage Header must carry its runtime-preservation marker.');
   assert.ok(header.includes('class="fc-top-row"'), 'Homepage Header must use the final two-tier layout in initial HTML.');
   assert.ok(header.includes('class="fc-language-control"') && header.includes('class="fc-currency-control"'));
   assert.ok(header.includes('class="fc-country-format-control"') && header.includes('class="fc-unit-control"'));
   assert.ok(header.indexOf('class="fc-language-control"') < header.indexOf('class="fc-currency-control"'), 'Currency must remain immediately after Language.');
   assert.ok(header.includes('id="fc-country-format-display"') && header.includes('id="fc-unit-system-select"'));
   assert.match(shell, /const preserveStaticHomepageHeader=headerIsReady&&location\.pathname==='\/'&&currentLocale==='en'/);
+  assert.ok(shell.includes("existingHeader.hasAttribute('data-fc-static-homepage')"));
   assert.match(shell, /const activeHeader=preserveStaticHomepageHeader\?existingHeader:h/);
   assert.ok(shell.includes('if(!countryFormatSelect.options.length)'), 'The shell must reuse pre-rendered country/format options instead of rebuilding them.');
   assert.ok(shell.includes("regionalMarkup.innerHTML=countryControl+(preserveStaticHomepageHeader?'':unitControl);"));
