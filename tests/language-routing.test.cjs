@@ -127,7 +127,7 @@ test('All configured locale routes enforce their document language and writing d
   const close = shell.indexOf(')', open);
   const routeCodes = shell.slice(open + 1, close).split('|').sort();
   const catalogue = require('../config/language-catalogue.json');
-  assert.deepEqual(routeCodes, catalogue.locales.filter(locale => locale.code !== 'uk').map(locale => locale.code).sort());
+  assert.deepEqual(routeCodes, catalogue.locales.map(locale => locale.code).sort());
   assert.ok(shell.includes("routeLocale.toLowerCase().split('-')[0]"));
 });
 test('language selector lists 50 high-reach languages and only enables configured locales', () => {
@@ -225,7 +225,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
-  assert.deepEqual(routed.sort(), catalogue.locales.filter(locale => locale.code !== 'uk').map(locale => locale.code).sort());
+  assert.deepEqual(routed.sort(), catalogue.locales.map(locale => locale.code).sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
