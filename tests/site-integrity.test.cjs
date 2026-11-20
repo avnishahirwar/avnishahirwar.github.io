@@ -2085,9 +2085,9 @@ test('homepage shows 16 curated popular calculators linked to the live catalogue
 test('homepage loads the shared header stylesheet and shared shell script', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(html, /<link rel="stylesheet" href="\\/assets\\/site-shell\\.css">/);
+  assert.ok(html.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
   assert.match(html, /<header class="fc-global-header">/);
-  assert.match(html, /<script src="\\/assets\\/site-shell\\.js" defer><\\/script>/);
+  assert.ok(html.includes('<script src="/assets/site-shell.js" defer></script>'));
   assert.ok(css.includes('.fc-global-header') && css.includes('.fc-global-nav'));
   assert.ok(css.includes('@media'), 'Shared header styles must include responsive rules.');
 });
