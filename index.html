@@ -315,13 +315,29 @@ function loadCatalogue(){
  }
  return cataloguePromise;
 }
+const categoryAliases={
+ 'biology':'Biology & Chemistry','chemistry':'Biology & Chemistry',
+ 'construction':'Geometry, Measurement & Construction',
+ 'conversion':'Converters, Data & Technology',
+ 'ecology':'Energy & Sustainability',
+ 'everyday life':'Home, Travel & Everyday Costs',
+ 'health':'Health, Fitness & Family',
+ 'math':'Mathematics, Numbers & Statistics','statistics':'Mathematics, Numbers & Statistics',
+ 'food':'Food & Cooking','business & trade':'Business, Sales & Operations',
+ 'finance':'Finance','physics':'Physics & Science','sports':'Sports & Recreation',
+ 'calculator':'Other Calculators','other':'Other Calculators'
+};
+function displayCategory(value){
+ const raw=String(value||'Other Calculators').trim();
+ return categoryAliases[raw.toLowerCase()]||raw;
+}
 function render(items,raw){
  const seen=new Set();const unique=[];
  for(const item of items){if(!seen.has(item.url)){seen.add(item.url);unique.push(item);}}
  const shown=unique.slice(0,15);
  const groups=new Map();
  for(const item of shown){
-  const category=String(item.category||'Other calculators').trim()||'Other calculators';
+  const category=displayCategory(item.category);
   if(!groups.has(category))groups.set(category,[]);
   groups.get(category).push(item);
  }
