@@ -83,3 +83,33 @@ test('UK and US hubs cite official guidance for the newly added local-tax and st
   assert.ok(us.includes('https://studentaid.gov/manage-loans/repayment'));
   assert.ok(us.includes('https://www.usa.gov/property-taxes'));
 });
+
+
+test('Friendship Calculator is discoverable from the homepage and has public metadata', () => {
+  const home = read('index.html');
+  const page = read('calculators/friendship-calculator.html');
+  assert.ok(home.includes('href="/calculators/friendship-calculator.html">Friendship Calculator</a>'));
+  assert.ok(page.includes('<title>Friendship Calculator'));
+  assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in/calculators/friendship-calculator.html"'));
+  assert.ok(page.includes('application/ld+json'));
+  assert.ok(page.includes('/assets/site-shell.js'));
+});
+
+test('Friendship Calculator validates names and explains its entertainment-only score', () => {
+  const page = read('calculators/friendship-calculator.html');
+  assert.ok(page.includes('id="friendOne"') && page.includes('id="friendTwo"'));
+  assert.ok(page.includes('maxlength="40"'));
+  assert.ok(page.includes('not scientific'));
+  assert.ok(page.includes('does not assess your relationship'));
+  assert.ok(page.includes('aria-live="polite"'));
+});
+
+test('Friendship Calculator computes locally and does not submit or persist entered names', () => {
+  const page = read('calculators/friendship-calculator.html');
+  assert.ok(page.includes('function scoreFor(a,b)'));
+  assert.ok(page.includes('.sort().join'));
+  assert.ok(page.includes('scoreFor(a,b)'));
+  assert.ok(!page.includes('fetch('));
+  assert.ok(!page.includes('XMLHttpRequest'));
+  assert.ok(!page.includes('localStorage'));
+});
