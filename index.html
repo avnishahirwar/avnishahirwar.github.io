@@ -304,7 +304,7 @@ let timer=0;
 let lastQuery='';
 const stopWords=new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
 const synonyms={gst:['goods and services tax'],emi:['loan installment','loan instalment'],sip:['systematic investment plan'],fd:['fixed deposit'],rd:['recurring deposit'],ppf:['public provident fund'],vat:['value added tax'],bmi:['body mass index'],roi:['return on investment'],hra:['house rent allowance'],tds:['tax deducted at source']};
-const normalize=value=>String(value||'').normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const normalize=value=>String(value||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
@@ -327,7 +327,7 @@ function render(items,raw){
 async function search(){
  const raw=input.value.trim();const query=normalize(raw);
  if(!query){lastQuery='';results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
- const terms=query.split(/\\s+/).filter(x=>!stopWords.has(x));
+ const terms=query.split(' ').filter(x=>x&&!stopWords.has(x));
  if(!terms.length){status.textContent='Type a calculator name or topic.';results.replaceChildren();results.hidden=true;return;}
  lastQuery=query;status.textContent='Searching 3,124 calculators…';results.hidden=true;
  try{
