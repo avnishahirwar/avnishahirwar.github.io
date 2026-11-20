@@ -72,7 +72,7 @@ for (const [route, pages] of pageMap) {
       const target = code === 'x-default' ? pages.get(defaultLocale) : pages.get(code);
       return '<link rel="alternate" hreflang="' + code + '" href="' + target.canonical + '">';
     }).join('\n');
-    const next = page.html.replace(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, '')
+    const next = page.html.replace(/\s*<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, '')
       .replace(/<\/head>/i, '\n' + tags + '\n</head>');
     if (next !== page.html) {
       if (check) {
