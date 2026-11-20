@@ -24,10 +24,9 @@ function normalizeHomepage(file, isAvailable) {
   if (!fs.existsSync(absolute)) throw new Error('Missing locale homepage: ' + file);
   const original = fs.readFileSync(absolute, 'utf8');
   const clean = removeAlternates(original);
-  const links = isAvailable ? alternateLinks() + '\n' : '';
   const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i;
   if (!canonical.test(clean)) throw new Error('Missing canonical link: ' + file);
-  const updated = clean.replace(canonical, match => match + '\n' + links.trimEnd());
+  const updated = isAvailable ? clean.replace(canonical, match => match + '\n' + alternateLinks()) : clean;
   if (updated !== original) {
     if (process.argv.includes('--write')) fs.writeFileSync(absolute, updated);
     return true;
