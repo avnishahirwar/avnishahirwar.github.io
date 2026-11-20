@@ -54,3 +54,16 @@ test('catalogue distinguishes top-level categories from normalized calculator to
   assert.equal(topics.size, 36);
   assert.equal(sitemapGroups, 36);
 });
+
+test('Homepage totals match the public search index and separate category levels', () => {
+  const homepage = read('index.html');
+  const searchIndex = JSON.parse(read('assets/calculator-search-index.json'));
+  const topicCount = new Set(searchIndex.map(item => (item.category || 'Other').trim().toLocaleLowerCase().replace(/\s+/g, ' '))).size;
+  const mainCategoryLinks = (homepage.match(/href="\/calculator\/site-directory\.html#[^"]+"><strong>/g) || []).length;
+  assert.equal(searchIndex.length, 3123);
+  assert.match(homepage, /Search all 3123 calculators/);
+  assert.match(homepage, /Browse 3123 calculators across 36 calculator topics/);
+  assert.equal(topicCount, 36);
+  assert.equal(mainCategoryLinks, 20);
+  assert.doesNotMatch(homepage, /Billionaire Desk|Wealth Intelligence|Original Research/i);
+});
