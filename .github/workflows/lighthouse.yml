@@ -41,6 +41,8 @@ on:
       - "index.html"
       - "assets/calculator-search-index.json"
       - "calculators/minutes-to-hours-calculator.html"
+      - "calculators/income-tax-calculator.html"
+      - "calculator/finance-calculators.html"
       - "tests/mobile-schema.test.cjs"
       - "tests/cross-browser-smoke.cjs"
       - "tests/safari-smoke.cjs"
