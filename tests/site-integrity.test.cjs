@@ -1588,7 +1588,7 @@ test('homepage search requires precise name, keyword phrase or category matches'
     return matcher.getCalculatorMatch(item, terms, query, item.category);
   };
 
-  assert.match(homepage, /FriendlyCalculatorSearchMatcher\\.getCalculatorMatch/);
+  assert.ok(homepage.includes('FriendlyCalculatorSearchMatcher.getCalculatorMatch'));
   assert.equal(getMatch({
     name: 'Home Loan Calculator', keywords: 'mortgage emi repayment',
     category: 'Finance', description: 'Estimate a tax repayment.'
