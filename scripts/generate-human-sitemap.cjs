@@ -76,8 +76,9 @@ function main() {
   html = html.slice(0, navStart) + '<nav class="sitemap-category-index" aria-label="Jump to a calculator category">\n' +
     nav + '\n</nav>' + html.slice(navEnd + '</nav>'.length);
   const groupStart = html.indexOf('<div id="sitemap-categories">');
-  const groupEnd = html.indexOf('</div>\n</section>', groupStart);
-  if (groupStart < 0 || groupEnd < 0) throw new Error('Could not find sitemap category container.');
+  const sectionEnd = html.indexOf('</section>', groupStart);
+  const groupEnd = html.lastIndexOf('</div>', sectionEnd);
+  if (groupStart < 0 || sectionEnd < 0 || groupEnd < 0) throw new Error('Could not find sitemap category container.');
   html = html.slice(0, groupStart) + '<div id="sitemap-categories">\n' + sections +
     '\n</div>' + html.slice(groupEnd + '</div>'.length);
   if (process.argv.includes('--write')) fs.writeFileSync(PAGE, html);
