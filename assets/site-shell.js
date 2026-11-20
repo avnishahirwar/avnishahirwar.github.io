@@ -1396,24 +1396,26 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   const unitControl=document.querySelector('.fc-unit-control');
   const countrySelect=countryControl?.querySelector('select');
   const localeSelect=formatControl?.querySelector('select');
-  const countryFormatLabel=document.createElement('label');
+  const countryFormatLabel=activeHeader.querySelector('.fc-country-format-control')||document.createElement('label');
   countryFormatLabel.className='fc-country-format-control';
-  const countryFormatText=document.createElement('span');
+  const countryFormatText=countryFormatLabel.querySelector('span')||document.createElement('span');
   countryFormatText.textContent=t.countryFormat;
-  const countryFormatSelect=document.createElement('select');
+  const countryFormatSelect=countryFormatLabel.querySelector('select')||document.createElement('select');
   countryFormatSelect.id='fc-country-format-display';
   countryFormatSelect.setAttribute('aria-label',t.countryFormat);
   if(countrySelect&&localeSelect){
-    const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
-    Array.from(localeSelect.options).forEach(localeOption=>{
-      const locale=localeOption.value;
-      const country=locale.split('-').pop().toUpperCase();
-      if(!countryCodes.has(country))return;
-      const option=document.createElement('option');
-      option.value=country+'|'+locale;
-      option.textContent=localeOption.textContent;
-      countryFormatSelect.appendChild(option);
-    });
+    if(!countryFormatSelect.options.length){
+      const countryCodes=new Set(Array.from(countrySelect.options,option=>option.value));
+      Array.from(localeSelect.options).forEach(localeOption=>{
+        const locale=localeOption.value;
+        const country=locale.split('-').pop().toUpperCase();
+        if(!countryCodes.has(country))return;
+        const option=document.createElement('option');
+        option.value=country+'|'+locale;
+        option.textContent=localeOption.textContent;
+        countryFormatSelect.appendChild(option);
+      });
+    }
     const currentValue=countrySelect.value+'|'+localeSelect.value;
     if(!Array.from(countryFormatSelect.options).some(option=>option.value===currentValue)){
       const option=document.createElement('option');
@@ -1446,7 +1448,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       if(preferredCurrency)window.FCLocale?.setCurrency(preferredCurrency);
       syncCountryFormat();
     });
-    countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    if(!countryFormatLabel.contains(countryFormatText))countryFormatLabel.append(countryFormatText,countryFormatSelect);
     countrySelect.tabIndex=-1;
     localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
