@@ -148,7 +148,7 @@ async function checkPage(browser, url, label, viewport) {
       const labelRect = label?.getBoundingClientRect();
       const select = control.querySelector('select');
       const selectRect = select?.getBoundingClientRect();
-      return labelRect && selectRect ? { controlWidth: controlRect.width, labelTop: labelRect.top, selectTop: selectRect.top, selectWidth: selectRect.width, selectRight: selectRect.right, selectHeight: selectRect.height } : null;
+      return labelRect && selectRect ? { controlClass: control.className, label: label.textContent.trim(), controlWidth: controlRect.width, controlLeft: controlRect.left, labelTop: labelRect.top, selectTop: selectRect.top, selectLeft: selectRect.left, selectWidth: selectRect.width, selectRight: selectRect.right, selectHeight: selectRect.height } : null;
     }));
     assert.equal(headerMetrics.filter(Boolean).length, 4, label + ': all four Header preference controls are visible');
     const navRight = await page.locator('#fc-primary-navigation').evaluate(element => element.getBoundingClientRect().right);
