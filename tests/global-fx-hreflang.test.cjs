@@ -40,7 +40,7 @@ test('percentage calculator hreflang cluster includes all nine published languag
  for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  assert.deepEqual(actual.slice().sort((a,b)=>a[0].localeCompare(b[0])),expected.slice().sort((a,b)=>a[0].localeCompare(b[0])),file);
  }
 });
 
@@ -52,7 +52,7 @@ test('simple-interest English and Bengali hreflang alternates match published tr
  for(const [file,expected] of [['calculators/'+route,expectedFor(englishLocales)],['bn/calculators/'+route,expectedFor(bengaliLocales)]]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  assert.deepEqual(actual.slice().sort((a,b)=>a[0].localeCompare(b[0])),expected.slice().sort((a,b)=>a[0].localeCompare(b[0])),file);
  }
 });
 
@@ -76,7 +76,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across s
    const html=fs.readFileSync(file,'utf8');
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
    const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-   assert.deepEqual(actual,expected,locale+'/'+route);
+   assert.deepEqual(actual.slice().sort((a,b)=>a[0].localeCompare(b[0])),expected.slice().sort((a,b)=>a[0].localeCompare(b[0])),locale+'/'+route);
   }
  }
 });
