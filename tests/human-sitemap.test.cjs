@@ -33,6 +33,8 @@ test('human sitemap generator reproduces the checked-in complete catalogue witho
  assert.ok(html.includes('<strong>3,129</strong> public catalogue entries'));
  assert.ok(html.includes('<strong>3,126</strong> calculator pages'));
  assert.ok(html.includes('<strong>3</strong> international entries'));
+ assert.match(html,/<p class="fc-sitemap-status"[^>]*>3,129 entries across 36 categories\\.<\\/p>/);
+ assert.doesNotMatch(html,/2,481 entries across 36 categories/);
  assert.ok(html.includes('<strong>36</strong> catalogue categories'));
 });
 
