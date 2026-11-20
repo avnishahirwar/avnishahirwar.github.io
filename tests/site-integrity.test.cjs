@@ -1519,6 +1519,7 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
   assert.match(homepage, /!Array\.isArray\(items\)/);
   assert.match(homepage, /items\.some\(item=>!item/);
+  assert.match(homepage, /function matchesAllTerms\(terms,tokens,field\)/);
   assert.doesNotMatch(homepage, /items\.length!==\d+/);
   assert.doesNotMatch(homepage, /items\.length!==285/);
 });
@@ -1566,7 +1567,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
 test('homepage search requires all query terms to match coherently within one field', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const vm = require('node:vm');
-  const helper = homepage.match(/function matchesAllTerms\\(terms,tokens,field\\)\\{[\\s\\S]*?\\n\\}/);
+  const helper = homepage.match(/function matchesAllTerms\(terms,tokens,field\)\{[\s\S]*?\n\}/);
   assert.ok(helper, 'Homepage must define the shared all-terms matcher');
   const matchesAllTerms = vm.runInNewContext('(' + helper[0] + ')', {
     normalize: value => String(value).toLowerCase(),
@@ -1577,29 +1578,9 @@ test('homepage search requires all query terms to match coherently within one fi
   assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan', 'tax'], 'home loan tax'), true);
   assert.equal(matchesAllTerms(['loan', 'emi'], ['home', 'loan', 'emi', 'calculator'], 'home loan emi'), true);
   assert.equal(matchesAllTerms(['salary', 'tax'], ['salary', 'tax', 'payroll'], 'salary tax payroll'), true);
-  assert.match(homepage, /const nameMatch=matchesAllTerms\\(terms,nameTokens,name\\)/);
-  assert.match(homepage, /const keywordMatch=matchesAllTerms\\(terms,keywordTokens,keywords\\)/);
-  assert.match(homepage, /if\\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\\)continue/);
-});
-
-
-test('homepage search requires all query terms to match coherently within one field', () => {
-  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const vm = require('node:vm');
-  const helper = homepage.match(/function matchesAllTerms\\(terms,tokens,field\\)\\{[\\s\\S]*?\\n\\}/);
-  assert.ok(helper, 'Homepage must define the shared all-terms matcher');
-  const matchesAllTerms = vm.runInNewContext('(' + helper[0] + ')', {
-    normalize: value => String(value).toLowerCase(),
-    synonyms: {}
-  });
-  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan'], 'home loan'), false,
-    'A partial name match must not be combined with unrelated keywords');
-  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan', 'tax'], 'home loan tax'), true);
-  assert.equal(matchesAllTerms(['loan', 'emi'], ['home', 'loan', 'emi', 'calculator'], 'home loan emi'), true);
-  assert.equal(matchesAllTerms(['salary', 'tax'], ['salary', 'tax', 'payroll'], 'salary tax payroll'), true);
-  assert.match(homepage, /const nameMatch=matchesAllTerms\\(terms,nameTokens,name\\)/);
-  assert.match(homepage, /const keywordMatch=matchesAllTerms\\(terms,keywordTokens,keywords\\)/);
-  assert.match(homepage, /if\\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\\)continue/);
+  assert.match(homepage, /const nameMatch=matchesAllTerms\(terms,nameTokens,name\)/);
+  assert.match(homepage, /const keywordMatch=matchesAllTerms\(terms,keywordTokens,keywords\)/);
+  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\)continue/);
 });
 
 
