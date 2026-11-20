@@ -8,6 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://friendlycalculator.in';
 const DEFAULT_IMAGE = `${ORIGIN}/og-friendly-calculator.png`;
 const EXCLUDED_PREFIXES = ['admin/', 'avnish-ai/', 'calculator/admin.html', 'calculator/dashboard.html', 'tests/'];
+const EXCLUDED_CONTENT_PATH = /(?:alcohol|beer|wine|cocktail|cigarette|nicotine|tobacco|vape|liquor|cannabis|marijuana|cbd|thc|weed|meth|cocaine|opioid)/i;
 
 function walk(dir, relative = '') {
   const files = [];
@@ -52,7 +53,7 @@ function publicCanonical(relPath) {
 
 function inspectAndRepair(relPath, html) {
   const robots = getMeta(html, 'robots');
-  if ((robots && /\bnoindex\b/i.test(robots.value)) || EXCLUDED_PREFIXES.some(prefix => relPath.startsWith(prefix))) {
+  if (EXCLUDED_CONTENT_PATH.test(relPath) || (robots && /\bnoindex\b/i.test(robots.value)) || EXCLUDED_PREFIXES.some(prefix => relPath.startsWith(prefix))) {
     return { html, skipped: true, changed: false };
   }
 
@@ -64,7 +65,7 @@ function inspectAndRepair(relPath, html) {
 
   let updated = html;
   if (relPath === 'index.html') {
-    const homeTitle = 'Free Online Calculators | Friendly Calculator';
+    const homeTitle = 'Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax';
     updated = updated.replace(/<title\b[^>]*>[\s\S]*?<\/title>/i, `<title>${homeTitle}</title>`);
     const existingOgTitle = getMeta(updated, 'og:title', 'property');
     if (existingOgTitle) updated = updated.replace(existingOgTitle.tag, `<meta property="og:title" content="${homeTitle}">`);

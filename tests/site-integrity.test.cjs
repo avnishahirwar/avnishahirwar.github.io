@@ -85,7 +85,7 @@ test('every public sitemap page loads the shared site header and footer shell', 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const pathname = new URL(url).pathname;
-    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
+    const expectedShell = '/assets/site-shell.js';
     if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
@@ -290,8 +290,8 @@ test('the shared top navigation exposes the preserved Admin Dashboard exactly on
 
 test('About page catalogue matches every canonical published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length.toLocaleString('en-US') + ' tools)'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(m => m[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
   assert.doesNotMatch(about, /<ol[^>]+start=/i);
@@ -374,7 +374,7 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
 
 test('GST calculator links to the current core catalogue count', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
-  assert.ok(gst.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
+  assert.ok(gst.includes('Explore all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
 });
 
@@ -404,7 +404,7 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily &amp; Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
-  assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
+  assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
 
@@ -879,9 +879,9 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const globalHeader = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
-  assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.ok(directory.includes('Search calculators by name or topic'));
-  assert.ok(directory.includes('Browse calculators by category, or explore international tools.'));
+  assert.ok(directory.includes('Browse all 3,125 calculator pages and the international VAT tool, organized into 20 directory sections.'));
+  assert.ok(directory.includes('Search 3,125 calculator pages by name or topic'));
+  assert.ok(directory.includes('Browse by category') && directory.includes('International Calculators'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
@@ -900,12 +900,12 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   }
   for (const card of cards) assert.equal(Number(card[2]), counts.get(card[1]));
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>129 calculators<\/span><\/a>/);
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>943 calculators<\/span><\/a>/);
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
@@ -1284,10 +1284,11 @@ test('homepage category summary and directory markup match the published catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into clearly labelled categories/);
+  assert.ok(homepage.includes('aria-label="Main calculator sections"'));
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.ok(directory.includes('Browse calculators by category'));
+  assert.ok(directory.includes('Browse by category'));
+  assert.ok(directory.includes('20 directory sections'));
 });
-
 
 test('Maharashtra employee professional tax uses Schedule I salary bands and February collection', () => {
   const html = fs.readFileSync(path.join(root, 'calculators/professional-tax-calculator.html'), 'utf8');
@@ -1465,17 +1466,12 @@ test('basic calculator avoids retired no-op chrome script and preserves deferred
   assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-chrome.css?v=1">'));
 });
 
-test('homepage prioritizes its visible brand illustration and uses the lean homepage shell', () => {
+test('homepage prioritizes its visible brand illustration and uses the shared site shell', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
-  assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<script src="/assets/homepage-shell.js" defer></script>'));
-  assert.ok(page.includes("link.href='/assets/site-shell.css'"));
-  assert.ok(page.includes("requestIdleCallback(loadShellStyles,{timeout:1200})"));
-  assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
+  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
 });
-
 
 test('key calculator pages do not load the retired no-op chrome script', () => {
   for (const relative of [
@@ -1621,9 +1617,9 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Make bigger decisions with better numbers.</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
-  assert.ok(homepage.includes('name="description" content="Clear calculators for wealth planning, property investment, loan EMI, GST, income tax, savings and everyday maths in India and worldwide."'));
-  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
+  assert.ok(homepage.includes('<title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title>'));
+  assert.ok(homepage.includes('name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."'));
+  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
@@ -1805,7 +1801,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 04 calculators are present in pages, search and directory', () => {
@@ -1838,7 +1834,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 05 calculators are present in pages, search and directory', () => {
@@ -1871,7 +1867,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 06 calculators are present in pages, search and directory', () => {
@@ -1904,7 +1900,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 07 calculators are present in pages, search and directory', () => {
@@ -1937,7 +1933,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 08 calculators are present in pages, search and directory', () => {
@@ -1970,7 +1966,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 09 calculators are present in pages, search and directory', () => {
@@ -2003,7 +1999,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('seven chemistry batch 10 calculators are present in pages, search and directory', () => {
@@ -2033,7 +2029,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 
@@ -2045,7 +2041,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
  assert.equal(index.length, expectedSearchIndexLength);
  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
- assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+ assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 
@@ -2065,33 +2061,27 @@ test('remaining chemistry calculator formulas return expected results',()=>{
 });
 
 
-test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+test('homepage exposes 18 popular calculator links from the searchable catalogue', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
-  const end = page.indexOf('<nav class="home-category-index"', start);
-  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const start = page.indexOf('<nav class="home-popular-tools"');
+  const end = page.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator navigation exists');
   const section = page.slice(start, end);
-  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(routes.length, 24);
-  assert.equal(new Set(routes).size, 24);
+  const routes = [...section.matchAll(/<a href="([^"]+)">/g)].map(match => match[1]);
+  assert.equal(routes.length, 18);
+  assert.equal(new Set(routes).size, 18);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
-  assert.match(page, /\.home-popular-list/);
-  assert.match(page, /\.home-popular-icon/);
-  assert.match(page, /\.home-popular-item/);
-  assert.doesNotMatch(section, /bmi-calculator\.html/i);
 });
 
-
-test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
+test('homepage loads the shared Header stylesheet and shell script', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /link\.rel='stylesheet'[\s\S]*link\.href='\/assets\/site-shell\.css'/);
-  assert.match(html, /requestIdleCallback\(loadShellStyles,\{timeout:1200\}\)/);
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/site-shell\.css"><\/noscript>/);
-  assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
-  assert.match(html, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(html.includes('<header class="fc-global-header">'));
+  assert.ok(html.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
+  assert.ok(html.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.ok(css.includes('.fc-global-header'));
+  assert.ok(css.includes('.fc-currency-control'));
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
@@ -2128,34 +2118,34 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
 });
 
 test('homepage uses the shared PWA install action and preserves language, analytics and accessibility controls', () => {
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const shared = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(!script.includes("id='fc-pwa-install'") && !script.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
+  assert.ok(!homepage.includes('id="fc-pwa-install"'), 'Homepage must not create its own floating install button.');
   assert.ok(shared.includes('quickActions.appendChild(installButton)'), 'The shared shell must place the install action inside Settings Quick Actions.');
   assert.ok(!shared.includes('footerInner.appendChild(button)'), 'The install action must not be mounted in the Footer.');
-  assert.ok(shared.includes("position:static!important"), 'The install action must not float over page content.');
-  for (const feature of ['fc-language-select', 'gtm.js', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
-    assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
+  assert.ok(shared.includes('position:static!important'), 'The install action must not float over page content.');
+  assert.ok(homepage.includes('fc-language-select'));
+  assert.ok(homepage.includes('gtag('), 'Homepage analytics configuration remains present.');
+  for (const feature of ['fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
+    assert.ok(shared.includes(feature), 'Missing shared-shell feature: ' + feature);
   }
   assert.ok(shared.includes('serviceWorker.register'), 'The shared shell must retain service-worker registration.');
 });
 
 
-test('English homepage always renders the shared footer and Sitemap link', () => {
+test('English homepage receives the shared footer and Sitemap link from the site shell', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const script = fs.readFileSync(path.join(root, 'assets/homepage-shell.js'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.ok(html.includes('src="/assets/homepage-shell.js" defer'));
-  assert.ok(script.includes("document.createElement('footer')"));
-  assert.ok(script.includes("footer.className = 'fc-global-footer'"));
-  assert.ok(script.includes("['Sitemap', '/sitemap.html']"));
-  assert.ok(script.includes("document.body.appendChild(footer)"));
-  assert.ok(script.includes('homepageFooterNavigation.appendChild(homepageSettingsTrigger)'), 'Homepage fallback Settings trigger must be the final Footer navigation item.');
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.ok(shell.includes("document.createElement('footer')"));
+  assert.ok(shell.includes("footer.classList.add('fc-global-footer')"));
+  assert.ok(shell.includes("document.body.appendChild(footer)"));
+  assert.ok(shell.includes('Sitemap') && shell.includes('/sitemap.html'));
   assert.ok(sitemap.includes('src="/assets/site-shell.js"'));
   assert.ok(sitemap.includes('id="sitemap-title"'));
 });
-
 
 test('shared header and footer fail-safe normalizes legacy navigation and nested footers', () => {
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
@@ -2240,34 +2230,31 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
   assert.match(script, /fc-global-footer-links/);
 });
 
-test('homepage has the same static shared footer and Sitemap destination', () => {
+test('homepage footer and Sitemap destination are provided by the shared shell', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<footer class="fc-global-footer"(?:\s|>)/);
-  assert.ok(html.includes('href="/sitemap.html">Sitemap</a>'));
-  assert.ok(html.includes('class="fc-global-footer-links"'));
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.ok(shell.includes("footer.classList.add('fc-global-footer')"));
+  assert.ok(shell.includes('Sitemap') && shell.includes('/sitemap.html'));
 });
 
-
-test('homepage critical CSS keeps the shared regional Header readable before deferred styles load', () => {
+test('homepage shared Header styles include regional controls', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const styleStart = html.indexOf('<style id="fc-critical-home-shell">');
-  const styleEnd = html.indexOf('</style>', styleStart);
-  const critical = styleStart >= 0 && styleEnd > styleStart ? html.slice(styleStart, styleEnd) : '';
-  assert.ok(critical.includes('.fc-top-row{width:min(1440px,96%);min-height:70px;margin:auto;display:flex'));
-  assert.ok(critical.includes('.fc-global-links .fc-currency-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-country-format-control'));
-  assert.ok(critical.includes('.fc-global-links .fc-unit-control'));
-  assert.ok(critical.includes('@media(max-width:760px)') && critical.includes('.fc-global-links.fc-nav-open'));
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(html.includes('<header class="fc-global-header">'));
+  assert.ok(html.includes('id="fc-language-select"'));
+  assert.ok(html.includes('Global Calculators'));
+  assert.ok(css.includes('.fc-global-header'));
+  assert.ok(css.includes('.fc-currency-control'));
 });
-
 
 test('visible brand text is included in accessible names and homepage feature icons meet contrast', () => {
   const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
   const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
-  assert.ok(homepage.includes('aria-label="FRIENDLY CALCULATOR Home"'));
-  assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
-  assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
+  assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
+  assert.ok(homepage.includes('.home-featured-tool a{display:inline-block;background:#101c2c;color:#fff'));
+  assert.ok(!homepage.includes('.home-featured-tool a{color:#caa347}'));
 });
 
 

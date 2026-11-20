@@ -14,7 +14,7 @@ test('human sitemap lists every public calculator catalogue URL exactly once',()
  assert.deepEqual([...urls].sort(),entries.map(x=>x.url).sort());
 });
 test('human sitemap groups every catalogue category and has indexable metadata',()=>{
- const categories=new Set(entries.map(x=>x.category||'Other'));
+ const categories=new Set(entries.map(x=>(x.category||'Other').trim()));
  assert.equal((html.match(/<details class="sitemap-category"/g)||[]).length,categories.size);
  assert.match(html,/<meta name="robots" content="index,follow/);
  assert.match(html,/<link rel="canonical" href="https:\/\/friendlycalculator\.in\/sitemap\.html"/);
