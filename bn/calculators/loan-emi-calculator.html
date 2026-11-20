@@ -4,6 +4,7 @@
 <meta name="twitter:description" content="ঋণের আনুমানিক মাসিক কিস্তি, মোট সুদ এবং মোট পরিশোধের পরিমাণ হিসাব করুন।">
 <meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<!-- fc-hreflang-start -->
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/loan-emi-calculator.html">
 <link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/loan-emi-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/loan-emi-calculator.html">
@@ -14,6 +15,7 @@
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/loan-emi-calculator.html">
 <link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/loan-emi-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/loan-emi-calculator.html">
+<!-- fc-hreflang-end -->
 </head><body><main class="wrap"><p><a href="/bn/index.html">হোম</a> / ক্যালকুলেটর / ঋণের EMI ক্যালকুলেটর</p><header class="hero"><p>বাংলা · Friendly Calculator</p><h1>ঋণের EMI ক্যালকুলেটর</h1><p>ঋণের আনুমানিক মাসিক কিস্তি, মোট সুদ এবং মোট পরিশোধের পরিমাণ হিসাব করুন।</p></header><section class="panel"><h2>EMI হিসাব করুন</h2><form id="calc"><div class="fields"><label>ঋণের পরিমাণ (currency)<input id="v0" type="number" min="1" step="any" value="1000000" required></label><label>বার্ষিক সুদের হার (%)<input id="v1" type="number" min="0" step="0.01" value="9" required></label><label>মেয়াদ (বছর)<input id="v2" type="number" min="0" step="1" value="20" required></label><label>অতিরিক্ত মাস<input id="v3" type="number" min="0" step="1" value="0" required></label></div><p><button class="btn" type="submit">EMI হিসাব করুন</button></p></form><div class="results" aria-live="polite"><div class="res"><span>মাসিক কিস্তি</span><strong id="o0">—</strong></div><div class="res"><span>মোট সুদ</span><strong id="o1">—</strong></div><div class="res"><span>মোট পরিশোধ</span><strong id="o2">—</strong></div></div><p id="status" class="note">ফলাফল গাণিতিক অনুমান। ফি, কর, বিমা, রাউন্ডিং এবং ঋণদাতার শর্তে প্রকৃত কিস্তি বদলাতে পারে। এটি কোনো ঋণ প্রস্তাব বা আর্থিক পরামর্শ নয়।</p></section><section class="panel"><h2>ক্যালকুলেটর</h2><p>EMI = P × r × (1+r)^n ÷ ((1+r)^n − 1), যেখানে r মাসিক সুদের হার এবং n কিস্তির সংখ্যা। r = 0 হলে EMI = P ÷ n.</p><h3>ফলাফল গাণিতিক অনুমান। ফি, কর, বিমা, রাউন্ডিং এবং ঋণদাতার শর্তে প্রকৃত কিস্তি বদলাতে পারে। এটি কোনো ঋণ প্রস্তাব বা আর্থিক পরামর্শ নয়।</h3></section></main><script src="/assets/global-locale.js"></script><script>(()=>{'use strict';
 const f=document.getElementById('calc'),status=document.getElementById('status'),principal=document.getElementById('v0');
 const countryDefaults={IN:1000000,ID:100000000,BR:200000,BD:2000000,ES:100000,MX:1000000,PT:100000,US:10000,GB:10000,CA:10000,AU:10000,DE:10000,FR:10000};
