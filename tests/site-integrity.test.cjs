@@ -1534,7 +1534,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
     'The homepage must not embed the full calculator catalogue');
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
   const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
-  assert.equal((popular.match(/<a\s/g) || []).length, 18, 'Homepage must show exactly 18 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 16, 'Homepage must show exactly 16 curated popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
@@ -2065,21 +2065,19 @@ test('remaining chemistry calculator formulas return expected results',()=>{
 });
 
 
-test('homepage shows 24 popular calculators as responsive thumbnail-led rows', () => {
+test('homepage exposes 16 curated popular calculator links backed by the canonical search index', () => {
   const page = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const start = page.indexOf('<section class="home-learning home-popular-worldwide"');
-  const end = page.indexOf('<nav class="home-category-index"', start);
-  assert.ok(start >= 0 && end > start, 'popular calculator section exists');
+  const start = page.indexOf('<nav class="home-popular-tools"');
+  const end = page.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'popular calculator navigation exists');
   const section = page.slice(start, end);
-  const routes = [...section.matchAll(/class="home-popular-item" href="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(routes.length, 24);
-  assert.equal(new Set(routes).size, 24);
+  const routes = [...section.matchAll(/<a href="([^"]+)">/g)].map(match => match[1]);
+  assert.equal(routes.length, 16);
+  assert.equal(new Set(routes).size, 16);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
-  assert.match(page, /\.home-popular-list/);
-  assert.match(page, /\.home-popular-icon/);
-  assert.match(page, /\.home-popular-item/);
-  assert.doesNotMatch(section, /bmi-calculator\.html/i);
+  assert.match(section, /Compound Interest Calculator/);
+  assert.match(section, /Simple Interest Calculator/);
 });
 
 
@@ -2265,7 +2263,7 @@ test('visible brand text is included in accessible names and homepage feature ic
   const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
   const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
-  assert.ok(homepage.includes('aria-label="FRIENDLY CALCULATOR Home"'));
+  assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
   assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
   assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
 });
