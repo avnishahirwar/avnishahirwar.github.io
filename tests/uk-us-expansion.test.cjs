@@ -70,7 +70,9 @@ test('new UK and US calculator URLs are listed in the additive country sitemap',
     'https://friendlycalculator.in/us/',
     'https://friendlycalculator.in/international/uk-council-tax-calculator.html',
     'https://friendlycalculator.in/international/us-student-loan-calculator.html',
-    'https://friendlycalculator.in/international/us-property-tax-calculator.html'
+    'https://friendlycalculator.in/international/us-property-tax-calculator.html',
+    'https://friendlycalculator.in/international/uk-student-loan-calculator.html',
+    'https://friendlycalculator.in/international/us-home-affordability-calculator.html'
   ]) assert.ok(sitemap.includes(route), 'Missing sitemap URL ' + route);
   const robots = read('robots.txt');
   assert.ok(robots.includes('Sitemap: https://friendlycalculator.in/sitemap-uk-us.xml'));
@@ -112,4 +114,32 @@ test('Friendship Calculator computes locally and does not submit or persist ente
   assert.ok(!page.includes('fetch('));
   assert.ok(!page.includes('XMLHttpRequest'));
   assert.ok(!page.includes('localStorage'));
+});
+
+test('UK Student Loan and US Home Affordability calculators are discoverable in homepage search and human sitemap', () => {
+  const home = read('index.html');
+  const uk = read('uk/index.html');
+  const us = read('us/index.html');
+  const index = JSON.parse(read('assets/calculator-search-index.json'));
+  const humanSitemap = read('sitemap.html');
+  const cases = [
+    {
+      name: 'UK Student Loan Calculator',
+      route: '/international/uk-student-loan-calculator.html',
+      hub: uk
+    },
+    {
+      name: 'US Home Affordability Calculator',
+      route: '/international/us-home-affordability-calculator.html',
+      hub: us
+    }
+  ];
+  for (const item of cases) {
+    assert.ok(fs.existsSync(path.join(root, item.route.slice(1))), 'Missing calculator file ' + item.route);
+    assert.ok(item.hub.includes('href="' + item.route + '"'), 'Country hub is missing ' + item.route);
+    assert.ok(index.some(entry => entry.name === item.name && entry.url === item.route),
+      'Homepage search index is missing ' + item.name);
+    assert.ok(humanSitemap.includes('href="' + item.route + '"'), 'Human sitemap is missing ' + item.route);
+  }
+  assert.ok(home.includes('calculator-search-index.json'));
 });
