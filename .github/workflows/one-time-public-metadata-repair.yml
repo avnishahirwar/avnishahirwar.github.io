@@ -14,9 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Restore excluded-topic pages to their base-branch versions
+        run: |
+          git fetch origin main
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            git checkout origin/main -- "$file"
+          done < <(git diff --name-only origin/main...HEAD | grep -Ei '(alcohol|beer|wine|cocktail|cigarette|nicotine|tobacco|vape|liquor|cannabis|marijuana|cbd|thc|weed|meth|cocaine|opioid)' || true)
       - name: Validate repair script
         run: node --check scripts/repair-public-social-metadata.cjs
       - name: Add missing public social metadata and canonicals
