@@ -24,9 +24,9 @@ function normalizeHomepage(file, isAvailable) {
   if (!fs.existsSync(absolute)) throw new Error('Missing locale homepage: ' + file);
   const original = fs.readFileSync(absolute, 'utf8');
   const clean = removeAlternates(original);
-  const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i;
+  const canonical = /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>\s*/i;
   if (!canonical.test(clean)) throw new Error('Missing canonical link: ' + file);
-  const updated = isAvailable ? clean.replace(canonical, match => match + '\n' + alternateLinks()) : clean;
+  const updated = isAvailable ? clean.replace(canonical, match => match.trimEnd() + '\n' + alternateLinks()) : clean.replace(canonical, match => match.trimEnd());
   if (updated !== original) {
     console.log('Homepage needs hreflang normalization: ' + file);
     if (process.argv.includes('--write')) fs.writeFileSync(absolute, updated);
