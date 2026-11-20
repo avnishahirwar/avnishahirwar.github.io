@@ -144,6 +144,7 @@ test('API documentation uses the current public calculator catalogue count', () 
   const indexOnly = [...searchUrls].filter(url => !expectedSearchIndexUrls.includes(url));
   assert.equal(sitemapOnly.length, 0, 'Sitemap routes missing from the calculator search index: ' + sitemapOnly.join(', '));
   assert.equal(indexOnly.length, 0, 'Search-index routes missing from the sitemap: ' + indexOnly.join(', '));
-  assert.ok(docs.includes('The full website directory contains ' + expectedCoreCalculatorCount + ' core calculator pages plus the international VAT calculator'));
+  assert.ok(docs.includes('The core category index currently highlights ' + expectedCoreCalculatorCount + ' calculator pages'));
+  assert.ok(docs.includes('the searchable public calculator directory contains ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator tools, including the international VAT calculator'));
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });
