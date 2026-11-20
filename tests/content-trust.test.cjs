@@ -43,3 +43,14 @@ test('Privacy Policy retains Google advertising, cookie and third-party vendor d
   assert.match(privacy, /advertising partners/i);
   assert.match(privacy, /Cookies and consent choices/i);
 });
+
+test('catalogue distinguishes top-level categories from normalized calculator topics', () => {
+  const directory = read('calculator/site-directory.html');
+  const searchIndex = JSON.parse(read('assets/calculator-search-index.json'));
+  const topLevelGroups = (directory.match(/<section class="section calculator-category"/g) || []).length;
+  const topics = new Set(searchIndex.map(item => (item.category || 'Other').trim().toLocaleLowerCase().replace(/\s+/g, ' ')));
+  const sitemapGroups = (read('sitemap.html').match(/<details class="sitemap-category"/g) || []).length;
+  assert.equal(topLevelGroups, 20);
+  assert.equal(topics.size, 36);
+  assert.equal(sitemapGroups, 36);
+});
