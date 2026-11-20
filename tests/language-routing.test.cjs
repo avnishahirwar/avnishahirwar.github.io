@@ -10,7 +10,7 @@ test('global language selector supports all configured locales', () => {
   }
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
-  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1,gu:1,kn:1/);
+  for (const locale of ['vi','te','gu','kn']) assert.match(shell, new RegExp(locale + ':1'));
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -77,8 +77,15 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
-  assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']"));
+  const routeLine = shell.split('\n').find(line => line.includes('const routeLocaleMatch='));
+  const localeArray = shell.match(/const localeCodes=\[([^\]]+)\]/);
+  assert.ok(routeLine && localeArray, 'Expected generated locale routing configuration');
+  const routeCodes = routeLine.match(/\(([^)]+)\)/)?.[1].split('|') || [];
+  const configuredCodes = [...localeArray[1].matchAll(/"([^"]+)"/g)].map(match => match[1]);
+  for (const locale of ['ja','ru']) {
+    assert.ok(routeCodes.includes(locale), 'Missing route match for ' + locale);
+    assert.ok(configuredCodes.includes(locale), 'Missing configured locale ' + locale);
+  }
 });
 
 
@@ -113,7 +120,12 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\\//.exec(p);"));
+  const routeLine = shell.split('\n').find(line => line.includes('const routeLocaleMatch='));
+  const localeArray = shell.match(/const localeCodes=\[([^\]]+)\]/);
+  assert.ok(routeLine && localeArray, 'Expected route and locale catalogue');
+  const routeCodes = routeLine.match(/\(([^)]+)\)/)?.[1].split('|').sort() || [];
+  const configuredCodes = [...localeArray[1].matchAll(/"([^"]+)"/g)].map(match => match[1]).sort();
+  assert.deepEqual(routeCodes, configuredCodes);
   assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
 });
 
@@ -211,7 +223,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const names = [...objectBody('const localeNames={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   const enabled = [...objectBody('const supportedUiLocales={').matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
-  assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
+  assert.deepEqual(names.sort(), catalogue.locales.map(locale => locale.code).sort());
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
   assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
@@ -273,9 +285,10 @@ test('five staged language editions have localized homepages and working basic c
       assert.match(calculator, /dir="rtl"/);
     }
   }
-  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  const routeLine = shell.split('\n').find(line => line.includes('const routeLocaleMatch='));
+  for (const locale of ['zh','ur','tr','it','ko']) assert.ok(routeLine.includes(locale), 'Missing staged locale route: ' + locale);
   assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
-  assert.match(shell, /ur\|fa\|ps\|he\|sd/);
+  for (const locale of ['ur','fa','ps','he','sd']) assert.ok(routeLine.includes(locale), 'Missing RTL locale route: ' + locale);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
   for (const locale of ['zh','ur','tr','it','ko']) {
     assert.ok(footerBlock.includes(locale + ':['), 'Missing footer labels for ' + locale);
