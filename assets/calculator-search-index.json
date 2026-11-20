@@ -21840,5 +21840,12 @@
     "category": "Calculator",
     "keywords": "wingdings translator",
     "description": "Wingdings translator is a simple, funny tool for writing your messages in Wingdings. Explore this symbol font and learn interesting facts about it."
+  },
+  {
+    "name": "Size to Weight Calculator (Rectangular Box)",
+    "url": "/calculators/size-to-weight-calculator-rectangular-box.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "size to weight calculator rectangular box construction solid cuboid dimensions density mass weight",
+    "description": "Estimate the mass of a solid rectangular block from its dimensions and material density."
   }
 ]
