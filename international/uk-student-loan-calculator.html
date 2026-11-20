@@ -25,6 +25,7 @@ body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.65 system-ui,sans-ser
 <div class="field"><label for="annualSalary">Annual gross earnings (£)</label><input id="annualSalary" type="number" min="0" step="100" value="40000" required></div>
 <div class="field"><label for="loanPlan">Undergraduate repayment plan</label><select id="loanPlan"><option value="plan1">Plan 1 — £26,900 threshold</option><option value="plan2" selected>Plan 2 — £29,385 threshold</option><option value="plan4">Plan 4 — £33,795 threshold</option><option value="plan5">Plan 5 — £25,000 threshold</option><option value="none">No undergraduate loan</option></select></div>
 </div>
+<p class="muted">If you have more than one undergraduate loan plan, do not add separate 9% deductions together. Payroll applies one undergraduate deduction using the lowest applicable repayment threshold; select that plan here. A Postgraduate Loan is a separate 6% deduction and can be included alongside it.</p>
 <p><label><input id="postgraduate" type="checkbox"> Include a Postgraduate Loan as well (6% above £21,000)</label></p>
 <button class="button" type="submit">Calculate repayments</button>
 </form>
