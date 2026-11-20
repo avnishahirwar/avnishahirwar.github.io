@@ -1564,6 +1564,21 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   }
 });
 
+test('human sitemap contains every canonical search-index URL once and is reproducibly generated', () => {
+  const humanSitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
+  const entries = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const urls = [...humanSitemap.matchAll(/<li class="sitemap-item" data-search="[^"]*"><a href="([^"]+)">/g)]
+    .map(match => match[1]);
+  assert.equal(urls.length, entries.length);
+  assert.equal(new Set(urls).size, urls.length);
+  assert.deepEqual([...urls].sort(), entries.map(entry => entry.url).sort());
+  const categories = new Set(entries.map(entry => (entry.category || 'Other').trim().toLocaleLowerCase('en')));
+  assert.equal((humanSitemap.match(/<details class="sitemap-category"/g) || []).length, categories.size);
+  const { renderHumanSitemap } = require('../scripts/generate-human-sitemap.cjs');
+  assert.equal(renderHumanSitemap(humanSitemap, entries), humanSitemap);
+});
+
+
 test('homepage search requires all query terms to match coherently within one field', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const vm = require('node:vm');
