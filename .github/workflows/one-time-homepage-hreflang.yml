@@ -31,3 +31,5 @@ jobs:
           git add index.html */index.html uk/index.html
           git commit -m "Normalize reciprocal locale homepage hreflang"
           git push origin "HEAD:refs/heads/$BRANCH"
+
+# Retry after correcting the script's escaping.
