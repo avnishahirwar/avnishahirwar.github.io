@@ -137,6 +137,8 @@ async function checkPage(browser, url, label, viewport) {
     assert.ok(metric.selectRight <= panelRight + 2, label + ': Settings selector must stay inside the panel');
   }
   if (viewport.width <= 760) {
+    await page.locator('button.fc-display-backdrop').click({ force: true });
+    await panel.waitFor({ state: 'hidden', timeout: 10000 });
     const navToggle = page.locator('button.fc-nav-toggle');
     await navToggle.click();
     await page.locator('#fc-primary-navigation.fc-nav-open').waitFor({ state: 'visible', timeout: 10000 });
@@ -156,8 +158,6 @@ async function checkPage(browser, url, label, viewport) {
       assert.ok(metric.selectWidth >= metric.controlWidth - 2, label + ': Header selectors must fill their control width');
       assert.ok(metric.selectRight <= navRight + 2, label + ': Header selector must stay inside the navigation viewport');
     }
-    await page.locator('button.fc-display-backdrop').click({ force: true });
-    await panel.waitFor({ state: 'hidden', timeout: 10000 });
   }
   const dims = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
   assert.ok(dims.document <= dims.viewport + 2, label + ': horizontal overflow ' + JSON.stringify(dims));
