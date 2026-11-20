@@ -41,7 +41,9 @@ for (const file of files) {
   if (page) pageMap.get(route).set(locale, { file, ...page });
 }
 let updated = 0;
+let needsRepair = 0;
 let clusters = 0;
+const check = process.argv.includes('--check');
 for (const [route, pages] of pageMap) {
   if (pages.size < 2 || !pages.has(defaultLocale)) continue;
   clusters++;
@@ -58,9 +60,15 @@ for (const [route, pages] of pageMap) {
     const next = page.html.replace(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, '')
       .replace(/<\/head>/i, '\n' + tags + '\n</head>');
     if (next !== page.html) {
-      fs.writeFileSync(path.join(ROOT, page.file), next);
-      updated++;
+      if (check) {
+        needsRepair++;
+        if (needsRepair <= 30) console.log('needs hreflang repair: ' + page.file);
+      } else {
+        fs.writeFileSync(path.join(ROOT, page.file), next);
+        updated++;
+      }
     }
   }
 }
-console.log('Generated reciprocal hreflang for ' + clusters + ' route clusters across ' + updated + ' indexable pages; locales: ' + locales.join(', ') + '.');
+console.log((check ? 'Checked' : 'Generated') + ' reciprocal hreflang for ' + clusters + ' route clusters; ' + (check ? needsRepair + ' pages need repair.' : updated + ' indexable pages updated.') + ' Locales: ' + locales.join(', ') + '.');
+if (check && needsRepair > 0) process.exitCode = 1;
