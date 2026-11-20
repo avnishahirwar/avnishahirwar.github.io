@@ -21464,13 +21464,6 @@
     "description": "The elastic constants calculator can help you explore the relationships between the moduli of elasticity for isotropic materials."
   },
   {
-    "name": "EMI Calculator",
-    "url": "/calculators/emi-calculator.html",
-    "category": "Calculator",
-    "keywords": "emi calculator",
-    "description": "Redirecting to the Friendly Calculator Loan EMI Calculator."
-  },
-  {
     "name": "Encounter Calculator 5e",
     "url": "/calculators/encounter-calculator-5e.html",
     "category": "Calculator",
@@ -21847,5 +21840,33 @@
     "category": "Geometry, Measurement & Construction",
     "keywords": "size to weight calculator rectangular box construction solid cuboid dimensions density mass weight",
     "description": "Estimate the mass of a solid rectangular block from its dimensions and material density."
+  },
+  {
+    "name": "Passive Income Calculator",
+    "url": "/calculators/passive-income-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "passive income calculator investment corpus target monthly income withdrawal rate inflation savings goal",
+    "description": "Estimate an investment corpus and time-to-target for an assumed passive-income goal."
+  },
+  {
+    "name": "Property Cash-on-Cash Return Calculator",
+    "url": "/calculators/property-cash-on-cash-calculator.html",
+    "category": "Finance",
+    "keywords": "property cash on cash return calculator rental yield net operating income cap rate annual debt service",
+    "description": "Estimate rental yield, net operating income, cap rate and cash-on-cash return from entered property assumptions."
+  },
+  {
+    "name": "Property Flip Profit Calculator",
+    "url": "/calculators/property-flip-profit-calculator.html",
+    "category": "Finance",
+    "keywords": "property flip profit calculator renovation purchase costs holding costs sale proceeds return on cash",
+    "description": "Estimate property renovation flip profit and return using purchase, renovation, holding and selling costs."
+  },
+  {
+    "name": "Wealth Goal Calculator",
+    "url": "/calculators/wealth-goal-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "wealth goal calculator millionaire goal investment corpus monthly contribution return inflation",
+    "description": "Estimate the time and monthly contributions needed to reach a custom wealth goal after inflation."
   }
 ]
