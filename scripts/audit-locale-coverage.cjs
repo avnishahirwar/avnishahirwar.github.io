@@ -49,15 +49,20 @@ function localePrefix(file, localeSet) {
 }
 
 function hasHreflang(html, locale, urlPath) {
-  const tags = html.match(/<link\b[^>]*\brel\s*=\s*["']alternate["'][^>]*>/gi) || [];
+  const tags = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']alternate["'][^>]*>/gi) || [];
+  const expectedPath = urlPath === 'index.html'
+    ? '/'
+    : '/' + urlPath.replace(/index\\.html$/, '');
   return tags.some(tag => {
-    const lang = tag.match(/\bhreflang\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase();
-    const href = tag.match(/\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    const lang = tag.match(/\\bhreflang\\s*=\\s*["']([^"']+)["']/i)?.[1]?.toLowerCase();
+    const href = tag.match(/\\bhref\\s*=\\s*["']([^"']+)["']/i)?.[1];
     if (lang !== locale) return false;
     try {
       const url = new URL(href, 'https://friendlycalculator.in');
-      return url.origin === 'https://friendlycalculator.in' &&
-        url.pathname.replace(/index\.html$/, '').replace(/\\/$/, '') === ('/' + urlPath).replace(/index\\.html$/, '').replace(/\\/$/, '');
+      const actualPath = url.pathname.endsWith('index.html')
+        ? url.pathname.slice(0, -'index.html'.length)
+        : url.pathname;
+      return url.origin === 'https://friendlycalculator.in' && actualPath === expectedPath;
     } catch {
       return false;
     }
