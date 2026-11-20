@@ -120,10 +120,10 @@
   },
   {
     "name": "STP Calculator",
-    "url": "/calculators/stp-calculator-standard-temperature-and-pressure.html",
-    "category": "Biology & Chemistry",
-    "keywords": "STP calculator standard temperature pressure ideal gas volume",
-    "description": "Calculate ideal-gas volume at specified standard temperature and pressure from amount of substance."
+    "url": "/calculators/stp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stp systematic transfer plan mutual fund source destination fund",
+    "description": "Model transfers from a source fund to a destination fund with separate assumed returns."
   },
   {
     "name": "Absolute Return Calculator",
@@ -2990,10 +2990,10 @@
   },
   {
     "name": "Avogadro's Number Calculator",
-    "url": "/calculators/avogadros-number-calculator.html",
+    "url": "/calculators/avogadro-s-number-calculator.html",
     "category": "Biology & Chemistry",
-    "keywords": "Avogadro number calculator moles particles molecules atoms Avogadro constant",
-    "description": "Convert amount in moles to a count of particles using the exact Avogadro constant."
+    "keywords": "avogadro number moles particles atoms molecules chemistry",
+    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
   },
   {
     "name": "Molar Mass of Gas Calculator",
@@ -3811,17 +3811,17 @@
   },
   {
     "name": "Light Year Conversion",
-    "url": "/calculators/light-year-conversion.html",
-    "category": "CONVERSION",
-    "keywords": "light year conversion",
-    "description": "Light Year Conversion — requested calculator in the Friendly Calculator directory."
+    "url": "/calculators/light-year-conversion-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "light year conversion kilometres kilometers astronomical units miles",
+    "description": "Convert light-years into kilometres, astronomical units and miles."
   },
   {
     "name": "Square Kilometers to Acres Conversion",
-    "url": "/calculators/square-kilometers-to-acres-conversion.html",
-    "category": "CONVERSION",
-    "keywords": "square kilometers to acres conversion",
-    "description": "Square Kilometers to Acres Conversion — requested calculator in the Friendly Calculator directory."
+    "url": "/calculators/square-kilometers-to-acres-calculator.html",
+    "category": "Geometry, Measurement & Construction",
+    "keywords": "square kilometers square kilometres acres area converter",
+    "description": "Convert square kilometres into acres and square metres."
   },
   {
     "name": "Cubic Feet Calculator",
@@ -3895,10 +3895,10 @@
   },
   {
     "name": "Torr to atm Conversion",
-    "url": "/calculators/torr-to-atm-conversion.html",
-    "category": "CONVERSION",
-    "keywords": "torr to atm conversion",
-    "description": "Torr to atm Conversion — requested calculator in the Friendly Calculator directory."
+    "url": "/calculators/torr-to-atm-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "torr to atm pressure conversion pascal pa",
+    "description": "Convert torr into standard atmospheres and pascals."
   },
   {
     "name": "Degrees Minutes Seconds Calculator",
@@ -17285,13 +17285,6 @@
     "description": "What Grade Was I in Year Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Avogadro's Number Calculator",
-    "url": "/calculators/avogadro-s-number-calculator.html",
-    "category": "Biology & Chemistry",
-    "keywords": "avogadro number moles particles atoms molecules chemistry",
-    "description": "Convert an amount of substance in moles into the corresponding number of particles using the exact Avogadro constant."
-  },
-  {
     "name": "HRA Exemption Calculator India",
     "url": "/calculators/hra-calculator.html",
     "category": "Tax, Salary & Payroll",
@@ -17299,39 +17292,11 @@
     "description": "Calculate HRA tax exemption in India using basic salary, HRA received, rent paid and metro or non-metro status."
   },
   {
-    "name": "Light Year Conversion",
-    "url": "/calculators/light-year-conversion-calculator.html",
-    "category": "Astronomy & Space",
-    "keywords": "light year conversion kilometres kilometers astronomical units miles",
-    "description": "Convert light-years into kilometres, astronomical units and miles."
-  },
-  {
-    "name": "Square Kilometers to Acres Conversion",
-    "url": "/calculators/square-kilometers-to-acres-calculator.html",
-    "category": "Geometry, Measurement & Construction",
-    "keywords": "square kilometers square kilometres acres area converter",
-    "description": "Convert square kilometres into acres and square metres."
-  },
-  {
     "name": "Sukanya Samriddhi Yojana (SSY) Calculator",
     "url": "/calculators/ssy-calculator.html",
     "category": "Savings, Investment & Retirement",
     "keywords": "ssy sukanya samriddhi yojana account maturity calculator india",
     "description": "Estimate Sukanya Samriddhi Account maturity after 21 years, with annual deposits for the first 15 years and an editable interest-rate assumption."
-  },
-  {
-    "name": "STP Calculator",
-    "url": "/calculators/stp-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "stp systematic transfer plan mutual fund source destination fund",
-    "description": "Model transfers from a source fund to a destination fund with separate assumed returns."
-  },
-  {
-    "name": "Torr to atm Conversion",
-    "url": "/calculators/torr-to-atm-conversion-calculator.html",
-    "category": "Converters, Data & Technology",
-    "keywords": "torr to atm pressure conversion pascal pa",
-    "description": "Convert torr into standard atmospheres and pascals."
   },
   {
     "name": "VAT Calculator",
