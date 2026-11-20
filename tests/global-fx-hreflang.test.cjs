@@ -47,7 +47,7 @@ test('percentage calculator hreflang cluster includes all nine published languag
 test('simple-interest English and Bengali hreflang alternates match published translations',()=>{
  const route='simple-interest-calculator.html';
  const englishLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
- const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt'];
+ const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
  const expectedFor=locales=>locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
  for(const [file,expected] of [['calculators/'+route,expectedFor(englishLocales)],['bn/calculators/'+route,expectedFor(bengaliLocales)]]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
