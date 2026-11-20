@@ -1284,7 +1284,7 @@ test('homepage category summary and directory markup match the published catalog
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into clearly labelled categories/);
-  assert.ok(homepage.includes('Browse by main section'));
+  assert.ok(homepage.includes('aria-label="Main calculator sections"'));
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse by category'));
   assert.ok(directory.includes('20 directory sections'));
@@ -2253,8 +2253,8 @@ test('visible brand text is included in accessible names and homepage feature ic
   const homepage = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(shell.includes('aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."'));
   assert.ok(homepage.includes('aria-label="Friendly Calculator home"'));
-  assert.ok(homepage.includes('.fc-feature-icon{color:#80632f}'));
-  assert.ok(!homepage.includes('.fc-feature-icon{color:#caa347}'));
+  assert.ok(homepage.includes('.home-featured-tool a{display:inline-block;background:#101c2c;color:#fff'));
+  assert.ok(!homepage.includes('.home-featured-tool a{color:#caa347}'));
 });
 
 
