@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Google Analytics 4: Friendly Calculator -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QVWQSEDRGL');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Cómo funcionan las fórmulas de Friendly Calculator, qué supuestos utiliza cada herramienta, cómo se maneja la información y qué fuentes oficiales consultar.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculator/methodology.html">
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculator/methodology.html"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/methodology.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta property="og:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<meta property="og:url" content="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta name="twitter:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<title>Metodología de cálculo y fuentes | Friendly Calculator</title>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--navy:#101c2c;--gold:#d8bd82;--line:#e0e5ea;--paper:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--navy);padding:18px 0;color:#fff}.wrap{width:min(900px,92%);margin:auto}.brand{color:#fff;text-decoration:none;font-weight:850;letter-spacing:.06em}.brand b{color:var(--gold)}
+main{padding:36px 0 54px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12}h2{margin-top:30px;line-height:1.25}.muted{color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;margin:16px 0}.panel h2{margin-top:0}.panel li{margin:7px 0}a{color:#174d72}footer{background:#0b1928;color:#bdc9d4;padding:24px 0}footer a{color:#fff;margin-right:14px}
+</style>
+<meta name="theme-color" content="#101c2c">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
+<style>
+.site-nav-wrap{width:min(1120px,92%);margin:auto}.site-header{background:#101c2c;color:#fff}.site-nav{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.site-brand{font-weight:900;letter-spacing:.13em;color:#fff;text-decoration:none}.site-brand b{color:#d8bd82}.site-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.site-links a{color:#dce5ed;text-decoration:none;font-size:.9rem}.site-links a:hover{color:#d8bd82}.site-footer{background:#0b1928!important;color:#bdc9d4!important;padding:26px 0!important}.site-footer a{color:#e7d5a9!important;text-decoration:none}.site-footer-inner{width:min(1120px,92%);margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.site-footer-links{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:700px){.site-nav{padding:14px 0;align-items:flex-start;flex-direction:column;gap:12px}.site-links{gap:10px 15px}.site-footer-inner{flex-direction:column}}
+</style>
+<link rel="icon" type="image/png" href="/favicon-96.png">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+</head>
+<body>
+<header class="site-header"><div class="site-nav-wrap site-nav"><a class="site-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="site-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#calculators">Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></header>
+<main class="wrap"><p class="muted"><a href="/">Inicio</a> / Metodología de cálculo</p>
+<h1>Metodología de cálculo y fuentes</h1>
+<p>Friendly Calculator ofrece estimaciones en el navegador con fines educativos y de planificación cotidiana. Esta página explica los métodos generales y los supuestos en los que se basan las herramientas para que los visitantes puedan determinar si una estimación se ajusta a su situación.</p>
+<p class="muted">Página actualizada: 9 de noviembre de 2026. Esta fecha corresponde a la publicación de la página; no significa que cada calculadora haya recibido una revisión profesional independiente en esa fecha.</p>
+<section class="panel"><h2>Cómo se realizan los cálculos</h2>
+<ul>
+<li>Los valores introducidos en las calculadoras públicas se procesan en el navegador del visitante.</li>
+<li>Cada herramienta utiliza la fórmula y los supuestos descritos en su página de calculadora o en la explicación del resultado correspondiente.</li>
+<li>Los valores mostrados se redondean para facilitar su lectura. El redondeo, las convenciones de cómputo de plazos y las reglas específicas de cada proveedor pueden hacer que difieran de los extractos o las liquidaciones oficiales.</li>
+<li>No afirmamos que los resultados estén certificados, auditados o garantizados, ni que sustituyan a un banco, un portal gubernamental, un contador cualificado, un profesional financiero o un profesional sanitario.</li>
+<li>Cuando cambia una norma o una tasa, se debe consultar la fuente oficial correspondiente antes de basarse en una estimación. Una página solo debe marcarse como revisada después de volver a comprobar realmente sus supuestos y ejemplos.</li>
+</ul></section>
+<section class="panel"><h2>Supuestos y limitaciones de las calculadoras</h2>
+<ul>
+<li><strong>GST:</strong> Realiza cálculos aritméticos según la tasa seleccionada por el visitante. No clasifica bienes o servicios ni determina si corresponde CGST/SGST o IGST. Compruebe la clasificación y la tasa aplicables.</li>
+<li><strong>Cuota EMI del préstamo:</strong> Utiliza una fórmula estándar de EMI con saldo decreciente y una tasa mensual. No incluye comisiones, seguros, tasas variables, pagos irregulares ni el redondeo específico del prestamista.</li>
+<li><strong>Depósito a plazo fijo:</strong> Utiliza el supuesto de capitalización periódica seleccionado. Los importes reales al vencimiento que paguen los bancos pueden diferir debido a las reglas de cómputo de días, la opción de pago, la cancelación anticipada, los impuestos y el TDS.</li>
+<li><strong>EPF/PF:</strong> Proyección simplificada basada en la contribución mensual introducida y una tasa supuesta constante. No contempla todos los límites salariales legales, el desglose de las contribuciones del empleador y del empleado, los retiros, el momento de las contribuciones ni los cambios anuales de la tasa.</li>
+<li><strong>SIP:</strong> Ilustra una contribución mensual fija y un rendimiento supuesto constante, con contribuciones al final de cada mes. Los rendimientos de los fondos de inversión están vinculados al mercado, son variables y no están garantizados; se excluyen las comisiones y los impuestos.</li>
+<li><strong>Intereses de ahorro:</strong> Utiliza una estimación simple basada en el saldo diario y un año de 365 días. Los bancos pueden aplicar distintos métodos para calcular saldos, abonar intereses y redondear importes.</li>
+<li><strong>Impuesto sobre la renta y TDS salarial:</strong> Estimaciones simplificadas que utilizan los supuestos configurados en la herramienta. Es posible que no contemplen ingresos sujetos a tasas especiales, bonificaciones, compensaciones, exenciones, deducciones, casos excepcionales de recargo, requisitos para acogerse a un régimen fiscal y otras circunstancias individuales. Confirme el año fiscal/de evaluación correspondiente y la legislación vigente.</li>
+<li><strong>Salario:</strong> Divide el importe mensual introducido entre los días y las horas laborables introducidos. No es un cálculo legal de nómina, horas extra, permisos ni recibos de sueldo.</li>
+<li><strong>Inflación:</strong> Proyecta una tasa anual constante compuesta durante el período seleccionado. La inflación real cambia con el tiempo.</li>
+<li><strong>IMC:</strong> Es un cálculo de detección, no un diagnóstico. Las categorías para adultos no se aplican a menores de 18 años; los niños y adolescentes requieren una interpretación profesional específica según la edad y el sexo.</li>
+<li><strong>Coste del combustible:</strong> Supone que el consumo indicado y el precio del combustible permanecen constantes durante todo el viaje.</li>
+<li><strong>Factura de electricidad:</strong> Utiliza los cargos por unidad y los cargos fijos introducidos por el visitante. No consulta tarifas en tiempo real ni modela todos los tramos tarifarios estatales o de las distribuidoras (discom), impuestos, subsidios o recargos.</li>
+<li><strong>Edad:</strong> Calcula la diferencia de calendario entre las dos fechas introducidas.</li>
+<li><strong>Descuento y ganancias/pérdidas:</strong> Solo realiza cálculos aritméticos básicos; no incluye automáticamente gastos de envío, impuestos, gastos generales, comisiones de plataformas ni otros costes empresariales.</li>
+</ul></section>
+<section class="panel"><h2>Fuentes oficiales de referencia</h2>
+<p>Estos son portales de referencia primarios para consultar las normas vigentes. Esto no significa que todas las tasas actuales se hayan sincronizado automáticamente con las calculadoras.</p>
+<ul>
+<li><a href="https://cbic-gst.gov.in/" rel="noopener noreferrer">Central Board of Indirect Taxes and Customs (CBIC)</a> — legislación del GST, tablas de tasas y orientación.</li>
+<li><a href="https://www.incometax.gov.in/" rel="noopener noreferrer">Income Tax Department</a> — tramos impositivos, normas, formularios y calculadora fiscal oficial.</li>
+<li><a href="https://www.epfindia.gov.in/" rel="noopener noreferrer">Employees' Provident Fund Organisation (EPFO)</a> — información sobre el régimen EPF y sus afiliados.</li>
+<li><a href="https://www.rbi.org.in/" rel="noopener noreferrer">Reserve Bank of India (RBI)</a> — directrices bancarias e información relacionada con los depósitos.</li>
+<li><a href="https://www.amfiindia.com/investor" rel="noopener noreferrer">Association of Mutual Funds in India (AMFI)</a> — educación para inversores e información sobre los riesgos de los fondos de inversión.</li>
+<li><a href="https://www.nsiindia.gov.in/" rel="noopener noreferrer">National Savings Institute</a> — información sobre los programas de ahorro a pequeña escala.</li>
+</ul></section>
+<section class="panel"><h2>Normas editoriales y correcciones</h2><p>Consulte nuestra <a href="/calculator/editorial-policy.html">Política editorial, fuentes y correcciones</a> para obtener información sobre la autoría, la selección de fuentes, las limitaciones de las revisiones y cómo informar de un error.</p></section><section class="panel"><h2>Correcciones y transparencia</h2>
+<p>Si un resultado parece incorrecto, envíe el nombre de la calculadora, los valores de ejemplo introducidos y el método esperado a través del <a href="/#contact">formulario de contacto</a>. No incluya contraseñas, OTP, credenciales bancarias, números de identidad gubernamentales ni otra información confidencial.</p>
+<p>No inventamos revisores cualificados, avales profesionales, cifras de usuarios, resultados de pruebas ni fechas de revisión. Cualquier futura revisión independiente se identificará únicamente después de que se haya realizado de verdad.</p></section>
+<section class="panel"><h2>Reutilice nuestro contenido educativo</h2><p>El texto editorial original y las explicaciones educativas están disponibles bajo la <a href="/calculator/content-license.html">licencia de contenido CC BY 4.0</a>. Mencione a Avnish Ahirwar y Friendly Calculator como fuente e incluya un enlace a la página original. Se excluyen el software, la marca y los materiales de terceros.</p></section>
+<section class="panel"><h2>Aviso importante</h2><p>Todos los resultados son estimaciones con fines informativos generales. No constituyen asesoramiento fiscal, jurídico, contable, crediticio, de inversión, médico ni de otro tipo profesional. Las proyecciones de fondos de inversión y SIP no garantizan rendimientos. Verifique las decisiones importantes con la fuente oficial correspondiente o con un profesional cualificado.</p><p><a href="/calculator/privacy.html">Política de privacidad</a> · <a href="/calculator/terms.html">Condiciones de uso</a> · <a href="/calculator/about.html">Acerca de Friendly Calculator</a></p></section></main>
+<footer class="site-footer"><div class="site-footer-inner"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="site-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/site-directory.html">All Pages</a><a href="/#contact">Contact</a></nav></div></footer>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>

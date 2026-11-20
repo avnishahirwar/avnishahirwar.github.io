@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<!-- Google Analytics 4: Friendly Calculator -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QVWQSEDRGL');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Friendly Calculatorの計算式の仕組み、各ツールで使用する前提条件、情報の取り扱い、確認すべき公式情報源について説明します。">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculator/methodology.html">
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculator/methodology.html"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/methodology.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta property="og:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<meta property="og:url" content="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta name="twitter:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<title>計算方法と出典 | Friendly Calculator</title>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--navy:#101c2c;--gold:#d8bd82;--line:#e0e5ea;--paper:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--navy);padding:18px 0;color:#fff}.wrap{width:min(900px,92%);margin:auto}.brand{color:#fff;text-decoration:none;font-weight:850;letter-spacing:.06em}.brand b{color:var(--gold)}
+main{padding:36px 0 54px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12}h2{margin-top:30px;line-height:1.25}.muted{color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;margin:16px 0}.panel h2{margin-top:0}.panel li{margin:7px 0}a{color:#174d72}footer{background:#0b1928;color:#bdc9d4;padding:24px 0}footer a{color:#fff;margin-right:14px}
+</style>
+<meta name="theme-color" content="#101c2c">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
+<style>
+.site-nav-wrap{width:min(1120px,92%);margin:auto}.site-header{background:#101c2c;color:#fff}.site-nav{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.site-brand{font-weight:900;letter-spacing:.13em;color:#fff;text-decoration:none}.site-brand b{color:#d8bd82}.site-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.site-links a{color:#dce5ed;text-decoration:none;font-size:.9rem}.site-links a:hover{color:#d8bd82}.site-footer{background:#0b1928!important;color:#bdc9d4!important;padding:26px 0!important}.site-footer a{color:#e7d5a9!important;text-decoration:none}.site-footer-inner{width:min(1120px,92%);margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.site-footer-links{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:700px){.site-nav{padding:14px 0;align-items:flex-start;flex-direction:column;gap:12px}.site-links{gap:10px 15px}.site-footer-inner{flex-direction:column}}
+</style>
+<link rel="icon" type="image/png" href="/favicon-96.png">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+</head>
+<body>
+<header class="site-header"><div class="site-nav-wrap site-nav"><a class="site-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="site-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#calculators">Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></header>
+<main class="wrap"><p class="muted"><a href="/">ホーム</a> / 計算方法</p>
+<h1>計算方法と出典</h1>
+<p>Friendly Calculatorは、学習や日常の計画に役立つ、ブラウザー上で利用できる概算ツールを提供しています。このページでは、各ツールの大まかな計算方法と前提条件を説明し、訪問者が概算結果を自身の状況に当てはめて判断できるようにしています。</p>
+<p class="muted">ページ更新日：2026年11月9日。この日付はページの公開日であり、すべての計算ツールが同日に独立した専門家による審査を受けたことを意味するものではありません。</p>
+<section class="panel"><h2>計算の仕組み</h2>
+<ul>
+<li>公開されている計算ツールに入力された値は、訪問者のブラウザー内で処理されます。</li>
+<li>各ツールでは、計算ツールのページまたは関連する結果の説明に記載された計算式と前提条件を使用します。</li>
+<li>表示値は読みやすさを考慮して丸めています。丸め処理、期間の扱い、提供元固有の規則により、明細書や公式の査定結果とは異なる場合があります。</li>
+<li>計算結果が認定済み、監査済み、保証付きであること、または銀行、政府のポータル、資格を有する会計士、金融専門家、医療従事者に代わるものであることを当サイトは主張しません。</li>
+<li>規則や料率が変更された場合は、概算結果を利用する前に該当する公式情報源をご確認ください。ページを審査済みと表示するのは、前提条件と計算例を実際に再確認した後に限るべきです。</li>
+</ul></section>
+<section class="panel"><h2>計算ツールの前提条件と制限</h2>
+<ul>
+<li><strong>GST：</strong>訪問者が選択した税率で計算します。物品やサービスを分類したり、CGST/SGSTとIGSTのどちらが適用されるかを判断したりするものではありません。該当する分類と税率をご確認ください。</li>
+<li><strong>ローンEMI：</strong>月利を用いる、元金均等返済方式に基づく標準的なEMI計算式を使用します。手数料、保険料、金利変更、不規則な返済、貸し手固有の丸め処理は含まれません。</li>
+<li><strong>定期預金：</strong>選択された定期複利の前提条件を使用します。実際の銀行の満期受取額は、日数計算の規則、受取方法、中途解約、税金、TDSにより異なる場合があります。</li>
+<li><strong>EPF/PF：</strong>入力された月々の拠出額と一定と仮定した利率に基づく簡易的な試算です。法定賃金上限、雇用主と従業員の拠出割合、引き出し、拠出の時期、年間利率の変更などをすべて反映するものではありません。</li>
+<li><strong>SIP：</strong>月末に拠出する前提で、毎月一定額を拠出し、一定の利回りが得られると仮定した試算を示します。投資信託のリターンは市場に連動して変動し、保証されません。手数料と税金は含まれません。</li>
+<li><strong>預金利息：</strong>365日を基準とした、日々の残高に基づく簡易的な試算を使用します。銀行によって残高の算定、利息の付与、丸めの方法が異なる場合があります。</li>
+<li><strong>所得税と給与TDS：</strong>ツールに設定された前提条件に基づく簡易的な概算です。特別税率が適用される所得、税額控除、軽減措置、免税、控除、追加税の個別ケース、税制の適用資格、その他の個別事情が反映されない場合があります。該当する会計年度／査定年度と現行法をご確認ください。</li>
+<li><strong>給与：</strong>入力された月額を、入力された勤務日数と勤務時間で割って計算します。法定の給与計算、時間外労働、休暇、給与明細の計算ではありません。</li>
+<li><strong>インフレーション：</strong>選択された期間にわたり、一定の年間インフレ率が複利で適用されると仮定して試算します。実際のインフレ率は時間とともに変化します。</li>
+<li><strong>BMI：</strong>スクリーニングを目的とする計算であり、診断ではありません。18歳未満の方には成人の区分を適用しません。子どもや10代の方については、年齢と性別に応じた専門家の解釈が必要です。</li>
+<li><strong>燃料費：</strong>入力された燃費と燃料価格が、移動中ずっと一定であると仮定します。</li>
+<li><strong>電気料金：</strong>訪問者が入力した従量料金と固定料金を使用します。最新の料金を取得したり、州や配電会社ごとのすべての段階別料金、賦課金、補助金、追加料金を反映したりするものではありません。</li>
+<li><strong>年齢：</strong>入力された2つの日付の暦上の差を計算します。</li>
+<li><strong>割引と損益：</strong>基本的な算術計算のみを行います。送料、税金、間接費、プラットフォーム手数料、その他の事業コストは自動的に含まれません。</li>
+</ul></section>
+<section class="panel"><h2>公式の参考情報源</h2>
+<p>以下は、最新の規則を確認するための一次情報ポータルです。現在適用されているすべての料率が計算ツールに自動的に同期されているという意味ではありません。</p>
+<ul>
+<li><a href="https://cbic-gst.gov.in/" rel="noopener noreferrer">中央物品・サービス税関委員会（CBIC）</a> — GST関連法令、税率表、ガイダンス。</li>
+<li><a href="https://www.incometax.gov.in/" rel="noopener noreferrer">所得税局</a> — 税率区分、規則、申告書、公式税額計算ツール。</li>
+<li><a href="https://www.epfindia.gov.in/" rel="noopener noreferrer">従業員積立基金機構（EPFO）</a> — EPF制度および加入者向け情報。</li>
+<li><a href="https://www.rbi.org.in/" rel="noopener noreferrer">インド準備銀行（RBI）</a> — 銀行業務に関する指針および預金関連情報。</li>
+<li><a href="https://www.amfiindia.com/investor" rel="noopener noreferrer">インド投資信託協会（AMFI）</a> — 投資家向け教育および投資信託のリスク情報。</li>
+<li><a href="https://www.nsiindia.gov.in/" rel="noopener noreferrer">国立貯蓄研究所</a> — 小口貯蓄制度に関する情報。</li>
+</ul></section>
+<section class="panel"><h2>編集基準と訂正</h2><p>執筆者、情報源の選定、審査の制限、誤りの報告方法については、<a href="/calculator/editorial-policy.html">編集方針、情報源および訂正</a>をご覧ください。</p></section><section class="panel"><h2>訂正と透明性</h2>
+<p>結果に誤りがあると思われる場合は、計算ツール名、入力したサンプル値、想定される計算方法を<a href="/#contact">お問い合わせフォーム</a>からお知らせください。パスワード、OTP、銀行の認証情報、政府発行の個人識別番号、その他の機密情報は記載しないでください。</p>
+<p>資格を有する審査担当者、専門家による推薦、利用者数、テスト結果、審査日を捏造することはありません。今後、独立した審査が行われる場合は、実際に実施された後に限り、その旨を明記します。</p></section>
+<section class="panel"><h2>教育コンテンツの再利用</h2><p>オリジナルの編集記事と教育的な解説は、<a href="/calculator/content-license.html">CC BY 4.0コンテンツライセンス</a>のもとで利用できます。Avnish AhirwarとFriendly Calculatorをクレジット表記し、元のページへのリンクを記載してください。ソフトウェア、ブランド、第三者の素材は対象外です。</p></section>
+<section class="panel"><h2>重要な免責事項</h2><p>すべての結果は、一般的な情報提供を目的とする概算です。税務、法律、会計、融資、投資、医療、その他の専門的な助言ではありません。投資信託やSIPの試算は、リターンを保証するものではありません。重要な判断をする際は、該当する公式情報源または資格を有する専門家に確認してください。</p><p><a href="/calculator/privacy.html">プライバシーポリシー</a> · <a href="/calculator/terms.html">利用規約</a> · <a href="/calculator/about.html">Friendly Calculatorについて</a></p></section></main>
+<footer class="site-footer"><div class="site-footer-inner"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="site-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/site-directory.html">All Pages</a><a href="/#contact">Contact</a></nav></div></footer>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>

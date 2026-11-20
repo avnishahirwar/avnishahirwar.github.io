@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<!-- Google Analytics 4: Friendly Calculator -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QVWQSEDRGL');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Как работают формулы Friendly Calculator, какие допущения использует каждый инструмент, как обрабатывается информация и какие официальные источники следует проверять.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculator/methodology.html">
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculator/methodology.html"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/methodology.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta property="og:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<meta property="og:url" content="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta name="twitter:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<title>Методология расчётов и источники | Friendly Calculator</title>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--navy:#101c2c;--gold:#d8bd82;--line:#e0e5ea;--paper:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--navy);padding:18px 0;color:#fff}.wrap{width:min(900px,92%);margin:auto}.brand{color:#fff;text-decoration:none;font-weight:850;letter-spacing:.06em}.brand b{color:var(--gold)}
+main{padding:36px 0 54px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12}h2{margin-top:30px;line-height:1.25}.muted{color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;margin:16px 0}.panel h2{margin-top:0}.panel li{margin:7px 0}a{color:#174d72}footer{background:#0b1928;color:#bdc9d4;padding:24px 0}footer a{color:#fff;margin-right:14px}
+</style>
+<meta name="theme-color" content="#101c2c">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
+<style>
+.site-nav-wrap{width:min(1120px,92%);margin:auto}.site-header{background:#101c2c;color:#fff}.site-nav{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.site-brand{font-weight:900;letter-spacing:.13em;color:#fff;text-decoration:none}.site-brand b{color:#d8bd82}.site-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.site-links a{color:#dce5ed;text-decoration:none;font-size:.9rem}.site-links a:hover{color:#d8bd82}.site-footer{background:#0b1928!important;color:#bdc9d4!important;padding:26px 0!important}.site-footer a{color:#e7d5a9!important;text-decoration:none}.site-footer-inner{width:min(1120px,92%);margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.site-footer-links{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:700px){.site-nav{padding:14px 0;align-items:flex-start;flex-direction:column;gap:12px}.site-links{gap:10px 15px}.site-footer-inner{flex-direction:column}}
+</style>
+<link rel="icon" type="image/png" href="/favicon-96.png">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+</head>
+<body>
+<header class="site-header"><div class="site-nav-wrap site-nav"><a class="site-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="site-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#calculators">Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></header>
+<main class="wrap"><p class="muted"><a href="/">Главная</a> / Методология расчётов</p>
+<h1>Методология расчётов и источники</h1>
+<p>Friendly Calculator предоставляет оценки в браузере для обучения и повседневного планирования. На этой странице описаны общие методы и допущения, лежащие в основе инструментов, чтобы посетители могли оценить, подходит ли им тот или иной результат.</p>
+<p class="muted">Дата обновления страницы: 9 ноября 2026 г. Это дата публикации страницы; она не означает, что каждый калькулятор прошёл независимую профессиональную проверку в этот день.</p>
+<section class="panel"><h2>Как выполняются расчёты</h2>
+<ul>
+<li>Значения, введённые в общедоступные калькуляторы, обрабатываются в браузере посетителя.</li>
+<li>В каждом инструменте используются формула и допущения, описанные на странице соответствующего калькулятора или в пояснении к результату.</li>
+<li>Для удобства чтения отображаемые значения округляются. Округление, правила учёта времени и особенности конкретного поставщика услуг могут приводить к отличиям от выписок или официальных расчётов.</li>
+<li>Мы не утверждаем, что результаты сертифицированы, проверены аудитом или гарантированы, и не считаем их заменой услуг банка, государственного портала, квалифицированного бухгалтера, финансового специалиста или медицинского работника.</li>
+<li>Если правило или ставка меняются, перед тем как полагаться на оценку, следует проверить соответствующий официальный источник. Страницу можно помечать как проверенную только после фактической повторной проверки её допущений и примеров.</li>
+</ul></section>
+<section class="panel"><h2>Допущения и ограничения калькуляторов</h2>
+<ul>
+<li><strong>GST:</strong> Выполняет арифметический расчёт для ставки, выбранной посетителем. Не классифицирует товары или услуги и не определяет, применяется ли CGST/SGST или IGST. Проверьте применимую классификацию и ставку.</li>
+<li><strong>EMI по кредиту:</strong> Использует стандартную формулу EMI с уменьшающимся остатком и месячной ставкой. Комиссии, страхование, изменение ставок, нерегулярные платежи и специфические для кредитора правила округления не учитываются.</li>
+<li><strong>Срочный депозит:</strong> Использует выбранное допущение о периодичности начисления процентов. Фактическая сумма к выплате банком по окончании срока может отличаться из-за правил подсчёта дней, способа выплаты, досрочного закрытия, налогов и TDS.</li>
+<li><strong>EPF/PF:</strong> Упрощённый прогноз на основе введённого ежемесячного взноса и постоянной предполагаемой ставки. Он не учитывает все установленные законом ограничения по заработной плате, распределение взносов между работодателем и работником, снятие средств, сроки внесения взносов или ежегодные изменения ставки.</li>
+<li><strong>SIP:</strong> Иллюстрирует фиксированный ежемесячный взнос и постоянную предполагаемую доходность с внесением взносов в конце месяца. Доходность взаимных фондов зависит от рынка, меняется и не гарантирована; комиссии и налоги не учитываются.</li>
+<li><strong>Проценты по сбережениям:</strong> Использует упрощённую оценку по ежедневному остатку исходя из 365 дней. Банки могут применять иные правила расчёта остатка, начисления процентов и округления.</li>
+<li><strong>Подоходный налог и TDS с зарплаты:</strong> Упрощённые оценки, основанные на допущениях, заданных в инструменте. Они могут не учитывать доходы, облагаемые по специальным ставкам, налоговые скидки, льготы, освобождения, вычеты, особые случаи применения надбавок, право на выбор налогового режима и другие индивидуальные обстоятельства. Уточните соответствующий финансовый/налоговый год и действующее законодательство.</li>
+<li><strong>Зарплата:</strong> Делит введённую месячную сумму на введённое количество рабочих дней и часов. Это не расчёт заработной платы, сверхурочной работы, отпускных или расчётного листка в соответствии с законодательством.</li>
+<li><strong>Инфляция:</strong> Прогнозирует постоянный годовой уровень с начислением сложных процентов за выбранный период. Фактическая инфляция меняется со временем.</li>
+<li><strong>BMI:</strong> Скрининговый расчёт, а не диагноз. Категории для взрослых не применяются к лицам младше 18 лет; для оценки детей и подростков специалистам требуются возрастные и половые показатели.</li>
+<li><strong>Стоимость топлива:</strong> Предполагается, что введённые показатели пробега и цена топлива остаются неизменными на протяжении всей поездки.</li>
+<li><strong>Счёт за электроэнергию:</strong> Используются введённые посетителем тариф за единицу и фиксированные сборы. Инструмент не получает актуальные тарифы и не моделирует все тарифные ступени штатов/распределительных компаний (discom), сборы, субсидии или надбавки.</li>
+<li><strong>Возраст:</strong> Вычисляет календарную разницу между двумя введёнными датами.</li>
+<li><strong>Скидка и прибыль/убыток:</strong> Только базовая арифметика; стоимость доставки, налоги, накладные расходы, комиссии платформ и другие расходы бизнеса автоматически не учитываются.</li>
+</ul></section>
+<section class="panel"><h2>Официальные источники</h2>
+<p>Это основные справочные порталы для проверки действующих правил. Их упоминание не означает, что все актуальные ставки автоматически синхронизируются с калькуляторами.</p>
+<ul>
+<li><a href="https://cbic-gst.gov.in/" rel="noopener noreferrer">Central Board of Indirect Taxes and Customs (CBIC)</a> — законодательство GST, перечни ставок и рекомендации.</li>
+<li><a href="https://www.incometax.gov.in/" rel="noopener noreferrer">Income Tax Department</a> — налоговые ставки, правила, формы и официальный налоговый калькулятор.</li>
+<li><a href="https://www.epfindia.gov.in/" rel="noopener noreferrer">Employees' Provident Fund Organisation (EPFO)</a> — информация о программе EPF и участниках.</li>
+<li><a href="https://www.rbi.org.in/" rel="noopener noreferrer">Reserve Bank of India (RBI)</a> — банковские предписания и информация о депозитах.</li>
+<li><a href="https://www.amfiindia.com/investor" rel="noopener noreferrer">Association of Mutual Funds in India (AMFI)</a> — материалы для инвесторов и информация о рисках взаимных фондов.</li>
+<li><a href="https://www.nsiindia.gov.in/" rel="noopener noreferrer">National Savings Institute</a> — информация о программах сбережений для населения.</li>
+</ul></section>
+<section class="panel"><h2>Редакционные стандарты и исправления</h2><p>Ознакомьтесь с нашей страницей <a href="/calculator/editorial-policy.html">«Редакционная политика, источники и исправления»</a>, где указаны сведения об авторах, выборе источников, ограничениях проверки и способах сообщить об ошибке.</p></section><section class="panel"><h2>Исправления и прозрачность</h2>
+<p>Если результат кажется неверным, укажите название калькулятора, введённые тестовые значения и ожидаемый метод расчёта через <a href="/#contact">форму обратной связи</a>. Не указывайте пароли, OTP-коды, банковские учётные данные, номера государственных документов, удостоверяющих личность, или другую конфиденциальную информацию.</p>
+<p>Мы не выдумываем квалифицированных рецензентов, рекомендации специалистов, количество пользователей, результаты тестов или даты проверок. О любой будущей независимой проверке будет сообщено только после того, как она действительно состоится.</p></section>
+<section class="panel"><h2>Использование наших обучающих материалов</h2><p>Оригинальные редакционные тексты и обучающие пояснения доступны по <a href="/calculator/content-license.html">лицензии на материалы CC BY 4.0</a>. Указывайте Avnish Ahirwar и Friendly Calculator и размещайте ссылку на исходную страницу. Программное обеспечение, фирменный стиль и материалы третьих лиц не включены.</p></section>
+<section class="panel"><h2>Важное предупреждение</h2><p>Все результаты являются оценочными и предоставляются только в общих информационных целях. Это не налоговая, юридическая, бухгалтерская, кредитная, инвестиционная, медицинская или иная профессиональная консультация. Прогнозы взаимных фондов и SIP не гарантируют доходность. При принятии важных решений сверяйтесь с соответствующим официальным источником или квалифицированным специалистом.</p><p><a href="/calculator/privacy.html">Политика конфиденциальности</a> · <a href="/calculator/terms.html">Условия использования</a> · <a href="/calculator/about.html">О Friendly Calculator</a></p></section></main>
+<footer class="site-footer"><div class="site-footer-inner"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="site-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/site-directory.html">All Pages</a><a href="/#contact">Contact</a></nav></div></footer>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>

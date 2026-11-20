@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<!-- Google Analytics 4: Friendly Calculator -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QVWQSEDRGL');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Friendly Calculator-এর সূত্রগুলো কীভাবে কাজ করে, প্রতিটি টুলে কী অনুমান ব্যবহার করা হয়, তথ্য কীভাবে পরিচালনা করা হয় এবং কোন সরকারি সূত্রগুলো যাচাই করতে হবে।">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculator/methodology.html">
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculator/methodology.html"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/methodology.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta property="og:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<meta property="og:url" content="https://friendlycalculator.in/calculator/methodology.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Friendly Calculator — free online calculators for finance, tax and everyday needs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:title" content="Calculation Methodology &amp; Sources | Friendly Calculator">
+<meta name="twitter:description" content="How Friendly Calculator formulas work, what assumptions each tool uses, how information is handled, and which official sources to check.">
+<title>গণনা পদ্ধতি ও সূত্র | Friendly Calculator</title>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--navy:#101c2c;--gold:#d8bd82;--line:#e0e5ea;--paper:#f5f6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:var(--navy);padding:18px 0;color:#fff}.wrap{width:min(900px,92%);margin:auto}.brand{color:#fff;text-decoration:none;font-weight:850;letter-spacing:.06em}.brand b{color:var(--gold)}
+main{padding:36px 0 54px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12}h2{margin-top:30px;line-height:1.25}.muted{color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:20px;margin:16px 0}.panel h2{margin-top:0}.panel li{margin:7px 0}a{color:#174d72}footer{background:#0b1928;color:#bdc9d4;padding:24px 0}footer a{color:#fff;margin-right:14px}
+</style>
+<meta name="theme-color" content="#101c2c">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404" crossorigin="anonymous"></script>
+<style>
+.site-nav-wrap{width:min(1120px,92%);margin:auto}.site-header{background:#101c2c;color:#fff}.site-nav{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.site-brand{font-weight:900;letter-spacing:.13em;color:#fff;text-decoration:none}.site-brand b{color:#d8bd82}.site-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.site-links a{color:#dce5ed;text-decoration:none;font-size:.9rem}.site-links a:hover{color:#d8bd82}.site-footer{background:#0b1928!important;color:#bdc9d4!important;padding:26px 0!important}.site-footer a{color:#e7d5a9!important;text-decoration:none}.site-footer-inner{width:min(1120px,92%);margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.site-footer-links{display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:700px){.site-nav{padding:14px 0;align-items:flex-start;flex-direction:column;gap:12px}.site-links{gap:10px 15px}.site-footer-inner{flex-direction:column}}
+</style>
+<link rel="icon" type="image/png" href="/favicon-96.png">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+</head>
+<body>
+<header class="site-header"><div class="site-nav-wrap site-nav"><a class="site-brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav class="site-links" aria-label="Main navigation"><a href="/">Home</a><a href="/#calculators">Calculators</a><a href="/calculator/about.html">About</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/api.html">API</a><a href="/calculator/business.html">Business</a><a href="/calculator/pricing.html">Pricing</a><a href="/calculator/site-directory.html">All Pages</a><a href="/calculator/contact.html">Contact</a></nav></div></header>
+<main class="wrap"><p class="muted"><a href="/">হোম</a> / গণনা পদ্ধতি</p>
+<h1>গণনা পদ্ধতি ও সূত্র</h1>
+<p>Friendly Calculator শেখা এবং দৈনন্দিন পরিকল্পনার জন্য ব্রাউজার-ভিত্তিক আনুমানিক হিসাব দেয়। এই পৃষ্ঠায় টুলগুলোর পেছনের সাধারণ পদ্ধতি ও অনুমান ব্যাখ্যা করা হয়েছে, যাতে দর্শনার্থীরা বিচার করতে পারেন কোনো আনুমানিক হিসাব তাঁদের পরিস্থিতির সঙ্গে মানানসই কি না।</p>
+<p class="muted">পৃষ্ঠাটি হালনাগাদ: ৯ নভেম্বর ২০২৬। এই তারিখটি পৃষ্ঠার প্রকাশের তারিখ; এর মানে এই নয় যে ওই তারিখে প্রতিটি ক্যালকুলেটর স্বাধীন পেশাদার পর্যালোচনা পেয়েছে।</p>
+<section class="panel"><h2>কীভাবে হিসাব করা হয়</h2>
+<ul>
+<li>সর্বসাধারণের জন্য উপলভ্য ক্যালকুলেটরগুলোতে প্রবেশ করানো মান দর্শনার্থীর ব্রাউজারেই প্রক্রিয়া করা হয়।</li>
+<li>প্রতিটি টুলে ক্যালকুলেটরের পৃষ্ঠা বা সংশ্লিষ্ট ফলাফলের ব্যাখ্যায় বর্ণিত সূত্র ও অনুমান ব্যবহার করা হয়।</li>
+<li>সহজে পড়ার জন্য প্রদর্শিত মানগুলোকে নিকটবর্তী মানে প্রকাশ করা হয়। রাউন্ডিং, সময় নির্ধারণের রীতি এবং পরিষেবা-প্রদানকারীভেদে নিয়মের কারণে বিবরণী বা সরকারি মূল্যায়নের সঙ্গে পার্থক্য হতে পারে।</li>
+<li>আমরা দাবি করি না যে ফলাফলগুলো প্রত্যয়িত, নিরীক্ষিত বা নিশ্চিত, কিংবা কোনো ব্যাংক, সরকারি পোর্টাল, যোগ্য হিসাবরক্ষক, আর্থিক পেশাজীবী বা স্বাস্থ্যসেবা পেশাজীবীর বিকল্প।</li>
+<li>কোনো নিয়ম বা হার পরিবর্তিত হলে, কোনো আনুমানিক হিসাবের ওপর নির্ভর করার আগে সংশ্লিষ্ট সরকারি সূত্র যাচাই করা উচিত। কোনো পৃষ্ঠাকে পর্যালোচিত হিসেবে চিহ্নিত করা উচিত কেবল তখনই, যখন তার অনুমান ও উদাহরণগুলো সত্যিই পুনরায় যাচাই করা হয়েছে।</li>
+</ul></section>
+<section class="panel"><h2>ক্যালকুলেটরের অনুমান ও সীমাবদ্ধতা</h2>
+<ul>
+<li><strong>GST:</strong> দর্শনার্থীর নির্বাচিত হারের জন্য গাণিতিক হিসাব করে। এটি পণ্য বা পরিষেবার শ্রেণিবিন্যাস করে না, কিংবা CGST/SGST বা IGST প্রযোজ্য কি না তা নির্ধারণ করে না। প্রযোজ্য শ্রেণিবিন্যাস ও হার যাচাই করুন।</li>
+<li><strong>ঋণের EMI:</strong> মাসিক হারসহ একটি প্রচলিত হ্রাসমান-ব্যালান্স EMI সূত্র ব্যবহার করে। ফি, বিমা, পরিবর্তনশীল হার, অনিয়মিত কিস্তি এবং ঋণদাতাভেদে রাউন্ডিং এতে অন্তর্ভুক্ত নয়।</li>
+<li><strong>স্থায়ী আমানত:</strong> নির্বাচিত পর্যায়ক্রমিক চক্রবৃদ্ধির অনুমান ব্যবহার করে। দিনের সংখ্যা গণনার নিয়ম, অর্থপ্রদানের বিকল্প, মেয়াদপূর্তির আগে বন্ধ করা, কর এবং TDS-এর কারণে প্রকৃত ব্যাংক-প্রদেয় মেয়াদপূর্তির অঙ্ক ভিন্ন হতে পারে।</li>
+<li><strong>EPF/PF:</strong> প্রবেশ করানো মাসিক অবদান এবং ধ্রুবক অনুমিত হারের ভিত্তিতে একটি সরলীকৃত প্রক্ষেপণ। এতে সব বিধিবদ্ধ মজুরি-সীমা, নিয়োগকর্তা/কর্মচারীর অবদানের বিভাজন, উত্তোলন, অবদানের সময় এবং বার্ষিক হার পরিবর্তন মডেল করা হয় না।</li>
+<li><strong>SIP:</strong> মাসের শেষে অবদান দেওয়ার সময় ধরে, একটি নির্দিষ্ট মাসিক অবদান ও ধ্রুবক অনুমিত রিটার্নের উদাহরণ দেখায়। মিউচুয়াল ফান্ডের রিটার্ন বাজার-নির্ভর, পরিবর্তনশীল এবং নিশ্চিত নয়; ফি ও কর এতে অন্তর্ভুক্ত নয়।</li>
+<li><strong>সঞ্চয়ের সুদ:</strong> ৩৬৫ দিনের ভিত্তিতে দৈনিক ব্যালান্সের একটি সরল অনুমান ব্যবহার করে। ব্যাংকগুলো ব্যালান্স, সুদ জমা এবং রাউন্ডিংয়ের ক্ষেত্রে ভিন্ন রীতি ব্যবহার করতে পারে।</li>
+<li><strong>আয়কর ও বেতনের TDS:</strong> টুলে নির্ধারিত অনুমান ব্যবহার করে সরলীকৃত হিসাব দেয়। এতে বিশেষ হারে করযোগ্য আয়, রিবেট, কর-ছাড়, কর্তন, সারচার্জের বিশেষ পরিস্থিতি, কর-ব্যবস্থা বেছে নেওয়ার যোগ্যতা এবং ব্যক্তিগত অন্যান্য পরিস্থিতি বাদ পড়তে পারে। প্রাসঙ্গিক আর্থিক/মূল্যায়ন বছর এবং বর্তমান আইন নিশ্চিত করুন।</li>
+<li><strong>বেতন:</strong> প্রবেশ করানো মাসিক অঙ্ককে প্রবেশ করানো কর্মদিবস ও ঘণ্টা দিয়ে ভাগ করে। এটি বিধিবদ্ধ বেতন-প্রক্রিয়াকরণ, অতিরিক্ত কাজ, ছুটি বা বেতন-স্লিপের হিসাব নয়।</li>
+<li><strong>মুদ্রাস্ফীতি:</strong> নির্বাচিত সময়কালে চক্রবৃদ্ধি করে একটি ধ্রুবক বার্ষিক হারের প্রক্ষেপণ করে। প্রকৃত মুদ্রাস্ফীতি সময়ের সঙ্গে পরিবর্তিত হয়।</li>
+<li><strong>BMI:</strong> এটি একটি প্রাথমিক筛নমূলক হিসাব, রোগনির্ণয় নয়। ১৮ বছরের কম বয়সীদের ক্ষেত্রে প্রাপ্তবয়স্কদের শ্রেণি প্রয়োগ করা হয় না; শিশু ও কিশোর-কিশোরীদের জন্য বয়স ও লিঙ্গ-নির্দিষ্ট পেশাদার ব্যাখ্যা প্রয়োজন।</li>
+<li><strong>জ্বালানির খরচ:</strong> ধরে নেয় যে যাত্রাপথ জুড়ে প্রবেশ করানো মাইলেজ ও জ্বালানির দাম অপরিবর্তিত থাকবে।</li>
+<li><strong>বিদ্যুৎ বিল:</strong> দর্শনার্থীর প্রবেশ করানো প্রতি-ইউনিট ও নির্দিষ্ট চার্জ ব্যবহার করে। এটি সরাসরি বর্তমান ট্যারিফ সংগ্রহ করে না, কিংবা প্রতিটি রাজ্য/ডিসকমের স্ল্যাব, শুল্ক, ভর্তুকি বা সারচার্জ মডেল করে না।</li>
+<li><strong>বয়স:</strong> প্রবেশ করানো দুটি তারিখের মধ্যকার ক্যালেন্ডারগত পার্থক্য গণনা করে।</li>
+<li><strong>ছাড় এবং লাভ/ক্ষতি:</strong> শুধু সাধারণ গাণিতিক হিসাব; শিপিং, কর, পরিচালন ব্যয়, প্ল্যাটফর্ম ফি এবং অন্যান্য ব্যবসায়িক খরচ স্বয়ংক্রিয়ভাবে অন্তর্ভুক্ত হয় না।</li>
+</ul></section>
+<section class="panel"><h2>সরকারি তথ্যসূত্র</h2>
+<p>বর্তমান নিয়ম যাচাই করার জন্য এগুলো প্রাথমিক তথ্যসূত্রের পোর্টাল। এর মানে এই নয় যে প্রতিটি বর্তমান হার স্বয়ংক্রিয়ভাবে ক্যালকুলেটরগুলোতে সমন্বিত হয়েছে।</p>
+<ul>
+<li><a href="https://cbic-gst.gov.in/" rel="noopener noreferrer">Central Board of Indirect Taxes and Customs (CBIC)</a> — GST আইন, হারের তালিকা এবং নির্দেশিকা।</li>
+<li><a href="https://www.incometax.gov.in/" rel="noopener noreferrer">Income Tax Department</a> — করের স্ল্যাব, নিয়ম, ফর্ম এবং সরকারি কর ক্যালকুলেটর।</li>
+<li><a href="https://www.epfindia.gov.in/" rel="noopener noreferrer">Employees' Provident Fund Organisation (EPFO)</a> — EPF প্রকল্প ও সদস্য-সংক্রান্ত তথ্য।</li>
+<li><a href="https://www.rbi.org.in/" rel="noopener noreferrer">Reserve Bank of India (RBI)</a> — ব্যাংকিং নির্দেশনা ও আমানত-সংক্রান্ত তথ্য।</li>
+<li><a href="https://www.amfiindia.com/investor" rel="noopener noreferrer">Association of Mutual Funds in India (AMFI)</a> — বিনিয়োগকারীদের শিক্ষা এবং মিউচুয়াল ফান্ডের ঝুঁকি-সংক্রান্ত তথ্য।</li>
+<li><a href="https://www.nsiindia.gov.in/" rel="noopener noreferrer">National Savings Institute</a> — ক্ষুদ্র সঞ্চয় প্রকল্পের তথ্য।</li>
+</ul></section>
+<section class="panel"><h2>সম্পাদকীয় মানদণ্ড ও সংশোধন</h2><p>লেখকত্ব, সূত্র নির্বাচন, পর্যালোচনার সীমাবদ্ধতা এবং ভুল জানানোর পদ্ধতি সম্পর্কে জানতে আমাদের <a href="/calculator/editorial-policy.html">সম্পাদকীয় নীতি, সূত্র ও সংশোধন</a> পড়ুন।</p></section><section class="panel"><h2>সংশোধন ও স্বচ্ছতা</h2>
+<p>কোনো ফলাফল ভুল মনে হলে, ক্যালকুলেটরের নাম, প্রবেশ করানো নমুনা মান এবং প্রত্যাশিত পদ্ধতিসহ <a href="/#contact">যোগাযোগ ফর্মের</a> মাধ্যমে জানান। পাসওয়ার্ড, OTP, ব্যাংকের পরিচয়সংক্রান্ত তথ্য, সরকারি পরিচয় নম্বর বা অন্য কোনো সংবেদনশীল তথ্য দেবেন না।</p>
+<p>আমরা যোগ্য পর্যালোচক, পেশাদার সমর্থন, ব্যবহারকারীর সংখ্যা, পরীক্ষার ফলাফল বা পর্যালোচনার তারিখ বানিয়ে বলি না। ভবিষ্যতে কোনো স্বাধীন পর্যালোচনা হলে, তা সত্যিই সম্পন্ন হওয়ার পরেই কেবল উল্লেখ করা হবে।</p></section>
+<section class="panel"><h2>আমাদের শিক্ষামূলক বিষয়বস্তু পুনর্ব্যবহার করুন</h2><p>মূল সম্পাদকীয় লেখা ও শিক্ষামূলক ব্যাখ্যা <a href="/calculator/content-license.html">CC BY 4.0 বিষয়বস্তু লাইসেন্সের</a> অধীনে উপলভ্য। অনুগ্রহ করে Avnish Ahirwar এবং Friendly Calculator-কে কৃতিত্ব দিন এবং মূল পৃষ্ঠার লিংক যুক্ত করুন। সফটওয়্যার, ব্র্যান্ডিং এবং তৃতীয় পক্ষের উপকরণ এর আওতাভুক্ত নয়।</p></section>
+<section class="panel"><h2>গুরুত্বপূর্ণ দায়মুক্তি</h2><p>সব ফলাফলই সাধারণ তথ্যের জন্য আনুমানিক হিসাব। এগুলো কর, আইন, হিসাবরক্ষণ, ঋণদান, বিনিয়োগ, চিকিৎসা বা অন্য কোনো পেশাগত পরামর্শ নয়। মিউচুয়াল ফান্ড ও SIP-এর প্রক্ষেপিত রিটার্ন নিশ্চিত নয়। গুরুত্বপূর্ণ সিদ্ধান্ত নেওয়ার আগে সংশ্লিষ্ট সরকারি সূত্র বা যোগ্য পেশাজীবীর সঙ্গে যাচাই করুন।</p><p><a href="/calculator/privacy.html">গোপনীয়তা নীতি</a> · <a href="/calculator/terms.html">ব্যবহারের শর্তাবলি</a> · <a href="/calculator/about.html">Friendly Calculator সম্পর্কে</a></p></section></main>
+<footer class="site-footer"><div class="site-footer-inner"><div><strong>FRIENDLY CALCULATOR</strong><br><small>Practical tools for everyday calculations.</small></div><nav class="site-footer-links" aria-label="Footer navigation"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/site-directory.html">All Pages</a><a href="/#contact">Contact</a></nav></div></footer>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>
