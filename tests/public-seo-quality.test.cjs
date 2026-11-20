@@ -25,7 +25,8 @@ test('homepage has a readable search title, canonical URL, and social preview', 
   const title = html.match(/<title>(.*?)<\/title>/i);
   assert.ok(title, 'homepage has a title');
   assert.doesNotMatch(title[1], /&amp;amp;/i, 'title must not be double escaped');
-  assert.ok(title[1].length >= 30 && title[1].length <= 60, 'title is within a useful display length');
+  const readableTitle = title[1].replace(/&amp;/gi, '&');
+  assert.ok(readableTitle.length >= 30 && readableTitle.length <= 60, 'decoded title is within a useful display length');
   assert.match(html, /<link\s+rel="canonical"\s+href="https:\/\/friendlycalculator\.in\/"/i);
   assert.match(html, /<meta\s+property="og:title"\s+content="Free Online Calculators India &amp; Worldwide \| EMI, GST &amp; Tax"/i);
   assert.match(html, /<meta\s+name="twitter:card"\s+content="summary_large_image"/i);
