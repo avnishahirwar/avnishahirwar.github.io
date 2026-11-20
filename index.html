@@ -308,7 +308,7 @@ const normalize=value=>String(value||'').normalize('NFKD').toLowerCase().replace
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
-  cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-searchfix1',{credentials:'same-origin',cache:'no-store'})
+  cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-searchfix2',{credentials:'same-origin',cache:'no-store'})
    .then(response=>{if(!response.ok)throw new Error('HTTP '+response.status);return response.json();})
    .then(items=>{if(!Array.isArray(items)||!items.length)throw new Error('Invalid search index');return items.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string'&&x.url.startsWith('/'));})
    .catch(error=>{cataloguePromise=null;throw error;});
@@ -355,7 +355,7 @@ async function search(){
  if(!query){lastQuery='';results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
  const terms=query.split(' ').filter(x=>x&&!stopWords.has(x));
  if(!terms.length){status.textContent='Type a calculator name or topic.';results.replaceChildren();results.hidden=true;return;}
- lastQuery=query;status.textContent='Searching 3,124 calculators…';results.hidden=true;
+ lastQuery=query;status.textContent='Searching all calculators…';results.hidden=true;
  try{
   const items=await loadCatalogue();if(lastQuery!==query)return;
   const matches=[];
