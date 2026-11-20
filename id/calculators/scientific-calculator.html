@@ -7,16 +7,16 @@
 <meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
 <meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
-
-
+<!-- fc-hreflang-start -->
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/scientific-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/scientific-calculator.html">
+<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/scientific-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/scientific-calculator.html">
+<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/scientific-calculator.html">
+<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/scientific-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/scientific-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/scientific-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/scientific-calculator.html">
 <link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/scientific-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/scientific-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/scientific-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/scientific-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/scientific-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/scientific-calculator.html">
+<!-- fc-hreflang-end -->
 </head><body><main class="wrap"><p><a href="/id/index.html">Beranda</a> / Kalkulator</p><h1>Kalkulator ilmiah</h1><p>Hitung sinus, kosinus, tangen, akar, logaritma, dan pangkat.</p><section class="panel"><form id="f"><div class="fields"><label>Nilai<input id="x" type="number" step="any" value="45"></label><label>Fungsi<select id="op"><option value="sin">Sinus</option><option value="cos">Kosinus</option><option value="tan">Tangen</option><option value="sqrt">Akar kuadrat</option><option value="ln">Logaritma natural</option><option value="log">Logaritma basis 10</option><option value="square">Kuadrat</option><option value="cube">Kubik</option><option value="abs">Nilai absolut</option></select></label><label>Sudut<select id="angle"><option value="deg">Derajat</option><option value="rad">Radian</option></select></label></div><p><button class="btn">Hitung</button></p></form><p>Hasil: <strong class="result" id="out">—</strong></p><p id="status">Hasil merupakan perhitungan matematika. Periksa nilai dan satuan masukan.</p></section><section class="panel"><h2>Kalkulator</h2><p>Hasil merupakan perhitungan matematika. Periksa nilai dan satuan masukan.</p></section></main><script>(()=>{const f=document.getElementById("f"),s=document.getElementById("status"),fmt=new Intl.NumberFormat("id",{maximumFractionDigits:8});function bad(){document.getElementById("out").textContent="—";s.textContent="Nilai tidak valid atau operasi tidak terdefinisi."}f.addEventListener("submit",e=>{e.preventDefault();let out=[];const x=+document.getElementById("x").value,o=document.getElementById("op").value,rad=document.getElementById("angle").value==="deg"?x*Math.PI/180:x;if(!Number.isFinite(x)){bad();return;}let v;if(o==="sin")v=Math.sin(rad);else if(o==="cos")v=Math.cos(rad);else if(o==="tan"){if(Math.abs(Math.cos(rad))<1e-12){bad();return;}v=Math.tan(rad);}else if(o==="sqrt"){if(x<0){bad();return;}v=Math.sqrt(x);}else if(o==="ln"||o==="log"){if(x<=0){bad();return;}v=o==="ln"?Math.log(x):Math.log10(x);}else if(o==="square")v=x*x;else if(o==="cube")v=x*x*x;else v=Math.abs(x);if(!Number.isFinite(v)){bad();return;}out=[v];document.getElementById("out").textContent=fmt.format(out[0]);s.textContent="Hasil merupakan perhitungan matematika. Periksa nilai dan satuan masukan.";if(typeof gtag==="function")gtag("event","calculator_used",{calculator_page:location.pathname,calculator_action:"calculate"});});f.requestSubmit();})();</script><script src="/assets/site-shell.js" defer></script></body></html>

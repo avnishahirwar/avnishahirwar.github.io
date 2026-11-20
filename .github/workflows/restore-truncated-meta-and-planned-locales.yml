@@ -1,0 +1,114 @@
+name: Restore truncated SEO metadata and stage planned locales safely
+
+concurrency:
+  group: locale-seo-repair-${{ github.ref }}
+  cancel-in-progress: false
+
+on:
+  push:
+    branches:
+      - seo/language-seo-finalize-v2-2026-11-20
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: "!contains(github.event.head_commit.message, '[locale-seo-repair-complete]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore truncated metadata and noindex planned locale pages
+        run: node scripts/restore-truncated-meta-and-planned-locales.cjs --write
+      - name: Add missing public social metadata
+        run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Add missing calculator links to About and directory
+        run: |
+          node --check scripts/repair-catalogue-internal-links.cjs
+          node scripts/repair-catalogue-internal-links.cjs
+      - name: Regenerate searchable human sitemap
+        run: |
+          node --check scripts/generate-human-sitemap.cjs
+          node scripts/generate-human-sitemap.cjs
+      - name: Generate reciprocal hreflang for published locale routes
+        run: |
+          node --check scripts/generate-reciprocal-hreflang.cjs
+          node scripts/generate-reciprocal-hreflang.cjs
+      - name: Regenerate all-pages and locale sitemaps
+        run: |
+          node scripts/generate-sitemaps.cjs
+          node scripts/generate-locale-sitemaps.cjs
+      - name: Audit search index coverage against XML sitemap
+        run: |
+          node --check scripts/audit-search-index-sitemap.cjs
+          node scripts/audit-search-index-sitemap.cjs --report=/tmp/search-index-sitemap-audit.json
+      - name: Upload search-index coverage audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-index-sitemap-audit
+          path: /tmp/search-index-sitemap-audit.json
+          if-no-files-found: error
+      - name: Verify metadata and planned locale exclusions
+        run: |
+          node scripts/restore-truncated-meta-and-planned-locales.cjs --check
+          node scripts/repair-public-social-metadata.cjs --check
+          node scripts/repair-catalogue-internal-links.cjs --check
+          node scripts/generate-sitemaps.cjs --check
+          node scripts/generate-locale-sitemaps.cjs --check
+          node scripts/generate-reciprocal-hreflang.cjs --check
+          node --test tests/human-sitemap.test.cjs
+      - name: Run focused SEO tests
+        run: |
+          node --test tests/seo-repair-regression.test.cjs tests/planned-locale-indexing.test.cjs tests/human-sitemap.test.cjs tests/global-fx-hreflang.test.cjs
+          node --test --test-name-pattern="UK country hub" tests/country-routing.test.cjs
+      - name: Commit reviewed-branch SEO repairs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: restore complete metadata and exclude planned locales [locale-seo-repair-complete]"
+          else
+            echo "No SEO repair changes were needed."
+            exit 0
+          fi
+          for attempt in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"
+            if ! git rebase "origin/$GITHUB_REF_NAME"; then
+              echo "Concurrent branch update overlaps generated SEO files; regenerate safely on the latest branch."
+              git rebase --abort || true
+              git reset --hard "origin/$GITHUB_REF_NAME"
+              node scripts/restore-truncated-meta-and-planned-locales.cjs --write
+              node scripts/repair-public-social-metadata.cjs --write
+              node scripts/generate-human-sitemap.cjs
+              node scripts/generate-reciprocal-hreflang.cjs
+              node scripts/generate-sitemaps.cjs
+              node scripts/generate-locale-sitemaps.cjs
+              node scripts/restore-truncated-meta-and-planned-locales.cjs --check
+              node scripts/repair-public-social-metadata.cjs --check
+              node scripts/generate-sitemaps.cjs --check
+              node scripts/generate-locale-sitemaps.cjs --check
+              node scripts/generate-reciprocal-hreflang.cjs --check
+              node --test tests/human-sitemap.test.cjs tests/global-fx-hreflang.test.cjs
+              node --test tests/seo-repair-regression.test.cjs tests/planned-locale-indexing.test.cjs
+              node --test --test-name-pattern="UK country hub" tests/country-routing.test.cjs
+              git add -A
+              if ! git diff --cached --quiet; then
+                git commit -m "seo: restore complete metadata and exclude planned locales [locale-seo-repair-complete]"
+              else
+                echo "The latest branch already contains all generated SEO repairs."
+                exit 0
+              fi
+            fi
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "Push attempt $attempt lost a concurrent update; retrying after fetch/rebase."
+          done
+          echo "Unable to push reviewed-branch SEO repairs after three safe retries."
+          exit 1

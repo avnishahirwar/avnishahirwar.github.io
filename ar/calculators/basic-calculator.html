@@ -8,11 +8,9 @@
 <meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
 <meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
-
-
+<!-- fc-hreflang-start -->
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/basic-calculator.html">
@@ -20,6 +18,7 @@
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/basic-calculator.html">
+<link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="ru" href="https://friendlycalculator.in/ru/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/basic-calculator.html">
@@ -27,4 +26,5 @@
 <link rel="alternate" hreflang="gu" href="https://friendlycalculator.in/gu/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="kn" href="https://friendlycalculator.in/kn/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/basic-calculator.html">
+<!-- fc-hreflang-end -->
 </head><body><main class="wrap"><p><a href="/ar/index.html">الرئيسية</a> / الحاسبات</p><h1>حاسبة أساسية</h1><p>نفّذ العمليات الحسابية الأساسية الأربع.</p><section class="panel"><form id="f"><div class="fields"><label>الرقم الأول<input id="a" type="number" step="any" value="12"></label><label>العملية<select id="op"><option value="add">جمع</option><option value="sub">طرح</option><option value="mul">ضرب</option><option value="div">قسمة</option></select></label><label>الرقم الثاني<input id="b" type="number" step="any" value="3"></label></div><p><button class="btn">احسب</button></p></form><p>النتيجة: <strong class="result" id="out">—</strong></p><p id="status">النتائج عمليات رياضية. تحقق من القيم والوحدات المدخلة.</p></section><section class="panel"><h2>الحاسبات</h2><p>النتائج عمليات رياضية. تحقق من القيم والوحدات المدخلة.</p></section></main><script>(()=>{const f=document.getElementById("f"),s=document.getElementById("status"),fmt=new Intl.NumberFormat("ar",{maximumFractionDigits:8});function bad(){document.getElementById("out").textContent="—";s.textContent="قيم غير صحيحة أو عملية غير معرفة."}f.addEventListener("submit",e=>{e.preventDefault();let out=[];const x=+document.getElementById("a").value,y=+document.getElementById("b").value,o=document.getElementById("op").value;if(!Number.isFinite(x)||!Number.isFinite(y)||(o==="div"&&y===0)){bad();return;}out=[o==="add"?x+y:o==="sub"?x-y:o==="mul"?x*y:x/y];document.getElementById("out").textContent=fmt.format(out[0]);s.textContent="النتائج عمليات رياضية. تحقق من القيم والوحدات المدخلة.";if(typeof gtag==="function")gtag("event","calculator_used",{calculator_page:location.pathname,calculator_action:"calculate"});});f.requestSubmit();})();</script><script src="/assets/site-shell.js" defer></script></body></html>
