@@ -65,6 +65,7 @@ test('council-tax calculator uses user-entered local bill and does not assume a 
 
 test('new UK and US calculator URLs are listed in the additive country sitemap', () => {
   const sitemap = read('sitemap-uk-us.xml');
+  const mainSitemap = read('sitemap.xml');
   for (const route of [
     'https://friendlycalculator.in/uk/',
     'https://friendlycalculator.in/us/',
@@ -73,7 +74,10 @@ test('new UK and US calculator URLs are listed in the additive country sitemap',
     'https://friendlycalculator.in/international/us-property-tax-calculator.html',
     'https://friendlycalculator.in/international/uk-student-loan-calculator.html',
     'https://friendlycalculator.in/international/us-home-affordability-calculator.html'
-  ]) assert.ok(sitemap.includes(route), 'Missing sitemap URL ' + route);
+  ]) {
+    assert.ok(sitemap.includes(route), 'Missing country sitemap URL ' + route);
+    if (route.includes('/international/')) assert.ok(mainSitemap.includes(route), 'Missing main sitemap URL ' + route);
+  }
   const robots = read('robots.txt');
   assert.ok(robots.includes('Sitemap: https://friendlycalculator.in/sitemap-uk-us.xml'));
 });
