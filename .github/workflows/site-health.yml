@@ -58,5 +58,7 @@ jobs:
         run: node --test tests/mobile-schema.test.cjs
       - name: Check calculator-only embed mode
         run: node --test tests/embed-mode.test.cjs
+      - name: Validate Cloudflare preview hostname redirects
+        run: node --test tests/preview-host-redirect.test.cjs
       - name: Check shared JavaScript syntax
         run: node --check assets/worldwide-mortgage-calculator.js && node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js && node --check assets/graphing-calculator.js && node --check assets/mortgage-tools.js
