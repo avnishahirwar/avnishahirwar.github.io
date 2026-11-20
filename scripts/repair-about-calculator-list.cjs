@@ -66,8 +66,8 @@ function main() {
 
   if (process.argv.includes('--write')) {
     let updated = current.replace(sectionPattern, list);
-    updated = updated.replace(/\\b[\\d,]+ public calculators in the core catalogue\\b/, countLabel + ' public calculators in the core catalogue');
-    updated = updated.replace(/(<strong>Platform:<\\/strong>\\s*)[\\d,]+ public calculators/, '$1' + countLabel + ' public calculators');
+    updated = updated.replace(/\b[\d,]+ public calculators in the core catalogue\b/, countLabel + ' public calculators in the core catalogue');
+    updated = updated.replace(/(<strong>Platform:<\/strong>\s*)[\d,]+ public calculators/, '$1' + countLabel + ' public calculators');
     fs.writeFileSync(ABOUT_PATH, updated);
   }
 
