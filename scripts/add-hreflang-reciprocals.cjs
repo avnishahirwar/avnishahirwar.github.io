@@ -7,6 +7,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = process.cwd();
 const ORIGIN = 'https://friendlycalculator.in';
+const LANGUAGE_CATALOGUE = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'language-catalogue.json'), 'utf8'));
+const PUBLISHED_LOCALES = new Set(LANGUAGE_CATALOGUE.locales.filter(locale => locale.status === 'available').map(locale => locale.code));
 const IGNORE = new Set(['.git', '.github', 'node_modules', 'tests', 'vendor', '_site', 'admin', 'avnish-ai']);
 
 function walk(dir, files = []) {
@@ -21,6 +23,13 @@ function walk(dir, files = []) {
 function headOf(html) {
   const end = html.toLowerCase().indexOf('</head>');
   return end < 0 ? '' : html.slice(0, end);
+}
+function isNoindex(html) {
+  return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
+}
+function isPublishedLanguage(lang) {
+  return PUBLISHED_LOCALES.has(String(lang || '').toLowerCase().split('-')[0]);
 }
 function langOf(html, file) {
   const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
@@ -61,20 +70,26 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedConflict: 0, skippedNoHead: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnpublishedLocale: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
+    if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
     const sourceLang = langOf(sourceHtml, sourceFile);
+    if (!isPublishedLanguage(sourceLang)) { stats.skippedUnpublishedLocale++; continue; }
     const sourceCanonical = canonicalOf(sourceHtml);
     if (!sourceCanonical) continue;
     for (const link of linksOf(sourceHtml)) {
       stats.linksExamined++;
       if (link.lang === 'x-default') continue;
+      if (!isPublishedLanguage(link.lang)) { stats.skippedUnpublishedLocale++; continue; }
       const target = targetFile(link.href);
       if (!target) { stats.skippedMissingTarget++; continue; }
       if (target === sourceFile) continue;
       const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
-      if (langOf(targetHtml, target) !== link.lang) { stats.skippedLanguageMismatch++; continue; }
+      if (isNoindex(targetHtml)) { stats.skippedNoindex++; continue; }
+      const targetLang = langOf(targetHtml, target);
+      if (!isPublishedLanguage(targetLang)) { stats.skippedUnpublishedLocale++; continue; }
+      if (targetLang !== link.lang) { stats.skippedLanguageMismatch++; continue; }
       if (canonicalOf(targetHtml) !== new URL(link.href, ORIGIN).href) { stats.skippedCanonicalMismatch++; continue; }
       const existing = linksOf(targetHtml).filter(item => item.lang === sourceLang);
       if (existing.some(item => new URL(item.href, ORIGIN).href === sourceCanonical)) { stats.alreadyPresent++; continue; }
