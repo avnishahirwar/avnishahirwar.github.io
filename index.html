@@ -362,7 +362,7 @@ function render(items,raw){
  results.hidden=unique.length===0;
  status.textContent=unique.length?unique.length+' matching calculators for “'+raw+'”. Showing '+shown.length+' in '+groups.size+' categories.':'No matching calculators found. Try a shorter name or topic.';
 }
-async function matchesAllTerms(terms,tokens,field){
+function matchesAllTerms(terms,tokens,field){
  return terms.every(term=>tokens.some(token=>token.startsWith(term))||
   (synonyms[term]||[]).some(alias=>field.includes(normalize(alias))));
 }
@@ -383,7 +383,7 @@ function getCalculatorMatch(item,terms,query){
  return score;
 }
 
-function search(){
+async function search(){
  const raw=input.value.trim();const query=normalize(raw);
  if(!query){lastQuery='';setSearchMode(false);results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
  const terms=query.split(' ').filter(x=>x&&!stopWords.has(x));
