@@ -144,6 +144,11 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 .fc-favourite-toggle[aria-pressed="true"]{border-color:#a98735;background:#fff9e8}
 @media(max-width:600px){.fc-home-personal{grid-template-columns:1fr}.fc-home-personal-privacy{grid-column:auto}}
 .fc-feature-icon{color:#80632f}
+
+/* While searching, show only matching results; preserve all homepage graphics and sections when idle. */
+.home-main.fc-search-active> :not(.home-tool-search){display:none!important}
+.home-tool-search.is-searching .home-popular-tools,.home-tool-search.is-searching .fc-home-personal{display:none!important}
+.home-tool-search.is-searching{margin-bottom:18px}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@id":"https://friendlycalculator.in/calculator/founder.html#person"},"email":"avnishahirwar420@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar420@gmail.com","availableLanguage":["English","Hindi","Spanish","French","Portuguese","Arabic","Indonesian","Bengali","Tamil","German (selected tools)","Japanese (selected tools)","Russian (selected tools)"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar420"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"},{"@type":"Person","@id":"https://friendlycalculator.in/calculator/founder.html#person","name":"Avnish Ahirwar","jobTitle":"Founder and Author","url":"https://friendlycalculator.in/calculator/founder.html","image":"https://friendlycalculator.in/assets/founder-avnish-profile.webp","sameAs":["https://www.linkedin.com/in/avnishahirwar420","https://www.instagram.com/avnish_ahirwar"],"worksFor":{"@id":"https://friendlycalculator.in/#organization"}}]}</script>
 
@@ -298,14 +303,21 @@ const input=document.getElementById('fc-home-tool-search');
 const clear=document.getElementById('fc-home-search-clear');
 const status=document.getElementById('fc-home-search-status');
 const results=document.getElementById('fc-home-search-results');
-if(!input||!clear||!status||!results)return;
+const searchPanel=document.querySelector('.home-tool-search');
+const homeMain=document.querySelector('main.home-main');
+if(!input||!clear||!status||!results||!searchPanel)return;
+function setSearchMode(active){
+ searchPanel.classList.toggle('is-searching',active);
+ if(homeMain)homeMain.classList.toggle('fc-search-active',active);
+}
 let cataloguePromise;
 let timer=0;
 let lastQuery='';
 const stopWords=new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
 const synonyms={gst:['goods and services tax'],emi:['loan installment','loan instalment'],sip:['systematic investment plan'],fd:['fixed deposit'],rd:['recurring deposit'],ppf:['public provident fund'],vat:['value added tax'],bmi:['body mass index'],roi:['return on investment'],hra:['house rent allowance'],tds:['tax deducted at source']};
 const normalize=value=>String(value||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const restrictedSearchContent=/\b(?:gun|firearm|bullet|ammo|ammunition|knife|knives|sword|weapon|alcohol|beer|wine|liquor|intoxicat|blood alcohol|\bbac\b|drug|cannabis|marijuana|casino|gambling|betting|wager|poker|lottery)\b/i;\nconst escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const restrictedSearchContent=/\b(?:gun|firearm|bullet|ammo|ammunition|knife|knives|sword|weapon|alcohol|beer|wine|liquor|intoxicat|blood alcohol|\bbac\b|drug|cannabis|marijuana|casino|gambling|betting|wager|poker|lottery)\b/i;
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json?v=20261120-searchfix4',{credentials:'same-origin',cache:'no-store'})
@@ -352,23 +364,35 @@ function render(items,raw){
 }
 async function search(){
  const raw=input.value.trim();const query=normalize(raw);
- if(!query){lastQuery='';results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
+ if(!query){lastQuery='';setSearchMode(false);results.replaceChildren();results.hidden=true;status.textContent='Search the full calculator catalogue or choose a category below.';return;}
  const terms=query.split(' ').filter(x=>x&&!stopWords.has(x));
+ setSearchMode(true);
  if(!terms.length){status.textContent='Type a calculator name or topic.';results.replaceChildren();results.hidden=true;return;}
  lastQuery=query;status.textContent='Searching all calculators…';results.hidden=true;
  try{
   const items=await loadCatalogue();if(lastQuery!==query)return;
   const matches=[];
   for(const item of items){
-   const name=normalize(item.name),hay=normalize([item.name,item.category,item.keywords,item.description].join(' '));
+   const name=normalize(item.name);
+   const keywords=normalize(item.keywords);
+   const category=normalize(displayCategory(item.category));
+   const nameTokens=name.split(' ').filter(Boolean);
+   const keywordTokens=keywords.split(' ').filter(Boolean);
+   const categoryTokens=category.split(' ').filter(Boolean);
+   const matchesField=(term,tokens,field)=>tokens.some(token=>token.startsWith(term))||
+    (synonyms[term]||[]).some(alias=>field.includes(normalize(alias)));
+   const categoryOnlyMatch=query===category||terms.every(term=>categoryTokens.some(token=>token.startsWith(term)));
    let score=0,ok=true;
    for(const term of terms){
-    const options=[term,...(synonyms[term]||[]).map(normalize)];
-    if(!options.some(v=>hay.includes(v))){ok=false;break;}
-    score+=options.some(v=>name.includes(v))?100:10;
+    const inName=matchesField(term,nameTokens,name);
+    const inKeywords=matchesField(term,keywordTokens,keywords);
+    if(!inName&&!inKeywords&&!categoryOnlyMatch){ok=false;break;}
+    score+=inName?120:inKeywords?60:25;
    }
    if(!ok)continue;
-   if(name===query)score+=1000;else if(name.startsWith(query))score+=500;else if(name.includes(query))score+=300;
+   if(name===query)score+=1000;
+   else if(name.startsWith(query))score+=500;
+   else if(name.includes(query))score+=300;
    matches.push({...item,_score:score});
   }
   matches.sort((a,b)=>b._score-a._score||a.name.localeCompare(b.name));render(matches,raw);
