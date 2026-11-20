@@ -26,10 +26,13 @@ jobs:
         run: |
           node --check scripts/repair-public-social-metadata.cjs
           node --check scripts/add-hreflang-reciprocals.cjs
+          node --check scripts/repair-verified-hreflang-mismatches.cjs
       - name: Add missing public social metadata only
         run: node scripts/repair-public-social-metadata.cjs --write
       - name: Add only unambiguous reciprocal hreflang tags
         run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Correct verified language-tag mismatches only
+        run: node scripts/repair-verified-hreflang-mismatches.cjs --write
       - name: Verify public metadata quality
         run: |
           node scripts/repair-public-social-metadata.cjs --check
@@ -40,6 +43,7 @@ jobs:
         run: |
           node scripts/repair-public-social-metadata.cjs --check
           node scripts/add-hreflang-reciprocals.cjs
+          node scripts/repair-verified-hreflang-mismatches.cjs
       - name: Commit additive HTML metadata and hreflang updates
         run: |
           git config user.name "github-actions[bot]"
