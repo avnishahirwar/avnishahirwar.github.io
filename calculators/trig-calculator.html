@@ -61,5 +61,5 @@ function calculate(){const raw=Number($('angle').value),unit=$('unit').value,p=N
 function solve(){const h=Number($('hypotenuse').value),a=Number($('triangle-angle').value);if($('hypotenuse').value.trim()===''||!finite(h)||h<=0||$('triangle-angle').value.trim()===''||!finite(a)||a<=0||a>=90){$('triangle-status').textContent='Enter a positive hypotenuse and an angle greater than 0° and less than 90°.';return;}const r=a*Math.PI/180;const o=h*Math.sin(r),adj=h*Math.cos(r);$('opposite').textContent=fmt(o,6);$('adjacent').textContent=fmt(adj,6);$('other-angle').textContent=fmt(90-a,6)+'°';$('triangle-status').textContent='Solved using SOH–CAH–TOA. Side lengths are in the same unit as the hypotenuse.';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'solve_triangle'});}
 $('calculate').addEventListener('click',calculate);$('solve-triangle').addEventListener('click',solve);['angle','unit','precision'].forEach(id=>$(id).addEventListener('change',calculate));['hypotenuse','triangle-angle'].forEach(id=>$(id).addEventListener('change',solve));calculate();solve();})();
 </script>
-<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+<script src="/assets/site-shell.js" defer></script>
 </body></html>

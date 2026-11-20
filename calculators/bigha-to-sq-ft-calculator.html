@@ -32,4 +32,4 @@
 </main><script>
 (()=>{const form=document.getElementById('bighaForm'),out=document.getElementById('bighaResult');const fmt=n=>n.toLocaleString('en-IN',{maximumFractionDigits:2});form.addEventListener('submit',e=>{e.preventDefault();const b=Number(document.getElementById('bigha').value),f=Number(document.getElementById('factor').value);if(!Number.isFinite(b)||b<0||!Number.isFinite(f)||f<=0){out.textContent='Enter a non-negative Bigha value and a positive local conversion factor.';out.style.display='block';return;}const sqft=b*f,values=[['Area in square feet',fmt(sqft)+' sq ft'],['Area in square metres',fmt(sqft*0.09290304)+' m²'],['Area in acres',fmt(sqft/43560)+' acres']];out.innerHTML='<div class="result-grid">'+values.map(([k,v])=>'<div class="result-card"><span>'+k+'</span><strong>'+v+'</strong></div>').join('')+'</div>';out.style.display='block';});form.dispatchEvent(new Event('submit',{cancelable:true}));
 })();
-</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>
+</script><script src="/assets/site-shell.js" defer></script></body></html>
