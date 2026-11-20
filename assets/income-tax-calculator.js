@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const localDateString = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")).join("-");
+  const localDateString = date => [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-");
   const definitions = { "income tax calculator india": {title:"Income Tax Calculator (Tax Year 2026–27)",fields:[["grossSalary","Annual gross salary (₹)","number",1275000],["standardDeduction","Standard deduction (₹) — enter the amount for your selected regime","number",75000],["age","Age attained during the tax year (years)","number",35],["regime","Tax regime","select",["New regime — Tax Year 2026–27","Old regime — individual"]],["residency","Residential status","select",["Resident individual","Non-resident"]]],calc:v=>{
       if(!Number.isFinite(v.grossSalary)||v.grossSalary<0||v.grossSalary>500000000||!Number.isFinite(v.standardDeduction)||v.standardDeduction<0||v.standardDeduction>v.grossSalary||!Number.isInteger(v.age)||v.age<0||v.age>120)return [];
       const taxable=Math.max(0,v.grossSalary-v.standardDeduction),newRegime=v.regime.startsWith("New"),resident=v.residency==="Resident individual";
