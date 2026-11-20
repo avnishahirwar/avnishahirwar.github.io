@@ -121,6 +121,42 @@ async function checkPage(browser, url, label, viewport) {
   await panel.waitFor({ state: 'visible', timeout: 10000 });
   const regionalControls = panel.locator('.fc-settings-site-controls select:visible');
   assert.ok(await regionalControls.count() >= 4, label + ': language, currency, country/format and units controls');
+  const panelControlMetrics = await panel.locator('.fc-settings-site-controls>label').evaluateAll(labels => labels.map(label => {
+    const labelRect = label.getBoundingClientRect();
+    const select = label.querySelector('select');
+    if (!select) return null;
+    const selectRect = select.getBoundingClientRect();
+    return { labelWidth: labelRect.width, labelTop: labelRect.top, selectWidth: selectRect.width, selectTop: selectRect.top, selectHeight: selectRect.height, selectRight: selectRect.right };
+  }));
+  assert.equal(panelControlMetrics.filter(Boolean).length, 4, label + ': all four Settings selectors have label wrappers');
+  const panelRight = await panel.evaluate(element => element.getBoundingClientRect().right);
+  for (const metric of panelControlMetrics) {
+    assert.ok(metric.selectWidth >= metric.labelWidth - 2, label + ': Settings selector must fill its label width');
+    assert.ok(metric.selectTop > metric.labelTop, label + ': Settings label must sit above its selector');
+    assert.ok(metric.selectHeight >= 46, label + ': Settings selector must remain comfortably tappable');
+    assert.ok(metric.selectRight <= panelRight + 2, label + ': Settings selector must stay inside the panel');
+  }
+  if (viewport.width <= 760) {
+    const navToggle = page.locator('button.fc-nav-toggle');
+    await navToggle.click();
+    await page.locator('#fc-primary-navigation.fc-nav-open').waitFor({ state: 'visible', timeout: 10000 });
+    const headerMetrics = await page.locator('#fc-primary-navigation>.fc-header-language-slot>.fc-language-control, #fc-primary-navigation>.fc-currency-control, #fc-primary-navigation>.fc-country-format-control, #fc-primary-navigation>.fc-unit-control').evaluateAll(controls => controls.map(control => {
+      const controlRect = control.getBoundingClientRect();
+      const label = control.querySelector('span');
+      const labelRect = label?.getBoundingClientRect();
+      const select = control.querySelector('select');
+      const selectRect = select?.getBoundingClientRect();
+      return labelRect && selectRect ? { controlWidth: controlRect.width, labelTop: labelRect.top, selectTop: selectRect.top, selectWidth: selectRect.width, selectRight: selectRect.right, selectHeight: selectRect.height } : null;
+    }));
+    assert.equal(headerMetrics.filter(Boolean).length, 4, label + ': all four Header preference controls are visible');
+    const navRight = await page.locator('#fc-primary-navigation').evaluate(element => element.getBoundingClientRect().right);
+    for (const metric of headerMetrics) {
+      assert.ok(metric.selectTop > metric.labelTop, label + ': Header labels must sit above their selectors');
+      assert.ok(metric.selectHeight >= 46, label + ': Header selectors must remain comfortably tappable');
+      assert.ok(metric.selectWidth >= metric.controlWidth - 2, label + ': Header selectors must fill their control width');
+      assert.ok(metric.selectRight <= navRight + 2, label + ': Header selector must stay inside the navigation viewport');
+    }
+  }
   const dims = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
   assert.ok(dims.document <= dims.viewport + 2, label + ': horizontal overflow ' + JSON.stringify(dims));
   assert.deepEqual(errors, [], label + ': uncaught JavaScript errors');
