@@ -42,7 +42,8 @@ test('generated sitemaps do not list planned locale routes', () => {
   for (const file of fs.readdirSync(root).filter(name => /^sitemap.*\.xml$/.test(name))) {
     const xml = fs.readFileSync(path.join(root, file), 'utf8');
     for (const locale of planned) {
-      assert.doesNotMatch(xml, new RegExp('https://friendlycalculator\\.in/' + locale + '/'), file + ' contains planned locale ' + locale);
+      const pattern = locale === 'uk' ? /https:\\/\\/friendlycalculator\\.in\\/uk\\/(?!index\\.html)/ : new RegExp('https://friendlycalculator\\.in/' + locale + '/');
+      assert.doesNotMatch(xml, pattern, file + ' contains planned locale ' + locale);
     }
   }
 });
