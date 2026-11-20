@@ -1567,20 +1567,33 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
 test('homepage search requires all query terms to match coherently within one field', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const vm = require('node:vm');
-  const helper = homepage.match(/function matchesAllTerms\(terms,tokens,field\)\{[\s\S]*?\n\}/);
-  assert.ok(helper, 'Homepage must define the shared all-terms matcher');
-  const matchesAllTerms = vm.runInNewContext('(' + helper[0] + ')', {
-    normalize: value => String(value).toLowerCase(),
+  const matcher = homepage.match(/function matchesAllTerms\(terms,tokens,field\)\{[\s\S]*?\n\}/);
+  const scorer = homepage.match(/function getCalculatorMatch\(item,terms,query\)\{[\s\S]*?\n\}/);
+  assert.ok(matcher && scorer, 'Homepage must define testable all-term matching and scoring helpers');
+  const getCalculatorMatch = vm.runInNewContext(matcher[0] + '\n' + scorer[0] + '\ngetCalculatorMatch', {
+    normalize: value => String(value || '').toLowerCase(),
+    displayCategory: value => value || 'Other',
     synonyms: {}
   });
-  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan'], 'home loan'), false,
-    'A partial name match must not be combined with unrelated keywords');
-  assert.equal(matchesAllTerms(['loan', 'tax'], ['home', 'loan', 'tax'], 'home loan tax'), true);
-  assert.equal(matchesAllTerms(['loan', 'emi'], ['home', 'loan', 'emi', 'calculator'], 'home loan emi'), true);
-  assert.equal(matchesAllTerms(['salary', 'tax'], ['salary', 'tax', 'payroll'], 'salary tax payroll'), true);
-  assert.match(homepage, /const nameMatch=matchesAllTerms\(terms,nameTokens,name\)/);
-  assert.match(homepage, /const keywordMatch=matchesAllTerms\(terms,keywordTokens,keywords\)/);
-  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\)continue/);
+  const splitFieldMatch = {
+    name: 'Home Loan Calculator',
+    keywords: 'mortgage emi repayment',
+    category: 'Finance',
+    description: 'Estimate a monthly mortgage repayment.'
+  };
+  assert.equal(getCalculatorMatch(splitFieldMatch, ['loan', 'tax'], 'loan tax'), null,
+    'A name match and an unrelated keyword must not be combined');
+  assert.ok(getCalculatorMatch({
+    name: 'Loan EMI Calculator', keywords: 'loan emi repayment',
+    category: 'Finance', description: 'Estimate a monthly loan payment.'
+  }, ['loan', 'emi'], 'loan emi') > 0);
+  assert.ok(getCalculatorMatch({
+    name: 'Monthly Salary Calculator', keywords: 'income salary tax',
+    category: 'Tax Salary Payroll', description: 'Estimate take-home pay.'
+  }, ['salary', 'tax'], 'salary tax') > 0);
+  assert.match(homepage, /const nameMatch=matchesAllTerms\(terms,name\.split/);
+  assert.match(homepage, /const keywordMatch=matchesAllTerms\(terms,keywords\.split/);
+  assert.match(homepage, /if\(!nameMatch&&!keywordMatch&&!descriptionMatch&&!categoryOnlyMatch\)return null/);
 });
 
 
