@@ -21847,5 +21847,33 @@
     "category": "Geometry, Measurement & Construction",
     "keywords": "size to weight calculator rectangular box construction solid cuboid dimensions density mass weight",
     "description": "Estimate the mass of a solid rectangular block from its dimensions and material density."
+  },
+  {
+    "name": "Passive Income Calculator",
+    "url": "/calculators/passive-income-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "passive income calculator investment corpus target monthly income current investments monthly contributions return inflation",
+    "description": "Estimate an investment corpus for a target passive income using current investments, contributions, assumed returns and inflation."
+  },
+  {
+    "name": "Property Cash-on-Cash Return Calculator",
+    "url": "/calculators/property-cash-on-cash-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "property cash on cash return calculator rental yield net operating income cap rate vacancy operating costs debt service",
+    "description": "Estimate rental yield, net operating income, cap rate and cash-on-cash return from rent, vacancy, property costs and debt service."
+  },
+  {
+    "name": "Property Flip Profit Calculator",
+    "url": "/calculators/property-flip-profit-calculator.html",
+    "category": "Home, Travel & Everyday Costs",
+    "keywords": "property flip profit calculator renovation real estate purchase price holding costs selling price return",
+    "description": "Estimate a property renovation project's costs, potential sale profit and return using purchase, renovation, holding and selling assumptions."
+  },
+  {
+    "name": "Wealth Goal Calculator",
+    "url": "/calculators/wealth-goal-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "wealth goal calculator target wealth monthly investing current savings inflation assumed return timeline",
+    "description": "Estimate a possible timeline toward a custom wealth goal using current savings, monthly contributions, assumed returns and inflation."
   }
 ]
