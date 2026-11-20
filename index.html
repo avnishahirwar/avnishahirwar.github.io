@@ -381,15 +381,13 @@ async function search(){
    const categoryTokens=category.split(' ').filter(Boolean);
    const matchesField=(term,tokens,field)=>tokens.some(token=>token.startsWith(term))||
     (synonyms[term]||[]).some(alias=>field.includes(normalize(alias)));
-   const categoryOnlyMatch=query===category||terms.every(term=>categoryTokens.some(token=>token.startsWith(term)));
-   let score=0,ok=true;
-   for(const term of terms){
-    const inName=matchesField(term,nameTokens,name);
-    const inKeywords=matchesField(term,keywordTokens,keywords);
-    if(!inName&&!inKeywords&&!categoryOnlyMatch){ok=false;break;}
-    score+=inName?120:inKeywords?60:25;
-   }
-   if(!ok)continue;
+   const nameMatch=terms.every(term=>matchesField(term,nameTokens,name));
+   const keywordMatch=keywords.includes(query)||
+    (terms.length===1&&(synonyms[terms[0]]||[]).some(alias=>keywords.includes(normalize(alias))));
+   const categoryOnlyMatch=query===category||
+    (terms.length>1&&terms.every(term=>categoryTokens.some(token=>token.startsWith(term))));
+   if(!nameMatch&&!keywordMatch&&!categoryOnlyMatch)continue;
+   const score=(nameMatch?120:keywordMatch?60:25)*terms.length;
    if(name===query)score+=1000;
    else if(name.startsWith(query))score+=500;
    else if(name.includes(query))score+=300;
