@@ -15,7 +15,7 @@ test('UK student loan calculator exposes 2026-27 plan thresholds and separate po
   assert.ok(html.includes('https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027'));
   assert.ok(html.includes('id="studentLoanForm"') && html.includes('aria-live="polite"'));
   assert.ok(html.includes('/assets/site-shell.js') && html.includes('/assets/site-chrome.js'));
-  assert.match(html, /application\\/ld\\+json/);
+  assert.ok(html.includes('application/ld+json'));
 });
 
 test('US home affordability calculator applies DTI, debts, local housing costs and mortgage present value', () => {
@@ -29,7 +29,7 @@ test('US home affordability calculator applies DTI, debts, local housing costs a
   assert.ok(html.includes('id="homeAffordabilityForm"') && html.includes('aria-live="polite"'));
   assert.ok(html.includes('https://www.consumerfinance.gov/owning-a-home/'));
   assert.ok(html.includes('/assets/site-shell.js') && html.includes('/assets/site-chrome.js'));
-  assert.match(html, /application\\/ld\\+json/);
+  assert.ok(html.includes('application/ld+json'));
 });
 
 test('UK and US country hubs link to the new local calculators', () => {
