@@ -11,7 +11,10 @@ const ROOT = process.cwd();
 const ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
 const MAX_BYTES = 50 * 1024 * 1024;
-const LOCALES = new Set(['hi', 'de', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'ja', 'ru']);
+const languageCatalogue = require('../config/language-catalogue.json');
+const LOCALES = new Set(languageCatalogue.locales
+  .filter(locale => locale.code !== languageCatalogue.defaultLocale && locale.status === 'available')
+  .map(locale => locale.code));
 const EXCLUDED_DIRS = new Set(['.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai', 'artifacts']);
 const EXCLUDED_FILES = new Set(['404.html', 'offline.html']);
 const EXCLUDED_PATHS = new Set([

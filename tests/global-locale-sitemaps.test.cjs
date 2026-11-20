@@ -2,6 +2,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const path = require('node:path');
+const fs = require('node:fs');
+const languageCatalogue = require('../config/language-catalogue.json');
 
 const root = path.join(__dirname, '..');
 
@@ -13,9 +15,14 @@ test('additive locale sitemap generator validates all locale segments without wr
   });
   assert.match(output, /Locale sitemap check passed:/);
   assert.match(output, /en=\d+/);
-  assert.match(output, /hi=\d+/);
-  assert.match(output, /gu=\d+/);
-  assert.match(output, /kn=\d+/);
+  const availableLocales = languageCatalogue.locales
+    .filter(locale => locale.code !== languageCatalogue.defaultLocale && locale.status === 'available')
+    .map(locale => locale.code)
+    .filter(locale => fs.existsSync(path.join(root, locale, 'index.html')));
+  for (const locale of availableLocales) {
+    assert.match(output, new RegExp('(?:^|[;, ])' + locale + '=\\d+'),
+      'Missing locale sitemap count for published locale ' + locale);
+  }
 });
 
 test('locale sitemap generator preserves the existing all-pages sitemap', () => {

@@ -3,7 +3,7 @@ name: One-time additive hreflang reciprocal repair
 on:
   push:
     branches:
-      - seo/additive-hreflang-reciprocals-2026-11-16
+      - fix/hreflang-and-locale-sitemaps-2026-11-21
 
 permissions:
   contents: write

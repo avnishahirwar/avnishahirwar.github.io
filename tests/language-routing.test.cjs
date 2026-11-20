@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const catalogue = require('../config/language-catalogue.json');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 
 test('global language selector supports all configured locales', () => {
@@ -10,7 +11,11 @@ test('global language selector supports all configured locales', () => {
   }
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
-  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1,gu:1,kn:1/);
+  const enabledBlock = shell.match(/const supportedUiLocales=\{([^}]+)\};/);
+  assert.ok(enabledBlock, 'Expected published locale preference map');
+  const enabledCodes = [...enabledBlock[1].matchAll(/(?:^|,)([a-z]{2,3}):1/g)].map(match => match[1]);
+  assert.deepEqual(enabledCodes.sort(), catalogue.locales
+    .filter(locale => locale.status === 'available').map(locale => locale.code).sort());
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -77,8 +82,13 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
-  assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']"));
+  const routeStart = shell.indexOf('const routeLocaleMatch=');
+  const routeEnd = shell.indexOf('.exec(p);', routeStart);
+  const routeCodes = shell.slice(routeStart, routeEnd).match(/\(([^)]+)\)/)?.[1].split('|') || [];
+  assert.ok(routeCodes.includes('ja') && routeCodes.includes('ru'),
+    'Japanese and Russian must be recognized as calculator locales');
+  const localeCodesMatch = shell.match(/const localeCodes=(\[[^\]]+\]);/);
+  assert.ok(localeCodesMatch && JSON.parse(localeCodesMatch[1]).includes('ja'));
 });
 
 
@@ -113,7 +123,12 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\\//.exec(p);"));
+  const routeStart = shell.indexOf('const routeLocaleMatch=');
+  const routeEnd = shell.indexOf('.exec(p);', routeStart);
+  const routeCodes = shell.slice(routeStart, routeEnd).match(/\(([^)]+)\)/)?.[1].split('|') || [];
+  const configuredRoutes = catalogue.locales.filter(locale => locale.code !== catalogue.defaultLocale)
+    .map(locale => locale.code);
+  assert.deepEqual(routeCodes.sort(), configuredRoutes.sort());
   assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
 });
 
@@ -213,7 +228,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
-  assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
+  assert.deepEqual(routed.sort(), catalogue.locales.map(locale => locale.code).sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
@@ -273,7 +288,10 @@ test('five staged language editions have localized homepages and working basic c
       assert.match(calculator, /dir="rtl"/);
     }
   }
-  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  const routeStart = shell.indexOf('const routeLocaleMatch=');
+  const routeEnd = shell.indexOf('.exec(p);', routeStart);
+  const routeCodes = shell.slice(routeStart, routeEnd).match(/\(([^)]+)\)/)?.[1].split('|') || [];
+  assert.ok(['zh','ur','tr','it','ko'].every(locale => routeCodes.includes(locale)));
   assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
   assert.match(shell, /ur\|fa\|ps\|he\|sd/);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
