@@ -893,7 +893,11 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   }
   for (const card of cards) assert.equal(Number(card[2]), counts.get(card[1]));
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>128 calculators<\/span><\/a>/);
+  const homepageMathCategory = homepage.match(/href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>([\d,]+) calculators<\/span><\/a>/);
+  const directoryMathCard = cards.find(card => card[1] === 'math-statistics');
+  assert.ok(homepageMathCategory, 'Homepage must expose the Mathematics category count.');
+  assert.ok(directoryMathCard, 'Directory must expose the Mathematics category card.');
+  assert.equal(Number(homepageMathCategory[1].replace(/,/g, '')), Number(directoryMathCard[2]), 'Homepage and directory Mathematics counts must match.');
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
