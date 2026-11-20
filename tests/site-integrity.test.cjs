@@ -2280,3 +2280,22 @@ test('homepage language coverage copy matches the currently published locale cat
   assert.match(html, /planned 50-language rollout is still in progress/);
   assert.match(html, /Coverage varies by language and page/);
 });
+
+
+test('mobile Language, currency, country/format and unit selectors stay full-width and cannot clip off-screen', () => {
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const mobileStart = css.lastIndexOf('@media(max-width:760px){');
+  const mobileRules = mobileStart >= 0 ? css.slice(mobileStart) : '';
+  assert.ok(mobileRules.includes('flex:0 0 100%!important'), 'Each mobile preference control must occupy its own full-width row.');
+  assert.ok(mobileRules.includes('width:100%!important') && mobileRules.includes('max-width:100%!important'), 'Mobile selectors must remain within the navigation viewport.');
+  assert.ok(mobileRules.includes('flex-direction:column!important'), 'Mobile labels must sit above their controls.');
+  assert.ok(mobileRules.includes('min-height:46px!important'), 'Mobile selects must remain comfortably tappable.');
+  assert.ok(mobileRules.includes('grid-template-columns:minmax(0,1fr)!important'), 'Settings mirrors must use a single responsive column.');
+});
+
+test('country and format setting explains that website language is independent', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.ok(shell.includes('Sets regional number and date formatting. Website language stays unchanged.'));
+  assert.ok(shell.includes('countryFormatSelect.setAttribute(\'aria-description\',countryFormatHelpText)'));
+  assert.ok(shell.includes('fc-country-format-help'));
+});
