@@ -1,0 +1,33 @@
+name: One-time homepage hreflang normalization
+on:
+  push:
+    branches:
+      - fix/run-hreflang-normalization
+permissions:
+  contents: write
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the locale fix branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/50-locale-regression-and-search-index
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Normalize reciprocal homepage hreflang clusters
+        run: node scripts/normalize-homepage-hreflang.cjs --write
+      - name: Verify homepage hreflang clusters
+        run: node scripts/normalize-homepage-hreflang.cjs --check
+      - name: Commit locale SEO repairs
+        env:
+          BRANCH: fix/50-locale-regression-and-search-index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html */index.html uk/index.html
+          git commit -m "Normalize reciprocal locale homepage hreflang"
+          git push origin "HEAD:refs/heads/$BRANCH"
