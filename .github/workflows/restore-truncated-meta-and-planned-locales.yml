@@ -58,13 +58,45 @@ jobs:
           git add -A
           if ! git diff --cached --quiet; then
             git commit -m "seo: restore complete metadata and exclude planned locales [locale-seo-repair-complete]"
-            for attempt in 1 2 3; do
-              git fetch origin "$GITHUB_REF_NAME"
-              git rebase "origin/$GITHUB_REF_NAME"
-              if git push origin "HEAD:$GITHUB_REF_NAME"; then
+          else
+            echo "No SEO repair changes were needed."
+            exit 0
+          fi
+          for attempt in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"
+            if ! git rebase "origin/$GITHUB_REF_NAME"; then
+              echo "Concurrent branch update overlaps generated SEO files; regenerate safely on the latest branch."
+              git rebase --abort || true
+              git reset --hard "origin/$GITHUB_REF_NAME"
+              node scripts/restore-truncated-meta-and-planned-locales.cjs --write
+              node scripts/repair-public-social-metadata.cjs --write
+              node scripts/generate-human-sitemap.cjs
+              node scripts/generate-reciprocal-hreflang.cjs
+              node scripts/generate-sitemaps.cjs
+              node scripts/generate-locale-sitemaps.cjs
+              node scripts/restore-truncated-meta-and-planned-locales.cjs --check
+              node scripts/repair-public-social-metadata.cjs --check
+              node scripts/generate-sitemaps.cjs --check
+              node scripts/generate-locale-sitemaps.cjs --check
+              node scripts/generate-reciprocal-hreflang.cjs --check
+              node --test tests/human-sitemap.test.cjs tests/global-fx-hreflang.test.cjs
+              node --test tests/seo-repair-regression.test.cjs tests/planned-locale-indexing.test.cjs
+              node --test --test-name-pattern="UK country hub" tests/country-routing.test.cjs
+              git add -A
+              if ! git diff --cached --quiet; then
+                git commit -m "seo: restore complete metadata and exclude planned locales [locale-seo-repair-complete]"
+              else
+                echo "The latest branch already contains all generated SEO repairs."
                 exit 0
               fi
-              echo "Push attempt $attempt lost a concurrent update; retrying after fetch/rebase."
+            fi
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "Push attempt $attempt lost a concurrent update; retrying after fetch/rebase."
+          done
+          echo "Unable to push reviewed-branch SEO repairs after three safe retries."
+          exit 1
               sleep 2
             done
             echo "Unable to push reviewed-branch SEO repairs after three safe retries."
