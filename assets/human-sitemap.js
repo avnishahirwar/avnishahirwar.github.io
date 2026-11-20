@@ -22,4 +22,5 @@ function filter(){
 input.addEventListener('input',filter);
 clear?.addEventListener('click',()=>{input.value='';filter();input.focus();});
 document.querySelectorAll('.sitemap-category-index a').forEach(link=>link.addEventListener('click',()=>{const target=document.getElementById(decodeURIComponent(link.hash.slice(1)));if(target)target.open=true;}));
+filter();
 })();
