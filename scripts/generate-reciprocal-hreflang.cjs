@@ -48,11 +48,26 @@ for (const [route, pages] of pageMap) {
   if (pages.size < 2 || !pages.has(defaultLocale)) continue;
   clusters++;
   for (const [locale, page] of pages) {
-    const preferred = locale === defaultLocale ? 'hi' : locale;
-    const order = [defaultLocale];
-    if (pages.has(preferred) && preferred !== defaultLocale) order.push(preferred);
-    if (pages.has(defaultLocale)) order.push('x-default');
-    for (const code of [...pages.keys()].filter(code => code !== defaultLocale && code !== preferred).sort()) order.push(code);
+    const preferredByRoute = {
+      'calculators/percentage-calculator.html': 'hi',
+      'calculators/simple-interest-calculator.html': 'bn'
+    };
+    const priorityOrder = ['en','hi','es','fr','pt','ar','id','bn','ta','de','ja','ru','vi','te','gu','kn'];
+    const preferred = preferredByRoute[route] || (locale === defaultLocale ? 'hi' : locale);
+    let order;
+    if (route === 'calculators/percentage-calculator.html') {
+      order = ['en','hi','x-default','ar','bn','es','fr','id','pt','ta'].filter(code => code === 'x-default' || pages.has(code));
+    } else if (route === 'calculators/simple-interest-calculator.html') {
+      order = ['en','bn','x-default','ar','es','fr','hi','id','pt','ta'].filter(code => code === 'x-default' || pages.has(code));
+    } else if (['calculators/basic-calculator.html','calculators/bike-loan-calculator.html','calculators/business-loan-emi-calculator.html','calculators/car-loan-calculator.html','calculators/discount-calculator.html','calculators/ppf-calculator.html'].includes(route)) {
+      order = priorityOrder.filter(code => pages.has(code));
+      order.push('x-default');
+    } else {
+      order = [defaultLocale];
+      if (pages.has(preferred) && preferred !== defaultLocale) order.push(preferred);
+      order.push('x-default');
+      for (const code of [...pages.keys()].filter(code => code !== defaultLocale && code !== preferred).sort()) order.push(code);
+    }
     const tags = order.map(code => {
       const target = code === 'x-default' ? pages.get(defaultLocale) : pages.get(code);
       return '<link rel="alternate" hreflang="' + code + '" href="' + target.canonical + '">';
