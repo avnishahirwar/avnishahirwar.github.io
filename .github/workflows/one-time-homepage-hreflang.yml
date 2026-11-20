@@ -37,3 +37,5 @@ jobs:
 # Retry after making the locale normalizer idempotent.
 
 # Rerun after preserving the UK path collision instead of assigning a false locale.
+
+# Emit per-page details if the idempotence check finds remaining differences.
