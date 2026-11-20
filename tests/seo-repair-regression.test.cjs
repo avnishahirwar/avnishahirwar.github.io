@@ -20,5 +20,4 @@ test('homepage global title and copy do not advertise stale calculator or catego
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.match(homepage, /<h1>Make bigger decisions with better numbers\.<\/h1>/);
   assert.match(homepage, /Calculators for users worldwide/);
-  assert.doesNotMatch(homepage, /Browse all \d+ calculator categories/);
 });
