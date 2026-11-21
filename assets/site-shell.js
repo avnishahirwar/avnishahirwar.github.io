@@ -783,11 +783,16 @@ document.addEventListener('click',event=>{
   const label=(button.textContent||'').trim();
   const isCalculate=/calculate/i.test(label)||(p.endsWith('/basic-calculator.html')&&label==='=');
   if(!isCalculate||typeof window.gtag!=='function')return;
-  window.gtag('event','calculator_calculate',{
+  const calculatorEvent={
     calculator_name:(document.querySelector('h1')?.textContent||'Calculator').trim(),
     calculator_path:p,
     control_label:label
-  });
+  };
+  if(window.__fcAnalyticsCategory){
+    calculatorEvent.calculator_category=window.__fcAnalyticsCategory;
+    calculatorEvent.calculator_group=window.__fcAnalyticsGroup||'uncategorized';
+  }
+  window.gtag('event','calculator_calculate',calculatorEvent);
 });
 document.addEventListener('change',event=>{
   const field=event.target;
