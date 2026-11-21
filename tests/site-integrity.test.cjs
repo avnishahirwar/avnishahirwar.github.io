@@ -32,6 +32,14 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.equal(new Set(urls).size, urls.length, 'Sitemap URLs must be unique');
 });
 
+test('sitemap excludes localized Search Console verification files and schema fragments', () => {
+  const excluded = urls.filter(url => {
+    const pathname = new URL(url).pathname;
+    return /\\/google[a-f0-9]+\\.html$/i.test(pathname) || /\\/schema\\/_homepage\\.html$/i.test(pathname);
+  });
+  assert.deepEqual(excluded, [], 'Non-content verification and schema fragments must not be sitemap URLs.');
+});
+
 test('AdSense publisher loader is not duplicated and configured ad slots have a loader', () => {
   // Ad spaces remain hidden until AdSense is approved and configured.
   const failures = [];
