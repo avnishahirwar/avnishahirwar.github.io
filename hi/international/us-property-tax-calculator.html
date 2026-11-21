@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US Property Tax Calculator | Annual & Monthly Estimate</title>
+<meta name="description" content="Estimate US property tax from home value, assessment ratio, local tax rate and exemptions. Enter rates from your local assessor; no location lookup.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/us-property-tax-calculator.html">
+<link rel="alternate" hreflang="en-US" href="https://friendlycalculator.in/hi/international/us-property-tax-calculator.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/international/us-property-tax-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="US Property Tax Calculator"><meta property="og:description" content="Estimate annual and monthly property tax using your local assessment and rate."><meta property="og:url" content="https://friendlycalculator.in/hi/international/us-property-tax-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"US Property Tax Calculator","url":"https://friendlycalculator.in/hi/international/us-property-tax-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this look up my county property-tax rate?","acceptedAnswer":{"@type":"Answer","text":"No. Enter the effective rate and assessment ratio supplied by your county assessor or tax authority."}},{"@type":"Question","name":"Can I include a homestead exemption?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enter an exemption amount only if your local authority confirms that you qualify and states the amount."}},{"@type":"Question","name":"Is this my official property-tax bill?","acceptedAnswer":{"@type":"Answer","text":"No. Assessments, exemptions, caps, special districts and local rules can change the actual bill."}}]}]</script>
+<style>
+body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.7 system-ui,sans-serif}main{width:min(920px,92%);margin:28px auto 56px}.hero{background:#101c2c;color:#fff;padding:26px;border-radius:14px}.hero p{color:#dce5ed}.panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:20px;margin:18px 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.field{display:grid;gap:6px;font-weight:650}.field input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #aeb9c4;border-radius:8px;font:inherit}button{background:#101c2c;color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:750;margin-top:14px;cursor:pointer}.result{background:#edf3f7;padding:16px;border-radius:10px;margin-top:16px}.error{color:#a21b1b;font-weight:700}.muted{color:#5c6d7e}@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="US Property Tax Calculator | Annual &amp; Monthly Estimate">
+<meta name="twitter:description" content="Estimate US property tax from home value, assessment ratio, local tax rate and exemptions. Enter rates from your local assessor; no location lookup.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/us-property-tax-calculator.html"></head>
+<body><main>
+<nav><a href="/">Home</a> / <a href="/hi/us/">United States</a> / Property Tax</nav>
+<header class="hero"><p>UNITED STATES · USD</p><h1>US Property Tax Calculator</h1><p>Estimate annual property tax from the assessed value, local tax rate and exemptions you enter.</p></header>
+<section class="panel"><h2>Estimate property tax</h2>
+<form id="propertyTaxForm" novalidate><div class="fields">
+<label class="field">Property market value (USD)<input id="marketValue" type="number" min="0" step="0.01" required inputmode="decimal" placeholder="e.g. 350000"></label>
+<label class="field">Assessment ratio (%)<input id="assessmentRatio" type="number" min="0" max="100" step="0.01" value="100" required inputmode="decimal"></label>
+<label class="field">Exemption amount (USD)<input id="exemption" type="number" min="0" step="0.01" value="0" required inputmode="decimal"></label>
+<label class="field">Effective property-tax rate (%)<input id="taxRate" type="number" min="0" max="100" step="0.001" required inputmode="decimal" placeholder="e.g. 1.25"></label>
+</div><button type="submit">Calculate property tax</button></form>
+<div id="result" class="result" aria-live="polite">Enter your property value and local tax assumptions.</div></section>
+<section class="panel"><h2>Formula and method</h2><p>Assessed value = market value × assessment ratio. Estimated taxable value = max(0, assessed value − exemption). Estimated annual property tax = taxable value × effective tax rate.</p><p>Monthly equivalent = estimated annual property tax ÷ 12. Enter the combined effective rate that applies to your property.</p></section>
+<section class="panel"><h2>Important local coverage limits</h2><ul><li>Property-tax rules, assessments, exemptions and billing schedules vary by state, county, city and special district.</li><li>This tool does not look up local rates, estimate future assessments or determine homestead eligibility.</li><li>Some jurisdictions use taxable-value caps, credits, millage rates or special assessments not represented here.</li><li>Use the assessed value and exemptions on your latest official assessment notice when possible.</li></ul><p><a href="https://www.usa.gov/property-taxes" rel="noopener noreferrer">USA.gov — Property taxes</a></p></section>
+<p class="muted">Free educational estimate. Not tax or legal advice. Confirm the assessment, rate and exemptions with your local tax assessor.</p>
+</main>
+<script>
+(function(){const form=document.getElementById('propertyTaxForm'),out=document.getElementById('result'),money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);form.addEventListener('submit',function(e){e.preventDefault();const market=Number(document.getElementById('marketValue').value),ratio=Number(document.getElementById('assessmentRatio').value),exemption=Number(document.getElementById('exemption').value),rate=Number(document.getElementById('taxRate').value);if(!Number.isFinite(market)||market<=0||!Number.isFinite(ratio)||ratio<0||ratio>100||!Number.isFinite(exemption)||exemption<0||!Number.isFinite(rate)||rate<0||rate>100){out.innerHTML='<p class="error">Enter a property value greater than zero, an assessment ratio from 0% to 100%, a non-negative exemption and a tax rate from 0% to 100%.</p>';return;}const assessed=market*ratio/100,taxable=Math.max(0,assessed-exemption),annual=taxable*rate/100;out.innerHTML='<h3>Estimated property tax</h3><p><strong>Annual tax: '+money(annual)+'</strong></p><p>Monthly equivalent: '+money(annual/12)+'</p><p>Assessed value: '+money(assessed)+'</p><p>Estimated taxable value: '+money(taxable)+'</p>';});})();
+</script>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>

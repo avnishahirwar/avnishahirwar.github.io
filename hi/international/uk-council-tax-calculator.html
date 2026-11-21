@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UK Council Tax Calculator | Annual & Monthly Estimate</title>
+<meta name="description" content="Estimate UK council tax payments from your local authority bill, an eligible discount and your payment schedule. No assumed council tax band rates.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html">
+<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="UK Council Tax Calculator"><meta property="og:description" content="Estimate council tax payments using your local authority bill and discount."><meta property="og:url" content="https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"UK Council Tax Calculator","url":"https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this calculator know my council tax band?","acceptedAnswer":{"@type":"Answer","text":"No. Enter the annual charge shown on your council tax bill. Band charges and local rules vary by council and nation."}},{"@type":"Question","name":"Can I include a single-person discount?","acceptedAnswer":{"@type":"Answer","text":"You can enter a discount percentage supplied by your council. A qualifying single adult discount is commonly 25%, but eligibility must be confirmed with your council."}},{"@type":"Question","name":"Does this determine eligibility for council tax support?","acceptedAnswer":{"@type":"Answer","text":"No. It only applies a discount percentage that you enter and does not assess benefits, exemptions or local support."}}]}]</script>
+<style>
+body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.7 system-ui,sans-serif}main{width:min(920px,92%);margin:28px auto 56px}.hero{background:#101c2c;color:#fff;padding:26px;border-radius:14px}.hero p{color:#dce5ed}.panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:20px;margin:18px 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.field{display:grid;gap:6px;font-weight:650}.field input,.field select{width:100%;box-sizing:border-box;padding:11px;border:1px solid #aeb9c4;border-radius:8px;font:inherit}button{background:#101c2c;color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:750;margin-top:14px;cursor:pointer}.result{background:#edf3f7;padding:16px;border-radius:10px;margin-top:16px}.error{color:#a21b1b;font-weight:700}.muted{color:#5c6d7e}@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UK Council Tax Calculator | Annual &amp; Monthly Estimate">
+<meta name="twitter:description" content="Estimate UK council tax payments from your local authority bill, an eligible discount and your payment schedule. No assumed council tax band rates.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/uk-council-tax-calculator.html"></head>
+<body><main>
+<nav><a href="/">Home</a> / <a href="/uk/">United Kingdom</a> / Council Tax</nav>
+<header class="hero"><p>UNITED KINGDOM · GBP</p><h1>UK Council Tax Calculator</h1><p>Estimate your annual and instalment payments using the charge and any discount shown by your local authority.</p></header>
+<section class="panel"><h2>Estimate your council tax</h2>
+<form id="councilTaxForm" novalidate><div class="fields">
+<label class="field">Annual council tax bill (£)<input id="bill" type="number" min="0" step="0.01" required inputmode="decimal" placeholder="e.g. 1800"></label>
+<label class="field">Discount or reduction (%)<input id="discount" type="number" min="0" max="100" step="0.01" value="0" required inputmode="decimal"></label>
+<label class="field">Payment schedule<select id="instalments"><option value="10">10 monthly instalments</option><option value="12">12 monthly instalments</option><option value="1">One annual payment</option></select></label>
+</div><button type="submit">Calculate council tax</button></form>
+<div id="result" class="result" aria-live="polite">Enter your annual bill to estimate the payment schedule.</div></section>
+<section class="panel"><h2>Formula and assumptions</h2><p>Adjusted annual charge = annual council tax bill × (1 − discount percentage ÷ 100). Instalment amount = adjusted annual charge ÷ number of instalments.</p><p>This is a bill-planning calculator. Enter the annual amount on your latest council bill and only apply a reduction confirmed by your local authority.</p></section>
+<section class="panel"><h2>Important UK coverage notes</h2><ul><li>Council tax charges depend on the local authority, property band and financial year.</li><li>Scotland, England and Wales have different local arrangements; Northern Ireland uses domestic rates rather than council tax.</li><li>Single-person discounts, exemptions, disability reductions and Council Tax Reduction have separate eligibility rules.</li><li>This tool does not look up council rates, assess eligibility or replace your bill.</li></ul><p><a href="https://www.gov.uk/council-tax" rel="noopener noreferrer">GOV.UK — Council Tax guidance</a> · <a href="https://www.mygov.scot/council-tax" rel="noopener noreferrer">mygov.scot — Council Tax</a></p></section>
+<p class="muted">Free educational estimate. Not tax or legal advice. Confirm your charge and eligibility with your local council.</p>
+</main>
+<script>
+(function(){const form=document.getElementById('councilTaxForm'),out=document.getElementById('result');const money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(n);form.addEventListener('submit',function(e){e.preventDefault();const bill=Number(document.getElementById('bill').value),discount=Number(document.getElementById('discount').value),count=Number(document.getElementById('instalments').value);if(!Number.isFinite(bill)||bill<=0||!Number.isFinite(discount)||discount<0||discount>100||!Number.isFinite(count)||count<1){out.innerHTML='<p class="error">Enter an annual bill greater than zero and a discount from 0% to 100%.</p>';return;}const annual=bill*(1-discount/100),payment=annual/count;out.innerHTML='<h3>Estimated council tax</h3><p><strong>Annual amount: '+money(annual)+'</strong></p><p>Payment amount: '+money(payment)+' × '+count+' instalment(s)</p><p>Discount applied: '+money(bill-annual)+'</p>';});})();
+</script>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>

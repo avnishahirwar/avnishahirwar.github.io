@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US Personal Loan Calculator: Monthly | Friendly Calc</title>
+<meta name="description" content="Estimate a US personal loan payment in USD using loan amount, APR and term. See total interest and an optional origination fee estimate.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html">
+<link rel="alternate" hreflang="en-US" href="https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="US Personal Loan Calculator | Friendly Calculator"><meta property="og:description" content="Estimate US personal loan payments, total interest and optional origination fees in USD."><meta property="og:url" content="https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">[
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"US Personal Loan Calculator","url":"https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true},
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the APR the same as the interest rate?","acceptedAnswer":{"@type":"Answer","text":"APR may include certain loan costs as well as interest. This calculator uses the APR you enter as the annual rate for its monthly payment estimate."}},
+{"@type":"Question","name":"Does the calculator check my credit or show lender offers?","acceptedAnswer":{"@type":"Answer","text":"No. It does not access credit reports, check eligibility, compare lenders or provide a loan offer."}},
+{"@type":"Question","name":"How is the origination fee treated?","acceptedAnswer":{"@type":"Answer","text":"The fee is shown separately as a percentage of the loan amount. Net proceeds are shown assuming the fee is withheld from the disbursement; the monthly payment is calculated on the full loan amount."}}
+]}]</script>
+<style>
+body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.7 system-ui,sans-serif}main{width:min(920px,92%);margin:28px auto 56px}
+.hero{background:#101c2c;color:#fff;padding:26px;border-radius:14px}.hero p{color:#dce5ed}
+.panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:20px;margin:18px 0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.field{display:grid;gap:6px;font-weight:650}.field input{padding:11px;border:1px solid #aeb9c4;border-radius:8px;font:inherit}
+button{background:#101c2c;color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:750;margin-top:14px;cursor:pointer}
+.result{background:#edf3f7;padding:16px;border-radius:10px;margin-top:16px}.error{color:#a21b1b;font-weight:700}.muted{color:#5c6d7e}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:0}
+.results-grid div{background:#fff;border:1px solid #dce4eb;border-radius:8px;padding:12px}.results-grid dt{font-size:.9rem;color:#536579}.results-grid dd{font-size:1.2rem;font-weight:800;margin:4px 0 0}.results-grid .total{border:2px solid #294d6d}
+@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:title" content="US Personal Loan Calculator: Monthly | Friendly Calc">
+<meta name="twitter:description" content="Estimate a US personal loan payment in USD using loan amount, APR and term. See total interest and an optional origination fee estimate.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/us-personal-loan-calculator.html"></head>
+<body><main>
+<nav><a href="/">Home</a> / <a href="/hi/international/">International</a> / <a href="/hi/us/">United States</a></nav>
+<header class="hero"><p>UNITED STATES · USD</p><h1>US Personal Loan Calculator</h1><p>Estimate a fixed-rate personal loan payment, total interest and optional origination fee using the assumptions you enter.</p></header>
+<section class="panel"><h2>Estimate a personal loan payment</h2>
+<form id="us-personal-loan-form"><div class="fields">
+<label class="field">Loan amount (USD)<input id="us-personal-loan-amount" type="number" min="0.01" step="0.01" value="10000" required></label>
+<label class="field">Annual percentage rate (APR %)<input id="us-personal-loan-apr" type="number" min="0" max="100" step="0.01" value="12" required></label>
+<label class="field">Loan term (months)<input id="us-personal-loan-term" type="number" min="1" max="120" step="1" value="36" required></label>
+<label class="field">Origination fee (%)<input id="us-personal-loan-fee" type="number" min="0" max="100" step="0.1" value="0" required></label>
+</div><button type="submit">Calculate loan estimate</button><p id="us-personal-loan-error" class="error" role="alert"></p><div id="us-personal-loan-result" class="result" aria-live="polite">Enter loan assumptions to see an estimate.</div></form></section>
+<section class="panel"><h2>How the estimate works</h2><p>The monthly payment uses a standard fixed-rate amortization formula. The APR you enter is divided by 12 to estimate a monthly rate. The origination fee is calculated separately; net proceeds assume the fee is withheld from the disbursement, while monthly payments are based on the full loan amount.</p></section>
+<section class="panel"><h2>Important limitations</h2><ul><li>This is a mathematical illustration, not a lender quote, credit decision or loan recommendation.</li><li>Actual APR, fees, eligibility, repayment dates and loan terms depend on the lender and your circumstances.</li><li>Some lenders calculate APR and fees differently; this estimate does not model daily interest, variable rates, late fees, prepayment penalties or add-on products.</li><li>Compare the total cost and all contract terms carefully; do not rely on the monthly payment alone.</li></ul></section>
+<section class="panel"><h2>Frequently asked questions</h2>
+<details><summary>Is APR the same as the interest rate?</summary><p>APR may include certain loan costs as well as interest. This calculator uses the APR you enter as the annual rate for its monthly payment estimate.</p></details>
+<details><summary>Does the calculator check my credit or show lender offers?</summary><p>No. It does not access credit reports, check eligibility, compare lenders or provide a loan offer.</p></details>
+<details><summary>How is the origination fee treated?</summary><p>The fee is shown separately as a percentage of the loan amount. Net proceeds are shown assuming the fee is withheld from the disbursement; the monthly payment is calculated on the full loan amount.</p></details>
+</section>
+<p class="muted">Free educational estimate. Not credit, legal or financial advice. No credit check or lender connection is performed.</p>
+</main><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script><script src="/assets/us-personal-loan-calculator.js" defer></script></body></html>

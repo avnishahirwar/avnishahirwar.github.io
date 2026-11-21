@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VAT Calculator — Add or Remove Value Added | Friendly Calc</title>
+<meta name="description" content="Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/vat-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/international/vat-calculator.html"><link rel="alternate" hreflang="ru" href="https://friendlycalculator.in/ru/international/vat-calculator.html">
+<link rel="icon" href="/favicon-96.png" type="image/png">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="VAT Calculator | Friendly Calculator">
+<meta property="og:description" content="Add VAT to a net price or extract VAT from a gross price using your chosen rate.">
+<meta property="og:url" content="https://friendlycalculator.in/hi/international/vat-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"VAT Calculator","url":"https://friendlycalculator.in/hi/international/vat-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"inLanguage":"en"}</script>
+<style>
+.vat-wrap{width:min(920px,94%);margin:24px auto 56px}.vat-panel{background:#fff;border:1px solid #d9e0e6;border-radius:14px;padding:clamp(16px,3vw,28px);margin:18px 0;box-shadow:0 5px 20px #1020300a}.vat-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.vat-fields label{display:grid;gap:6px;font-weight:650}.vat-fields input,.vat-fields select{width:100%;min-height:44px;padding:10px;border:1px solid #aeb9c4;border-radius:7px}.vat-result{margin-top:18px;padding:18px;background:#f5f6f8;border-radius:10px}.vat-result strong{font-size:1.25rem}.vat-result ul{padding-left:22px}.vat-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.vat-actions button{padding:11px 16px;border:0;border-radius:7px;background:#101c2c;color:#fff;font-weight:700;cursor:pointer}.vat-note{font-size:.92rem;color:#526170;line-height:1.6}.vat-error{color:#a21b1b;font-weight:650}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:title" content="VAT Calculator — Add or Remove Value Added | Friendly Calc">
+<meta name="twitter:description" content="Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/vat-calculator.html"></head>
+<body>
+<main class="vat-wrap">
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/hi/calculator/site-directory.html">All calculators</a> / VAT Calculator</nav>
+<header><p class="vat-note">FRIENDLY CALCULATOR · FREE INTERNATIONAL TOOL</p><h1>VAT Calculator</h1><p>Calculate value added tax (VAT) by adding tax to a net price or extracting tax from a VAT-inclusive total. Choose the currency in the site header and enter the rate that applies to your country, product and transaction.</p></header>
+<section class="vat-panel">
+<h2>Calculate VAT</h2>
+<form id="vat-form">
+<div class="vat-fields">
+<label>Country / tax jurisdiction<select id="vat-jurisdiction"><option value="manual">Manual rate — enter your own</option><option value="AE">United Arab Emirates — standard VAT</option><option value="SA">Saudi Arabia — standard VAT</option><option value="AU">Australia — standard GST</option><option value="GB">United Kingdom — standard VAT</option><option value="AU">Australia — standard GST</option><option value="SG">Singapore — standard GST</option><option value="DE">Germany — standard VAT</option><option value="FR">France — standard VAT</option><option value="ES">Spain — standard VAT</option><option value="IT">Italy — standard VAT</option><option value="IE">Ireland — standard VAT</option><option value="NL">Netherlands — standard VAT</option><option value="SE">Sweden — standard VAT</option><option value="DK">Denmark — standard VAT</option><option value="FI">Finland — standard VAT</option></select></label>
+<label>Calculation method<select id="vat-mode"><option value="add">Add VAT to a net price</option><option value="remove">Remove VAT from a VAT-inclusive price</option></select></label>
+<label>Price amount (<span id="vat-currency-symbol">₹</span>)<input id="vat-amount" type="number" min="0" step="any" value="1000" required></label>
+<label>VAT / GST rate (%)<input id="vat-rate" type="number" min="0" max="100" step="0.01" placeholder="Enter the applicable rate" required></label>
+</div>
+<p id="vat-rate-source" class="vat-note" aria-live="polite">Choose a standard-rate preset or enter the rate that applies to your product, service and transaction.</p>
+<div class="vat-actions"><button type="submit">Calculate VAT</button><button type="reset">Reset</button></div>
+<p id="vat-error" class="vat-error" role="alert" aria-live="polite"></p>
+<div id="vat-result" class="vat-result" role="status" aria-live="polite">Enter a price and the VAT rate for your transaction.</div>
+</form>
+</section>
+<section class="vat-panel">
+<h2>VAT formulas</h2>
+<p><strong>Adding VAT:</strong> VAT amount = net price × VAT rate ÷ 100. Gross price = net price + VAT amount.</p>
+<p><strong>Removing VAT:</strong> Net price = gross price ÷ (1 + VAT rate ÷ 100). VAT amount = gross price − net price.</p>
+<p>The calculator rounds displayed values to two decimal places. Calculations retain full precision until display.</p>
+</section>
+<section class="vat-panel">
+<h2>VAT rates vary by country</h2>
+<p>Presets provide standard VAT/GST rates for selected jurisdictions only. Reduced, zero-rated and exempt supplies may use different treatment. Rates and rules can change; verify the rate for the product, service, place of supply, customer status and transaction date before using it.</p>
+<ul><li><a href="https://u.ae/en/information-and-services/finance-and-investment/taxation" rel="noopener noreferrer">UAE Government — taxation and VAT</a></li><li><a href="https://zatca.gov.sa/en/RulesRegulations/VAT/Pages/About-Vat.aspx" rel="noopener noreferrer">Saudi ZATCA — VAT rate</a></li><li><a href="https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/tax-gap/a-h-tax-gaps/goods-and-services-tax-gap/overview" rel="noopener noreferrer">Australian Taxation Office — GST overview</a></li><li><a href="https://www.gov.uk/vat-rates" rel="noopener noreferrer">UK HMRC — VAT rates</a></li><li><a href="https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/how-gst-works" rel="noopener noreferrer">Australian Taxation Office — How GST works</a></li><li><a href="https://www.iras.gov.sg/taxes/goods-services-tax-%28gst%29/basics-of-gst/current-gst-rates" rel="noopener noreferrer">Singapore IRAS — Current GST rates</a></li><li><a href="https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm" rel="noopener noreferrer">European Commission — VAT rates in EU countries</a></li></ul>
+<p class="vat-note">Standard-rate references checked 16 November 2026. EU presets use the standard rate shown by the European Commission. This list is not a product classification or a tax-compliance determination.</p>
+<p>Before using a result for an invoice, import, export or tax return, verify the applicable rate and rules with the relevant tax authority or a qualified tax professional. This calculator does not determine registration obligations, exemptions, reverse-charge treatment, input-tax recovery or cross-border place-of-supply rules.</p>
+</section>
+<section class="vat-panel">
+<h2>Worked example</h2>
+<p>If the net price is 100 and the applicable VAT rate is 20%, VAT is 20 and the gross price is 120. If 120 already includes 20% VAT, the net price is 100 and the VAT component is 20.</p>
+<h2>Frequently asked questions</h2>
+<details><summary>Does this calculator know my country's VAT rate?</summary><p>No. Enter the current rate that applies to your specific transaction. This avoids presenting an outdated or incorrect country rate as universal.</p></details>
+<details><summary>Can I use this for GST?</summary><p>The arithmetic is similar for a simple tax-inclusive or tax-exclusive percentage calculation. GST rules, input tax credits, place-of-supply and invoice requirements are different and should be checked separately.</p></details>
+<details><summary>Does changing currency convert the entered price?</summary><p>No. The currency selector changes display formatting only. It does not convert the amount or exchange rate. Use the Currency Converter for currency conversion.</p></details>
+</section>
+<section class="vat-panel">
+<h2>Related calculators</h2>
+<ul>
+<li><a href="/hi/calculators/sales-tax-calculator.html">Sales Tax Calculator</a></li>
+<li><a href="/hi/calculators/canada-gst-hst-calculator.html">Canada GST/HST Calculator</a></li>
+<li><a href="/hi/calculators/gst-calculator.html">GST Calculator</a></li>
+</ul>
+</section>
+<p class="vat-note">Free educational calculator. Results are estimates, not tax advice. Calculation runs in your browser.</p>
+</main>
+<script src="/assets/site-shell.js" defer></script>
+<script src="/assets/site-chrome.js?v=1" defer></script>
+<script src="/assets/vat-calculator.js" defer></script>
+</body>
+</html>

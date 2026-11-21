@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US Student Loan Calculator | Monthly Payment & Interest</title>
+<meta name="description" content="Estimate a US student loan's fixed monthly payment, total interest and payoff time. Add optional extra payments using your own APR and term.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/us-student-loan-calculator.html">
+<link rel="alternate" hreflang="en-US" href="https://friendlycalculator.in/hi/international/us-student-loan-calculator.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/international/us-student-loan-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="US Student Loan Calculator"><meta property="og:description" content="Estimate fixed-rate student loan payments and interest in USD."><meta property="og:url" content="https://friendlycalculator.in/hi/international/us-student-loan-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"US Student Loan Calculator","url":"https://friendlycalculator.in/hi/international/us-student-loan-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this calculate federal income-driven repayment?","acceptedAnswer":{"@type":"Answer","text":"No. It estimates a fixed-rate amortizing loan and does not calculate SAVE, income-based, income-contingent or other federal repayment plan eligibility."}},{"@type":"Question","name":"Can I include extra payments?","acceptedAnswer":{"@type":"Answer","text":"Yes. An optional monthly extra payment is applied to reduce the remaining balance in this illustration."}},{"@type":"Question","name":"Does it include loan fees or forgiveness?","acceptedAnswer":{"@type":"Answer","text":"No. Fees, subsidies, deferment, forbearance, forgiveness, variable rates and federal plan rules are excluded."}}]}]</script>
+<style>
+body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.7 system-ui,sans-serif}main{width:min(940px,92%);margin:28px auto 56px}.hero{background:#101c2c;color:#fff;padding:26px;border-radius:14px}.hero p{color:#dce5ed}.panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:20px;margin:18px 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.field{display:grid;gap:6px;font-weight:650}.field input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #aeb9c4;border-radius:8px;font:inherit}button{background:#101c2c;color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:750;margin-top:14px;cursor:pointer}.result{background:#edf3f7;padding:16px;border-radius:10px;margin-top:16px}.error{color:#a21b1b;font-weight:700}.muted{color:#5c6d7e}@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="US Student Loan Calculator | Monthly Payment &amp; Interest">
+<meta name="twitter:description" content="Estimate a US student loan's fixed monthly payment, total interest and payoff time. Add optional extra payments using your own APR and term.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/us-student-loan-calculator.html"></head>
+<body><main>
+<nav><a href="/">Home</a> / <a href="/hi/us/">United States</a> / Student Loan</nav>
+<header class="hero"><p>UNITED STATES · USD</p><h1>US Student Loan Calculator</h1><p>Estimate a fixed-rate repayment scenario, total interest and the effect of optional extra monthly payments.</p></header>
+<section class="panel"><h2>Calculate student loan payments</h2>
+<form id="studentLoanForm" novalidate><div class="fields">
+<label class="field">Loan balance (USD)<input id="balance" type="number" min="0.01" step="0.01" required inputmode="decimal" placeholder="e.g. 25000"></label>
+<label class="field">Annual interest rate / APR (%)<input id="apr" type="number" min="0" max="100" step="0.01" required inputmode="decimal" placeholder="e.g. 5.5"></label>
+<label class="field">Repayment term (years)<input id="years" type="number" min="1" max="50" step="1" required inputmode="numeric" value="10"></label>
+<label class="field">Extra monthly payment (USD)<input id="extra" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+</div><button type="submit">Calculate loan repayment</button></form>
+<div id="result" class="result" aria-live="polite">Enter your loan details to estimate repayments.</div></section>
+<section class="panel"><h2>Formula and method</h2><p>For a fixed monthly rate, the scheduled payment uses the standard amortization formula: payment = principal × monthly rate ÷ (1 − (1 + monthly rate)<sup>−number of payments</sup>). At 0% interest, principal is divided evenly across payments.</p><p>Extra monthly payments are applied to the outstanding balance after the scheduled payment. The final payment is capped at the remaining balance plus interest.</p></section>
+<section class="panel"><h2>Important federal loan limitations</h2><ul><li>This is a fixed-rate mathematical estimate, not an official federal student-loan repayment estimator.</li><li>It does not calculate income-driven repayment, Public Service Loan Forgiveness, deferment, forbearance, subsidies, consolidation or eligibility.</li><li>Actual federal and private loan terms, interest accrual, fees and payment allocation may differ.</li></ul><p><a href="https://studentaid.gov/manage-loans/repayment" rel="noopener noreferrer">Federal Student Aid — Repayment plans</a> · <a href="https://studentaid.gov/loan-simulator/" rel="noopener noreferrer">Federal Student Aid — Loan Simulator</a></p></section>
+<p class="muted">Free educational estimate. Not financial or legal advice. Verify your repayment options with your loan servicer or Federal Student Aid.</p>
+</main>
+<script>
+(function(){const form=document.getElementById('studentLoanForm'),out=document.getElementById('result'),money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);form.addEventListener('submit',function(e){e.preventDefault();const principal=Number(document.getElementById('balance').value),apr=Number(document.getElementById('apr').value),years=Number(document.getElementById('years').value),extra=Number(document.getElementById('extra').value);if(!Number.isFinite(principal)||principal<=0||!Number.isFinite(apr)||apr<0||apr>100||!Number.isInteger(years)||years<1||years>50||!Number.isFinite(extra)||extra<0){out.innerHTML='<p class="error">Enter a positive balance, APR from 0% to 100%, a 1–50 year term and a non-negative extra payment.</p>';return;}const rate=apr/1200,n=years*12,scheduled=rate===0?principal/n:principal*rate/(1-Math.pow(1+rate,-n));let balance=principal,totalInterest=0,totalPaid=0,months=0;while(balance>0.005&&months<n+1200){const interest=balance*rate;let payment=Math.min(balance+interest,scheduled+extra);if(rate===0)payment=Math.min(balance,scheduled+extra);const principalPaid=Math.min(balance,payment-interest);balance=Math.max(0,balance-principalPaid);totalInterest+=interest;totalPaid+=payment;months++;}if(balance>0.005){out.innerHTML='<p class="error">The selected payment does not amortize the loan. Check the inputs.</p>';return;}out.innerHTML='<h3>Estimated repayment</h3><p><strong>Scheduled monthly payment: '+money(scheduled)+'</strong></p><p>Total interest: '+money(totalInterest)+'</p><p>Total paid: '+money(totalPaid)+'</p><p>Estimated payoff time: '+months+' months ('+(months/12).toFixed(1)+' years)</p><p>Extra monthly amount: '+money(extra)+'</p>';});})();
+</script>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script>
+</body></html>
