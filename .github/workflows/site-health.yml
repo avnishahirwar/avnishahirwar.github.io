@@ -24,6 +24,8 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
+      - name: Validate all-calculators directory route
+        run: node --test tests/site-directory-route.test.cjs
       - name: Generate current sitemap for repository QA
         run: node scripts/generate-sitemaps.cjs
       - name: Generate curated programmatic SEO pages
