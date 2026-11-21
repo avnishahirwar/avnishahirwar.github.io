@@ -1,9 +1,9 @@
 name: One-time additive social metadata repair
 
 on:
-  push:
-    branches:
-      - seo/additive-social-metadata-repair-2026-11-21
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
 
 permissions:
   contents: write
