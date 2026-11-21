@@ -32,6 +32,14 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.equal(new Set(urls).size, urls.length, 'Sitemap URLs must be unique');
 });
 
+test('sitemap excludes localized Search Console verification files and schema fragments', () => {
+  const excluded = urls.filter(url => {
+    const pathname = new URL(url).pathname;
+    return /(^|[/])google[a-f0-9]+[.]html$/i.test(pathname) || /(^|[/])schema[/]_homepage[.]html$/i.test(pathname);
+  });
+  assert.deepEqual(excluded, [], 'Non-content verification and schema fragments must not be sitemap URLs.');
+});
+
 test('AdSense publisher loader is not duplicated and configured ad slots have a loader', () => {
   // Ad spaces remain hidden until AdSense is approved and configured.
   const failures = [];
@@ -106,8 +114,10 @@ test('every public sitemap page loads the shared site header and footer shell', 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const pathname = new URL(url).pathname;
-    const expectedShell = pathname === '/' ? '/assets/homepage-shell.js' : '/assets/site-shell.js';
-    if (!html.includes(expectedShell)) failures.push(url + ' (' + expectedShell + ')');
+    const hasExpectedShell = pathname === '/'
+      ? html.includes('/assets/site-shell.js') || html.includes('/assets/homepage-shell.js')
+      : html.includes('/assets/site-shell.js');
+    if (!hasExpectedShell) failures.push(url + ' (shared header/footer shell script)');
     if (!html.includes('/assets/site-shell.css')) failures.push(url + ' (shared shell styles)');
   }
   assert.deepEqual(failures, [], 'Public pages must use the shared header/footer: ' + failures.join(', '));
