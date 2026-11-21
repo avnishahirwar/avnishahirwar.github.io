@@ -1,0 +1,42 @@
+name: One-time additive social metadata repair
+
+on:
+  push:
+    branches:
+      - seo/additive-social-metadata-repair-2026-11-21
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out approved repair branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo/additive-social-metadata-repair-2026-11-21
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate repair script syntax
+        run: node --check scripts/repair-public-social-metadata.cjs
+
+      - name: Add only missing social metadata
+        run: node scripts/repair-public-social-metadata.cjs --write
+
+      - name: Verify repair is idempotent
+        run: node scripts/repair-public-social-metadata.cjs --check
+
+      - name: Commit repaired public pages and remove one-time runner
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/one-time-social-metadata-repair.yml
+          git add -A -- '*.html' scripts/repair-public-social-metadata.cjs
+          git commit -m "seo: add missing social metadata to public pages"
+          git push origin HEAD:seo/additive-social-metadata-repair-2026-11-21
