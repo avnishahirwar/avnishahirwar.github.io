@@ -41,8 +41,8 @@ function walk(dir, files = []) {
         !EXCLUDED_FILES.has(entry.name.toLowerCase())) {
       const relative = path.relative(ROOT, path.join(dir, entry.name)).split(path.sep).join('/');
       if (!EXCLUDED_PATHS.has(relative) &&
-          !/(^|\\/)google[a-f0-9]+\\.html$/i.test(relative) &&
-          !/(^|\\/)schema\\/_homepage\\.html$/i.test(relative)) files.push(relative);
+          !/(^|[/])google[a-f0-9]+[.]html$/i.test(relative) &&
+          !/(^|[/])schema[/]_homepage[.]html$/i.test(relative)) files.push(relative);
     }
   }
   return files;
