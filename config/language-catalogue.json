@@ -15,7 +15,7 @@
       "name": "Chinese (Mandarin)",
       "nativeName": "中文（普通话）",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "hi",
@@ -71,7 +71,7 @@
       "name": "Urdu",
       "nativeName": "اردو",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ru",
@@ -99,14 +99,14 @@
       "name": "Nigerian Pidgin",
       "nativeName": "Naijá",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "arz",
       "name": "Egyptian Arabic",
       "nativeName": "مصري",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "mr",
@@ -134,35 +134,35 @@
       "name": "Swahili",
       "nativeName": "Kiswahili",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ha",
       "name": "Hausa",
       "nativeName": "Harshen Hausa",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "tr",
       "name": "Turkish",
       "nativeName": "Türkçe",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "pa",
       "name": "Punjabi",
       "nativeName": "ਪੰਜਾਬੀ",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "fil",
       "name": "Filipino",
       "nativeName": "Filipino",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ta",
@@ -176,56 +176,56 @@
       "name": "Cantonese",
       "nativeName": "粵語",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "wuu",
       "name": "Wu Chinese",
       "nativeName": "吴语",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "fa",
       "name": "Persian",
       "nativeName": "فارسی",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ko",
       "name": "Korean",
       "nativeName": "한국어",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "am",
       "name": "Amharic",
       "nativeName": "አማርኛ",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "th",
       "name": "Thai",
       "nativeName": "ไทย",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "jv",
       "name": "Javanese",
       "nativeName": "Basa Jawa",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "it",
       "name": "Italian",
       "nativeName": "Italiano",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "gu",
@@ -246,112 +246,112 @@
       "name": "Yoruba",
       "nativeName": "Yorùbá",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "bho",
       "name": "Bhojpuri",
       "nativeName": "भोजपुरी",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "nl",
       "name": "Dutch",
       "nativeName": "Nederlands",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "pl",
       "name": "Polish",
       "nativeName": "Polski",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ml",
       "name": "Malayalam",
       "nativeName": "മലയാളം",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "or",
       "name": "Odia",
       "nativeName": "ଓଡ଼ିଆ",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ne",
       "name": "Nepali",
       "nativeName": "नेपाली",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "si",
       "name": "Sinhala",
       "nativeName": "සිංහල",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "uk",
       "name": "Ukrainian",
       "nativeName": "Українська",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "uz",
       "name": "Uzbek",
       "nativeName": "Oʻzbekcha",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ps",
       "name": "Pashto",
       "nativeName": "پښتو",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "so",
       "name": "Somali",
       "nativeName": "Soomaali",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "he",
       "name": "Hebrew",
       "nativeName": "עברית",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "my",
       "name": "Burmese",
       "nativeName": "မြန်မာ",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "ro",
       "name": "Romanian",
       "nativeName": "Română",
       "direction": "ltr",
-      "status": "planned"
+      "status": "available"
     },
     {
       "code": "sd",
       "name": "Sindhi",
       "nativeName": "سنڌي",
       "direction": "rtl",
-      "status": "planned"
+      "status": "available"
     }
   ]
 }

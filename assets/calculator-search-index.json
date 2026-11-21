@@ -21889,5 +21889,54 @@
     "category": "Loans, EMI & Credit",
     "keywords": "us home affordability calculator mortgage affordability home price monthly income debt to income dti down payment interest rate property tax homeowners insurance",
     "description": "Estimate a home purchase price from household income, debts, down payment and assumed mortgage costs."
+  },
+  {
+    "name": "GST/QST Calculator for Canada",
+    "url": "/calculators/gst-qst-calculator-canada.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "gst/qst calculator for canada québec gst and qst estimate using current official rates.",
+    "description": "Québec GST and QST estimate using current official rates."
+  },
+  {
+    "name": "Australia 2020–21 Income Tax Calculator",
+    "url": "/calculators/income-tax-cuts-calculator-australia-2020-21.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "australia 2020–21 income tax calculator historical resident income-tax estimate for the 2020–21 tax year.",
+    "description": "Historical resident income-tax estimate for the 2020–21 tax year."
+  },
+  {
+    "name": "RMD Calculator — Required Minimum Distributions",
+    "url": "/calculators/rmd-calculator-required-minimum-distributions.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "rmd calculator — required minimum distributions estimate an eligible 2026 traditional ira rmd using irs table iii.",
+    "description": "Estimate an eligible 2026 traditional IRA RMD using IRS Table III."
+  },
+  {
+    "name": "UK Stamp Duty Land Tax Calculator",
+    "url": "/calculators/uk-stamp-duty-land-tax-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "uk stamp duty land tax calculator estimate standard residential sdlt for england or northern ireland.",
+    "description": "Estimate standard residential SDLT for England or Northern Ireland."
+  },
+  {
+    "name": "California Golden State Stimulus II Calculator",
+    "url": "/calculators/california-stimulus-check-ii-calculator.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "california golden state stimulus ii calculator historical-only estimate for listed qualifying 2020 tax-return categories.",
+    "description": "Historical-only estimate for listed qualifying 2020 tax-return categories."
+  },
+  {
+    "name": "Atal Pension Yojana Calculator",
+    "url": "/calculators/atal-pension-yojana-calculator.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "atal pension yojana calculator look up prescribed apy contributions from the official pfrda table.",
+    "description": "Look up prescribed APY contributions from the official PFRDA table."
+  },
+  {
+    "name": "Unemployment Rate Calculator",
+    "url": "/calculators/unemployment-calculator-unemployment-rate.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "unemployment rate calculator calculate a bls-style u.s. unemployment rate; not a benefits tool.",
+    "description": "Calculate a BLS-style U.S. unemployment rate; not a benefits tool."
   }
 ]
