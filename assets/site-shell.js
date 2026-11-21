@@ -309,8 +309,11 @@ if(localeCodes.includes(locale)){
 }
 
 const r='/calculator/';
-// Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
-const preservedAdminDashboardLink=['Admin',r+'admin.html'];
+// The admin route is owner-only. Never expose it through the public shared shell.
+const isAdminRouteLink=link=>{
+  const href=(link.getAttribute('href')||'').trim().toLowerCase();
+  return /(?:^|\/)calculator\/admin\.html(?:[?#].*)?$/.test(href) || /(?:^|\/)admin(?:\/|$)/.test(href);
+};
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
 // Keep vector, 48px/96px PNG and Apple touch icons together on every page.
 document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]').forEach(node=>node.remove());
@@ -578,7 +581,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
     // Social/contact destinations already have one dedicated icon row in the shared Footer.
-    if(href&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');

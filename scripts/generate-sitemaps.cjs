@@ -40,7 +40,9 @@ function walk(dir, files = []) {
     if (entry.isFile() && entry.name.toLowerCase().endsWith('.html') &&
         !EXCLUDED_FILES.has(entry.name.toLowerCase())) {
       const relative = path.relative(ROOT, path.join(dir, entry.name)).split(path.sep).join('/');
-      if (!EXCLUDED_PATHS.has(relative)) files.push(relative);
+      const pathWithoutLocale = relative.replace(/^[a-z]{2,3}\//, '');
+      const excludedLocalized = /^(?:google09d3278d6d57b1a4\.html|schema\/_homepage\.html|calculator\/admin\.html)$/.test(pathWithoutLocale);
+      if (!EXCLUDED_PATHS.has(relative) && !excludedLocalized) files.push(relative);
     }
   }
   return files;

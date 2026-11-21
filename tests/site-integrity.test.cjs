@@ -300,13 +300,23 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];"));
 });
 
-test('the shared top navigation exposes the preserved Admin Dashboard exactly once', () => {
+test('the Admin dashboard remains private from public navigation and indexing', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.ok(shell.includes("['Admin',r+'admin.html']"));
-  assert.equal((shell.match(/\['Admin',r\+'admin\.html'\]/g) || []).length, 1);
+  assert.ok(shell.includes('isAdminRouteLink'), 'Shared shell must filter owner-only admin routes');
+  assert.doesNotMatch(shell, /\['Admin',r\+'admin\.html'\]/, 'Shared shell must not publish an Admin navigation item');
   assert.ok(fs.existsSync(path.join(root, 'calculator/admin.html')), 'Admin dashboard page must remain preserved');
   const dashboard = fs.readFileSync(path.join(root, 'calculator/admin.html'), 'utf8');
+  assert.match(dashboard, /name="robots" content="noindex,nofollow"/);
   assert.match(dashboard, /app_metadata\?\.role!==['"]admin['"]/);
+  const publicAdminLinks=[];
+  for (const file of fs.readdirSync(root, {recursive:true})) {
+    if (!String(file).endsWith('.html') || /(^|\/)admin\//.test(String(file))) continue;
+    const html=fs.readFileSync(path.join(root,file),'utf8');
+    const markup=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'');
+    if (/href=["'][^"']*\/calculator\/admin\.html/i.test(markup)) publicAdminLinks.push(file);
+  }
+  assert.deepEqual(publicAdminLinks, [], 'Public pages must not link to the Admin dashboard');
+  assert.doesNotMatch(sitemap, /https:\/\/friendlycalculator\.in\/calculator\/admin\.html/);
 });
 
 test('About page catalogue matches every canonical published calculator page', () => {
