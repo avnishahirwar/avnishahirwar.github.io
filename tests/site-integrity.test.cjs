@@ -35,7 +35,7 @@ test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
 test('sitemap excludes localized Search Console verification files and schema fragments', () => {
   const excluded = urls.filter(url => {
     const pathname = new URL(url).pathname;
-    return /\\/google[a-f0-9]+\\.html$/i.test(pathname) || /\\/schema\\/_homepage\\.html$/i.test(pathname);
+    return /(^|[/])google[a-f0-9]+[.]html$/i.test(pathname) || /(^|[/])schema[/]_homepage[.]html$/i.test(pathname);
   });
   assert.deepEqual(excluded, [], 'Non-content verification and schema fragments must not be sitemap URLs.');
 });
