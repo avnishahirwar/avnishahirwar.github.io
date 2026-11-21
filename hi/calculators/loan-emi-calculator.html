@@ -1,14 +1,14 @@
-<!doctype html>
+html
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>लोन EMI कैलकुलेटर | मासिक किस्त, ब्याज और कुल भुगतान</title>
-<meta name="description" content="लोन राशि, वार्षिक ब्याज दर और अवधि दर्ज करके मासिक EMI, कुल ब्याज और कुल भुगतान हिंदी में जानें।">
-<meta name="robots" content="index,follow,max-image-preview:large"><meta name="theme-color" content="#101c2c">
-<link rel="canonical" href="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html">
-<meta property="og:type" content="article"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="लोन EMI कैलकुलेटर | Friendly Calculator"><meta property="og:description" content="मासिक EMI, कुल ब्याज और कुल भुगतान की गणना करें।"><meta property="og:url" content="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.png">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="लोन EMI कैलकुलेटर"><meta name="twitter:description" content="लोन की मासिक किस्त और कुल ब्याज हिंदी में calculate करें।"><meta name="twitter:image" content="https://friendlycalculator.in/assets/og-friendly-calculator.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png"><link rel="stylesheet" href="/assets/site-shell.css">
+<meta content="लोन राशि, वार्षिक ब्याज दर और अवधि दर्ज करके मासिक EMI, कुल ब्याज और कुल भुगतान हिंदी में जानें।" name="description"/>
+<meta content="index,follow,max-image-preview:large" name="robots"/><meta content="#101c2c" name="theme-color"/>
+<link href="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html" rel="canonical"/>
+<meta content="article" property="og:type"/><meta content="Friendly Calculator" property="og:site_name"/><meta content="लोन EMI कैलकुलेटर | Friendly Calculator" property="og:title"/><meta content="मासिक EMI, कुल ब्याज और कुल भुगतान की गणना करें।" property="og:description"/><meta content="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html" property="og:url"/><meta content="https://friendlycalculator.in/assets/og-friendly-calculator.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/><meta content="लोन EMI कैलकुलेटर" name="twitter:title"/><meta content="लोन की मासिक किस्त और कुल ब्याज हिंदी में calculate करें।" name="twitter:description"/><meta content="https://friendlycalculator.in/assets/og-friendly-calculator.png" name="twitter:image"/>
+<link href="/favicon-96.png" rel="icon" sizes="96x96" type="image/png"/><link href="/assets/site-shell.css" rel="stylesheet"/>
 <style>
 :root{--ink:#172638;--muted:#596b7c;--navy:#101c2c;--gold:#d8bd82;--line:#e0e5ea;--paper:#f5f6f8}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,"Noto Sans Devanagari",sans-serif}
@@ -20,44 +20,40 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"EMI की गणना कैसे होती है?","acceptedAnswer":{"@type":"Answer","text":"मासिक ब्याज दर और कुल किस्तों की संख्या के आधार पर reducing-balance EMI formula लागू होता है। शून्य ब्याज पर मूलधन को किस्तों में बराबर बाँटा जाता है।"}},{"@type":"Question","name":"क्या लंबी अवधि में कुल ब्याज बढ़ सकता है?","acceptedAnswer":{"@type":"Answer","text":"हाँ। अवधि बढ़ने पर किस्त कम हो सकती है, लेकिन बकाया राशि अधिक महीनों तक रहने से कुल ब्याज बढ़ सकता है।"}},{"@type":"Question","name":"क्या processing fee और insurance शामिल हैं?","acceptedAnswer":{"@type":"Answer","text":"नहीं। यह अनुमान केवल मूलधन और दिए गए ब्याज दर पर आधारित है। अन्य शुल्क शामिल नहीं हैं।"}}]}</script>
 <style id="hi-top10-visual-styles">.hi-result-visual{margin-top:18px}.hi-result-bars{display:grid;gap:12px}.hi-result-bar-row{display:grid;gap:5px}.hi-result-bar-label{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}.hi-result-bar-label span{font-weight:650}.hi-result-bar-label strong{font-variant-numeric:tabular-nums}.hi-result-bar-track{height:12px;background:#e8edf2;border-radius:99px;overflow:hidden}.hi-result-bar-fill{display:block;height:100%;background:#174f82;border-radius:99px;min-width:2px}</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"लोन EMI कैलकुलेटर","description":"हिंदी में लोन EMI कैलकुलेटर के लिए गणना उपकरण। दर्ज मानों और प्रदर्शित मान्यताओं के आधार पर अनुमान प्राप्त करें।","url":"https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","inLanguage":"hi","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}</script>
-
-<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
-<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
-
-
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/loan-emi-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/loan-emi-calculator.html">
+<meta content="Friendly Calculator — online calculators and practical tools" property="og:image:alt"/>
+<meta content="Friendly Calculator — online calculators and practical tools" name="twitter:image:alt"/>
+<link href="https://friendlycalculator.in/calculators/loan-emi-calculator.html" hreflang="en" rel="alternate"/>
+<link href="https://friendlycalculator.in/hi/calculators/loan-emi-calculator.html" hreflang="hi" rel="alternate"/>
+<link href="https://friendlycalculator.in/es/calculators/loan-emi-calculator.html" hreflang="es" rel="alternate"/>
+<link href="https://friendlycalculator.in/fr/calculators/loan-emi-calculator.html" hreflang="fr" rel="alternate"/>
+<link href="https://friendlycalculator.in/pt/calculators/loan-emi-calculator.html" hreflang="pt" rel="alternate"/>
+<link href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html" hreflang="ar" rel="alternate"/>
+<link href="https://friendlycalculator.in/id/calculators/loan-emi-calculator.html" hreflang="id" rel="alternate"/>
+<link href="https://friendlycalculator.in/bn/calculators/loan-emi-calculator.html" hreflang="bn" rel="alternate"/>
+<link href="https://friendlycalculator.in/ta/calculators/loan-emi-calculator.html" hreflang="ta" rel="alternate"/>
+<link href="https://friendlycalculator.in/calculators/loan-emi-calculator.html" hreflang="x-default" rel="alternate"/>
 </head>
 <body>
-<section class="hero"><div class="wrap"><p class="eyebrow">FINANCE CALCULATOR · हिंदी</p><h1>लोन EMI कैलकुलेटर</h1><p class="muted">अपनी लोन राशि, ब्याज दर और अवधि के आधार पर मासिक किस्त, कुल ब्याज और कुल भुगतान का अनुमान निकालें।</p></div></section>
+<section class="hero"><div class="wrap"><p class="eyebrow">वित्त कैलकुलेटर · हिंदी</p><h1>लोन EMI कैलकुलेटर</h1><p class="muted">लोन की राशि, ब्याज दर और अवधि के आधार पर मासिक किस्त, कुल ब्याज और कुल भुगतान का अनुमान लगाएँ।</p></div></section>
 <main class="wrap"><section class="panel hi-formula-intro"><h2>गणना का सूत्र — संक्षेप में</h2><p>EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), जहाँ P मूलधन, r मासिक ब्याज दर और n कुल किस्तें हैं।</p></section>
-
-<section class="panel" aria-labelledby="form-title"><h2 id="form-title">लोन की जानकारी दर्ज करें</h2>
+<section aria-labelledby="form-title" class="panel"><h2 id="form-title">लोन की जानकारी दर्ज करें</h2>
 <div class="fields">
-<div class="field"><label for="principal">लोन राशि (currency)</label><input id="principal" type="number" min="1" step="1000" value="1000000" inputmode="decimal"></div>
-<div class="field"><label for="rate">वार्षिक ब्याज दर (%)</label><input id="rate" type="number" min="0" max="100" step="0.01" value="9" inputmode="decimal"></div>
-<div class="field"><label for="years">अवधि (वर्ष)</label><input id="years" type="number" min="0" max="50" step="1" value="20" inputmode="numeric"></div>
-<div class="field"><label for="months">अतिरिक्त अवधि (महीने)</label><input id="months" type="number" min="0" max="11" step="1" value="0" inputmode="numeric"></div>
+<div class="field"><label for="principal">लोन राशि (मुद्रा)</label><input id="principal" inputmode="decimal" min="1" step="1000" type="number" value="1000000"/></div>
+<div class="field"><label for="rate">वार्षिक ब्याज दर (%)</label><input id="rate" inputmode="decimal" max="100" min="0" step="0.01" type="number" value="9"/></div>
+<div class="field"><label for="years">अवधि (वर्ष)</label><input id="years" inputmode="numeric" max="50" min="0" step="1" type="number" value="20"/></div>
+<div class="field"><label for="months">अतिरिक्त अवधि (महीने)</label><input id="months" inputmode="numeric" max="11" min="0" step="1" type="number" value="0"/></div>
 </div>
-<div class="actions"><button class="btn" id="calculate" type="button">EMI की गणना करें</button><button class="btn alt" id="reset" type="button">रीसेट</button></div><p id="error" class="error" role="alert" aria-live="polite"></p>
+<div class="actions"><button class="btn" id="calculate" type="button">EMI की गणना करें</button><button class="btn alt" id="reset" type="button">रीसेट</button></div><p aria-live="polite" class="error" id="error" role="alert"></p>
 </section>
-<section class="panel" aria-live="polite"><h2>आपका अनुमानित परिणाम</h2><div class="results">
+<section aria-live="polite" class="panel"><h2>आपका अनुमानित परिणाम</h2><div class="results">
 <div class="result"><span>मासिक EMI</span><strong id="emi">—</strong></div>
 <div class="result"><span>कुल ब्याज</span><strong id="interest">—</strong></div>
 <div class="result"><span>कुल भुगतान</span><strong id="total">—</strong></div>
 </div><p class="muted" id="tenure-label"></p></section>
-<section class="panel"><h2>EMI का formula</h2><div class="formula"><strong>EMI = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</strong><p>जहाँ P = लोन का मूलधन, r = मासिक ब्याज दर (दशमलव में), और n = कुल मासिक किस्तों की संख्या। यदि ब्याज दर 0% है, तो EMI = P ÷ n।</p></div>
-<h2>उदाहरण</h2><p>यदि लोन ₹10,00,000, वार्षिक ब्याज दर 9% और अवधि 20 वर्ष हो, तो कैलकुलेटर लगभग ₹8,997 की मासिक EMI दिखाएगा। वास्तविक EMI lender की दर, दिन-गणना और शर्तों के अनुसार अलग हो सकती है।</p></section>
-<section class="panel"><h2>इस अनुमान में क्या शामिल नहीं है?</h2><p>Processing fee, insurance, late fee, prepayment charges, floating-rate changes और lender-specific adjustments शामिल नहीं हैं। यह कैलकुलेटर सामान्य reducing-balance EMI मानता है। लोन लेने से पहले lender के repayment schedule और सभी शुल्क जाँचें।</p><p><a href="/calculators/loan-emi-calculator.html">English Loan EMI Calculator</a> · <a href="/hi/index.html">हिंदी होमपेज</a></p></section>
-<section class="panel faq"><h2>अक्सर पूछे जाने वाले सवाल</h2><details><summary>EMI की गणना कैसे होती है?</summary><p>मासिक ब्याज दर और कुल किस्तों की संख्या के आधार पर reducing-balance EMI formula लागू होता है। 0% ब्याज पर मूलधन बराबर बाँटा जाता है।</p></details><details><summary>क्या लंबी अवधि में कुल ब्याज बढ़ता है?</summary><p>अक्सर हाँ। EMI कम हो सकती है, लेकिन बकाया राशि अधिक महीनों तक रहने से कुल ब्याज बढ़ सकता है।</p></details><details><summary>क्या processing fee शामिल है?</summary><p>नहीं। यह अनुमान केवल मूलधन और दर्ज ब्याज दर पर आधारित है।</p></details></section>
+<section class="panel"><h2>EMI का सूत्र</h2><div class="formula"><strong>EMI = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</strong><p>जहाँ P = लोन का मूलधन, r = मासिक ब्याज दर (दशमलव में), और n = कुल मासिक किस्तों की संख्या। यदि ब्याज दर 0% है, तो EMI = P ÷ n।</p></div>
+<h2>उदाहरण</h2><p>यदि लोन ₹10,00,000 का हो, वार्षिक ब्याज दर 9% हो और अवधि 20 वर्ष हो, तो कैलकुलेटर लगभग ₹8,997 की मासिक EMI दिखाएगा। वास्तविक EMI ऋणदाता की ब्याज दर, दिन-गणना और शर्तों के अनुसार अलग हो सकती है।</p></section>
+<section class="panel"><h2>इस अनुमान में क्या शामिल नहीं है?</h2><p>प्रोसेसिंग शुल्क, बीमा, देर से भुगतान का शुल्क, समय से पहले भुगतान के शुल्क, परिवर्तनीय ब्याज दर में बदलाव और ऋणदाता के अनुसार होने वाले समायोजन शामिल नहीं हैं। यह कैलकुलेटर सामान्य घटती बकाया राशि वाली EMI मानता है। लोन लेने से पहले ऋणदाता की भुगतान अनुसूची और सभी शुल्क जाँचें।</p><p><a href="/calculators/loan-emi-calculator.html">अंग्रेज़ी में Loan EMI Calculator</a> · <a href="/hi/index.html">हिंदी होमपेज</a></p></section>
+<section class="panel faq"><h2>अक्सर पूछे जाने वाले सवाल</h2><details><summary>EMI की गणना कैसे होती है?</summary><p>मासिक ब्याज दर और कुल किस्तों की संख्या के आधार पर घटती बकाया राशि वाला EMI सूत्र लागू होता है। 0% ब्याज पर मूलधन बराबर बाँटा जाता है।</p></details><details><summary>क्या लंबी अवधि में कुल ब्याज बढ़ता है?</summary><p>अक्सर हाँ। EMI कम हो सकती है, लेकिन बकाया राशि पर अधिक महीनों तक ब्याज लगने से कुल ब्याज बढ़ सकता है।</p></details><details><summary>क्या प्रोसेसिंग शुल्क शामिल है?</summary><p>नहीं। यह अनुमान केवल मूलधन और दर्ज की गई ब्याज दर पर आधारित है।</p></details></section>
 </main>
 <script>
 (()=>{const ids=["principal","rate","years","months"];const money=n=>{const code=window.FCLocale?.getCurrency?.()||'INR',locale=window.FCLocale?.getLocale?.()||'hi-IN';try{return window.FCLocale?.formatCurrency?window.FCLocale.formatCurrency(n,code,{maximumFractionDigits:0}):new Intl.NumberFormat(locale,{style:'currency',currency:code,maximumFractionDigits:0}).format(n);}catch(_){return new Intl.NumberFormat(locale,{maximumFractionDigits:0}).format(n)+' '+code;}};
@@ -65,6 +61,6 @@ const countryDefaults={IN:1000000,ID:100000000,BR:200000,BD:2000000,ES:100000,MX
 const applyCountryDefaults=()=>{const input=document.getElementById("principal");if(input&&input.value==="1000000")input.value=String(countryDefaults[window.FCLocale?.getCountry?.()||"IN"]||10000);};
 const updateCurrencyLabel=()=>{const label=document.querySelector('label[for="principal"]');if(!label)return;const code=window.FCLocale?.getCurrency?.()||"INR",locale=window.FCLocale?.getLocale?.()||"hi-IN";let symbol=code;try{symbol=new Intl.NumberFormat(locale,{style:"currency",currency:code}).formatToParts(0).find(part=>part.type==="currency")?.value||code;}catch(_){}label.textContent="लोन राशि ("+symbol+")";};function calculate(){const p=Number(document.getElementById("principal").value),annual=Number(document.getElementById("rate").value),y=Number(document.getElementById("years").value),m=Number(document.getElementById("months").value);const err=document.getElementById("error");err.textContent="";if(!Number.isFinite(p)||p<=0||!Number.isFinite(annual)||annual<0||annual>100||!Number.isInteger(y)||y<0||y>50||!Number.isInteger(m)||m<0||m>11||y*12+m<1){err.textContent="कृपया सही लोन राशि, 0–100% ब्याज दर और कम से कम 1 महीने की अवधि दर्ज करें।";return;}const n=y*12+m,r=annual/1200;const emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);const total=emi*n;document.getElementById("emi").textContent=money(emi);document.getElementById("interest").textContent=money(total-p);document.getElementById("total").textContent=money(total);document.getElementById("tenure-label").textContent="कुल अवधि: "+n+" महीने ("+y+" वर्ष और "+m+" महीने)। यह अनुमानित गणना है।";}document.getElementById("calculate").addEventListener("click",calculate);document.getElementById("reset").addEventListener("click",()=>{document.getElementById("principal").value=String(countryDefaults[window.FCLocale?.getCountry?.()||"IN"]||10000);document.getElementById("rate").value="9";document.getElementById("years").value="20";document.getElementById("months").value="0";calculate();});calculate();if(window.FCLocale){applyCountryDefaults();updateCurrencyLabel();calculate();}else window.addEventListener("fc:locale-ready",()=>{applyCountryDefaults();updateCurrencyLabel();calculate();},{once:true});window.addEventListener("fc:localechange",updateCurrencyLabel);window.addEventListener("fc:localechange",calculate);})();
 </script>
-<script src="/assets/site-shell.js" defer></script>
-<script src="/assets/hi-top10-visuals.js" defer></script>
+<script defer="" src="/assets/site-shell.js"></script>
+<script defer="" src="/assets/hi-top10-visuals.js"></script>
 </body></html>
