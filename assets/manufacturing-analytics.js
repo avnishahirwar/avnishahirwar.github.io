@@ -110,12 +110,56 @@
     "name": "Ideal Gas Law Calculator",
     "group": "materials_industrial_physics"
   },
+  "/calculators/ideal-gas-density-calculator.html": {
+    "name": "Ideal Gas Density Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/ideal-gas-pressure-calculator.html": {
+    "name": "Ideal Gas Pressure Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/ideal-gas-temperature-calculator.html": {
+    "name": "Ideal Gas Temperature Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/ideal-gas-volume-calculator.html": {
+    "name": "Ideal Gas Volume Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/boyles-law-calculator.html": {
+    "name": "Boyle's Law Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/stp-calculator-standard-temperature-and-pressure.html": {
+    "name": "STP Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/molar-mass-of-gas-calculator.html": {
+    "name": "Molar Mass of Gas Calculator",
+    "group": "materials_industrial_physics"
+  },
   "/calculators/pipe-volume.html": {
     "name": "Pipe Volume Calculator",
     "group": "materials_industrial_physics"
   },
   "/calculators/concrete-calculator.html": {
     "name": "Concrete Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/concrete-tube-calculator.html": {
+    "name": "Concrete Tube Volume Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/concrete-column-calculator.html": {
+    "name": "Concrete Column Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/concrete-cylinder-calculator.html": {
+    "name": "Concrete Cylinder Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/rebar-calculator.html": {
+    "name": "Rebar Calculator",
     "group": "materials_industrial_physics"
   },
   "/calculators/paint-calculator.html": {

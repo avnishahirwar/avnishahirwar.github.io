@@ -20,7 +20,12 @@ const groups = [
     'heat-capacity-calculator.html', 'pump-horsepower-calculator.html',
     '100-amp-wire-size-calculator.html', '24v-wire-size-calculator.html',
     'amp-to-wire-size-calculator.html', 'ideal-gas-law-calculator.html',
-    'pipe-volume.html', 'concrete-calculator.html', 'paint-calculator.html'
+    'ideal-gas-density-calculator.html', 'ideal-gas-pressure-calculator.html',
+    'ideal-gas-temperature-calculator.html', 'ideal-gas-volume-calculator.html',
+    'boyles-law-calculator.html', 'stp-calculator-standard-temperature-and-pressure.html',
+    'molar-mass-of-gas-calculator.html', 'pipe-volume.html', 'concrete-calculator.html',
+    'concrete-tube-calculator.html', 'concrete-column-calculator.html',
+    'concrete-cylinder-calculator.html', 'rebar-calculator.html', 'paint-calculator.html'
   ]},
   { key: 'inventory_costing_operations', title: 'Inventory, costing and operations', routes: [
     'inventory-turnover-calculator.html', 'ending-inventory-calculator.html',
@@ -78,7 +83,18 @@ const seo = {
   'pallet-calculator.html': ['Pallet Loading Calculator for Packaging | Friendly Calculator', 'Estimate how many boxes fit on a pallet from box and pallet dimensions. Use the result for preliminary packaging and warehouse planning.'],
   'roll-length-calculator.html': ['Roll Length Calculator for Materials | Friendly Calculator', 'Estimate roll length from outside diameter, core diameter and material thickness for paper, film, sheet and other rolled materials.'],
   'paper-weight-calculator.html': ['Paper Batch Weight Calculator | Friendly Calculator', 'Estimate paper batch weight from sheet size, GSM and quantity for packaging, printing and material purchasing calculations.'],
-  'paper-thickness-calculator.html': ['Paper Thickness Calculator for Materials | Friendly Calculator', 'Estimate paper thickness from basis weight and material assumptions for packaging, printing and converting work.']
+  'paper-thickness-calculator.html': ['Paper Thickness Calculator for Materials | Friendly Calculator', 'Estimate paper thickness from basis weight and material assumptions for packaging, printing and converting work.'],
+  'ideal-gas-density-calculator.html': ['Ideal Gas Density Calculator for Process Engineering | Friendly Calculator', 'Calculate ideal-gas density from pressure, temperature and molar mass for preliminary process and plant engineering estimates.'],
+  'ideal-gas-pressure-calculator.html': ['Ideal Gas Pressure Calculator for Process Engineering | Friendly Calculator', 'Calculate ideal-gas pressure from amount, temperature and volume using absolute units for preliminary process engineering estimates.'],
+  'ideal-gas-temperature-calculator.html': ['Ideal Gas Temperature Calculator for Process Engineering | Friendly Calculator', 'Calculate ideal-gas temperature from pressure, volume and amount using absolute units for preliminary process engineering estimates.'],
+  'ideal-gas-volume-calculator.html': ['Ideal Gas Volume Calculator for Process Engineering | Friendly Calculator', 'Calculate ideal-gas volume from amount, pressure and temperature using absolute units for preliminary process engineering estimates.'],
+  'boyles-law-calculator.html': ["Boyle's Law Calculator for Process Engineering | Friendly Calculator", 'Calculate the pressure or volume change of a fixed amount of gas at constant temperature for preliminary process engineering work.'],
+  'stp-calculator-standard-temperature-and-pressure.html': ['STP Gas Volume Calculator | Friendly Calculator', 'Calculate ideal-gas volume at standard temperature and pressure from the amount of substance for preliminary process and laboratory estimates.'],
+  'molar-mass-of-gas-calculator.html': ['Molar Mass of Gas Calculator | Friendly Calculator', 'Estimate a gas molar mass from sample mass, pressure, volume and temperature using the ideal gas equation.'],
+  'concrete-tube-calculator.html': ['Concrete Tube Volume Calculator for Plant Work | Friendly Calculator', 'Estimate concrete volume for a cylindrical tube or footing from diameter and height for facility and construction material planning.'],
+  'concrete-column-calculator.html': ['Concrete Column Volume Calculator | Friendly Calculator', 'Estimate concrete volume and material quantity for a cylindrical column from diameter and height for facility planning.'],
+  'concrete-cylinder-calculator.html': ['Concrete Cylinder Volume Calculator | Friendly Calculator', 'Calculate the volume of a cylindrical concrete form from radius or diameter and height for material planning.'],
+  'rebar-calculator.html': ['Rebar Weight and Cost Calculator | Friendly Calculator', 'Estimate reinforcing-bar mass and material cost from diameter, length, quantity and price for facility and construction planning.']
 };
 
 const related = {
