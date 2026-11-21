@@ -31,6 +31,7 @@ for (const [url, info] of byRoute) {
     if (!pattern.test(html)) throw new Error(`Metadata tag missing in ${url}: ${pattern}`);
     html = html.replace(pattern, replacement);
   }
+  html = html.replace(/\/assets\/generated-equation-calculator\.js(?:\?v=[^"]+)?/g, '/assets/generated-equation-calculator.js?v=2');
   const appUrl = `${site}${url}`;
   const name = title.replace(/\s*\| Friendly Calculator$/, '');
   const schema = { '@context':'https://schema.org', '@graph': [
