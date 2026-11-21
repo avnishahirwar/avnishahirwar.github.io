@@ -38,7 +38,7 @@ function walk(dir, relative = '') {
 }
 
 function readAttribute(tag, name) {
-  const pattern = new RegExp("\\\\b" + name + "\\\\s*=\\\\s*(?:\\\"([^\\\"]*)\\\"|'([^']*)')", 'i');
+  const pattern = new RegExp("\\b" + name + "\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)')", 'i');
   const match = tag.match(pattern);
   return match ? (match[1] !== undefined ? match[1] : match[2]) : null;
 }
