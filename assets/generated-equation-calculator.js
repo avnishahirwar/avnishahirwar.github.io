@@ -7,7 +7,7 @@
   const form=document.getElementById('calc'),out=document.getElementById('out');
   const safe=cfg.variables||[];
   safe.forEach(v=>{const l=document.createElement('label');l.textContent=v;const i=document.createElement('input');i.name=v;i.type='number';i.step='any';l.appendChild(i);form.appendChild(l)});
-  function jsExpr(s){return s.replace(/\^/g,'**').replace(/\bln\b/g,'Math.log').replace(/\blog10\b/g,'Math.log10').replace(/\bsqrt\b/g,'Math.sqrt').replace(/\babs\b/g,'Math.abs').replace(/\bpi\b/gi,'Math.PI').replace(/×/g,'*').replace(/÷/g,'/');}
+  function jsExpr(s){return s.replace(/\^/g,'**').replace(/\bln\b/g,'Math.log').replace(/\blog10\b/g,'Math.log10').replace(/\bsqrt\b/g,'Math.sqrt').replace(/\bpow\s*\(/g,'Math.pow(').replace(/\babs\b/g,'Math.abs').replace(/\bpi\b/gi,'Math.PI').replace(/×/g,'*').replace(/÷/g,'/');}
   document.getElementById('go').addEventListener('click',function(){
     const vals=Object.fromEntries([...form.elements].map(i=>[i.name,Number(i.value)]));
     const rows=[];
