@@ -17,7 +17,7 @@ test('public static pages have route-specific Open Graph and Twitter metadata', 
   });
   assert.equal(result.error, undefined, result.error && result.error.message);
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-  assert.match(result.stdout, /0 need repair/);
+  assert.match(result.stdout, /changed 0 pages/);
 });
 
 test('homepage has a readable search title, canonical URL, and social preview', () => {
