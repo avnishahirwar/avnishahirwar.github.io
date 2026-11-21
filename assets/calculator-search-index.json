@@ -21938,5 +21938,26 @@
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "unemployment rate calculator calculate a bls-style u.s. unemployment rate; not a benefits tool.",
     "description": "Calculate a BLS-style U.S. unemployment rate; not a benefits tool."
+  },
+  {
+    "name": "Accounts Payable Days Calculator",
+    "url": "/calculators/payables-days-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "accounts payable days calculator accounting finance ca business",
+    "description": "Estimate supplier payment days from average accounts payable and credit purchases."
+  },
+  {
+    "name": "Accounts Receivable Days Calculator",
+    "url": "/calculators/receivables-days-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "accounts receivable days calculator accounting finance ca business",
+    "description": "Estimate debtor days from average accounts receivable and credit sales."
+  },
+  {
+    "name": "Trial Balance Checker",
+    "url": "/calculators/trial-balance-checker.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "trial balance checker accounting finance ca business",
+    "description": "Check whether total debit and credit entries balance before preparing financial statements."
   }
 ]
