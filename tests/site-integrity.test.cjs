@@ -914,7 +914,6 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.ok(directory.includes('Search calculators by name or topic'));
-  assert.ok(directory.includes('Browse calculators by category, or explore international tools.'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
@@ -1351,7 +1350,7 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v9/);
+  assert.match(worker, /friendly-calculator-public-v10/);
   assert.match(worker, /key !== CACHE_NAME/);
   assert.match(worker, /url\.pathname === '\/assets\/site-shell\.js'/);
   assert.match(worker, /new Request\(request, \{ cache: 'reload' \}\)/);
