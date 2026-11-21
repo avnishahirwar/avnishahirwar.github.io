@@ -103,6 +103,19 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   await worldwide.close();
 }
 
+async function checkHumanSitemap(browser, name) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const response = await page.goto(new URL('/sitemap.html', origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  assert.ok(response && response.ok(), name + ': Human sitemap HTTP response');
+  await page.waitForFunction(() => document.querySelector('#sitemap-status')?.textContent.trim() === '3,129 entries across 36 categories.', null, { timeout: 15000 });
+  assert.equal(Number(await page.locator('[data-sitemap-total]').getAttribute('data-sitemap-total')), 3129, name + ': generated sitemap total');
+  assert.equal(await page.locator('.sitemap-category').count(), 36, name + ': sitemap category count');
+  assert.deepEqual(errors, [], name + ': human sitemap JavaScript errors');
+  await page.close();
+}
+
 async function checkPage(browser, url, label, viewport) {
   const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
   const errors = [];
@@ -154,6 +167,7 @@ async function checkPage(browser, url, label, viewport) {
       } else {
         browser = await engine.launch({ headless: true, ...launchOptions });
       }
+      await checkHumanSitemap(browser, name);
       for (const viewport of [{ width: 1365, height: 900 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
         const dims = await checkPage(browser, '/', name + ' homepage ' + viewport.width, viewport);
         results.push({ browser: name, page: '/', width: viewport.width, ...dims });
