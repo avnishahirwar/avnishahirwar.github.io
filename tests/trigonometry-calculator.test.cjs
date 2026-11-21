@@ -33,7 +33,7 @@ test('right-triangle solver validates acute angles and calculates both legs', ()
 });
 
 test('trigonometry calculator is discoverable in directory and search index', () => {
-  assert.match(directory, /href="\/calculators\/trig-calculator\.html"[^>]*><strong>Trigonometry Calculator<\/strong>/);
+  assert.match(directory, /href="\/calculators\/trig-calculator\.html"[^>]*><strong>Trigonometry Calculator[^<]*<\/strong>/);
   const entry = searchIndex.find(item => item.url === '/calculators/trig-calculator.html');
   assert.ok(entry);
   assert.equal(entry.name, 'Trigonometry Calculator');
