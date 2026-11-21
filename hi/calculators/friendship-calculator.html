@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Friendship Calculator – Fun Friendship Score | Friendly Calculator</title>
+<meta name="description" content="Try a fun friendship calculator with two names and get a playful friendship score. Just for entertainment—not a measure of real friendship or compatibility.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/calculators/friendship-calculator.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Friendship Calculator – Fun Friendship Score">
+<meta property="og:description" content="Enter two names to generate a playful friendship score. For entertainment only.">
+<meta property="og:url" content="https://friendlycalculator.in/hi/calculators/friendship-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Friendship Calculator – Fun Friendship Score">
+<meta name="twitter:description" content="A light-hearted friendship score for entertainment.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<style>
+:root{--ink:#172638;--muted:#596b7c;--line:#e0e5ea;--paper:#f5f6f8;--navy:#101c2c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+.fc-wrap{width:min(900px,92%);margin:0 auto}.fc-hero{padding:34px 0 12px}.fc-hero h1{font-size:clamp(2rem,5vw,2.8rem);line-height:1.15;margin:.35rem 0}.fc-muted{color:var(--muted)}
+.fc-panel,.fc-content{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.fc-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.fc-field{display:grid;gap:6px;font-weight:700}.fc-field input{width:100%;padding:12px;border:1px solid #aebbc7;border-radius:8px;font:inherit}
+.fc-btn{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer;margin-top:16px}.fc-btn:focus-visible,.fc-field input:focus-visible{outline:3px solid #b28a43;outline-offset:2px}
+.fc-result{display:none;margin-top:18px;padding:20px;background:#edf3f7;border-radius:12px;text-align:center}.fc-result[hidden]{display:none}.fc-score{display:block;font-size:clamp(2.6rem,8vw,4rem);line-height:1.15;font-weight:850;color:var(--navy)}
+.fc-note{border-left:4px solid #b28a43;padding:12px 15px;background:#faf7ef}.fc-faq details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 16px;margin:10px 0}.fc-faq summary{font-weight:750;cursor:pointer}.fc-faq p{color:var(--muted);margin-bottom:0}
+@media(max-width:620px){.fc-fields{grid-template-columns:1fr}.fc-panel,.fc-content{padding:17px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Friendship Calculator","applicationCategory":"EntertainmentApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://friendlycalculator.in/hi/calculators/friendship-calculator.html","description":"A light-hearted name-based friendship score generator for entertainment only. It does not measure real friendship or compatibility."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"All Calculators","item":"https://friendlycalculator.in/calculator/site-directory.html"},{"@type":"ListItem","position":3,"name":"Friendship Calculator","item":"https://friendlycalculator.in/hi/calculators/friendship-calculator.html"}]}</script>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/friendship-calculator.html"></head>
+<body>
+<main class="fc-wrap">
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/hi/calculator/site-directory.html">All Calculators</a> / Friendship Calculator</nav>
+<header class="fc-hero"><p class="fc-muted">FUN &amp; ENTERTAINMENT</p><h1>Friendship Calculator</h1><p class="fc-muted">Enter two first names to generate a light-hearted friendship score. Share the result for a little fun with friends.</p></header>
+<section class="fc-panel" aria-labelledby="friendship-form-title">
+<h2 id="friendship-form-title">Calculate your fun friendship score</h2>
+<form id="friendshipForm" novalidate>
+<div class="fc-fields">
+<div class="fc-field"><label for="friendOne">Your name</label><input id="friendOne" name="friendOne" type="text" maxlength="40" autocomplete="given-name" required placeholder="Enter first name"></div>
+<div class="fc-field"><label for="friendTwo">Friend's name</label><input id="friendTwo" name="friendTwo" type="text" maxlength="40" required placeholder="Enter friend's first name"></div>
+</div>
+<button class="fc-btn" type="submit">Calculate friendship score</button>
+</form>
+<div id="friendshipResult" class="fc-result" aria-live="polite" hidden>
+<p id="resultNames"></p><strong class="fc-score" id="resultScore"></strong><h3 id="resultMessage"></h3>
+<p class="fc-muted">This score is generated from the names for entertainment. It does not assess your relationship.</p>
+<button class="fc-btn" id="shareResult" type="button">Copy result</button>
+<p id="copyStatus" class="fc-muted" role="status"></p>
+</div>
+<p class="fc-note"><strong>Just for fun:</strong> a name-based score is not scientific and cannot tell how strong, healthy or meaningful a friendship is. Real friendships grow through trust, kindness, communication and shared experiences.</p>
+</section>
+<section class="fc-content"><h2>How this friendship calculator works</h2><p>The tool normalizes the two names and uses a repeatable, browser-side calculation to produce a playful score from 1 to 100. Entering the same pair of names produces the same score. The result is an entertainment feature, not a psychological test, prediction or compatibility assessment.</p><h2>How to use it</h2><ol><li>Enter your first name.</li><li>Enter your friend's first name.</li><li>Select <strong>Calculate friendship score</strong> to see the playful result.</li><li>Use Copy result if you want to share the text.</li></ol><h2>Privacy</h2><p>The calculation runs in your browser. The names are not submitted to a server or saved by this calculator. Avoid entering sensitive personal information.</p></section>
+<section class="fc-content fc-faq"><h2>Frequently asked questions</h2>
+<details><summary>Is the friendship score scientifically accurate?</summary><p>No. It is a playful name-based result created for entertainment. It cannot measure trust, loyalty, personality or the quality of a friendship.</p></details>
+<details><summary>Can a low score mean we are not good friends?</summary><p>No. The score has no real-world meaning. A good friendship is built through mutual respect, honesty, kindness and how people treat one another.</p></details>
+<details><summary>Are the names stored?</summary><p>No. This calculator processes the entered names locally in your browser and does not send them to a server.</p></details>
+<details><summary>Will the same names give the same result?</summary><p>Yes. The score is repeatable for the same pair of names, but it remains a game and not a real assessment.</p></details>
+</section>
+<section class="fc-content"><h2>Related calculators</h2><p>Explore the <a href="/hi/calculator/site-directory.html">complete calculator directory</a> for more free tools.</p></section>
+</main>
+<script>
+(()=>{'use strict';
+const form=document.getElementById('friendshipForm'),one=document.getElementById('friendOne'),two=document.getElementById('friendTwo'),result=document.getElementById('friendshipResult');
+let shareText='';
+function scoreFor(a,b){
+ const pair=[a.normalize('NFKC').trim().toLocaleLowerCase(),b.normalize('NFKC').trim().toLocaleLowerCase()].sort().join('|');
+ let hash=2166136261;
+ for(let i=0;i<pair.length;i++){hash^=pair.charCodeAt(i);hash=Math.imul(hash,16777619);}
+ return (hash>>>0)%100+1;
+}
+form.addEventListener('submit',event=>{
+ event.preventDefault();
+ const a=one.value.trim(),b=two.value.trim();
+ if(!a||!b){result.hidden=true;(a?two:one).focus();return;}
+ if(a.localeCompare(b,undefined,{sensitivity:'base'})===0){result.hidden=true;two.setCustomValidity('Enter two different names.');two.reportValidity();two.setCustomValidity('');return;}
+ const score=scoreFor(a,b);
+ const message=score>=80?'A great score for a fun friendship game!':score>=60?'A cheerful result for your friendship game!':score>=40?'A little score, lots of room for shared memories!':'Scores are just numbers—friendship is about how you treat each other!';
+ document.getElementById('resultNames').textContent=a+' + '+b;
+ document.getElementById('resultScore').textContent=score+'/100';
+ document.getElementById('resultMessage').textContent=message;
+ document.getElementById('copyStatus').textContent='';
+ shareText='Friendship Calculator: '+a+' + '+b+' = '+score+'/100 (for fun only) — https://friendlycalculator.in/hi/calculators/friendship-calculator.html';
+ result.hidden=false;
+ if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});
+});
+document.getElementById('shareResult').addEventListener('click',async()=>{
+ const status=document.getElementById('copyStatus');
+ try{await navigator.clipboard.writeText(shareText);status.textContent='Result copied.';}
+ catch(error){status.textContent='Copy is unavailable in this browser. You can select and copy the result text.';}
+});
+})();
+</script>
+<script src="/assets/site-shell.js" defer></script>
+</body>
+</html>

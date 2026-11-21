@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Insurance Premium Calculator | Friendly Calculator</title>
+<meta name="description" content="Estimate an insurance premium breakdown from the base premium, add-ons, discount and tax rate you enter. Supports multiple currencies and payment frequencies.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="Insurance Premium Calculator | Friendly Calculator"><meta property="og:description" content="Estimate an insurance premium breakdown using your own quote inputs."><meta property="og:url" content="https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Insurance Premium Calculator | Friendly Calculator"><meta name="twitter:description" content="Estimate an insurance premium breakdown using your own quote inputs."><meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Insurance Premium Calculator","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html","description":"Estimate an insurance premium breakdown from user-entered base premium, add-ons, discount and tax assumptions."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"All Calculators","item":"https://friendlycalculator.in/calculator/site-directory.html"},{"@type":"ListItem","position":3,"name":"Insurance Premium Calculator","item":"https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html"}]}</script>
+<style>
+:root{--n:#101c2c;--g:#d8bd82;--i:#172638;--m:#596b7c;--l:#e0e5ea;--p:#f5f6f8}*{box-sizing:border-box}body{margin:0;background:var(--p);color:var(--i);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}main{width:min(920px,92%);margin:30px auto 58px}nav{font-size:.9rem;color:var(--m)}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12;margin:.3em 0}.muted{color:var(--m)}.panel{background:#fff;border:1px solid var(--l);border-radius:16px;padding:22px;margin:20px 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.field{display:grid;gap:6px;font-weight:650}.field input,.field select{width:100%;min-width:0;padding:11px 12px;border:1px solid #b9c5cf;border-radius:8px;font:inherit}.field span{font-size:.92rem}.actions{margin-top:16px}button{border:0;border-radius:9px;background:var(--n);color:#fff;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--g);outline-offset:2px}.result{margin-top:16px;padding:16px;border-radius:10px;background:#edf3f7;overflow-wrap:anywhere}.result strong{font-size:1.12rem}.result ul{padding-left:20px}.error{color:#a32626;font-weight:650}.note{padding:13px;border-left:4px solid var(--g);background:#faf8f2;border-radius:6px}.faq details{border-top:1px solid var(--l);padding:12px 0}.faq summary{font-weight:700;cursor:pointer}@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+
+
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/insurance-premium-calculator.html"></head>
+<body><main>
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/hi/calculator/site-directory.html">All Calculators</a> / Insurance Premium Calculator</nav>
+<header><p class="muted">FRIENDLY CALCULATOR · FREE ONLINE TOOL</p><h1>Insurance Premium Calculator</h1><p class="muted">Estimate the premium breakdown for a life, health, motor, travel, property or other insurance quote using figures supplied by you.</p></header>
+<section class="panel">
+<h2>Calculate an estimated premium</h2>
+<form id="insurance-form">
+<div class="fields">
+<label class="field"><span>Insurance type</span><select id="policy-type"><option>Life insurance</option><option>Health insurance</option><option>Motor insurance</option><option>Travel insurance</option><option>Home / property insurance</option><option>Other insurance</option></select></label>
+<label class="field"><span>Currency</span><select id="currency"><option value="INR">INR — Indian Rupee</option><option value="USD">USD — US Dollar</option><option value="GBP">GBP — Pound Sterling</option><option value="EUR">EUR — Euro</option><option value="AED">AED — UAE Dirham</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option></select></label>
+<label class="field"><span>Base premium</span><input id="base-premium" type="number" min="0.01" step="any" value="12000" required></label>
+<label class="field"><span>Add-on / rider premium</span><input id="addon-premium" type="number" min="0" step="any" value="1500"></label>
+<label class="field"><span>Discount (amount)</span><input id="discount" type="number" min="0" step="any" value="500"></label>
+<label class="field"><span>Tax rate (%) — enter the applicable rate</span><input id="tax-rate" type="number" min="0" max="100" step="any" value="0"></label>
+<label class="field"><span>Payment frequency</span><select id="frequency"><option value="1">Annual — 1 payment</option><option value="2">Half-yearly — 2 payments</option><option value="4">Quarterly — 4 payments</option><option value="12">Monthly — 12 payments</option></select></label>
+</div>
+<div class="actions"><button type="submit">Calculate premium</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite">Enter your quote values and select Calculate premium.</div>
+<p class="note"><strong>Important:</strong> This is a quote-breakdown estimator, not an insurer quote. It does not calculate underwriting risk, age-based rates, medical loading, no-claim bonuses or policy-specific fees.</p>
+</section>
+<section class="panel"><h2>Formula and methodology</h2><p>First, add the base premium and optional add-on or rider premium. Subtract the discount you enter. The calculator then applies the tax rate you provide to that discounted amount.</p><p><strong>Premium before tax</strong> = Base premium + Add-on premium − Discount</p><p><strong>Estimated tax</strong> = Premium before tax × Tax rate ÷ 100</p><p><strong>Estimated total</strong> = Premium before tax + Estimated tax</p><p>The payment estimate divides the annual total by the number of payments selected. Some insurers add instalment charges or use different payment schedules; those are not included unless you account for them in your input.</p></section>
+<section class="panel"><h2>How to use this calculator</h2><ol><li>Choose the type of insurance and the currency shown on your quote.</li><li>Enter the base premium, optional add-ons and any discount from the insurer's illustration.</li><li>Enter the applicable tax rate from the current quote or official/provider source. The default is zero because rates vary by jurisdiction and product.</li><li>Select a payment frequency to see an equal-payment estimate.</li><li>Compare the result with the insurer's formal benefit illustration, policy wording and payment schedule.</li></ol><p class="muted">Calculations run locally in your browser. Do not enter policy numbers, identity documents, health details or other sensitive personal information.</p></section>
+<section class="panel"><h2>Worked example</h2><p>If the base premium is 12,000, add-ons are 1,500, the discount is 500 and the entered tax rate is 0%, the pre-tax estimate and total are both 13,000. Choosing quarterly payments gives an indicative 3,250 per payment. These are example inputs, not a market quote or a recommended policy price.</p></section>
+<section class="panel faq"><h2>Frequently asked questions</h2>
+<details><summary>Does this calculator provide an insurance quote?</summary><p>No. It adds values from a quote or illustration that you already have. An insurer determines the actual premium after applying its product terms, eligibility rules and underwriting process.</p></details>
+<details><summary>Does it know the current insurance tax rate?</summary><p>No. Tax rules can depend on the country, policy type and date. Enter the rate shown by the insurer or confirmed from an official source. The default is zero so the calculator does not assume a rate.</p></details>
+<details><summary>Can I use it for life, health, motor or travel insurance?</summary><p>Yes, as a general premium breakdown tool. It does not estimate risk-based pricing or decide how much cover you need for any of those products.</p></details>
+<details><summary>Why can the insurer's instalment differ?</summary><p>Payment mode charges, rounding, policy fees, taxes, underwriting changes and product-specific conditions can change the final amount. Use the insurer's written schedule as authoritative.</p></details>
+</section>
+</main>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/insurance-premium-calculator.js" defer></script>
+</body></html>

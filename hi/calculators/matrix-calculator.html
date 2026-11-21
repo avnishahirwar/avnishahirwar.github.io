@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matrix Calculator 2×2 and 3×3 | Friendly Calculator</title>
+<meta name="description" content="Add, subtract, multiply, transpose, find determinants and calculate inverses of 2×2 and 3×3 matrices with worked explanations.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/calculators/matrix-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Matrix Calculator 2×2 and 3×3">
+<meta property="og:description" content="Perform matrix arithmetic, determinants, transposes and inverses with worked explanations.">
+<meta property="og:url" content="https://friendlycalculator.in/hi/calculators/matrix-calculator.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Matrix Calculator 2×2 and 3×3">
+<meta name="twitter:description" content="Perform matrix arithmetic, determinants, transposes and inverses with worked explanations.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<style>
+.matrix-wrap{max-width:1080px;margin:28px auto;padding:0 18px;color:#202b36}
+.matrix-wrap h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;color:#101c2c}
+.matrix-wrap .intro{max-width:780px;color:#536273;line-height:1.65}
+.matrix-card{background:#fff;border:1px solid #d9e0e6;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 4px 18px #101c2c08}
+.matrix-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.matrix-controls label,.matrix-field label{display:grid;gap:6px;font-weight:650;font-size:.94rem}
+.matrix-wrap input,.matrix-wrap select{width:100%;min-height:42px;border:1px solid #cbd5df;border-radius:8px;padding:9px 10px;background:#fff;color:#172638}
+.matrix-controls select{min-width:190px}
+.matrix-grids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+.matrix-grid{display:grid;gap:8px;max-width:340px}
+.matrix-grid[data-size="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.matrix-grid[data-size="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.matrix-grid input{text-align:center;font-variant-numeric:tabular-nums}
+.matrix-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.matrix-actions button{border:0;border-radius:8px;padding:11px 16px;background:#101c2c;color:#fff;font-weight:700;cursor:pointer}
+.matrix-actions button.secondary{background:#e9eef3;color:#172638}
+.matrix-result{overflow-x:auto;line-height:1.65}
+.matrix-result table{border-collapse:collapse;margin:12px 0}
+.matrix-result td{border:1px solid #d9e0e6;padding:8px 14px;text-align:right;font-variant-numeric:tabular-nums}
+.matrix-result .steps{padding-left:22px}
+.matrix-note{color:#5c6875;font-size:.92rem}
+.matrix-error{color:#9c2b20;font-weight:650}
+.matrix-success{color:#17633d;font-weight:650}
+.matrix-privacy{border-left:4px solid #4a7a62;background:#f2f7f3;padding:12px 14px;border-radius:6px}
+@media(max-width:700px){.matrix-grids{grid-template-columns:1fr}.matrix-card{padding:15px}.matrix-controls>*{flex:1 1 100%}.matrix-controls select{min-width:0}}
+</style>
+
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+
+
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/hi/calculators/matrix-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/calculators/matrix-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/matrix-calculator.html"></head>
+<body>
+<main class="matrix-wrap">
+<p class="eyebrow">ADVANCED MATHEMATICS · BROWSER-BASED TOOL</p>
+<h1>Matrix Calculator</h1>
+<p class="intro">Work with 2×2 and 3×3 matrices. Add, subtract, multiply, transpose, calculate determinants and find matrix inverses. The result includes worked arithmetic and step-by-step method details for each operation.</p>
+<section class="matrix-card" aria-labelledby="matrix-input-title">
+<h2 id="matrix-input-title">Enter your matrices</h2>
+<div class="matrix-controls">
+<label>Matrix size
+<select id="matrixSize"><option value="2">2 × 2</option><option value="3" selected>3 × 3</option></select>
+</label>
+<label>Operation
+<select id="matrixOperation">
+<option value="add">Addition (A + B)</option>
+<option value="subtract">Subtraction (A − B)</option>
+<option value="multiply">Multiplication (A × B)</option>
+<option value="transpose">Transpose (Aᵀ)</option>
+<option value="determinant">Determinant det(A)</option>
+<option value="inverse">Inverse A⁻¹</option>
+</select>
+</label>
+</div>
+<div class="matrix-grids">
+<div class="matrix-field"><h3>Matrix A</h3><div id="matrixA" class="matrix-grid" data-size="3"></div></div>
+<div class="matrix-field" id="matrixBField"><h3>Matrix B</h3><div id="matrixB" class="matrix-grid" data-size="3"></div></div>
+</div>
+<div class="matrix-actions">
+<button type="button" id="calculateMatrix">Calculate</button>
+<button type="button" class="secondary" id="resetMatrix">Reset examples</button>
+</div>
+<p class="matrix-note">Enter finite numbers. Inverse is available only when the determinant is non-zero. Matrix multiplication uses rows of A and columns of B.</p>
+</section>
+<section class="matrix-card" aria-live="polite" aria-labelledby="matrix-result-title">
+<h2 id="matrix-result-title">Result and method</h2>
+<div id="matrixResult" class="matrix-result"><p class="matrix-note">Choose an operation and select Calculate to see the result.</p></div>
+</section>
+<p class="matrix-privacy"><strong>Privacy:</strong> This matrix tool performs calculations in your browser. Matrix entries are not sent to Friendly Calculator by this tool. The website may still use standard analytics and essential site technologies.</p>
+<section class="matrix-card">
+<h2>Matrix formulas</h2>
+<ul>
+<li>Addition and subtraction operate on corresponding elements.</li>
+<li>Multiplication uses row-by-column dot products.</li>
+<li>The determinant indicates whether a square matrix has an inverse.</li>
+<li>The transpose exchanges rows and columns.</li>
+<li>An inverse exists only when det(A) is not zero.</li>
+</ul>
+<p class="matrix-note">This tool supports square 2×2 and 3×3 matrices. It is an educational calculator, not a computer algebra system for arbitrary matrix dimensions.</p>
+</section>
+<p><a href="/hi/calculators/scientific-calculator.html">Scientific Calculator</a> · <a href="/hi/calculators/matrix-determinant-calculator.html">3×3 Determinant Calculator</a> · <a href="/hi/calculator/site-directory.html">All Calculators</a></p>
+</main>
+<script src="/assets/matrix-calculator.js" defer></script>
+<script src="/assets/site-shell.js" defer></script>
+</body>
+</html>

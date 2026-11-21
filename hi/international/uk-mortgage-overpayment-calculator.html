@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UK Mortgage Overpayment Calculator | Friendly Calc</title>
+<meta name="description" content="Estimate how regular UK mortgage overpayments could reduce total interest and shorten your repayment term. Enter your GBP balance, rate, remaining term and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html">
+<link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="UK Mortgage Overpayment Calculator | Friendly Calculator">
+<meta property="og:description" content="Compare UK mortgage interest and payoff time with regular monthly overpayments.">
+<meta property="og:url" content="https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">[
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"UK Mortgage Overpayment Calculator","url":"https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true},
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How are overpayments modelled?","acceptedAnswer":{"@type":"Answer","text":"The calculator assumes a fixed interest rate and regular monthly overpayments that reduce the outstanding balance and shorten the repayment term."}},
+{"@type":"Question","name":"Does it include early repayment charges?","acceptedAnswer":{"@type":"Answer","text":"No. Check your mortgage offer for overpayment allowances, early repayment charges and lender-specific rules."}},
+{"@type":"Question","name":"Will my lender reduce my monthly payment?","acceptedAnswer":{"@type":"Answer","text":"This model keeps the regular scheduled payment unchanged and applies overpayments to shorten the term. Your lender may handle overpayments differently."}}
+]}]</script>
+<style>
+body{margin:0;background:#f5f7f9;color:#172638;font:16px/1.7 system-ui,sans-serif}
+main{width:min(920px,92%);margin:28px auto 56px}
+.hero{background:#101c2c;color:#fff;padding:26px;border-radius:14px}.hero p{color:#dce5ed}
+.panel{background:#fff;border:1px solid #dfe5eb;border-radius:12px;padding:20px;margin:18px 0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.field{display:grid;gap:6px;font-weight:650}.field input{padding:11px;border:1px solid #aeb9c4;border-radius:8px;font:inherit}
+button{background:#101c2c;color:#fff;border:0;border-radius:8px;padding:11px 18px;font-weight:750;margin-top:14px;cursor:pointer}
+.result{background:#edf3f7;padding:16px;border-radius:10px;margin-top:16px}.error{color:#a21b1b;font-weight:700}.muted{color:#5c6d7e}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:0}
+.results-grid div{background:#fff;border:1px solid #dce4eb;border-radius:8px;padding:12px}
+.results-grid dt{font-size:.9rem;color:#536579}.results-grid dd{font-size:1.2rem;font-weight:800;margin:4px 0 0}
+.results-grid .total{border:2px solid #294d6d}
+.faq details{border-top:1px solid #dfe5eb;padding:12px 0}.faq summary{font-weight:700;cursor:pointer}
+@media(max-width:600px){.panel{padding:16px}.fields{grid-template-columns:1fr}}
+</style>
+
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:title" content="UK Mortgage Overpayment Calculator | Friendly Calc">
+<meta name="twitter:description" content="Estimate how regular UK mortgage overpayments could reduce total interest and shorten your repayment term. Enter your GBP balance, rate, remaining term and…">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/international/uk-mortgage-overpayment-calculator.html"></head>
+<body><main>
+<nav><a href="/">Home</a> / <a href="/hi/international/">International</a> / <a href="/uk/">United Kingdom</a></nav>
+<header class="hero"><p>UNITED KINGDOM · GBP</p><h1>UK Mortgage Overpayment Calculator</h1><p>Compare the estimated interest and repayment time with and without regular monthly overpayments.</p></header>
+<section class="panel"><h2>Calculate your overpayment scenario</h2>
+<form id="uk-overpayment-form">
+<div class="fields">
+<label class="field">Outstanding mortgage balance (£)<input id="uk-overpayment-balance" type="number" min="0.01" step="0.01" value="200000" required></label>
+<label class="field">Annual interest rate (%)<input id="uk-overpayment-rate" type="number" min="0" max="100" step="0.01" value="4.5" required></label>
+<label class="field">Remaining term (years)<input id="uk-overpayment-term" type="number" min="0.1" max="50" step="0.1" value="20" required></label>
+<label class="field">Extra monthly overpayment (£)<input id="uk-overpayment-extra" type="number" min="0" step="0.01" value="150" required></label>
+</div>
+<button type="submit">Compare mortgage scenarios</button>
+<p id="uk-overpayment-error" class="error" role="alert"></p>
+<div id="uk-overpayment-result" class="result" aria-live="polite">Enter your mortgage details to compare scenarios.</div>
+</form></section>
+<section class="panel"><h2>How this estimate works</h2><ul><li>The standard repayment is calculated from the outstanding balance, annual rate and remaining term.</li><li>The overpayment scenario keeps that regular payment unchanged and adds your extra monthly amount to reduce the balance.</li><li>Interest is estimated monthly on the remaining balance; the final payment is adjusted to clear the balance.</li><li>Results are illustrative and assume the interest rate stays constant for the full remaining term.</li></ul></section>
+<section class="panel"><h2>Check your mortgage terms</h2><p>Some lenders limit how much you can overpay without an early repayment charge. Fixed-rate, tracker and variable-rate products may have different rules. Check your mortgage offer and lender before making additional payments.</p><p class="muted">This estimate does not include fees, changing interest rates, payment-date conventions, daily interest, offset accounts, payment holidays, tax effects or lender-specific overpayment allocation. It assumes overpayments reduce the term rather than recalculate the regular payment.</p><p><a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/should-you-overpay-your-mortgage" rel="noopener noreferrer">MoneyHelper: Should you overpay your mortgage?</a></p></section>
+<section class="panel faq"><h2>Frequently asked questions</h2>
+<details><summary>How are overpayments modelled?</summary><p>The calculator assumes a fixed interest rate and regular monthly overpayments that reduce the outstanding balance and shorten the repayment term.</p></details>
+<details><summary>Does it include early repayment charges?</summary><p>No. Check your mortgage offer for overpayment allowances, early repayment charges and lender-specific rules.</p></details>
+<details><summary>Will my lender reduce my monthly payment?</summary><p>This model keeps the regular scheduled payment unchanged and applies overpayments to shorten the term. Your lender may handle overpayments differently.</p></details>
+</section>
+<p class="muted">Free educational estimate. Not mortgage, legal or financial advice. Confirm overpayment terms with your lender.</p>
+</main>
+<script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script><script src="/assets/uk-mortgage-overpayment-calculator.js" defer></script>
+</body></html>

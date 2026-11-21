@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image Resizer &amp; Converter Online | Friendly Calculator</title>
+<meta name="description" content="Resize and convert PNG, JPG, WebP and GIF images in your browser. Choose output dimensions and format; your image files are not uploaded.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/hi/calculator/image-tools.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Browser Image Resizer & Converter">
+<meta property="og:description" content="Resize and convert images locally in your browser without uploading the original file.">
+<meta property="og:url" content="https://friendlycalculator.in/hi/calculator/image-tools.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Browser Image Resizer & Converter">
+<meta name="twitter:description" content="Resize and convert images locally in your browser.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<style>
+.image-tool{max-width:1040px;margin:28px auto;padding:0 18px;color:#202b36}
+.image-tool h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;color:#101c2c}
+.image-tool .intro{max-width:760px;color:#536273;line-height:1.65}
+.image-card{background:#fff;border:1px solid #d9e0e6;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 4px 18px #101c2c08}
+.image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.image-tool label{display:grid;gap:6px;font-weight:650;font-size:.94rem}
+.image-tool input,.image-tool select{width:100%;min-height:42px;border:1px solid #cbd5df;border-radius:8px;padding:9px 10px;background:#fff;color:#172638}
+.image-tool input[type=checkbox]{width:auto;min-height:0}
+.image-tool input[type=range]{padding:0}
+.image-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:14px 0}
+.image-row label{display:flex;align-items:center;gap:8px}
+.image-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.image-actions button,.image-actions a{border:0;border-radius:8px;padding:11px 16px;background:#101c2c;color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.image-actions button:disabled{opacity:.45;cursor:not-allowed}
+.image-actions .secondary{background:#e9eef3;color:#172638}
+.image-preview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.image-preview figure{margin:0;min-width:0}
+.image-preview img{display:block;max-width:100%;max-height:320px;margin:auto;object-fit:contain;background:repeating-conic-gradient(#f0f2f4 0% 25%,#fff 0% 50%) 50%/20px 20px;border:1px solid #d9e0e6;border-radius:8px}
+.image-preview figcaption{font-size:.9rem;color:#536273;margin-top:8px}
+.image-status{min-height:1.5em;color:#17633d;font-weight:650}
+.image-error{color:#9c2b20;font-weight:650}
+.image-privacy{border-left:4px solid #4a7a62;background:#f2f7f3;padding:12px 14px;border-radius:6px}
+.image-note{font-size:.9rem;color:#5c6875;line-height:1.55}
+@media(max-width:680px){.image-grid,.image-preview{grid-template-columns:1fr}.image-card{padding:15px}}
+</style>
+
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculator/image-tools.html"></head>
+<body>
+<main class="image-tool">
+<p class="eyebrow">BROWSER-BASED IMAGE UTILITY</p>
+<h1>Image Resizer & Converter</h1>
+<p class="intro">Resize raster images and convert between PNG, JPEG and WebP. Select an image, set its output dimensions, preview the result and download it.</p>
+<section class="image-card" aria-labelledby="image-input-title">
+<h2 id="image-input-title">Choose an image</h2>
+<label>Image file (PNG, JPG, WebP or GIF)
+<input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+</label>
+<p class="image-note">Maximum input size: 20 MB. GIF files are resized from their first displayed frame. SVG files are not accepted.</p>
+<div class="image-grid">
+<label>Output width (px)<input id="imageWidth" type="number" min="1" max="6000" value="1200" disabled></label>
+<label>Output height (px)<input id="imageHeight" type="number" min="1" max="6000" value="800" disabled></label>
+<label>Output format
+<select id="imageFormat" disabled><option value="image/webp">WebP</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option></select>
+</label>
+<label>Quality for JPEG / WebP
+<input id="imageQuality" type="range" min="0.1" max="1" step="0.05" value="0.85" disabled>
+</label>
+</div>
+<div class="image-row">
+<label><input id="keepRatio" type="checkbox" checked disabled> Keep aspect ratio</label>
+<span id="sourceInfo" class="image-note">No image selected.</span>
+</div>
+<div class="image-actions">
+<button id="resizeImage" type="button" disabled>Resize & Convert</button>
+<button id="resetImage" type="button" class="secondary">Reset</button>
+<a id="downloadImage" hidden download="friendly-calculator-image.webp">Download image</a>
+</div>
+<p id="imageStatus" class="image-status" role="status" aria-live="polite"></p>
+</section>
+<section class="image-card">
+<h2>Preview</h2>
+<div class="image-preview">
+<figure><img id="originalPreview" alt="Original image preview" hidden><figcaption id="originalCaption">Original image</figcaption></figure>
+<figure><img id="outputPreview" alt="Resized image preview" hidden><figcaption id="outputCaption">Resized image</figcaption></figure>
+</div>
+</section>
+<p class="image-privacy"><strong>Privacy:</strong> Image decoding, resizing and conversion happen locally in your browser. This tool does not upload your selected image to Friendly Calculator or a third-party processing service.</p>
+<section class="image-card">
+<h2>Supported formats and limitations</h2>
+<ul>
+<li>Input: PNG, JPEG, WebP and GIF (first frame only).</li>
+<li>Output: PNG, JPEG and WebP, depending on browser support.</li>
+<li>Maximum output dimension: 6,000 pixels per side and 20 megapixels total.</li>
+<li>Transparent areas are preserved in PNG and WebP. JPEG output uses a white background.</li>
+<li>Animated GIF frames, metadata, EXIF details and colour profiles are not preserved as a complete original file.</li>
+</ul>
+<p class="image-note">The output is a newly rendered image. Keep your original file if you need animation, metadata or archival fidelity.</p>
+</section>
+<p><a href="/hi/calculator/site-directory.html">All tools and calculators</a> · <a href="/hi/calculator/privacy.html">Privacy Policy</a></p>
+</main>
+<script src="/assets/image-tools.js" defer></script>
+<script src="/assets/site-shell.js" defer></script>
+</body>
+</html>
