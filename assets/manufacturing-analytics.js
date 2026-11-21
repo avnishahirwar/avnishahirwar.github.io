@@ -2,168 +2,36 @@
 (() => {
   'use strict';
   const catalogue = {
-  "/calculators/dividend-yield-calculator.html": {
-    "name": "Dividend Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/inventory-turnover-calculator.html": {
-    "name": "Inventory Turnover Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/paper-weight-calculator.html": {
-    "name": "Paper Weight Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/absolute-value-inequalities-calculator.html": {
-    "name": "Absolute Value Inequality Calculator",
+  "/calculators/takt-time-calculator.html": {
+    "name": "Takt Time Calculator",
     "group": "production_quality"
   },
-  "/calculators/concrete-calculator.html": {
-    "name": "Concrete Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/paint-calculator.html": {
-    "name": "Paint Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/dry-to-cooked-pasta-calculator.html": {
-    "name": "Dry to Cooked Pasta Converter",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/uncooked-to-cooked-rice-calculator.html": {
-    "name": "Uncooked to Cooked Rice Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/crop-cost-profit-calculator.html": {
-    "name": "Crop Cost & Profit Calculator",
+  "/calculators/cycle-time-calculator.html": {
+    "name": "Cycle Time Calculator",
     "group": "production_quality"
   },
-  "/calculators/crop-yield-sale-value-calculator.html": {
-    "name": "Crop Yield & Sale Value Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/graphing-inequalities-number-line-calculator.html": {
-    "name": "Graphing Inequalities on a Number Line Calculator",
+  "/calculators/lead-time-calculator.html": {
+    "name": "Lead Time Calculator",
     "group": "production_quality"
-  },
-  "/calculators/inequality-to-interval-notation-calculator.html": {
-    "name": "Inequality to Interval Notation Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/fte-calculator.html": {
-    "name": "Full-Time Equivalent (FTE) Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/molar-mass-of-gas-calculator.html": {
-    "name": "Molar Mass of Gas Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/actual-yield-calculator.html": {
-    "name": "Actual Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/buffer-capacity-calculator.html": {
-    "name": "Buffer Capacity Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/water-hardness-calculator.html": {
-    "name": "Water Hardness Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/theoretical-yield-calculator.html": {
-    "name": "Theoretical Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/langmuir-isotherm-calculator.html": {
-    "name": "Langmuir Isotherm Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/rebar-calculator.html": {
-    "name": "Rebar Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/steel-weight-calculator.html": {
-    "name": "Steel Weight Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/percent-yield-calculator.html": {
-    "name": "Percent Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/concrete-tube-calculator.html": {
-    "name": "Concrete Tube Volume Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/countersink-depth-calculator.html": {
-    "name": "Countersink Depth Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/gmroi-calculator.html": {
-    "name": "GMROI Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/dog-quality-of-life-calculator.html": {
-    "name": "Dog Quality of Life Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/cat-quality-of-life-calculator.html": {
-    "name": "Cat Quality of Life Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/corn-yield-calculator.html": {
-    "name": "Corn Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/plant-population-calculator.html": {
-    "name": "Plant Population Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/plant-spacing-calculator.html": {
-    "name": "Plant Spacing Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/vegetable-yield-calculator.html": {
-    "name": "Vegetable Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/metal-weight-calculator.html": {
-    "name": "Metal Weight Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/concrete-column-calculator.html": {
-    "name": "Concrete Column Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/concrete-stairs-calculator.html": {
-    "name": "Concrete Stairs Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/metal-roof-cost-calculator.html": {
-    "name": "Metal Roof Cost Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/concrete-driveway-cost-calculator.html": {
-    "name": "Concrete Driveway Cost Calculator",
-    "group": "materials_industrial_physics"
   },
   "/calculators/material-removal-rate-calculator.html": {
     "name": "Material Removal Rate Calculator",
     "group": "production_quality"
   },
-  "/calculators/pitch-diameter-calculator.html": {
-    "name": "Pitch Diameter Calculator",
+  "/calculators/spindle-speed-calculator.html": {
+    "name": "Spindle Speed Calculator",
     "group": "production_quality"
   },
   "/calculators/punch-force-calculator.html": {
     "name": "Punch Force Calculator",
     "group": "production_quality"
   },
-  "/calculators/rivet-size-calculator.html": {
-    "name": "Rivet Size Calculator",
+  "/calculators/countersink-depth-calculator.html": {
+    "name": "Countersink Depth Calculator",
     "group": "production_quality"
   },
-  "/calculators/spindle-speed-calculator.html": {
-    "name": "Spindle Speed Calculator",
+  "/calculators/pitch-diameter-calculator.html": {
+    "name": "Pitch Diameter Calculator",
     "group": "production_quality"
   },
   "/calculators/thread-pitch-calculator.html": {
@@ -174,89 +42,9 @@
     "name": "True Position Calculator",
     "group": "production_quality"
   },
-  "/calculators/concrete-cylinder-calculator.html": {
-    "name": "Concrete Cylinder Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/post-hole-concrete-calculator.html": {
-    "name": "Post Hole Concrete Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/plastic-footprint-calculator.html": {
-    "name": "Plastic Footprint Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/reduce-your-plastic-calculator.html": {
-    "name": "Reduce Your Plastic Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/global-plastic-policy-calculator.html": {
-    "name": "Global Plastic Policy Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/carrying-capacity-calculator.html": {
-    "name": "Carrying Capacity Calculator",
+  "/calculators/rivet-size-calculator.html": {
+    "name": "Rivet Size Calculator",
     "group": "production_quality"
-  },
-  "/calculators/fuel-pump-calculator.html": {
-    "name": "Fuel Pump Calculator",
-    "group": "related_plant_facility"
-  },
-  "/calculators/roll-length-calculator.html": {
-    "name": "Roll Length Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/cycle-time-calculator.html": {
-    "name": "Cycle Time Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/lead-time-calculator.html": {
-    "name": "Lead Time Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/paper-thickness-calculator.html": {
-    "name": "Paper Thickness Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/direct-material-price-variance-calculator.html": {
-    "name": "Direct Material Price Variance Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/capital-gains-yield-calculator.html": {
-    "name": "Capital Gains Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/effective-annual-yield-calculator.html": {
-    "name": "Effective Annual Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/bond-current-yield-calculator.html": {
-    "name": "Bond Current Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/bond-equivalent-yield-calculator.html": {
-    "name": "Bond Equivalent Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/bond-yield-calculator.html": {
-    "name": "Bond Yield Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/yield-to-call-calculator.html": {
-    "name": "Yield to Call Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/ending-inventory-calculator.html": {
-    "name": "Ending Inventory Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/cobb-douglas-production-function-calculator.html": {
-    "name": "Cobb-Douglas Production Function Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/california-overtime-calculator.html": {
-    "name": "California Overtime Calculator",
-    "group": "inventory_costing_operations"
   },
   "/calculators/brinell-hardness-number-calculator.html": {
     "name": "Brinell Hardness Number Calculator",
@@ -270,20 +58,40 @@
     "name": "Vickers Hardness Number Calculator",
     "group": "production_quality"
   },
-  "/calculators/pump-horsepower-calculator.html": {
-    "name": "Pump Horsepower Calculator",
+  "/calculators/cobb-douglas-production-function-calculator.html": {
+    "name": "Cobb-Douglas Production Function Calculator",
+    "group": "production_quality"
+  },
+  "/calculators/metal-weight-calculator.html": {
+    "name": "Metal Weight Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/bug-rivet-paradox.html": {
-    "name": "Bug-Rivet Paradox",
-    "group": "production_quality"
+  "/calculators/steel-weight-calculator.html": {
+    "name": "Steel Weight Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/size-to-weight-calculator-rectangular-box.html": {
+    "name": "Size to Weight Calculator (Rectangular Box)",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/density-to-mass-calculator.html": {
+    "name": "Density To Mass Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/density-to-weight-calculator.html": {
+    "name": "Density to Weight Calculator",
+    "group": "materials_industrial_physics"
+  },
+  "/calculators/mass-to-density-calculator.html": {
+    "name": "Mass to Density Calculator",
+    "group": "materials_industrial_physics"
   },
   "/calculators/heat-capacity-calculator.html": {
     "name": "Heat Capacity Calculator",
-    "group": "production_quality"
+    "group": "materials_industrial_physics"
   },
-  "/calculators/ideal-gas-density-calculator.html": {
-    "name": "Ideal Gas Density Calculator",
+  "/calculators/pump-horsepower-calculator.html": {
+    "name": "Pump Horsepower Calculator",
     "group": "materials_industrial_physics"
   },
   "/calculators/100-amp-wire-size-calculator.html": {
@@ -298,29 +106,61 @@
     "name": "Amp to Wire Size Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/density-to-mass-calculator.html": {
-    "name": "Density To Mass Calculator",
+  "/calculators/ideal-gas-law-calculator.html": {
+    "name": "Ideal Gas Law Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/density-to-weight-calculator.html": {
-    "name": "Density to Weight Calculator",
+  "/calculators/pipe-volume.html": {
+    "name": "Pipe Volume Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/ideal-gas-pressure-calculator.html": {
-    "name": "Ideal Gas Pressure Calculator",
+  "/calculators/concrete-calculator.html": {
+    "name": "Concrete Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/ideal-gas-temperature-calculator.html": {
-    "name": "Ideal Gas Temperature Calculator",
+  "/calculators/paint-calculator.html": {
+    "name": "Paint Calculator",
     "group": "materials_industrial_physics"
   },
-  "/calculators/ideal-gas-volume-calculator.html": {
-    "name": "Ideal Gas Volume Calculator",
-    "group": "materials_industrial_physics"
+  "/calculators/inventory-turnover-calculator.html": {
+    "name": "Inventory Turnover Calculator",
+    "group": "inventory_costing_operations"
   },
-  "/calculators/mass-to-density-calculator.html": {
-    "name": "Mass to Density Calculator",
-    "group": "materials_industrial_physics"
+  "/calculators/ending-inventory-calculator.html": {
+    "name": "Ending Inventory Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/fifo-calculator-for-inventory.html": {
+    "name": "FIFO Calculator for Inventory",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/lifo-calculator-for-inventory.html": {
+    "name": "LIFO Calculator for Inventory",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/direct-material-price-variance-calculator.html": {
+    "name": "Direct Material Price Variance Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/labor-cost-calculator.html": {
+    "name": "Labor Cost Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/fte-calculator.html": {
+    "name": "Full-Time Equivalent (FTE) Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/gmroi-calculator.html": {
+    "name": "GMROI Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/cogs-calculator.html": {
+    "name": "COGS Calculator",
+    "group": "inventory_costing_operations"
+  },
+  "/calculators/cash-conversion-cycle-calculator.html": {
+    "name": "Cash Conversion Cycle Calculator",
+    "group": "inventory_costing_operations"
   },
   "/calculators/dimensional-weight-calculator.html": {
     "name": "Dimensional Weight Calculator",
@@ -330,56 +170,16 @@
     "name": "Pallet Calculator",
     "group": "inventory_costing_operations"
   },
-  "/calculators/takt-time-calculator.html": {
-    "name": "Takt Time Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/property-investment-calculator.html": {
-    "name": "Property Investment Calculator",
+  "/calculators/roll-length-calculator.html": {
+    "name": "Roll Length Calculator",
     "group": "inventory_costing_operations"
   },
-  "/calculators/boyles-law-calculator.html": {
-    "name": "Boyle's Law Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/fifo-calculator-for-inventory.html": {
-    "name": "FIFO Calculator for Inventory",
+  "/calculators/paper-weight-calculator.html": {
+    "name": "Paper Weight Calculator",
     "group": "inventory_costing_operations"
   },
-  "/calculators/ideal-gas-law-calculator.html": {
-    "name": "Ideal Gas Law Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/labor-cost-calculator.html": {
-    "name": "Labor Cost Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/lifo-calculator-for-inventory.html": {
-    "name": "LIFO Calculator for Inventory",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/pipe-volume.html": {
-    "name": "Pipe Volume Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/wind-turbine-calculator.html": {
-    "name": "Wind Turbine Calculator",
-    "group": "production_quality"
-  },
-  "/calculators/yield-to-maturity-calculator.html": {
-    "name": "Yield to Maturity Calculator",
-    "group": "inventory_costing_operations"
-  },
-  "/calculators/stp-calculator-standard-temperature-and-pressure.html": {
-    "name": "STP Calculator",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/size-to-weight-calculator-rectangular-box.html": {
-    "name": "Size to Weight Calculator (Rectangular Box)",
-    "group": "materials_industrial_physics"
-  },
-  "/calculators/property-cash-on-cash-calculator.html": {
-    "name": "Property Cash-on-Cash Return Calculator",
+  "/calculators/paper-thickness-calculator.html": {
+    "name": "Paper Thickness Calculator",
     "group": "inventory_costing_operations"
   }
 };
@@ -389,7 +189,7 @@
   if (!isHub && !item) return;
   window.__fcAnalyticsCategory = 'manufacturing';
   window.__fcAnalyticsGroup = isHub ? 'hub' : item.group;
-  window.__fcAnalyticsCalculatorName = isHub ? 'Worldwide Manufacturing Calculators' : item.name;
+  window.__fcAnalyticsCalculatorName = isHub ? 'Manufacturing Calculators' : item.name;
   const send = (name, params) => {
     if (typeof window.gtag === 'function') window.gtag('event', name, params);
   };
