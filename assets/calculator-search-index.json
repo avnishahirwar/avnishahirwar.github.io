@@ -1,5 +1,12 @@
 [
   {
+    "name": "₹5,000 Monthly SIP Scenario",
+    "url": "/calculators/sip-5000-monthly-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sip 5000 monthly scenario 10 year worked example",
+    "description": "Explore a worked ₹5,000 monthly SIP scenario."
+  },
+  {
     "name": "0-60 Calculator",
     "url": "/calculators/0-60-calculator.html",
     "category": "EVERYDAY LIFE",
@@ -105,6 +112,13 @@
     "description": "3D Printer - Buy vs Outsource Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "3D Vector Calculator",
+    "url": "/calculators/vector-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "3d vector calculator dot product cross product magnitude",
+    "description": "Calculate dot product, cross product and vector magnitudes for two 3D vectors."
+  },
+  {
     "name": "3x Rent Calculator",
     "url": "/calculators/3x-rent-calculator.html",
     "category": "FINANCE",
@@ -117,13 +131,6 @@
     "category": "OTHER",
     "keywords": "4:3 aspect ratio calculator",
     "description": "4:3 Aspect Ratio Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "US 401(k) Growth Calculator",
-    "url": "/calculators/401k-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "US 401k retirement account employee contribution employer match growth projection",
-    "description": "Estimate a simplified 401(k) balance with employee contributions and employer matching."
   },
   {
     "name": "403b Calculator",
@@ -140,18 +147,18 @@
     "description": "45 Day Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "5/3/1 Calculator",
-    "url": "/calculators/5-3-1-calculator.html",
-    "category": "Sports",
-    "keywords": "5/3/1 calculator",
-    "description": "Calculate 5/3/1 Calculator using a transparent, browser-only method with sample and limitations."
-  },
-  {
     "name": "5 Number Summary Calculator",
     "url": "/calculators/5-number-summary-calculator.html",
     "category": "Statistics",
     "keywords": "5 number summary calculator",
     "description": "Calculate 5 number summary calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
+  },
+  {
+    "name": "5/3/1 Calculator",
+    "url": "/calculators/5-3-1-calculator.html",
+    "category": "Sports",
+    "keywords": "5/3/1 calculator",
+    "description": "Calculate 5/3/1 Calculator using a transparent, browser-only method with sample and limitations."
   },
   {
     "name": "50/30/20 Rule Calculator",
@@ -231,18 +238,18 @@
     "description": "95% Confidence Interval Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "a+bi Form Calculator",
-    "url": "/calculators/a-bi-form-calculator.html",
-    "category": "MATH",
-    "keywords": "a+bi form calculator",
-    "description": "a+bi Form Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "A/R Days Calculator",
     "url": "/calculators/a-r-days-calculator.html",
     "category": "Finance",
     "keywords": "a/r days calculator",
     "description": "Calculate A/R Days Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "a+bi Form Calculator",
+    "url": "/calculators/a-bi-form-calculator.html",
+    "category": "MATH",
+    "keywords": "a+bi form calculator",
+    "description": "a+bi Form Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "A1c Calculator – Hemoglobin A1c to Average Blood Sugar",
@@ -357,6 +364,12 @@
     "description": "Solve both the inside-interval and outside-interval forms of |a × x + b| compared with a positive bound."
   },
   {
+    "name": "ABV Calculator (Alcohol by Volume)",
+    "url": "/calculators/alcohol-by-volume-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "ABV alcohol by volume calculator beer brewing original gravity final gravity OG FG specific gravity fermentation alcohol by weight ABW"
+  },
+  {
     "name": "AC Tonnage Calculator",
     "url": "/calculators/ac-tonnage-calculator.html",
     "category": "CONSTRUCTION",
@@ -397,6 +410,20 @@
     "category": "FINANCE",
     "keywords": "accounting profit calculator",
     "description": "Accounting Profit Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Accounts Payable Days Calculator",
+    "url": "/calculators/payables-days-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "accounts payable days calculator accounting finance ca business",
+    "description": "Estimate supplier payment days from average accounts payable and credit purchases."
+  },
+  {
+    "name": "Accounts Receivable Days Calculator",
+    "url": "/calculators/receivables-days-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "accounts receivable days calculator accounting finance ca business",
+    "description": "Estimate debtor days from average accounts receivable and credit sales."
   },
   {
     "name": "Accrual Ratio Calculator",
@@ -441,18 +468,18 @@
     "description": "Acoustic Impedance Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Acre to Are Converter",
-    "url": "/calculators/acre-to-are-conversion-calculator.html",
-    "category": "Converters, Data & Technology",
-    "keywords": "acre to are converter unit conversion calculator",
-    "description": "Convert acres into ares, hectares and square metres using standard area factors."
-  },
-  {
     "name": "Acre to Are Conversion",
     "url": "/calculators/acre-to-are-conversion.html",
     "category": "Conversion",
     "keywords": "acre to are conversion",
     "description": "Convert acre to are using a fixed unit ratio."
+  },
+  {
+    "name": "Acre to Are Converter",
+    "url": "/calculators/acre-to-are-conversion-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "acre to are converter unit conversion calculator",
+    "description": "Convert acres into ares, hectares and square metres using standard area factors."
   },
   {
     "name": "Acres Per Hour Calculator",
@@ -665,13 +692,6 @@
     "description": "After-tax Cost of Debt Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Age-Adjusted D-dimer Calculator",
-    "url": "/calculators/age-adjusted-d-dimer-calculator.html",
-    "category": "HEALTH",
-    "keywords": "age-adjusted d-dimer calculator",
-    "description": "Age-Adjusted D-dimer Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Age Calculator",
     "url": "/calculators/age-calculator.html",
     "category": "Date, Time & Work",
@@ -756,6 +776,13 @@
     "description": "Age to Birthday Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Age-Adjusted D-dimer Calculator",
+    "url": "/calculators/age-adjusted-d-dimer-calculator.html",
+    "category": "HEALTH",
+    "keywords": "age-adjusted d-dimer calculator",
+    "description": "Age-Adjusted D-dimer Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
     "name": "AHI Calculator | Apnea-Hypopnea Index",
     "url": "/calculators/ahi-calculator-apnea-hypopnea-index.html",
     "category": "Health",
@@ -810,12 +837,6 @@
     "category": "Health",
     "keywords": "albumin globulin ratio calculator",
     "description": "Calculate Albumin Globulin Ratio Calculator with a stated formula, sample and limitations."
-  },
-  {
-    "name": "ABV Calculator (Alcohol by Volume)",
-    "url": "/calculators/alcohol-by-volume-calculator.html",
-    "category": "Food & Cooking",
-    "keywords": "ABV alcohol by volume calculator beer brewing original gravity final gravity OG FG specific gravity fermentation alcohol by weight ABW"
   },
   {
     "name": "Alcohol Dilution Calculator",
@@ -986,18 +1007,18 @@
     "description": "Angle of Twist Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Angstrom to nm Converter",
-    "url": "/calculators/angstrom-to-nanometer-converter.html",
-    "category": "Converters, Data & Technology",
-    "keywords": "angstrom nanometre length conversion",
-    "description": "Convert angstroms into nanometres and metres."
-  },
-  {
     "name": "Angstrom to nm converter",
     "url": "/calculators/angstrom-to-nm-converter.html",
     "category": "CONVERSION",
     "keywords": "angstrom to nm converter",
     "description": "Angstrom to nm converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Angstrom to nm Converter",
+    "url": "/calculators/angstrom-to-nanometer-converter.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "angstrom nanometre length conversion",
+    "description": "Convert angstroms into nanometres and metres."
   },
   {
     "name": "Angular Acceleration Calculator",
@@ -1273,13 +1294,6 @@
     "description": "Calculate APY Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Atal Pension Yojana Planner",
-    "url": "/calculators/apy-eligibility-pension-planner.html",
-    "category": "Government Schemes & Eligibility",
-    "keywords": "Atal Pension Yojana APY eligibility pension planner",
-    "description": ""
-  },
-  {
     "name": "Arc Length Calculator",
     "url": "/calculators/arc-length-calculator.html",
     "category": "Math",
@@ -1469,6 +1483,13 @@
     "description": "Look up prescribed APY contributions from the official PFRDA table."
   },
   {
+    "name": "Atal Pension Yojana Planner",
+    "url": "/calculators/apy-eligibility-pension-planner.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "Atal Pension Yojana APY eligibility pension planner",
+    "description": ""
+  },
+  {
     "name": "ATM Conversion",
     "url": "/calculators/atm-conversion.html",
     "category": "CONVERSION",
@@ -1537,6 +1558,20 @@
     "category": "Everyday Life",
     "keywords": "audiobooks calculator - reclaim the dead time",
     "description": "Audiobooks Calculator - Reclaim the Dead Time: a transparent browser-based calculator with formula, sample and assumptions."
+  },
+  {
+    "name": "Australia 2020–21 Income Tax Calculator",
+    "url": "/calculators/income-tax-cuts-calculator-australia-2020-21.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "australia 2020–21 income tax calculator historical resident income-tax estimate for the 2020–21 tax year.",
+    "description": "Historical resident income-tax estimate for the 2020–21 tax year."
+  },
+  {
+    "name": "Australia Superannuation Calculator",
+    "url": "/calculators/superannuation-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "Australia superannuation super guarantee employer contribution retirement balance ATO",
+    "description": "Estimate 2026–27 employer super contributions and an illustrative future balance."
   },
   {
     "name": "Average Atomic Mass Calculator",
@@ -1748,6 +1783,13 @@
     "description": "Bar to PSIG Converter — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Barbell Plate Loading Calculator",
+    "url": "/calculators/plate-loading-calculator.html",
+    "category": "Workout Planning",
+    "keywords": "barbell plate loading weight per side lifting",
+    "description": "Calculate balanced plate loading for a target barbell weight."
+  },
+  {
     "name": "Barn-Pole Paradox",
     "url": "/calculators/barn-pole-paradox.html",
     "category": "PHYSICS",
@@ -1781,6 +1823,13 @@
     "category": "Calculator",
     "keywords": "base64 encoder & decoder",
     "description": "Try our Base64 encoder and decoder to quickly convert text to Base64 and decode Base64 back to readable text."
+  },
+  {
+    "name": "Baseball OPS Calculator",
+    "url": "/calculators/ops-calculator-baseball.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "baseball OPS calculator on base percentage OBP slugging SLG hits walks hit by pitch at bats total bases",
+    "description": "Calculate OBP, slugging percentage and OPS from a consistent batting line."
   },
   {
     "name": "Basic Calculator",
@@ -1916,18 +1965,18 @@
     "description": "Bed Size Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
-    "name": "Beer-Lambert Law Calculator",
-    "url": "/calculators/beer-lambert-law-calculator.html",
-    "category": "Biology & Chemistry",
-    "keywords": "Beer Lambert law calculator absorbance concentration molar absorptivity",
-    "description": "Calculate solution concentration from absorbance, molar absorptivity and optical path length."
-  },
-  {
     "name": "Beer Pong Calculator",
     "url": "/calculators/beer-pong-calculator.html",
     "category": "FOOD",
     "keywords": "beer pong calculator",
     "description": "Beer Pong Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Beer-Lambert Law Calculator",
+    "url": "/calculators/beer-lambert-law-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "Beer Lambert law calculator absorbance concentration molar absorptivity",
+    "description": "Calculate solution concentration from absorbance, molar absorptivity and optical path length."
   },
   {
     "name": "Beighton Score Calculator",
@@ -2776,6 +2825,13 @@
     "description": "Bug-Rivet Paradox — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Building Coverage Calculator",
+    "url": "/calculators/building-coverage-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "building coverage calculator designer architecture design planning built environment",
+    "description": "Calculate site coverage and remaining open area from site area and building footprint."
+  },
+  {
     "name": "Bulb Spacing Calculator",
     "url": "/calculators/bulb-spacing-calculator.html",
     "category": "BIOLOGY",
@@ -2825,18 +2881,18 @@
     "description": "Buoyant Force Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Burn Rate Calculator",
-    "url": "/calculators/burn-rate-calculator.html",
-    "category": "FINANCE",
-    "keywords": "burn rate calculator",
-    "description": "Burn Rate Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Burn Rate & Runway Calculator",
     "url": "/calculators/burn-rate-runway-calculator.html",
     "category": "Business, Sales & Operations",
     "keywords": "burn rate & runway calculator estimate monthly net cash burn and cash runway.",
     "description": "Estimate monthly net cash burn and cash runway."
+  },
+  {
+    "name": "Burn Rate Calculator",
+    "url": "/calculators/burn-rate-calculator.html",
+    "category": "FINANCE",
+    "keywords": "burn rate calculator",
+    "description": "Burn Rate Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Burpee Calorie Calculator",
@@ -2872,6 +2928,13 @@
     "category": "Loans, EMI & Credit",
     "keywords": "business loan emi calculator",
     "description": "Estimate monthly instalments and total interest for a business loan."
+  },
+  {
+    "name": "Business Markup & Margin Calculator",
+    "url": "/calculators/markup-margin-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "business markup & margin calculator calculate unit markup and gross margin.",
+    "description": "Calculate unit markup and gross margin."
   },
   {
     "name": "Business Valuation Calculator",
@@ -2986,6 +3049,13 @@
     "description": "Fit a straight-line calibration from two standards and estimate an unknown concentration from its measured response."
   },
   {
+    "name": "California Golden State Stimulus II Calculator",
+    "url": "/calculators/california-stimulus-check-ii-calculator.html",
+    "category": "Government Schemes & Eligibility",
+    "keywords": "california golden state stimulus ii calculator historical-only estimate for listed qualifying 2020 tax-return categories.",
+    "description": "Historical-only estimate for listed qualifying 2020 tax-return categories."
+  },
+  {
     "name": "California Overtime Calculator",
     "url": "/calculators/california-overtime-calculator.html",
     "category": "FINANCE",
@@ -2998,13 +3068,6 @@
     "category": "FINANCE",
     "keywords": "california sales tax calculator",
     "description": "California Sales Tax Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "California Golden State Stimulus II Calculator",
-    "url": "/calculators/california-stimulus-check-ii-calculator.html",
-    "category": "Government Schemes & Eligibility",
-    "keywords": "california golden state stimulus ii calculator historical-only estimate for listed qualifying 2020 tax-return categories.",
-    "description": "Historical-only estimate for listed qualifying 2020 tax-return categories."
   },
   {
     "name": "California Tax Calculator",
@@ -3329,18 +3392,18 @@
     "description": "Cash On Cash Return Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Cash-Out Refinance Calculator",
-    "url": "/calculators/cash-out-refinance-calculator.html",
-    "category": "FINANCE",
-    "keywords": "cash-out refinance calculator",
-    "description": "Cash-Out Refinance Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Cash Ratio Calculator",
     "url": "/calculators/cash-ratio-calculator.html",
     "category": "FINANCE",
     "keywords": "cash ratio calculator",
     "description": "Cash Ratio Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Cash-Out Refinance Calculator",
+    "url": "/calculators/cash-out-refinance-calculator.html",
+    "category": "FINANCE",
+    "keywords": "cash-out refinance calculator",
+    "description": "Cash-Out Refinance Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Cat Age Calculator",
@@ -4595,13 +4658,6 @@
     "description": "Corrected Calcium Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Correlation Coefficient Calculator (Matthews)",
-    "url": "/calculators/correlation-coefficient-calculator-matthews.html",
-    "category": "Statistics",
-    "keywords": "correlation coefficient calculator (matthews)",
-    "description": "Calculate correlation coefficient calculator (matthews) locally from values you provide. Results are educational estimates; review the stated assumptions."
-  },
-  {
     "name": "Correlation Coefficient Calculator",
     "url": "/calculators/correlation-coefficient-calculator.html",
     "category": "Statistics",
@@ -4609,11 +4665,11 @@
     "description": "Calculate correlation coefficient calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
   },
   {
-    "name": "Cos-1 Calculator",
-    "url": "/calculators/cos-1-calculator.html",
-    "category": "MATH",
-    "keywords": "cos-1 calculator",
-    "description": "Cos-1 Calculator — requested calculator in the Friendly Calculator directory."
+    "name": "Correlation Coefficient Calculator (Matthews)",
+    "url": "/calculators/correlation-coefficient-calculator-matthews.html",
+    "category": "Statistics",
+    "keywords": "correlation coefficient calculator (matthews)",
+    "description": "Calculate correlation coefficient calculator (matthews) locally from values you provide. Results are educational estimates; review the stated assumptions."
   },
   {
     "name": "Cos 2 Theta Calculator",
@@ -4628,6 +4684,13 @@
     "category": "MATH",
     "keywords": "cos inverse calculator",
     "description": "Cos Inverse Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Cos-1 Calculator",
+    "url": "/calculators/cos-1-calculator.html",
+    "category": "MATH",
+    "keywords": "cos-1 calculator",
+    "description": "Cos-1 Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Cosh Calculator",
@@ -4868,18 +4931,18 @@
     "description": "Calculate balance as a share of available credit."
   },
   {
-    "name": "Cricket Follow-On Calculator",
-    "url": "/calculators/cricket-follow-on-calculator.html",
-    "category": "SPORTS",
-    "keywords": "cricket follow-on calculator",
-    "description": "Cricket Follow-On Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Cricket Chirp Temperature Estimator",
     "url": "/calculators/crickets-chirping-thermometer-calculator.html",
     "category": "Biology & Chemistry",
     "keywords": "cricket chirp temperature chirps in 15 seconds NOAA approximate Fahrenheit Celsius insect field rule",
     "description": "Estimate temperature from 15-second cricket chirps using NOAA’s approximate +40°F rule; results are not calibrated."
+  },
+  {
+    "name": "Cricket Follow-On Calculator",
+    "url": "/calculators/cricket-follow-on-calculator.html",
+    "category": "SPORTS",
+    "keywords": "cricket follow-on calculator",
+    "description": "Cricket Follow-On Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Critical Damping Calculator",
@@ -5168,18 +5231,18 @@
     "description": "Curtain Size Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
-    "name": "Customer Acquisition Cost Calculator – CAC Calculator",
-    "url": "/calculators/customer-acquisition-cost-calculator-cac-calculator.html",
-    "category": "Finance",
-    "keywords": "customer acquisition cost calculator – cac calculator",
-    "description": "Calculate Customer Acquisition Cost Calculator – CAC Calculator with a transparent formula and worked example."
-  },
-  {
     "name": "Customer Acquisition Cost Calculator",
     "url": "/calculators/customer-acquisition-cost-calculator.html",
     "category": "Business & Trade",
     "keywords": "customer acquisition cost CAC marketing sales spend new customers startup",
     "description": "Calculate customer acquisition cost (CAC) from marketing, sales and other acquisition spending."
+  },
+  {
+    "name": "Customer Acquisition Cost Calculator – CAC Calculator",
+    "url": "/calculators/customer-acquisition-cost-calculator-cac-calculator.html",
+    "category": "Finance",
+    "keywords": "customer acquisition cost calculator – cac calculator",
+    "description": "Calculate Customer Acquisition Cost Calculator – CAC Calculator with a transparent formula and worked example."
   },
   {
     "name": "Customer Effort Score Calculator",
@@ -5434,6 +5497,13 @@
     "description": "Daylight Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Daylight Factor Calculator",
+    "url": "/calculators/daylight-factor-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "daylight factor calculator designer architecture design planning built environment",
+    "description": "Calculate an indicative daylight factor from indoor and outdoor illuminance readings."
+  },
+  {
     "name": "Days Between Dates Calculator",
     "url": "/calculators/days-between-dates-calculator.html",
     "category": "Everyday Life",
@@ -5588,13 +5658,6 @@
     "description": "Calculate Debt to Asset Ratio Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Debt-to-Capital Ratio Calculator",
-    "url": "/calculators/debt-to-capital-ratio-calculator.html",
-    "category": "Finance",
-    "keywords": "debt-to-capital ratio calculator",
-    "description": "Calculate Debt-to-Capital Ratio Calculator with a transparent formula and worked example."
-  },
-  {
     "name": "Debt to Equity Calculator",
     "url": "/calculators/debt-to-equity-calculator.html",
     "category": "FINANCE",
@@ -5607,6 +5670,13 @@
     "category": "Finance",
     "keywords": "debt to income ratio calculator",
     "description": "Calculate Debt to Income Ratio Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "Debt-to-Capital Ratio Calculator",
+    "url": "/calculators/debt-to-capital-ratio-calculator.html",
+    "category": "Finance",
+    "keywords": "debt-to-capital ratio calculator",
+    "description": "Calculate Debt-to-Capital Ratio Calculator with a transparent formula and worked example."
   },
   {
     "name": "Debye Length Calculator",
@@ -5847,13 +5917,6 @@
     "description": "Depth of Field Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Numerical Derivative Calculator",
-    "url": "/calculators/derivative-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "numerical derivative calculator central difference derivative estimate calculus",
-    "description": "Estimate the derivative of an expression at a selected x value."
-  },
-  {
     "name": "Descartes’ Rule of Signs Calculator",
     "url": "/calculators/descartes-rule-of-signs-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
@@ -5866,6 +5929,34 @@
     "category": "Calculator",
     "keywords": "descriptive statistics calculator",
     "description": "The descriptive statistics calculator will thoroughly analyze your data set using more than 20 different descriptive statistics spread over various subcate"
+  },
+  {
+    "name": "Design Contrast Ratio Calculator",
+    "url": "/calculators/design-contrast-ratio-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "design contrast ratio calculator designer architecture design planning built environment",
+    "description": "Calculate a relative luminance contrast ratio from two luminance values for interface review."
+  },
+  {
+    "name": "Design Grid Calculator",
+    "url": "/calculators/design-grid-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "design grid calculator designer architecture design planning built environment",
+    "description": "Calculate usable column width from a layout width, column count and gutter size."
+  },
+  {
+    "name": "Design Project Budget Calculator",
+    "url": "/calculators/design-project-budget-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "design project budget calculator designer architecture design planning built environment",
+    "description": "Estimate a design project budget from hours, rate, external costs and a contingency percentage."
+  },
+  {
+    "name": "Design Spacing Scale Calculator",
+    "url": "/calculators/design-spacing-scale-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "design spacing scale calculator designer architecture design planning built environment",
+    "description": "Create a spacing token scale from a base unit and multiplier for product or brand systems."
   },
   {
     "name": "Desk Height Calculator",
@@ -6693,18 +6784,18 @@
     "description": "Duty Cycle Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "E-Bike Range Calculator",
-    "url": "/calculators/e-bike-range-calculator.html",
-    "category": "SPORTS",
-    "keywords": "e-bike range calculator",
-    "description": "E-Bike Range Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "e Calculator | eˣ | e Raised to Power of x",
     "url": "/calculators/e-calculator-ex-e-raised-to-power-of-x.html",
     "category": "Math",
     "keywords": "e calculator | eˣ | e raised to power of x",
     "description": "Calculate e Calculator | eˣ | e Raised to Power of x in your browser with a stated formula, worked example, validation, and limitations."
+  },
+  {
+    "name": "E-Bike Range Calculator",
+    "url": "/calculators/e-bike-range-calculator.html",
+    "category": "SPORTS",
+    "keywords": "e-bike range calculator",
+    "description": "E-Bike Range Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "EAR Calculator",
@@ -6979,18 +7070,18 @@
     "description": "Calculate a tiered bill using slab-wise consumption and the rates entered for each slab."
   },
   {
-    "name": "Electricity Cost Calculator",
-    "url": "/calculators/electricity-cost-calculator.html",
-    "category": "Everyday Life",
-    "keywords": "electricity cost calculator",
-    "description": "Electricity Cost Calculator: a transparent browser-based calculator with formula, sample and assumptions."
-  },
-  {
     "name": "Electricity Cost – Single Usage Calculator",
     "url": "/calculators/electricity-cost-single-usage-calculator.html",
     "category": "Everyday Life",
     "keywords": "electricity cost – single usage calculator",
     "description": "Electricity Cost – Single Usage Calculator: a transparent browser-based calculator with formula, sample and assumptions."
+  },
+  {
+    "name": "Electricity Cost Calculator",
+    "url": "/calculators/electricity-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "electricity cost calculator",
+    "description": "Electricity Cost Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
     "name": "Electricity Cost per Use Calculator",
@@ -7224,18 +7315,18 @@
     "description": "EPDS Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "EPF Calculator",
-    "url": "/calculators/epf-calculator.html",
-    "category": "FINANCE",
-    "keywords": "epf calculator",
-    "description": "EPF Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "EPF / PF Calculator",
     "url": "/calculators/epf-pf-calculator.html",
     "category": "Savings, Investment & Retirement",
     "keywords": "epf pf provident fund employee",
     "description": "Estimate provident fund accumulation."
+  },
+  {
+    "name": "EPF Calculator",
+    "url": "/calculators/epf-calculator.html",
+    "category": "FINANCE",
+    "keywords": "epf calculator",
+    "description": "EPF Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Epoxy Calculator",
@@ -7651,13 +7742,6 @@
     "description": "Calculate FD Calculator — Fixed Deposit Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Fixed Deposit Calculator",
-    "url": "/calculators/fd-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "fixed deposit fd maturity interest",
-    "description": "Estimate deposit maturity and interest."
-  },
-  {
     "name": "FD vs RD vs SIP Comparison Calculator",
     "url": "/calculators/fd-rd-sip-comparison-calculator.html",
     "category": "Savings, Investment & Retirement",
@@ -7973,6 +8057,13 @@
     "description": "Calculate Fixed Asset Turnover Ratio Calculator with a transparent formula and worked example."
   },
   {
+    "name": "Fixed Deposit Calculator",
+    "url": "/calculators/fd-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "fixed deposit fd maturity interest",
+    "description": "Estimate deposit maturity and interest."
+  },
+  {
     "name": "Flight Carbon Footprint Calculator",
     "url": "/calculators/flight-carbon-footprint-calculator.html",
     "category": "Energy & Sustainability",
@@ -8005,6 +8096,13 @@
     "category": "MATH",
     "keywords": "floor function calculator",
     "description": "Floor Function Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Floor Plan Area Calculator",
+    "url": "/calculators/floor-plan-area-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "floor plan area calculator designer architecture design planning built environment",
+    "description": "Estimate total floor-plan area from rectangular spaces and an optional circulation or wall allowance."
   },
   {
     "name": "Flooring Calculator",
@@ -8356,13 +8454,6 @@
     "description": "Convert ft to m using a fixed unit ratio."
   },
   {
-    "name": "Full-Time Equivalent (FTE) Calculator",
-    "url": "/calculators/fte-calculator.html",
-    "category": "Business & Trade",
-    "keywords": "FTE full time equivalent staffing employee hours workforce capacity",
-    "description": "Convert total employee work hours into full-time equivalent (FTE) staffing for a consistent period."
-  },
-  {
     "name": "Fuel Consumption Calculator",
     "url": "/calculators/fuel-consumption-calculator.html",
     "category": "Everyday Life",
@@ -8410,6 +8501,13 @@
     "category": "PHYSICS",
     "keywords": "fulcrum calculator",
     "description": "Fulcrum Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Full-Time Equivalent (FTE) Calculator",
+    "url": "/calculators/fte-calculator.html",
+    "category": "Business & Trade",
+    "keywords": "FTE full time equivalent staffing employee hours workforce capacity",
+    "description": "Convert total employee work hours into full-time equivalent (FTE) staffing for a consistent period."
   },
   {
     "name": "Furnace Size Calculator",
@@ -8783,18 +8881,18 @@
     "description": "GMAT Score Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "GMROI Calculator — Gross Margin Return on Investment",
-    "url": "/calculators/gmroi-calculator-gross-margin-return-on-investment.html",
-    "category": "Finance",
-    "keywords": "gmroi calculator — gross margin return on investment",
-    "description": "Calculate GMROI Calculator — Gross Margin Return on Investment with a transparent formula and worked example."
-  },
-  {
     "name": "GMROI Calculator",
     "url": "/calculators/gmroi-calculator.html",
     "category": "Business, Sales & Operations",
     "keywords": "GMROI gross margin return on inventory investment retailer inventory cost net sales COGS",
     "description": "Calculate gross margin return on inventory investment from same-period sales, COGS and average inventory cost."
+  },
+  {
+    "name": "GMROI Calculator — Gross Margin Return on Investment",
+    "url": "/calculators/gmroi-calculator-gross-margin-return-on-investment.html",
+    "category": "Finance",
+    "keywords": "gmroi calculator — gross margin return on investment",
+    "description": "Calculate GMROI Calculator — Gross Margin Return on Investment with a transparent formula and worked example."
   },
   {
     "name": "Goal Success Calculator",
@@ -8881,18 +8979,18 @@
     "description": "Gout Diagnosis Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "GPA Calculator Pakistan",
-    "url": "/calculators/gpa-calculator-pakistan.html",
-    "category": "Other",
-    "keywords": "gpa calculator pakistan",
-    "description": "Use this browser-only gpa calculator pakistan to calculate an illustrative result from the inputs you provide."
-  },
-  {
     "name": "GPA Calculator",
     "url": "/calculators/gpa-calculator.html",
     "category": "Education & Academic Tools",
     "keywords": "gpa calculator calculate credit-weighted gpa.",
     "description": "Calculate credit-weighted GPA."
+  },
+  {
+    "name": "GPA Calculator Pakistan",
+    "url": "/calculators/gpa-calculator-pakistan.html",
+    "category": "Other",
+    "keywords": "gpa calculator pakistan",
+    "description": "Use this browser-only gpa calculator pakistan to calculate an illustrative result from the inputs you provide."
   },
   {
     "name": "gr to ml Converter",
@@ -9279,13 +9377,6 @@
     "description": "Half Birthday Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Half-Life Calculator",
-    "url": "/calculators/half-life-calculator.html",
-    "category": "Biology & Chemistry",
-    "keywords": "half life calculator exponential decay remaining amount",
-    "description": "Calculate the remaining amount of a first-order decaying quantity from its half-life and elapsed time."
-  },
-  {
     "name": "Half Marathon Pace Calculator",
     "url": "/calculators/half-marathon-pace-calculator.html",
     "category": "Sports",
@@ -9298,6 +9389,13 @@
     "category": "EVERYDAY LIFE",
     "keywords": "half square triangle calculator",
     "description": "Half Square Triangle Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Half-Life Calculator",
+    "url": "/calculators/half-life-calculator.html",
+    "category": "Biology & Chemistry",
+    "keywords": "half life calculator exponential decay remaining amount",
+    "description": "Calculate the remaining amount of a first-order decaying quantity from its half-life and elapsed time."
   },
   {
     "name": "Hall Coefficient Calculator",
@@ -9636,13 +9734,6 @@
     "description": "Hexagonal Pyramid Surface Area Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "High-Low Method Calculator",
-    "url": "/calculators/high-low-method-calculator.html",
-    "category": "FINANCE",
-    "keywords": "high-low method calculator",
-    "description": "High-Low Method Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "High Pass Filter Calculator",
     "url": "/calculators/high-pass-filter-calculator.html",
     "category": "PHYSICS",
@@ -9655,6 +9746,13 @@
     "category": "OTHER",
     "keywords": "high school gpa calculator",
     "description": "High School GPA Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "High-Low Method Calculator",
+    "url": "/calculators/high-low-method-calculator.html",
+    "category": "FINANCE",
+    "keywords": "high-low method calculator",
+    "description": "High-Low Method Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Hiking Calculator",
@@ -9718,6 +9816,13 @@
     "category": "FINANCE",
     "keywords": "home improvement loan calculator",
     "description": "Home Improvement Loan Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Home Loan &amp; Loan Prepayment Calculator",
+    "url": "/calculators/loan-prepayment-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "home loan prepayment calculator loan prepayment lump sum prepayment extra monthly payment",
+    "description": "Estimate how a one-time principal payment and extra monthly payments affect loan payoff time and interest."
   },
   {
     "name": "Home Loan Amortization Schedule Calculator",
@@ -9972,18 +10077,18 @@
     "description": "HR Software ROI Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "HRA Exemption Calculator India",
-    "url": "/calculators/hra-calculator.html",
-    "category": "Tax, Salary & Payroll",
-    "keywords": "hra exemption calculator india house rent allowance section 10 13a",
-    "description": "Calculate HRA tax exemption in India using basic salary, HRA received, rent paid and metro or non-metro status."
-  },
-  {
     "name": "HRA Exemption Calculator",
     "url": "/calculators/hra-exemption-calculator.html",
     "category": "FINANCE",
     "keywords": "hra exemption calculator",
     "description": "HRA Exemption Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "HRA Exemption Calculator India",
+    "url": "/calculators/hra-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "hra exemption calculator india house rent allowance section 10 13a",
+    "description": "Calculate HRA tax exemption in India using basic salary, HRA received, rent paid and metro or non-metro status."
   },
   {
     "name": "Hull Speed Calculator",
@@ -10301,18 +10406,18 @@
     "description": "Inch Converter — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Inch-Pounds to Foot-Pounds Converter",
-    "url": "/calculators/inch-pounds-to-foot-pounds-calculator.html",
-    "category": "Converters, Data & Technology",
-    "keywords": "inch pounds to foot pounds converter lbf in lbf ft torque moment conversion 12",
-    "description": "Convert lbf·in to lbf·ft using the exact factor of 12."
-  },
-  {
     "name": "Inch to Meter Calculator",
     "url": "/calculators/inch-to-meter-calculator.html",
     "category": "Conversion",
     "keywords": "inch to meter calculator",
     "description": "Convert in to m using a fixed unit ratio."
+  },
+  {
+    "name": "Inch-Pounds to Foot-Pounds Converter",
+    "url": "/calculators/inch-pounds-to-foot-pounds-calculator.html",
+    "category": "Converters, Data & Technology",
+    "keywords": "inch pounds to foot pounds converter lbf in lbf ft torque moment conversion 12",
+    "description": "Convert lbf·in to lbf·ft using the exact factor of 12."
   },
   {
     "name": "Inches to Fraction Calculator",
@@ -10350,13 +10455,6 @@
     "description": "Calculate Income Elasticity of Demand Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Income Tax Calculator Pakistan",
-    "url": "/calculators/income-tax-calculator-pakistan.html",
-    "category": "FINANCE",
-    "keywords": "income tax calculator pakistan",
-    "description": "Income Tax Calculator Pakistan — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Income Tax Calculator",
     "url": "/calculators/income-tax-calculator.html",
     "category": "Tax, Salary & Payroll",
@@ -10364,11 +10462,11 @@
     "description": "Indicative income tax estimate."
   },
   {
-    "name": "Australia 2020–21 Income Tax Calculator",
-    "url": "/calculators/income-tax-cuts-calculator-australia-2020-21.html",
-    "category": "Tax, Salary & Payroll",
-    "keywords": "australia 2020–21 income tax calculator historical resident income-tax estimate for the 2020–21 tax year.",
-    "description": "Historical resident income-tax estimate for the 2020–21 tax year."
+    "name": "Income Tax Calculator Pakistan",
+    "url": "/calculators/income-tax-calculator-pakistan.html",
+    "category": "FINANCE",
+    "keywords": "income tax calculator pakistan",
+    "description": "Income Tax Calculator Pakistan — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Income Tax Philippines Calculator",
@@ -10462,13 +10560,6 @@
     "description": "Interest Coverage Ratio Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Interest-Only Mortgage Calculator",
-    "url": "/calculators/interest-only-mortgage-calculator.html",
-    "category": "FINANCE",
-    "keywords": "interest-only mortgage calculator",
-    "description": "Interest-Only Mortgage Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Interest Per Day Calculator",
     "url": "/calculators/interest-per-day-calculator.html",
     "category": "FINANCE",
@@ -10488,6 +10579,13 @@
     "category": "FINANCE",
     "keywords": "interest rate parity calculator",
     "description": "Interest Rate Parity Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Interest-Only Mortgage Calculator",
+    "url": "/calculators/interest-only-mortgage-calculator.html",
+    "category": "FINANCE",
+    "keywords": "interest-only mortgage calculator",
+    "description": "Interest-Only Mortgage Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Interior and Exterior Triangle Angles Calculator",
@@ -10861,13 +10959,6 @@
     "description": "Kaya Identity Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Kisan Credit Card Interest Calculator",
-    "url": "/calculators/kcc-interest-calculator.html",
-    "category": "Agriculture & Rural Finance",
-    "keywords": "kisan credit card KCC interest calculator farmer loan interest",
-    "description": ""
-  },
-  {
     "name": "KD Calculator (Kill/Death Ratio)",
     "url": "/calculators/kd-calculator-kill-death-ratio.html",
     "category": "Other",
@@ -10966,6 +11057,20 @@
     "description": "Kinematic Viscosity of Air Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Kisan Credit Card Interest Calculator",
+    "url": "/calculators/kcc-interest-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "kisan credit card KCC interest calculator farmer loan interest",
+    "description": ""
+  },
+  {
+    "name": "Kisan Vikas Patra Calculator",
+    "url": "/calculators/kvp-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "kisan vikas patra calculator illustrate kvp maturity using selected scheme duration.",
+    "description": "Illustrate KVP maturity using selected scheme duration."
+  },
+  {
     "name": "Kiteboarding Calculator",
     "url": "/calculators/kiteboarding-calculator.html",
     "category": "SPORTS",
@@ -11057,13 +11162,6 @@
     "description": "kVA to Amperage Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Kisan Vikas Patra Calculator",
-    "url": "/calculators/kvp-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "kisan vikas patra calculator illustrate kvp maturity using selected scheme duration.",
-    "description": "Illustrate KVP maturity using selected scheme duration."
-  },
-  {
     "name": "l to gal Converter",
     "url": "/calculators/l-to-gal-converter.html",
     "category": "CONVERSION",
@@ -11106,18 +11204,18 @@
     "description": "Land Area Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Land Loan Calculator",
-    "url": "/calculators/land-loan-calculator.html",
-    "category": "Finance",
-    "keywords": "land loan calculator",
-    "description": "Calculate Land Loan Calculator with a transparent formula and worked example."
-  },
-  {
     "name": "Land Area Converter (Bigha, Guntha & Cent)",
     "url": "/calculators/land-unit-converter-calculator.html",
     "category": "Converters, Data & Technology",
     "keywords": "land unit converter (bigha, guntha & cent) convert land area using local unit conversion factors.",
     "description": "Convert land area using local unit conversion factors."
+  },
+  {
+    "name": "Land Loan Calculator",
+    "url": "/calculators/land-loan-calculator.html",
+    "category": "Finance",
+    "keywords": "land loan calculator",
+    "description": "Calculate Land Loan Calculator with a transparent formula and worked example."
   },
   {
     "name": "Landscape Rock Calculator",
@@ -11218,18 +11316,18 @@
     "description": "lbs to Stone Converter — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "LCM Calculator — Least Common Multiple",
-    "url": "/calculators/lcm-calculator-least-common-multiple.html",
-    "category": "Math",
-    "keywords": "lcm calculator — least common multiple",
-    "description": "Calculate LCM Calculator — Least Common Multiple in your browser with a stated formula, worked example, validation, and limitations."
-  },
-  {
     "name": "LCM &amp; HCF Calculator",
     "url": "/calculators/lcm-hcf-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "lcm hcf calculator lcm and hcf gcd least common multiple highest common factor",
     "description": "Find common multiples and factors for whole numbers."
+  },
+  {
+    "name": "LCM Calculator — Least Common Multiple",
+    "url": "/calculators/lcm-calculator-least-common-multiple.html",
+    "category": "Math",
+    "keywords": "lcm calculator — least common multiple",
+    "description": "Calculate LCM Calculator — Least Common Multiple in your browser with a stated formula, worked example, validation, and limitations."
   },
   {
     "name": "LCR Calculator",
@@ -11414,18 +11512,18 @@
     "description": "Light Year Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Light Year Conversion",
-    "url": "/calculators/light-year-conversion-calculator.html",
-    "category": "Astronomy & Space",
-    "keywords": "light year conversion kilometres kilometers astronomical units miles",
-    "description": "Convert light-years into kilometres, astronomical units and miles."
-  },
-  {
     "name": "Light Year Calculator",
     "url": "/calculators/light-year-conversion.html",
     "category": "Calculator",
     "keywords": "light year calculator",
     "description": "Our light year calculator can help you calculate the distance light can travel in a certain amount of time."
+  },
+  {
+    "name": "Light Year Conversion",
+    "url": "/calculators/light-year-conversion-calculator.html",
+    "category": "Astronomy & Space",
+    "keywords": "light year conversion kilometres kilometers astronomical units miles",
+    "description": "Convert light-years into kilometres, astronomical units and miles."
   },
   {
     "name": "Lighting Calculator",
@@ -11461,13 +11559,6 @@
     "category": "EVERYDAY LIFE",
     "keywords": "linear inches calculator",
     "description": "Linear Inches Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Sum of a Linear Number Sequence Calculator",
-    "url": "/calculators/linear-number-sequence-sum-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "sum of a linear number sequence mathematics sequence algebra numbers",
-    "description": "Calculate the common difference and sum of a finite arithmetic sequence from its first and last terms."
   },
   {
     "name": "Linear Regression Calculator",
@@ -11582,13 +11673,6 @@
     "description": "Calculate Loan Payment Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Home Loan &amp; Loan Prepayment Calculator",
-    "url": "/calculators/loan-prepayment-calculator.html",
-    "category": "Loans, EMI & Credit",
-    "keywords": "home loan prepayment calculator loan prepayment lump sum prepayment extra monthly payment",
-    "description": "Estimate how a one-time principal payment and extra monthly payments affect loan payoff time and interest."
-  },
-  {
     "name": "Loan Prepayment vs Investment Calculator",
     "url": "/calculators/loan-prepayment-vs-investment-calculator.html",
     "category": "Loans, EMI & Credit",
@@ -11643,6 +11727,13 @@
     "category": "STATISTICS",
     "keywords": "lognormal distribution calculator",
     "description": "Lognormal Distribution Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Logo Safe Area Calculator",
+    "url": "/calculators/logo-safe-area-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "logo safe area calculator designer architecture design planning built environment",
+    "description": "Calculate a protected clear-space boundary around a logo from its displayed size and margin rule."
   },
   {
     "name": "Long Addition Calculator",
@@ -11967,18 +12058,18 @@
     "description": "Calculate Margin and Sales Tax Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Margin Calculator Classic",
-    "url": "/calculators/margin-calculator-classic.html",
-    "category": "Finance",
-    "keywords": "margin calculator classic",
-    "description": "Calculate Margin Calculator Classic with a transparent formula and worked example."
-  },
-  {
     "name": "Margin Calculator",
     "url": "/calculators/margin-calculator.html",
     "category": "Finance",
     "keywords": "margin calculator",
     "description": "Calculate Margin Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "Margin Calculator Classic",
+    "url": "/calculators/margin-calculator-classic.html",
+    "category": "Finance",
+    "keywords": "margin calculator classic",
+    "description": "Calculate Margin Calculator Classic with a transparent formula and worked example."
   },
   {
     "name": "Margin Call Calculator",
@@ -12044,13 +12135,6 @@
     "description": "Estimate a listed company's market capitalization from its current share price and shares outstanding."
   },
   {
-    "name": "Markup Calculator Classic",
-    "url": "/calculators/markup-calculator-classic.html",
-    "category": "Finance",
-    "keywords": "markup calculator classic",
-    "description": "Calculate Markup Calculator Classic with a transparent formula and worked example."
-  },
-  {
     "name": "Markup Calculator",
     "url": "/calculators/markup-calculator.html",
     "category": "Finance",
@@ -12058,11 +12142,11 @@
     "description": "Calculate Markup Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Business Markup & Margin Calculator",
-    "url": "/calculators/markup-margin-calculator.html",
-    "category": "Business, Sales & Operations",
-    "keywords": "business markup & margin calculator calculate unit markup and gross margin.",
-    "description": "Calculate unit markup and gross margin."
+    "name": "Markup Calculator Classic",
+    "url": "/calculators/markup-calculator-classic.html",
+    "category": "Finance",
+    "keywords": "markup calculator classic",
+    "description": "Calculate Markup Calculator Classic with a transparent formula and worked example."
   },
   {
     "name": "Marriage Cost Calculator",
@@ -13171,18 +13255,18 @@
     "description": "Calculate Mortgage Amortization Calculator with a transparent formula and worked example."
   },
   {
-    "name": "Mortgage Calculator with Taxes and Insurance",
-    "url": "/calculators/mortgage-calculator-with-taxes-and-insurance.html",
-    "category": "FINANCE",
-    "keywords": "mortgage calculator with taxes and insurance",
-    "description": "Mortgage Calculator with Taxes and Insurance — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Mortgage Calculator",
     "url": "/calculators/mortgage-calculator.html",
     "category": "Loans, EMI & Credit",
     "keywords": "mortgage calculator home loan monthly payment property tax insurance",
     "description": "Estimate home-loan payments plus property tax, insurance and monthly maintenance."
+  },
+  {
+    "name": "Mortgage Calculator with Taxes and Insurance",
+    "url": "/calculators/mortgage-calculator-with-taxes-and-insurance.html",
+    "category": "FINANCE",
+    "keywords": "mortgage calculator with taxes and insurance",
+    "description": "Mortgage Calculator with Taxes and Insurance — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Mortgage Comparison Calculator",
@@ -13465,11 +13549,11 @@
     "description": "NaNoWriMo Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "UK National Insurance Calculator",
-    "url": "/calculators/national-insurance-calculator.html",
-    "category": "Tax, Salary & Payroll",
-    "keywords": "UK National Insurance employee Class 1 payroll 2026 2027 thresholds",
-    "description": "Estimate employee Class 1 NI using 2026–27 standard category A rates."
+    "name": "National Savings Certificate Calculator",
+    "url": "/calculators/nsc-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "national savings certificate calculator",
+    "description": "Project NSC maturity value and interest for a selected investment term."
   },
   {
     "name": "NATO Phonetic Alphabet Translator",
@@ -13794,13 +13878,6 @@
     "description": "Calculate NPV Calculator – Net Present Value with a transparent formula and worked example."
   },
   {
-    "name": "National Savings Certificate Calculator",
-    "url": "/calculators/nsc-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "national savings certificate calculator",
-    "description": "Project NSC maturity value and interest for a selected investment term."
-  },
-  {
     "name": "NSFR Calculator",
     "url": "/calculators/nsfr-calculator.html",
     "category": "FINANCE",
@@ -13848,6 +13925,13 @@
     "category": "EVERYDAY LIFE",
     "keywords": "numbers to words converter",
     "description": "Numbers to Words Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Numerical Derivative Calculator",
+    "url": "/calculators/derivative-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "numerical derivative calculator central difference derivative estimate calculus",
+    "description": "Estimate the derivative of an expression at a selected x value."
   },
   {
     "name": "Nusselt Number Calculator",
@@ -14016,13 +14100,6 @@
     "category": "FINANCE",
     "keywords": "opportunity cost calculator",
     "description": "Opportunity Cost Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Baseball OPS Calculator",
-    "url": "/calculators/ops-calculator-baseball.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "baseball OPS calculator on base percentage OBP slugging SLG hits walks hit by pitch at bats total bases",
-    "description": "Calculate OBP, slugging percentage and OPS from a consistent batting line."
   },
   {
     "name": "OPS Calculator (On-Base Plus Slugging)",
@@ -14354,6 +14431,13 @@
     "description": "Parking Ratio Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Parking Space Capacity Calculator",
+    "url": "/calculators/parking-space-capacity-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "parking space capacity calculator designer architecture design planning built environment",
+    "description": "Estimate parking capacity and area demand from available parking area and space-plus-circulation allowance."
+  },
+  {
     "name": "Parkland Formula Calculator",
     "url": "/calculators/parkland-formula-calculator.html",
     "category": "HEALTH",
@@ -14471,13 +14555,6 @@
     "category": "Finance",
     "keywords": "pay raise calculator",
     "description": "Calculate Pay Raise Calculator with a transparent formula and worked example."
-  },
-  {
-    "name": "Accounts Payable Days Calculator",
-    "url": "/calculators/payables-days-calculator.html",
-    "category": "Business, Sales & Operations",
-    "keywords": "accounts payable days calculator accounting finance ca business",
-    "description": "Estimate supplier payment days from average accounts payable and credit purchases."
   },
   {
     "name": "Payback Period Calculator",
@@ -14844,18 +14921,18 @@
     "description": "Period Products Cost Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Permutation Calculator",
-    "url": "/calculators/permutation-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "permutation calculator count ordered selections from distinct items.",
-    "description": "Count ordered selections from distinct items."
-  },
-  {
     "name": "Permutation and Combination Calculator",
     "url": "/calculators/permutation-combination-calculator.html",
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "permutation combination calculator npr ncr factorial arrangements selections",
     "description": "Calculate nPr permutations and nCr combinations."
+  },
+  {
+    "name": "Permutation Calculator",
+    "url": "/calculators/permutation-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "permutation calculator count ordered selections from distinct items.",
+    "description": "Count ordered selections from distinct items."
   },
   {
     "name": "Permutation with Repetition Calculator",
@@ -15081,13 +15158,6 @@
     "description": "Pixels to Print Size Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Pizza Size Calculator",
-    "url": "/calculators/pizza-calculator.html",
-    "category": "Food & Cooking",
-    "keywords": "pizza size calculator food cooking recipe calculator",
-    "description": "Calculate the area of a round pizza and compare total area across multiple pizzas."
-  },
-  {
     "name": "Pizza Comparison Calculator (old version)",
     "url": "/calculators/pizza-comparison-calculator-old-version.html",
     "category": "Food",
@@ -15100,6 +15170,13 @@
     "category": "Food & Cooking",
     "keywords": "pizza party calculator food cooking recipe calculator",
     "description": "Estimate how many pizzas to order from guest count, slices per guest and slices per pizza."
+  },
+  {
+    "name": "Pizza Size Calculator",
+    "url": "/calculators/pizza-calculator.html",
+    "category": "Food & Cooking",
+    "keywords": "pizza size calculator food cooking recipe calculator",
+    "description": "Calculate the area of a round pizza and compare total area across multiple pizzas."
   },
   {
     "name": "Pizza Tip Calculator",
@@ -15163,13 +15240,6 @@
     "category": "ECOLOGY",
     "keywords": "plastic footprint calculator",
     "description": "Plastic Footprint Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Barbell Plate Loading Calculator",
-    "url": "/calculators/plate-loading-calculator.html",
-    "category": "Workout Planning",
-    "keywords": "barbell plate loading weight per side lifting",
-    "description": "Calculate balanced plate loading for a target barbell weight."
   },
   {
     "name": "Plate Weight Calculator",
@@ -15648,6 +15718,13 @@
     "description": "Pressure Unit Conversion — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Price / Quantity Calculator",
+    "url": "/calculators/price-quantity-calculator.html",
+    "category": "FINANCE",
+    "keywords": "price / quantity calculator",
+    "description": "Price / Quantity Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
     "name": "Price Elasticity of Demand Calculator",
     "url": "/calculators/price-elasticity-of-demand-calculator.html",
     "category": "Finance",
@@ -15746,13 +15823,6 @@
     "description": "Price per Weight Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
-    "name": "Price / Quantity Calculator",
-    "url": "/calculators/price-quantity-calculator.html",
-    "category": "FINANCE",
-    "keywords": "price / quantity calculator",
-    "description": "Price / Quantity Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Price to Book Ratio Calculator",
     "url": "/calculators/price-to-book-ratio-calculator.html",
     "category": "FINANCE",
@@ -15767,18 +15837,18 @@
     "description": "Price to Cash Flow Ratio Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Price-to-Earnings (P/E) Ratio Calculator",
-    "url": "/calculators/price-to-earnings-ratio-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "price earnings ratio PE P/E stock valuation share price earnings per share",
-    "description": "Calculate a share's price-to-earnings ratio from its market price per share and earnings per share."
-  },
-  {
     "name": "Price to Sales Ratio Calculator",
     "url": "/calculators/price-to-sales-ratio-calculator.html",
     "category": "FINANCE",
     "keywords": "price to sales ratio calculator",
     "description": "Price to Sales Ratio Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Price-to-Earnings (P/E) Ratio Calculator",
+    "url": "/calculators/price-to-earnings-ratio-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "price earnings ratio PE P/E stock valuation share price earnings per share",
+    "description": "Calculate a share's price-to-earnings ratio from its market price per share and earnings per share."
   },
   {
     "name": "Prime Factorization Calculator",
@@ -15879,18 +15949,18 @@
     "description": "Estimate professional tax from the selected state and salary details."
   },
   {
-    "name": "Profit Calculator",
-    "url": "/calculators/profit-calculator.html",
-    "category": "Finance",
-    "keywords": "profit calculator",
-    "description": "Calculate Profit Calculator with a transparent formula and worked example."
-  },
-  {
     "name": "Profit & Loss Calculator",
     "url": "/calculators/profit-loss-calculator.html",
     "category": "Business, Sales & Operations",
     "keywords": "profit loss margin business",
     "description": "Calculate profit, loss and percentage."
+  },
+  {
+    "name": "Profit Calculator",
+    "url": "/calculators/profit-calculator.html",
+    "category": "Finance",
+    "keywords": "profit calculator",
+    "description": "Calculate Profit Calculator with a transparent formula and worked example."
   },
   {
     "name": "Profitability Index Calculator",
@@ -16214,18 +16284,18 @@
     "description": "Calculate QTc Calculator with a stated formula, sample and limitations."
   },
   {
-    "name": "Quadratic Formula Calculator",
-    "url": "/calculators/quadratic-formula-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "quadratic formula calculator roots discriminant equation",
-    "description": "Solve quadratic equations and calculate real or complex roots."
-  },
-  {
     "name": "Quadratic Equation Solver",
     "url": "/calculators/quadratic-polynomial-solver.html",
     "category": "Mathematics, Numbers & Statistics",
     "keywords": "quadratic equation solver solve quadratic equations and complex roots.",
     "description": "Solve quadratic equations and complex roots."
+  },
+  {
+    "name": "Quadratic Formula Calculator",
+    "url": "/calculators/quadratic-formula-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "quadratic formula calculator roots discriminant equation",
+    "description": "Solve quadratic equations and calculate real or complex roots."
   },
   {
     "name": "Quadratic Regression Calculator",
@@ -16809,13 +16879,6 @@
     "description": "Estimate nominal reinforcing-bar mass and material cost from bar diameter, length, quantity and price per kilogram."
   },
   {
-    "name": "Accounts Receivable Days Calculator",
-    "url": "/calculators/receivables-days-calculator.html",
-    "category": "Business, Sales & Operations",
-    "keywords": "accounts receivable days calculator accounting finance ca business",
-    "description": "Estimate debtor days from average accounts receivable and credit sales."
-  },
-  {
     "name": "Receivables Turnover Ratio Calculator",
     "url": "/calculators/receivables-turnover-ratio-calculator.html",
     "category": "Finance",
@@ -17369,18 +17432,18 @@
     "description": "Rockwell Hardness Conversion Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "ROI Calculator - Return on Investment",
-    "url": "/calculators/roi-calculator-return-on-investment.html",
-    "category": "Finance",
-    "keywords": "roi calculator - return on investment",
-    "description": "Calculate ROI Calculator - Return on Investment with a transparent formula and worked example."
-  },
-  {
     "name": "ROI Calculator",
     "url": "/calculators/roi-calculator.html",
     "category": "Savings, Investment & Retirement",
     "keywords": "roi calculator roi calculator calculate return on investment (roi), net gain or loss and percentage return from an initial investment, current value and additional income.",
     "description": "Calculate a simple return on investment from the original cost, current value and any additional income received. Use it to compare scenarios on a consistent basis."
+  },
+  {
+    "name": "ROI Calculator - Return on Investment",
+    "url": "/calculators/roi-calculator-return-on-investment.html",
+    "category": "Finance",
+    "keywords": "roi calculator - return on investment",
+    "description": "Calculate ROI Calculator - Return on Investment with a transparent formula and worked example."
   },
   {
     "name": "ROIC Calculator – Return on Invested Capital",
@@ -17691,18 +17754,18 @@
     "description": "Calculate salad calories calculator with a transparent formula, example, and browser-only results."
   },
   {
-    "name": "Salary Calculator With Overtime",
-    "url": "/calculators/salary-calculator-with-overtime.html",
-    "category": "FINANCE",
-    "keywords": "salary calculator with overtime",
-    "description": "Salary Calculator With Overtime — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Salary Calculator",
     "url": "/calculators/salary-calculator.html",
     "category": "Tax, Salary & Payroll",
     "keywords": "salary daily hourly pay",
     "description": "Convert pay to daily and hourly estimates."
+  },
+  {
+    "name": "Salary Calculator With Overtime",
+    "url": "/calculators/salary-calculator-with-overtime.html",
+    "category": "FINANCE",
+    "keywords": "salary calculator with overtime",
+    "description": "Salary Calculator With Overtime — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Salary Hike Calculator",
@@ -17747,18 +17810,18 @@
     "description": "Sales Commission Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Sales Tax Calculator New Jersey",
-    "url": "/calculators/sales-tax-calculator-new-jersey.html",
-    "category": "Finance",
-    "keywords": "sales tax calculator new jersey",
-    "description": "Calculate Sales Tax Calculator New Jersey with a transparent formula and worked example."
-  },
-  {
     "name": "Sales Tax Calculator",
     "url": "/calculators/sales-tax-calculator.html",
     "category": "Tax, Salary & Payroll",
     "keywords": "sales tax calculator estimate sales tax and total.",
     "description": "Estimate sales tax and total."
+  },
+  {
+    "name": "Sales Tax Calculator New Jersey",
+    "url": "/calculators/sales-tax-calculator-new-jersey.html",
+    "category": "Finance",
+    "keywords": "sales tax calculator new jersey",
+    "description": "Calculate Sales Tax Calculator New Jersey with a transparent formula and worked example."
   },
   {
     "name": "Salt Dough Calculator",
@@ -17950,13 +18013,6 @@
     "description": "Calculate the width, height and area of a display from its diagonal and aspect ratio."
   },
   {
-    "name": "Senior Citizens Savings Scheme Calculator",
-    "url": "/calculators/scss-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "senior citizens savings scheme calculator",
-    "description": "Estimate Senior Citizens Savings Scheme interest payouts and maturity."
-  },
-  {
     "name": "Scuba Weight Calculator",
     "url": "/calculators/scuba-weight-calculator.html",
     "category": "SPORTS",
@@ -18067,6 +18123,13 @@
     "category": "OTHER",
     "keywords": "semitone calculator",
     "description": "Semitone Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Senior Citizens Savings Scheme Calculator",
+    "url": "/calculators/scss-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "senior citizens savings scheme calculator",
+    "description": "Estimate Senior Citizens Savings Scheme interest payouts and maturity."
   },
   {
     "name": "Sensible Heat Calculator",
@@ -18349,13 +18412,6 @@
     "description": "Simplify Ratio Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Sin-1 Calculator",
-    "url": "/calculators/sin-1-calculator.html",
-    "category": "MATH",
-    "keywords": "sin-1 calculator",
-    "description": "Sin-1 Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Sin 2 Theta Calculator",
     "url": "/calculators/sin-2-theta-calculator.html",
     "category": "MATH",
@@ -18375,6 +18431,13 @@
     "category": "MATH",
     "keywords": "sin theta calculator",
     "description": "Sin Theta Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Sin-1 Calculator",
+    "url": "/calculators/sin-1-calculator.html",
+    "category": "MATH",
+    "keywords": "sin-1 calculator",
+    "description": "Sin-1 Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Sine Function Calculator",
@@ -18405,13 +18468,6 @@
     "description": "Sinking Fund Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "₹5,000 Monthly SIP Scenario",
-    "url": "/calculators/sip-5000-monthly-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "sip 5000 monthly scenario 10 year worked example",
-    "description": "Explore a worked ₹5,000 monthly SIP scenario."
-  },
-  {
     "name": "SIP Calculator",
     "url": "/calculators/sip-calculator.html",
     "category": "Savings, Investment & Retirement",
@@ -18431,6 +18487,13 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "sip goal calculator estimate the monthly sip needed for a target.",
     "description": "Estimate the monthly SIP needed for a target."
+  },
+  {
+    "name": "Site Setback Area Calculator",
+    "url": "/calculators/site-setback-area-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "site setback area calculator designer architecture design planning built environment",
+    "description": "Estimate a buildable rectangle after applying front, rear and side setbacks to a rectangular site."
   },
   {
     "name": "Size to Weight Calculator (Rectangular Box)",
@@ -19077,13 +19140,6 @@
     "description": "SSS Triangle Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Sukanya Samriddhi Yojana (SSY) Calculator",
-    "url": "/calculators/ssy-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "ssy sukanya samriddhi yojana account maturity calculator india",
-    "description": "Estimate Sukanya Samriddhi Account maturity after 21 years, with annual deposits for the first 15 years and an editable interest-rate assumption."
-  },
-  {
     "name": "Stair Calculator",
     "url": "/calculators/stair-calculator.html",
     "category": "Geometry, Measurement & Construction",
@@ -19448,11 +19504,25 @@
     "description": "Subtraction Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Sukanya Samriddhi Yojana (SSY) Calculator",
+    "url": "/calculators/ssy-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "ssy sukanya samriddhi yojana account maturity calculator india",
+    "description": "Estimate Sukanya Samriddhi Account maturity after 21 years, with annual deposits for the first 15 years and an editable interest-rate assumption."
+  },
+  {
     "name": "Sulfur Calculator",
     "url": "/calculators/sulfur-calculator.html",
     "category": "FOOD",
     "keywords": "sulfur calculator",
     "description": "Sulfur Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Sum of a Linear Number Sequence Calculator",
+    "url": "/calculators/linear-number-sequence-sum-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "sum of a linear number sequence mathematics sequence algebra numbers",
+    "description": "Calculate the common difference and sum of a finite arithmetic sequence from its first and last terms."
   },
   {
     "name": "Sum of Series Calculator",
@@ -19502,13 +19572,6 @@
     "category": "PHYSICS",
     "keywords": "sunset calculator",
     "description": "Sunset Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Australia Superannuation Calculator",
-    "url": "/calculators/superannuation-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "Australia superannuation super guarantee employer contribution retirement balance ATO",
-    "description": "Estimate 2026–27 employer super contributions and an illustrative future balance."
   },
   {
     "name": "Superscript Generator",
@@ -19665,18 +19728,18 @@
     "description": "Takt Time Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Tan-1 Calculator",
-    "url": "/calculators/tan-1-calculator.html",
-    "category": "MATH",
-    "keywords": "tan-1 calculator",
-    "description": "Tan-1 Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "Tan Inverse Calculator",
     "url": "/calculators/tan-inverse-calculator.html",
     "category": "MATH",
     "keywords": "tan inverse calculator",
     "description": "Tan Inverse Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Tan-1 Calculator",
+    "url": "/calculators/tan-1-calculator.html",
+    "category": "MATH",
+    "keywords": "tan-1 calculator",
+    "description": "Tan-1 Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
     "name": "Tangent Angle Calculator",
@@ -20589,13 +20652,6 @@
     "description": "Trick-or-Treat Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Trigonometry Calculator",
-    "url": "/calculators/trig-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "trigonometry calculator trig calculator sine cosine tangent cotangent secant cosecant sin cos tan degrees radians angle right triangle solver opposite adjacent hypotenuse",
-    "description": "Calculate six trigonometric functions in degrees or radians and solve right-triangle sides from a hypotenuse and acute angle."
-  },
-  {
     "name": "Trig Degree Calculator",
     "url": "/calculators/trig-degree-calculator.html",
     "category": "MATH",
@@ -20629,6 +20685,13 @@
     "category": "MATH",
     "keywords": "trigonometric functions calculator",
     "description": "Trigonometric Functions Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Trigonometry Calculator",
+    "url": "/calculators/trig-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "trigonometry calculator trig calculator sine cosine tangent cotangent secant cosecant sin cos tan degrees radians angle right triangle solver opposite adjacent hypotenuse",
+    "description": "Calculate six trigonometric functions in degrees or radians and solve right-triangle sides from a hypotenuse and acute angle."
   },
   {
     "name": "Trihybrid Cross Calculator - Punnett Square",
@@ -20827,6 +20890,13 @@
     "description": "Tylenol Overdose Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Typography Scale Calculator",
+    "url": "/calculators/typography-scale-calculator.html",
+    "category": "Design & Creative",
+    "keywords": "typography scale calculator designer architecture design planning built environment",
+    "description": "Generate a consistent type scale from a base font size, ratio and number of steps."
+  },
+  {
     "name": "UFO Travel Calculator",
     "url": "/calculators/ufo-travel-calculator.html",
     "category": "PHYSICS",
@@ -20841,6 +20911,13 @@
     "description": "UK Coin Weight Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "UK National Insurance Calculator",
+    "url": "/calculators/national-insurance-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "UK National Insurance employee Class 1 payroll 2026 2027 thresholds",
+    "description": "Estimate employee Class 1 NI using 2026–27 standard category A rates."
+  },
+  {
     "name": "UK Stamp Duty Calculator",
     "url": "/calculators/uk-stamp-duty-calculator.html",
     "category": "Tax, Salary & Payroll",
@@ -20853,6 +20930,13 @@
     "category": "Tax, Salary & Payroll",
     "keywords": "uk stamp duty land tax calculator estimate standard residential sdlt for england or northern ireland.",
     "description": "Estimate standard residential SDLT for England or Northern Ireland."
+  },
+  {
+    "name": "UK Student Loan Calculator",
+    "url": "/international/uk-student-loan-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "uk student loan calculator student loan repayment plan 1 plan 2 plan 4 plan 5 postgraduate loan threshold income united kingdom",
+    "description": "Estimate UK student-loan repayments from income and selected repayment plan assumptions. Check current official thresholds and payroll rules."
   },
   {
     "name": "UK to US Shoe Size Converter",
@@ -21016,6 +21100,20 @@
     "description": "Calculate Urine Output Calculator with a stated formula, sample and limitations."
   },
   {
+    "name": "US 401(k) Growth Calculator",
+    "url": "/calculators/401k-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "US 401k retirement account employee contribution employer match growth projection",
+    "description": "Estimate a simplified 401(k) balance with employee contributions and employer matching."
+  },
+  {
+    "name": "US Home Affordability Calculator",
+    "url": "/international/us-home-affordability-calculator.html",
+    "category": "Loans, EMI & Credit",
+    "keywords": "us home affordability calculator mortgage affordability home price monthly income debt to income dti down payment interest rate property tax homeowners insurance",
+    "description": "Estimate a home purchase price from household income, debts, down payment and assumed mortgage costs."
+  },
+  {
     "name": "US to EU Shoe Size Converter",
     "url": "/calculators/us-to-eu-shoe-size-converter.html",
     "category": "Everyday Life",
@@ -21093,11 +21191,11 @@
     "description": "Calculate variance calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
   },
   {
-    "name": "3D Vector Calculator",
-    "url": "/calculators/vector-calculator.html",
-    "category": "Mathematics, Numbers & Statistics",
-    "keywords": "3d vector calculator dot product cross product magnitude",
-    "description": "Calculate dot product, cross product and vector magnitudes for two 3D vectors."
+    "name": "VAT Calculator",
+    "url": "/international/vat-calculator.html",
+    "category": "Tax, Salary & Payroll",
+    "keywords": "vat calculator value added tax add remove tax inclusive net price international",
+    "description": "Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency."
   },
   {
     "name": "Vector Magnitude Calculator",
@@ -21800,6 +21898,13 @@
     "description": "Wind Turbine Profit Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Window-to-Wall Ratio Calculator",
+    "url": "/calculators/window-to-wall-ratio-calculator.html",
+    "category": "Architecture & Built Environment",
+    "keywords": "window-to-wall ratio calculator designer architecture design planning built environment",
+    "description": "Estimate window-to-wall ratio for a façade using opening area and gross wall area."
+  },
+  {
     "name": "Windsock Calculator",
     "url": "/calculators/windsock-calculator.html",
     "category": "EVERYDAY LIFE",
@@ -22078,26 +22183,5 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "UK Student Loan Calculator",
-    "url": "/international/uk-student-loan-calculator.html",
-    "category": "Loans, EMI & Credit",
-    "keywords": "uk student loan calculator student loan repayment plan 1 plan 2 plan 4 plan 5 postgraduate loan threshold income united kingdom",
-    "description": "Estimate UK student-loan repayments from income and selected repayment plan assumptions. Check current official thresholds and payroll rules."
-  },
-  {
-    "name": "US Home Affordability Calculator",
-    "url": "/international/us-home-affordability-calculator.html",
-    "category": "Loans, EMI & Credit",
-    "keywords": "us home affordability calculator mortgage affordability home price monthly income debt to income dti down payment interest rate property tax homeowners insurance",
-    "description": "Estimate a home purchase price from household income, debts, down payment and assumed mortgage costs."
-  },
-  {
-    "name": "VAT Calculator",
-    "url": "/international/vat-calculator.html",
-    "category": "Tax, Salary & Payroll",
-    "keywords": "vat calculator value added tax add remove tax inclusive net price international",
-    "description": "Calculate VAT for international purchases. Add VAT to a net price or remove VAT from a VAT-inclusive total using your local tax rate and currency."
   }
 ]
