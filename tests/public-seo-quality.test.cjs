@@ -31,6 +31,26 @@ test('homepage has a readable search title, canonical URL, and social preview', 
   assert.match(html, /<meta\s+name="twitter:card"\s+content="summary_large_image"/i);
 });
 
+
+test('basic calculator targets its Search Console query with a concise, accurate snippet', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'calculators', 'basic-calculator.html'), 'utf8');
+  const titleStart = html.indexOf('<title>');
+  const titleEnd = html.indexOf('</title>', titleStart);
+  const title = titleStart >= 0 && titleEnd > titleStart ? html.slice(titleStart + 7, titleEnd) : '';
+  const descriptionPrefix = '<meta name="description" content="';
+  const descriptionStart = html.indexOf(descriptionPrefix);
+  const descriptionEnd = descriptionStart >= 0 ? html.indexOf('"', descriptionStart + descriptionPrefix.length) : -1;
+  const description = descriptionEnd > descriptionStart
+    ? html.slice(descriptionStart + descriptionPrefix.length, descriptionEnd)
+    : '';
+  assert.ok(title, 'basic calculator has a title');
+  assert.match(title, /basic calculator online free/i);
+  assert.ok(title.length >= 30 && title.length <= 60, 'title is within a useful display length');
+  assert.ok(description, 'basic calculator has a meta description');
+  assert.match(description, /addition, subtraction, multiplication, division/i);
+  assert.ok(html.includes('<link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html">'));
+});
+
 test('source code license is MIT and does not claim editorial content or brand assets', () => {
   const license = fs.readFileSync(path.join(ROOT, 'LICENSE'), 'utf8');
   const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
