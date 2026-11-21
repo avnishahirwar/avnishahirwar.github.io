@@ -252,7 +252,7 @@ test('shared Header follows the same navigation and regional-control order on ev
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
   const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
-  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blogs<', '>Login<', 'fc-language-control'];
+  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blog<', '>Login<', 'fc-language-control'];
   let homepageLast = -1;
   for (const token of homepageOrder) {
     const index = homepageNav.indexOf(token);
