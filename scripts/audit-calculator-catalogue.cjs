@@ -18,7 +18,7 @@ for (const lang of languages) walk(path.join(root,lang,'calculators'));
 const has = (html,re) => re.test(html);
 const findings = [];
 const stats = {total:files.length,english:0,localized:0,byLanguage:{},checks:{title:0,description:0,canonical:0,formula:0,workedExample:0,visibleFaq:0,faqSchema:0,chartOrTable:0,updatedRateStamp:0,authoritativeRateSource:0}};
-const ratePattern = /(ppf|ssy|sukanya|nsc|kvp|scss|post-office-(?:rd|mis)|gst|income-tax|advance-tax|tds|epf|pf-calculator|uk-stamp-duty|national-insurance|superannuation)/i;
+const ratePattern = /(ppf|ssy|sukanya|nsc|kvp|scss|post-office-(?:rd|mis)|gst|income-tax|advance-tax|tds|epf|pf-calculator|uk-stamp-duty|national-insurance|superannuation|atal-pension-yojana)/i;
 for (const file of files.sort()) {
   const rel = path.relative(root,file).split(path.sep).join('/');
   const m = rel.match(/^([a-z]{2})\/calculators\//);
@@ -38,7 +38,7 @@ for (const file of files.sort()) {
   for (const k of Object.keys(checks)) if(checks[k]) stats.checks[k]++;
   const rateSensitive=ratePattern.test(path.basename(file));
   const updated=has(html,/updated\s*[:：]|checked\s+(?:against|on)|rates\s+checked|अद्यतन\s*[:：]|अपडेट\s*[:：]/i);
-  const source=has(html,/(dea\.gov\.in|indiapost\.gov\.in|gst\.gov\.in|incometax\.gov\.in|epfindia\.gov\.in|canada\.ca|gov\.uk)/i);
+  const source=has(html,/(dea\.gov\.in|indiapost\.gov\.in|gst\.gov\.in|incometax\.gov\.in|epfindia\.gov\.in|canada\.ca|gov\.uk|ato\.gov\.au|pfrda\.org\.in)/i);
   if(rateSensitive){if(updated)stats.checks.updatedRateStamp++;if(source)stats.checks.authoritativeRateSource++;}
   const missing=Object.entries(checks).filter(([,v])=>!v).map(([k])=>k);
   if(rateSensitive&&!updated)missing.push('updatedRateStamp');

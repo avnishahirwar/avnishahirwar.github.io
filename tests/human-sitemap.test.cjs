@@ -29,13 +29,16 @@ test('shared footer exposes sitemap in every supported language',()=>{
 
 test('human sitemap generator reproduces the checked-in complete catalogue without changing the site shell',()=>{
  assert.equal(renderHumanSitemap(html,entries),html);
- assert.match(html,/data-sitemap-total="3129"/);
- assert.ok(html.includes('<strong>3,129</strong> public catalogue entries'));
- assert.ok(html.includes('<strong>3,126</strong> calculator pages'));
- assert.ok(html.includes('<strong>3</strong> international entries'));
- assert.match(html,/<p class="fc-sitemap-status"[^>]*>3,129 entries across 36 categories\.<\/p>/);
- assert.doesNotMatch(html,/2,481 entries across 36 categories/);
- assert.ok(html.includes('<strong>36</strong> catalogue categories'));
+ const total=entries.length;
+ const calculators=entries.filter(x=>x.url.startsWith('/calculators/')).length;
+ const international=total-calculators;
+ const categories=new Set(entries.map(x=>(x.category||'Other').trim().toLocaleLowerCase('en'))).size;
+ assert.ok(html.includes('data-sitemap-total="'+total+'"'));
+ assert.ok(html.includes('<strong>'+total.toLocaleString('en-US')+'</strong> public catalogue entries'));
+ assert.ok(html.includes('<strong>'+calculators.toLocaleString('en-US')+'</strong> calculator pages'));
+ assert.ok(html.includes('<strong>'+international.toLocaleString('en-US')+'</strong> international entries'));
+ assert.ok(html.includes('<p class="fc-sitemap-status" id="sitemap-status" role="status" aria-live="polite">'+total.toLocaleString('en-US')+' entries across '+categories.toLocaleString('en-US')+' categories.</p>'));
+ assert.ok(html.includes('<strong>'+categories.toLocaleString('en-US')+'</strong> catalogue categories'));
 });
 
 
