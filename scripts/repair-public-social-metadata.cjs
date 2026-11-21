@@ -38,10 +38,10 @@ function walk(dir, relative = '') {
 }
 
 function readAttribute(tag, name) {
-  const match = tag.match(new RegExp('\\b' + name + '\\s*=\\s*(["\\'])(.*?)\\1', 'i'));
-  return match ? match[2] : null;
+  const pattern = new RegExp("\\\\b" + name + "\\\\s*=\\\\s*(?:\\\"([^\\\"]*)\\\"|'([^']*)')", 'i');
+  const match = tag.match(pattern);
+  return match ? (match[1] !== undefined ? match[1] : match[2]) : null;
 }
-
 function getMeta(html, key, attribute) {
   const tags = html.match(/<meta\b[^>]*>/gi) || [];
   const tag = tags.find((candidate) => {
