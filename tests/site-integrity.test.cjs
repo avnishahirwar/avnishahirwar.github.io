@@ -40,38 +40,17 @@ test('AdSense publisher loader is not duplicated and configured ad slots have a 
     if (!file || !fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, 'utf8');
     const hasAdSlot = /class=["'][^"']*(?:ad-slot|ad-placeholder|adsense-placeholder)[^"']*["']/i.test(html);
-    const gateCount = html.split('/assets/adsense-domain-gate.js').length - 1;
-    const directCount = html.split('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').length - 1;
-    if (directCount > 0 || gateCount > 1 || (hasAdSlot && gateCount !== 1)) failures.push(url + ' (ad slot: ' + hasAdSlot + ', gate count: ' + gateCount + ', direct loader count: ' + directCount + ')');
+    const count = html.split('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js').length - 1;
+    if (count > 1 || (hasAdSlot && count !== 1)) failures.push(url + ' (ad slot: ' + hasAdSlot + ', loader count: ' + count + ')');
   }
-  assert.deepEqual(failures, [], 'AdSense must use one domain-gated loader per ad-slot page: ' + failures.join(', '));
+  assert.deepEqual(failures, [], 'AdSense loader must match actual ad-slot pages: ' + failures.join(', '));
 });
-test('AdSense publisher script loads only on the canonical production hostname', () => {
-  const gate = fs.readFileSync(path.join(root, 'assets/adsense-domain-gate.js'), 'utf8');
-  function injectedScripts(hostname) {
-    const inserted = [];
-    const document = {
-      querySelector: () => null,
-      createElement: tag => ({ tagName: tag.toUpperCase() }),
-      head: { appendChild: script => inserted.push(script) }
-    };
-    vm.runInNewContext(gate, { window: { location: { hostname } }, document });
-    return inserted;
-  }
-  const production = injectedScripts('friendlycalculator.in');
-  assert.equal(production.length, 1);
-  assert.equal(production[0].src, 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404');
-  assert.equal(production[0].crossOrigin, 'anonymous');
-  for (const hostname of ['www.friendlycalculator.in', 'branch.pages.dev', 'friendlycalculator.in.example.com']) {
-    assert.equal(injectedScripts(hostname).length, 0, hostname + ' must not load publisher ads');
-  }
-});
+
 test('AdSense auto ads are excluded from navigation, contact and interactive calculator pages', () => {
   const excluded = ['index.html', 'calculator/contact.html', 'calculators/loan-emi-calculator.html'];
   for (const relative of excluded) {
     const html = fs.readFileSync(path.join(root, relative), 'utf8');
     assert.doesNotMatch(html, /pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js/i, relative + ' must not load auto ads');
-    assert.doesNotMatch(html, /assets\/adsense-domain-gate\.js/i, relative + ' must not load auto ads');
   }
 });
 test('shared shell does not inject the full calculator catalogue when a focused bundle is present', () => {

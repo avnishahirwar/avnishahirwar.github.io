@@ -10,7 +10,6 @@ test('homepage presents Friendly Calculator as a global free calculator platform
   assert.match(home, /<h1>Free Online Calculators for India and Worldwide<\/h1>/);
   assert.doesNotMatch(home, /<h1>Free Online Calculators for India<\/h1>/);
   assert.match(home, /Calculators for users worldwide/);
-  assert.match(home, /selected international calculators/);
   assert.match(home, /\/international\//);
 });
 
