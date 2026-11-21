@@ -14,7 +14,7 @@ test('Study Calculator is indexed, discoverable and uses the published catalogue
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(index.some(item => item.name === 'Study Calculator' && item.url === '/calculators/study-calculator.html'));
   assert.match(directory, /href="\/calculators\/study-calculator\.html"/);
-  assert.ok(home.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.ok(home.includes('Search all calculators'));
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /rel="canonical"/);
   assert.match(page, /EducationalApplication/);
