@@ -1,5 +1,12 @@
 [
   {
+    "name": "Government & Public Service Calculators",
+    "url": "/government-calculators/",
+    "category": "Government & Public Services",
+    "keywords": "government public service calculators worldwide tax income tax gst vat payroll salary pension social security benefits public savings stamp duty education loan",
+    "description": "Browse government-rule-based tax, payroll, pension, public savings and education calculators by topic and country."
+  },
+  {
     "name": "Compound Interest Calculator",
     "url": "/calculators/compound-interest-calculator.html",
     "category": "Savings, Investment & Retirement",
