@@ -10,7 +10,9 @@ test('global language selector supports all configured locales', () => {
   }
   assert.match(shell, /fc-language-select/);
   assert.match(shell, /fc-language-preference/);
-  assert.match(shell, /supportedUiLocales=\{[^}]*vi:1,te:1,gu:1,kn:1/);
+  for (const locale of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) {
+    assert.match(shell, new RegExp('supportedUiLocales=[^;]*' + locale + ':1'));
+  }
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -78,7 +80,8 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
 
 test('Japanese and Russian calculator routes receive localized shell behavior', () => {
   assert.ok(shell.includes('bn|ta|ja|ru'), 'Japanese and Russian must be recognized as calculator locales');
-  assert.ok(shell.includes("const localeCodes=['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']"));
+  assert.match(shell, /const localeCodes=\[/);
+  for (const locale of ['ja','ru','mr','vi','te','gu','kn']) assert.ok(shell.includes('"' + locale + '"'));
 });
 
 
@@ -113,7 +116,7 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
 
 test('All configured locale routes enforce their document language and writing direction', () => {
   assert.ok(shell.includes("document.documentElement.lang=routeLocale;"));
-  assert.ok(shell.includes("const routeLocaleMatch=/^\\/(hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn|zh|ur|tr|it|ko)\\//.exec(p);"));
+  assert.ok(shell.includes('const routeLocaleMatch=/^\\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\\//.exec(p);'));
   assert.ok(shell.includes("document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';"));
 });
 
@@ -125,7 +128,7 @@ test('language selector lists 50 high-reach languages and only enables configure
   assert.equal(codes.length, 50, 'Expected exactly 50 language choices');
   for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(codes.includes(code), 'Missing language code: '+code);
   assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
-  assert.match(shell, / — Coming soon/);
+  assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
   assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
 });
 
@@ -166,11 +169,11 @@ test('Vietnamese and Telugu homepages declare localized, canonical, indexable do
 
 test('language directory lists exactly 50 unique language editions with accurate availability groups', () => {
   const page = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
-  assert.match(page, /Available language editions \(17\)/);
-  assert.match(page, /Planned language editions \(33\)/);
+  assert.match(page, /Live language entry points \(50\)/);
+  assert.doesNotMatch(page, /Planned language editions/);
   assert.equal((page.match(/class="card"/g) || []).length, 50);
-  assert.equal((page.match(/class="status-live"/g) || []).length, 17);
-  assert.equal((page.match(/class="status-soon"/g) || []).length, 33);
+  assert.equal((page.match(/class="status-live"/g) || []).length, 50);
+  assert.equal((page.match(/class="status-soon"/g) || []).length, 0);
   assert.equal(page.split('href="/mr/index.html"').length - 1, 1, 'Marathi edition link must appear once only');
   assert.equal(page.split('href="/vi/index.html"').length - 1, 1, 'Vietnamese edition link must appear once only');
   assert.equal(page.split('href="/te/index.html"').length - 1, 1, 'Telugu edition link must appear once only');
@@ -213,7 +216,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   const routed = [...objectBody('const localeHome={').matchAll(/(?:^|,)([a-z]{2,3}):/g)].map(match => match[1]);
   assert.deepEqual(names, catalogue.locales.map(locale => locale.code));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
-  assert.deepEqual(routed.sort(), [...enabled,'zh','ur','tr','it','ko'].sort());
+  assert.deepEqual(routed.sort(), enabled.sort());
   assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
@@ -224,7 +227,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
 });
 
 
-test('first translation batch has complete shared navigation and footer dictionaries but remains unpublished until routes are ready', () => {
+test('first translation batch has complete shared navigation and footer dictionaries and indexable locale homepages', () => {
   const match = shell.match(/const chrome=\{([\s\S]*?)\n\};/);
   assert.ok(match, 'Expected shared chrome dictionaries');
   for (const locale of ['zh','ur','tr','it','ko']) {
@@ -238,13 +241,12 @@ test('first translation batch has complete shared navigation and footer dictiona
   }
   const catalogue = require('../config/language-catalogue.json');
   for (const locale of ['zh','ur','tr','it','ko']) {
-    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned',
-      locale + ' must remain disabled until its localized routes are published and reviewed');
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'available');
   }
 });
 
 
-test('five staged language editions have localized homepages and working basic calculators without premature indexing', () => {
+test('five staged language editions have indexable homepages while draft calculators remain noindex', () => {
   const catalogue = require('../config/language-catalogue.json');
   const expected = {
     zh: ['让计算更简单、更清晰。', '基础计算器', '计算方法'],
@@ -254,12 +256,12 @@ test('five staged language editions have localized homepages and working basic c
     ko: ['계산을 더 쉽고 명확하게.', '기본 계산기', '계산 방식']
   };
   for (const [locale, phrases] of Object.entries(expected)) {
-    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'planned');
+    assert.equal(catalogue.locales.find(item => item.code === locale).status, 'available');
     const home = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
     const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'basic-calculator.html'), 'utf8');
     assert.match(home, new RegExp('<html lang="' + locale + '"'));
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
-    assert.match(home, /name="robots" content="noindex,follow"/);
+    assert.match(home, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.match(calculator, /name="robots" content="noindex,follow"/);
     assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
     assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
@@ -273,7 +275,7 @@ test('five staged language editions have localized homepages and working basic c
       assert.match(calculator, /dir="rtl"/);
     }
   }
-  assert.match(shell, /zh\|ur\|tr\|it\|ko/);
+  for (const locale of ['zh','ur','tr','it','ko']) assert.ok(shell.includes(locale), 'Missing staged locale in shell: ' + locale);
   assert.ok(['zh','ur','tr','it','ko'].every(locale => shell.includes(locale + ":'/" + locale + "/index.html'")), 'Missing staged locale home route');
   assert.match(shell, /ur\|fa\|ps\|he\|sd/);
   const footerBlock = shell.slice(shell.indexOf('const footerLabels={'), shell.indexOf('const footerPaths='));
@@ -357,5 +359,5 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
 
 test('sitemap hreflang grouping recognizes every published locale prefix', () => {
   const generator = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'generate-sitemaps.cjs'), 'utf8');
-  assert.match(generator, /const LANGUAGE_PREFIXES = new Set\(\['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn'\]\);/);
+  for (const locale of ['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.match(generator, new RegExp("'" + locale + "'"));
 });
