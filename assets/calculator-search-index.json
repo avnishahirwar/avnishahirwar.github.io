@@ -4714,6 +4714,13 @@
     "description": "Cost per Minute Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
+    "name": "Cost per Transaction Calculator",
+    "url": "/calculators/cost-per-transaction-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "cost per transaction calculator organization enterprise industry company operations",
+    "description": "Estimate the average operating cost for each order, case, ticket or transaction handled by a team."
+  },
+  {
     "name": "Count Hours Calculator",
     "url": "/calculators/count-hours-calculator.html",
     "category": "EVERYDAY LIFE",
@@ -7112,6 +7119,13 @@
     "description": "Calculate empirical rule calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
   },
   {
+    "name": "Employee Utilization Calculator",
+    "url": "/calculators/employee-utilization-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "employee utilization calculator organization enterprise industry company operations",
+    "description": "Measure the share of available work time used for productive or billable activity."
+  },
+  {
     "name": "EMV Calculator – Expected Monetary Value",
     "url": "/calculators/emv-calculator-expected-monetary-value.html",
     "category": "Finance",
@@ -9389,6 +9403,13 @@
     "category": "EVERYDAY LIFE",
     "keywords": "hat size calculator",
     "description": "Hat Size Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Headcount Planning Calculator",
+    "url": "/calculators/headcount-planning-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "headcount planning calculator organization enterprise industry company operations",
+    "description": "Estimate the people required to cover planned workload while allowing for a productive-time assumption."
   },
   {
     "name": "Headphone Power Calculator",
@@ -14074,6 +14095,13 @@
     "description": "Order of Magnitude Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Organization Growth Rate Calculator",
+    "url": "/calculators/organization-growth-rate-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "organization growth rate calculator organization enterprise industry company operations",
+    "description": "Compare an earlier and later organization metric to estimate simple growth or contraction."
+  },
+  {
     "name": "Orthocenter Calculator",
     "url": "/calculators/orthocenter-calculator.html",
     "category": "MATH",
@@ -15823,6 +15851,20 @@
     "description": "Process Capability Index Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Process Efficiency Calculator",
+    "url": "/calculators/process-efficiency-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "process efficiency calculator organization enterprise industry company operations",
+    "description": "Estimate process cycle efficiency by comparing value-added time with total elapsed lead time."
+  },
+  {
+    "name": "Procurement Savings Calculator",
+    "url": "/calculators/procurement-savings-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "procurement savings calculator organization enterprise industry company operations",
+    "description": "Compare a baseline purchase cost with a negotiated or alternative cost to estimate procurement savings."
+  },
+  {
     "name": "Productivity Calculator",
     "url": "/calculators/productivity-calculator.html",
     "category": "FINANCE",
@@ -15856,6 +15898,13 @@
     "category": "FINANCE",
     "keywords": "profitability index calculator",
     "description": "Profitability Index Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Project Resource Capacity Calculator",
+    "url": "/calculators/project-resource-capacity-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "project resource capacity calculator organization enterprise industry company operations",
+    "description": "Compare available team hours with planned project demand and show the remaining capacity or shortfall."
   },
   {
     "name": "Projectile Motion Experiment Calculator",
@@ -18067,6 +18116,13 @@
     "category": "HEALTH",
     "keywords": "serum osmolality calculator",
     "description": "Serum Osmolality Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Service Level Uptime Calculator",
+    "url": "/calculators/service-level-uptime-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "service level uptime calculator organization enterprise industry company operations",
+    "description": "Translate a target uptime percentage into an indicative downtime allowance for a selected period."
   },
   {
     "name": "Set Builder Calculator",
@@ -21625,6 +21681,13 @@
     "description": "Weighted Blanket Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Weighted Decision Scorecard Calculator",
+    "url": "/calculators/weighted-decision-scorecard-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "weighted decision scorecard calculator organization enterprise industry company operations",
+    "description": "Combine criterion scores and weights into a transparent weighted score for comparing suppliers, projects or options."
+  },
+  {
     "name": "Weird Units Converter",
     "url": "/calculators/weird-units-converter.html",
     "category": "CONVERSION",
@@ -21805,6 +21868,13 @@
     "category": "Date, Time & Work",
     "keywords": "work hours calculator working hours shift duration timesheet breaks overnight",
     "description": "Calculate shift duration and subtract unpaid breaks."
+  },
+  {
+    "name": "Workforce Capacity Calculator",
+    "url": "/calculators/workforce-capacity-calculator.html",
+    "category": "ORGANISATIONS & ENTERPRISE",
+    "keywords": "workforce capacity calculator organization enterprise industry company operations",
+    "description": "Estimate practical team capacity from headcount, working hours and a realistic productive-time percentage."
   },
   {
     "name": "Working Capital Calculator",

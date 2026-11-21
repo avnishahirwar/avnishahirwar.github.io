@@ -911,7 +911,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.match(directory, /Search 3136 calculators by name or topic/);
+  assert.match(directory, new RegExp('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.equal(categoryCount, 20);
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
