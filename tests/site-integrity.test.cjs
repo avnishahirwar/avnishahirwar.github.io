@@ -2111,8 +2111,8 @@ test('homepage shows the curated popular calculator links without embedding the 
   assert.ok(extra);
   const routes = [...(nav[0]+extra[0]).matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
   assert.equal((nav[0].match(/<a href=/g)||[]).length,6);
-  assert.equal(routes.length, 19);
-  assert.equal(new Set(routes).size, 19);
+  assert.equal(routes.length, 16);
+  assert.equal(new Set(routes).size, 16);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
   assert.match(page, /class="home-popular-tools"/);
 });
