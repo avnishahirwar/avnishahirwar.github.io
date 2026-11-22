@@ -1338,3 +1338,15 @@ test('fuel cost page avoids stale catalogue totals and template placeholders', (
   assert.match(page, /Enter vehicle mileage in km\/L/);
   assert.doesNotMatch(page, /186 browser-based tools|n2 assumption|live n2 quote/);
 });
+
+
+test('homepage catalogue count matches its category index and public schema', () => {
+  const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const expected = catalogueCounts.homepageCoreCalculatorCount;
+  const formatted = expected.toLocaleString('en-US');
+  assert.ok(expected > 0, 'Homepage category index must expose a positive calculator count');
+  assert.ok(home.includes('Total catalogue: ' + formatted + ' calculators'), 'Homepage visible catalogue total must match category totals');
+  assert.ok(home.includes('offering ' + formatted + ' public calculators'), 'Homepage structured data must match category totals');
+  assert.ok(about.includes('offering ' + formatted + ' public calculators'), 'About structured data must match category totals');
+});
