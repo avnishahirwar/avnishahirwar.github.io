@@ -47,7 +47,7 @@ test('global landing page is discoverable from homepage and uses the shared site
 test('primary navigation follows category order and exposes the international hub in the All menu', () => {
   const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
   assert.ok(shell.includes("const primaryLinks=[[nav.home,localeHome[currentLocale]],[nav.all,r+'site-directory.html'],links[2],links[3]]"));
-  assert.ok(shell.includes('const moreLinks=[links[1],[nav.global,globalCalculatorsUrl],links[4],links[5]'));
+  assert.ok(shell.includes('const moreLinks=[links[1],...productLinks,[nav.global,globalCalculatorsUrl],links[4],links[5]'));
   assert.match(shell,/fc-more-navigation/);
   assert.match(shell,/fc-all-calculators-link/);
   assert.match(shell,/moreLinks\.map\(navLink\)/);
