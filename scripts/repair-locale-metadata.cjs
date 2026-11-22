@@ -82,7 +82,29 @@ function replaceCanonical(html, file, url) {
   const insertion = '<link rel="canonical" href="' + url + '">\n';
   return { html: html.slice(0, end) + insertion + html.slice(end), changed: true };
 }
-function rebuildAlternates(html, cluster) {
+function validExtraAlternates(file, html, cluster, cache) {
+  const end = headEnd(html);
+  const head = html.slice(0, end < 0 ? html.length : end);
+  const clusterLanguages = new Set(cluster.map(item => item.language.toLowerCase()));
+  const sourceCanonical = canonicalFor(file, html);
+  const extras = new Map();
+  for (const match of head.matchAll(/<link\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/\brel=["']alternate["']/i.test(tag)) continue;
+    const language = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+    const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+    if (!language || !href || language.toLowerCase() === 'x-default' || clusterLanguages.has(language.toLowerCase())) continue;
+    const targetFile = localFile(href);
+    if (!targetFile || targetFile === file) continue;
+    const targetHtml = cache.get(targetFile);
+    if (!targetHtml || (declaredLanguage(targetHtml) || '').toLowerCase() !== language.toLowerCase()) continue;
+    const targetCanonical = canonicalFor(targetFile, targetHtml);
+    if (targetCanonical !== new URL(href, ORIGIN).href || targetCanonical === sourceCanonical) continue;
+    extras.set(language.toLowerCase(), { language, url: targetCanonical });
+  }
+  return [...extras.values()].sort((a, b) => a.language.toLowerCase().localeCompare(b.language.toLowerCase()));
+}
+function rebuildAlternates(html, cluster, extras = []) {
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
@@ -95,7 +117,8 @@ function rebuildAlternates(html, cluster) {
       try { return language && href ? [language.toLowerCase(), new URL(href, ORIGIN).href] : null; }
       catch { return null; }
     }).filter(Boolean);
-  const desired = cluster.map(item => [item.language.toLowerCase(), item.url]);
+  const links = [...cluster, ...extras];
+  const desired = links.map(item => [item.language.toLowerCase(), item.url]);
   desired.push(['x-default', cluster.find(item => item.isDefault).url]);
   const same = existing.length === desired.length && desired.every(([language, url]) =>
     existing.some(([currentLanguage, currentUrl]) => currentLanguage === language && currentUrl === url));
@@ -103,7 +126,7 @@ function rebuildAlternates(html, cluster) {
 
   const pattern = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=)[^>]*\/?\s*>/gi;
   const cleaned = head.replace(pattern, '');
-  const tags = cluster.map(item => '  <link rel="alternate" hreflang="' + item.language + '" href="' + item.url + '">');
+  const tags = links.map(item => '  <link rel="alternate" hreflang="' + item.language + '" href="' + item.url + '">');
   tags.push('  <link rel="alternate" hreflang="x-default" href="' + cluster.find(item => item.isDefault).url + '">');
   const trimmed = cleaned.replace(/(?:[ \t]*\n)*[ \t]*$/, '');
   const nextHead = trimmed + '\n' + tags.join('\n') + '\n';
@@ -139,7 +162,8 @@ function main() {
       const canonical = replaceCanonical(html, item.file, item.url);
       if (canonical.changed) stats.canonicalsCorrected++;
       html = canonical.html;
-      const alternates = rebuildAlternates(html, cluster);
+      const extras = validExtraAlternates(item.file, html, cluster, cache);
+      const alternates = rebuildAlternates(html, cluster, extras);
       if (alternates.changed) stats.alternateSetsRebuilt++;
       html = alternates.html;
       if (html !== cache.get(item.file)) {
