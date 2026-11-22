@@ -1206,3 +1206,13 @@ html[data-fc-theme=dark] .home-main .fc-home-next-actions{background:#20334a;col
 .home-main>.fc-home-hero .fc-home-intents a strong{color:#172638}
 html[data-fc-theme=dark] .home-main>.fc-home-hero .fc-home-intents a>span,
 html[data-fc-theme=dark] .home-main>.fc-home-hero .fc-home-intents a strong{color:#edf3f8!important}
+/* Final mobile repair: keep the expanded More menu inside the viewport. */
+.fc-more-menu{grid-template-columns:minmax(0,1fr);width:min(320px,calc(100vw - 32px));box-sizing:border-box;overflow:hidden}
+.fc-more-menu a{display:flex!important;align-items:center;width:100%!important;min-width:0;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:760px){
+  .fc-more-navigation{width:100%;}
+  .fc-more-navigation summary{display:flex;align-items:center;width:100%;box-sizing:border-box;}
+  .fc-more-menu{width:100%;max-width:100%;padding:6px 0;background:#102238;border:0;border-top:1px solid #40536a;border-radius:0;}
+  .fc-more-menu a{min-height:44px;padding:10px 14px;color:#f7f9fc!important;border-radius:6px;white-space:normal!important;}
+  .fc-more-menu a:hover{background:#203852;}
+}
