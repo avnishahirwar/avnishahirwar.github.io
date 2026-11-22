@@ -92,12 +92,13 @@ test('homepage calculator search loads its index only after typing and renders a
   assert.ok(start >= 0 && end > start, 'Homepage deferred search initializer must exist');
   const script = homepage.slice(start, end);
   assert.match(script, /function loadCatalogue\(/);
-  assert.match(script, /fetch\('\/assets\/calculator-search-index\.json'/);
+  assert.match(script, /fetch\('\/assets\/calculator-search-index\.json\?v=/);
+  assert.match(script, /cache:'no-store'/);
   assert.match(script, /input\.addEventListener\('input'/);
-  assert.match(script, /window\.setTimeout\(search,120\)/);
+  assert.match(script, /timer=setTimeout\(search,100\)/);
   assert.match(script, /if\(!query\)[\s\S]*?results\.hidden=true/);
-  assert.match(script, /items\.slice\(0,12\)/);
-  assert.match(script, /if\(items\.length>12\)/);
+  assert.match(script, /unique\.slice\(0,15\)/);
+  assert.match(script, /unique\.length>shown\.length/);
 });
 
 
