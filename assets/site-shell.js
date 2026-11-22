@@ -2,8 +2,7 @@
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
 try {
-  const isPublicTopPage = window.self === window.top &&
-    new URLSearchParams(location.search).get('embed') !== '1' &&
+  const isPublicTopPage = new URLSearchParams(location.search).get('embed') !== '1' &&
     !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
   if (isPublicTopPage && document.body) {
     // Replace legacy page-level navigation/footer visually with the one shared site chrome.
@@ -457,7 +456,11 @@ const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Quốc gia & định dạng':currentLocale==='te'?'దేశం & ఫార్మాట్':currentLocale==='gu'?'દેશ અને ફોર્મેટ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ಸ್ವರೂಪ':'Country &amp; format')+'</span><select id="fc-country-select" aria-label="'+(currentLocale==='vi'?'Chọn quốc gia và định dạng':currentLocale==='te'?'దేశం మరియు ఫార్మాట్‌ను ఎంచుకోండి':currentLocale==='gu'?'દેશ અને ફોર્મેટ પસંદ કરો':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ಸ್ವರೂಪವನ್ನು ಆಯ್ಕೆಮಾಡಿ':'Choose country and format')+'">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Quốc gia & định dạng':currentLocale==='te'?'దేశం & ఫార్మాట్':currentLocale==='gu'?'દેશ અને તારીખનું સ્વરૂપ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ದಿನಾಂಕದ ಸ್ವರೂಪ':'Date format')+'</span><select id="fc-locale-select" aria-label="'+(currentLocale==='vi'?'Quốc gia và định dạng':currentLocale==='te'?'దేశం మరియు ఫార్మాట్':currentLocale==='gu'?'દેશ અને તારીખનું સ્વરૂપ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ದಿನಾಂಕದ ಸ್ವರೂપ':'Date format')+'">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Đơn vị':currentLocale==='te'?'కొలత యూనిట్లు':currentLocale==='gu'?'એકમો':currentLocale==='kn'?'ಅಳತೆಯ ಘಟಕಗಳು':'Units')+'</span><select id="fc-unit-system-select" aria-label="'+(currentLocale==='vi'?'Hệ đơn vị đo':currentLocale==='te'?'కొలత యూనిట్ విధానం':currentLocale==='gu'?'માપન પદ્ધતિ':currentLocale==='kn'?'ಅಳತೆಯ ಪದ್ಧತಿ':'Measurement unit system')+'"><option value="metric">'+(currentLocale==='gu'?'મેટ્રિક':currentLocale==='kn'?'ಮೆಟ್ರಿಕ್':'Metric')+'</option><option value="imperial">'+(currentLocale==='gu'?'ઇમ્પિરિયલ':currentLocale==='kn'?'ಇಂಪೀರಿಯಲ್':'Imperial')+'</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+(navigationNames[currentLocale]||navigationNames.en)+'">'+links.slice(0,4).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a>'+links.slice(4,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'<span class="fc-header-language-slot">'+languageControl+'</span>'+currencyControl+'</nav></div></div>';
+const moreLabel=currentLocale==='hi'?'और विकल्प':'More';
+const primaryLinks=[[nav.home,localeHome[currentLocale]],[nav.all,r+'site-directory.html'],links[2],links[3]];
+const moreLinks=[links[1],[nav.global,globalCalculatorsUrl],links[4],links[5],['Industry',r+'industry-calculators.html'],['Manufacturing',r+'manufacturing-calculators.html'],[nav.embed,'/embed/'],['Developers','/developers/']];
+const navLink=([name,url])=>'<a'+(url===r+'site-directory.html'?' class="fc-all-calculators-link"':url===r+'dashboard.html'?' class="fc-login-link"':'')+' href="'+url+'"'+(p===url?' aria-current="page"':'')+'>'+name+'</a>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b></span><small>Free tools. Clear calculations.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+(navigationNames[currentLocale]||navigationNames.en)+'">'+primaryLinks.map(navLink).join('')+'<details class="fc-more-navigation"><summary>'+moreLabel+'</summary><div class="fc-more-menu">'+moreLinks.map(navLink).join('')+'</div></details>'+navLink(links[6])+'<span class="fc-header-language-slot">'+languageControl+'</span></nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
@@ -478,8 +481,8 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep original country/date selectors in a hidden compatibility node for
-// global-locale.js. Visible regional controls are mounted after Language in the shared Header.
+// Stage original regional selectors for global-locale.js. Settings promotes
+// the visible controls from this compatibility node, preserving IDs and listeners.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
@@ -487,14 +490,14 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Preserve original locale controls for FCLocale; visible controls are promoted into the Header.
+// Preserve the original currency, country and unit controls for FCLocale.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=countryControl+unitControl;
+  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language, Display currency, Country & format and Units follow Login in the shared Header.
+// The header retains language and an accessible compact navigation toggle.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴'};
   const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기'};
@@ -1285,7 +1288,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
 
 /* Accessible display preferences: persistent theme and text scaling. */
 (()=>{
-  if(!document.body||window.self!==window.top||document.getElementById('fc-display-settings'))return;
+  if(!document.body||embedMode||document.getElementById('fc-display-settings'))return;
   const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={
     en:{open:'Settings',title:'Settings & Accessibility',region:'Regional settings',accessibility:'Accessibility',quick:'Quick actions',currency:'Display currency',countryFormat:'Country & format',units:'Units',normalMode:'Normal Mode',theme:'Dark Mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
@@ -1462,9 +1465,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     regionalControlsSource.appendChild(compatibilityControls);
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
-  if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  // Keep all regional controls after Language in the shared Header; Settings receives synchronized mirrors.
-  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
+  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  // Language stays discoverable in the header; regional preferences belong in Settings.
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1496,13 +1498,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
   mirrorSiteControl(headerLanguageControl);
-  mirrorSiteControl(currencyControl);
+  if(currencyControl)siteSettingsControls.appendChild(currencyControl);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
   const regionalSettingsControls=document.createElement('div');
   regionalSettingsControls.className='fc-settings-site-controls';
-  mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
-  mirrorSiteControl(unitControl,regionalSettingsControls);
+  if(countryFormatSelect.options.length)regionalSettingsControls.appendChild(countryFormatLabel);
+  if(unitControl)regionalSettingsControls.appendChild(unitControl);
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
