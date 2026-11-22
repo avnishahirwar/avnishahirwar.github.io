@@ -7,3 +7,5 @@
 /contact/ /calculator/contact.html 301
 /api/ /calculator/api.html 301
 /calculators/ /calculator/ 301
+/portal /calculator/portal.html 301
+/portal/ /calculator/portal.html 301
