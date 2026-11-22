@@ -22,20 +22,19 @@ function walk(dir, files = []) {
 }
 function headEnd(html) { return html.toLowerCase().indexOf('</head>'); }
 function declaredLanguage(html) {
-  const head = html.slice(0, headEnd(html) < 0 ? html.length : headEnd(html));
   const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
-  return match ? match[1].toLowerCase().split('-')[0] : null;
+  return match ? match[1].toLowerCase() : null;
 }
 function routeInfo(file, html) {
   const relative = path.relative(ROOT, file).split(path.sep);
   const first = relative[0];
+  const declared = declaredLanguage(html);
   if (LOCALES.has(first)) {
-    const language = declaredLanguage(html);
-    if (language !== first) return null;
-    return { language: first, route: relative.slice(1).join('/') };
+    if (!declared || declared.split('-')[0] !== first) return null;
+    return { language: first, route: relative.slice(1).join('/'), isDefault: false };
   }
-  if (first === 'en' || declaredLanguage(html) !== 'en') return null;
-  return { language: 'en', route: relative.join('/') };
+  if (first === 'en' || !declared || declared.split('-')[0] !== 'en') return null;
+  return { language: declared, route: relative.join('/'), isDefault: true };
 }
 function publicUrl(file) {
   const relative = path.relative(ROOT, file).split(path.sep).join('/');
@@ -66,7 +65,7 @@ function rebuildAlternates(html, cluster) {
   const pattern = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=)[^>]*\/?\s*>/gi;
   const cleaned = head.replace(pattern, '');
   const tags = cluster.map(item => '  <link rel="alternate" hreflang="' + item.language + '" href="' + item.url + '">');
-  tags.push('  <link rel="alternate" hreflang="x-default" href="' + cluster.find(item => item.language === 'en').url + '">');
+  tags.push('  <link rel="alternate" hreflang="x-default" href="' + cluster.find(item => item.isDefault).url + '">');
   const trimmed = cleaned.replace(/[ \t]*\n*$/, '');
   const nextHead = trimmed + '\n' + tags.join('\n') + '\n';
   if (nextHead === head) return { html, changed: false };
@@ -88,10 +87,11 @@ function main() {
   const updates = new Map();
   const stats = { pagesScanned: pages.length, routeGroups: groups.size, clustersRebuilt: 0, changedPages: 0, canonicalsCorrected: 0, alternateSetsRebuilt: 0, skippedGroups: 0 };
   for (const [route, group] of groups) {
-    if (!group.has('en') || group.size < 2) { stats.skippedGroups++; continue; }
+    const defaultEntry = [...group.entries()].find(([language]) => language === 'en' || language.startsWith('en-'));
+    if (!defaultEntry || group.size < 2) { stats.skippedGroups++; continue; }
     const cluster = [...group.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([language, file]) => ({ language, file, url: publicUrl(file) }));
+      .map(([language, file]) => ({ language, file, url: publicUrl(file), isDefault: file === defaultEntry[1] }));
     if (cluster.some(item => !cache.has(item.file))) { stats.skippedGroups++; continue; }
     stats.clustersRebuilt++;
     for (const item of cluster) {
