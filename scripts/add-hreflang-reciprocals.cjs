@@ -95,6 +95,7 @@ function main() {
     if (process.argv.includes('--write')) fs.writeFileSync(file, next);
   }
   stats.targetPagesChanged = additions.size;
+  for (const [file, tags] of additions) for (const tag of tags) console.log('Hreflang candidate: ' + path.relative(ROOT, file) + ' :: ' + tag);
   console.log('Additive hreflang reciprocal repair: ' + JSON.stringify(stats));
   if (!process.argv.includes('--write')) console.log('Dry run only. No files were changed.');
 }
