@@ -1504,6 +1504,13 @@
     "description": "Convert standard atmospheres into pascals and kilopascals."
   },
   {
+    "name": "ATM Transaction Cost Calculator",
+    "url": "/calculators/atm-transaction-cost-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "atm transaction cost calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate average ATM transaction cost from fixed operating costs, maintenance and transaction volume."
+  },
+  {
     "name": "Atom Calculator",
     "url": "/calculators/atom-calculator.html",
     "category": "Biology & Chemistry",
@@ -1753,6 +1760,20 @@
     "category": "OTHER",
     "keywords": "bandwidth delay product calculator",
     "description": "Bandwidth Delay Product Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Bank Branch Break-Even Calculator",
+    "url": "/calculators/branch-break-even-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "bank branch break-even calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate the monthly customers or revenue needed for a branch or service point to cover operating costs."
+  },
+  {
+    "name": "Bank Fee Impact Calculator",
+    "url": "/calculators/bank-fee-impact-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "bank fee impact calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate the annual customer or business impact of recurring account and transaction fees."
   },
   {
     "name": "Bank Reconciliation Calculator",
@@ -3180,6 +3201,13 @@
     "category": "PHYSICS",
     "keywords": "capacitors in series calculator",
     "description": "Capacitors in Series Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Capital Adequacy Ratio Calculator",
+    "url": "/calculators/capital-adequacy-ratio-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "capital adequacy ratio calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Calculate a simple capital adequacy ratio from eligible capital and risk-weighted assets."
   },
   {
     "name": "Capital Case Converter",
@@ -5901,6 +5929,13 @@
     "category": "PHYSICS",
     "keywords": "density to weight calculator",
     "description": "Density to Weight Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Deposit Growth Calculator",
+    "url": "/calculators/deposit-growth-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "deposit growth calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Measure simple and compound growth in deposits between two reporting dates."
   },
   {
     "name": "Depreciation Calculator",
@@ -11582,6 +11617,13 @@
     "description": "Liquid Net Worth Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Liquidity Coverage Ratio Calculator",
+    "url": "/calculators/liquidity-coverage-ratio-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "liquidity coverage ratio calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate a simplified liquidity coverage ratio from high-quality liquid assets and projected net cash outflows."
+  },
+  {
     "name": "Liter to cc Converter",
     "url": "/calculators/liter-to-cc-converter.html",
     "category": "Conversion",
@@ -11666,6 +11708,13 @@
     "description": "Loan Interest Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Loan Loss Provision Calculator",
+    "url": "/calculators/loan-loss-provision-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "loan loss provision calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate a planning provision from exposure, expected loss rate and recoveries."
+  },
+  {
     "name": "Loan Payment Calculator",
     "url": "/calculators/loan-payment-calculator.html",
     "category": "Finance",
@@ -11685,6 +11734,13 @@
     "category": "Finance",
     "keywords": "loan repayment calculator | loan payoff calculator",
     "description": "Calculate Loan Repayment Calculator | Loan Payoff Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "Loan-to-Deposit Ratio Calculator",
+    "url": "/calculators/loan-to-deposit-ratio-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "loan-to-deposit ratio calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Measure loans outstanding against customer deposits for a bank, credit union or lending institution."
   },
   {
     "name": "Loan-to-Value Calculator",
@@ -13675,6 +13731,13 @@
     "description": "Net Income Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Net Interest Margin Calculator",
+    "url": "/calculators/net-interest-margin-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "net interest margin calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate bank net interest margin from interest income, interest expense and average earning assets."
+  },
+  {
     "name": "Net Ionic Equation Calculator",
     "url": "/calculators/net-ionic-equation-calculator.html",
     "category": "CHEMISTRY",
@@ -13813,6 +13876,13 @@
     "category": "PHYSICS",
     "keywords": "noise figure calculator",
     "description": "Noise Figure Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Non-Performing Asset Ratio Calculator",
+    "url": "/calculators/non-performing-asset-ratio-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "non-performing asset ratio calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Calculate gross or net NPA ratio from non-performing assets and the relevant loan book."
   },
   {
     "name": "NOPAT Calculator",
@@ -14226,6 +14296,13 @@
     "category": "Statistics",
     "keywords": "outlier calculator",
     "description": "Calculate outlier calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
+  },
+  {
+    "name": "Overdraft Interest Calculator",
+    "url": "/calculators/overdraft-interest-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "overdraft interest calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate interest on an overdraft or revolving bank balance using a daily-rate approximation."
   },
   {
     "name": "Overtime Calculator",
@@ -21952,6 +22029,13 @@
     "category": "PHYSICS",
     "keywords": "wire gauge calculator",
     "description": "Wire Gauge Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Wire Transfer Cost Calculator",
+    "url": "/calculators/wire-transfer-cost-calculator.html",
+    "category": "Banking & Financial Institutions",
+    "keywords": "wire transfer cost calculator banking bank finance deposits loans risk liquidity payments branch operations",
+    "description": "Estimate the total cost and recipient amount for a transfer with fees and foreign-exchange spread."
   },
   {
     "name": "Wood Fence Calculator",
