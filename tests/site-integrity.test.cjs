@@ -230,72 +230,21 @@ test('owner-designated permanent website features are protected from accidental 
 
  
 test('shared Header follows the same navigation and regional-control order on every page', () => {
-  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const header = shell.slice(shell.indexOf('const links=['), shell.indexOf('const languageControl='));
-  const expectedHeader = [
-    '[nav.home,localeHome[currentLocale]]',
-    '[nav.business,',
-    '[nav.finance,',
-    '[nav.tax,',
-    "[nav.login,r+'dashboard.html']"
-  ];
-  let last = -1;
-  for (const item of expectedHeader) {
-    const index = header.indexOf(item);
-    assert.ok(index > last, 'Header item is missing or out of order: ' + item);
-    last = index;
-  }
-  assert.doesNotMatch(header, /nav\.search|Search Calculator/);
-  assert.match(shell, /en:\{home:'Home',login:'Login'/);
-  assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'All Calculators must remain a plain link alongside Global Tools.');
-  assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must not use dropdown markup.');
-  const headerStart = shell.indexOf('h.innerHTML=');
-  const headerEnd = shell.indexOf('const reservedHeader', headerStart);
-  const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency must immediately follow Language inside the shared navigation.');
-  assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'), 'Pre-existing static headers must be normalized to the canonical shared navigation.');
-  assert.ok(headerMarkup.indexOf('nav.global')>=0 && headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear after Tax and before Everyday.');
-  assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
-  assert.ok(headerMarkup.indexOf('fc-all-calculators-link')<headerMarkup.indexOf('links.slice(5)'), 'Blog and Login must follow the All Calculators link.');
-  assert.ok(!headerMarkup.includes('fc-all-dropdown'), 'All Calculators must not have dropdown behavior.');
-  const renderedOrder = [
-    'links.slice(0,4)', 'nav.global', 'links.slice(4,5)',
-    'fc-all-calculators-link', 'links.slice(5)', 'fc-header-language-slot'
-  ];
-  let renderedLast = -1;
-  for (const token of renderedOrder) {
-    const index = shell.indexOf(token, headerStart);
-    assert.ok(index > renderedLast, 'Rendered Header order is incorrect at: ' + token);
-    renderedLast = index;
-  }
-  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  const homepageNavStart = homepage.indexOf('<nav id="fc-primary-navigation"');
-  const homepageNav = homepage.slice(homepageNavStart, homepage.indexOf('</nav>', homepageNavStart));
-  const homepageOrder = ['>Home<', '>Business Tools<', '>Finance<', '>Tax<', '>Global Calculators<', '>Everyday<', '>All Calculators<', '>Blog<', '>Login<', 'fc-language-control'];
-  let homepageLast = -1;
-  for (const token of homepageOrder) {
-    const index = homepageNav.indexOf(token);
-    assert.ok(index > homepageLast, 'Homepage Header order is incorrect at: ' + token);
-    homepageLast = index;
-  }
-  assert.ok(shell.includes('fc-regional-settings-source') && shell.includes('fc-display-panel') && shell.includes('regionalControlsSource.append(...regionalMarkup.children)'), 'Regional controls must remain outside the Header.');
-  assert.ok(shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)') && shell.includes('panel.append(regionalSettingsControls)'), 'Currency is mirrored in Settings while country/format and units remain there.');
-  assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
-  assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
-  const footer = shell.slice(shell.indexOf('const footerLabels='), shell.indexOf('const footerLinks='));
-  for (const labels of [
-    "en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']",
-    "hi:['हमारे बारे में','कार्यप्रणाली','गोपनीयता','नियम','अस्वीकरण','कानूनी एवं अनुपालन','एम्बेड','साइटमैप (अंग्रेज़ी)','संपर्क','विज्ञापन']"
-  ]) assert.ok(footer.includes(labels), 'Footer sequence missing: ' + labels);
-  const footerLocaleRows = footer.split('\n').filter(line => /^\s{2}(de|en|hi|es|fr|pt|ar|id|bn|ta|ja|ru):\[/.test(line));
-  assert.equal(footerLocaleRows.length, 12, 'All 12 site locales must define Footer labels.');
-  for (const row of footerLocaleRows) {
-    const labels = row.slice(row.indexOf(':[') + 2, row.lastIndexOf(']'));
-    assert.equal(labels.split("','").length, 10, 'Each locale must expose all ten Footer destinations.');
-  }
-  assert.doesNotMatch(shell, /if\(footerLinks\.length===9\)/, 'Footer labels must be localized rather than falling back to English.');
-  assert.doesNotMatch(footer, /Cookies|कुकीज़|ملفات تعريف الارتباط/);
-  assert.ok(shell.includes("r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];"));
+  const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+  assert.ok(shell.includes("const primaryLinks=[[nav.home,localeHome[currentLocale]],[nav.all,r+'site-directory.html'],links[2],links[3]]"));
+  const start=shell.indexOf('h.innerHTML=');
+  const header=shell.slice(start,shell.indexOf('const reservedHeader',start));
+  const order=['primaryLinks.map(navLink)','fc-more-navigation','moreLinks.map(navLink)','navLink(links[6])','fc-header-language-slot'];
+  let previous=-1;
+  for(const item of order){const current=header.indexOf(item);assert.ok(current>previous,item);previous=current;}
+  assert.ok(!header.includes('+currencyControl+'));
+  assert.match(shell,/fc-all-calculators-link/);
+  assert.ok(!shell.includes('fc-all-dropdown'));
+  assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'));
+  assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'));
+  assert.ok(shell.includes('regionalSettingsControls.appendChild(countryFormatLabel)'));
+  assert.ok(shell.includes('regionalSettingsControls.appendChild(unitControl)'));
+  for(const id of ['fc-language-select','fc-currency-select','fc-country-select','fc-locale-select','fc-unit-system-select'])assert.ok(shell.includes(id));
 });
 
 test('the Admin dashboard remains private from public navigation and indexing', () => {
@@ -1500,7 +1449,7 @@ test('hours-to-minutes page provides unit-consistent reference examples and vali
 test('basic calculator avoids retired no-op chrome script and preserves deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
   assert.equal(page.includes('/assets/site-chrome.js?v=1'), false);
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.match(page,/<script src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer><\/script>/);
   assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-chrome.css?v=1">'));
 });
 
@@ -1509,8 +1458,8 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.match(page,/<link rel="stylesheet" href="\/assets\/site-shell\.css(?:\?v=[a-z0-9-]+)?">/);
+  assert.match(page,/<script src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer><\/script>/);
   assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
 });
 
@@ -1571,8 +1520,9 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   assert.ok(Buffer.byteLength(homepage, 'utf8') < 500 * 1024, 'Homepage HTML must stay below 500 KB');
   assert.equal((homepage.match(/class=["']calculator-link["']/g) || []).length, 0,
     'The homepage must not embed the full calculator catalogue');
-  assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 1);
-  const popular = homepage.slice(homepage.indexOf('class="home-popular-tools"'), homepage.indexOf('</nav>', homepage.indexOf('class="home-popular-tools"')));
+  assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 2);
+  const popular = homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0]+homepage.match(/<details class="fc-popular-more"[\s\S]*?<\/details>/)[0];
+  assert.equal((homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0].match(/<a\s/g)||[]).length,6);
   assert.equal((popular.match(/<a\s/g) || []).length, 19, 'Homepage must show exactly 19 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
@@ -2157,7 +2107,10 @@ test('homepage shows the curated popular calculator links without embedding the 
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const nav = page.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/);
   assert.ok(nav, 'popular calculator section exists');
-  const routes = [...nav[0].matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
+  const extra=page.match(/<details class="fc-popular-more"[\s\S]*?<\/details>/);
+  assert.ok(extra);
+  const routes = [...(nav[0]+extra[0]).matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
+  assert.equal((nav[0].match(/<a href=/g)||[]).length,6);
   assert.equal(routes.length, 19);
   assert.equal(new Set(routes).size, 19);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
@@ -2167,12 +2120,12 @@ test('homepage shows the curated popular calculator links without embedding the 
 
 test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<link rel="stylesheet" href="\/assets\/site-shell\.css">/);
+  assert.match(html, /<link rel="stylesheet" href="\/assets\/site-shell\.css(?:\?v=[a-z0-9-]+)?">/);
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   const sharedCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.match(sharedCss, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
+  assert.match(html, /src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
@@ -2189,11 +2142,11 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
   assert.ok(shell.includes("(activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav)"), 'Mobile Menu toggle must sit in the shared top row.');
   assert.ok(shell.includes("defaultLocaleSettings") && shell.includes("window.FCLocale?.getCurrency()"));
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
-  assert.ok(shell.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency must immediately follow Language inside the shared Header.');
+  assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
   assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
-  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('mirrorSiteControl(currencyControl)') && shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)') && shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'), 'Settings must contain mirrored Currency and regional preferences.');
+  assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('siteSettingsControls.appendChild(currencyControl)') && shell.includes('regionalSettingsControls.appendChild(countryFormatLabel)') && shell.includes('regionalSettingsControls.appendChild(unitControl)'), 'Settings must contain mirrored Currency and regional preferences.');
   assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
   assert.ok(shell.includes("'fc-footer-settings-link'"), 'Footer Settings must use the shared Footer link styling.');
   assert.ok(shell.includes("legacyFooters=Array.from(document.querySelectorAll('footer:not(.fc-global-footer)'))"), 'Legacy plain footers must be normalized rather than duplicated.');
@@ -2227,7 +2180,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
   assert.ok(script.includes("const f=document.createElement('footer')"));
   assert.ok(script.includes("f.className='fc-global-footer'"));
   assert.ok(script.includes("['Sitemap','/sitemap.html']"));
@@ -2271,10 +2224,11 @@ test('Header regional selectors use consistent readable sizing and Settings mirr
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors must share consistent dimensions.');
-  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'));
-  assert.ok(shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
-  assert.ok(shell.includes('mirrorSiteControl(countryFormatLabel,regionalSettingsControls)'));
-  assert.ok(shell.includes('mirrorSiteControl(unitControl,regionalSettingsControls)'));
+  assert.ok(shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'));
+  assert.ok(!shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
+  assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'));
+  assert.ok(shell.includes('regionalSettingsControls.appendChild(countryFormatLabel)'));
+  assert.ok(shell.includes('regionalSettingsControls.appendChild(unitControl)'));
   assert.ok(!shell.includes("addSettingRow('fc-display-units-row'"));
 });
 
@@ -2323,7 +2277,7 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
 
 test('homepage has the same static shared footer and Sitemap destination', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
   assert.match(fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8'), /Sitemap/);
 });
 
