@@ -58,3 +58,15 @@ test('hreflang page edits preserve every original byte except the inserted alter
     assert.equal(current, original, 'unexpected non-additive page change: ' + file);
   }
 });
+
+
+test('verified locale metadata repair is idempotent after the PR repair step', () => {
+  const output = execFileSync(process.execPath, ['scripts/repair-locale-metadata.cjs'], {
+    cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
+  });
+  const match = output.match(/Verified locale metadata repair: (\{[^\n]+\})/);
+  assert.ok(match, 'repair script must report a JSON summary');
+  const summary = JSON.parse(match[1]);
+  assert.equal(summary.changedPages, 0, 'all verified locale clusters should already be repaired');
+  assert.match(output, /Dry run only\. No files were changed\./);
+});
