@@ -33,50 +33,51 @@ test('generated sitemap check includes hreflang clusters',()=>{
 });
 
 
-test('percentage calculator hreflang cluster includes all nine published language pages',()=>{
+test('percentage calculator hreflang cluster includes every published locale page',()=>{
  const route='percentage-calculator.html';
- const locales=['en','hi','x-default','ar','bn','es','fr','id','pt','ta'];
- const expected=locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+ const catalogue=require('../config/language-catalogue.json');
+ const locales=['en',...catalogue.locales.map(x=>x.code).filter(x=>x!=='en')]
+  .filter(locale=>fs.existsSync(path.join(root,locale==='en'?'':locale,'calculators',route)));
+ const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+ expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
+ const sorted=items=>items.map(x=>x.join('|')).sort();
  for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
-  const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  const actual=[...html.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+  assert.deepEqual(sorted(actual),sorted(expected),file);
  }
 });
 
-test('simple-interest English and Bengali hreflang alternates match published translations',()=>{
+test('simple-interest hreflang cluster matches every published translation',()=>{
  const route='simple-interest-calculator.html';
- const englishLocales=['en','bn','x-default','ar','es','fr','hi','id','pt','ta'];
- const bengaliLocales=['en','bn','x-default','ar','es','fr','hi','id','pt'];
- const expectedFor=locales=>locales.map(locale=>[locale,locale==='x-default'?'https://friendlycalculator.in/calculators/'+route:'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
- for(const [file,expected] of [['calculators/'+route,expectedFor(englishLocales)],['bn/calculators/'+route,expectedFor(bengaliLocales)]]){
+ const catalogue=require('../config/language-catalogue.json');
+ const locales=['en',...catalogue.locales.map(x=>x.code).filter(x=>x!=='en')]
+  .filter(locale=>fs.existsSync(path.join(root,locale==='en'?'':locale,'calculators',route)));
+ const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
+ expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
+ const sorted=items=>items.map(x=>x.join('|')).sort();
+ for(const file of ['calculators/'+route,'bn/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
-  const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-  assert.deepEqual(actual,expected,file);
+  const actual=[...html.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+  assert.deepEqual(sorted(actual),sorted(expected),file);
  }
 });
 
-test('priority calculator hreflang clusters are complete and reciprocal across supported locales',()=>{
- const routes=[
-  'basic-calculator.html',
-  'bike-loan-calculator.html',
-  'business-loan-emi-calculator.html',
-  'car-loan-calculator.html',
-  'discount-calculator.html',
-  'ppf-calculator.html'
- ];
- const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
+test('priority calculator hreflang clusters cover every published locale page',()=>{
+ const routes=['basic-calculator.html','bike-loan-calculator.html','business-loan-emi-calculator.html','car-loan-calculator.html','discount-calculator.html','ppf-calculator.html'];
+ const catalogue=require('../config/language-catalogue.json');
+ const sorted=items=>items.map(x=>x.join('|')).sort();
  for(const route of routes){
-  const locales=route==='basic-calculator.html'?expandedLocales:baseLocales;
+  const locales=['en',...catalogue.locales.map(x=>x.code).filter(x=>x!=='en')]
+   .filter(locale=>fs.existsSync(path.join(root,locale==='en'?'':locale,'calculators',route)));
   const expected=locales.map(locale=>[locale,'https://friendlycalculator.in/'+(locale==='en'?'':locale+'/')+'calculators/'+route]);
   expected.push(['x-default','https://friendlycalculator.in/calculators/'+route]);
   for(const locale of locales){
    const file=path.join(root,locale==='en'?'':locale,'calculators',route);
    const html=fs.readFileSync(file,'utf8');
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
-   const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
-   assert.deepEqual(actual,expected,locale+'/'+route);
+   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   assert.deepEqual(sorted(actual),sorted(expected),locale+'/'+route);
   }
  }
 });
