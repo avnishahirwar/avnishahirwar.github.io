@@ -253,17 +253,22 @@ test('the Admin dashboard remains private from public navigation and indexing', 
   assert.doesNotMatch(shell, /\['Admin',r\+'admin\.html'\]/, 'Shared shell must not publish an Admin navigation item');
   assert.ok(fs.existsSync(path.join(root, 'calculator/admin.html')), 'Admin dashboard page must remain preserved');
   const dashboard = fs.readFileSync(path.join(root, 'calculator/admin.html'), 'utf8');
-  assert.match(dashboard, /name="robots" content="noindex,nofollow"/);
-  assert.match(dashboard, /app_metadata\?\.role!==['"]admin['"]/);
+  const localizedDashboard = fs.readFileSync(path.join(root, 'hi/calculator/admin.html'), 'utf8');
+  for (const privateDashboard of [dashboard, localizedDashboard]) {
+    assert.match(privateDashboard, /name="robots" content="noindex,nofollow"/);
+    assert.match(privateDashboard, /app_metadata\?\.role!==['"]admin['"]/);
+  }
+  const privateDashboardPaths = new Set(['calculator/admin.html', 'hi/calculator/admin.html']);
   const publicAdminLinks=[];
   for (const file of fs.readdirSync(root, {recursive:true})) {
-    if (!String(file).endsWith('.html') || /(^|\/)admin\//.test(String(file))) continue;
+    if (!String(file).endsWith('.html') || /(^|\/)admin\//.test(String(file)) || privateDashboardPaths.has(String(file))) continue;
     const html=fs.readFileSync(path.join(root,file),'utf8');
     const markup=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'');
     if (/href=["'][^"']*\/calculator\/admin\.html/i.test(markup)) publicAdminLinks.push(file);
   }
   assert.deepEqual(publicAdminLinks, [], 'Public pages must not link to the Admin dashboard');
   assert.doesNotMatch(sitemap, /https:\/\/friendlycalculator\.in\/calculator\/admin\.html/);
+  assert.doesNotMatch(sitemap, /https:\/\/friendlycalculator\.in\/hi\/calculator\/admin\.html/);
 });
 
 test('About page catalogue matches every canonical published calculator page', () => {

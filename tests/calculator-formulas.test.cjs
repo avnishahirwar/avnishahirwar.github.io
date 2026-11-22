@@ -740,7 +740,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.ok(homepage.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.match(homepage, /aria-label="Search all calculator entries by name or topic"/);
+  assert.match(homepage, /placeholder="Try EMI, GST, income tax or percentage/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
@@ -1327,4 +1328,26 @@ test('homepage search matcher requires relevant name, keyword phrase or category
   assert.notEqual(match({ name: 'Fixed Deposit Calculator', keywords: 'fixed deposit maturity', category: 'Savings' }, 'fixed deposit'), null);
   assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
   assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
+});
+
+
+test('fuel cost page avoids stale catalogue totals and template placeholders', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/fuel-cost-calculator.html'), 'utf8');
+  assert.match(page, /Explore more free calculators in the complete directory\./);
+  assert.match(page, /vehicle efficiency and an assumed fuel price/);
+  assert.match(page, /not a live fuel-price quote/);
+  assert.match(page, /Enter vehicle mileage in km\/L/);
+  assert.doesNotMatch(page, /186 browser-based tools|n2 assumption|live n2 quote/);
+});
+
+
+test('homepage catalogue count matches its category index and public schema', () => {
+  const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const expected = catalogueCounts.homepageCoreCalculatorCount;
+  const formatted = expected.toLocaleString('en-US');
+  assert.ok(expected > 0, 'Homepage category index must expose a positive calculator count');
+  assert.ok(home.includes('Total catalogue: ' + formatted + ' calculators'), 'Homepage visible catalogue total must match category totals');
+  assert.ok(home.includes('offering ' + formatted + ' public calculators'), 'Homepage structured data must match category totals');
+  assert.ok(about.includes('offering ' + formatted + ' public calculators'), 'About structured data must match category totals');
 });

@@ -14,7 +14,8 @@ test('Study Calculator is indexed, discoverable and uses the published catalogue
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(index.some(item => item.name === 'Study Calculator' && item.url === '/calculators/study-calculator.html'));
   assert.match(directory, /href="\/calculators\/study-calculator\.html"/);
-  assert.ok(home.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.match(home, /aria-label="Search all calculator entries by name or topic"/);
+  assert.match(home, /placeholder="Try EMI, GST, income tax or percentage/);
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /rel="canonical"/);
   assert.match(page, /EducationalApplication/);
