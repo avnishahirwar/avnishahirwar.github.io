@@ -45,25 +45,14 @@ test('global landing page is discoverable from homepage and uses the shared site
 });
 
 test('primary navigation follows category order and exposes the international hub in the All menu', () => {
-  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const navStart = shell.indexOf('const links=[');
-  const navEnd = shell.indexOf('];', navStart);
-  const nav = shell.slice(navStart, navEnd);
-  const order = ['nav.home','nav.business','nav.finance','nav.tax','nav.everyday','nav.blog','nav.login'];
-  let previous = -1;
-  for (const item of order) {
-    const index = nav.indexOf(item);
-    assert.ok(index > previous, 'Navigation item out of order or missing: ' + item);
-    previous = index;
-  }
-  assert.match(nav, /r\+'tax\.html'/);
-  assert.ok(shell.includes('globalCalculatorsUrl') && shell.includes('nav.global') && shell.includes('fc-all-calculators-link'), 'Global Tools and All Calculators must both remain available as links.');
-  const headerStart=shell.indexOf('h.innerHTML=');
-  const headerEnd=shell.indexOf('const reservedHeader',headerStart);
-  const headerMarkup=shell.slice(headerStart,headerEnd);
-  assert.ok(headerMarkup.indexOf('nav.global')<headerMarkup.indexOf('links.slice(4,5)'), 'Global Calculators must appear before Everyday.');
-  assert.ok(headerMarkup.indexOf('links.slice(4,5)')<headerMarkup.indexOf('fc-all-calculators-link'), 'Everyday must appear before All Calculators.');
-  assert.ok(headerMarkup.includes("'<a href=\"'+globalCalculatorsUrl+'\">'+nav.global+'</a>"), 'Global Tools must be a standalone top-level navigation link.');
+  const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+  assert.ok(shell.includes("const primaryLinks=[[nav.home,localeHome[currentLocale]],[nav.all,r+'site-directory.html'],links[2],links[3]]"));
+  assert.ok(shell.includes('const moreLinks=[links[1],[nav.global,globalCalculatorsUrl],links[4],links[5]'));
+  assert.match(shell,/fc-more-navigation/);
+  assert.match(shell,/fc-all-calculators-link/);
+  assert.match(shell,/moreLinks\.map\(navLink\)/);
+  assert.match(shell,/nav\.embed/);
+  assert.match(shell,/r\+'tax\.html'/);
 });
 
 test('shared footer retains Sitemap; regional preferences stay in Settings and Settings is the final Footer item', () => {
@@ -74,16 +63,16 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
-  assert.ok(headerMarkup.includes("<span class=\"fc-header-language-slot\">'+languageControl+'</span>'+currencyControl+'</nav>"), 'Currency selector must immediately follow Language in the Header.');
-  assert.ok(shell.includes("regionalMarkup.innerHTML=countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
-  assert.ok(shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
+  assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
+  assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
+  assert.ok(shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
   assert.ok(!headerMarkup.includes('Sitemap'), 'Sitemap must not appear in the All Calculators dropdown.');
   assert.ok(shell.includes('markCurrentNavigation(activeHeader.querySelector(\'#fc-primary-navigation\'))') && shell.includes('markCurrentNavigation(f.querySelector(\'.fc-global-footer-links\'))'), 'Only the current page item should be highlighted in each navigation region.');
   assert.ok(shell.includes('const activeHeader=h;'), 'Active state must target the mounted canonical header, not a replaced legacy node.');
   assert.ok(shell.includes('fc-regional-settings-source'), 'Original country and locale controls must remain available for locale compatibility.');
   assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'The hidden date-format selector must preserve the global locale compatibility contract without duplicate visible control IDs.');
-  assert.ok(shell.includes("mirrorSiteControl(currencyControl)") && shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)"), 'Display currency, Country & format and Units remain mirrored in Settings.');
+  assert.ok(shell.includes("siteSettingsControls.appendChild(currencyControl)") && shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)"), 'Display currency, Country & format and Units remain mirrored in Settings.');
   assert.ok(!shell.includes('fc-display-language-row'), 'Language must not be repeated inside Settings.');
   assert.ok(shell.includes('themeModes.append(normalModeButton,darkModeButton)'), 'Accessibility must expose only Normal Mode and Dark Mode.');
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final item in shared Footer navigation.');
@@ -114,7 +103,7 @@ test('header order places Login immediately before Language and keeps Sitemap on
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.indexOf('nav.login') < headerMarkup.indexOf('languageControl'), 'Language must follow Login.');
+  assert.ok(headerMarkup.indexOf('navLink(links[6])') < headerMarkup.indexOf('languageControl'), 'Language must follow Login.');
   assert.ok(!headerMarkup.includes('/sitemap.html'), 'Header must not link to Sitemap.');
   assert.ok(shell.includes("markCurrentNavigation(activeHeader.querySelector('#fc-primary-navigation'))"));
   assert.ok(shell.includes("markCurrentNavigation(f.querySelector('.fc-global-footer-links'))"));
@@ -172,8 +161,10 @@ test('All Calculators is a plain header link with no dropdown markup or behavior
   const headerStart = shell.indexOf('h.innerHTML=');
   const headerEnd = shell.indexOf('const reservedHeader', headerStart);
   const headerMarkup = shell.slice(headerStart, headerEnd);
-  assert.ok(headerMarkup.includes('class="fc-all-calculators-link"'));
-  assert.ok(!headerMarkup.includes('<details') && !headerMarkup.includes('<summary>'));
+  assert.ok(shell.includes('class="fc-all-calculators-link"'));
+  assert.match(shell,/\[nav\.all,r\+'site-directory\.html'\]/);
+  assert.ok(!headerMarkup.includes('fc-all-dropdown'));
+  assert.ok(headerMarkup.includes('fc-more-navigation'), 'Secondary links use a separate More disclosure.');
   assert.ok(!headerMarkup.includes('fc-all-dropdown'));
   const fallbackStart = shell.indexOf('header.innerHTML =');
   const fallbackEnd = shell.indexOf('document.body.prepend(header)', fallbackStart);
@@ -201,14 +192,15 @@ test('regional defaults follow the visitor browser region and preserve explicit 
 });
 
 
-test('all regional selectors follow Language in the shared Header and stay mirrored in Settings', () => {
+test('regional selectors retain original IDs and move into Settings instead of the Header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(shell.includes('regionalControlsSource.innerHTML=formatControl'), 'Original locale selector remains available to FCLocale.');
-  assert.ok(shell.includes('regionalMarkup.innerHTML=countryControl+unitControl'), 'Original country and units controls are staged for compatibility.');
+  assert.ok(shell.includes('regionalMarkup.innerHTML=currencyControl+countryControl+unitControl'), 'Original country and units controls are staged for compatibility.');
   assert.ok(shell.includes("countryFormatLabel.className='fc-country-format-control'"), 'Country & format uses one combined visible selector.');
   assert.ok(shell.includes('compatibilityControls.append(countryControl,formatControl)'), 'Original locale controls remain hidden for compatibility listeners.');
-  assert.ok(shell.includes("primaryNav.append(currencyControl,countryFormatLabel,unitControl)"), 'Currency, Country & format and Units follow Language in the Header.');
-  assert.ok(shell.includes("mirrorSiteControl(currencyControl)") && shell.includes("mirrorSiteControl(countryFormatLabel,regionalSettingsControls)") && shell.includes("mirrorSiteControl(unitControl,regionalSettingsControls)"), 'All regional preferences are mirrored in Settings.');
+  assert.ok(!shell.includes('primaryNav.append(currencyControl,countryFormatLabel,unitControl)'));
+  assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'));
+  assert.ok(shell.includes("siteSettingsControls.appendChild(currencyControl)") && shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)"), 'All regional preferences are mirrored in Settings.');
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors share equal sizing.');
 });
