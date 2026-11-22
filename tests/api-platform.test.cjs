@@ -72,6 +72,10 @@ test('customer dashboard clears private API keys and account data on logout or a
   assert.match(customer, /\$\('inputs'\)\.value='';/);
   assert.match(customer, /\$\('tryOutput'\)\.textContent='—';/);
   assert.match(customer, /\$\('accountLabel'\)\.textContent='';/);
+  assert.match(customer, /\$\('accessStatus'\)\.textContent='Checking API plan access…';/);
+  assert.match(customer, /\$\('copyKey'\)\.textContent='Copy API key';/);
+  assert.match(customer, /\$\('tryMeta'\)\.textContent='No request sent\.';/);
+  assert.match(customer, /setStatus\('keyStatus',''\);setStatus\('dataStatus',''\);setStatus\('authStatus',''\)/);
   assert.match(customer, /for\(const id of \['usageToday','usageMonth','usageSuccess','usageFailed','quotaRemaining','activeKeys'\]\)/);
   assert.match(customer, /async function enter\(data\)\{clearCustomerState\(\);/);
   assert.match(customer, /logoutButton[\s\S]*?clearCustomerState\(\)/);
