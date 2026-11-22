@@ -1266,18 +1266,18 @@ injectLocalizedSchemeRateNotice();
 if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('script[data-fc-free-assistant]')&&!window.__fcFreeAssistantLoaded&&!location.pathname.startsWith('/avnish-ai/')&&!location.pathname.includes('/admin')){
   const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={
-    en:{open:'Open assistant',loading:'Loading assistant…',retry:'Retry assistant'},
-    hi:{open:'सहायक खोलें',loading:'सहायक लोड हो रहा है…',retry:'फिर से कोशिश करें'},
-    es:{open:'Abrir asistente',loading:'Cargando asistente…',retry:'Reintentar asistente'},
-    fr:{open:'Ouvrir l’assistant',loading:'Chargement…',retry:'Réessayer'},
-    pt:{open:'Abrir assistente',loading:'Carregando…',retry:'Tentar novamente'},
-    ar:{open:'فتح المساعد',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
-    id:{open:'Buka asisten',loading:'Memuat…',retry:'Coba lagi'},
-    bn:{open:'সহায়ক খুলুন',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
-    ta:{open:'உதவியாளரைத் திற',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'},
-    de:{open:'Assistent öffnen',loading:'Assistent wird geladen…',retry:'Erneut versuchen'},
-    ja:{open:'アシスタントを開く',loading:'読み込み中…',retry:'再試行'},
-    ru:{open:'Открыть помощник',loading:'Загрузка помощника…',retry:'Повторить попытку'}
+    en:{open:'Get free guidance',loading:'Loading assistant…',retry:'Retry assistant'},
+    hi:{open:'मुफ़्त मार्गदर्शन लें',loading:'सहायक लोड हो रहा है…',retry:'फिर से कोशिश करें'},
+    es:{open:'Orientación gratuita',loading:'Cargando asistente…',retry:'Reintentar asistente'},
+    fr:{open:'Conseils généraux gratuits',loading:'Chargement…',retry:'Réessayer'},
+    pt:{open:'Orientação gratuita',loading:'Carregando…',retry:'Tentar novamente'},
+    ar:{open:'إرشادات عامة مجانية',loading:'جارٍ التحميل…',retry:'إعادة المحاولة'},
+    id:{open:'Panduan gratis',loading:'Memuat…',retry:'Coba lagi'},
+    bn:{open:'বিনামূল্যে সাধারণ নির্দেশনা',loading:'লোড হচ্ছে…',retry:'আবার চেষ্টা করুন'},
+    ta:{open:'இலவசப் பொதுவழிகாட்டல்',loading:'ஏற்றுகிறது…',retry:'மீண்டும் முயற்சிக்கவும்'},
+    de:{open:'Kostenlose allgemeine Hilfe',loading:'Assistent wird geladen…',retry:'Erneut versuchen'},
+    ja:{open:'無料の一般ガイダンス',loading:'読み込み中…',retry:'再試行'},
+    ru:{open:'Бесплатные общие рекомендации',loading:'Загрузка помощника…',retry:'Повторить попытку'}
   };
   const copy=labels[language]||labels.en;
   const activateAssistant=()=>{
@@ -1551,19 +1551,19 @@ const mountSettingsQuickActions=()=>{
   if(!trigger||!panel||document.getElementById('fc-settings-quick-actions'))return;
   const language=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const copy={
-    en:{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.',close:'Close',quick:'Quick actions'},
-    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'सहायक खोलें',help:'ऐप जैसे अनुभव के लिए Friendly Calculator इंस्टॉल करें। पहले खोले गए सार्वजनिक पेज ऑफलाइन उपलब्ध हो सकते हैं; नए पेजों के लिए इंटरनेट की आवश्यकता हो सकती है।',close:'बंद करें',quick:'त्वरित सुविधाएँ'},
-    es:{install:'Instalar Friendly Calculator',assistant:'Abrir asistente',help:'Instala Friendly Calculator como acceso directo. Las páginas públicas visitadas anteriormente pueden estar disponibles sin conexión.',close:'Cerrar',quick:'Acciones rápidas'},
-    fr:{install:'Installer Friendly Calculator',assistant:'Ouvrir l’assistant',help:'Installez Friendly Calculator comme raccourci. Les pages publiques déjà consultées peuvent être disponibles hors connexion.',close:'Fermer',quick:'Actions rapides'},
-    pt:{install:'Instalar Friendly Calculator',assistant:'Abrir assistente',help:'Instale o Friendly Calculator como atalho. Páginas públicas já visitadas podem ficar disponíveis offline.',close:'Fechar',quick:'Ações rápidas'},
-    ar:{install:'تثبيت Friendly Calculator',assistant:'فتح المساعد',help:'ثبّت Friendly Calculator كاختصار للتطبيق. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.',close:'إغلاق',quick:'إجراءات سريعة'},
-    id:{install:'Instal Friendly Calculator',assistant:'Buka asisten',help:'Instal Friendly Calculator sebagai pintasan aplikasi. Halaman publik yang pernah dibuka mungkin tersedia secara offline.',close:'Tutup',quick:'Aksi cepat'},
-    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'সহায়ক খুলুন',help:'অ্যাপের মতো ব্যবহারের জন্য Friendly Calculator ইনস্টল করুন। আগে দেখা পাবলিক পেজ অফলাইনে পাওয়া যেতে পারে।',close:'বন্ধ',quick:'দ্রুত কাজ'},
-    ta:{install:'Friendly Calculator நிறுவு',assistant:'உதவியாளரைத் திற',help:'செயலி போன்ற அனுபவத்திற்கு Friendly Calculator-ஐ நிறுவவும். முன்பு பார்த்த பொது பக்கங்கள் இணையமின்றி கிடைக்கலாம்.',close:'மூடு',quick:'விரைவு செயல்கள்'},
-    de:{install:'Friendly Calculator installieren',assistant:'Assistent öffnen',help:'Installieren Sie Friendly Calculator als App-Verknüpfung. Bereits besuchte öffentliche Seiten sind möglicherweise offline verfügbar.',close:'Schließen',quick:'Schnellaktionen'},
-    ja:{install:'Friendly Calculator をインストール',assistant:'アシスタントを開く',help:'アプリのように使うために Friendly Calculator をインストールします。以前に開いた公開ページはオフラインで利用できる場合があります。',close:'閉じる',quick:'クイック操作'},
-    ru:{install:'Установить Friendly Calculator',assistant:'Открыть помощник',help:'Установите Friendly Calculator как приложение. Ранее открытые общедоступные страницы могут быть доступны офлайн.',close:'Закрыть',quick:'Быстрые действия'}
-  }[language]||{install:'Install Friendly Calculator',assistant:'Open assistant',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline.',close:'Close',quick:'Quick actions'};
+    en:{install:'Install Friendly Calculator',assistant:'Get free guidance',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline; pages you have not opened before may still need an internet connection.',close:'Close',quick:'Quick actions'},
+    hi:{install:'Friendly Calculator इंस्टॉल करें',assistant:'मुफ़्त मार्गदर्शन लें',help:'ऐप जैसे अनुभव के लिए Friendly Calculator इंस्टॉल करें। पहले खोले गए सार्वजनिक पेज ऑफलाइन उपलब्ध हो सकते हैं; नए पेजों के लिए इंटरनेट की आवश्यकता हो सकती है।',close:'बंद करें',quick:'त्वरित सुविधाएँ'},
+    es:{install:'Instalar Friendly Calculator',assistant:'Orientación gratuita',help:'Instala Friendly Calculator como acceso directo. Las páginas públicas visitadas anteriormente pueden estar disponibles sin conexión.',close:'Cerrar',quick:'Acciones rápidas'},
+    fr:{install:'Installer Friendly Calculator',assistant:'Conseils généraux gratuits',help:'Installez Friendly Calculator comme raccourci. Les pages publiques déjà consultées peuvent être disponibles hors connexion.',close:'Fermer',quick:'Actions rapides'},
+    pt:{install:'Instalar Friendly Calculator',assistant:'Orientação gratuita',help:'Instale o Friendly Calculator como atalho. Páginas públicas já visitadas podem ficar disponíveis offline.',close:'Fechar',quick:'Ações rápidas'},
+    ar:{install:'تثبيت Friendly Calculator',assistant:'إرشادات عامة مجانية',help:'ثبّت Friendly Calculator كاختصار للتطبيق. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.',close:'إغلاق',quick:'إجراءات سريعة'},
+    id:{install:'Instal Friendly Calculator',assistant:'Panduan gratis',help:'Instal Friendly Calculator sebagai pintasan aplikasi. Halaman publik yang pernah dibuka mungkin tersedia secara offline.',close:'Tutup',quick:'Aksi cepat'},
+    bn:{install:'Friendly Calculator ইনস্টল করুন',assistant:'বিনামূল্যে সাধারণ নির্দেশনা',help:'অ্যাপের মতো ব্যবহারের জন্য Friendly Calculator ইনস্টল করুন। আগে দেখা পাবলিক পেজ অফলাইনে পাওয়া যেতে পারে।',close:'বন্ধ',quick:'দ্রুত কাজ'},
+    ta:{install:'Friendly Calculator நிறுவு',assistant:'இலவசப் பொதுவழிகாட்டல்',help:'செயலி போன்ற அனுபவத்திற்கு Friendly Calculator-ஐ நிறுவவும். முன்பு பார்த்த பொது பக்கங்கள் இணையமின்றி கிடைக்கலாம்.',close:'மூடு',quick:'விரைவு செயல்கள்'},
+    de:{install:'Friendly Calculator installieren',assistant:'Kostenlose allgemeine Hilfe',help:'Installieren Sie Friendly Calculator als App-Verknüpfung. Bereits besuchte öffentliche Seiten sind möglicherweise offline verfügbar.',close:'Schließen',quick:'Schnellaktionen'},
+    ja:{install:'Friendly Calculator をインストール',assistant:'無料の一般ガイダンス',help:'アプリのように使うために Friendly Calculator をインストールします。以前に開いた公開ページはオフラインで利用できる場合があります。',close:'閉じる',quick:'クイック操作'},
+    ru:{install:'Установить Friendly Calculator',assistant:'Бесплатные общие рекомендации',help:'Установите Friendly Calculator как приложение. Ранее открытые общедоступные страницы могут быть доступны офлайн.',close:'Закрыть',quick:'Быстрые действия'}
+  }[language]||{install:'Install Friendly Calculator',assistant:'Get free guidance',help:'Install Friendly Calculator for an app-like shortcut. Previously visited public pages may be available offline.',close:'Close',quick:'Quick actions'};
   const quickActions=document.createElement('div');
   quickActions.id='fc-settings-quick-actions';
   quickActions.className='fc-settings-quick-actions';
