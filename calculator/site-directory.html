@@ -29,7 +29,7 @@ main{padding:28px 0 48px}.searchbar{display:flex;gap:10px;align-items:center;bac
 <section class="hero"><div class="wrap"><div class="eyebrow">One place · Every section</div><h1>Find what you need, faster.</h1><p>Browse calculator tools, business services and website information from one organized directory. The catalogue currently contains 3192 core calculator pages and selected international tools. Search by tool name or topic.</p><figure class="fc-brand-visual"><img src="/assets/friendly-calculator-brand-illustration.svg" alt="Friendly Calculator brand illustration for finance, tax, business and everyday calculator tools" width="1200" height="630" fetchpriority="high" decoding="async"><figcaption>Friendly Calculator — Practical tools for everyday calculations.</figcaption></figure></div></section>
 <main class="wrap">
 <label class="searchbar"><span aria-hidden="true">⌕</span><input id="siteSearch" type="search" placeholder="Search 3192 calculators by name or topic…" aria-label="Search all calculator categories and website sections" aria-controls="calculator-category-index"></label>
-<p id="searchStatus" class="muted" role="status" aria-live="polite">Showing 3,156 calculator tools, including international VAT, plus website resources.</p>
+<p id="searchStatus" class="muted" role="status" aria-live="polite">Showing 3,192 core calculator pages and selected international tools, plus website resources.</p>
 <p id="noResults" class="no-results" role="status">No matching calculators or website pages found. Try a broader keyword.</p>
 <section class="section"><div class="section-head"><div><h2>Calculator categories</h2><p>Choose a section to see its tools.</p></div></div><div class="quickgrid">
 <a class="quick" href="/calculator/finance-calculators.html" data-search="finance savings loan emi fd sip ppf epf interest"><strong>Finance & Savings</strong><span>Loans, deposits and investments</span></a>
@@ -43,15 +43,15 @@ main{padding:28px 0 48px}.searchbar{display:flex;gap:10px;align-items:center;bac
 <a class="quick" href="/calculator/everyday-calculators.html" data-search="everyday age electricity fuel bmi inflation basic arithmetic"><strong>Everyday Tools</strong><span>Daily and household calculations</span></a>
 </div></section>
 
-<section class="section" id="calculator-category-index"><div class="section-head"><div><h2>Browse calculators by category</h2><p>Browse 3,156 calculators across 20 categories, plus international calculator tools. Select a category to jump to its tools.</p></div></div><div class="quickgrid"><a class="quick" href="#savings-investments" data-search="savings, investment & retirement bank deposits, government savings schemes, investment returns, portfolio planning and retirement estimates."><strong>Savings, Investment & Retirement</strong><span>549 calculators</span></a>
+<section class="section" id="calculator-category-index"><div class="section-head"><div><h2>Browse calculators by category</h2><p>Browse 3,188 calculators across 20 categories, plus international calculator tools. Select a category to jump to its tools.</p></div></div><div class="quickgrid"><a class="quick" href="#savings-investments" data-search="savings, investment & retirement bank deposits, government savings schemes, investment returns, portfolio planning and retirement estimates."><strong>Savings, Investment & Retirement</strong><span>545 calculators</span></a>
 <a class="quick" href="#loans-credit" data-search="loans, emi & credit loan payments, eligibility, amortization, credit-card costs and borrowing comparisons."><strong>Loans, EMI & Credit</strong><span>28 calculators</span></a>
 <a class="quick" href="#insurance-protection" data-search="insurance and protection insurance premium policy quote add-on rider discount tax life health motor travel property"><strong>Insurance &amp; Protection</strong><span>1 calculator</span></a>
 <a class="quick" href="#tax-payroll" data-search="tax, salary & payroll gst, income tax, tds, salary structures, payroll, employee benefits and statutory estimates."><strong>Tax, Salary & Payroll</strong><span>32 calculators</span></a>
-<a class="quick" href="#business-operations" data-search="business, sales & operations pricing, profit, margins, invoices, cash flow, inventory, business costs and operating metrics."><strong>Business, Sales & Operations</strong><span>36 calculators</span></a>
+<a class="quick" href="#business-operations" data-search="business, sales & operations pricing, profit, margins, invoices, cash flow, inventory, business costs and operating metrics."><strong>Business, Sales & Operations</strong><span>66 calculators</span></a>
 <a class="quick" href="#math-statistics" data-search="mathematics, numbers & statistics arithmetic, percentages, fractions, number theory, probability, algebra and statistical tools."><strong>Mathematics, Numbers & Statistics</strong><span>943 calculators</span></a>
 <a class="quick" href="#astronomy-space" data-search="astronomy space planetary gravity planets moon"><strong>Astronomy & Space</strong><span>12 calculators</span></a>
 <a class="quick" href="#astrology-numerology" data-search="astrology and numerology zodiac sun sign compatibility life path personal year name number Chinese zodiac"><strong>Astrology & Numerology</strong><span>8 calculators</span></a>
-<a class="quick" href="#geometry-construction" data-search="geometry, measurement & construction shape dimensions, area, angles, perimeter, volume, surface area and construction quantities."><strong>Geometry, Measurement & Construction</strong><span>121 calculators</span></a>
+<a class="quick" href="#geometry-construction" data-search="geometry, measurement & construction shape dimensions, area, angles, perimeter, volume, surface area and construction quantities."><strong>Geometry, Measurement & Construction</strong><span>127 calculators</span></a>
 <a class="quick" href="#date-time-work" data-search="date, time & work age, date differences, calendar planning, time zones, work hours, shifts and working days."><strong>Date, Time & Work</strong><span>14 calculators</span></a>
 <a class="quick" href="#converters-technology" data-search="converters, data & technology unit, currency, land and number-system conversions, data transfer and network utilities."><strong>Converters, Data & Technology</strong><span>542 calculators</span></a>
 <a class="quick" href="#home-travel" data-search="home, travel & everyday costs household bills, travel costs, mileage, shared expenses and practical day-to-day estimates."><strong>Home, Travel & Everyday Costs</strong><span>295 calculators</span></a>
@@ -3237,7 +3237,7 @@ function filter(){
  }
  if(index)index.hidden=!!q;
  no.style.display=q&&calculatorMatches+resourceMatches===0?'block':'none';
- if(!q)status.textContent='Showing 3,156 calculator tools, including international VAT, plus website resources.';
+ if(!q)status.textContent='Showing 3,192 core calculator pages and selected international tools, plus website resources.';
  else status.textContent=calculatorMatches+' matching calculators'+(resourceMatches?' · '+resourceMatches+' matching website links':'')+'.';
 }
 input.addEventListener('input',filter);
