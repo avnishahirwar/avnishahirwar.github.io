@@ -1,7 +1,4 @@
 name: Calculator formula tests
-
-permissions:
-  contents: write
 # Run the additional Omni math expansion regression suite.
 on:
   push:
@@ -16,62 +13,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Merge latest main and synchronize homepage catalogue total (PR 758 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git merge --no-edit -X theirs origin/main
-          node <<'NODE'
-          const fs = require('node:fs');
-          let home = fs.readFileSync('index.html', 'utf8');
-          const start = home.indexOf('<nav class="home-category-index"');
-          const end = home.indexOf('</nav>', start);
-          if (start < 0 || end < 0) throw new Error('Homepage category index was not found');
-          const nav = home.slice(start, end);
-          const count = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)]
-            .reduce((sum, match) => sum + Number(match[1]), 0);
-          if (!count) throw new Error('Homepage category index count is zero');
-          const formatted = count.toLocaleString('en-US');
-          home = home.replace(/placeholder="Search [^"]*calculators by name or topic…"/i, 'placeholder="Search calculators by name or topic…"');
-          home = home.replace(/Total catalogue: [\d,]+ calculators/, 'Total catalogue: ' + formatted + ' calculators');
-          home = home.replace(/offering [\d,]+ public calculators/, 'offering ' + formatted + ' public calculators');
-          fs.writeFileSync('index.html', home);
-          let about = fs.readFileSync('calculator/about.html', 'utf8');
-          about = about.replace(/offering [\d,]+ public calculators/, 'offering ' + formatted + ' public calculators');
-          fs.writeFileSync('calculator/about.html', about);
-          process.stdout.write('Synchronized homepage and About catalogue total: ' + formatted + '\n');
-          NODE
-      - name: Repair verified locale metadata clusters (PR 758 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
-        run: |
-          node --check scripts/repair-locale-metadata.cjs
-          node --check scripts/add-hreflang-reciprocals.cjs
-          node scripts/repair-locale-metadata.cjs --write
-          node scripts/add-hreflang-reciprocals.cjs --write
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run calculator regression tests
         run: node --test tests/calculator-formulas.test.cjs tests/extended-science-astrology.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs tests/omni-math-expansion.test.cjs tests/omni-home-productivity-expansion.test.cjs tests/omni-construction-expansion.test.cjs tests/financial-yml-content.test.cjs tests/global-fx-hreflang.test.cjs tests/international-seo.test.cjs tests/global-locale.test.cjs tests/country-routing.test.cjs tests/us-uk-mortgage-calculators.test.cjs tests/us-sales-tax-calculator.test.cjs tests/us-auto-loan-calculator.test.cjs tests/us-personal-loan-calculator.test.cjs tests/uk-mortgage-overpayment-calculator.test.cjs tests/uk-workplace-pension-calculator.test.cjs tests/study-calculator.test.cjs tests/international-seo-diagnostic.test.cjs tests/brand-discovery.test.cjs tests/global-locale-sitemaps.test.cjs tests/us-additional-medicare-tax.test.cjs tests/brazil-indonesia-payroll.test.cjs tests/international-calculators.test.cjs tests/human-sitemap.test.cjs tests/worldwide-mortgage-calculator.test.cjs tests/mortgage-tools.test.cjs tests/trigonometry-calculator.test.cjs tests/uk-us-expansion.test.cjs tests/uk-student-loan-us-affordability.test.cjs
-      - name: Commit verified locale metadata repair (PR 758 only)
-        if: success() && github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m "Sync main, repair verified locale metadata and catalogue totals"
-          fi
-          git push origin "HEAD:${BRANCH_NAME}"
   catalogue-audit:
     runs-on: ubuntu-latest
     steps:
