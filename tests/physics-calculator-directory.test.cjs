@@ -105,6 +105,7 @@ test('homepage, all-calculator directory and both sitemap files link to the phys
   const siteDirectory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /href="\/calculator\/physics-calculators\.html"/);
   assert.match(siteDirectory, /href="\/calculator\/physics-calculators\.html"/);
+  assert.match(siteDirectory, /Search calculators by topic/);
   for (const sitemapFile of ['sitemap.xml', 'sitemap-en.xml']) {
     const sitemap = fs.readFileSync(path.join(root, sitemapFile), 'utf8');
     assert.ok(sitemap.includes('https://friendlycalculator.in/calculator/physics-calculators.html'), `${sitemapFile} is missing the physics directory`);
