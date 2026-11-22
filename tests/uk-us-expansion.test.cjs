@@ -147,3 +147,13 @@ test('UK Student Loan and US Home Affordability calculators are discoverable in 
   }
   assert.ok(home.includes('calculator-search-index.json'));
 });
+
+test('UK Mortgage Overpayment page uses complete branded title and non-truncated search/social descriptions', () => {
+  const html = read('international/uk-mortgage-overpayment-calculator.html');
+  const description = 'Estimate how regular UK mortgage overpayments may reduce interest and shorten your term. Enter your GBP balance, rate, remaining term and extra payment.';
+  assert.ok(html.includes('<title>UK Mortgage Overpayment Calculator | Friendly Calculator</title>'));
+  assert.ok(html.includes('<meta name="description" content="' + description + '">'));
+  assert.ok(html.includes('<meta property="og:title" content="UK Mortgage Overpayment Calculator | Friendly Calculator">'));
+  assert.ok(html.includes('<meta name="twitter:title" content="UK Mortgage Overpayment Calculator | Friendly Calculator">'));
+  assert.ok(html.includes('<meta name="twitter:description" content="' + description + '">'));
+});
