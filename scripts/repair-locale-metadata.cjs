@@ -23,17 +23,17 @@ function walk(dir, files = []) {
 function headEnd(html) { return html.toLowerCase().indexOf('</head>'); }
 function declaredLanguage(html) {
   const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
-  return match ? match[1].toLowerCase() : null;
+  return match ? match[1].trim() : null;
 }
 function routeInfo(file, html) {
   const relative = path.relative(ROOT, file).split(path.sep);
   const first = relative[0];
   const declared = declaredLanguage(html);
   if (LOCALES.has(first)) {
-    if (!declared || declared.split('-')[0] !== first) return null;
-    return { language: first, route: relative.slice(1).join('/'), isDefault: false };
+    if (!declared || declared.split('-')[0].toLowerCase() !== first) return null;
+    return { language: declared, route: relative.slice(1).join('/'), isDefault: false };
   }
-  if (first === 'en' || !declared || declared.split('-')[0] !== 'en') return null;
+  if (first === 'en' || !declared || declared.split('-')[0].toLowerCase() !== 'en') return null;
   return { language: declared, route: relative.join('/'), isDefault: true };
 }
 function publicUrl(file) {
@@ -42,7 +42,32 @@ function publicUrl(file) {
   if (relative.endsWith('/index.html')) return ORIGIN + '/' + relative.slice(0, -'index.html'.length);
   return ORIGIN + '/' + relative;
 }
-function replaceCanonical(html, url) {
+function localFile(href) {
+  try {
+    const url = new URL(href, ORIGIN);
+    if (url.origin !== ORIGIN || url.search || url.hash) return null;
+    let pathname = decodeURIComponent(url.pathname);
+    if (pathname === '/') pathname = '/index.html';
+    else if (pathname.endsWith('/')) pathname += 'index.html';
+    const file = path.resolve(ROOT, '.' + pathname);
+    if (!file.startsWith(ROOT + path.sep) && file !== path.join(ROOT, 'index.html')) return null;
+    return fs.existsSync(file) && fs.statSync(file).isFile() ? file : null;
+  } catch { return null; }
+}
+function canonicalHref(html) {
+  const end = headEnd(html);
+  const head = html.slice(0, end < 0 ? html.length : end);
+  const tag = head.match(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i);
+  const match = tag && tag[0].match(/\bhref=["']([^"']+)["']/i);
+  return match ? match[1] : null;
+}
+function canonicalFor(file, html) {
+  const current = canonicalHref(html);
+  return current && localFile(current) === file ? new URL(current, ORIGIN).href : publicUrl(file);
+}
+function replaceCanonical(html, file, url) {
+  const current = canonicalHref(html);
+  if (current && localFile(current) === file) return { html, changed: false };
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
@@ -52,7 +77,6 @@ function replaceCanonical(html, url) {
     const nextTag = /\bhref=["'][^"']*["']/i.test(tag[0])
       ? tag[0].replace(/\bhref=["'][^"']*["']/i, 'href="' + url + '"')
       : tag[0].replace(/>$/, ' href="' + url + '">');
-    if (nextTag === tag[0]) return { html, changed: false };
     return { html: html.slice(0, end).replace(tagPattern, nextTag) + html.slice(end), changed: true };
   }
   const insertion = '<link rel="canonical" href="' + url + '">\n';
@@ -62,13 +86,27 @@ function rebuildAlternates(html, cluster) {
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
+  const tagPattern = /<link\b[^>]*>/gi;
+  const existing = [...head.matchAll(tagPattern)].map(match => match[0])
+    .filter(tag => /\brel=["']alternate["']/i.test(tag) && /\bhreflang=["'][^"']+["']/i.test(tag))
+    .map(tag => {
+      const language = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+      const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+      try { return language && href ? [language.toLowerCase(), new URL(href, ORIGIN).href] : null; }
+      catch { return null; }
+    }).filter(Boolean);
+  const desired = cluster.map(item => [item.language.toLowerCase(), item.url]);
+  desired.push(['x-default', cluster.find(item => item.isDefault).url]);
+  const same = existing.length === desired.length && desired.every(([language, url]) =>
+    existing.some(([currentLanguage, currentUrl]) => currentLanguage === language && currentUrl === url));
+  if (same) return { html, changed: false };
+
   const pattern = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=)[^>]*\/?\s*>/gi;
   const cleaned = head.replace(pattern, '');
   const tags = cluster.map(item => '  <link rel="alternate" hreflang="' + item.language + '" href="' + item.url + '">');
   tags.push('  <link rel="alternate" hreflang="x-default" href="' + cluster.find(item => item.isDefault).url + '">');
-  const trimmed = cleaned.replace(/[ \t]*\n*$/, '');
+  const trimmed = cleaned.replace(/(?:[ \t]*\n)*[ \t]*$/, '');
   const nextHead = trimmed + '\n' + tags.join('\n') + '\n';
-  if (nextHead === head) return { html, changed: false };
   return { html: nextHead + html.slice(end), changed: true };
 }
 
@@ -81,22 +119,24 @@ function main() {
     if (!info) continue;
     if (!groups.has(info.route)) groups.set(info.route, new Map());
     const group = groups.get(info.route);
-    if (!group.has(info.language)) group.set(info.language, file);
+    const key = info.language.toLowerCase();
+    if (!group.has(key)) group.set(key, { language: info.language, file, isDefault: info.isDefault });
   }
 
   const updates = new Map();
   const stats = { pagesScanned: pages.length, routeGroups: groups.size, clustersRebuilt: 0, changedPages: 0, canonicalsCorrected: 0, alternateSetsRebuilt: 0, skippedGroups: 0 };
   for (const [route, group] of groups) {
-    const defaultEntry = [...group.entries()].find(([language]) => language === 'en' || language.startsWith('en-'));
+    const entries = [...group.values()];
+    const defaultEntry = entries.find(item => item.isDefault);
     if (!defaultEntry || group.size < 2) { stats.skippedGroups++; continue; }
-    const cluster = [...group.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([language, file]) => ({ language, file, url: publicUrl(file), isDefault: file === defaultEntry[1] }));
+    const cluster = entries
+      .sort((a, b) => a.language.toLowerCase().localeCompare(b.language.toLowerCase()))
+      .map(item => ({ ...item, url: canonicalFor(item.file, cache.get(item.file)) }));
     if (cluster.some(item => !cache.has(item.file))) { stats.skippedGroups++; continue; }
     stats.clustersRebuilt++;
     for (const item of cluster) {
       let html = cache.get(item.file);
-      const canonical = replaceCanonical(html, item.url);
+      const canonical = replaceCanonical(html, item.file, item.url);
       if (canonical.changed) stats.canonicalsCorrected++;
       html = canonical.html;
       const alternates = rebuildAlternates(html, cluster);
