@@ -32,7 +32,7 @@ jobs:
           node <<'NODE'
           const fs = require('node:fs');
           let home = fs.readFileSync('index.html', 'utf8');
-          home = home.replace(/aria-label="Search all [\\d,]+ calculator entries by name or topic"/, 'aria-label="Search all calculator entries by name or topic"');
+          home = home.replace(/aria-label="Search all [\d,]+ calculator entries by name or topic"/, 'aria-label="Search all calculator entries by name or topic"');
           fs.writeFileSync('index.html', home);
           NODE
       - name: Run calculator search matcher regression tests
