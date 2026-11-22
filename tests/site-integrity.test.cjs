@@ -269,7 +269,7 @@ test('the Admin dashboard remains private from public navigation and indexing', 
 test('About page catalogue matches every canonical published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(m => m[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
   assert.doesNotMatch(about, /<ol[^>]+start=/i);
@@ -888,7 +888,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
@@ -1837,7 +1837,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 04 calculators are present in pages, search and directory', () => {
@@ -1870,7 +1870,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 05 calculators are present in pages, search and directory', () => {
@@ -1903,7 +1903,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 06 calculators are present in pages, search and directory', () => {
@@ -1936,7 +1936,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 07 calculators are present in pages, search and directory', () => {
@@ -1969,7 +1969,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 08 calculators are present in pages, search and directory', () => {
@@ -2002,7 +2002,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('ten chemistry batch 09 calculators are present in pages, search and directory', () => {
@@ -2035,7 +2035,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 test('seven chemistry batch 10 calculators are present in pages, search and directory', () => {
@@ -2065,7 +2065,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
-  assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 
@@ -2077,7 +2077,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
  assert.equal(index.length, expectedSearchIndexLength);
  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
- assert.ok(about.includes(expectedCoreCalculatorCount + ' public calculators'));
+ assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
 
