@@ -45,8 +45,8 @@ Disallow: /tests/
 Disallow: /avnish-ai/
 
 # Additional AI discovery and assistant crawlers. Search/retrieval agents are
-# allowed below. Model-training crawlers remain disallowed unless explicitly
-# approved as a separate policy decision.
+# allowed below. Public content is available to AI discovery and retrieval crawlers;
+# private, administrative, test, and internal AI paths remain restricted.
 User-agent: GPTBot
 Allow: /
 Disallow: /calculator/admin.html
