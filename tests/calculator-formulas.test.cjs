@@ -740,8 +740,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.ok(homepage.includes('Search all calculators'));
-  assert.match(homepage, /placeholder="Search calculators by name or topic/);
+  assert.match(homepage, /aria-label="Search all calculator entries by name or topic"/);
+  assert.match(homepage, /placeholder="Try EMI, GST, income tax or percentage/);
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
