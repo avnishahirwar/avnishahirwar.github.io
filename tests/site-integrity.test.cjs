@@ -1523,7 +1523,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 2);
   const popular = homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0]+homepage.match(/<details class="fc-popular-more"[\s\S]*?<\/details>/)[0];
   assert.equal((homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0].match(/<a\s/g)||[]).length,6);
-  assert.equal((popular.match(/<a\s/g) || []).length, 19, 'Homepage must show exactly 19 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 16, 'Homepage must expose a concise set of 16 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
