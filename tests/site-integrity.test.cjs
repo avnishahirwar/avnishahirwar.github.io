@@ -262,7 +262,12 @@ test('the Admin dashboard remains private from public navigation and indexing', 
     const markup=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'');
     if (/href=["'][^"']*\/calculator\/admin\.html/i.test(markup)) publicAdminLinks.push(file);
   }
-  assert.deepEqual(publicAdminLinks.sort(), ['calculator/dashboard.html','hi/calculator/dashboard.html'], 'Only authenticated dashboard surfaces may link to the private Admin dashboard');
+  assert.deepEqual(publicAdminLinks.sort(), [], 'Static public HTML must not expose the private Admin dashboard link');
+  for (const file of ['calculator/dashboard.html','hi/calculator/dashboard.html']) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /id="adminDashboardLink"[^>]*hidden/);
+    assert.match(html, /user\?\.app_metadata\?\.role===['"]admin['"]/);
+  }
   assert.doesNotMatch(sitemap, /https:\/\/friendlycalculator\.in\/calculator\/admin\.html/);
 });
 
@@ -1301,7 +1306,7 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v10/);
+  assert.match(worker, /friendly-calculator-public-v11/);
   assert.match(worker, /key !== CACHE_NAME/);
   assert.match(worker, /url\.pathname === '\/assets\/site-shell\.js'/);
   assert.match(worker, /new Request\(request, \{ cache: 'reload' \}\)/);
@@ -2319,4 +2324,14 @@ test('homepage calculator search matcher avoids unrelated cross-field matches', 
   assert.notEqual(match({ name: 'Fixed Deposit Calculator', keywords: 'fixed deposit maturity', category: 'Savings' }, 'fixed deposit'), null);
   assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
   assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
+});
+
+test('money and biology directories provide complete social preview image metadata', () => {
+  for (const file of ['calculator/money-calculators.html', 'calculator/biology-calculators.html']) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /<meta property="og:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png">/);
+    assert.match(html, /<meta property="og:image:alt" content="Friendly Calculator/);
+    assert.match(html, /<meta name="twitter:image" content="https:\/\/friendlycalculator\.in\/og-friendly-calculator\.png">/);
+    assert.match(html, /<meta name="twitter:image:alt" content="Friendly Calculator/);
+  }
 });
