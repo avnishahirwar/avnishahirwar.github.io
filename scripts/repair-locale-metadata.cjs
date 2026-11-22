@@ -33,7 +33,9 @@ function routeInfo(file, html) {
     if (!declared || declared.split('-')[0].toLowerCase() !== first) return null;
     return { language: declared, route: relative.slice(1).join('/'), isDefault: false };
   }
-  if (first === 'en' || !declared || declared.split('-')[0].toLowerCase() !== 'en') return null;
+  if (first === 'en' || !declared) return null;
+  const base = declared.split('-')[0].toLowerCase();
+  if (LOCALES.has(base) && !declared.includes('-')) return null;
   return { language: declared, route: relative.join('/'), isDefault: true };
 }
 function publicUrl(file) {
@@ -133,9 +135,94 @@ function rebuildAlternates(html, cluster, extras = []) {
   return { html: nextHead + html.slice(end), changed: true };
 }
 
+function verifiedPreferredAlternates(file, html, cache) {
+  const end = headEnd(html);
+  const head = html.slice(0, end < 0 ? html.length : end);
+  const sourceCanonical = canonicalFor(file, html);
+  const preferred = new Map();
+  for (const match of head.matchAll(/<link\\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/\\brel=["']alternate["']/i.test(tag)) continue;
+    const language = (tag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
+    const href = (tag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+    if (!language || !href || language.toLowerCase() === 'x-default') continue;
+    const base = language.split('-')[0].toLowerCase();
+    if (!LOCALES.has(base)) continue;
+    const targetFile = localFile(href);
+    if (!targetFile || targetFile === file) continue;
+    const targetHtml = cache.get(targetFile);
+    if (!targetHtml || (declaredLanguage(targetHtml) || '').toLowerCase() !== language.toLowerCase()) continue;
+    const targetCanonical = canonicalFor(targetFile, targetHtml);
+    if (targetCanonical !== new URL(href, ORIGIN).href || targetCanonical === sourceCanonical) continue;
+    preferred.set(language.toLowerCase(), { language, file: targetFile, isDefault: false });
+  }
+  return preferred;
+}
+function pruneInvalidAlternates(file, html, cache) {
+  const end = headEnd(html);
+  if (end < 0) return { html, changed: false };
+  const head = html.slice(0, end);
+  const sourceLanguage = (declaredLanguage(html) || '').toLowerCase();
+  const sourceCanonicalRaw = canonicalHref(html);
+  const sourceCanonical = sourceCanonicalRaw ? new URL(sourceCanonicalRaw, ORIGIN).href : null;
+  if (!sourceLanguage || !sourceCanonical) return { html, changed: false };
+  const remove = new Set();
+  for (const match of head.matchAll(/<link\\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/\\brel=["']alternate["']/i.test(tag)) continue;
+    const language = (tag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
+    const href = (tag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+    if (!language || !href) { remove.add(tag); continue; }
+    let absolute;
+    try { absolute = new URL(href, ORIGIN).href; } catch { remove.add(tag); continue; }
+    const targetFile = localFile(absolute);
+    const targetHtml = targetFile && cache.get(targetFile);
+    if (!targetFile || !targetHtml) { remove.add(tag); continue; }
+    if (language.toLowerCase() === 'x-default') {
+      if (canonicalFor(targetFile, targetHtml) !== absolute) remove.add(tag);
+      continue;
+    }
+    if (language.toLowerCase() === sourceLanguage && absolute === sourceCanonical) continue;
+    const targetLanguage = (declaredLanguage(targetHtml) || '').toLowerCase();
+    const targetCanonical = canonicalFor(targetFile, targetHtml);
+    if (targetLanguage !== language.toLowerCase() || targetCanonical !== absolute) { remove.add(tag); continue; }
+    const targetEnd = headEnd(targetHtml);
+    const targetHead = targetHtml.slice(0, targetEnd < 0 ? targetHtml.length : targetEnd);
+    const reciprocal = [...targetHead.matchAll(/<link\\b[^>]*>/gi)].some(item => {
+      const reciprocalTag = item[0];
+      if (!/\\brel=["']alternate["']/i.test(reciprocalTag)) return false;
+      const reciprocalLanguage = (reciprocalTag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
+      const reciprocalHref = (reciprocalTag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+      return reciprocalLanguage && reciprocalHref &&
+        reciprocalLanguage.toLowerCase() === sourceLanguage &&
+        new URL(reciprocalHref, ORIGIN).href === sourceCanonical;
+    });
+    if (!reciprocal) remove.add(tag);
+  }
+  if (!remove.size) return { html, changed: false };
+  const nextHead = head.replace(/<link\\b[^>]*>/gi, tag => remove.has(tag) ? '' : tag);
+  return { html: nextHead + html.slice(end), changed: true };
+}
+
 function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
+  const updates = new Map();
+  const stats = { pagesScanned: pages.length, routeGroups: 0, clustersRebuilt: 0, changedPages: 0, canonicalsCorrected: 0, alternateSetsRebuilt: 0, orphanAlternatesPruned: 0, skippedGroups: 0 };
+
+  // A localized page should be self-canonical even when it has no exact English route counterpart.
+  for (const [file, original] of cache) {
+    const info = routeInfo(file, original);
+    if (!info || info.isDefault) continue;
+    const url = canonicalFor(file, original);
+    const result = replaceCanonical(original, file, url);
+    if (result.changed) {
+      cache.set(file, result.html);
+      updates.set(file, result.html);
+      stats.canonicalsCorrected++;
+    }
+  }
+
   const groups = new Map();
   for (const [file, html] of cache) {
     const info = routeInfo(file, html);
@@ -145,19 +232,32 @@ function main() {
     const key = info.language.toLowerCase();
     if (!group.has(key)) group.set(key, { language: info.language, file, isDefault: info.isDefault });
   }
+  stats.routeGroups = groups.size;
 
-  const updates = new Map();
-  const stats = { pagesScanned: pages.length, routeGroups: groups.size, clustersRebuilt: 0, changedPages: 0, canonicalsCorrected: 0, alternateSetsRebuilt: 0, skippedGroups: 0 };
-  for (const [route, group] of groups) {
+  const clusteredFiles = new Set();
+  for (const group of groups.values()) {
     const entries = [...group.values()];
     const defaultEntry = entries.find(item => item.isDefault);
     if (!defaultEntry || group.size < 2) { stats.skippedGroups++; continue; }
-    const cluster = entries
+
+    // Prefer an already-valid alternate target over a same-route file when the
+    // site intentionally uses a legacy route alias (e.g. /hi/about.html).
+    const preferred = verifiedPreferredAlternates(defaultEntry.file, cache.get(defaultEntry.file), cache);
+    const selected = new Map([[defaultEntry.language.toLowerCase(), defaultEntry]]);
+    for (const item of entries) {
+      if (item.isDefault) continue;
+      const key = item.language.toLowerCase();
+      selected.set(key, preferred.get(key) || item);
+    }
+    for (const [key, item] of preferred) if (!selected.has(key)) selected.set(key, item);
+
+    const cluster = [...selected.values()]
       .sort((a, b) => a.language.toLowerCase().localeCompare(b.language.toLowerCase()))
       .map(item => ({ ...item, url: canonicalFor(item.file, cache.get(item.file)) }));
     if (cluster.some(item => !cache.has(item.file))) { stats.skippedGroups++; continue; }
     stats.clustersRebuilt++;
     for (const item of cluster) {
+      clusteredFiles.add(item.file);
       let html = cache.get(item.file);
       const canonical = replaceCanonical(html, item.file, item.url);
       if (canonical.changed) stats.canonicalsCorrected++;
@@ -167,12 +267,24 @@ function main() {
       if (alternates.changed) stats.alternateSetsRebuilt++;
       html = alternates.html;
       if (html !== cache.get(item.file)) {
+        cache.set(item.file, html);
         updates.set(item.file, html);
-        stats.changedPages++;
       }
     }
   }
 
+  // Remove only unverified alternates from pages outside a verified translation cluster.
+  for (const [file, html] of cache) {
+    if (clusteredFiles.has(file)) continue;
+    const result = pruneInvalidAlternates(file, html, cache);
+    if (result.changed) {
+      cache.set(file, result.html);
+      updates.set(file, result.html);
+      stats.orphanAlternatesPruned++;
+    }
+  }
+
+  stats.changedPages = updates.size;
   for (const [file, content] of updates) {
     if (process.argv.includes('--write')) fs.writeFileSync(file, content);
     else console.log('Locale metadata candidate: ' + path.relative(ROOT, file));
