@@ -104,11 +104,11 @@ function validExtraAlternates(file, html, cluster, cache) {
     if (targetCanonical !== new URL(href, ORIGIN).href || targetCanonical === sourceCanonical) continue;
     const targetEnd = headEnd(targetHtml);
     const targetHead = targetHtml.slice(0, targetEnd < 0 ? targetHtml.length : targetEnd);
-    const reciprocal = [...targetHead.matchAll(/<link\\b[^>]*>/gi)].some(item => {
+    const reciprocal = [...targetHead.matchAll(/<link\b[^>]*>/gi)].some(item => {
       const reciprocalTag = item[0];
-      if (!/\\brel=["']alternate["']/i.test(reciprocalTag)) return false;
-      const reciprocalLanguage = (reciprocalTag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
-      const reciprocalHref = (reciprocalTag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+      if (!/\brel=["']alternate["']/i.test(reciprocalTag)) return false;
+      const reciprocalLanguage = (reciprocalTag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+      const reciprocalHref = (reciprocalTag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
       return reciprocalLanguage && reciprocalHref &&
         reciprocalLanguage.toLowerCase() === (declaredLanguage(html) || '').toLowerCase() &&
         new URL(reciprocalHref, ORIGIN).href === sourceCanonical;
@@ -152,11 +152,11 @@ function verifiedPreferredAlternates(file, html, cache) {
   const head = html.slice(0, end < 0 ? html.length : end);
   const sourceCanonical = canonicalFor(file, html);
   const preferred = new Map();
-  for (const match of head.matchAll(/<link\\b[^>]*>/gi)) {
+  for (const match of head.matchAll(/<link\b[^>]*>/gi)) {
     const tag = match[0];
-    if (!/\\brel=["']alternate["']/i.test(tag)) continue;
-    const language = (tag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
-    const href = (tag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+    if (!/\brel=["']alternate["']/i.test(tag)) continue;
+    const language = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+    const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
     if (!language || !href || language.toLowerCase() === 'x-default') continue;
     const base = language.split('-')[0].toLowerCase();
     if (!LOCALES.has(base)) continue;
@@ -179,11 +179,11 @@ function pruneInvalidAlternates(file, html, cache) {
   const sourceCanonical = sourceCanonicalRaw ? new URL(sourceCanonicalRaw, ORIGIN).href : null;
   if (!sourceLanguage || !sourceCanonical) return { html, changed: false };
   const remove = new Set();
-  for (const match of head.matchAll(/<link\\b[^>]*>/gi)) {
+  for (const match of head.matchAll(/<link\b[^>]*>/gi)) {
     const tag = match[0];
-    if (!/\\brel=["']alternate["']/i.test(tag)) continue;
-    const language = (tag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
-    const href = (tag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+    if (!/\brel=["']alternate["']/i.test(tag)) continue;
+    const language = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+    const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
     if (!language || !href) { remove.add(tag); continue; }
     let absolute;
     try { absolute = new URL(href, ORIGIN).href; } catch { remove.add(tag); continue; }
@@ -200,11 +200,11 @@ function pruneInvalidAlternates(file, html, cache) {
     if (targetLanguage !== language.toLowerCase() || targetCanonical !== absolute) { remove.add(tag); continue; }
     const targetEnd = headEnd(targetHtml);
     const targetHead = targetHtml.slice(0, targetEnd < 0 ? targetHtml.length : targetEnd);
-    const reciprocal = [...targetHead.matchAll(/<link\\b[^>]*>/gi)].some(item => {
+    const reciprocal = [...targetHead.matchAll(/<link\b[^>]*>/gi)].some(item => {
       const reciprocalTag = item[0];
-      if (!/\\brel=["']alternate["']/i.test(reciprocalTag)) return false;
-      const reciprocalLanguage = (reciprocalTag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
-      const reciprocalHref = (reciprocalTag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+      if (!/\brel=["']alternate["']/i.test(reciprocalTag)) return false;
+      const reciprocalLanguage = (reciprocalTag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1];
+      const reciprocalHref = (reciprocalTag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
       return reciprocalLanguage && reciprocalHref &&
         reciprocalLanguage.toLowerCase() === sourceLanguage &&
         new URL(reciprocalHref, ORIGIN).href === sourceCanonical;
@@ -212,7 +212,7 @@ function pruneInvalidAlternates(file, html, cache) {
     if (!reciprocal) remove.add(tag);
   }
   if (!remove.size) return { html, changed: false };
-  const nextHead = head.replace(/<link\\b[^>]*>/gi, tag => remove.has(tag) ? '' : tag);
+  const nextHead = head.replace(/<link\b[^>]*>/gi, tag => remove.has(tag) ? '' : tag);
   return { html: nextHead + html.slice(end), changed: true };
 }
 
