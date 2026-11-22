@@ -85,7 +85,7 @@
   function nonnegative(n,label){if(!Number.isFinite(n)||n<0)throw Error(label+' cannot be negative.')}
   function num(n){return new Intl.NumberFormat(undefined,{maximumFractionDigits:3}).format(n)}
   function pct(n){return num(n*100)+'%'}
-  function money(n){return new Intl.NumberFormat(undefined,{style:'currency',currency:'INR',maximumFractionDigits:2}).format(n)}
+  function money(n){return num(n)+' (same currency unit as input)'}
   function init(){
     const form=document.getElementById('calc-form'), output=document.getElementById('calc-result');
     if(!form||!output)return;
