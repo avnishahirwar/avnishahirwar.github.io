@@ -102,6 +102,18 @@ function validExtraAlternates(file, html, cluster, cache) {
     if (!targetHtml || (declaredLanguage(targetHtml) || '').toLowerCase() !== language.toLowerCase()) continue;
     const targetCanonical = canonicalFor(targetFile, targetHtml);
     if (targetCanonical !== new URL(href, ORIGIN).href || targetCanonical === sourceCanonical) continue;
+    const targetEnd = headEnd(targetHtml);
+    const targetHead = targetHtml.slice(0, targetEnd < 0 ? targetHtml.length : targetEnd);
+    const reciprocal = [...targetHead.matchAll(/<link\\b[^>]*>/gi)].some(item => {
+      const reciprocalTag = item[0];
+      if (!/\\brel=["']alternate["']/i.test(reciprocalTag)) return false;
+      const reciprocalLanguage = (reciprocalTag.match(/\\bhreflang=["']([^"']+)["']/i) || [])[1];
+      const reciprocalHref = (reciprocalTag.match(/\\bhref=["']([^"']+)["']/i) || [])[1];
+      return reciprocalLanguage && reciprocalHref &&
+        reciprocalLanguage.toLowerCase() === (declaredLanguage(html) || '').toLowerCase() &&
+        new URL(reciprocalHref, ORIGIN).href === sourceCanonical;
+    });
+    if (!reciprocal) continue;
     extras.set(language.toLowerCase(), { language, url: targetCanonical });
   }
   return [...extras.values()].sort((a, b) => a.language.toLowerCase().localeCompare(b.language.toLowerCase()));
