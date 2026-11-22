@@ -22,6 +22,9 @@
   const normalize = value => String(value || '').normalize('NFKD')
     .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   const tokensOf = value => normalize(value).split(/\s+/).filter(Boolean);
+  // Short acronyms (EMI, GST, SIP, VAT, BMI) must match whole tokens.
+  // Prefix matching is retained for longer words such as "percent" → "percentage".
+  const tokenMatches = (token, term) => token === term || (term.length >= 4 && token.startsWith(term));
 
   function hasSynonym(term, field) {
     return (SYNONYMS[term] || []).some(alias => normalize(field).includes(alias));
@@ -40,7 +43,7 @@
     // Every query term must be present in the calculator name, preventing
     // unrelated catalogue entries from being combined across fields.
     const nameMatch = terms.every(term =>
-      nameTokens.some(token => token.startsWith(term)) || hasSynonym(term, name)
+      nameTokens.some(token => tokenMatches(token, term)) || hasSynonym(term, name)
     );
 
     // Keywords are intentionally stricter: multi-word searches must be a
@@ -53,7 +56,7 @@
     // Category search is only a fallback when all terms belong to that
     // category. Descriptions are not searched because they create noisy hits.
     const categoryMatch = terms.every(term =>
-      categoryTokens.some(token => token.startsWith(term))
+      categoryTokens.some(token => tokenMatches(token, term))
     );
 
     if (!nameMatch && !keywordMatch && !categoryMatch) return null;
