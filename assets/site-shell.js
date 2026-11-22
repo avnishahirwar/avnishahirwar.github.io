@@ -284,11 +284,14 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\//.exec(p);
+const routeLocaleMatch=/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\//.exec(p);
+const declaredDocumentLang=(document.documentElement.getAttribute('lang')||'').trim();
+const declaredLocale=declaredDocumentLang.toLowerCase().split('-')[0];
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
-document.documentElement.lang=routeLocale;
-document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\/)?calculators\//.test(p);
+const effectiveLocale=declaredLocale||routeLocale;
+document.documentElement.lang=declaredDocumentLang||routeLocale;
+document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(effectiveLocale)?'rtl':'ltr';
+const isCalculatorRoute=/^\/(?:(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
@@ -404,7 +407,9 @@ const supportedUiLocales={en:1,zh:1,hi:1,es:1,ar:1,fr:1,bn:1,pt:1,id:1,ur:1,ru:1
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
-const currentLocale=(/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
+const pathLocale=(/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\//.exec(p)||[])[1];
+const currentDocumentLocale=(document.documentElement.lang||'').toLowerCase().split('-')[0];
+const currentLocale=p==='/'?(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:preferredUiLocale):(Object.hasOwn(supportedUiLocales,currentDocumentLocale)?currentDocumentLocale:(pathLocale||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:'en')));
 const localeHome={en:'/',zh:'/zh/index.html',hi:'/hi/index.html',es:'/es/index.html',ar:'/ar/index.html',fr:'/fr/index.html',bn:'/bn/index.html',pt:'/pt/index.html',id:'/id/index.html',ur:'/ur/index.html',ru:'/ru/index.html',de:'/de/index.html',ja:'/ja/index.html',pcm:'/pcm/index.html',arz:'/arz/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',sw:'/sw/index.html',ha:'/ha/index.html',tr:'/tr/index.html',pa:'/pa/index.html',fil:'/fil/index.html',ta:'/ta/index.html',yue:'/yue/index.html',wuu:'/wuu/index.html',fa:'/fa/index.html',ko:'/ko/index.html',am:'/am/index.html',th:'/th/index.html',jv:'/jv/index.html',it:'/it/index.html',gu:'/gu/index.html',kn:'/kn/index.html',yo:'/yo/index.html',bho:'/bho/index.html',nl:'/nl/index.html',pl:'/pl/index.html',ml:'/ml/index.html',or:'/or/index.html',ne:'/ne/index.html',si:'/si/index.html',uk:'/uk/index.html',uz:'/uz/index.html',ps:'/ps/index.html',so:'/so/index.html',he:'/he/index.html',my:'/my/index.html',ro:'/ro/index.html',sd:'/sd/index.html'};
 // A saved visitor choice wins; otherwise use the browser's supported language.
 // Only the root entry point auto-selects a language; explicit page routes remain authoritative.

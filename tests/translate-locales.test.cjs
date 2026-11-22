@@ -10,11 +10,12 @@ test('load translator module', async () => {
   assert.equal(typeof api.tokenizeHtml, 'function');
 });
 
-test('catalogue contains 33 planned locales and never selects available locales', async () => {
-  const locales = await api.loadPlannedLocales();
-  assert.equal(locales.length, 33);
-  assert.ok(locales.every(x => x.status === 'planned' && x.code !== 'en'));
-  assert.ok(locales.some(x => x.direction === 'rtl'));
+test('catalogue keeps all 50 configured locales available and does not queue them for translation', async () => {
+  const catalogue = require('../config/language-catalogue.json').locales;
+  assert.equal(catalogue.length, 50);
+  assert.ok(catalogue.every(x => x.status === 'available'));
+  assert.deepEqual(await api.loadPlannedLocales(), []);
+  assert.ok(catalogue.some(x => x.direction === 'rtl'));
 });
 
 test('HTML tokenization excludes executable and code contents but leaves their markup untouched', () => {

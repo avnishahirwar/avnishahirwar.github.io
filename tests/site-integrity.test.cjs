@@ -2295,14 +2295,13 @@ test('visible brand text is included in accessible names and homepage feature ic
 });
 
 
-test('homepage language coverage copy matches the currently published locale catalogue', () => {
+test('homepage points to the current 50-language directory without overstating translated coverage', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  for (const language of ['English', 'Hindi', 'German', 'Spanish', 'French', 'Portuguese', 'Arabic', 'Indonesian', 'Bengali', 'Tamil', 'Japanese', 'Russian', 'Marathi', 'Vietnamese', 'Telugu', 'Gujarati', 'Kannada']) {
-    assert.ok(html.includes(language), 'Homepage should name the published language edition: ' + language);
-  }
-  assert.match(html, /17 currently published language editions/);
-  assert.match(html, /planned 50-language rollout is still in progress/);
-  assert.match(html, /Coverage varies by language and page/);
+  const catalogue = require('../config/language-catalogue.json');
+  assert.equal(catalogue.locales.length, 50);
+  assert.match(html, /language directory lists 50 configured language editions/i);
+  assert.match(html, /translation coverage varies by language and calculator/i);
+  assert.match(html, /href="\/calculator\/languages\.html"/);
 });
 
 

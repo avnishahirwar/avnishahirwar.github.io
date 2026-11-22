@@ -775,7 +775,7 @@ test('the ten priority Hindi calculators expose canonical URLs, nine language al
   for (const slug of slugs) {
     const html = fs.readFileSync(new URL('../hi/calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
     assert.match(html, /<html[^>]+lang="hi"/, slug + ' is marked Hindi');
-    assert.match(html, /<link(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
+    assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
     for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','x-default']) assert.match(html, new RegExp('hreflang="' + locale + '"'), slug + ' is missing ' + locale + ' hreflang');
     assert.match(html, /"@type":"SoftwareApplication"/, slug + ' has SoftwareApplication schema');
     assert.match(html, /"@type":"FAQPage"/, slug + ' has FAQ schema');
