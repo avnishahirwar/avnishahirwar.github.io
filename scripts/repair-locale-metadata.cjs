@@ -10,6 +10,16 @@ const ORIGIN = 'https://friendlycalculator.in';
 const IGNORE = new Set(['.git', '.github', 'node_modules', 'tests', 'vendor', '_site', 'admin', 'avnish-ai']);
 const catalogue = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/language-catalogue.json'), 'utf8'));
 const LOCALES = new Set(catalogue.locales.map(item => item.code).filter(code => code && code !== 'en'));
+const PRESERVED_CANONICAL_ALIASES = new Map([
+  ['calculator/finance.html', '/calculator/finance-calculators.html'],
+  ['calculator/everyday.html', '/calculator/everyday-calculators.html'],
+  ['calculator/business-tools.html', '/calculator/business-calculators.html'],
+  ['calculator/tax-calculators.html', '/calculator/tax.html'],
+  ['hi/calculator/finance.html', '/calculator/finance-calculators.html'],
+  ['hi/calculator/everyday.html', '/calculator/everyday-calculators.html'],
+  ['hi/calculator/business-tools.html', '/calculator/business-calculators.html'],
+  ['hi/calculator/tax-calculators.html', '/calculator/tax.html']
+]);
 
 function walk(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -26,7 +36,9 @@ function declaredLanguage(html) {
   return match ? match[1].trim() : null;
 }
 function routeInfo(file, html) {
-  const relative = path.relative(ROOT, file).split(path.sep);
+  const relativePath = path.relative(ROOT, file).split(path.sep).join('/');
+  if (PRESERVED_CANONICAL_ALIASES.has(relativePath)) return null;
+  const relative = relativePath.split('/');
   const first = relative[0];
   const declared = declaredLanguage(html);
   if (LOCALES.has(first)) {
@@ -64,6 +76,8 @@ function canonicalHref(html) {
   return match ? match[1] : null;
 }
 function canonicalFor(file, html) {
+  const relativePath = path.relative(ROOT, file).split(path.sep).join('/');
+  if (PRESERVED_CANONICAL_ALIASES.has(relativePath)) return ORIGIN + PRESERVED_CANONICAL_ALIASES.get(relativePath);
   const current = canonicalHref(html);
   return current && localFile(current) === file ? new URL(current, ORIGIN).href : publicUrl(file);
 }
@@ -171,6 +185,8 @@ function verifiedPreferredAlternates(file, html, cache) {
   return preferred;
 }
 function pruneInvalidAlternates(file, html, cache) {
+  const relativePath = path.relative(ROOT, file).split(path.sep).join('/');
+  if (PRESERVED_CANONICAL_ALIASES.has(relativePath)) return { html, changed: false };
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
