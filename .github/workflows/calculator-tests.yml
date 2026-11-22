@@ -25,6 +25,8 @@ jobs:
       - name: Merge latest main and synchronize homepage catalogue total (PR 758 only)
         if: github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git merge --no-edit -X theirs origin/main
           node <<'NODE'
