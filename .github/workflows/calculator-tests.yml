@@ -27,6 +27,7 @@ jobs:
         run: |
           node --check scripts/repair-locale-metadata.cjs
           node scripts/repair-locale-metadata.cjs --write
+          node scripts/add-hreflang-reciprocals.cjs --write
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run calculator regression tests
