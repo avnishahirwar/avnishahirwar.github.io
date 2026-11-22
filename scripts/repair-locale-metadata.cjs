@@ -23,7 +23,7 @@ function walk(dir, files = []) {
 function headEnd(html) { return html.toLowerCase().indexOf('</head>'); }
 function declaredLanguage(html) {
   const head = html.slice(0, headEnd(html) < 0 ? html.length : headEnd(html));
-  const match = html.match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i);
+  const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
   return match ? match[1].toLowerCase().split('-')[0] : null;
 }
 function routeInfo(file, html) {
@@ -47,28 +47,28 @@ function replaceCanonical(html, url) {
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
-  const tagPattern = /<link\\b(?=[^>]*\\brel=["']canonical["'])[^>]*>/i;
+  const tagPattern = /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i;
   const tag = head.match(tagPattern);
   if (tag) {
-    const nextTag = /\\bhref=["'][^"']*["']/i.test(tag[0])
-      ? tag[0].replace(/\\bhref=["'][^"']*["']/i, 'href="' + url + '"')
+    const nextTag = /\bhref=["'][^"']*["']/i.test(tag[0])
+      ? tag[0].replace(/\bhref=["'][^"']*["']/i, 'href="' + url + '"')
       : tag[0].replace(/>$/, ' href="' + url + '">');
     if (nextTag === tag[0]) return { html, changed: false };
     return { html: html.slice(0, end).replace(tagPattern, nextTag) + html.slice(end), changed: true };
   }
-  const insertion = '<link rel="canonical" href="' + url + '">\\n';
+  const insertion = '<link rel="canonical" href="' + url + '">\n';
   return { html: html.slice(0, end) + insertion + html.slice(end), changed: true };
 }
 function rebuildAlternates(html, cluster) {
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
-  const pattern = /<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=)[^>]*\\/?\\s*>/gi;
+  const pattern = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=)[^>]*\/?\s*>/gi;
   const cleaned = head.replace(pattern, '');
   const tags = cluster.map(item => '  <link rel="alternate" hreflang="' + item.language + '" href="' + item.url + '">');
   tags.push('  <link rel="alternate" hreflang="x-default" href="' + cluster.find(item => item.language === 'en').url + '">');
-  const trimmed = cleaned.replace(/[ \\t]*\\n*$/, '');
-  const nextHead = trimmed + '\\n' + tags.join('\\n') + '\\n';
+  const trimmed = cleaned.replace(/[ \t]*\n*$/, '');
+  const nextHead = trimmed + '\n' + tags.join('\n') + '\n';
   if (nextHead === head) return { html, changed: false };
   return { html: nextHead + html.slice(end), changed: true };
 }
