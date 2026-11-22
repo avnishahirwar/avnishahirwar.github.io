@@ -1,7 +1,4 @@
 name: Calculator formula tests
-
-permissions:
-  contents: write
 # Run the additional Omni math expansion regression suite.
 on:
   push:
@@ -16,41 +13,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Merge latest main and remove stale search count from accessible label (PR 758 only)
-        if: github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git merge --no-edit -X theirs origin/main
-          node <<'NODE'
-          const fs = require('node:fs');
-          let home = fs.readFileSync('index.html', 'utf8');
-          home = home.replace(/aria-label="Search all [\d,]+ calculator entries by name or topic"/, 'aria-label="Search all calculator entries by name or topic"');
-          fs.writeFileSync('index.html', home);
-          NODE
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run calculator regression tests
         run: node --test tests/calculator-formulas.test.cjs tests/extended-science-astrology.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs tests/omni-math-expansion.test.cjs tests/omni-home-productivity-expansion.test.cjs tests/omni-construction-expansion.test.cjs tests/financial-yml-content.test.cjs tests/global-fx-hreflang.test.cjs tests/international-seo.test.cjs tests/global-locale.test.cjs tests/country-routing.test.cjs tests/us-uk-mortgage-calculators.test.cjs tests/us-sales-tax-calculator.test.cjs tests/us-auto-loan-calculator.test.cjs tests/us-personal-loan-calculator.test.cjs tests/uk-mortgage-overpayment-calculator.test.cjs tests/uk-workplace-pension-calculator.test.cjs tests/study-calculator.test.cjs tests/international-seo-diagnostic.test.cjs tests/brand-discovery.test.cjs tests/global-locale-sitemaps.test.cjs tests/us-additional-medicare-tax.test.cjs tests/brazil-indonesia-payroll.test.cjs tests/international-calculators.test.cjs tests/human-sitemap.test.cjs tests/worldwide-mortgage-calculator.test.cjs tests/mortgage-tools.test.cjs tests/trigonometry-calculator.test.cjs tests/uk-us-expansion.test.cjs tests/uk-student-loan-us-affordability.test.cjs
-      - name: Commit main sync for PR 758
-        if: success() && github.event_name == 'pull_request' && github.event.pull_request.number == 758 && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m "Sync latest main and retain calculator search fixes"
-          fi
-          git push origin "HEAD:${BRANCH_NAME}"
   catalogue-audit:
     runs-on: ubuntu-latest
     steps:
