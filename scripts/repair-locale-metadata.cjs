@@ -186,7 +186,16 @@ function verifiedPreferredAlternates(file, html, cache) {
 }
 function pruneInvalidAlternates(file, html, cache) {
   const relativePath = path.relative(ROOT, file).split(path.sep).join('/');
-  if (PRESERVED_CANONICAL_ALIASES.has(relativePath)) return { html, changed: false };
+  if (PRESERVED_CANONICAL_ALIASES.has(relativePath)) {
+    const aliasEnd = headEnd(html);
+    if (aliasEnd < 0) return { html, changed: false };
+    const aliasHead = html.slice(0, aliasEnd);
+    const alternatePattern = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=)[^>]*\/?\s*>/gi;
+    const cleanedHead = aliasHead.replace(alternatePattern, '');
+    return cleanedHead === aliasHead
+      ? { html, changed: false }
+      : { html: cleanedHead + html.slice(aliasEnd), changed: true };
+  }
   const end = headEnd(html);
   if (end < 0) return { html, changed: false };
   const head = html.slice(0, end);
