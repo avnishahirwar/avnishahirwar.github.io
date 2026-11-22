@@ -94,10 +94,10 @@ test('seven small-savings calculators show the current review date and RBI rate 
 
 test('business and API documentation snippets describe live capabilities and match social metadata', () => {
   const business = read('calculator/business.html');
-  assert.match(business, /<title>Calculator Partnerships &amp; Business \\| Friendly Calc<\/title>/);
+  assert.match(business, /<title>Calculator Partnerships &amp; Business \| Friendly Calc<\/title>/);
   assert.match(business, /name="description" content="Explore Friendly Calculator advertising, affiliate partnerships, calculator embeds, API access and white-label options/);
-  assert.match(business, /property="og:title" content="Calculator Partnerships &amp; Business \\| Friendly Calc"/);
-  assert.match(business, /name="twitter:title" content="Calculator Partnerships &amp; Business \\| Friendly Calc"/);
+  assert.match(business, /property="og:title" content="Calculator Partnerships &amp; Business \| Friendly Calc"/);
+  assert.match(business, /name="twitter:title" content="Calculator Partnerships &amp; Business \| Friendly Calc"/);
   const api = read('calculator/api.html');
   assert.match(api, /<title>Calculator API &amp; Embed Documentation \| Friendly Calculator<\/title>/);
   assert.match(api, /name="description" content="Read the Friendly Calculator REST API and iframe embed docs/);
