@@ -268,7 +268,7 @@ test('the Admin dashboard remains private from public navigation and indexing', 
 
 test('About page catalogue matches every canonical published calculator page', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length + ' tools)'));
+  assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length.toLocaleString('en-US') + ' tools)'));
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   const linkedPages = [...about.matchAll(/<li><a href="\/calculators\/([^"]+)">/g)].map(m => m[1]).sort();
   assert.deepEqual(linkedPages, canonicalCalculatorUrls.map(url => url.split('/').pop()).sort());
