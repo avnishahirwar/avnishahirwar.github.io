@@ -4567,6 +4567,13 @@
     "description": "Constant of Proportionality Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Construction Cost per Square Foot Calculator",
+    "url": "/calculators/construction-cost-per-square-foot-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "construction cost per square foot calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate construction cost per square foot or square metre from project cost and built area."
+  },
+  {
     "name": "Consulting Fees Calculator",
     "url": "/calculators/consulting-fees-calculator.html",
     "category": "FINANCE",
@@ -16095,11 +16102,32 @@
     "description": "Propagation Delay Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Property Absorption Rate Calculator",
+    "url": "/calculators/property-absorption-rate-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property absorption rate calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate the monthly sales pace and months of inventory for a property development or market segment."
+  },
+  {
     "name": "Property Cash-on-Cash Return Calculator",
     "url": "/calculators/property-cash-on-cash-calculator.html",
     "category": "Home, Travel & Everyday Costs",
     "keywords": "property cash on cash return calculator rental yield net operating income cap rate vacancy operating costs debt service",
     "description": "Estimate rental yield, net operating income, cap rate and cash-on-cash return from rent, vacancy, property costs and debt service."
+  },
+  {
+    "name": "Property Development Profit Margin Calculator",
+    "url": "/calculators/development-profit-margin-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property development profit margin calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate development profit and margin from total project cost and expected sale revenue."
+  },
+  {
+    "name": "Property Equity Growth Calculator",
+    "url": "/calculators/property-equity-growth-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property equity growth calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate current property equity from value growth, original debt and principal repaid."
   },
   {
     "name": "Property Flip Profit Calculator",
@@ -16116,11 +16144,32 @@
     "description": "Estimate gross rental yield, annual net cash flow and cash-on-cash return from entered property price, rent, own cash and annual costs."
   },
   {
+    "name": "Property Loan-to-Value Calculator",
+    "url": "/calculators/loan-to-value-property-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property loan-to-value calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Calculate property loan-to-value and the implied borrower equity percentage."
+  },
+  {
     "name": "Property Price per Sq Ft Calculator",
     "url": "/calculators/property-price-per-sq-ft-calculator.html",
     "category": "Geometry, Measurement & Construction",
     "keywords": "property price per sq ft calculator estimate price per square foot.",
     "description": "Estimate price per square foot."
+  },
+  {
+    "name": "Property Renovation ROI Calculator",
+    "url": "/calculators/renovation-roi-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property renovation roi calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate renovation return on investment from post-renovation value uplift and project cost."
+  },
+  {
+    "name": "Property Tax Rate Calculator",
+    "url": "/calculators/property-tax-rate-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property tax rate calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate an effective property tax rate from annual tax and assessed property value."
   },
   {
     "name": "Proportion Calculator",
@@ -16907,11 +16956,32 @@
     "description": "Reading Time Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
+    "name": "Real Estate Cash Flow Calculator",
+    "url": "/calculators/real-estate-cash-flow-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "real estate cash flow calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate monthly property cash flow after rent, vacancy, operating costs and debt service."
+  },
+  {
     "name": "Real Estate Commission Calculator",
     "url": "/calculators/real-estate-commission-calculator.html",
     "category": "Finance",
     "keywords": "real estate commission calculator",
     "description": "Calculate Real Estate Commission Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "Real Estate DSCR Calculator",
+    "url": "/calculators/real-estate-dscr-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "real estate dscr calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate debt service coverage ratio from property net operating income and annual debt service."
+  },
+  {
+    "name": "Real Estate Portfolio Leverage Calculator",
+    "url": "/calculators/real-estate-portfolio-leverage-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "real estate portfolio leverage calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Measure portfolio loan-to-value and equity from total property values and debt."
   },
   {
     "name": "Real GDP Calculator",
@@ -17159,6 +17229,13 @@
     "description": "Compare estimated renting and buying cash costs."
   },
   {
+    "name": "Rent-to-Price Ratio Calculator",
+    "url": "/calculators/rent-to-price-ratio-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "rent-to-price ratio calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Compare annual gross rent with a property purchase price as a quick screening ratio."
+  },
+  {
     "name": "Rental Commission Calculator",
     "url": "/calculators/rental-commission-calculator.html",
     "category": "FINANCE",
@@ -17171,6 +17248,13 @@
     "category": "Finance",
     "keywords": "rental property calculator",
     "description": "Calculate Rental Property Calculator with a transparent formula and worked example."
+  },
+  {
+    "name": "Rental Vacancy Loss Calculator",
+    "url": "/calculators/rental-vacancy-loss-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "rental vacancy loss calculator real estate property realty rental development mortgage land investment construction",
+    "description": "Estimate lost rental income from vacancy days or a vacancy percentage."
   },
   {
     "name": "Reorder Point Calculator",
