@@ -56,12 +56,19 @@ function targetFile(href) {
     return fs.existsSync(file) && fs.statSync(file).isFile() ? file : null;
   } catch { return null; }
 }
+function routeKey(file, html) {
+  const relative = path.relative(ROOT, file).split(path.sep);
+  const first = relative[0];
+  const language = langOf(html, file).split('-')[0].toLowerCase();
+  if (relative.length > 1 && first.toLowerCase() === language) return relative.slice(1).join('/');
+  return relative.join('/');
+}
 
 function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedDuplicateCanonical: 0, skippedConflict: 0, skippedNoHead: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedDuplicateCanonical: 0, skippedDifferentRoute: 0, skippedConflict: 0, skippedNoHead: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
     const sourceLang = langOf(sourceHtml, sourceFile);
@@ -79,6 +86,7 @@ function main() {
       // A translated source that canonicalizes to the same URL as its target is not a distinct locale page.
       // Adding a reciprocal tag in that case would incorrectly label the target as its own translation.
       if (sourceCanonical === canonicalOf(targetHtml)) { stats.skippedDuplicateCanonical++; continue; }
+      if (routeKey(sourceFile, sourceHtml) !== routeKey(target, targetHtml)) { stats.skippedDifferentRoute++; continue; }
       const existing = linksOf(targetHtml).filter(item => item.lang === sourceLang);
       if (existing.some(item => new URL(item.href, ORIGIN).href === sourceCanonical)) { stats.alreadyPresent++; continue; }
       if (existing.length) { stats.skippedConflict++; continue; }
