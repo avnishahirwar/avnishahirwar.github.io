@@ -32,6 +32,8 @@ jobs:
         run: node --test tests/programmatic-seo.test.cjs
       - name: Validate global expansion landing pages
         run: node --test tests/global-expansion.test.cjs
+      - name: Validate global sector calculator directory
+        run: node --test tests/sector-directory.test.cjs
       - name: Validate sitemap, metadata and local links
         run: node --test tests/site-integrity.test.cjs
       - name: Validate calculator formulas
