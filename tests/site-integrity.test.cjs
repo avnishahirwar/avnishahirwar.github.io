@@ -869,7 +869,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.match(directory, new RegExp('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.equal(categoryCount, 20);
+  assert.equal(categoryCount, 20, 'Expected 20 calculator-category sections; found ' + categoryCount + ': ' + [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"/g)].map(match => match[1]).join(', '));
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
