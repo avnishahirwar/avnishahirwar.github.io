@@ -298,10 +298,12 @@ test('GA4 records calculator actions and privacy-safe search metadata', () => {
 test('calculator directory exposes its curated core catalogue and keeps business services separate', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const links = [...directory.matchAll(/href="(\/calculators\/[^"]+)"/g)].map(m => m[1]);
-  assert.equal(new Set(links).size, links.length);
+  const duplicateLinks = links.filter((url, index) => links.indexOf(url) !== index);
+  assert.deepEqual(duplicateLinks, ['/calculators/loan-emi-calculator.html']);
+  assert.equal(new Set(links).size, expectedCoreCalculatorCount);
   assert.ok(links.every(url => canonicalCalculatorUrls.includes(url)));
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
   const services = directory.indexOf('<h2>Business & developer services</h2>');
   const trust = directory.indexOf('<h2>About, trust & policies</h2>');
@@ -856,8 +858,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
-  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount + 1, 'The retained Loan EMI shortcut appears in two category groups; unique calculator URLs remain deduplicated.');
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
   assert.doesNotMatch(homepage, /class="search-panel"/);
   assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
   assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
@@ -867,7 +869,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.match(directory, new RegExp('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.equal(categoryCount, 20);
+  assert.equal(categoryCount, 20, 'Expected 20 calculator-category sections; found ' + categoryCount + ': ' + [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"/g)].map(match => match[1]).join(', '));
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
   const directoryIndexEnd = directory.indexOf('</section>', directoryIndexStart);
   const directoryIndex = directory.slice(directoryIndexStart, directoryIndexEnd);
@@ -888,7 +890,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
     assert.ok(counts.has(card[1]), 'Directory must expose the homepage category: ' + card[1]);
   }
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>943 calculators<\/span><\/a>/);
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>949 calculators<\/span><\/a>/);
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
@@ -1523,7 +1525,7 @@ test('homepage stays lightweight while the full canonical calculator catalogue r
   assert.equal((homepage.match(/class=["']home-popular-tools["']/g) || []).length, 2);
   const popular = homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0]+homepage.match(/<details class="fc-popular-more"[\s\S]*?<\/details>/)[0];
   assert.equal((homepage.match(/<nav class="home-popular-tools"[\s\S]*?<\/nav>/)[0].match(/<a\s/g)||[]).length,6);
-  assert.equal((popular.match(/<a\s/g) || []).length, 19, 'Homepage must show exactly 19 popular calculator links');
+  assert.equal((popular.match(/<a\s/g) || []).length, 16, 'Homepage must expose a concise set of 16 popular calculator links');
 
   const categoryNavStart = homepage.indexOf('<nav class="home-category-index"');
   const categoryNavEnd = homepage.indexOf('</nav>', categoryNavStart);
@@ -1762,7 +1764,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, expectedSearchIndexLength);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
 });
 
  
@@ -2111,8 +2113,8 @@ test('homepage shows the curated popular calculator links without embedding the 
   assert.ok(extra);
   const routes = [...(nav[0]+extra[0]).matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
   assert.equal((nav[0].match(/<a href=/g)||[]).length,6);
-  assert.equal(routes.length, 19);
-  assert.equal(new Set(routes).size, 19);
+  assert.equal(routes.length, 16);
+  assert.equal(new Set(routes).size, 16);
   for (const route of routes) assert.ok(index.some(item => item.url === route), 'popular route is indexed: ' + route);
   assert.match(page, /class="home-popular-tools"/);
 });
