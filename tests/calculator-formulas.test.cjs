@@ -1328,3 +1328,13 @@ test('homepage search matcher requires relevant name, keyword phrase or category
   assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
   assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
 });
+
+
+test('fuel cost page avoids stale catalogue totals and template placeholders', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/fuel-cost-calculator.html'), 'utf8');
+  assert.match(page, /Explore more free calculators in the complete directory\./);
+  assert.match(page, /vehicle efficiency and an assumed fuel price/);
+  assert.match(page, /not a live fuel-price quote/);
+  assert.match(page, /Enter vehicle mileage in km\/L/);
+  assert.doesNotMatch(page, /186 browser-based tools|n2 assumption|live n2 quote/);
+});
