@@ -9,19 +9,19 @@ test('OEE uses availability × performance × quality', () => {
 });
 test('RevPAR, ADR and occupancy use available and sold room nights', () => {
  const r=definitions.revpar.calculate({revenue:180000,available:300,sold:240});
- assert.equal(r.RevPAR,'₹600.00'); assert.equal(r['Average daily rate (ADR)'],'₹750.00'); assert.equal(r['Occupancy rate'],'80%');
+ assert.equal(r.RevPAR,'600 (same currency unit as input)'); assert.equal(r['Average daily rate (ADR)'],'750 (same currency unit as input)'); assert.equal(r['Occupancy rate'],'80%');
 });
 test('food cost ratio and gross profit', () => {
  const r=definitions.foodcost.calculate({ingredient:30000,sales:100000});
- assert.equal(r['Food cost percentage'],'30%'); assert.equal(r['Gross profit before other expenses'],'₹70,000.00');
+ assert.equal(r['Food cost percentage'],'30%'); assert.equal(r['Gross profit before other expenses'],'70,000 (same currency unit as input)');
 });
 test('freight uses greater of actual and dimensional weight', () => {
  const r=definitions.freight.calculate({actual:10,length:50,width:40,height:30,divisor:5000,rate:80,fixed:150});
- assert.equal(r['Dimensional weight'],'12 kg'); assert.equal(r['Chargeable weight'],'12 kg'); assert.equal(r['Estimated freight cost'],'₹1,110.00');
+ assert.equal(r['Dimensional weight'],'12 kg'); assert.equal(r['Chargeable weight'],'12 kg'); assert.equal(r['Estimated freight cost'],'1,110 (same currency unit as input)');
 });
 test('shipping applies fuel surcharge to base plus weight charge', () => {
  const r=definitions.shipping.calculate({base:100,weight:2,rate:40,fuel:10,handling:20,insurance:10});
- assert.equal(r['Estimated shipping total'],'₹242.00');
+ assert.equal(r['Estimated shipping total'],'228 (same currency unit as input)');
 });
 test('machine utilization excludes planned maintenance', () => {
  const r=definitions.machine.calculate({scheduled:10,maintenance:1,run:7.2});
@@ -29,7 +29,7 @@ test('machine utilization excludes planned maintenance', () => {
 });
 test('fabric estimate includes layout efficiency and wastage', () => {
  const r=definitions.fabric.calculate({area:0.8,qty:100,width:150,efficiency:80,waste:5});
- assert.equal(r['Estimated fabric to plan'],'70.222 m');
+ assert.equal(r['Estimated fabric to plan'],'70 m');
 });
 test('domain inputs reject invalid denominators and inconsistent counts', () => {
  assert.throws(()=>definitions.oee.calculate({planned:10,downtime:10,cycle:1,total:1,good:1}),/Downtime/);
