@@ -3,6 +3,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
+const isNoindex = html => {
+  const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
+  return /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(head);
+};
 
 test('global language selector supports all configured locales', () => {
   for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']) {
@@ -66,7 +70,7 @@ test('German locale is available in the global selector and routing', () => {
   assert.match(shell, /(de|es|fr|pt|ar|id|bn|ta|ja|ru)/);
 });
 
-test('Japanese and Russian have translated homepage routes and calculator hubs',()=>{
+test('Japanese and Russian translated routes use hreflang only when their robots policy allows indexing',()=>{
  for(const locale of ['ja','ru']){
   for(const file of ['index.html','international/index.html','calculators/mortgage-calculator.html','international/vat-calculator.html']){
    const target=path.join(__dirname,'..',locale,file);
@@ -74,7 +78,8 @@ test('Japanese and Russian have translated homepage routes and calculator hubs',
    const html=fs.readFileSync(target,'utf8');
    assert.match(html,new RegExp('<html lang="'+locale+'"'));
    assert.match(html,/rel="canonical"/);
-   assert.match(html,/hreflang="x-default"/);
+   if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,locale+'/'+file+' is noindex');
+   else assert.match(html,/hreflang="x-default"/);
   }
  }
 });
@@ -96,7 +101,7 @@ test('Partial German, Japanese and Russian editions have explicit navigation fal
   assert.ok(shell.includes('const footerLinks=footerLabels[currentLocale].map('),'Every supported locale must have footer labels to prevent a runtime error');
 });
 
-test('German, Japanese and Russian basic calculators are fully localized and have reciprocal hreflang', () => {
+test('localized basic calculators preserve their translated content and follow the robots indexing policy', () => {
   const pages = {
     de: ['Einfacher Rechner', 'Addition', 'Division'],
     ja: ['基本電卓', '加算', '計算方法'],
@@ -110,7 +115,8 @@ test('German, Japanese and Russian basic calculators are fully localized and hav
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
     assert.ok(html.includes('rel="canonical"'));
-    assert.ok(html.includes('hreflang="x-default"'));
+    if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,locale+' noindex page must not claim a language cluster');
+    else assert.match(html,/hreflang="x-default"/);
     for (const phrase of phrases) assert.ok(html.includes(phrase), 'Missing localized phrase: ' + phrase);
     assert.match(html, /data-action="equals"/);
     assert.match(html, /site-shell\.js/);
@@ -207,15 +213,18 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 });
 
 
-test('all localized basic calculator pages include reciprocal Gujarati and Kannada alternates',()=>{
+test('noindex Gujarati and Kannada basic calculators are excluded from language clusters',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
- for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
-});
-
-
-test('localized basic calculator hreflang alternates are reciprocal for Gujarati and Kannada',()=>{
- const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
- for(const file of pages){const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');assert.match(html,/hreflang="gu"/);assert.match(html,/hreflang="kn"/);}
+ for(const locale of ['gu','kn']){
+  const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
+  assert.ok(isNoindex(html),locale+' basic calculator must retain its noindex policy');
+  assert.doesNotMatch(html,/hreflang=/i,locale+' noindex page must not carry alternates');
+ }
+ for(const file of pages){
+  const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+  if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,file+' noindex page must not carry alternates');
+  else assert.doesNotMatch(html,/hreflang="(?:gu|kn)"/i,file+' must not target noindex Gujarati or Kannada pages');
+ }
 });
 
 

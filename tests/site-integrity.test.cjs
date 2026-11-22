@@ -2299,7 +2299,7 @@ test('homepage points to the current 50-language directory without overstating t
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const catalogue = require('../config/language-catalogue.json');
   assert.equal(catalogue.locales.length, 50);
-  assert.match(html, /language directory lists 50 configured language editions/i);
+  assert.match(html, /language directory lists all 50 configured language options/i);
   assert.match(html, /translation coverage varies by language and calculator/i);
   assert.match(html, /href="\/calculator\/languages\.html"/);
 });

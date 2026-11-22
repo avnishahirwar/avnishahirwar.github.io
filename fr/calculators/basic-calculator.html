@@ -12,7 +12,6 @@
 
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/basic-calculator.html">
@@ -20,11 +19,5 @@
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="ru" href="https://friendlycalculator.in/ru/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="te" href="https://friendlycalculator.in/te/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="gu" href="https://friendlycalculator.in/gu/calculators/basic-calculator.html">
-<link rel="alternate" hreflang="kn" href="https://friendlycalculator.in/kn/calculators/basic-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/basic-calculator.html">
 </head><body><main class="wrap"><p><a href="/fr/index.html">Accueil</a> / Calculatrices</p><h1>Calculatrice de base</h1><p>Effectuez les quatre opérations arithmétiques de base.</p><section class="panel"><form id="f"><div class="fields"><label>Premier nombre<input id="a" type="number" step="any" value="12"></label><label>Opération<select id="op"><option value="add">Additionner</option><option value="sub">Soustraire</option><option value="mul">Multiplier</option><option value="div">Diviser</option></select></label><label>Deuxième nombre<input id="b" type="number" step="any" value="3"></label></div><p><button class="btn">Calculer</button></p></form><p>Résultat: <strong class="result" id="out">—</strong></p><p id="status">Les résultats sont des calculs mathématiques. Vérifiez les valeurs saisies et les unités.</p></section><section class="panel"><h2>Calculatrices</h2><p>Les résultats sont des calculs mathématiques. Vérifiez les valeurs saisies et les unités.</p></section></main><script>(()=>{const f=document.getElementById("f"),s=document.getElementById("status"),fmt=new Intl.NumberFormat("fr",{maximumFractionDigits:8});function bad(){document.getElementById("out").textContent="—";s.textContent="Valeurs invalides ou opération non définie."}f.addEventListener("submit",e=>{e.preventDefault();let out=[];const x=+document.getElementById("a").value,y=+document.getElementById("b").value,o=document.getElementById("op").value;if(!Number.isFinite(x)||!Number.isFinite(y)||(o==="div"&&y===0)){bad();return;}out=[o==="add"?x+y:o==="sub"?x-y:o==="mul"?x*y:x/y];document.getElementById("out").textContent=fmt.format(out[0]);s.textContent="Les résultats sont des calculs mathématiques. Vérifiez les valeurs saisies et les unités.";if(typeof gtag==="function")gtag("event","calculator_used",{calculator_page:location.pathname,calculator_action:"calculate"});});f.requestSubmit();})();</script><script src="/assets/site-shell.js" defer></script></body></html>

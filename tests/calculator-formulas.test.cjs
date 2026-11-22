@@ -740,7 +740,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
-  assert.ok(homepage.includes('Search ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.ok(homepage.includes('aria-label="Search all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator entries by name or topic"'));
+  assert.ok(homepage.includes('Total catalogue: ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators'));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
@@ -770,13 +771,27 @@ test('Hindi Income Tax uses its reviewed localized model while other translated 
   }
 });
 
-test('the ten priority Hindi calculators expose canonical URLs, nine language alternates, schemas, formula notes and visual results', () => {
+test('the ten priority Hindi calculators expose canonical URLs, indexable language alternates, schemas, formula notes and visual results', () => {
   const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
+  const candidates = ['en','hi','es','fr','pt','ar','id','bn','ta'];
+  const isNoindex = html => /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html.slice(0, html.toLowerCase().indexOf('</head>')));
+  const sortPairs = pairs => pairs.slice().sort(([a],[b]) => a.localeCompare(b));
   for (const slug of slugs) {
     const html = fs.readFileSync(new URL('../hi/calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
     assert.match(html, /<html[^>]+lang="hi"/, slug + ' is marked Hindi');
     assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
-    for (const locale of ['en','hi','es','fr','pt','ar','id','bn','ta','x-default']) assert.match(html, new RegExp('hreflang="' + locale + '"'), slug + ' is missing ' + locale + ' hreflang');
+    const indexable = candidates.filter(locale => {
+      const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
+      const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
+      return !isNoindex(localeHtml);
+    });
+    const expectedAlternates = [
+      ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
+      ['x-default', 'https://friendlycalculator.in/calculators/' + slug + '.html']
+    ];
+    const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
+    const actualAlternates = [...head.matchAll(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="([^"]+)")(?=[^>]*\bhref="([^"]+)")[^>]*>/gi)].map(match => [match[1], match[2]]);
+    assert.deepEqual(sortPairs(actualAlternates), sortPairs(expectedAlternates), slug + ' hreflang cluster must exclude noindex pages');
     assert.match(html, /"@type":"SoftwareApplication"/, slug + ' has SoftwareApplication schema');
     assert.match(html, /"@type":"FAQPage"/, slug + ' has FAQ schema');
     assert.match(html, /hi-formula-intro/, slug + ' has a formula summary');

@@ -8,7 +8,11 @@ const page=fs.readFileSync(path.join(root,'calculator/why-friendly-calculator.ht
 test('homepage presents Friendly Calculator consistently as an India and worldwide calculator platform',()=>{
  assert.ok(home.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
  assert.match(home,/<meta property="og:site_name" content="Friendly Calculator">/);
- assert.match(home,/"@type":"WebSite","@id":"https:\/\/friendlycalculator\.in\/#website","name":"Friendly Calculator"/);
+ const entities=[...home.matchAll(/<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi)].flatMap(match=>{
+  const data=JSON.parse(match[1]);
+  return Array.isArray(data['@graph'])?data['@graph']:[data];
+ });
+ assert.ok(entities.some(entity=>entity['@type']==='WebSite'&&entity['@id']==='https://friendlycalculator.in/#website'&&entity.url==='https://friendlycalculator.in/'&&entity.name==='Friendly Calculator'));
  assert.match(home,/A calculator website for India, Madhya Pradesh and worldwide users/);
  assert.match(home,/why-friendly-calculator\.html/);
 });

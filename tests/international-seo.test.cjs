@@ -22,6 +22,7 @@ function langOf(html,file){
  return ['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'].includes(first)?first:'en';
 }
 function canonicalOf(html){const m=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return m?new URL(m[1],origin).href:null;}
+function noindexOf(html){const h=headOf(html);return /<meta\b[^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\'][^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b/i.test(h)||/<meta\b[^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b[^"\']*["\'][^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\']/i.test(h);}
 function alternatesOf(html){return [...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>({lang:m[1].toLowerCase(),href:new URL(m[2],origin).href}));}
 function localFile(url){
  const u=new URL(url);if(u.origin!==origin||u.search||u.hash)return null;
@@ -36,6 +37,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
  const errors=[];let checked=0,tagged=0;
  for(const [file,html] of cache){
   const links=alternatesOf(html);if(!links.length)continue;tagged++;
+  if(noindexOf(html)){errors.push(file+': noindex page carries hreflang alternates');continue;}
   const sourceLang=langOf(html,file),sourceCanonical=canonicalOf(html);
   if(!sourceCanonical){errors.push(file+': hreflang present but canonical missing');continue;}
   const seen=new Set();
@@ -47,6 +49,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
    if(!targetFile){errors.push(file+': '+link.lang+' target missing/off-domain: '+link.href);continue;}
    if(link.lang==='x-default')continue;
    const targetHtml=cache.get(targetFile)||fs.readFileSync(targetFile,'utf8');
+   if(noindexOf(targetHtml)){errors.push(file+': '+link.lang+' target is noindex: '+link.href);continue;}
    const targetLang=langOf(targetHtml,targetFile);
    if(targetLang!==link.lang)errors.push(file+': hreflang '+link.lang+' points to page declaring lang='+targetLang);
    const targetLinks=alternatesOf(targetHtml);
