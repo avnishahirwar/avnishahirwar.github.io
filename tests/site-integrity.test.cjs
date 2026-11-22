@@ -2337,3 +2337,12 @@ test('money and biology directories provide complete social preview image metada
     assert.match(html, /<meta name="twitter:image:alt" content="Friendly Calculator/);
   }
 });
+
+test('calculator pages show the requested non-advice disclaimer beside the calculator', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shell, /fc-calculator-disclaimer/);
+  assert.match(shell, /Calculators on the site provide illustrations based on user inputs and are not financial, tax, or investment advice\./);
+  assert.match(shell, /localTarget\|\|main/);
+  assert.match(css, /\.fc-calculator-disclaimer\s*\{/);
+});

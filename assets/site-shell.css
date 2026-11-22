@@ -1279,3 +1279,5 @@ html[data-fc-theme=dark] .home-main>.fc-home-hero .fc-home-intents a strong{colo
     background:#263f59!important;border-color:#d8bd82!important;color:#f3d78f!important;
   }
 }
+/* Calculator-specific financial and tax limitation notice. */
+.fc-calculator-disclaimer{width:min(960px,92%);margin:18px auto;padding:12px 15px;border:1px solid #d9e0e6;border-left:4px solid #d8bd82;border-radius:8px;background:#fff;color:#465463;font-size:.9rem;line-height:1.55}

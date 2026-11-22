@@ -745,6 +745,15 @@ if(isCalculatorRoute){
     target.scrollIntoView({behavior:'smooth',block:'start'});
     history.replaceState(null,'','#'+target.id);
   });
+  if(!document.getElementById('fc-calculator-disclaimer')){
+    const disclaimer=document.createElement('aside');
+    disclaimer.id='fc-calculator-disclaimer';
+    disclaimer.className='fc-calculator-disclaimer';
+    disclaimer.setAttribute('role','note');
+    disclaimer.textContent='Calculators on the site provide illustrations based on user inputs and are not financial, tax, or investment advice.';
+    const disclaimerTarget=localTarget||main;
+    if(disclaimerTarget)disclaimerTarget.insertAdjacentElement('afterend',disclaimer);
+  }
 }
 document.querySelectorAll('.ad-slot,.ad-break,.ad,.ad-placeholder,.adsense-placeholder,.advertisement,.ad-container,[data-ad-slot],[aria-label="Advertisement space"]').forEach(e=>e.remove());
 if(p.startsWith('/calculators/')){
