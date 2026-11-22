@@ -95,6 +95,9 @@ function build() {
 <meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Money &amp; Finance Calculators Worldwide | Friendly Calculator">
 <meta name="twitter:description" content="Browse finance calculators by topic and search the full directory.">
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 <link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
 <style>
 :root{--money-ink:#172638;--money-muted:#596b7c;--money-line:#dce4eb;--money-paper:#fff;--money-wash:#f4f7f9;--money-accent:#174f82}

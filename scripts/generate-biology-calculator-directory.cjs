@@ -87,6 +87,9 @@ function build() {
 <meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Biology Calculators Worldwide | Friendly Calculator">
 <meta name="twitter:description" content="Browse biology and life-science calculators by topic.">
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 <link rel="stylesheet" href="/assets/site-shell.css"><link rel="stylesheet" href="/assets/site-chrome.css?v=1">
 <style>
 :root{--bio-ink:#172638;--bio-muted:#596b7c;--bio-line:#dce4eb;--bio-paper:#fff;--bio-wash:#f4f7f9;--bio-accent:#28624f}
