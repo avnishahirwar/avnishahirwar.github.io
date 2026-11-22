@@ -14,8 +14,8 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/property-investment-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/property-investment-calculator.html">
+
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,4 +48,7 @@
   ]
 }
 </script>
+  <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/property-investment-calculator.html">
+  <link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/property-investment-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/property-investment-calculator.html">
 </head><body><main class="wrap"><p><a href="/">Home</a> / <a href="/calculator/real-estate-calculators.html">Real Estate</a> / Property Investment</p><header class="hero"><div class="eyebrow">Rental property planning</div><h1>Property Investment Calculator</h1><p class="muted">Estimate gross rental yield, annual cash flow and cash-on-cash return from your own price, rent and cost assumptions.</p></header><section class="panel"><h2>Enter property assumptions</h2><div class="fields"><div class="field"><label for="price">Purchase price</label><input id="price" type="number" min="0" value="5000000"></div><div class="field"><label for="down">Down payment / own cash</label><input id="down" type="number" min="0" value="1500000"></div><div class="field"><label for="rent">Monthly rent</label><input id="rent" type="number" min="0" value="30000"></div><div class="field"><label for="costs">Annual costs (tax, repairs, vacancy)</label><input id="costs" type="number" min="0" value="60000"></div></div><button id="go" class="btn" type="button">Calculate property returns</button><div class="metrics" aria-live="polite"><div class="metric"><small>Gross rental yield</small><strong id="yield">—</strong></div><div class="metric"><small>Annual net cash flow</small><strong id="cash">—</strong></div><div class="metric"><small>Cash-on-cash return</small><strong id="coc">—</strong></div></div></section><section class="content"><h2>Formula and limitations</h2><p>Gross rental yield = annual rent ÷ purchase price. Annual net cash flow = annual rent − entered annual costs. Cash-on-cash return = annual net cash flow ÷ own cash invested. This simple tool excludes financing interest, appreciation, tax treatment, legal costs and local vacancy patterns unless you include them in your inputs.</p><p class="note">Use a local valuation, lender quote and professional tax/legal advice before committing to a property.</p></section></main><script>(()=>{const $=id=>document.getElementById(id);const n=id=>Math.max(0,Number($(id).value)||0);const calc=()=>{const price=n('price'),down=n('down'),rent=n('rent'),costs=n('costs'),annual=rent*12,net=annual-costs;$('yield').textContent=price?(annual/price*100).toFixed(2)+'%':'—';$('cash').textContent=net.toLocaleString('en-IN',{maximumFractionDigits:0});$('coc').textContent=down?(net/down*100).toFixed(2)+'%':'—'};['price','down','rent','costs'].forEach(id=>$(id).addEventListener('input',calc));$('go').addEventListener('click',calc);calc()})();</script><script src="/assets/manufacturing-analytics.js" defer></script><script src="/assets/site-shell.js" defer></script></body></html>
