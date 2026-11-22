@@ -8,7 +8,7 @@ const page=fs.readFileSync(path.join(root,'calculator/why-friendly-calculator.ht
 test('homepage presents Friendly Calculator consistently as an India and worldwide calculator platform',()=>{
  assert.ok(home.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
  assert.match(home,/<meta property="og:site_name" content="Friendly Calculator">/);
- const jsonLdMatch=home.match(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/);
+ const jsonLdMatch=home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
  assert.ok(jsonLdMatch,'Homepage must expose a JSON-LD graph');
  const structuredData=JSON.parse(jsonLdMatch[1]);
  assert.ok(structuredData['@graph'].some(entity=>entity['@type']==='WebSite'&&entity['@id']==='https://friendlycalculator.in/#website'&&entity.name==='Friendly Calculator'));
