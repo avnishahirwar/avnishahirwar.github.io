@@ -48,10 +48,16 @@ Disallow: /avnish-ai/
 # allowed below. Model-training crawlers remain disallowed unless explicitly
 # approved as a separate policy decision.
 User-agent: GPTBot
-Disallow: /
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: ClaudeBot
-Disallow: /
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: PerplexityBot
 Allow: /
@@ -66,10 +72,16 @@ Disallow: /tests/
 Disallow: /avnish-ai/
 
 User-agent: Applebot-Extended
-Disallow: /
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Google-Extended
-Disallow: /
+Allow: /
+Disallow: /calculator/admin.html
+Disallow: /tests/
+Disallow: /avnish-ai/
 
 User-agent: Amazonbot
 Allow: /

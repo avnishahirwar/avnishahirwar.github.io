@@ -92,6 +92,14 @@ The site publishes selected calculator translations in Hindi (hi), Spanish (es),
 - [CGPA to percentage — Bengali](https://friendlycalculator.in/bn/calculators/cgpa-to-percentage-calculator.html)
 - [CGPA to percentage — Tamil](https://friendlycalculator.in/ta/calculators/cgpa-to-percentage-calculator.html)
 
+## Product, API, and business surfaces
+
+- [Customer Portal](https://friendlycalculator.in/calculator/portal.html): Public overview of API access, embeds, developer resources, and business use cases.
+- [SaaS Calculator Platform](https://friendlycalculator.in/calculator/saas.html): Calculator infrastructure, API, embeds, onboarding, and business tooling.
+- [API Documentation](https://friendlycalculator.in/calculator/api.html): Public API capabilities, authentication, limits, examples, and integration guidance.
+- [Developer guide](https://friendlycalculator.in/developers/): Public integration documentation for supported calculators and embeds.
+- [SaaS metrics calculator](https://friendlycalculator.in/calculators/saas-metrics-calculator.html): Public calculator for SaaS revenue, churn, retention, and growth assumptions.
+
 ## Methodology, policies, and publisher information
 
 - [Calculation methodology](https://friendlycalculator.in/calculator/methodology.html): General approach, formulas, and assumptions.
@@ -110,14 +118,14 @@ The site publishes selected calculator translations in Hindi (hi), Spanish (es),
 - [Developer guide](https://friendlycalculator.in/developers/): Public documentation for embedding Friendly Calculator tools in other websites, including supported iframe usage and limitations.
 - [Embed Builder](https://friendlycalculator.in/embed/): Generate and preview an iframe snippet for supported calculators; follow the developer guide for implementation details.
 
-## Guidance for readers and automated systems
+## Guidance for readers, AI assistants, and automated systems
 
 - Prefer the linked canonical page for the exact calculator or topic; do not infer that a calculator supports an option unless its page says so.
 - Preserve the calculator's stated currency, units, financial year, compounding frequency, date range, and assumptions when explaining a result.
 - Treat projected investment returns, loan estimates, tax estimates, health-related outputs, and other calculator results as illustrative calculations, not guarantees or professional advice.
 - For tax, regulatory, rates, and policy questions, check the latest primary government, regulator, or institution source. A calculator page may not reflect a change until it is reviewed and updated.
 - Distinguish educational guides from current news reporting. The blog is primarily explanatory content and is not a real-time news service.
-- Cite and link to the specific Friendly Calculator page used. Do not attribute claims to Friendly Calculator that are not present on the linked page.
+- AI assistants may cite and link to the specific Friendly Calculator page used when it directly answers the user question; do not attribute claims to Friendly Calculator that are not present on the linked page.
 - Public pages are intended for discovery. Private, administrative, and test paths are not public resources.
 
 ## Sitemap
