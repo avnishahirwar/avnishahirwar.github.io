@@ -43,7 +43,7 @@ test('percentage calculator hreflang cluster includes every published locale pag
  const sorted=items=>items.map(x=>x.join('|')).sort();
  for(const file of ['calculators/'+route,'hi/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
-  const actual=[...html.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+  const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
   assert.deepEqual(sorted(actual),sorted(expected),file);
  }
 });
@@ -58,7 +58,7 @@ test('simple-interest hreflang cluster matches every published translation',()=>
  const sorted=items=>items.map(x=>x.join('|')).sort();
  for(const file of ['calculators/'+route,'bn/calculators/'+route]){
   const html=fs.readFileSync(path.join(root,file),'utf8');
-  const actual=[...html.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+  const actual=[...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
   assert.deepEqual(sorted(actual),sorted(expected),file);
  }
 });
@@ -76,7 +76,7 @@ test('priority calculator hreflang clusters cover every published locale page',(
    const file=path.join(root,locale==='en'?'':locale,'calculators',route);
    const html=fs.readFileSync(file,'utf8');
    const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
-   const actual=[...head.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+   const actual=[...head.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
    assert.deepEqual(sorted(actual),sorted(expected),locale+'/'+route);
   }
  }
