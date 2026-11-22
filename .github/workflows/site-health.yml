@@ -32,8 +32,12 @@ jobs:
         run: node --test tests/programmatic-seo.test.cjs
       - name: Validate global expansion landing pages
         run: node --test tests/global-expansion.test.cjs
+      - name: Validate global sector calculator directory
+        run: node --test tests/sector-directory.test.cjs
       - name: Validate sitemap, metadata and local links
         run: node --test tests/site-integrity.test.cjs
+      - name: Validate new global sector calculator formulas
+        run: node --test tests/sector-calculators.test.cjs
       - name: Validate calculator formulas
         run: node --test tests/calculator-formulas.test.cjs
       - name: Validate international calculator formulas
@@ -61,4 +65,4 @@ jobs:
       - name: Check calculator-only embed mode
         run: node --test tests/embed-mode.test.cjs
       - name: Check shared JavaScript syntax
-        run: node --check assets/worldwide-mortgage-calculator.js && node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js && node --check assets/graphing-calculator.js && node --check assets/mortgage-tools.js
+        run: node --check assets/sector-calculators.js && node --check assets/worldwide-mortgage-calculator.js && node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js && node --check assets/graphing-calculator.js && node --check assets/mortgage-tools.js

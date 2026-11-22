@@ -22393,5 +22393,54 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Overall Equipment Effectiveness (OEE) Calculator",
+    "url": "/calculators/oee-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "overall equipment effectiveness oee calculator availability performance quality",
+    "description": "Calculate manufacturing OEE from availability, performance and quality using planned production time, downtime, ideal cycle time and good output."
+  },
+  {
+    "name": "Hotel RevPAR Calculator",
+    "url": "/calculators/hotel-revpar-calculator.html",
+    "category": "Hospitality & Tourism",
+    "keywords": "hotel revpar revenue per available room adr occupancy room revenue",
+    "description": "Calculate hotel revenue per available room, average daily rate and occupancy from room revenue and room nights."
+  },
+  {
+    "name": "Restaurant Food Cost Calculator",
+    "url": "/calculators/restaurant-food-cost-calculator.html",
+    "category": "Food & Restaurant",
+    "keywords": "restaurant food cost percentage ingredient cost menu pricing gross profit",
+    "description": "Calculate restaurant food cost percentage and gross profit from ingredient cost and food sales revenue."
+  },
+  {
+    "name": "Freight Cost Calculator",
+    "url": "/calculators/freight-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "freight cost chargeable weight dimensional weight carrier rate",
+    "description": "Estimate freight charges using actual and dimensional weight, chargeable weight, carrier rate and fixed handling charges."
+  },
+  {
+    "name": "Shipping Cost Calculator",
+    "url": "/calculators/shipping-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "shipping cost parcel shipping fuel surcharge handling insurance",
+    "description": "Estimate parcel shipping costs from base charge, package weight, fuel surcharge, handling and insurance fees."
+  },
+  {
+    "name": "Machine Utilization Calculator",
+    "url": "/calculators/machine-utilization-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "machine utilization productive run time scheduled hours planned maintenance",
+    "description": "Calculate productive machine utilization after excluding planned maintenance from scheduled production time."
+  },
+  {
+    "name": "Fabric Consumption Calculator",
+    "url": "/calculators/fabric-consumption-calculator.html",
+    "category": "Fashion & Textile",
+    "keywords": "fabric consumption textile fabric length pattern area marker efficiency wastage",
+    "description": "Estimate textile fabric length from pattern area, order quantity, usable fabric width, layout efficiency and wastage."
   }
 ]
