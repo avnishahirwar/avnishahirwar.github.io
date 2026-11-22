@@ -20,17 +20,21 @@ test('audit compares equivalent public paths and excludes noindex/private pages'
     write(root, 'about.html');
     write(root, 'hi/index.html', '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head><script src="/assets/site-shell.js"></script></html>');
     write(root, 'hi/calculators/emi.html', '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/calculators/emi.html"><link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/emi.html"></head><script src="/assets/site-shell.js"></script></html>');
+    write(root, 'hi/duplicate.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/about.html"></head></html>');
     write(root, 'fr/index.html', '<html lang="fr"><head><link rel="canonical" href="https://friendlycalculator.in/fr/"></head><script src="/assets/site-shell.js"></script></html>');
+    write(root, 'uk/index.html', '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/uk/"></head><script src="/assets/site-shell.js"></script></html>');
     write(root, 'noindex.html', '<html lang="en"><head><meta name="robots" content="noindex"></head></html>');
     write(root, 'admin/private.html');
-    const report = auditLocaleCoverage(root, ['hi', 'fr', 'de']);
-    assert.equal(report.publicIndexableEnglishPageCount, 3);
+    const report = auditLocaleCoverage(root, ['hi', 'fr', 'de', 'uk']);
+    assert.equal(report.publicIndexableEnglishPageCount, 4);
     assert.equal(report.excludedNoindexPageCount, 1);
+    assert.equal(report.excludedCanonicalAliasPageCount, 1);
     assert.equal(report.locales.hi.translatedPageCount, 2);
-    assert.equal(report.locales.hi.missingCount, 1);
-    assert.deepEqual(report.locales.hi.missingPages, ['about.html']);
-    assert.equal(report.locales.fr.coveragePercent, 33.3);
+    assert.equal(report.locales.hi.missingCount, 2);
+    assert.deepEqual(report.locales.hi.missingPages, ['about.html', 'uk/index.html']);
+    assert.equal(report.locales.fr.coveragePercent, 25);
     assert.equal(report.locales.de.coveragePercent, 0);
+    assert.equal(report.locales.uk.translatedPageCount, 0, '/uk/ is an en-GB market page, not a Ukrainian translation');
     assert.equal(report.locales.hi.missingLangCount, 0);
     assert.equal(report.locales.hi.missingSiteShellCount, 0);
     assert.equal(report.locales.hi.missingHreflangCount, 1);
@@ -53,7 +57,7 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('canonical language catalogue defines 50 unique locales, 17 available editions and correct writing directions', () => {
+test('canonical language catalogue defines 50 unique available locales and correct writing directions', () => {
   const { DEFAULT_LOCALES } = require('../scripts/audit-locale-coverage.cjs');
   const locales = languageCatalogue.locales;
   const codes = locales.map(locale => locale.code);
@@ -61,8 +65,8 @@ test('canonical language catalogue defines 50 unique locales, 17 available editi
   assert.equal(locales.length, 50);
   assert.equal(new Set(codes).size, 50);
   assert.equal(codes[0], 'en');
-  assert.equal(locales.filter(locale => locale.status === 'available').length, 17);
-  assert.equal(locales.filter(locale => locale.status === 'planned').length, 33);
+  assert.equal(locales.filter(locale => locale.status === 'available').length, 50);
+  assert.equal(locales.filter(locale => locale.status === 'planned').length, 0);
   assert.equal(DEFAULT_LOCALES.length, 49);
   assert.deepEqual(DEFAULT_LOCALES, codes.filter(code => code !== 'en'));
   for (const locale of locales) {

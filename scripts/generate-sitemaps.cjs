@@ -8,7 +8,7 @@ const { execFileSync } = require('node:child_process');
 const ROOT = process.cwd();
 const SITE_ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
-const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']);
+const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd']);
 const MAX_BYTES = 50 * 1024 * 1024;
 const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai', 'artifacts'
@@ -40,7 +40,9 @@ function walk(dir, files = []) {
     if (entry.isFile() && entry.name.toLowerCase().endsWith('.html') &&
         !EXCLUDED_FILES.has(entry.name.toLowerCase())) {
       const relative = path.relative(ROOT, path.join(dir, entry.name)).split(path.sep).join('/');
-      if (!EXCLUDED_PATHS.has(relative)) files.push(relative);
+      const pathWithoutLocale = relative.replace(/^[a-z]{2,3}\//, '');
+      const excludedLocalized = /^(?:google09d3278d6d57b1a4\.html|schema\/_homepage\.html|calculator\/admin\.html)$/.test(pathWithoutLocale);
+      if (!EXCLUDED_PATHS.has(relative) && !excludedLocalized) files.push(relative);
     }
   }
   return files;
@@ -60,6 +62,15 @@ function getCanonical(file, html) {
   } catch {
     return null;
   }
+}
+
+function canonicalMatchesFile(file, loc) {
+  const filePath = file === 'index.html' ? '/' :
+    file.endsWith('/index.html') ? '/' + file.slice(0, -'index.html'.length) : '/' + file;
+  const canonicalPath = new URL(loc).pathname;
+  const normalize = value => value.endsWith('index.html')
+    ? value.slice(0, -'index.html'.length) : value;
+  return normalize(canonicalPath) === normalize(filePath);
 }
 
 function isNoindex(html) {
@@ -91,7 +102,7 @@ function build() {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
     if (isNoindex(html)) continue;
     const loc = getCanonical(file, html);
-    if (!loc || seen.has(loc)) continue;
+    if (!loc || !canonicalMatchesFile(file, loc) || seen.has(loc)) continue;
     seen.add(loc);
     entries.push({ loc, lastmod: getLastmod(file), file });
   }

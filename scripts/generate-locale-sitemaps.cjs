@@ -11,7 +11,7 @@ const ROOT = process.cwd();
 const ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
 const MAX_BYTES = 50 * 1024 * 1024;
-const LOCALES = new Set(['hi', 'de', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'ja', 'ru']);
+const LOCALES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd']);
 const EXCLUDED_DIRS = new Set(['.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai', 'artifacts']);
 const EXCLUDED_FILES = new Set(['404.html', 'offline.html']);
 const EXCLUDED_PATHS = new Set([
@@ -59,6 +59,15 @@ function canonicalFor(file, html) {
   }
 }
 
+function canonicalMatchesFile(file, loc) {
+  const filePath = file === 'index.html' ? '/' :
+    file.endsWith('/index.html') ? '/' + file.slice(0, -'index.html'.length) : '/' + file;
+  const canonicalPath = new URL(loc).pathname;
+  const normalize = value => value.endsWith('index.html')
+    ? value.slice(0, -'index.html'.length) : value;
+  return normalize(canonicalPath) === normalize(filePath);
+}
+
 function isNoindex(html) {
   return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
@@ -87,7 +96,7 @@ function build() {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
     if (isNoindex(html)) continue;
     const loc = canonicalFor(file, html);
-    if (!loc || seen.has(loc)) continue;
+    if (!loc || !canonicalMatchesFile(file, loc) || seen.has(loc)) continue;
     seen.add(loc);
     const locale = localeFor(file);
     if (!groups.has(locale)) groups.set(locale, []);

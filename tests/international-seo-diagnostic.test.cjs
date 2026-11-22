@@ -18,6 +18,55 @@ test('additive hreflang repair has no remaining unambiguous reciprocal additions
   assert.match(output, /Dry run only\. No files were changed\./);
 });
 
+test('additive hreflang repair never adds alternates to noindex pages', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-noindex-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  try {
+    write('index.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"></head></html>');
+    const noindex = '<html lang="hi"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
+    write('hi/index.html', noindex);
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    assert.equal(summary.added, 0);
+    assert.ok(summary.skippedNoindex > 0);
+    assert.equal(fs.readFileSync(path.join(temp, 'hi/index.html'), 'utf8'), noindex);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('additive hreflang repair skips sources whose canonical points elsewhere', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-canonical-alias-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  try {
+    const source = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/legacy-home/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"></head></html>';
+    const target = '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
+    write('index.html', source);
+    write('hi/index.html', target);
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    assert.equal(summary.added, 0);
+    assert.ok(summary.skippedNoncanonicalSource > 0);
+    assert.equal(fs.readFileSync(path.join(temp, 'hi/index.html'), 'utf8'), target);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
+
 test('hreflang page edits preserve every original byte except the inserted alternate tags', t => {
   if (process.env.CHECK_HREFLANG_ADDITIVE_REPAIR !== 'true') { t.skip('Historical byte-preservation check was verified on PR #453; do not compare unrelated future page edits against the current main branch.'); return; }
   const baseRef = process.env.GITHUB_BASE_REF;

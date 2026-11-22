@@ -22,6 +22,10 @@ function headOf(html) {
   const end = html.toLowerCase().indexOf('</head>');
   return end < 0 ? '' : html.slice(0, end);
 }
+function isNoindex(html) {
+  return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
+}
 function langOf(html, file) {
   const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
   if (match) return match[1].toLowerCase();
@@ -35,6 +39,13 @@ function canonicalOf(html) {
     const url = new URL(tag[1], ORIGIN);
     return url.origin === ORIGIN && !url.search && !url.hash ? url.href : null;
   } catch { return null; }
+}
+function selfCanonicalCandidates(file) {
+  const relative = path.relative(ROOT, file).split(path.sep).join('/');
+  const candidates = new Set([new URL('/' + relative, ORIGIN).href]);
+  if (relative === 'index.html') candidates.add(new URL('/', ORIGIN).href);
+  else if (relative.endsWith('/index.html')) candidates.add(new URL('/' + relative.slice(0, -'index.html'.length), ORIGIN).href);
+  return candidates;
 }
 function linksOf(html) {
   return [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
@@ -61,12 +72,14 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedConflict: 0, skippedNoHead: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
+    if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
     const sourceLang = langOf(sourceHtml, sourceFile);
     const sourceCanonical = canonicalOf(sourceHtml);
     if (!sourceCanonical) continue;
+    if (!selfCanonicalCandidates(sourceFile).has(sourceCanonical)) { stats.skippedNoncanonicalSource++; continue; }
     for (const link of linksOf(sourceHtml)) {
       stats.linksExamined++;
       if (link.lang === 'x-default') continue;
@@ -74,6 +87,7 @@ function main() {
       if (!target) { stats.skippedMissingTarget++; continue; }
       if (target === sourceFile) continue;
       const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
+      if (isNoindex(targetHtml)) { stats.skippedNoindex++; continue; }
       if (langOf(targetHtml, target) !== link.lang) { stats.skippedLanguageMismatch++; continue; }
       if (canonicalOf(targetHtml) !== new URL(link.href, ORIGIN).href) { stats.skippedCanonicalMismatch++; continue; }
       const existing = linksOf(targetHtml).filter(item => item.lang === sourceLang);

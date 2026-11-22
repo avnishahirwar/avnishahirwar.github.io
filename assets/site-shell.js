@@ -2,8 +2,7 @@
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
 try {
-  const isPublicTopPage = window.self === window.top &&
-    new URLSearchParams(location.search).get('embed') !== '1' &&
+  const isPublicTopPage = new URLSearchParams(location.search).get('embed') !== '1' &&
     !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
   if (isPublicTopPage && document.body) {
     // Replace legacy page-level navigation/footer visually with the one shared site chrome.
@@ -26,7 +25,7 @@ try {
     if (!document.querySelector('header.fc-global-header')) {
       const header = document.createElement('header');
       header.className = 'fc-global-header fc-shell-failsafe';
-      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/international/">Global Calculators</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blogs</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="zh" disabled aria-label="中文（普通话） — Coming soon">中文（普通话） — Coming soon</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="ar">العربية</option><option value="fr">Français</option><option value="bn">বাংলা</option><option value="pt">Português</option><option value="id">Bahasa Indonesia</option><option value="ur" disabled aria-label="اردو — Coming soon">اردو — Coming soon</option><option value="ru">Русский</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="pcm" disabled aria-label="Naijá — Coming soon">Naijá — Coming soon</option><option value="arz" disabled aria-label="مصري — Coming soon">مصري — Coming soon</option><option value="mr">मराठी</option><option value="vi">Tiếng Việt</option><option value="te">తెలుగు</option><option value="sw" disabled aria-label="Kiswahili — Coming soon">Kiswahili — Coming soon</option><option value="ha" disabled aria-label="Harshen Hausa — Coming soon">Harshen Hausa — Coming soon</option><option value="tr" disabled aria-label="Türkçe — Coming soon">Türkçe — Coming soon</option><option value="pa" disabled aria-label="ਪੰਜਾਬੀ — Coming soon">ਪੰਜਾਬੀ — Coming soon</option><option value="fil" disabled aria-label="Filipino — Coming soon">Filipino — Coming soon</option><option value="ta">தமிழ்</option><option value="yue" disabled aria-label="粵語 — Coming soon">粵語 — Coming soon</option><option value="wuu" disabled aria-label="吴语 — Coming soon">吴语 — Coming soon</option><option value="fa" disabled aria-label="فارسی — Coming soon">فارسی — Coming soon</option><option value="ko" disabled aria-label="한국어 — Coming soon">한국어 — Coming soon</option><option value="am" disabled aria-label="አማርኛ — Coming soon">አማርኛ — Coming soon</option><option value="th" disabled aria-label="ไทย — Coming soon">ไทย — Coming soon</option><option value="jv" disabled aria-label="Basa Jawa — Coming soon">Basa Jawa — Coming soon</option><option value="it" disabled aria-label="Italiano — Coming soon">Italiano — Coming soon</option><option value="gu">ગુજરાતી</option><option value="kn">ಕನ್ನಡ</option><option value="yo" disabled aria-label="Yorùbá — Coming soon">Yorùbá — Coming soon</option><option value="bho" disabled aria-label="भोजपुरी — Coming soon">भोजपुरी — Coming soon</option><option value="nl" disabled aria-label="Nederlands — Coming soon">Nederlands — Coming soon</option><option value="pl" disabled aria-label="Polski — Coming soon">Polski — Coming soon</option><option value="ml" disabled aria-label="മലയാളം — Coming soon">മലയാളം — Coming soon</option><option value="or" disabled aria-label="ଓଡ଼ିଆ — Coming soon">ଓଡ଼ିଆ — Coming soon</option><option value="ne" disabled aria-label="नेपाली — Coming soon">नेपाली — Coming soon</option><option value="si" disabled aria-label="සිංහල — Coming soon">සිංහල — Coming soon</option><option value="uk" disabled aria-label="Українська — Coming soon">Українська — Coming soon</option><option value="uz" disabled aria-label="Oʻzbekcha — Coming soon">Oʻzbekcha — Coming soon</option><option value="ps" disabled aria-label="پښتو — Coming soon">پښتو — Coming soon</option><option value="so" disabled aria-label="Soomaali — Coming soon">Soomaali — Coming soon</option><option value="he" disabled aria-label="עברית — Coming soon">עברית — Coming soon</option><option value="my" disabled aria-label="မြန်မာ — Coming soon">မြန်မာ — Coming soon</option><option value="ro" disabled aria-label="Română — Coming soon">Română — Coming soon</option><option value="sd" disabled aria-label="سنڌي — Coming soon">سنڌي — Coming soon</option></select></label></nav></div>';
+      header.innerHTML = '<div class="fc-global-nav"><a class="fc-global-brand" href="/" aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="34" height="34" alt="Friendly Calculator logo"><span>FRIENDLY <b>CALCULATOR</b></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="Main navigation"><a href="/">Home</a><a href="/calculator/business-calculators.html">Business Tools</a><a href="/calculator/finance-calculators.html">Finance</a><a href="/calculator/tax.html">Tax</a><a href="/calculator/industry-calculators.html">Industry</a><a href="/calculator/manufacturing-calculators.html">Manufacturing</a><a href="/international/">Global Calculators</a><a href="/calculator/everyday-calculators.html">Everyday</a><a href="/calculator/site-directory.html">All Calculators</a><a href="/blog/">Blog</a><a href="/calculator/dashboard.html" class="fc-login-link">Login</a><label class="fc-language-control"><span class="fc-language-label">Language</span><select id="fc-language-select" aria-label="Language"><option value="en">English</option><option value="zh">中文（普通话）</option><option value="hi">हिन्दी</option><option value="es">Español</option><option value="ar">العربية</option><option value="fr">Français</option><option value="bn">বাংলা</option><option value="pt">Português</option><option value="id">Bahasa Indonesia</option><option value="ur">اردو</option><option value="ru">Русский</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="pcm">Naijá</option><option value="arz">مصري</option><option value="mr">मराठी</option><option value="vi">Tiếng Việt</option><option value="te">తెలుగు</option><option value="sw">Kiswahili</option><option value="ha">Harshen Hausa</option><option value="tr">Türkçe</option><option value="pa">ਪੰਜਾਬੀ</option><option value="fil">Filipino</option><option value="ta">தமிழ்</option><option value="yue">粵語</option><option value="wuu">吴语</option><option value="fa">فارسی</option><option value="ko">한국어</option><option value="am">አማርኛ</option><option value="th">ไทย</option><option value="jv">Basa Jawa</option><option value="it">Italiano</option><option value="gu">ગુજરાતી</option><option value="kn">ಕನ್ನಡ</option><option value="yo">Yorùbá</option><option value="bho">भोजपुरी</option><option value="nl">Nederlands</option><option value="pl">Polski</option><option value="ml">മലയാളം</option><option value="or">ଓଡ଼ିଆ</option><option value="ne">नेपाली</option><option value="si">සිංහල</option><option value="uk">Українська</option><option value="uz">Oʻzbekcha</option><option value="ps">پښتو</option><option value="so">Soomaali</option><option value="he">עברית</option><option value="my">မြန်မာ</option><option value="ro">Română</option><option value="sd">سنڌي</option></select></label></nav></div>';
       document.body.prepend(header);
     }
     // Normalize legacy page footers instead of appending a second footer.
@@ -62,10 +61,13 @@ try {
     nav.className='fc-global-footer-links';
     nav.setAttribute('aria-label','Footer navigation');
     const requiredLinks=[
-      ['About','/calculator/about.html'],['Methodology','/calculator/methodology.html'],
-      ['Privacy','/calculator/privacy.html'],['Terms','/calculator/terms.html'],
-      ['Disclaimer','/calculator/disclaimer.html'],['Legal & Compliance','/calculator/legal-compliance.html'],
-      ['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
+      ['Home','/'],['Business','/calculator/business-calculators.html'],['Finance','/calculator/finance-calculators.html'],
+      ['Tax','/calculator/tax.html'],['Industry','/calculator/industry-calculators.html'],
+      ['Manufacturing','/calculator/manufacturing-calculators.html'],['Everyday','/calculator/everyday-calculators.html'],
+      ['All Calculators','/calculator/site-directory.html'],['Blog','/blog/'],['About','/calculator/about.html'],
+      ['Methodology','/calculator/methodology.html'],['Privacy','/calculator/privacy.html'],['Cookie Policy','/calculator/cookies.html'],
+      ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['DMCA / Copyright','/dmca.html'],
+      ['Legal & Compliance','/calculator/legal-compliance.html'],['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
     ];
     const allLinks=[...preservedLinks];
     requiredLinks.forEach(([label,href])=>{
@@ -240,8 +242,8 @@ const ensurePwaInstallUi=()=>{
   document.body.append(button,panel,network);
 };
 
-// Do not load analytics tags on the Privacy Policy URL used for consent review.
-if(!/(^|\/)(?:privacy|cookies)\.html$/.test(location.pathname)){
+// Do not load analytics tags on privacy or cookie policy URLs used for consent review (?:privacy|cookies).
+if(!/(^|\/)(?:privacy|privacy-policy|cookies)\.html$/.test(location.pathname)){
 // Google Tag Manager container: loaded once on every page using this shared shell.
 // Keep the existing direct GA4 configuration below; do not add a second GA4 tag
 // inside GTM unless the direct GA4 installation is deliberately migrated.
@@ -282,11 +284,14 @@ if(typeof window.gtag!=='function'){
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
-const routeLocaleMatch=/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\//.exec(p);
+const routeLocaleMatch=/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\//.exec(p);
+const declaredDocumentLang=(document.documentElement.getAttribute('lang')||'').trim();
+const declaredLocale=declaredDocumentLang.toLowerCase().split('-')[0];
 const routeLocale=routeLocaleMatch?routeLocaleMatch[1]:'en';
-document.documentElement.lang=routeLocale;
-document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(routeLocale)?'rtl':'ltr';
-const isCalculatorRoute=/^\/(?:(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\/)?calculators\//.test(p);
+const effectiveLocale=declaredLocale||routeLocale;
+document.documentElement.lang=declaredDocumentLang||routeLocale;
+document.documentElement.dir=/^(ar|ur|fa|ps|he|sd|arz)$/.test(effectiveLocale)?'rtl':'ltr';
+const isCalculatorRoute=/^\/(?:(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\/)?calculators\//.test(p);
 const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
@@ -309,8 +314,11 @@ if(localeCodes.includes(locale)){
 }
 
 const r='/calculator/';
-// Keep the owner-only Admin Dashboard route intact; it is intentionally not part of the public navigation.
-const preservedAdminDashboardLink=['Admin',r+'admin.html'];
+// The admin route is owner-only. Never expose it through the public shared shell.
+const isAdminRouteLink=link=>{
+  const href=(link.getAttribute('href')||'').trim().toLowerCase();
+  return /(?:^|\/)calculator\/admin\.html(?:[?#].*)?$/.test(href) || /(?:^|\/)admin(?:\/|$)/.test(href);
+};
 if(p==='/calculator/contact.html'){const robots=[...document.head.querySelectorAll('meta[name="robots" i]')];if(robots.length){robots[0].content='index,follow,max-image-preview:large';robots.slice(1).forEach(m=>m.remove())}document.head.querySelectorAll('meta[name="googlebot" i]').forEach(m=>m.remove())}
 // Keep vector, 48px/96px PNG and Apple touch icons together on every page.
 document.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"]').forEach(node=>node.remove());
@@ -399,7 +407,9 @@ const supportedUiLocales={en:1,zh:1,hi:1,es:1,ar:1,fr:1,bn:1,pt:1,id:1,ur:1,ru:1
 const savedUiLocale=(()=>{try{return localStorage.getItem('fc-language-preference')||'';}catch(_){return '';}})();
 const browserUiLocale=(()=>{try{return (navigator.languages||[navigator.language||'']).map(value=>String(value).split('-')[0].toLowerCase()).find(value=>Object.hasOwn(supportedUiLocales,value))||'en';}catch(_){return 'en';}})();
 const preferredUiLocale=Object.hasOwn(supportedUiLocales,savedUiLocale)?savedUiLocale:browserUiLocale;
-const currentLocale=(/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uk|uz|ps|so|he|my|ro|sd)\//.exec(p)||[])[1]||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:(p==='/'?preferredUiLocale:'en'));
+const pathLocale=(/^\/(zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)\//.exec(p)||[])[1];
+const currentDocumentLocale=(document.documentElement.lang||'').toLowerCase().split('-')[0];
+const currentLocale=p==='/'?(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:preferredUiLocale):(Object.hasOwn(supportedUiLocales,currentDocumentLocale)?currentDocumentLocale:(pathLocale||(requestedUiLocale&&Object.hasOwn(supportedUiLocales,requestedUiLocale)?requestedUiLocale:'en')));
 const localeHome={en:'/',zh:'/zh/index.html',hi:'/hi/index.html',es:'/es/index.html',ar:'/ar/index.html',fr:'/fr/index.html',bn:'/bn/index.html',pt:'/pt/index.html',id:'/id/index.html',ur:'/ur/index.html',ru:'/ru/index.html',de:'/de/index.html',ja:'/ja/index.html',pcm:'/pcm/index.html',arz:'/arz/index.html',mr:'/mr/index.html',vi:'/vi/index.html',te:'/te/index.html',sw:'/sw/index.html',ha:'/ha/index.html',tr:'/tr/index.html',pa:'/pa/index.html',fil:'/fil/index.html',ta:'/ta/index.html',yue:'/yue/index.html',wuu:'/wuu/index.html',fa:'/fa/index.html',ko:'/ko/index.html',am:'/am/index.html',th:'/th/index.html',jv:'/jv/index.html',it:'/it/index.html',gu:'/gu/index.html',kn:'/kn/index.html',yo:'/yo/index.html',bho:'/bho/index.html',nl:'/nl/index.html',pl:'/pl/index.html',ml:'/ml/index.html',or:'/or/index.html',ne:'/ne/index.html',si:'/si/index.html',uk:'/uk/index.html',uz:'/uz/index.html',ps:'/ps/index.html',so:'/so/index.html',he:'/he/index.html',my:'/my/index.html',ro:'/ro/index.html',sd:'/sd/index.html'};
 // A saved visitor choice wins; otherwise use the browser's supported language.
 // Only the root entry point auto-selects a language; explicit page routes remain authoritative.
@@ -451,7 +461,11 @@ const countryNames={IN:'🇮🇳 India',US:'🇺🇸 United States',GB:'🇬🇧
 const countryControl='<label class="fc-country-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Quốc gia & định dạng':currentLocale==='te'?'దేశం & ఫార్మాట్':currentLocale==='gu'?'દેશ અને ફોર્મેટ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ಸ್ವರೂಪ':'Country &amp; format')+'</span><select id="fc-country-select" aria-label="'+(currentLocale==='vi'?'Chọn quốc gia và định dạng':currentLocale==='te'?'దేశం మరియు ఫార్మాట్‌ను ఎంచుకోండి':currentLocale==='gu'?'દેશ અને ફોર્મેટ પસંદ કરો':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ಸ್ವರೂಪವನ್ನು ಆಯ್ಕೆಮಾಡಿ':'Choose country and format')+'">'+Object.entries(countryNames).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const formatControl='<label class="fc-format-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Quốc gia & định dạng':currentLocale==='te'?'దేశం & ఫార్మాట్':currentLocale==='gu'?'દેશ અને તારીખનું સ્વરૂપ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ದಿನಾಂಕದ ಸ್ವರೂಪ':'Date format')+'</span><select id="fc-locale-select" aria-label="'+(currentLocale==='vi'?'Quốc gia và định dạng':currentLocale==='te'?'దేశం మరియు ఫార్మాట్':currentLocale==='gu'?'દેશ અને તારીખનું સ્વરૂપ':currentLocale==='kn'?'ದೇಶ ಮತ್ತು ದಿನಾಂಕದ ಸ್ವರೂપ':'Date format')+'">'+Object.entries(formatLocales).map(([code,name])=>'<option value="'+code+'">'+name+'</option>').join('')+'</select></label>';
 const unitControl='<label class="fc-unit-control"><span class="fc-language-label">'+(currentLocale==='vi'?'Đơn vị':currentLocale==='te'?'కొలత యూనిట్లు':currentLocale==='gu'?'એકમો':currentLocale==='kn'?'ಅಳತೆಯ ಘಟಕಗಳು':'Units')+'</span><select id="fc-unit-system-select" aria-label="'+(currentLocale==='vi'?'Hệ đơn vị đo':currentLocale==='te'?'కొలత యూనిట్ విధానం':currentLocale==='gu'?'માપન પદ્ધતિ':currentLocale==='kn'?'ಅಳತೆಯ ಪದ್ಧತಿ':'Measurement unit system')+'"><option value="metric">'+(currentLocale==='gu'?'મેટ્રિક':currentLocale==='kn'?'ಮೆಟ್ರಿಕ್':'Metric')+'</option><option value="imperial">'+(currentLocale==='gu'?'ઇમ્પિરિયલ':currentLocale==='kn'?'ಇಂಪೀರಿಯಲ್':'Imperial')+'</option></select></label>';
-h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="FRIENDLY CALCULATOR® Free Online Calculators for India and Worldwide."><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b><sup>®</sup></span><small>Free Online Calculators for India and Worldwide.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+(navigationNames[currentLocale]||navigationNames.en)+'">'+links.slice(0,4).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+globalCalculatorsUrl+'">'+nav.global+'</a>'+links.slice(4,5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')+'<a href="'+r+'site-directory.html" class="fc-all-calculators-link">'+nav.all+'</a>'+links.slice(5).map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+(n===nav.login?' class="fc-login-link"':'')+'>'+n+'</a>').join('')+'<span class="fc-header-language-slot">'+languageControl+'</span>'+currencyControl+'</nav></div></div>';
+const moreLabel=currentLocale==='hi'?'और विकल्प':'More';
+const primaryLinks=[[nav.home,localeHome[currentLocale]],[nav.all,r+'site-directory.html'],links[2],links[3]];
+const moreLinks=[links[1],[nav.global,globalCalculatorsUrl],links[4],links[5],['Industry',r+'industry-calculators.html'],['Manufacturing',r+'manufacturing-calculators.html'],[nav.embed,'/embed/'],['Developers','/developers/']];
+const navLink=([name,url])=>'<a'+(url===r+'site-directory.html'?' class="fc-all-calculators-link"':url===r+'dashboard.html'?' class="fc-login-link"':'')+' href="'+url+'"'+(p===url?' aria-current="page"':'')+'>'+name+'</a>';
+h.innerHTML='<div class="fc-global-nav"><div class="fc-top-row"><a class="fc-global-brand" href="'+localeHome[currentLocale]+'" aria-label="Friendly Calculator home"><img class="fc-brand-mark" src="/assets/friendly-calculator-logo.svg" width="46" height="46" alt="Friendly Calculator logo" decoding="async"><span class="fc-brand-copy"><span>FRIENDLY <b>CALCULATOR</b></span><small>Free tools. Clear calculations.</small></span></a><nav id="fc-primary-navigation" class="fc-global-links" aria-label="'+(navigationNames[currentLocale]||navigationNames.en)+'">'+primaryLinks.map(navLink).join('')+'<details class="fc-more-navigation"><summary>'+moreLabel+'</summary><div class="fc-more-menu">'+moreLinks.map(navLink).join('')+'</div></details>'+navLink(links[6])+'<span class="fc-header-language-slot">'+languageControl+'</span></nav></div></div>';
 const reservedHeader=document.getElementById('fc-header-reservation');
 const existingHeader=[...document.body.children].find(e=>e.tagName==='HEADER');
 const existingHeaderIsNavigation=!!(existingHeader&&(existingHeader.querySelector('.fc-brand,.fc-global-brand')||existingHeader.querySelector('nav[aria-label="Main navigation"]')));
@@ -472,8 +486,8 @@ const removeDuplicateLegacyHeaders=()=>{
 };
 removeDuplicateLegacyHeaders();
 
-// Keep original country/date selectors in a hidden compatibility node for
-// global-locale.js. Visible regional controls are mounted after Language in the shared Header.
+// Stage original regional selectors for global-locale.js. Settings promotes
+// the visible controls from this compatibility node, preserving IDs and listeners.
 activeHeader.querySelector('.fc-settings-row')?.remove();
 const regionalControlsSource=document.createElement('div');
 regionalControlsSource.id='fc-regional-settings-source';
@@ -481,14 +495,14 @@ regionalControlsSource.hidden=true;
 regionalControlsSource.innerHTML=formatControl;
 document.body.appendChild(regionalControlsSource);
 const primaryNav=activeHeader.querySelector('#fc-primary-navigation');
-// Preserve original locale controls for FCLocale; visible controls are promoted into the Header.
+// Preserve the original currency, country and unit controls for FCLocale.
 if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-control')){
   const regionalMarkup=document.createElement('div');
-  regionalMarkup.innerHTML=countryControl+unitControl;
+  regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
 }
-// Language, Display currency, Country & format and Units follow Login in the shared Header.
+// The header retains language and an accessible compact navigation toggle.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴'};
   const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기'};
@@ -578,7 +592,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
     // Social/contact destinations already have one dedicated icon row in the shared Footer.
-    if(href&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
@@ -780,11 +794,16 @@ document.addEventListener('click',event=>{
   const label=(button.textContent||'').trim();
   const isCalculate=/calculate/i.test(label)||(p.endsWith('/basic-calculator.html')&&label==='=');
   if(!isCalculate||typeof window.gtag!=='function')return;
-  window.gtag('event','calculator_calculate',{
+  const calculatorEvent={
     calculator_name:(document.querySelector('h1')?.textContent||'Calculator').trim(),
     calculator_path:p,
     control_label:label
-  });
+  };
+  if(window.__fcAnalyticsCategory){
+    calculatorEvent.calculator_category=window.__fcAnalyticsCategory;
+    calculatorEvent.calculator_group=window.__fcAnalyticsGroup||'uncategorized';
+  }
+  window.gtag('event','calculator_calculate',calculatorEvent);
 });
 document.addEventListener('change',event=>{
   const field=event.target;
@@ -1274,7 +1293,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
 
 /* Accessible display preferences: persistent theme and text scaling. */
 (()=>{
-  if(!document.body||window.self!==window.top||document.getElementById('fc-display-settings'))return;
+  if(!document.body||embedMode||document.getElementById('fc-display-settings'))return;
   const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={
     en:{open:'Settings',title:'Settings & Accessibility',region:'Regional settings',accessibility:'Accessibility',quick:'Quick actions',currency:'Display currency',countryFormat:'Country & format',units:'Units',normalMode:'Normal Mode',theme:'Dark Mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
@@ -1451,9 +1470,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     regionalControlsSource.appendChild(compatibilityControls);
   }
   if(currencyControl?.querySelector('.fc-language-label'))currencyControl.querySelector('.fc-language-label').textContent=t.currency;
-  if(unitControl.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
-  // Keep all regional controls after Language in the shared Header; Settings receives synchronized mirrors.
-  if(primaryNav)primaryNav.append(currencyControl,countryFormatLabel,unitControl);
+  if(unitControl?.querySelector('.fc-language-label'))unitControl.querySelector('.fc-language-label').textContent=t.units;
+  // Language stays discoverable in the header; regional preferences belong in Settings.
   const addSectionHeading=text=>{
     const section=document.createElement('h3');
     section.className='fc-settings-section-heading';
@@ -1485,13 +1503,13 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   };
   const headerLanguageControl=activeHeader.querySelector('.fc-language-control');
   mirrorSiteControl(headerLanguageControl);
-  mirrorSiteControl(currencyControl);
+  if(currencyControl)siteSettingsControls.appendChild(currencyControl);
   panel.append(siteSettingsControls);
   addSectionHeading(t.region);
   const regionalSettingsControls=document.createElement('div');
   regionalSettingsControls.className='fc-settings-site-controls';
-  mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
-  mirrorSiteControl(unitControl,regionalSettingsControls);
+  if(countryFormatSelect.options.length)regionalSettingsControls.appendChild(countryFormatLabel);
+  if(unitControl)regionalSettingsControls.appendChild(unitControl);
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);

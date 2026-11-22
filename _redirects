@@ -1,2 +1,11 @@
 /calculator/ / 301
 /calculators/emi-calculator.html /calculators/loan-emi-calculator.html 301
+/schema/_homepage.html /schema/homepage.html 301
+/about.html /calculator/about.html 301
+/about/ /calculator/about.html 301
+/contact.html /calculator/contact.html 301
+/contact/ /calculator/contact.html 301
+/api/ /calculator/api.html 301
+/calculators/ /calculator/ 301
+/portal /calculator/portal.html 301
+/portal/ /calculator/portal.html 301
