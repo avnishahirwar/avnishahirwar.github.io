@@ -1444,7 +1444,7 @@ test('hours-to-minutes page provides unit-consistent reference examples and vali
 test('basic calculator avoids retired no-op chrome script and preserves deferred shared shell', () => {
   const page = fs.readFileSync(path.join(root, 'calculators/basic-calculator.html'), 'utf8');
   assert.equal(page.includes('/assets/site-chrome.js?v=1'), false);
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.match(page,/<script src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer><\/script>/);
   assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-chrome.css?v=1">'));
 });
 
@@ -1453,8 +1453,8 @@ test('homepage prioritizes its visible brand illustration and uses the lean home
   assert.ok(page.includes('loading="lazy" fetchpriority="low"'));
   assert.ok(page.includes('friendly-calculator-brand-illustration.svg'));
   assert.ok(page.includes('width="1200" height="630"'));
-  assert.ok(page.includes('<link rel="stylesheet" href="/assets/site-shell.css">'));
-  assert.ok(page.includes('<script src="/assets/site-shell.js" defer></script>'));
+  assert.match(page,/<link rel="stylesheet" href="\/assets\/site-shell\.css(?:\?v=[a-z0-9-]+)?">/);
+  assert.match(page,/<script src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer><\/script>/);
   assert.equal(page.includes('<link rel="preload" href="/assets/site-shell.css" as="style"'), false);
 });
 
@@ -2115,12 +2115,12 @@ test('homepage shows the curated popular calculator links without embedding the 
 
 test('homepage keeps critical header CSS inline and defers the shared shell stylesheet', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.match(html, /<link rel="stylesheet" href="\/assets\/site-shell\.css">/);
+  assert.match(html, /<link rel="stylesheet" href="\/assets\/site-shell\.css(?:\?v=[a-z0-9-]+)?">/);
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   const sharedCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.match(sharedCss, /\.fc-global-header\{/);
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
-  assert.match(html, /src="\/assets\/site-shell\.js" defer/);
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
+  assert.match(html, /src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
 });
 
 test('Settings trigger is the final Footer item; regional preferences stay in Settings', () => {
@@ -2175,7 +2175,7 @@ test('English homepage always renders the shared footer and Sitemap link', () =>
   const script = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.html'), 'utf8');
   assert.match(html, /<header class="fc-global-header">/);
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
   assert.ok(script.includes("const f=document.createElement('footer')"));
   assert.ok(script.includes("f.className='fc-global-footer'"));
   assert.ok(script.includes("['Sitemap','/sitemap.html']"));
@@ -2272,7 +2272,7 @@ test('shared shell visually replaces legacy page-level headers and footers', () 
 
 test('homepage has the same static shared footer and Sitemap destination', () => {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(html.includes('src="/assets/site-shell.js" defer'));
+  assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
   assert.match(fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8'), /Sitemap/);
 });
 
