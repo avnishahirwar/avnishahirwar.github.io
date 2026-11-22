@@ -298,10 +298,12 @@ test('GA4 records calculator actions and privacy-safe search metadata', () => {
 test('calculator directory exposes its curated core catalogue and keeps business services separate', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const links = [...directory.matchAll(/href="(\/calculators\/[^"]+)"/g)].map(m => m[1]);
-  assert.equal(new Set(links).size, links.length);
+  const duplicateLinks = links.filter((url, index) => links.indexOf(url) !== index);
+  assert.deepEqual(duplicateLinks, ['/calculators/loan-emi-calculator.html']);
+  assert.equal(new Set(links).size, expectedCoreCalculatorCount);
   assert.ok(links.every(url => canonicalCalculatorUrls.includes(url)));
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
   const services = directory.indexOf('<h2>Business & developer services</h2>');
   const trust = directory.indexOf('<h2>About, trust & policies</h2>');
@@ -856,8 +858,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
-  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount + 1, 'The retained Loan EMI shortcut appears in two category groups; unique calculator URLs remain deduplicated.');
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
   assert.doesNotMatch(homepage, /class="search-panel"/);
   assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
   assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
@@ -1762,7 +1764,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, expectedSearchIndexLength);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount);
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
 });
 
  
