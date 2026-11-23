@@ -2359,3 +2359,14 @@ test('homepage primary navigation links to the global calculators hub before Eve
   assert.ok(globalLink >= 0, 'Global Calculators link must be present');
   assert.ok(everydayLink > globalLink, 'Global Calculators must precede Everyday');
 });
+
+
+test('Fuel Cost Calculator copy has clear inputs and no stale catalogue count or placeholder text', () => {
+  const html = fs.readFileSync(path.join(root, 'calculators/fuel-cost-calculator.html'), 'utf8');
+  assert.match(html, /Enter the distance in kilometres\./);
+  assert.match(html, /Enter vehicle mileage in km\/L\./);
+  assert.match(html, /Enter the fuel price per litre\./);
+  assert.match(html, /assumed fuel price/);
+  assert.match(html, /not a live fuel-price quote/);
+  assert.doesNotMatch(html, /186 browser-based tools|n2 assumption|live n2 quote/);
+});
