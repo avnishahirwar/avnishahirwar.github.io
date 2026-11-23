@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Landed Cost Calculator | Friendly Calculator</title>
+<meta name="description" content="Estimate total import landed cost per shipment and per unit from purchase value, freight, insurance, customs duty and handling charges you enter.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculators/landed-cost-calculator.html">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Landed Cost Calculator | Friendly Calculator">
+<meta property="og:description" content="Estimate total import landed cost per shipment and per unit from purchase value, freight, insurance, customs duty and handling charges you enter.">
+<meta property="og:url" content="https://friendlycalculator.in/calculators/landed-cost-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Landed Cost Calculator | Friendly Calculator">
+<meta name="twitter:description" content="Estimate total import landed cost per shipment and per unit from purchase value, freight, insurance, customs duty and handling charges you enter.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Landed Cost Calculator","description":"Estimate total import landed cost per shipment and per unit from purchase value, freight, insurance, customs duty and handling charges you enter.","url":"https://friendlycalculator.in/calculators/landed-cost-calculator.html","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"isPartOf":{"@type":"WebSite","name":"Friendly Calculator","url":"https://friendlycalculator.in/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"Sector calculators","item":"https://friendlycalculator.in/calculator/sector-calculators.html"},{"@type":"ListItem","position":3,"name":"Landed Cost Calculator","item":"https://friendlycalculator.in/calculators/landed-cost-calculator.html"}]}]}
+</script>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--line:#dfe5eb;--paper:#f5f7f9;--blue:#174d72}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{width:min(980px,92%);margin:auto}
+.hero{padding:30px 0 12px}
+.muted{color:var(--muted)}
+.panel,.content{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin:16px 0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:grid;gap:5px;font-weight:700}
+input{min-width:0;padding:10px;border:1px solid #aebbc7;border-radius:8px;font:inherit}
+button{margin-top:16px;border:0;border-radius:8px;background:#101c2c;color:#fff;padding:11px 17px;font:inherit;font-weight:750;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #7ba7cf;outline-offset:2px}
+.out{margin-top:16px;padding:14px;background:#edf3f7;border-radius:10px;overflow-wrap:anywhere}
+dl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+dt{color:var(--muted)}dd{margin:0;font-weight:750;text-align:right}
+a{color:var(--blue)}
+@media(max-width:520px){.fields,dl{grid-template-columns:1fr}dd{text-align:left}}
+</style>
+<meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools">
+<meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
+</head>
+<body>
+<main class="wrap">
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/sector-calculators.html">Sector calculators</a> / Landed Cost Calculator</nav>
+<header class="hero">
+<p class="muted">GLOBAL LOGISTICS &amp; TRADE TOOL</p>
+<h1>Landed Cost Calculator</h1>
+<p class="muted">Estimate the total cost of bringing a shipment to its destination, including goods, transport, insurance, customs duty and handling charges entered by you.</p>
+</header>
+<section class="panel">
+<h2>Enter shipment costs</h2>
+<p class="muted">Enter all amounts in the same currency. Use the actual charges from your supplier, carrier, customs broker and applicable authority.</p>
+<form id="landed-cost-form" class="fields">
+<label>Number of units in shipment<input name="quantity" type="number" min="0.000001" step="any" required inputmode="decimal"></label>
+<label>Goods purchase value<input name="goodsValue" type="number" min="0" step="any" required inputmode="decimal"></label>
+<label>Origin inland freight<input name="originFreight" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>International freight<input name="internationalFreight" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>Cargo insurance<input name="insurance" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>Customs duty amount<input name="customsDuty" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>Customs clearance and brokerage<input name="clearance" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>Destination inland delivery<input name="destinationFreight" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<label>Other shipment charges<input name="otherCharges" type="number" min="0" step="any" value="0" required inputmode="decimal"></label>
+<div><button type="submit">Calculate landed cost</button></div>
+</form>
+<div id="landed-cost-result" class="out" aria-live="polite"></div>
+</section>
+<section class="content">
+<h2>Formula and method</h2>
+<p>Total landed cost = goods purchase value + origin inland freight + international freight + cargo insurance + customs duty amount + customs clearance and brokerage + destination inland delivery + other shipment charges.</p>
+<p>Landed cost per unit = total landed cost ÷ number of units in the shipment.</p>
+<h2>Worked example</h2>
+<p>For 100 units with a goods value of 50,000, freight and insurance of 8,000, customs duty of 5,000 and other clearance and delivery charges of 2,000 (all in the same currency), total landed cost is 65,000 and landed cost per unit is 650.</p>
+<h2>Assumptions and limitations</h2>
+<ul>
+<li>This is a cost aggregation tool, not a customs classification, duty-rate or tax calculator.</li>
+<li>Enter statutory duty, import VAT/GST, excise, anti-dumping duty and other applicable taxes as separate charges in the appropriate cost fields if they belong in your accounting definition.</li>
+<li>Customs valuation, Incoterms, exchange rates, duty bases, recoverable taxes, transfer pricing and accounting treatment vary by jurisdiction and transaction. Confirm the applicable treatment with official customs/tax guidance or a qualified customs professional.</li>
+<li>All entries must use one currency and one consistent shipment scope. Do not mix per-unit and total-shipment values.</li>
+</ul>
+<h2>Frequently asked questions</h2>
+<h3>What does landed cost include?</h3>
+<p>It commonly combines the purchase cost with costs required to transport and clear goods to a defined destination. The exact accounting and customs treatment depends on the transaction and jurisdiction.</p>
+<h3>Does this calculator calculate customs duty automatically?</h3>
+<p>No. Customs duty depends on classification, origin, valuation, trade measures and current law. Enter a duty amount verified for your shipment.</p>
+<h3>Can I compare suppliers?</h3>
+<p>Yes. Calculate each supplier's shipment using the same currency, quantity basis and destination scope, then compare the per-unit result.</p>
+<p><a href="/calculator/sector-calculators.html">Explore sector calculators</a> · <a href="/calculator/site-directory.html">Browse all calculators</a></p>
+</section>
+</main>
+<script src="/assets/landed-cost-calculator.js" defer></script>
+<script src="/assets/site-shell.js" defer></script>
+<script src="/assets/site-chrome.js?v=1" defer></script>
+</body>
+</html>
