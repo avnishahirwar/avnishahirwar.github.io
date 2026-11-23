@@ -3350,13 +3350,6 @@
     "description": "Estimate annual CO₂ emissions from electricity, travel and fuel inputs."
   },
   {
-    "name": "Carbon Footprint Estimator",
-    "url": "/calculators/carbon-footprint-estimator.html",
-    "category": "Environment & Sustainability",
-    "keywords": "carbon footprint estimator emissions electricity fuel travel emission factor kg CO2e",
-    "description": "Estimate operational emissions from electricity, fuel and travel using user-supplied emission factors."
-  },
-  {
     "name": "Carburetor CFM Calculator",
     "url": "/calculators/carburetor-cfm-calculator.html",
     "category": "PHYSICS",
@@ -7126,13 +7119,6 @@
     "description": "Electric Potential Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Electrical Load and Energy Cost Calculator",
-    "url": "/calculators/electrical-load-energy-cost-calculator.html",
-    "category": "Electrical & Electronics",
-    "keywords": "electrical load connected load demand factor monthly energy consumption electricity cost",
-    "description": "Estimate connected electrical load, peak demand, monthly kWh and energy charges."
-  },
-  {
     "name": "Electrical Mobility Calculator",
     "url": "/calculators/electrical-mobility-calculator.html",
     "category": "PHYSICS",
@@ -10896,13 +10882,6 @@
     "description": "Irregular Trapezoid Area Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
-    "name": "Irrigation Water Requirement Calculator",
-    "url": "/calculators/irrigation-water-requirement-calculator.html",
-    "category": "Agriculture & Farming",
-    "keywords": "irrigation water requirement crop water depth field area application efficiency gross water volume",
-    "description": "Estimate irrigation water volume from crop water depth, field area, duration and application efficiency."
-  },
-  {
     "name": "Is it a Right Triangle Calculator",
     "url": "/calculators/is-it-a-right-triangle-calculator.html",
     "category": "MATH",
@@ -11356,13 +11335,6 @@
     "category": "Finance",
     "keywords": "land loan calculator",
     "description": "Calculate Land Loan Calculator with a transparent formula and worked example."
-  },
-  {
-    "name": "Landed Cost Calculator",
-    "url": "/calculators/landed-cost-calculator.html",
-    "category": "Logistics & Supply Chain",
-    "keywords": "landed cost import cost total cost per unit customs duty international freight insurance clearance brokerage destination delivery logistics supply chain trade",
-    "description": "Estimate shipment and per-unit landed cost from goods value, freight, insurance, user-entered customs duty and other charges."
   },
   {
     "name": "Landscape Rock Calculator",
@@ -22582,5 +22554,26 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Irrigation Water Requirement Calculator",
+    "url": "/calculators/irrigation-water-requirement-calculator.html",
+    "category": "Agriculture & Farming",
+    "keywords": "irrigation water requirement crop water depth field area application efficiency gross water volume",
+    "description": "Estimate irrigation water volume from crop water depth, field area, duration and application efficiency."
+  },
+  {
+    "name": "Electrical Load and Energy Cost Calculator",
+    "url": "/calculators/electrical-load-energy-cost-calculator.html",
+    "category": "Electrical & Electronics",
+    "keywords": "electrical load connected load demand factor monthly energy consumption electricity cost",
+    "description": "Estimate connected electrical load, peak demand, monthly kWh and energy charges."
+  },
+  {
+    "name": "Carbon Footprint Estimator",
+    "url": "/calculators/carbon-footprint-estimator.html",
+    "category": "Environment & Sustainability",
+    "keywords": "carbon footprint estimator emissions electricity fuel travel emission factor kg CO2e",
+    "description": "Estimate operational emissions from electricity, fuel and travel using user-supplied emission factors."
   }
 ]
