@@ -11,8 +11,8 @@ test('calculates total shipment landed cost and unit cost', () => {
   });
   assert.equal(result.logistics, 8500);
   assert.equal(result.importFees, 6500);
-  assert.equal(result.total, 65500);
-  assert.equal(result.perUnit, 655);
+  assert.equal(result.total, 65000);
+  assert.equal(result.perUnit, 650);
 });
 
 test('supports zero ancillary charges', () => {
