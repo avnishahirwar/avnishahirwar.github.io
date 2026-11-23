@@ -80,6 +80,25 @@
         return {'Net fabric length before wastage':num(base)+' m','Additional wastage':num(total-base)+' m','Estimated fabric to plan':num(total)+' m',note:'Estimate assumes pattern area and usable width use compatible units. Real marker layout, selvedges, shrinkage, matching, defects and roll-end losses can change consumption.'};
       }
     }
+
+    irrigation: {
+      title: 'Irrigation Water Requirement Calculator',
+      intro: 'Estimate gross irrigation water volume from crop water depth, field area, duration and application efficiency.',
+      fields: [['area','Field area','hectares'],['depth','Net crop water requirement','mm per day'],['days','Irrigation period','days'],['efficiency','Application efficiency','%']],
+      calculate(v) { positive(v.area,'Field area'); positive(v.depth,'Water requirement'); positive(v.days,'Irrigation period'); positive(v.efficiency,'Application efficiency'); if(v.efficiency>100) throw Error('Application efficiency cannot exceed 100%.'); const net=v.area*v.depth*v.days*10, gross=net/(v.efficiency/100); return {'Net water requirement':num(net)+' m³','Gross water to apply':num(gross)+' m³','Gross water volume':num(gross*1000)+' litres',note:'1 mm over 1 hectare equals 10 m³. Adjust for effective rainfall, soil, crop stage, climate and irrigation scheduling.'}; }
+    },
+    electrical: {
+      title: 'Electrical Load and Energy Cost Calculator',
+      intro: 'Estimate connected load, demand-adjusted load, monthly electricity use and energy charges.',
+      fields: [['quantity','Number of identical units','units'],['watts','Rated power per unit','watts'],['demand','Demand factor','%'],['hours','Operating time per day','hours'],['days','Operating days per month','days'],['tariff','Electricity tariff per kWh','currency']],
+      calculate(v) { positive(v.quantity,'Quantity'); positive(v.watts,'Rated power'); positive(v.demand,'Demand factor'); positive(v.hours,'Operating hours'); positive(v.days,'Operating days'); nonnegative(v.tariff,'Electricity tariff'); if(v.demand>100) throw Error('Demand factor cannot exceed 100%.'); if(v.hours>24) throw Error('Operating hours cannot exceed 24 per day.'); if(v.days>31) throw Error('Operating days cannot exceed 31 per month.'); const connected=v.quantity*v.watts/1000, demandLoad=connected*v.demand/100, energy=demandLoad*v.hours*v.days; return {'Connected load':num(connected)+' kW','Estimated demand load':num(demandLoad)+' kW','Monthly energy use':num(energy)+' kWh','Estimated energy charge':money(energy*v.tariff),note:'Energy = quantity × rated kW × demand factor × operating hours. Excludes fixed charges, taxes, power-factor penalties and utility-specific demand billing.'}; }
+    },
+    carbon: {
+      title: 'Carbon Footprint Estimator',
+      intro: 'Estimate operational emissions using activity data and emission factors supplied by the user.',
+      fields: [['electricity','Electricity use','kWh'],['electricityFactor','Electricity emission factor','kg CO₂e per kWh'],['fuel','Fuel consumed','litres'],['fuelFactor','Fuel emission factor','kg CO₂e per litre'],['travel','Travel distance','km'],['travelFactor','Travel emission factor','kg CO₂e per km']],
+      calculate(v) { for(const [key,label] of [['electricity','Electricity use'],['electricityFactor','Electricity factor'],['fuel','Fuel consumed'],['fuelFactor','Fuel factor'],['travel','Travel distance'],['travelFactor','Travel factor']]) nonnegative(v[key],label); const e=v.electricity*v.electricityFactor, f=v.fuel*v.fuelFactor, t=v.travel*v.travelFactor, total=e+f+t; return {'Electricity emissions':num(e)+' kg CO₂e','Fuel emissions':num(f)+' kg CO₂e','Travel emissions':num(t)+' kg CO₂e','Estimated total':num(total)+' kg CO₂e','Total in tonnes':num(total/1000)+' t CO₂e',note:'Factors must match geography, energy source, fuel, vehicle and reporting boundary. Other Scope 1, 2 and 3 sources may be omitted.'}; }
+    },
   };
   function positive(n,label){if(!Number.isFinite(n)||n<=0)throw Error(label+' must be greater than zero.')}
   function nonnegative(n,label){if(!Number.isFinite(n)||n<0)throw Error(label+' cannot be negative.')}
