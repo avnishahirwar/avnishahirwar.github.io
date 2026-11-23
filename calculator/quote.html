@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101c2c">
+<title>Custom Calculator Quote | Friendly Calculator</title>
+<style>
+:root{--navy:#101c2c;--gold:#d8bd82;--ink:#172638;--muted:#5d6d7d;--line:#dfe5ea;--paper:#f5f7f9;--green:#166b4d;--red:#9e3434}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}.top{background:var(--navy);color:#fff;padding:17px 4%}.brand{color:#fff;text-decoration:none;font-weight:900;letter-spacing:.1em}.brand b{color:var(--gold)}main{width:min(760px,92%);margin:38px auto 60px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(20px,5vw,36px);box-shadow:0 12px 32px #10243a0a}.eyebrow{font-size:.76rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#89703d}h1{font-size:clamp(1.8rem,5vw,2.5rem);line-height:1.15;margin:.45rem 0 1rem}h2{font-size:1.1rem;margin:24px 0 8px}.muted{color:var(--muted)}.amount{font-size:2.2rem;font-weight:900;letter-spacing:-.04em;margin:8px 0}.block{white-space:pre-wrap;overflow-wrap:anywhere;background:#f8f9fb;border:1px solid var(--line);border-radius:10px;padding:14px}.check{display:flex;gap:10px;align-items:flex-start;margin:22px 0}.check input{margin-top:6px;width:18px;height:18px;flex:0 0 auto}.btn{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:11px 18px;border:0;border-radius:9px;background:var(--navy);color:white;font:inherit;font-weight:800;cursor:pointer}.btn:disabled{opacity:.55;cursor:not-allowed}.status{min-height:28px;margin:14px 0 0;color:var(--muted)}.status.error{color:var(--red)}.status.success{color:var(--green)}.fine{font-size:.87rem;color:var(--muted);margin-top:16px}footer{padding:20px 4%;background:#0b1928;color:#d1dae2;text-align:center;font-size:.85rem}footer a{color:#e6d4a4}
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a></header>
+<main><section class="card" aria-labelledby="title">
+<div class="eyebrow">Custom calculator project</div><h1 id="title">Your project quote</h1>
+<p id="intro" class="muted">Loading the quote details securely…</p>
+<div id="quoteContent" hidden>
+<p class="muted">Prepared for <strong id="customer"></strong></p>
+<h2>Project scope</h2><div id="scope" class="block"></div>
+<h2>Quoted terms</h2><div id="terms" class="block"></div>
+<h2>Fixed quote amount</h2><p class="amount" id="amount"></p>
+<p class="muted">Quote valid until <time id="expiry"></time></p>
+<div class="check"><input id="accept" type="checkbox"><label for="accept">I have reviewed and agree to the project scope and quoted terms shown above.</label></div>
+<button id="pay" class="btn" type="button" disabled>Continue to secure checkout</button>
+</div>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+<p class="fine">Payment is processed by Razorpay. Do not share this private quote link. Payment confirmation is checked by Friendly Calculator’s server before the order is marked paid. Service delivery follows only the written scope and terms shown here.</p>
+</section></main>
+<footer><a href="/calculator/contact.html">Contact support</a> · <a href="/calculator/privacy.html">Privacy</a> · <a href="/calculator/terms.html">Terms</a></footer>
+<script>
+(()=>{
+  'use strict';
+  const API='https://gtuycqunlihegsbvvsol.supabase.co/functions/v1/business-checkout';
+  const $=id=>document.getElementById(id);
+  const storageKey='fc_quote_token_v1';
+  let token=new URLSearchParams(location.hash.slice(1)).get('token')||'';
+  if(token){sessionStorage.setItem(storageKey,token);history.replaceState(null,'',location.pathname+location.search)}
+  else token=sessionStorage.getItem(storageKey)||'';
+  let quote=null;
+  function status(message,kind=''){ $('status').textContent=message; $('status').className='status'+(kind?' '+kind:'') }
+  async function call(action,payload={}){
+    const response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||'The request could not be completed.');
+    return data;
+  }
+  async function load(){
+    if(!token){$('intro').textContent='This private quote link is missing or has already been opened in another browser session.';status('Open the complete private link sent to you, or contact the sender for a fresh link.','error');return}
+    try{
+      const data=await call('get-quote',{token});quote=data.quote;
+      $('intro').textContent='Review the exact scope and terms before choosing to pay.';
+      $('customer').textContent=quote.customer_name;
+      $('scope').textContent=quote.project_scope;
+      $('terms').textContent=quote.quoted_terms;
+      $('amount').textContent=new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(quote.amount_paise/100);
+      const date=new Date(quote.expires_at);$('expiry').dateTime=date.toISOString();$('expiry').textContent=date.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+      $('quoteContent').hidden=false;
+      if(data.already_paid){$('pay').disabled=true;$('accept').disabled=true;status('This quote is already marked paid. No further payment is due.','success')}
+      else if(date.getTime()<=Date.now()){ $('pay').disabled=true;status('This quote has expired. Contact the sender to request updated terms.','error') }
+    }catch(error){$('intro').textContent='Quote unavailable';status(error.message,'error')}
+  }
+  $('accept').addEventListener('change',()=>{$('pay').disabled=!$('accept').checked||!quote||['paid','fulfilled','cancelled','expired'].includes(quote.status)||new Date(quote.expires_at)<=new Date()});
+  $('pay').addEventListener('click',async()=>{
+    if(!$('accept').checked||!quote)return;
+    $('pay').disabled=true;status('Preparing secure checkout…');
+    try{
+      const order=await call('create-order',{token,quote_id:quote.id});
+      await new Promise((resolve,reject)=>{
+        if(window.Razorpay){resolve();return}
+        const script=document.createElement('script');script.src='https://checkout.razorpay.com/v1/checkout.js';script.onload=resolve;script.onerror=()=>reject(new Error('Secure checkout could not be loaded.'));
+        document.head.appendChild(script);
+      });
+      const checkout=new Razorpay({key:order.key_id,amount:order.amount,currency:order.currency,name:order.name,description:order.description,order_id:order.order_id,prefill:order.prefill,theme:{color:'#101c2c'},modal:{ondismiss:()=>{$('pay').disabled=!$('accept').checked;status('Checkout closed. No payment confirmation was received.')}} ,handler:async result=>{
+        status('Verifying payment securely…');
+        try{const verified=await call('verify-payment',{token,razorpay_order_id:result.razorpay_order_id,razorpay_payment_id:result.razorpay_payment_id,razorpay_signature:result.razorpay_signature});status(verified.message||'Payment verified.','success');$('accept').disabled=true}
+        catch(error){status(error.message+' If your bank shows a debit, contact support with the payment reference.','error');$('pay').disabled=true}
+      }});
+      checkout.on('payment.failed',()=>{status('Payment was not confirmed. You can retry this same quote securely.','error');$('pay').disabled=!$('accept').checked});
+      checkout.open();
+    }catch(error){status(error.message,'error');$('pay').disabled=!$('accept').checked}
+  });
+  load();
+})();
+</script>
+</body>
+</html>

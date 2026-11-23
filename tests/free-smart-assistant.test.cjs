@@ -40,3 +40,13 @@ test('assistant directory includes international calculator pages for VAT search
   assert.ok(assistant.includes('value added tax'));
   assert.ok(assistant.includes('mortgage calculator'));
 });
+test('free general guidance stays educational, browser-local, and links paid enquiries without enabling checkout', () => {
+  assert.match(assistant, /guidanceButton/);
+  assert.match(assistant, /General guidance:/);
+  assert.match(assistant, /सामान्य मार्गदर्शन/);
+  assert.match(assistant, /financial, tax, investment/);
+  assert.match(assistant, /messages and calculator inputs are not sent to a server or saved/);
+  assert.match(assistant, /Paid expert consultations are not available yet/);
+  assert.match(assistant, /expert-consultations/);
+  assert.doesNotMatch(assistant, /checkout|razorpay/i);
+});

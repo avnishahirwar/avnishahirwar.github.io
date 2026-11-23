@@ -205,3 +205,15 @@ test('regional selectors retain original IDs and move into Settings instead of t
   const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.ok(css.includes('.fc-global-links>.fc-country-format-control') && css.includes('height:44px!important'), 'Header regional selectors share equal sizing.');
 });
+
+test('expanded More navigation renders every secondary link as a full-width menu card on mobile', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const serviceWorker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.match(shell, /<details class="fc-more-navigation"><summary>[\s\S]*?<\/summary><div class="fc-more-menu">/);
+  assert.match(shell, /moreLinks\.map\(navLink\)/);
+  assert.match(css, /\.fc-top-row>\.fc-global-links\.fc-nav-open>\.fc-more-navigation\{[\s\S]*?width:100%!important/);
+  assert.match(css, /\.fc-top-row>\.fc-global-links\.fc-nav-open>\.fc-more-navigation\[open\]>\.fc-more-menu\{[\s\S]*?display:grid!important/);
+  assert.match(css, /\.fc-top-row>\.fc-global-links\.fc-nav-open>\.fc-more-navigation>\.fc-more-menu>a\{[^}]*width:100%!important[^}]*min-height:46px!important/);
+  assert.match(serviceWorker, /friendly-calculator-public-v11/);
+});

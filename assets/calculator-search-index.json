@@ -10203,6 +10203,13 @@
     "description": "Hydroxychloroquine Dose Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Hyperbola Calculator",
+    "url": "/calculators/hyperbola-calculator.html",
+    "category": "MATH",
+    "keywords": "hyperbola calculator",
+    "description": "Calculate y-values, vertices and asymptotes for a standard horizontal or vertical hyperbola."
+  },
+  {
     "name": "Hyperbolic Functions Calculator",
     "url": "/calculators/hyperbolic-functions-calculator.html",
     "category": "MATH",
@@ -11580,6 +11587,13 @@
     "category": "HEALTH",
     "keywords": "lille score calculator",
     "description": "Lille Score Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Line Equation Calculator",
+    "url": "/calculators/line-equation-calculator.html",
+    "category": "MATH",
+    "keywords": "line equation calculator",
+    "description": "Find the slope, y-intercept and equation of a straight line from two points."
   },
   {
     "name": "Linear Actuator Force Calculator",
@@ -13969,6 +13983,13 @@
     "description": "The null space calculator will quickly compute the dimension and basis of the null space of a given matrix of size up to 4x4."
   },
   {
+    "name": "Number Base Converter",
+    "url": "/calculators/number-base-converter.html",
+    "category": "MATH",
+    "keywords": "number base converter",
+    "description": "Convert whole numbers between binary, octal, decimal and hexadecimal formats."
+  },
+  {
     "name": "Number Density Calculator",
     "url": "/calculators/number-density-calculator.html",
     "category": "PHYSICS",
@@ -14457,6 +14478,13 @@
     "category": "Business, Sales & Operations",
     "keywords": "paper weight calculator estimate paper batch weight from sheet dimensions, gsm and quantity.",
     "description": "Estimate paper batch weight from sheet dimensions, GSM and quantity."
+  },
+  {
+    "name": "Parabola Calculator",
+    "url": "/calculators/parabola-calculator.html",
+    "category": "MATH",
+    "keywords": "parabola calculator",
+    "description": "Find the vertex, axis, discriminant and real roots of a quadratic parabola from a, b and c."
   },
   {
     "name": "Parallax Calculator",
@@ -18573,6 +18601,13 @@
     "description": "Simplify Ratio Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Simultaneous Equations Calculator",
+    "url": "/calculators/linear-system-calculator.html",
+    "category": "MATH",
+    "keywords": "simultaneous equations calculator",
+    "description": "Solve two simultaneous linear equations and find x and y using Cramer’s rule."
+  },
+  {
     "name": "Sin 2 Theta Calculator",
     "url": "/calculators/sin-2-theta-calculator.html",
     "category": "MATH",
@@ -21149,6 +21184,13 @@
     "description": "Calculate uniform distribution calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
   },
   {
+    "name": "Unit Circle Calculator",
+    "url": "/calculators/unit-circle-calculator.html",
+    "category": "MATH",
+    "keywords": "unit circle calculator",
+    "description": "Convert an angle in degrees or radians to sine, cosine and tangent values on the unit circle."
+  },
+  {
     "name": "Unit Converter",
     "url": "/calculators/unit-converter.html",
     "category": "Converters, Data & Technology",
@@ -22351,5 +22393,54 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Overall Equipment Effectiveness (OEE) Calculator",
+    "url": "/calculators/oee-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "overall equipment effectiveness oee calculator availability performance quality",
+    "description": "Calculate manufacturing OEE from availability, performance and quality using planned production time, downtime, ideal cycle time and good output."
+  },
+  {
+    "name": "Hotel RevPAR Calculator",
+    "url": "/calculators/hotel-revpar-calculator.html",
+    "category": "Hospitality & Tourism",
+    "keywords": "hotel revpar revenue per available room adr occupancy room revenue",
+    "description": "Calculate hotel revenue per available room, average daily rate and occupancy from room revenue and room nights."
+  },
+  {
+    "name": "Restaurant Food Cost Calculator",
+    "url": "/calculators/restaurant-food-cost-calculator.html",
+    "category": "Food & Restaurant",
+    "keywords": "restaurant food cost percentage ingredient cost menu pricing gross profit",
+    "description": "Calculate restaurant food cost percentage and gross profit from ingredient cost and food sales revenue."
+  },
+  {
+    "name": "Freight Cost Calculator",
+    "url": "/calculators/freight-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "freight cost chargeable weight dimensional weight carrier rate",
+    "description": "Estimate freight charges using actual and dimensional weight, chargeable weight, carrier rate and fixed handling charges."
+  },
+  {
+    "name": "Shipping Cost Calculator",
+    "url": "/calculators/shipping-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "shipping cost parcel shipping fuel surcharge handling insurance",
+    "description": "Estimate parcel shipping costs from base charge, package weight, fuel surcharge, handling and insurance fees."
+  },
+  {
+    "name": "Machine Utilization Calculator",
+    "url": "/calculators/machine-utilization-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "machine utilization productive run time scheduled hours planned maintenance",
+    "description": "Calculate productive machine utilization after excluding planned maintenance from scheduled production time."
+  },
+  {
+    "name": "Fabric Consumption Calculator",
+    "url": "/calculators/fabric-consumption-calculator.html",
+    "category": "Fashion & Textile",
+    "keywords": "fabric consumption textile fabric length pattern area marker efficiency wastage",
+    "description": "Estimate textile fabric length from pattern area, order quantity, usable fabric width, layout efficiency and wastage."
   }
 ]

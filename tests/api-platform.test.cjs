@@ -62,6 +62,26 @@ test('customer dashboard uses server-side key management rather than direct tabl
   assert.match(customer, /performance\.now\(\)/);
 });
 
+test('customer dashboard clears private API keys and account data on logout or account change', () => {
+  assert.match(customer, /function clearCustomerState\(\)/);
+  assert.match(customer, /\$\('rawKey'\)\.textContent='';/);
+  assert.match(customer, /\$\('tryKey'\)\.value='';/);
+  assert.match(customer, /\$\('usageBody'\)\.replaceChildren\(\)/);
+  assert.match(customer, /\$\('keysBody'\)\.replaceChildren\(\)/);
+  assert.match(customer, /\$\('usageChart'\)\.replaceChildren\(\)/);
+  assert.match(customer, /\$\('inputs'\)\.value='';/);
+  assert.match(customer, /\$\('tryOutput'\)\.textContent='—';/);
+  assert.match(customer, /\$\('accountLabel'\)\.textContent='';/);
+  assert.match(customer, /\$\('accessStatus'\)\.textContent='Checking API plan access…';/);
+  assert.match(customer, /\$\('copyKey'\)\.textContent='Copy API key';/);
+  assert.match(customer, /\$\('tryMeta'\)\.textContent='No request sent\.';/);
+  assert.match(customer, /setStatus\('keyStatus',''\);setStatus\('dataStatus',''\);setStatus\('authStatus',''\)/);
+  assert.match(customer, /for\(const id of \['usageToday','usageMonth','usageSuccess','usageFailed','quotaRemaining','activeKeys'\]\)/);
+  assert.match(customer, /async function enter\(data\)\{clearCustomerState\(\);/);
+  assert.match(customer, /logoutButton[\s\S]*?clearCustomerState\(\)/);
+  assert.match(customer, /if\(session\?\.access_token!==token\)return/);
+});
+
 test('admin dashboard manages API customer access and keys through authenticated server actions', () => {
   assert.match(admin, /admin-dashboard/);
   assert.match(admin, /admin-set-access/);
