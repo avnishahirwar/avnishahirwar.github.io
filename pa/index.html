@@ -206,12 +206,12 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p></div></section>
 <main class="page-wrap home-main">
 <section class="home-tool-search" aria-labelledby="home-tool-search-title">
-<label id="home-tool-search-title" for="fc-home-tool-search">ਸਾਰੇ 3224 ਕੈਲਕੁਲੇਟਰ ਖੋਜੋ</label>
+<label id="home-tool-search-title" for="fc-home-tool-search">ਸਾਰੇ 3227 ਕੈਲਕੁਲੇਟਰ ਖੋਜੋ</label>
 <div class="home-tool-search-row">
 <input id="fc-home-tool-search" type="search" autocomplete="off" placeholder="GST, EMI, SIP, ਪ੍ਰਤੀਸ਼ਤ, ਉਮਰ... ਅਜ਼ਮਾਓ" aria-describedby="fc-home-search-status">
 <button id="fc-home-search-clear" type="button">ਸਾਫ਼ ਕਰੋ</button>
 </div>
-<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">34 ਸ਼੍ਰੇਣੀਆਂ ਵਿੱਚ 3224 ਕੈਲਕੁਲੇਟਰ ਵੇਖੋ। ਤੁਰੰਤ ਖੋਜੋ ਜਾਂ ਹੇਠਾਂ ਦਿੱਤੀ ਕੋਈ ਸ਼੍ਰੇਣੀ ਚੁਣੋ।</p>
+<p class="home-tool-search-status" id="fc-home-search-status" role="status" aria-live="polite">34 ਸ਼੍ਰੇਣੀਆਂ ਵਿੱਚ 3227 ਕੈਲਕੁਲੇਟਰ ਵੇਖੋ। ਤੁਰੰਤ ਖੋਜੋ ਜਾਂ ਹੇਠਾਂ ਦਿੱਤੀ ਕੋਈ ਸ਼੍ਰੇਣੀ ਚੁਣੋ।</p>
 <div id="fc-home-search-results" class="home-search-results" role="region" aria-label="Calculator search results" hidden></div>
 <nav class="home-popular-tools" aria-label="18 popular calculators">
 <a href="/calculators/gst-calculator.html">GST Calculator</a>
@@ -302,7 +302,7 @@ function loadCatalogue(){
  if(!cataloguePromise){
   cataloguePromise=fetch('/assets/calculator-search-index.json',{credentials:'same-origin',cache:'force-cache'})
    .then(response=>{if(!response.ok)throw new Error('Search index unavailable');return response.json();})
-   .then(items=>{if(!Array.isArray(items)||items.length!==3224)throw new Error('Search index validation failed');return items;})
+   .then(items=>{if(!Array.isArray(items)||items.length!==3227)throw new Error('Search index validation failed');return items;})
    .catch(error=>{cataloguePromise=null;throw error;});
  }
  return cataloguePromise;
@@ -318,9 +318,9 @@ function render(items,query){
 }
 async function search(){
  const query=input.value.trim().toLocaleLowerCase();
- if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 3224 calculators across 34 categories. Search instantly or choose a category below.';return;}
+ if(!query){lastQuery='';results.hidden=true;results.replaceChildren();status.textContent='Browse 3227 calculators across 34 categories. Search instantly or choose a category below.';return;}
  lastQuery=query;
- status.textContent='Searching all 3224 calculators…';
+ status.textContent='Searching all 3227 calculators…';
  results.hidden=true;
  try{
   const items=await loadCatalogue();
