@@ -262,7 +262,7 @@ test('the Admin dashboard remains private from public navigation and indexing', 
     const markup=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'');
     if (/href=["'][^"']*\/calculator\/admin\.html/i.test(markup)) publicAdminLinks.push(file);
   }
-  assert.deepEqual(publicAdminLinks.sort(), ['calculator/dashboard.html','hi/calculator/dashboard.html'], 'Only authenticated dashboard surfaces may link to the private Admin dashboard');
+  assert.deepEqual(publicAdminLinks.sort(), [], 'Admin links must not be present in public/static navigation markup');
   assert.doesNotMatch(sitemap, /https:\/\/friendlycalculator\.in\/calculator\/admin\.html/);
 });
 

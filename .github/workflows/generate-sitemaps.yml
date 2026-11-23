@@ -28,6 +28,7 @@ jobs:
       - run: node scripts/generate-sitemaps.cjs --check
       - run: node --check scripts/generate-locale-sitemaps.cjs
       - run: node scripts/generate-locale-sitemaps.cjs --check
+      - run: node --test tests/sitemap-index.test.cjs
 
   generate:
     if: github.event_name != 'pull_request'

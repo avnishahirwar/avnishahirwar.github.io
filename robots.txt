@@ -101,7 +101,8 @@ Disallow: /calculator/admin.html
 Disallow: /tests/
 Disallow: /avnish-ai/
 
-# Keep the original all-pages sitemap and expose the additive locale index.
+# Keep the standard sitemap index, all-pages sitemap, and additive locale indexes discoverable.
+Sitemap: https://friendlycalculator.in/sitemap-index.xml
 Sitemap: https://friendlycalculator.in/sitemap.xml
 Sitemap: https://friendlycalculator.in/sitemap-locales.xml
 Sitemap: https://friendlycalculator.in/sitemap-uk-us.xml
