@@ -2347,3 +2347,15 @@ test('calculator pages show the requested non-advice disclaimer beside the calcu
   assert.match(shell, /localTarget\|\|main/);
   assert.match(css, /\.fc-calculator-disclaimer\s*\{/);
 });
+
+
+test('homepage primary navigation links to the global calculators hub before Everyday', () => {
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const navStart = html.indexOf('<nav id="fc-primary-navigation"');
+  assert.notEqual(navStart, -1, 'Homepage primary navigation must exist');
+  const nav = html.slice(navStart, html.indexOf('</nav>', navStart));
+  const globalLink = nav.indexOf('<a href="/international/">Global Calculators</a>');
+  const everydayLink = nav.indexOf('<a href="/calculator/everyday-calculators.html">Everyday</a>');
+  assert.ok(globalLink >= 0, 'Global Calculators link must be present');
+  assert.ok(everydayLink > globalLink, 'Global Calculators must precede Everyday');
+});
