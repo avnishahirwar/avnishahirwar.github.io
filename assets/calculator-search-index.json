@@ -2489,6 +2489,13 @@
     "keywords": "BAI body adiposity index calculator hip circumference height body fat estimate non diagnostic wellness index"
   },
   {
+    "name": "Body Fat Percentage Calculator",
+    "url": "/calculators/body-fat-calculator.html",
+    "category": "Health & Fitness",
+    "keywords": "body fat percentage calculator health & fitness estimate body fat percentage using the us navy circumference method inputs.",
+    "description": "Estimate body fat percentage using the US Navy circumference method inputs."
+  },
+  {
     "name": "Body Roundness Index (BRI) Calculator",
     "url": "/calculators/body-roundness-index-calculator.html",
     "category": "Health, Fitness & Family",
@@ -2718,6 +2725,13 @@
     "category": "Business, Sales & Operations",
     "keywords": "break-even point calculator estimate break-even units and sales revenue.",
     "description": "Estimate break-even units and sales revenue."
+  },
+  {
+    "name": "Break-Even Point Calculator",
+    "url": "/calculators/break-even-point-calculator.html",
+    "category": "Business & Operations",
+    "keywords": "break-even point calculator business & operations find the unit sales and revenue needed to cover fixed costs.",
+    "description": "Find the unit sales and revenue needed to cover fixed costs."
   },
   {
     "name": "Breast Cancer Recurrence Risk Calculator",
@@ -3105,6 +3119,13 @@
     "description": "Calculate Call Option Calculator with a transparent formula and worked example."
   },
   {
+    "name": "Calorie Needs Calculator",
+    "url": "/calculators/calorie-calculator.html",
+    "category": "Health & Fitness",
+    "keywords": "calorie needs calculator health & fitness estimate daily calorie needs from age, sex, weight, height and activity level.",
+    "description": "Estimate daily calorie needs from age, sex, weight, height and activity level."
+  },
+  {
     "name": "Calories Burned Biking Calculator",
     "url": "/calculators/calories-burned-biking-calculator.html",
     "category": "Sports",
@@ -3320,6 +3341,13 @@
     "category": "CONSTRUCTION",
     "keywords": "carbon equivalent calculator",
     "description": "Carbon Equivalent Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Carbon Footprint Calculator",
+    "url": "/calculators/carbon-footprint-calculator.html",
+    "category": "Energy & Sustainability",
+    "keywords": "carbon footprint calculator energy & sustainability estimate annual co₂ emissions from electricity, travel and fuel inputs.",
+    "description": "Estimate annual CO₂ emissions from electricity, travel and fuel inputs."
   },
   {
     "name": "Carburetor CFM Calculator",
@@ -7686,6 +7714,13 @@
     "description": "Fabric Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
+    "name": "Fabric Consumption Calculator",
+    "url": "/calculators/fabric-consumption-calculator.html",
+    "category": "Fashion & Textile",
+    "keywords": "fabric consumption textile fabric length pattern area marker efficiency wastage",
+    "description": "Estimate textile fabric length from pattern area, order quantity, usable fabric width, layout efficiency and wastage."
+  },
+  {
     "name": "Factor of Safety Calculator",
     "url": "/calculators/factor-of-safety-calculator.html",
     "category": "PHYSICS",
@@ -7894,6 +7929,13 @@
     "category": "HEALTH",
     "keywords": "fertility by age calculator",
     "description": "Fertility by Age Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Fertility Window Calculator",
+    "url": "/calculators/fertility-window-calculator.html",
+    "category": "Health & Family",
+    "keywords": "fertility window calculator health & family estimate an ovulation date and fertile window from cycle length and period start date.",
+    "description": "Estimate an ovulation date and fertile window from cycle length and period start date."
   },
   {
     "name": "Fertilizer Calculator",
@@ -8210,6 +8252,13 @@
     "description": "Calculate Football Calorie Calculator (World Cup Edition) using a transparent, browser-only method with sample and limitations."
   },
   {
+    "name": "Force Calculator",
+    "url": "/calculators/force-calculator.html",
+    "category": "Physics & Science",
+    "keywords": "force calculator physics & science calculate force from mass and acceleration using newton’s second law.",
+    "description": "Calculate force from mass and acceleration using Newton’s second law."
+  },
+  {
     "name": "Force Converter",
     "url": "/calculators/force-converter.html",
     "category": "Converters, Data & Technology",
@@ -8369,6 +8418,13 @@
     "category": "OTHER",
     "keywords": "freight class calculator",
     "description": "Freight Class Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Freight Cost Calculator",
+    "url": "/calculators/freight-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "freight cost chargeable weight dimensional weight carrier rate",
+    "description": "Estimate freight charges using actual and dimensional weight, chargeable weight, carrier rate and fixed handling charges."
   },
   {
     "name": "French Drain Calculator",
@@ -9944,6 +10000,13 @@
     "description": "Hot Tub Cost Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Hotel RevPAR Calculator",
+    "url": "/calculators/hotel-revpar-calculator.html",
+    "category": "Hospitality & Tourism",
+    "keywords": "hotel revpar revenue per available room adr occupancy room revenue",
+    "description": "Calculate hotel revenue per available room, average daily rate and occupancy from room revenue and room nights."
+  },
+  {
     "name": "Hour Converter",
     "url": "/calculators/hour-converter.html",
     "category": "CONVERSION",
@@ -10642,6 +10705,13 @@
     "category": "MATH",
     "keywords": "interior and exterior triangle angles calculator",
     "description": "Interior and Exterior Triangle Angles Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Internal Rate of Return (IRR) Calculator",
+    "url": "/calculators/internal-rate-of-return-calculator.html",
+    "category": "Finance & Investment",
+    "keywords": "internal rate of return (irr) calculator finance & investment estimate the annual return that makes a three-year investment cash-flow stream break even in present-value terms.",
+    "description": "Estimate the annual return that makes a three-year investment cash-flow stream break even in present-value terms."
   },
   {
     "name": "Internal Rate of Return (IRR) Calculator",
@@ -12021,6 +12091,20 @@
     "category": "CONVERSION",
     "keywords": "m to ft converter",
     "description": "m to ft Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Machine Utilization Calculator",
+    "url": "/calculators/machine-utilization-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "machine utilization productive run time scheduled hours planned maintenance",
+    "description": "Calculate productive machine utilization after excluding planned maintenance from scheduled production time."
+  },
+  {
+    "name": "Macronutrient Calculator",
+    "url": "/calculators/macro-calculator.html",
+    "category": "Health & Fitness",
+    "keywords": "macronutrient calculator health & fitness convert a daily calorie target and macro percentages into grams of protein, carbohydrate and fat.",
+    "description": "Convert a daily calorie target and macro percentages into grams of protein, carbohydrate and fat."
   },
   {
     "name": "Magic Mile Calculator",
@@ -13787,6 +13871,13 @@
     "description": "Net Operating Working Capital Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Net Present Value (NPV) Calculator",
+    "url": "/calculators/net-present-value-calculator.html",
+    "category": "Finance & Investment",
+    "keywords": "net present value (npv) calculator finance & investment calculate the present value of future cash flows minus the initial investment.",
+    "description": "Calculate the present value of future cash flows minus the initial investment."
+  },
+  {
     "name": "Net Profit Margin Calculator",
     "url": "/calculators/net-profit-margin-calculator.html",
     "category": "FINANCE",
@@ -14095,6 +14186,13 @@
     "description": "Ohio Sales Tax Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Ohm’s Law Calculator",
+    "url": "/calculators/ohms-law-calculator.html",
+    "category": "Physics & Science",
+    "keywords": "ohm’s law calculator physics & science calculate voltage, current or resistance using ohm’s law.",
+    "description": "Calculate voltage, current or resistance using Ohm’s law."
+  },
+  {
     "name": "Oil to Butter Conversion",
     "url": "/calculators/oil-to-butter-conversion.html",
     "category": "Food",
@@ -14324,6 +14422,13 @@
     "category": "Statistics",
     "keywords": "outlier calculator",
     "description": "Calculate outlier calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
+  },
+  {
+    "name": "Overall Equipment Effectiveness (OEE) Calculator",
+    "url": "/calculators/oee-calculator.html",
+    "category": "Manufacturing & Industry",
+    "keywords": "overall equipment effectiveness oee calculator availability performance quality",
+    "description": "Calculate manufacturing OEE from availability, performance and quality using planned production time, downtime, ideal cycle time and good output."
   },
   {
     "name": "Overdraft Interest Calculator",
@@ -15704,6 +15809,13 @@
     "description": "Power Dissipation Calculator — requested calculator in the Friendly Calculator directory."
   },
   {
+    "name": "Power Factor Calculator",
+    "url": "/calculators/power-factor-calculator.html",
+    "category": "Energy & Sustainability",
+    "keywords": "power factor calculator energy & sustainability calculate electrical power factor from real and apparent power.",
+    "description": "Calculate electrical power factor from real and apparent power."
+  },
+  {
     "name": "Power Function Calculator",
     "url": "/calculators/power-function-calculator.html",
     "category": "MATH",
@@ -15800,6 +15912,13 @@
     "category": "Everyday Life",
     "keywords": "pregnancy countdown calculator",
     "description": "Pregnancy Countdown Calculator: a transparent browser-based calculator with formula, sample and assumptions."
+  },
+  {
+    "name": "Pregnancy Due Date Calculator",
+    "url": "/calculators/due-date-calculator.html",
+    "category": "Health & Family",
+    "keywords": "pregnancy due date calculator health & family estimate an expected due date from the first day of the last menstrual period.",
+    "description": "Estimate an expected due date from the first day of the last menstrual period."
   },
   {
     "name": "Pregnancy Due Date Calculator",
@@ -16193,6 +16312,13 @@
     "description": "Estimate renovation return on investment from post-renovation value uplift and project cost."
   },
   {
+    "name": "Property Tax Calculator",
+    "url": "/calculators/property-tax-calculator.html",
+    "category": "Real Estate & Property",
+    "keywords": "property tax calculator real estate & property estimate annual property tax from assessed value, exemption and local tax rate.",
+    "description": "Estimate annual property tax from assessed value, exemption and local tax rate."
+  },
+  {
     "name": "Property Tax Rate Calculator",
     "url": "/calculators/property-tax-rate-calculator.html",
     "category": "Real Estate & Property",
@@ -16436,6 +16562,13 @@
     "category": "Health",
     "keywords": "qtc calculator",
     "description": "Calculate QTc Calculator with a stated formula, sample and limitations."
+  },
+  {
+    "name": "Quadratic Equation Calculator",
+    "url": "/calculators/quadratic-equation-calculator.html",
+    "category": "Mathematics & Statistics",
+    "keywords": "quadratic equation calculator mathematics & statistics solve ax² + bx + c = 0 and report real or complex roots.",
+    "description": "Solve ax² + bx + c = 0 and report real or complex roots."
   },
   {
     "name": "Quadratic Equation Solver",
@@ -17339,6 +17472,13 @@
     "category": "PHYSICS",
     "keywords": "resistor wattage calculator",
     "description": "Resistor Wattage Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Restaurant Food Cost Calculator",
+    "url": "/calculators/restaurant-food-cost-calculator.html",
+    "category": "Food & Restaurant",
+    "keywords": "restaurant food cost percentage ingredient cost menu pricing gross profit",
+    "description": "Calculate restaurant food cost percentage and gross profit from ingredient cost and food sales revenue."
   },
   {
     "name": "Resultant Velocity Calculator",
@@ -18452,6 +18592,13 @@
     "category": "CONSTRUCTION",
     "keywords": "shiplap calculator",
     "description": "Shiplap Calculator — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Shipping Cost Calculator",
+    "url": "/calculators/shipping-cost-calculator.html",
+    "category": "Logistics & Supply Chain",
+    "keywords": "shipping cost parcel shipping fuel surcharge handling insurance",
+    "description": "Estimate parcel shipping costs from base charge, package weight, fuel surcharge, handling and insurance fees."
   },
   {
     "name": "Shock Index Calculator",
@@ -20407,6 +20554,13 @@
     "description": "Convert a time using entered UTC offsets."
   },
   {
+    "name": "Time Zone Difference Calculator",
+    "url": "/calculators/time-zone-calculator.html",
+    "category": "Date, Time & Work",
+    "keywords": "time zone difference calculator date, time & work compare two utc offsets and convert a local time between them.",
+    "description": "Compare two UTC offsets and convert a local time between them."
+  },
+  {
     "name": "Time Zones Converter",
     "url": "/calculators/time-zones-converter.html",
     "category": "CONVERSION",
@@ -21392,6 +21546,13 @@
     "category": "Statistics",
     "keywords": "variance calculator",
     "description": "Calculate variance calculator locally from values you provide. Results are educational estimates; review the stated assumptions."
+  },
+  {
+    "name": "VAT Calculator",
+    "url": "/calculators/vat-calculator.html",
+    "category": "Tax & Payroll",
+    "keywords": "vat calculator tax & payroll add or remove value-added tax from a net or gross amount.",
+    "description": "Add or remove value-added tax from a net or gross amount."
   },
   {
     "name": "VAT Calculator",
@@ -22393,54 +22554,5 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Overall Equipment Effectiveness (OEE) Calculator",
-    "url": "/calculators/oee-calculator.html",
-    "category": "Manufacturing & Industry",
-    "keywords": "overall equipment effectiveness oee calculator availability performance quality",
-    "description": "Calculate manufacturing OEE from availability, performance and quality using planned production time, downtime, ideal cycle time and good output."
-  },
-  {
-    "name": "Hotel RevPAR Calculator",
-    "url": "/calculators/hotel-revpar-calculator.html",
-    "category": "Hospitality & Tourism",
-    "keywords": "hotel revpar revenue per available room adr occupancy room revenue",
-    "description": "Calculate hotel revenue per available room, average daily rate and occupancy from room revenue and room nights."
-  },
-  {
-    "name": "Restaurant Food Cost Calculator",
-    "url": "/calculators/restaurant-food-cost-calculator.html",
-    "category": "Food & Restaurant",
-    "keywords": "restaurant food cost percentage ingredient cost menu pricing gross profit",
-    "description": "Calculate restaurant food cost percentage and gross profit from ingredient cost and food sales revenue."
-  },
-  {
-    "name": "Freight Cost Calculator",
-    "url": "/calculators/freight-cost-calculator.html",
-    "category": "Logistics & Supply Chain",
-    "keywords": "freight cost chargeable weight dimensional weight carrier rate",
-    "description": "Estimate freight charges using actual and dimensional weight, chargeable weight, carrier rate and fixed handling charges."
-  },
-  {
-    "name": "Shipping Cost Calculator",
-    "url": "/calculators/shipping-cost-calculator.html",
-    "category": "Logistics & Supply Chain",
-    "keywords": "shipping cost parcel shipping fuel surcharge handling insurance",
-    "description": "Estimate parcel shipping costs from base charge, package weight, fuel surcharge, handling and insurance fees."
-  },
-  {
-    "name": "Machine Utilization Calculator",
-    "url": "/calculators/machine-utilization-calculator.html",
-    "category": "Manufacturing & Industry",
-    "keywords": "machine utilization productive run time scheduled hours planned maintenance",
-    "description": "Calculate productive machine utilization after excluding planned maintenance from scheduled production time."
-  },
-  {
-    "name": "Fabric Consumption Calculator",
-    "url": "/calculators/fabric-consumption-calculator.html",
-    "category": "Fashion & Textile",
-    "keywords": "fabric consumption textile fabric length pattern area marker efficiency wastage",
-    "description": "Estimate textile fabric length from pattern area, order quantity, usable fabric width, layout efficiency and wastage."
   }
 ]
