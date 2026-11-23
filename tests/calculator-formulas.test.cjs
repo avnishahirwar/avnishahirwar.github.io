@@ -1343,3 +1343,20 @@ test('homepage search matcher requires relevant name, keyword phrase or category
   assert.equal(match({ name: 'General Calculator', keywords: 'general arithmetic', category: 'Everyday', description: 'A calculator for tax planning' }, 'tax'), null);
   assert.notEqual(match({ name: 'Income Tax Calculator', keywords: 'income tax regime', category: 'Tax' }, 'income tax'), null);
 });
+
+test('credit utilization page explains its formula, worked example and limits', () => {
+  const page = fs.readFileSync(path.join(root, 'calculators/credit-utilization-calculator.html'), 'utf8');
+  const engine = fs.readFileSync(path.join(root, 'assets/extra-calculators.js'), 'utf8');
+  assert.match(engine, /case'utilization':\\{const ratio=v\\.limit>0\\?v\\.balance\\/v\\.limit\\*100:NaN;/);
+  assert.match(page, /Credit utilization \\(%\\) = current outstanding balance ÷ total available credit limit × 100\\./);
+  assert.match(page, /₹25,000.*₹1,00,000.*25%/);
+  assert.match(page, /unused available credit is ₹75,000/i);
+  assert.match(page, /greater than zero/i);
+  assert.match(page, /can exceed 100%/i);
+  assert.match(page, /does not calculate a credit score/i);
+  const ratio = (balance, limit) => limit > 0 ? balance / limit * 100 : NaN;
+  assert.equal(ratio(25000, 100000), 25);
+  assert.equal(ratio(0, 100000), 0);
+  assert.ok(ratio(125000, 100000) > 100);
+  assert.ok(Number.isNaN(ratio(25000, 0)));
+});
