@@ -22554,5 +22554,26 @@
     "category": "CONVERSION",
     "keywords": "zulu time converter",
     "description": "Zulu Time Converter — requested calculator in the Friendly Calculator directory."
+  },
+  {
+    "name": "Irrigation Water Requirement Calculator",
+    "url": "/calculators/irrigation-water-requirement-calculator.html",
+    "category": "Agriculture & Farming",
+    "keywords": "irrigation water requirement crop water depth field area application efficiency gross water volume",
+    "description": "Estimate irrigation water volume from crop water depth, field area, duration and application efficiency."
+  },
+  {
+    "name": "Electrical Load and Energy Cost Calculator",
+    "url": "/calculators/electrical-load-energy-cost-calculator.html",
+    "category": "Electrical & Electronics",
+    "keywords": "electrical load connected load demand factor monthly energy consumption electricity cost",
+    "description": "Estimate connected electrical load, demand-adjusted load, monthly kWh and energy charges."
+  },
+  {
+    "name": "Carbon Footprint Estimator",
+    "url": "/calculators/carbon-footprint-estimator.html",
+    "category": "Environment & Sustainability",
+    "keywords": "carbon footprint estimator emissions electricity fuel travel emission factor kg CO2e",
+    "description": "Estimate operational emissions from electricity, fuel and travel using user-supplied emission factors."
   }
 ]
