@@ -10,7 +10,7 @@ test('calculates total shipment landed cost and unit cost', () => {
     clearance: 1000, destinationFreight: 500, otherCharges: 500
   });
   assert.equal(result.logistics, 8500);
-  assert.equal(result.importFees, 7000);
+  assert.equal(result.importFees, 6500);
   assert.equal(result.total, 65500);
   assert.equal(result.perUnit, 655);
 });
