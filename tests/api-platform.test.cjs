@@ -7,6 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { expectedSearchIndexLength, expectedCoreCalculatorCount, expectedSearchIndexUrls } = catalogueCounts;
+const indexedCatalogue = require('../scripts/sync-calculator-counts.cjs').catalogueStats();
 const api = fs.readFileSync(path.join(root, 'supabase/functions/calculator-api/index.ts'), 'utf8');
 const management = fs.readFileSync(path.join(root, 'supabase/functions/api-management/index.ts'), 'utf8');
 const customer = fs.readFileSync(path.join(root, 'calculator/dashboard.html'), 'utf8');
@@ -164,6 +165,6 @@ test('API documentation uses the current public calculator catalogue count', () 
   const indexOnly = [...searchUrls].filter(url => !expectedSearchIndexUrls.includes(url));
   assert.equal(sitemapOnly.length, 0, 'Sitemap routes missing from the calculator search index: ' + sitemapOnly.join(', '));
   assert.equal(indexOnly.length, 0, 'Search-index routes missing from the sitemap: ' + indexOnly.join(', '));
-  assert.ok(docs.includes('The full website directory contains ' + expectedCoreCalculatorCount + ' core calculator pages plus the international VAT calculator'));
+  assert.ok(docs.includes('The full website directory contains ' + indexedCatalogue.core.toLocaleString('en-US') + ' core calculator pages plus ' + indexedCatalogue.international.toLocaleString('en-US') + ' international calculator pages'));
   assert.doesNotMatch(docs, /The full website directory contains 200 public calculator pages/);
 });

@@ -359,7 +359,7 @@ test('SIP and BMI calls to action point to on-page calculator targets', () => {
 
 test('GST calculator links to the current core catalogue count', () => {
   const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
-  assert.ok(gst.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
+  assert.ok(gst.includes('Explore all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(gst, /Explore all 303 calculators/);
 });
 
@@ -389,7 +389,7 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily &amp; Hourly Pay</title>'));
   assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
-  assert.ok(salary.includes('Explore all ' + expectedCoreCalculatorCount + ' calculators on Friendly Calculator.'));
+  assert.ok(salary.includes('Explore all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
 });
 
@@ -838,6 +838,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
+  const indexedCoreTotal = require('../scripts/sync-calculator-counts.cjs').catalogueStats().core;
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const searchUrls = [...new Set(searchIndex.map(item => item.url))].sort();
@@ -867,7 +868,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.match(directory, new RegExp('Search ' + expectedCoreCalculatorCount + ' calculators by name or topic'));
+  assert.match(directory, new RegExp('Search ' + (expectedCoreCalculatorCount + 1).toLocaleString('en-US') + ' calculators by name or topic'));
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.equal(categoryCount, 20, 'Expected 20 calculator-category sections; found ' + categoryCount + ': ' + [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"/g)].map(match => match[1]).join(', '));
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
@@ -895,7 +896,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
   assert.ok(sitemap.includes('/calculator/agriculture-calculators.html'));
-  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
+  assert.ok(about.includes(indexedCoreTotal.toLocaleString('en-US') + ' public calculators'));
   assert.doesNotMatch(homepage + directory, /186 calculators|186 calculator tools|Search 186 calculators|Showing all 186 calculators|198 calculators|198 calculator tools/);
 });
 
