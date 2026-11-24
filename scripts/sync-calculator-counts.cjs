@@ -17,11 +17,11 @@ function publishedCalculatorEntries() {
     const absolute = path.resolve(ROOT, url.slice(1));
     if (!absolute.startsWith(ROOT + path.sep) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) continue;
     const html = fs.readFileSync(absolute, 'utf8');
-    const noindex = /<meta\\b[^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["'][^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b/i.test(html) ||
-      /<meta\\b[^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["']/i.test(html);
+    const noindex = /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
+      /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
     if (noindex) continue;
-    const canonicalTag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
-    const canonicalHref = canonicalTag && canonicalTag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+    const canonicalTag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+    const canonicalHref = canonicalTag && canonicalTag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
     let canonicalPath = url;
     if (canonicalHref) {
       try {
@@ -54,10 +54,10 @@ function escapeHtml(value) {
 function updateAboutCatalogue(html, entries) {
   const list = entries.filter(item => item.url.startsWith('/calculators/'))
     .map(item => '<li><a href="' + escapeHtml(item.url) + '">' + escapeHtml(item.name) + '</a></li>')
-    .join('\\n');
-  const pattern = /(<h2>Available calculators \\([\\d,]+ tools\\)<\\/h2>\\s*)<ol>[\\s\\S]*?<\\/ol>/i;
+    .join('\n');
+  const pattern = /(<h2>Available calculators \([\d,]+ tools\)<\/h2>\s*)<ol>[\s\S]*?<\/ol>/i;
   if (!pattern.test(html)) throw new Error('Could not locate the complete Available calculators list in calculator/about.html');
-  return html.replace(pattern, (_, heading) => heading + '<ol>\\n' + list + '\\n</ol>');
+  return html.replace(pattern, (_, heading) => heading + '<ol>\n' + list + '\n</ol>');
 }
 
 function sectionCardCounts(html) {
