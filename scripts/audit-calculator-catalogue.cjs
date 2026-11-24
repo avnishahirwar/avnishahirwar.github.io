@@ -26,28 +26,28 @@ const ratePattern = /(ppf|ssy|sukanya|nsc|kvp|scss|post-office-(?:rd|mis)|gst|in
 for (const file of files.sort()) {
   const rel = path.relative(root,file).split(path.sep).join('/');
   const html = fs.readFileSync(file,'utf8');
-  const redirectOnly = has(html,/<meta\\b(?=[^>]*http-equiv=[\"']refresh[\"'])[^>]*>/i) && has(html,/<meta\\b(?=[^>]*name=[\"']robots[\"'])(?=[^>]*noindex)[^>]*>/i);
+  const redirectOnly = has(html,/<meta\b(?=[^>]*http-equiv=[\"']refresh[\"'])[^>]*>/i) && has(html,/<meta\b(?=[^>]*name=[\"']robots[\"'])(?=[^>]*noindex)[^>]*>/i);
   if (redirectOnly) { excludedRedirects++; continue; }
-  const m = rel.match(/^([a-z]{2})\\/calculators\\//);
+  const m = rel.match(/^([a-z]{2})\/calculators\//);
   const lang = m ? m[1] : 'en';
   stats.total++;
   if (lang === 'en') stats.english++; else {stats.localized++;stats.byLanguage[lang]=(stats.byLanguage[lang]||0)+1;}
-  const visible = html.replace(/<script\\b[\\s\\S]*?<\\/script>/gi,' ').replace(/<style\\b[\\s\\S]*?<\\/style>/gi,' ').replace(/<[^>]*>/g,' ').replace(/&(?:nbsp|amp|lt|gt|quot|#39);/gi,' ').replace(/\\s+/g,' ');
-  const visibleFaq = has(html,/<(?:section|div)[^>]*(?:faq|frequently)[^>]*>|<details[^>]*>[\\s\\S]*?<summary/i);
+  const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi,' ').replace(/<style\b[\s\S]*?<\/style>/gi,' ').replace(/<[^>]*>/g,' ').replace(/&(?:nbsp|amp|lt|gt|quot|#39);/gi,' ').replace(/\s+/g,' ');
+  const visibleFaq = has(html,/<(?:section|div)[^>]*(?:faq|frequently)[^>]*>|<details[^>]*>[\s\S]*?<summary/i);
   const checks = {
-    title:has(html,/<title>\\s*[^<]{8,}<\\/title>/i),
+    title:has(html,/<title>\s*[^<]{8,}<\/title>/i),
     description:has(html,/<meta[^>]+name=[\"']description[\"'][^>]+content=[\"'][^\"']{40,}/i)||has(html,/<meta[^>]+content=[\"'][^\"']{40,}[\"'][^>]+name=[\"']description[\"']/i),
-    canonical:has(html,/<link\\b(?=[^>]*\\brel=[\"']canonical[\"'])(?=[^>]*\\bhref=[\"'][^\"']+[\"'])[^>]*>/i),
-    formula:has(visible,/(formula|calculation method|how (?:this|the) calculator works|emi\\s*=|sip\\s*=|principal|interest rate|गणना का सूत्र|सूत्र)/i),
+    canonical:has(html,/<link\b(?=[^>]*\brel=[\"']canonical[\"'])(?=[^>]*\bhref=[\"'][^\"']+[\"'])[^>]*>/i),
+    formula:has(visible,/(formula|calculation method|how (?:this|the) calculator works|emi\s*=|sip\s*=|principal|interest rate|गणना का सूत्र|सूत्र)/i),
     workedExample:has(visible,/(worked example|calculation example|example calculation|उदाहरण|गणना का उदाहरण)/i),
     visibleFaq,
-    faqSchema:has(html,/\"@type\"\\s*:\\s*\"FAQPage\"/i)||(sharedFaqSchema&&visibleFaq),
-    chartOrTable:has(html,/<table[\\s>]/i)||has(visible,/(chart|canvas|plot|visuali[sz]ation|amortization|amortisation|ग्राफ|चार्ट)/i)
+    faqSchema:has(html,/\"@type\"\s*:\s*\"FAQPage\"/i)||(sharedFaqSchema&&visibleFaq),
+    chartOrTable:has(html,/<table[\s>]/i)||has(visible,/(chart|canvas|plot|visuali[sz]ation|amortization|amortisation|ग्राफ|चार्ट)/i)
   };
   for (const k of Object.keys(checks)) if(checks[k]) stats.checks[k]++;
   const rateSensitive=ratePattern.test(path.basename(file));
-  const updated=has(visible,/last\\s+updated|updated\\s*[:：]|checked\\s+(?:against|on)|rates?\\s+(?:last\\s+)?checked|अद्यतन\\s*[:：]|अपडेट\\s*[:：]|दरें?\\s+जाँची\\s+गई/i);
-  const source=has(html,/(dea\\.gov\\.in|indiapost\\.gov\\.in|gst\\.gov\\.in|cbic\\.gov\\.in|incometax\\.gov\\.in|epfindia\\.gov\\.in|pfrda\\.org\\.in|mof\\.gov\\.in|canada\\.ca|gov\\.uk|ato\\.gov\\.au)/i);
+  const updated=has(visible,/last\s+updated|updated\s*[:：]|checked\s+(?:against|on)|rates?\s+(?:last\s+)?checked|अद्यतन\s*[:：]|अपडेट\s*[:：]|दरें?\s+जाँची\s+गई/i);
+  const source=has(html,/(dea\.gov\.in|indiapost\.gov\.in|gst\.gov\.in|cbic\.gov\.in|incometax\.gov\.in|epfindia\.gov\.in|pfrda\.org\.in|mof\.gov\.in|canada\.ca|gov\.uk|ato\.gov\.au)/i);
   if(rateSensitive){rateSensitivePages++;if(updated)stats.checks.updatedRateStamp++;if(source)stats.checks.authoritativeRateSource++;}
   const required=['title','description','canonical','formula','workedExample','visibleFaq'];
   const missing=required.filter(k=>!checks[k]);
