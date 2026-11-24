@@ -1,0 +1,37 @@
+name: One-time additive public social metadata repair
+
+on:
+  push:
+    branches:
+      - seo/public-social-metadata-repair-2026-11-24
+
+permissions:
+  contents: write
+
+jobs:
+  repair-public-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check repair script syntax
+        run: node --check scripts/repair-public-social-metadata.cjs
+      - name: Add missing public social metadata
+        run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Verify no eligible pages remain unrepaired
+        run: node scripts/repair-public-social-metadata.cjs --check
+      - name: Commit additive HTML metadata changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: repair missing public social metadata [skip ci]"
+            git push
+          else
+            echo "No public social metadata repairs were needed."
+          fi
