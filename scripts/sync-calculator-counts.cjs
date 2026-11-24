@@ -8,19 +8,57 @@ const ROOT = path.resolve(__dirname, '..');
 const INDEX_FILE = path.join(ROOT, 'assets/calculator-search-index.json');
 const DIRECTORY_FILES = ['calculator/site-directory.html', 'hi/calculator/site-directory.html'];
 
-function catalogueStats() {
+function publishedCalculatorEntries() {
   const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
-  const urls = new Set();
+  const entries = new Map();
   for (const item of index) {
     const url = String(item.url || '');
     if (!url.startsWith('/') || !url.endsWith('.html') || url.includes('?') || url.includes('#') || url.split('/').includes('..')) continue;
-    if (!fs.existsSync(path.join(ROOT, url.slice(1)))) continue;
-    urls.add(url);
+    const absolute = path.resolve(ROOT, url.slice(1));
+    if (!absolute.startsWith(ROOT + path.sep) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) continue;
+    const html = fs.readFileSync(absolute, 'utf8');
+    const noindex = /<meta\\b[^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["'][^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b/i.test(html) ||
+      /<meta\\b[^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["']/i.test(html);
+    if (noindex) continue;
+    const canonicalTag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
+    const canonicalHref = canonicalTag && canonicalTag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+    let canonicalPath = url;
+    if (canonicalHref) {
+      try {
+        const canonical = new URL(canonicalHref[1], 'https://friendlycalculator.in');
+        if (canonical.origin !== 'https://friendlycalculator.in' || canonical.search || canonical.hash) continue;
+        canonicalPath = canonical.pathname;
+      } catch {
+        continue;
+      }
+    }
+    if (canonicalPath !== url) continue;
+    if (!entries.has(url)) entries.set(url, item);
   }
+  return [...entries.values()].sort((a, b) => String(a.name).localeCompare(String(b.name), 'en'));
+}
+
+function catalogueStats() {
+  const entries = publishedCalculatorEntries();
+  const urls = new Set(entries.map(item => item.url));
   const core = [...urls].filter(url => url.startsWith('/calculators/')).length;
-  return {total: urls.size, core, international: urls.size - core};
+  return {total: urls.size, core, international: urls.size - core, entries};
 }
 function catalogueCount() { return catalogueStats().total; }
+
+function escapeHtml(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function updateAboutCatalogue(html, entries) {
+  const list = entries.filter(item => item.url.startsWith('/calculators/'))
+    .map(item => '<li><a href="' + escapeHtml(item.url) + '">' + escapeHtml(item.name) + '</a></li>')
+    .join('\\n');
+  const pattern = /(<h2>Available calculators \\([\\d,]+ tools\\)<\\/h2>\\s*)<ol>[\\s\\S]*?<\\/ol>/i;
+  if (!pattern.test(html)) throw new Error('Could not locate the complete Available calculators list in calculator/about.html');
+  return html.replace(pattern, (_, heading) => heading + '<ol>\\n' + list + '\\n</ol>');
+}
 
 function sectionCardCounts(html) {
   const counts = new Map();
@@ -104,7 +142,7 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
 }
 
 function transformedFiles() {
-  const {total, core, international} = catalogueStats();
+  const {total, core, international, entries} = catalogueStats();
   const result = new Map();
   const englishFiles = [
     'index.html', 'calculator/about.html', 'calculator/api.html',
@@ -117,6 +155,7 @@ function transformedFiles() {
     let html = fs.readFileSync(absolute, 'utf8');
     if (relative === 'index.html') html = updateHomepage(html, total, false, core, sectionCardCounts(fs.readFileSync(path.join(ROOT, 'calculator/site-directory.html'), 'utf8')));
     else if (DIRECTORY_FILES.includes(relative)) html = updateDirectoryCounters(html, total);
+    else if (relative === 'calculator/about.html') html = updateAboutCatalogue(updateGlobalText(html, total, core, international), entries);
     else html = updateGlobalText(html, total, core, international);
     result.set(relative, html);
   }
