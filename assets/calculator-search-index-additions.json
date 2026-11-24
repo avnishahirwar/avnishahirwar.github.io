@@ -1,4 +1,5 @@
-[  {
+[
+  {
     "name": "Treadmill Pace Calculator",
     "url": "/calculators/treadmill-pace-calculator.html",
     "category": "Sports",
@@ -2097,5 +2098,705 @@
     "category": "Home & Garden",
     "keywords": "stain removed solution ratio calculator",
     "description": "Dilution of stain remover or oxygen bleach per litre."
+  },
+  {
+    "name": "Farming Profit Margin Calculator",
+    "url": "/calculators/farming-profit-margin.html",
+    "category": "Business",
+    "keywords": "farming profit margin calculator",
+    "description": "Profit and margin per acre from crop revenue and costs."
+  },
+  {
+    "name": "Farm Loan Interest Calculator",
+    "url": "/calculators/farm-loan-interest.html",
+    "category": "Finance",
+    "keywords": "farm loan interest calculator",
+    "description": "Interest outgo on a Kisan Credit Card or crop loan."
+  },
+  {
+    "name": "Fat Loss Timeline Calculator",
+    "url": "/calculators/fat-loss-timeline.html",
+    "category": "Health",
+    "keywords": "fat loss timeline calculator",
+    "description": "Weeks to a target weight at your calorie deficit."
+  },
+  {
+    "name": "Feet and Inches Height Converter",
+    "url": "/calculators/feet-and-inches-height-converter.html",
+    "category": "Conversion",
+    "keywords": "feet and inches height converter",
+    "description": "Centimetres to feet and inches in one step."
+  },
+  {
+    "name": "Fence Post Spacing Calculator",
+    "url": "/calculators/fence-post-spacing.html",
+    "category": "Construction & DIY",
+    "keywords": "fence post spacing calculator",
+    "description": "Post count for a fence run at set spacing."
+  },
+  {
+    "name": "Fertilizer NPK Ratio Calculator",
+    "url": "/calculators/fertilizer-npk-ratio.html",
+    "category": "Home & Garden",
+    "keywords": "fertilizer npk ratio calculator",
+    "description": "Actual N, P and K kilograms from bag weight."
+  },
+  {
+    "name": "Festival Budget Planner Calculator",
+    "url": "/calculators/festival-budget-planner.html",
+    "category": "Everyday Life",
+    "keywords": "festival budget planner calculator",
+    "description": "Total festival spend from category budgets."
+  },
+  {
+    "name": "Fiber Optic Loss Budget Calculator",
+    "url": "/calculators/fiber-optic-loss-budget.html",
+    "category": "Tools",
+    "keywords": "fiber optic loss budget calculator",
+    "description": "Total dB loss along a fiber link."
+  },
+  {
+    "name": "Firewood Cord Volume Calculator",
+    "url": "/calculators/firewood-cord-volume.html",
+    "category": "Home & Garden",
+    "keywords": "firewood cord volume calculator",
+    "description": "Stack volume in cords and cubic metres."
+  },
+  {
+    "name": "Startup Runway Calculator",
+    "url": "/calculators/first-year-startup-runway.html",
+    "category": "Business",
+    "keywords": "startup runway calculator",
+    "description": "Months of life left at current burn rate."
+  },
+  {
+    "name": "Fish Tank Water Change Calculator",
+    "url": "/calculators/fish-tank-water-change.html",
+    "category": "Pets",
+    "keywords": "fish tank water change calculator",
+    "description": "Litres to swap on a weekly water change."
+  },
+  {
+    "name": "Fitness Frequency Plan Calculator",
+    "url": "/calculators/fitness-frequency-plan.html",
+    "category": "Health",
+    "keywords": "fitness frequency plan calculator",
+    "description": "Rest-to-training ratio across a week."
+  },
+  {
+    "name": "Flat Discount Calculation Calculator",
+    "url": "/calculators/flat-discount-calculation.html",
+    "category": "Finance",
+    "keywords": "flat discount calculation calculator",
+    "description": "Final price after stacked discounts."
+  },
+  {
+    "name": "Floor Slope to Drain Calculator",
+    "url": "/calculators/floor-slope-drain.html",
+    "category": "Construction & DIY",
+    "keywords": "floor slope to drain calculator",
+    "description": "Floor fall needed so water reaches the drain."
+  },
+  {
+    "name": "Flower Bed Planting Density Calculator",
+    "url": "/calculators/flower-bed-planting-density.html",
+    "category": "Home & Garden",
+    "keywords": "flower bed planting density calculator",
+    "description": "Plants for a bed from spacing."
+  },
+  {
+    "name": "Food Expiry Planner Calculator",
+    "url": "/calculators/food-expiry-planner.html",
+    "category": "Everyday Life",
+    "keywords": "food expiry planner calculator",
+    "description": "Days left before a packet must be used."
+  },
+  {
+    "name": "Food Truck Revenue Calculator",
+    "url": "/calculators/food-truck-revenue.html",
+    "category": "Business",
+    "keywords": "food truck revenue calculator",
+    "description": "Daily takings from covers and ticket size."
+  },
+  {
+    "name": "Freelance Hourly Rate Calculator",
+    "url": "/calculators/freelance-hourly-rate.html",
+    "category": "Business",
+    "keywords": "freelance hourly rate calculator",
+    "description": "Hourly rate that hits your target income."
+  },
+  {
+    "name": "Freelance Invoice GST Calculator",
+    "url": "/calculators/freelance-invoice-gst.html",
+    "category": "Tax & Compliance",
+    "keywords": "freelance invoice gst calculator",
+    "description": "Invoice total with 18% GST split into CGST/SGST."
+  },
+  {
+    "name": "Fried Food Oil Absorption Calculator",
+    "url": "/calculators/fried-food-oil-absorption.html",
+    "category": "Everyday Life",
+    "keywords": "fried food oil absorption calculator",
+    "description": "Oil absorbed per serving by food weight."
+  },
+  {
+    "name": "Fridge Storage Space Calculator",
+    "url": "/calculators/fridge-storage-space.html",
+    "category": "Home & Garden",
+    "keywords": "fridge storage space calculator",
+    "description": "Shelf litres used by stacked containers."
+  },
+  {
+    "name": "Fruit Ripening Days Calculator",
+    "url": "/calculators/fruit-ripening-days.html",
+    "category": "Everyday Life",
+    "keywords": "fruit ripening days calculator",
+    "description": "Days until fruit is ready at room temperature."
+  },
+  {
+    "name": "Monthly Fuel Budget Calculator",
+    "url": "/calculators/fuel-budget-monthly.html",
+    "category": "Automobile",
+    "keywords": "monthly fuel budget calculator",
+    "description": "Petrol budget from kilometres and mileage."
+  },
+  {
+    "name": "Funeral Planning Cost Calculator",
+    "url": "/calculators/funeral-planning-cost.html",
+    "category": "Everyday Life",
+    "keywords": "funeral planning cost calculator",
+    "description": "Estimated funeral expenses by component."
+  },
+  {
+    "name": "Furnace BTU Sizing Calculator",
+    "url": "/calculators/furnace-btu-sizing.html",
+    "category": "Home & Garden",
+    "keywords": "furnace btu sizing calculator",
+    "description": "Heater size for a room from area and climate."
+  },
+  {
+    "name": "Furniture Moving Cost Calculator",
+    "url": "/calculators/furniture-moving-cost.html",
+    "category": "Everyday Life",
+    "keywords": "furniture moving cost calculator",
+    "description": "Shifting cost by load weight and distance."
+  },
+  {
+    "name": "Future Value Annuity Calculator",
+    "url": "/calculators/future-value-annuity.html",
+    "category": "Finance",
+    "keywords": "future value annuity calculator",
+    "description": "Value of regular yearly deposits with growth."
+  },
+  {
+    "name": "Gabion Wall Volume Calculator",
+    "url": "/calculators/gabion-wall-volume.html",
+    "category": "Construction & DIY",
+    "keywords": "gabion wall volume calculator",
+    "description": "Stone volume for gabion cages."
+  },
+  {
+    "name": "Gallery Wall Spacing Calculator",
+    "url": "/calculators/gallery-wall-spacing.html",
+    "category": "Home & Garden",
+    "keywords": "gallery wall spacing calculator",
+    "description": "Spacing between frames on a gallery wall."
+  },
+  {
+    "name": "Game Developer Royalty Calculator",
+    "url": "/calculators/game-developer-royalty.html",
+    "category": "Business",
+    "keywords": "game developer royalty calculator",
+    "description": "Earnings from game sales across store share."
+  },
+  {
+    "name": "Garage Door Spring Turns Calculator",
+    "url": "/calculators/garage-door-spring-tension.html",
+    "category": "Construction & DIY",
+    "keywords": "garage door spring turns calculator",
+    "description": "Required spring wind turns by door height."
+  },
+  {
+    "name": "Garbage Bin Capacity Calculator",
+    "url": "/calculators/garbage-bin-capacity.html",
+    "category": "Home & Garden",
+    "keywords": "garbage bin capacity calculator",
+    "description": "Weekly bin litres your household needs."
+  },
+  {
+    "name": "Garden Hose Flow Rate Calculator",
+    "url": "/calculators/garden-hose-flow-rate.html",
+    "category": "Home & Garden",
+    "keywords": "garden hose flow rate calculator",
+    "description": "Litres per minute from hose size and pressure."
+  },
+  {
+    "name": "LPG Cylinder Days Left Calculator",
+    "url": "/calculators/gas-cylinder-days-left.html",
+    "category": "Everyday Life",
+    "keywords": "lpg cylinder days left calculator",
+    "description": "How long a cooking gas cylinder lasts."
+  },
+  {
+    "name": "Gear Ratio Speed Calculator",
+    "url": "/calculators/gear-ratio-speed.html",
+    "category": "Tools",
+    "keywords": "gear ratio speed calculator",
+    "description": "Output RPM from input and gear ratio."
+  },
+  {
+    "name": "Geyser Water Heating Cost Calculator",
+    "url": "/calculators/geyser-water-heating-cost.html",
+    "category": "Home & Garden",
+    "keywords": "geyser water heating cost calculator",
+    "description": "Electricity cost of a hot water bath."
+  },
+  {
+    "name": "Gift Card Breakage Calculator",
+    "url": "/calculators/gift-card-breakage.html",
+    "category": "Business",
+    "keywords": "gift card breakage calculator",
+    "description": "Value never redeemed on issued cards."
+  },
+  {
+    "name": "Glass Shelf Load Calculator",
+    "url": "/calculators/glass-shelf-load.html",
+    "category": "Construction & DIY",
+    "keywords": "glass shelf load calculator",
+    "description": "Safe load for a toughened glass shelf."
+  },
+  {
+    "name": "Estimated Average Glucose Calculator",
+    "url": "/calculators/glucose-average-estimated.html",
+    "category": "Health",
+    "keywords": "estimated average glucose calculator",
+    "description": "Convert HbA1c to average blood glucose."
+  },
+  {
+    "name": "Glue Drying Time Calculator",
+    "url": "/calculators/glue-drying-time.html",
+    "category": "Construction & DIY",
+    "keywords": "glue drying time calculator",
+    "description": "Clamp and cure time scale with glue line thickness."
+  },
+  {
+    "name": "Gold Loan LTV Calculator",
+    "url": "/calculators/gold-loan-ltv.html",
+    "category": "Finance",
+    "keywords": "gold loan ltv calculator",
+    "description": "Loan amount as a share of gold value."
+  },
+  {
+    "name": "Gold Price Gram Conversion Calculator",
+    "url": "/calculators/gold-price-gram-conversion.html",
+    "category": "Finance",
+    "keywords": "gold price gram conversion calculator",
+    "description": "Rupees per gram from per-10g quotes."
+  },
+  {
+    "name": "Golf Stableford Points Calculator",
+    "url": "/calculators/golf-handicap-stableford.html",
+    "category": "Sports",
+    "keywords": "golf stableford points calculator",
+    "description": "Stableford points from strokes and par."
+  },
+  {
+    "name": "Grape Wine Yield Calculator",
+    "url": "/calculators/grape-wine-yield.html",
+    "category": "Home & Garden",
+    "keywords": "grape wine yield calculator",
+    "description": "Bottles of wine from kilograms of grapes."
+  },
+  {
+    "name": "Grass Seed Coverage Calculator",
+    "url": "/calculators/grass-seed-coverage.html",
+    "category": "Home & Garden",
+    "keywords": "grass seed coverage calculator",
+    "description": "Kilograms of seed for a lawn area."
+  },
+  {
+    "name": "Memorial Engraving Cost Calculator",
+    "url": "/calculators/gravestone-etching-cost.html",
+    "category": "Everyday Life",
+    "keywords": "memorial engraving cost calculator",
+    "description": "Cost estimate by characters and stone type."
+  },
+  {
+    "name": "Grocery Basket Inflation Calculator",
+    "url": "/calculators/grocery-basket-inflation.html",
+    "category": "Everyday Life",
+    "keywords": "grocery basket inflation calculator",
+    "description": "Your personal inflation rate across two shop trips."
+  },
+  {
+    "name": "Grommet Spacing Calculator",
+    "url": "/calculators/grommet-spacing.html",
+    "category": "Everyday Life",
+    "keywords": "grommet spacing calculator",
+    "description": "Grommet count and spacing for a curtain or tarp."
+  },
+  {
+    "name": "Gross Rent Multiplier Calculator",
+    "url": "/calculators/gross-rent-multiplier.html",
+    "category": "Finance",
+    "keywords": "gross rent multiplier calculator",
+    "description": "GRM to compare rental properties."
+  },
+  {
+    "name": "Tile Grout Volume Calculator",
+    "url": "/calculators/grout-tile-gap-volume.html",
+    "category": "Construction & DIY",
+    "keywords": "tile grout volume calculator",
+    "description": "Grout weight for a tiled area."
+  },
+  {
+    "name": "Guitar Capo Transposition Calculator",
+    "url": "/calculators/guitar-capo-transposition.html",
+    "category": "Everyday Life",
+    "keywords": "guitar capo transposition calculator",
+    "description": "Chord shape to sounding key at any capo fret."
+  },
+  {
+    "name": "Guitar String Tension Calculator",
+    "url": "/calculators/guitar-string-tension.html",
+    "category": "Everyday Life",
+    "keywords": "guitar string tension calculator",
+    "description": "Tension in newtons from scale, pitch and gauge."
+  },
+  {
+    "name": "Gun Safe Cubic Feet Calculator",
+    "url": "/calculators/gun-safe-cubic-feet.html",
+    "category": "Home & Garden",
+    "keywords": "gun safe cubic feet calculator",
+    "description": "Interior volume in cubic feet."
+  },
+  {
+    "name": "Gutter Capacity Rainfall Calculator",
+    "url": "/calculators/gutter-capacity-rainfall.html",
+    "category": "Construction & DIY",
+    "keywords": "gutter capacity rainfall calculator",
+    "description": "Gutter litres per hour versus roof runoff."
+  },
+  {
+    "name": "Gutter Slope Calculator",
+    "url": "/calculators/gutter-slope.html",
+    "category": "Construction & DIY",
+    "keywords": "gutter slope calculator",
+    "description": "Fall along a gutter run so water flows."
+  },
+  {
+    "name": "Gym Membership Value Calculator",
+    "url": "/calculators/gym-membership-value.html",
+    "category": "Finance",
+    "keywords": "gym membership value calculator",
+    "description": "Cost per visit and break-even attendance."
+  },
+  {
+    "name": "Haircut Cost With Tip Calculator",
+    "url": "/calculators/haircut-cost-with-tip.html",
+    "category": "Everyday Life",
+    "keywords": "haircut cost with tip calculator",
+    "description": "Total salon bill with tip share."
+  },
+  {
+    "name": "Halogen to LED Savings Calculator",
+    "url": "/calculators/halogen-to-led-savings.html",
+    "category": "Home & Garden",
+    "keywords": "halogen to led savings calculator",
+    "description": "Yearly savings from swapping halogen bulbs."
+  },
+  {
+    "name": "Handmade Soap Bar Cost Calculator",
+    "url": "/calculators/handmade-soap-bar-cost.html",
+    "category": "Business",
+    "keywords": "handmade soap bar cost calculator",
+    "description": "Cost per bar from batch inputs."
+  },
+  {
+    "name": "Hanging Shelf Load Calculator",
+    "url": "/calculators/hanging-shelf-load.html",
+    "category": "Construction & DIY",
+    "keywords": "hanging shelf load calculator",
+    "description": "Load limit from bracket count and rating."
+  },
+  {
+    "name": "Grain Moisture Adjustment Calculator",
+    "url": "/calculators/harvest-moisture-adjustment.html",
+    "category": "Tools",
+    "keywords": "grain moisture adjustment calculator",
+    "description": "Price dockage for grain above safe moisture."
+  },
+  {
+    "name": "Hay Bale Bedding Coverage Calculator",
+    "url": "/calculators/hay-bale-coverage.html",
+    "category": "Home & Garden",
+    "keywords": "hay bale bedding coverage calculator",
+    "description": "Area a bale of straw covers."
+  },
+  {
+    "name": "Headphone Amplifier Gain Calculator",
+    "url": "/calculators/headphone-amplifier-gain.html",
+    "category": "Tools",
+    "keywords": "headphone amplifier gain calculator",
+    "description": "Output voltage and dB gain from amplifier settings."
+  },
+  {
+    "name": "Heat Index Feels Like Calculator",
+    "url": "/calculators/heat-index-feels-like.html",
+    "category": "Health",
+    "keywords": "heat index feels like calculator",
+    "description": "Feels-like temperature from heat and humidity."
+  },
+  {
+    "name": "Room Heater Size Calculator",
+    "url": "/calculators/heater-room-size.html",
+    "category": "Home & Garden",
+    "keywords": "room heater size calculator",
+    "description": "Watts needed to heat a room."
+  },
+  {
+    "name": "Heavy Bag Beam Load Calculator",
+    "url": "/calculators/heavy-bag-hanging-beam.html",
+    "category": "Construction & DIY",
+    "keywords": "heavy bag beam load calculator",
+    "description": "Dynamic load a beam carries for a hanging bag."
+  },
+  {
+    "name": "Hedge Trimmer Runtime Calculator",
+    "url": "/calculators/hedge-trimmer-runtime.html",
+    "category": "Tools",
+    "keywords": "hedge trimmer runtime calculator",
+    "description": "Minutes of trimming from battery Ah."
+  },
+  {
+    "name": "Adult Height Percentile Calculator",
+    "url": "/calculators/height-percentile-adult.html",
+    "category": "Health",
+    "keywords": "adult height percentile calculator",
+    "description": "Where your height sits statistically."
+  },
+  {
+    "name": "Herb Planter Box Soil Calculator",
+    "url": "/calculators/herb-planter-box-soil.html",
+    "category": "Home & Garden",
+    "keywords": "herb planter box soil calculator",
+    "description": "Soil litres for a rectangular planter."
+  },
+  {
+    "name": "Hibiscus Pot Size Calculator",
+    "url": "/calculators/hibiscus-pot-size.html",
+    "category": "Home & Garden",
+    "keywords": "hibiscus pot size calculator",
+    "description": "Pot diameter for hibiscus by plant height."
+  },
+  {
+    "name": "Semester GPA Calculator",
+    "url": "/calculators/high-school-gpa-semester.html",
+    "category": "Education",
+    "keywords": "semester gpa calculator",
+    "description": "Grade points average by credits."
+  },
+  {
+    "name": "Hiking Trail Time Calculator",
+    "url": "/calculators/hiking-trail-time.html",
+    "category": "Travel",
+    "keywords": "hiking trail time calculator",
+    "description": "Trek time with Naismith gradient estimate."
+  },
+  {
+    "name": "Hip Roof Area Calculator",
+    "url": "/calculators/hip-roof-area.html",
+    "category": "Construction & DIY",
+    "keywords": "hip roof area calculator",
+    "description": "Roof surface area of a hip roof."
+  },
+  {
+    "name": "Hobby Expense Tracker Calculator",
+    "url": "/calculators/hobby-expense-tracker.html",
+    "category": "Everyday Life",
+    "keywords": "hobby expense tracker calculator",
+    "description": "Cost per month and per hour of hobby time."
+  },
+  {
+    "name": "Holiday Lights Electricity Cost Calculator",
+    "url": "/calculators/holiday-light-electricity-cost.html",
+    "category": "Everyday Life",
+    "keywords": "holiday lights electricity cost calculator",
+    "description": "Season cost of festive string lights."
+  },
+  {
+    "name": "Home Office Deduction Calculator",
+    "url": "/calculators/home-office-deduction-inr.html",
+    "category": "Tax & Compliance",
+    "keywords": "home office deduction calculator",
+    "description": "Share of home expenses claimable for a home office."
+  },
+  {
+    "name": "Home Renovation Budget Calculator",
+    "url": "/calculators/home-renovation-budget.html",
+    "category": "Home & Garden",
+    "keywords": "home renovation budget calculator",
+    "description": "Total budget from per-room and works estimates."
+  },
+  {
+    "name": "Home Theater Seating Distance Calculator",
+    "url": "/calculators/home-theater-seating-distance.html",
+    "category": "Everyday Life",
+    "keywords": "home theater seating distance calculator",
+    "description": "Viewing distance for a screen size."
+  },
+  {
+    "name": "Honey Harvest Per Hive Calculator",
+    "url": "/calculators/honey-harvest-per-hive.html",
+    "category": "Home & Garden",
+    "keywords": "honey harvest per hive calculator",
+    "description": "Kilograms of surplus honey per hive."
+  },
+  {
+    "name": "House Cleaning Time Calculator",
+    "url": "/calculators/house-cleaning-time.html",
+    "category": "Everyday Life",
+    "keywords": "house cleaning time calculator",
+    "description": "Minutes to deep clean by rooms and bathrooms."
+  },
+  {
+    "name": "House Painting Cost Calculator",
+    "url": "/calculators/house-painting-cost-inr.html",
+    "category": "Home & Garden",
+    "keywords": "house painting cost calculator",
+    "description": "Paint and labour cost per square foot."
+  },
+  {
+    "name": "Houseplant Watering Interval Calculator",
+    "url": "/calculators/houseplant-watering-interval.html",
+    "category": "Home & Garden",
+    "keywords": "houseplant watering interval calculator",
+    "description": "Days between watering by pot size and season."
+  },
+  {
+    "name": "PMAY Income Eligibility Check Calculator",
+    "url": "/calculators/hud-income-limit.html",
+    "category": "Finance",
+    "keywords": "pmay income eligibility check calculator",
+    "description": "Which PMAY housing band your income fits."
+  },
+  {
+    "name": "Body Water Percentage Calculator",
+    "url": "/calculators/human-body-water-percent.html",
+    "category": "Health",
+    "keywords": "body water percentage calculator",
+    "description": "Estimated body water litres and share."
+  },
+  {
+    "name": "Humidity Comfort Dew Point Calculator",
+    "url": "/calculators/humidity-dew-point-comfort.html",
+    "category": "Health",
+    "keywords": "humidity comfort dew point calculator",
+    "description": "Dew point and comfort label from heat and humidity."
+  },
+  {
+    "name": "Hurdle Spacing Calculator",
+    "url": "/calculators/hurdle-stride-spacing.html",
+    "category": "Sports",
+    "keywords": "hurdle spacing calculator",
+    "description": "Spacing by stride count for training."
+  },
+  {
+    "name": "Hybrid Car Fuel Savings Calculator",
+    "url": "/calculators/hybrid-car-fuel-savings.html",
+    "category": "Automobile",
+    "keywords": "hybrid car fuel savings calculator",
+    "description": "Petrol saved by moving to a hybrid."
+  },
+  {
+    "name": "Hydroponic Nutrient Mix Calculator",
+    "url": "/calculators/hydroponic-nutrient-mix.html",
+    "category": "Home & Garden",
+    "keywords": "hydroponic nutrient mix calculator",
+    "description": "Millilitres of A and B concentrate for a reservoir."
+  },
+  {
+    "name": "Ice Cube Freeze Time Calculator",
+    "url": "/calculators/ice-cube-tray-freeze-time.html",
+    "category": "Everyday Life",
+    "keywords": "ice cube freeze time calculator",
+    "description": "Hours to freeze cubes by freezer quality."
+  },
+  {
+    "name": "Ice Melt Salt Coverage Calculator",
+    "url": "/calculators/ice-melt-salt-coverage.html",
+    "category": "Home & Garden",
+    "keywords": "ice melt salt coverage calculator",
+    "description": "Kilograms of salt for a paved area."
+  },
+  {
+    "name": "Igloo Wall Block Count Calculator",
+    "url": "/calculators/igloo-wall-block-count.html",
+    "category": "Everyday Life",
+    "keywords": "igloo wall block count calculator",
+    "description": "Snow blocks for a dome by diameter."
+  },
+  {
+    "name": "Image Compression Size Calculator",
+    "url": "/calculators/image-file-size-compression.html",
+    "category": "Tools",
+    "keywords": "image compression size calculator",
+    "description": "Compressed file size at a compression setting."
+  },
+  {
+    "name": "Immunization Dose Gap Calculator",
+    "url": "/calculators/immunization-schedule-gap.html",
+    "category": "Health",
+    "keywords": "immunization dose gap calculator",
+    "description": "Date the next vaccine dose falls due."
+  },
+  {
+    "name": "Advance Tax Installment Calculator",
+    "url": "/calculators/income-tax-advance-installment.html",
+    "category": "Tax & Compliance",
+    "keywords": "advance tax installment calculator",
+    "description": "Quarterly advance-tax amounts on other income."
+  },
+  {
+    "name": "Professional Indemnity Cover Check Calculator",
+    "url": "/calculators/indemnity-cover-check.html",
+    "category": "Finance",
+    "keywords": "professional indemnity cover check calculator",
+    "description": "Cover factor against worst-case claim exposure."
+  },
+  {
+    "name": "Inflation Adjusted FD Returns Calculator",
+    "url": "/calculators/inflation-adjusted-fd.html",
+    "category": "Finance",
+    "keywords": "inflation adjusted fd returns calculator",
+    "description": "Real return after inflation on a deposit."
+  },
+  {
+    "name": "Ink Cartridge Cost Per Page Calculator",
+    "url": "/calculators/inkjet-cartridge-cost-per-page.html",
+    "category": "Home & Garden",
+    "keywords": "ink cartridge cost per page calculator",
+    "description": "Rupees per printed page by cartridge."
+  },
+  {
+    "name": "Sleep Debt Calculator",
+    "url": "/calculators/insomnia-sleep-debt.html",
+    "category": "Health",
+    "keywords": "sleep debt calculator",
+    "description": "Hours of sleep debt across tracked nights."
+  },
+  {
+    "name": "Insurance Claim Depreciation Calculator",
+    "url": "/calculators/insurance-claim-depreciation.html",
+    "category": "Finance",
+    "keywords": "insurance claim depreciation calculator",
+    "description": "Depreciated claim value by item age."
+  },
+  {
+    "name": "Interior Doors Quantity Calculator",
+    "url": "/calculators/interior-doors-quantity.html",
+    "category": "Construction & DIY",
+    "keywords": "interior doors quantity calculator",
+    "description": "Doors and hardware count by floor plan."
   }
 ]
