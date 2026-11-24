@@ -1,0 +1,695 @@
+[
+  {
+    "name": "Treadmill Pace Calculator",
+    "url": "/calculators/treadmill-pace-calculator.html",
+    "category": "Sports",
+    "keywords": "treadmill pace calculator",
+    "description": "Convert treadmill speed and time into pace, distance and calories."
+  },
+  {
+    "name": "BMR Mifflin-St Jeor Calculator",
+    "url": "/calculators/bmr-mifflin-st-jeor-calculator.html",
+    "category": "Sports",
+    "keywords": "bmr mifflin-st jeor calculator",
+    "description": "Estimate basal metabolic rate with the Mifflin-St Jeor equation."
+  },
+  {
+    "name": "TDEE Calculator",
+    "url": "/calculators/tdee-calculator.html",
+    "category": "Sports",
+    "keywords": "tdee calculator",
+    "description": "Estimate total daily energy expenditure from activity level."
+  },
+  {
+    "name": "Ideal Weight Calculator",
+    "url": "/calculators/ideal-weight-calculator.html",
+    "category": "Sports",
+    "keywords": "ideal weight calculator",
+    "description": "Compare ideal weight ranges from common clinical formulas."
+  },
+  {
+    "name": "FTP Cycling Calculator",
+    "url": "/calculators/ftp-cycling-calculator.html",
+    "category": "Sports",
+    "keywords": "ftp cycling calculator",
+    "description": "Estimate functional threshold power from a 20-minute test."
+  },
+  {
+    "name": "Calorie Deficit Timeline Calculator",
+    "url": "/calculators/calorie-deficit-timeline-calculator.html",
+    "category": "Sports",
+    "keywords": "calorie deficit timeline calculator",
+    "description": "Project weight loss over time from a daily calorie deficit."
+  },
+  {
+    "name": "Swimming Pace Calculator",
+    "url": "/calculators/swimming-pace-calculator.html",
+    "category": "Sports",
+    "keywords": "swimming pace calculator",
+    "description": "Convert swim times into pace per 100 m across strokes."
+  },
+  {
+    "name": "VO2max Cooper Calculator",
+    "url": "/calculators/vo2max-cooper-calculator.html",
+    "category": "Sports",
+    "keywords": "vo2max cooper calculator",
+    "description": "Estimate VO2 max from a 12-minute Cooper run test."
+  },
+  {
+    "name": "Maintenance Calories Calculator",
+    "url": "/calculators/maintenance-calories-calculator.html",
+    "category": "Sports",
+    "keywords": "maintenance calories calculator",
+    "description": "Find daily calories needed to hold your current weight."
+  },
+  {
+    "name": "Macro Split Calculator",
+    "url": "/calculators/macro-split-calculator.html",
+    "category": "Sports",
+    "keywords": "macro split calculator",
+    "description": "Split daily calories into protein, carbs and fat targets."
+  },
+  {
+    "name": "Body Fat Navy Calculator",
+    "url": "/calculators/body-fat-navy-calculator.html",
+    "category": "Sports",
+    "keywords": "body fat navy calculator",
+    "description": "Estimate body fat percentage using the US Navy tape method."
+  },
+  {
+    "name": "Resting vs Max Heart Rate Calculator",
+    "url": "/calculators/resting-vs-max-heart-rate-calculator.html",
+    "category": "Sports",
+    "keywords": "resting vs max heart rate calculator",
+    "description": "Compute heart-rate training zones from resting and max heart rate."
+  },
+  {
+    "name": "Stairs Climbing Calculator",
+    "url": "/calculators/stairs-climbing-calculator.html",
+    "category": "Sports",
+    "keywords": "stairs climbing calculator",
+    "description": "Estimate calories and vertical metres gained climbing stairs."
+  },
+  {
+    "name": "Jump Rope Calories Calculator",
+    "url": "/calculators/jump-rope-calories-calculator.html",
+    "category": "Sports",
+    "keywords": "jump rope calories calculator",
+    "description": "Estimate calories burned skipping rope by intensity and time."
+  },
+  {
+    "name": "Plank Progression Calculator",
+    "url": "/calculators/plank-progression-calculator.html",
+    "category": "Sports",
+    "keywords": "plank progression calculator",
+    "description": "Plan a progressive plank-hold training schedule."
+  },
+  {
+    "name": "Pushups Progression Calculator",
+    "url": "/calculators/pushups-progression-calculator.html",
+    "category": "Sports",
+    "keywords": "pushups progression calculator",
+    "description": "Plan weekly push-up targets to build strength steadily."
+  },
+  {
+    "name": "Deadlift One Rep Max Calculator",
+    "url": "/calculators/deadlift-one-rep-max-calculator.html",
+    "category": "Sports",
+    "keywords": "deadlift one rep max calculator",
+    "description": "Estimate your one-rep max deadlift from lighter sets."
+  },
+  {
+    "name": "Bench Press One Rep Max Calculator",
+    "url": "/calculators/bench-press-one-rep-max-calculator.html",
+    "category": "Sports",
+    "keywords": "bench press one rep max calculator",
+    "description": "Estimate your one-rep max bench press safely."
+  },
+  {
+    "name": "Squat One Rep Max Calculator",
+    "url": "/calculators/squat-one-rep-max-calculator.html",
+    "category": "Sports",
+    "keywords": "squat one rep max calculator",
+    "description": "Estimate your one-rep max squat from working sets."
+  },
+  {
+    "name": "Negative Split Calculator",
+    "url": "/calculators/negative-split-calculator.html",
+    "category": "Sports",
+    "keywords": "negative split calculator",
+    "description": "Plan the second half of a race slightly faster than the first."
+  },
+  {
+    "name": "Race Time Predictor Calculator",
+    "url": "/calculators/race-time-predictor-calculator.html",
+    "category": "Sports",
+    "keywords": "race time predictor calculator",
+    "description": "Predict race times across distances using the Riegel formula."
+  },
+  {
+    "name": "Rowing Split Calculator",
+    "url": "/calculators/rowing-split-calculator.html",
+    "category": "Sports",
+    "keywords": "rowing split calculator",
+    "description": "Convert indoor rowing results into pace per 500 m and watts."
+  },
+  {
+    "name": "10K Pace Calculator",
+    "url": "/calculators/10k-pace-calculator.html",
+    "category": "Sports",
+    "keywords": "10k pace calculator",
+    "description": "Find the per-kilometre pace needed for your 10K goal time."
+  },
+  {
+    "name": "Protein Per Meal Calculator",
+    "url": "/calculators/protein-per-meal-calculator.html",
+    "category": "Sports",
+    "keywords": "protein per meal calculator",
+    "description": "Split a daily protein target across your meals."
+  },
+  {
+    "name": "Water Intake Athlete Calculator",
+    "url": "/calculators/water-intake-athlete-calculator.html",
+    "category": "Sports",
+    "keywords": "water intake athlete calculator",
+    "description": "Estimate daily fluid needs for training days."
+  },
+  {
+    "name": "AC Size BTU Calculator",
+    "url": "/calculators/ac-size-btu-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ac size btu calculator",
+    "description": "Estimate air-conditioner capacity needed for a room in BTU per hour."
+  },
+  {
+    "name": "Wallpaper Rolls Calculator",
+    "url": "/calculators/wallpaper-rolls-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "wallpaper rolls calculator",
+    "description": "Estimate rolls of wallpaper needed for a wall set."
+  },
+  {
+    "name": "Aquarium Volume Calculator",
+    "url": "/calculators/aquarium-volume-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "aquarium volume calculator",
+    "description": "Calculate fish tank volume in litres and US gallons."
+  },
+  {
+    "name": "Aquarium Heater Size Calculator",
+    "url": "/calculators/aquarium-heater-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "aquarium heater size calculator",
+    "description": "Estimate heater wattage needed for a tank and room-temperature gap."
+  },
+  {
+    "name": "Aquarium Substrate Calculator",
+    "url": "/calculators/aquarium-substrate-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "aquarium substrate calculator",
+    "description": "Estimate how many kilograms of substrate a tank floor needs."
+  },
+  {
+    "name": "Lawn Fertilizer Calculator",
+    "url": "/calculators/lawn-fertilizer-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "lawn fertilizer calculator",
+    "description": "Calculate fertilizer weight needed for an N rate on a lawn."
+  },
+  {
+    "name": "Soil Volume Calculator",
+    "url": "/calculators/soil-volume-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "soil volume calculator",
+    "description": "Calculate soil or mulch volume for beds and areas."
+  },
+  {
+    "name": "Compost Bin Size Calculator",
+    "url": "/calculators/compost-bin-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "compost bin size calculator",
+    "description": "Estimate compost bin volume from household size and waste rate."
+  },
+  {
+    "name": "Greenhouse Heating Calculator",
+    "url": "/calculators/greenhouse-heating-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "greenhouse heating calculator",
+    "description": "Estimate greenhouse heater wattage from size, insulation and temperature gap."
+  },
+  {
+    "name": "Drip Irrigation Flow Calculator",
+    "url": "/calculators/drip-irrigation-flow-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "drip irrigation flow calculator",
+    "description": "Total drip emitter flow and runtime estimates."
+  },
+  {
+    "name": "Rainwater Harvesting Calculator",
+    "url": "/calculators/rainwater-harvesting-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rainwater harvesting calculator",
+    "description": "Estimate roof runoff volume you can harvest."
+  },
+  {
+    "name": "Pond Pump Size Calculator",
+    "url": "/calculators/pond-pump-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pond pump size calculator",
+    "description": "Estimate pond turnover pumping rate needed."
+  },
+  {
+    "name": "Pool Pump Run Time Calculator",
+    "url": "/calculators/pool-pump-run-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pool pump run time calculator",
+    "description": "Estimate daily pump hours needed to filter the pool volume."
+  },
+  {
+    "name": "Pool Heating Cost Calculator",
+    "url": "/calculators/pool-heating-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pool heating cost calculator",
+    "description": "Estimate energy cost to heat a swimming pool."
+  },
+  {
+    "name": "Hot Tub Heating Time Calculator",
+    "url": "/calculators/hot-tub-heating-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "hot tub heating time calculator",
+    "description": "Estimate how long a heater takes to bring a spa to temperature."
+  },
+  {
+    "name": "Propane Usage Calculator",
+    "url": "/calculators/propane-usage-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "propane usage calculator",
+    "description": "Estimate how long a propane tank lasts by appliance load."
+  },
+  {
+    "name": "Firewood Cord Calculator",
+    "url": "/calculators/firewood-cord-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "firewood cord calculator",
+    "description": "Convert a stacked firewood pile into cords and estimate heat output."
+  },
+  {
+    "name": "Stove Wood Consumption Calculator",
+    "url": "/calculators/stove-wood-consumption-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "stove wood consumption calculator",
+    "description": "Estimate wood usage over a heating season."
+  },
+  {
+    "name": "HVAC Duct Size Calculator",
+    "url": "/calculators/hvac-duct-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "hvac duct size calculator",
+    "description": "Estimate round duct diameter for an airflow at a target velocity."
+  },
+  {
+    "name": "Ceiling Fan Size Calculator",
+    "url": "/calculators/ceiling-fan-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ceiling fan size calculator",
+    "description": "Match ceiling fan diameter to room size."
+  },
+  {
+    "name": "Window AC Running Cost Calculator",
+    "url": "/calculators/window-ac-runtime-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "window ac running cost calculator",
+    "description": "Estimate monthly electricity cost of a window AC by rating and use."
+  },
+  {
+    "name": "Fan Electricity Cost Calculator",
+    "url": "/calculators/fan-electricity-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "fan electricity cost calculator",
+    "description": "Estimate the running cost of a ceiling or table fan."
+  },
+  {
+    "name": "Electric Heater Cost Calculator",
+    "url": "/calculators/heater-electricity-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "electric heater cost calculator",
+    "description": "Estimate the running cost of an electric room heater."
+  },
+  {
+    "name": "Dehumidifier Runtime Calculator",
+    "url": "/calculators/dehumidifier-runtime-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "dehumidifier runtime calculator",
+    "description": "Estimate how long a dehumidifier takes to extract a set volume of water."
+  },
+  {
+    "name": "Dog Food Portion Calculator",
+    "url": "/calculators/dog-food-portion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "dog food portion calculator",
+    "description": "Estimate daily dog food grams from weight and activity."
+  },
+  {
+    "name": "Laundry Detergent Calculator",
+    "url": "/calculators/laundry-detergent-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "laundry detergent calculator",
+    "description": "Estimate how long a detergent bottle lasts per wash load."
+  },
+  {
+    "name": "Washing Machine Cost Calculator",
+    "url": "/calculators/washing-machine-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "washing machine cost calculator",
+    "description": "Estimate monthly electricity and water cost of laundry."
+  },
+  {
+    "name": "Puppy Food Calculator",
+    "url": "/calculators/puppy-food-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "puppy food calculator",
+    "description": "Estimate daily puppy food portions by weight and age."
+  },
+  {
+    "name": "Cat Food Portion Calculator",
+    "url": "/calculators/cat-food-portion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cat food portion calculator",
+    "description": "Estimate daily cat food grams by weight and body condition."
+  },
+  {
+    "name": "Espresso Ratio Calculator",
+    "url": "/calculators/espresso-ratio-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "espresso ratio calculator",
+    "description": "Scale espresso dose and yield for ristretto, normale and lungo shots."
+  },
+  {
+    "name": "Coffee Per Cup Cost Calculator",
+    "url": "/calculators/coffee-per-cup-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "coffee per cup cost calculator",
+    "description": "Break down the true cost of each home-brewed coffee cup."
+  },
+  {
+    "name": "Rice Water Ratio Calculator",
+    "url": "/calculators/rice-water-ratio-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rice water ratio calculator",
+    "description": "Scale rice and water quantities for consistent texture."
+  },
+  {
+    "name": "Pasta Portion Calculator",
+    "url": "/calculators/pasta-portion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pasta portion calculator",
+    "description": "Estimate dry pasta per person and total cooked weight."
+  },
+  {
+    "name": "Baking Scaling Calculator",
+    "url": "/calculators/baking-scaling-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "baking scaling calculator",
+    "description": "Scale every recipe ingredient up or down by a target factor."
+  },
+  {
+    "name": "Cake Tin Conversion Calculator",
+    "url": "/calculators/cake-tin-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cake tin conversion calculator",
+    "description": "Scale a recipe between different cake tin sizes."
+  },
+  {
+    "name": "Cocktail Dilution Calculator",
+    "url": "/calculators/cocktail-dilution-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cocktail dilution calculator",
+    "description": "Estimate stirred or shaken cocktail dilution and final volume."
+  },
+  {
+    "name": "Cocktail Batch Calculator",
+    "url": "/calculators/cocktail-batch-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cocktail batch calculator",
+    "description": "Scale a cocktail recipe to a batch for many servings."
+  },
+  {
+    "name": "Meat Thawing Calculator",
+    "url": "/calculators/meat-thawing-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "meat thawing calculator",
+    "description": "Estimate defrosting time for frozen meat by weight and method."
+  },
+  {
+    "name": "Sous Vide Time Calculator",
+    "url": "/calculators/sous-vide-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "sous vide time calculator",
+    "description": "Estimate sous-vide cooking time by meat thickness."
+  },
+  {
+    "name": "Baby Formula Feeding Calculator",
+    "url": "/calculators/baby-formula-feeding-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "baby formula feeding calculator",
+    "description": "Estimate daily formula and water needs by baby weight."
+  },
+  {
+    "name": "Bread Hydration Calculator",
+    "url": "/calculators/bread-hydration-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "bread hydration calculator",
+    "description": "Compute dough hydration as flour and water percentages."
+  },
+  {
+    "name": "Pan Size Conversion Calculator",
+    "url": "/calculators/pan-size-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pan size conversion calculator",
+    "description": "Scale recipe quantities between different pan sizes."
+  },
+  {
+    "name": "Caffeine Daily Limit Calculator",
+    "url": "/calculators/caffeine-daily-limit-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "caffeine daily limit calculator",
+    "description": "Estimate a safe daily caffeine ceiling from body weight and intake."
+  },
+  {
+    "name": "Tea Brewing Ratio Calculator",
+    "url": "/calculators/tea-brewing-ratio-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "tea brewing ratio calculator",
+    "description": "Scale tea leaves and water for any teapot or gaiwan."
+  },
+  {
+    "name": "Olive Oil Substitution Calculator",
+    "url": "/calculators/olive-oil-substitution-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "olive oil substitution calculator",
+    "description": "Convert butter amounts into olive oil for baking and cooking."
+  },
+  {
+    "name": "Chilli Heat Scaling Calculator",
+    "url": "/calculators/chilli-heat-scaling-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "chilli heat scaling calculator",
+    "description": "Scale chilli heat in a recipe by pod count and Scoville rating."
+  },
+  {
+    "name": "Freezer Defrost Time Calculator",
+    "url": "/calculators/freezer-defrost-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "freezer defrost time calculator",
+    "description": "Estimate how long food takes to defrost at a given room temperature."
+  },
+  {
+    "name": "Grilling Time Calculator",
+    "url": "/calculators/grilling-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "grilling time calculator",
+    "description": "Estimate grill cooking time by cut thickness and doneness target."
+  },
+  {
+    "name": "Pizza Dough Calculator",
+    "url": "/calculators/pizza-dough-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pizza dough calculator",
+    "description": "Compute flour, water, salt and yeast for pizza dough over baker percentages."
+  },
+  {
+    "name": "Cold Brew Ratio Calculator",
+    "url": "/calculators/coffee-cold-brew-ratio-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cold brew ratio calculator",
+    "description": "Scale coffee and water for cold brew concentrate."
+  },
+  {
+    "name": "Sugar Syrup Calculator",
+    "url": "/calculators/sugar-syrup-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "sugar syrup calculator",
+    "description": "Compute sugar and water for a syrup at a chosen sweetness stage."
+  },
+  {
+    "name": "Chocolate Tempering Calculator",
+    "url": "/calculators/chocolate-tempering-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "chocolate tempering calculator",
+    "description": "Plan chocolate tempering by seed amount and temperature targets."
+  },
+  {
+    "name": "Yoghurt Culturing Calculator",
+    "url": "/calculators/yoghurt-culturing-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "yoghurt culturing calculator",
+    "description": "Estimate milk, starter and incubation details for homemade yoghurt."
+  },
+  {
+    "name": "Screen Viewing Distance Calculator",
+    "url": "/calculators/screen-viewing-distance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "screen viewing distance calculator",
+    "description": "Find a comfortable TV viewing distance for your screen size."
+  },
+  {
+    "name": "Poster Print DPI Calculator",
+    "url": "/calculators/poster-print-dpi-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "poster print dpi calculator",
+    "description": "Check the DPI your image delivers at a chosen poster print size."
+  },
+  {
+    "name": "Monitor Pixel Density Calculator",
+    "url": "/calculators/monitor-pixel-density-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "monitor pixel density calculator",
+    "description": "Compute a monitor or phone screen PPI."
+  },
+  {
+    "name": "Freelance Hourly Rate Calculator",
+    "url": "/calculators/freelance-hourly-rate-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "freelance hourly rate calculator",
+    "description": "Derive a sustainable freelance hourly rate from your target income."
+  },
+  {
+    "name": "Day Rate Converter Calculator",
+    "url": "/calculators/day-rate-converter-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "day rate converter calculator",
+    "description": "Convert an hourly rate to a day rate and vice versa."
+  },
+  {
+    "name": "Keyword Density Calculator",
+    "url": "/calculators/seo-keyword-density-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "keyword density calculator",
+    "description": "Compute keyword density for a piece of content."
+  },
+  {
+    "name": "CPM Calculator",
+    "url": "/calculators/cost-per-thousand-impressions-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cpm calculator",
+    "description": "Compute cost per thousand ad impressions and budget needs."
+  },
+  {
+    "name": "Email Open Rate Calculator",
+    "url": "/calculators/email-open-rate-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "email open rate calculator",
+    "description": "Compute open rate, click rate and clicks per open."
+  },
+  {
+    "name": "Webinar Capacity Calculator",
+    "url": "/calculators/webinar-capacity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "webinar capacity calculator",
+    "description": "Estimate seats, registrations and live attendance for a webinar."
+  },
+  {
+    "name": "Blog Reading Time Calculator",
+    "url": "/calculators/blog-word-count-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "blog reading time calculator",
+    "description": "Estimate how long a blog post takes to read or write."
+  },
+  {
+    "name": "UPS Runtime Calculator",
+    "url": "/calculators/ups-runtime-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ups runtime calculator",
+    "description": "Estimate UPS backup time from battery capacity and load."
+  },
+  {
+    "name": "Smartphone Battery Life Calculator",
+    "url": "/calculators/smartphone-battery-life-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "smartphone battery life calculator",
+    "description": "Estimate phone screen-on time from battery capacity and drain."
+  },
+  {
+    "name": "Power Bank Charge Calculator",
+    "url": "/calculators/power-bank-charge-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "power bank charge calculator",
+    "description": "Estimate how many device charges a power bank provides."
+  },
+  {
+    "name": "Ebike Range Calculator",
+    "url": "/calculators/ebike-range-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ebike range calculator",
+    "description": "Estimate electric bike range from battery size and assist level."
+  },
+  {
+    "name": "Flight Emissions Calculator",
+    "url": "/calculators/flight-emissions-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "flight emissions calculator",
+    "description": "Estimate CO2 emissions for a flight leg."
+  },
+  {
+    "name": "Commute Cost Calculator",
+    "url": "/calculators/commute-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "commute cost calculator",
+    "description": "Estimate monthly and yearly commuting cost by mode."
+  },
+  {
+    "name": "Moving Box Count Calculator",
+    "url": "/calculators/moving-box-count-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "moving box count calculator",
+    "description": "Estimate how many moving boxes a home needs."
+  },
+  {
+    "name": "Storage Unit Size Calculator",
+    "url": "/calculators/storage-unit-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "storage unit size calculator",
+    "description": "Match your belongings to a storage unit size."
+  },
+  {
+    "name": "Roommate Rent Split Calculator",
+    "url": "/calculators/roommate-rent-split-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "roommate rent split calculator",
+    "description": "Split rent between roommates by room size and weightings."
+  },
+  {
+    "name": "Box Volume Calculator",
+    "url": "/calculators/box-volume-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "box volume calculator",
+    "description": "Compute shipping box volume and dimensional weight."
+  },
+  {
+    "name": "Pallet Load Calculator",
+    "url": "/calculators/pallet-load-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pallet load calculator",
+    "description": "Estimate how many cartons fit on a pallet layer and stack."
+  }
+]

@@ -1,0 +1,48 @@
+name: Merge search index additions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/calculator-search-index-additions.json'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --check scripts/merge-search-index.cjs
+      - run: node scripts/merge-search-index.cjs --check
+
+  merge:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/merge-search-index.cjs
+      - name: Commit updated search index when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/calculator-search-index.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(search): merge calculator search index additions"
+            git push
+          else
+            echo "Search index already up to date."
+          fi
