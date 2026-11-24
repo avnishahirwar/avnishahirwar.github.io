@@ -1,0 +1,28 @@
+name: Sync calculator counts
+on:
+  push:
+    branches: [chore/sync-calculator-counts]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run count sync
+        run: node scripts/sync-calculator-counts.cjs
+      - name: Commit synced counts
+        run: |
+          git config user.name "friendly-bot"
+          git config user.email "bot@friendlycalculator.in"
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add -A
+            git commit -m "chore: sync calculator counts to catalogue (3928)"
+            git push
+          else
+            echo "No changes"
+          fi
