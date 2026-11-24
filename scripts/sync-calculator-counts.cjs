@@ -129,9 +129,9 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
   const formatted = total.toLocaleString('en-US');
   const coreFormatted = core.toLocaleString('en-US');
   const internationalFormatted = international.toLocaleString('en-US');
-  html = html.replace(/(brings together\\s+)[\\d,]+(\\s+public calculators in the core sitemap catalogue)/i,
+  html = html.replace(/(brings together\s+)[\d,]+(\s+public calculators in the core sitemap catalogue)/i,
     (_, a, b) => a + coreFormatted + b);
-  html = html.replace(/([\\d,]+)(\\s+core catalogue entries are indexed for search)/i,
+  html = html.replace(/([\d,]+)(\s+core catalogue entries are indexed for search)/i,
     (_, count, suffix) => coreFormatted + suffix);
   html = html.replace(/[\d,]+ public calculator pages, including international tools/gi,
     `${coreFormatted} public calculators in the core catalogue plus ${internationalFormatted} international calculators (${formatted} calculator pages total)`);
