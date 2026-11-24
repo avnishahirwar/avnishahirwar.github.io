@@ -115,6 +115,11 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
   html = html.replace(/[\d,]+ public calculators in the core sitemap catalogue, including [\d,]+ distinct calculator routes in the curated directory, plus [\d,]+ international calculator entries/gi,
     `${coreFormatted} public calculators in the calculator catalogue, including ${internationalFormatted} international calculators`);
   html = html.replace(/[\d,]+ calculator routes in the curated directory, plus/gi, `${internationalFormatted} international calculators, plus`);
+  html = html.replace(/[\d,]+ public calculators in the calculator catalogue, including [\d,]+ international calculators/gi,
+    `${coreFormatted} public calculators in the calculator catalogue, including ${internationalFormatted} international calculators`);
+  html = html.replace(/[\d,]+ calculator routes in the curated directory, plus/gi, `${internationalFormatted} international calculators, plus`);
+  html = html.replace(/[\d,]+ public calculators in the calculator catalogue; all catalogue entries are indexed for search/gi,
+    `${formatted} public calculators in the calculator catalogue; all catalogue entries are indexed for search`);
   html = html.replace(/[\d,]+ public calculators in the curated directory; [\d,]+ core catalogue entries are indexed for search/gi,
     `${formatted} public calculators in the calculator catalogue; all catalogue entries are indexed for search`);
   return html;
