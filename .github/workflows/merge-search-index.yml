@@ -23,6 +23,7 @@ jobs:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
       - run: node scripts/merge-search-index.cjs --check
+      - run: node --check scripts/sync-calculator-counts.cjs
 
   merge:
     if: github.event_name != 'pull_request'
@@ -34,15 +35,30 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node scripts/merge-search-index.cjs
-      - name: Commit updated search index when changed
+      - name: Merge only additions with existing calculator pages
+        run: node scripts/merge-search-index.cjs
+      - name: Synchronize every public calculator count
+        run: node scripts/sync-calculator-counts.cjs
+      - name: Verify synchronized counts
+        run: node scripts/sync-calculator-counts.cjs --check
+      - name: Commit updated index and count surfaces when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/calculator-search-index.json
+          git add -A -- \
+            assets/calculator-search-index.json \
+            index.html \
+            calculator/about.html \
+            calculator/api.html \
+            calculator/site-directory.html \
+            calculators/gst-calculator.html \
+            calculators/salary-calculator.html \
+            hi/calculator/about.html \
+            hi/calculator/site-directory.html \
+            ':(glob)*/index.html'
           if ! git diff --cached --quiet; then
-            git commit -m "chore(search): merge calculator search index additions"
+            git commit -m "chore(catalogue): synchronize calculator index and public counts"
             git push
           else
-            echo "Search index already up to date."
+            echo "Search index and calculator counts are already up to date."
           fi
