@@ -3,13 +3,13 @@
 > Free online calculators for everyday personal and small-business calculations in India.
 
 ## Main tool
-- https://avnishahirwar.github.io/avnish-ai/ — GST, loan EMI, fixed deposit, discount, EPF/PF, savings interest, salary, SIP, inflation, BMI, fuel cost, income-tax estimate, age, electricity bill, salary TDS estimate, and profit/loss calculators.
+- https://friendlycalculator.in/avnish-ai/ — GST, loan EMI, fixed deposit, discount, EPF/PF, savings interest, salary, SIP, inflation, BMI, fuel cost, income-tax estimate, age, electricity bill, salary TDS estimate, and profit/loss calculators.
 
 ## Information
-- https://avnishahirwar.github.io/avnish-ai/about.html — About AVNISH AI
-- https://avnishahirwar.github.io/avnish-ai/api.html — Limited calculator API documentation and access request
-- https://avnishahirwar.github.io/avnish-ai/privacy.html — Privacy policy
-- https://avnishahirwar.github.io/avnish-ai/terms.html — Terms of use
+- https://friendlycalculator.in/avnish-ai/about.html — About AVNISH AI
+- https://friendlycalculator.in/avnish-ai/api.html — Limited calculator API documentation and access request
+- https://friendlycalculator.in/avnish-ai/privacy.html — Privacy policy
+- https://friendlycalculator.in/avnish-ai/terms.html — Terms of use
 
 ## Important
 - Browser calculators process entered values locally unless a visitor submits an enquiry form.
