@@ -2372,3 +2372,16 @@ test('Fuel Cost Calculator copy has clear inputs and no stale catalogue count or
   assert.match(html, /not a live fuel-price quote/);
   assert.doesNotMatch(html, /186 browser-based tools|n2 assumption|live n2 quote/);
 });
+
+
+test('About and Methodology use the hostname-gated shared analytics bootstrap', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /const isProductionAnalyticsHost=\['friendlycalculator\.in','www\.friendlycalculator\.in'\]/);
+  assert.match(shell, /if\(isProductionAnalyticsHost/);
+  for (const relative of ['calculator/about.html', 'calculator/methodology.html']) {
+    const html = fs.readFileSync(path.join(root, relative), 'utf8');
+    assert.match(html, /assets\/site-shell\.js/, relative + ' must load the shared shell');
+    assert.doesNotMatch(html, /googletagmanager\.com\/gtag\/js\?id=G-QVWQSEDRGL/i, relative + ' must not bypass the hostname guard');
+    assert.doesNotMatch(html, /gtag\(['"]config['"],\s*['"]G-QVWQSEDRGL['"]\)/i, relative + ' must not contain a direct GA4 config');
+  }
+});
