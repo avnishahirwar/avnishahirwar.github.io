@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - ".github/workflows/lighthouse.yml"
+      - "sw.js"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "scripts/check-site-shell-runtime.cjs"
@@ -32,6 +33,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
+      - "sw.js"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/page-calculators.js"
@@ -89,8 +91,9 @@ jobs:
             international="$(curl -fsSL "${BASE_URL}/international/?deploy=${GITHUB_SHA}" || true)"
             shell="$(curl -fsSL "${BASE_URL}/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
             shell_css="$(curl -fsSL "${BASE_URL}/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q "const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links')" <<<"$shell" && grep -q "const assistantLauncher=document.getElementById('fc-ai-lazy-launch')" <<<"$shell" && grep -q "quickActions.appendChild(installButton)" <<<"$shell" && grep -q '#fc-ai-lazy-launch{position:fixed' <<<"$shell_css"; then
-              echo "Production calculator assets match commit ${GITHUB_SHA}."
+            service_worker="$(curl -fsSL "${BASE_URL}/sw.js?deploy=${GITHUB_SHA}" || true)"
+            if grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker" && grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q "const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links')" <<<"$shell" && grep -q "const assistantLauncher=document.getElementById('fc-ai-lazy-launch')" <<<"$shell" && grep -q "quickActions.appendChild(installButton)" <<<"$shell" && grep -q '#fc-ai-lazy-launch{position:fixed' <<<"$shell_css"; then
+              echo "Production calculator assets and refreshed service worker match commit ${GITHUB_SHA}."
               exit 0
             fi
             echo "Waiting for GitHub Pages deployment (attempt ${attempt}/30)..."
@@ -117,7 +120,8 @@ jobs:
             base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
             if [ -n "$base_url" ]; then
               html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
-              if grep -q 'fc-calculator-reserved' <<<"$html"; then
+              service_worker="$(curl -fsSL "$base_url/sw.js" || true)"
+              if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
                 echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
                 echo "Auditing pull-request preview: $base_url"
                 exit 0
