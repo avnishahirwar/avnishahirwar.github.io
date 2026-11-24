@@ -137,7 +137,7 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
     `${coreFormatted} public calculators in the core catalogue plus ${internationalFormatted} international calculators (${formatted} calculator pages total)`);
   // The About-page directory count is intentionally distinct from XML-sitemap core routes.
   html = html.replace(/(\b(?:Available\s+)?calculators\s*\()[\d,]+(\s+tools?\))/gi, (_, a, b) => `${a}${coreFormatted}${b}`);
-  html = html.replace(/(offering\s+)[\d,]+(\s+public\s+calculators)/gi, (_, a, b) => `${a}${formatted}${b}`);
+  html = html.replace(/(offering\s+)[\d,]+(\s+public\s+calculators)/gi, (_, a, b) => `${a}${coreFormatted}${b}`);
   html = html.replace(/(contains\s+)[\d,]+(\s+core\s+calculator\s+pages)/gi, (_, a, b) => `${a}${coreFormatted}${b}`);
   html = html.replace(/full website directory contains\s+[\d,]+(?: core calculator pages plus the international VAT calculator| calculator pages, including international tools| core calculator pages plus\s+[\d,]+ international calculator pages)/gi,
     `full website directory contains ${coreFormatted} core calculator pages plus ${internationalFormatted} international calculator pages`);

@@ -12,26 +12,39 @@ test('global calculator total matches unique catalog routes with existing pages'
   assert.equal(catalogueCount(), routes.size);
 });
 
-test('English and Hindi category totals match their actual unique calculator links', () => {
-  for (const relative of ['calculator/site-directory.html', 'hi/calculator/site-directory.html']) {
-    const html = fs.readFileSync(path.join(root, relative), 'utf8');
-    const counts = sectionCardCounts(html);
-    const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
-    assert.ok(counts.size >= 20, `${relative} should expose its category sections`);
-    assert.ok(total > 3000, `${relative} should cover a broad linked catalog`);
-    for (const [id, count] of counts) {
-      const sectionStart = html.indexOf(`id="${id}"`);
-      const end = html.indexOf('</section>', sectionStart);
-      const section = html.slice(sectionStart, end < 0 ? undefined : end);
-      const expectedLinks = new Set([...section.matchAll(/href="((?:\/[a-z]{2,3})?\/calculators\/[^\"]+)"/g)].map(match => match[1]));
-      assert.equal(expectedLinks.size, count, `${relative} ${id} card count`);
-      const plural = count === 1 ? 'calculator' : 'calculators';
-      const quickLink = new RegExp(`<a\\b[^>]*href="#${id}"[^>]*>[\\s\\S]*?<span>${count.toLocaleString('en-US')} ${plural}<\\/span>`);
-      assert.match(html, quickLink, `${relative} category shortcut ${id} count`);
+test('English alphabetical directory and Hindi category totals match their linked calculators', () => {
+  const english = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const groups = [...english.matchAll(/<section\b[^>]*\bclass="[^"]*\bgroup\b[^"]*"[^>]*\bid="group-([^"]+)"[^>]*>([\s\S]*?)<\/section>/g)];
+  assert.ok(groups.length >= 20, 'English directory should expose its alphabetical groups');
+  const englishRoutes = new Set();
+  for (const [, key, section] of groups) {
+    const routes = [...section.matchAll(/href="(\/calculators\/[^"]+\.html)"/g)].map(match => match[1]);
+    assert.ok(routes.length > 0, 'English directory group ' + key + ' should contain calculator links');
+    for (const route of routes) {
+      const slug = route.split('/').pop().replace(/\.html$/, '');
+      assert.equal(slug[0].toLowerCase() === key || (key === 'num' && /^\d/.test(slug)), true,
+        'English directory route ' + route + ' should be in group ' + key);
+      englishRoutes.add(route);
     }
   }
-});
+  assert.ok(englishRoutes.size > 3000, 'English alphabetical directory should cover a broad linked catalog');
 
+  const hindi = fs.readFileSync(path.join(root, 'hi/calculator/site-directory.html'), 'utf8');
+  const counts = sectionCardCounts(hindi);
+  const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
+  assert.ok(counts.size >= 20, 'Hindi directory should expose its category sections');
+  assert.ok(total > 3000, 'Hindi directory should cover a broad linked catalog');
+  for (const [id, count] of counts) {
+    const sectionStart = hindi.indexOf('id="' + id + '"');
+    const end = hindi.indexOf('</section>', sectionStart);
+    const section = hindi.slice(sectionStart, end < 0 ? undefined : end);
+    const expectedLinks = new Set([...section.matchAll(/href="((?:\/[a-z]{2,3})?\/calculators\/[^"]+)"/g)].map(match => match[1]));
+    assert.equal(expectedLinks.size, count, 'Hindi category ' + id + ' card count');
+    const plural = count === 1 ? 'calculator' : 'calculators';
+    const quickLink = new RegExp('<a\\b[^>]*href="#' + id + '"[^>]*>[\\s\\S]*?<span>' + count.toLocaleString('en-US') + ' ' + plural + '<\\/span>');
+    assert.match(hindi, quickLink, 'Hindi category shortcut ' + id + ' count');
+  }
+});
 test('all catalog-driven counts are synchronized and repeatable', () => {
   const {total, files} = transformedFiles();
   assert.equal(total, catalogueCount());

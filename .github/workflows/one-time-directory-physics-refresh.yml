@@ -1,0 +1,54 @@
+name: One-time generated directory and physics catalogue refresh
+
+on:
+  push:
+    branches:
+      - seo/additive-hreflang-reciprocals-2026-11-16
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Repair missing public social metadata
+        run: |
+          node scripts/repair-public-social-metadata.cjs --write
+          node scripts/repair-public-social-metadata.cjs --check
+      - name: Rebuild English alphabetical calculator directory
+        run: node scripts/build-site-directory.cjs
+      - name: Synchronize published calculator counts
+        run: node scripts/sync-calculator-counts.cjs
+      - name: Regenerate physics directory
+        run: node scripts/generate-physics-calculator-directory.cjs
+      - name: Regenerate canonical and locale sitemaps
+        run: |
+          node scripts/generate-sitemaps.cjs
+          node scripts/generate-locale-sitemaps.cjs
+      - name: Verify generated directory and counts
+        run: |
+          node scripts/build-site-directory.cjs --check
+          node scripts/sync-calculator-counts.cjs --check
+          node scripts/generate-physics-calculator-directory.cjs --check
+          node scripts/generate-sitemaps.cjs --check
+          node scripts/generate-locale-sitemaps.cjs --check
+          node --test tests/calculator-counts.test.cjs tests/physics-calculator-directory.test.cjs
+      - name: Commit generated outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html' 'sitemap*.xml'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: refresh generated calculator directories [skip ci]"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push
+          else
+            echo "Generated directories are already current."
+          fi
