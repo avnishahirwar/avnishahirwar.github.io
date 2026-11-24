@@ -24,6 +24,8 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
+      - name: Build the current published calculator catalogue
+        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs
       - name: Validate catalog-driven calculator counts
         run: node scripts/sync-calculator-counts.cjs --check && node --test tests/calculator-counts.test.cjs
       - name: Validate physics calculator directory
