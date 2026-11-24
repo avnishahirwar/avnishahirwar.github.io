@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'friendly-calculator-public-v11';
+const CACHE_NAME = 'friendly-calculator-public-v12';
 const CACHE_PREFIX = 'friendly-calculator-public-';
 const OFFLINE_URL = '/offline.html';
 const PRECACHE_URLS = [
@@ -57,7 +57,26 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        const response = await fetch(new Request(request, { cache: 'reload' }));
+        const networkUrl = new URL(request.url);
+        // The homepage HTML can remain stale at an intermediary edge cache even
+        // when the browser requests a reload. Add a stable query key for root
+        // navigations so the CDN must fetch the current published document.
+        if (networkUrl.pathname === '/' || networkUrl.pathname === '/index.html') {
+          networkUrl.searchParams.set('__fc_home_refresh', '20261123');
+        }
+        const networkRequest = networkUrl.href === request.url
+          ? new Request(request, { cache: 'reload' })
+          : new Request(networkUrl.href, {
+              method: 'GET',
+              mode: 'same-origin',
+              credentials: request.credentials,
+              headers: request.headers,
+              redirect: 'follow',
+              referrer: request.referrer,
+              referrerPolicy: request.referrerPolicy,
+              cache: 'reload'
+            });
+        const response = await fetch(networkRequest);
         if (isSafeResponse(response)) {
           const cache = await caches.open(CACHE_NAME);
           await cache.put(request, response.clone());
