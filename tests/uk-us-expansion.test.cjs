@@ -150,10 +150,12 @@ test('UK Student Loan and US Home Affordability calculators are discoverable in 
 
 test('UK Mortgage Overpayment page uses complete branded title and non-truncated search/social descriptions', () => {
   const html = read('international/uk-mortgage-overpayment-calculator.html');
-  const description = 'Estimate how regular UK mortgage overpayments may reduce interest and shorten your term. Enter your GBP balance, rate, remaining term and extra payment.';
-  assert.ok(html.includes('<title>UK Mortgage Overpayment Calculator | Friendly Calculator</title>'));
-  assert.ok(html.includes('<meta name="description" content="' + description + '">'));
-  assert.ok(html.includes('<meta property="og:title" content="UK Mortgage Overpayment Calculator | Friendly Calculator">'));
-  assert.ok(html.includes('<meta name="twitter:title" content="UK Mortgage Overpayment Calculator | Friendly Calculator">'));
-  assert.ok(html.includes('<meta name="twitter:description" content="' + description + '">'));
+  const searchDescription = 'Estimate mortgage overpayments in the UK. Compare monthly repayments, interest saved and how much sooner you could clear your mortgage.';
+  const socialDescription = 'Estimate UK mortgage overpayments, interest saved and how much sooner you could repay your mortgage.';
+  assert.ok(html.includes('<title>UK Mortgage Overpayment Calculator | Save Interest &amp; Pay Off Early</title>'));
+  assert.ok(html.includes('<meta name="description" content="' + searchDescription + '">'));
+  assert.ok(html.includes('<meta property="og:title" content="UK Mortgage Overpayment Calculator | Save Interest &amp; Pay Off Early">'));
+  assert.ok(html.includes('<meta name="twitter:title" content="UK Mortgage Overpayment Calculator | Save Interest &amp; Pay Off Early">'));
+  assert.ok(html.includes('<meta property="og:description" content="' + socialDescription + '">'));
+  assert.ok(html.includes('<meta name="twitter:description" content="' + socialDescription + '">'));
 });
