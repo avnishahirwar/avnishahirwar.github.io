@@ -150,7 +150,7 @@ test('UK Student Loan and US Home Affordability calculators are discoverable in 
 
 test('UK Mortgage Overpayment page uses complete branded title and non-truncated search/social descriptions', () => {
   const html = read('international/uk-mortgage-overpayment-calculator.html');
-  const description = 'Estimate UK mortgage overpayments, interest saved and how much sooner you could repay your mortgage.';
+  const description = 'Estimate mortgage overpayments in the UK. Compare monthly repayments, interest saved and how much sooner you could clear your mortgage.';
   assert.ok(html.includes('<title>UK Mortgage Overpayment Calculator | Save Interest &amp; Pay Off Early</title>'));
   assert.ok(html.includes('<meta name="description" content="' + description + '">'));
   assert.ok(html.includes('<meta property="og:title" content="UK Mortgage Overpayment Calculator | Save Interest &amp; Pay Off Early">'));
