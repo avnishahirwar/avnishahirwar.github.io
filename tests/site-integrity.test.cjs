@@ -1311,6 +1311,7 @@ test('PWA manifest is installable and service worker caches only public query-fr
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
   assert.match(worker, /friendly-calculator-public-v12/);
   assert.match(worker, /__fc_home_refresh/);
+  assert.match(worker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
   assert.match(worker, /key !== CACHE_NAME/);
   assert.match(worker, /url\.pathname === '\/assets\/site-shell\.js'/);
   assert.match(worker, /new Request\(request, \{ cache: 'reload' \}\)/);

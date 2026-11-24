@@ -217,4 +217,5 @@ test('expanded More navigation renders every secondary link as a full-width menu
   assert.match(css, /\.fc-top-row>\.fc-global-links\.fc-nav-open>\.fc-more-navigation>\.fc-more-menu>a\{[^}]*width:100%!important[^}]*min-height:46px!important/);
   assert.match(serviceWorker, /friendly-calculator-public-v12/);
   assert.match(serviceWorker, /__fc_home_refresh/);
+  assert.match(serviceWorker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
 });

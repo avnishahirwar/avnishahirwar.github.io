@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - ".github/workflows/lighthouse.yml"
+      - "sw.js"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "scripts/check-site-shell-runtime.cjs"
@@ -32,6 +33,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/lighthouse.yml"
+      - "sw.js"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "assets/page-calculators.js"
@@ -89,8 +91,9 @@ jobs:
             international="$(curl -fsSL "${BASE_URL}/international/?deploy=${GITHUB_SHA}" || true)"
             shell="$(curl -fsSL "${BASE_URL}/assets/site-shell.js?deploy=${GITHUB_SHA}" || true)"
             shell_css="$(curl -fsSL "${BASE_URL}/assets/site-shell.css?deploy=${GITHUB_SHA}" || true)"
-            if grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q "const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links')" <<<"$shell" && grep -q "const assistantLauncher=document.getElementById('fc-ai-lazy-launch')" <<<"$shell" && grep -q "quickActions.appendChild(installButton)" <<<"$shell" && grep -q '#fc-ai-lazy-launch{position:fixed' <<<"$shell_css"; then
-              echo "Production calculator assets match commit ${GITHUB_SHA}."
+            service_worker="$(curl -fsSL "${BASE_URL}/sw.js?deploy=${GITHUB_SHA}" || true)"
+            if grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker" && grep -q 'src="/assets/loan-emi-calculator.js"' <<<"$html" && grep -q "function calculateLoanEmi" <<<"$js" && grep -q 'fetchpriority="high"' <<<"$directory" && grep -q '<title>Legal &amp; Compliance | Friendly Calculator</title>' <<<"$legal" && grep -q '.hero .links a{color:#e6d6b2' <<<"$international" && grep -q "const footerNavigation=document.querySelector('footer.fc-global-footer .fc-global-footer-links')" <<<"$shell" && grep -q "const assistantLauncher=document.getElementById('fc-ai-lazy-launch')" <<<"$shell" && grep -q "quickActions.appendChild(installButton)" <<<"$shell" && grep -q '#fc-ai-lazy-launch{position:fixed' <<<"$shell_css"; then
+              echo "Production calculator assets and refreshed service worker match commit ${GITHUB_SHA}."
               exit 0
             fi
             echo "Waiting for GitHub Pages deployment (attempt ${attempt}/30)..."
@@ -114,10 +117,14 @@ jobs:
           slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
           for attempt in {1..30}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\.friendly-calculator\.pages\.dev" <<<"$comments" | tail -n1 || true)"
+            base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            if [ -z "$base_url" ]; then
+              base_url="$(grep -Eo "https://deploy-preview-${PR_NUMBER}--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
+            fi
             if [ -n "$base_url" ]; then
               html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
-              if grep -q 'fc-calculator-reserved' <<<"$html"; then
+              service_worker="$(curl -fsSL "$base_url/sw.js" || true)"
+              if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
                 echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
                 echo "Auditing pull-request preview: $base_url"
                 exit 0
@@ -175,19 +182,10 @@ jobs:
           homepage|${BASE_URL}/
           directory|${BASE_URL}/calculator/site-directory.html
           gst-calculator|${BASE_URL}/calculators/gst-calculator.html
-          loan-emi|${BASE_URL}/calculators/loan-emi-calculator.html
-          minutes-to-hours|${BASE_URL}/calculators/minutes-to-hours-calculator.html
-          finance-category|${BASE_URL}/calculator/finance-calculators.html
-          tax-category|${BASE_URL}/calculator/tax.html
           income-tax|${BASE_URL}/calculators/income-tax-calculator.html
-          sip-calculator|${BASE_URL}/calculators/sip-calculator.html
           mortgage-calculator|${BASE_URL}/calculators/mortgage-calculator.html
-          methodology|${BASE_URL}/calculator/methodology.html
-          about|${BASE_URL}/calculator/about.html
-          international-home|${BASE_URL}/international/
-          blog-home|${BASE_URL}/blog/
           hindi-home|${BASE_URL}/hi/index.html
-          spanish-home|${BASE_URL}/es/index.html
+          international-home|${BASE_URL}/international/
           legal-compliance|${BASE_URL}/calculator/legal-compliance.html
           URLS
 
