@@ -1,9 +1,4 @@
 {
   "unique": 3928,
-  "missing": [
-    {
-      "url": "/calculators/fabric-width-converter-calculator.html",
-      "from": "assets/calculator-search-index-additions.json"
-    }
-  ]
+  "missing": []
 }
