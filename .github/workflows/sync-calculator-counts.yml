@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Audit missing catalogue pages
+        run: node scripts/report-missing-calculators.cjs
       - name: Run count sync
         run: node scripts/sync-calculator-counts.cjs
       - name: Commit synced counts
@@ -21,7 +23,7 @@ jobs:
           git config user.email "bot@friendlycalculator.in"
           if [[ -n "$(git status --porcelain)" ]]; then
             git add -A
-            git commit -m "chore: sync calculator counts to catalogue (3928)"
+            git commit -m "chore: sync calculator counts and audit report"
             git push
           else
             echo "No changes"
