@@ -27,7 +27,9 @@ jobs:
         run: |
           node scripts/merge-search-index.cjs
           node scripts/sync-calculator-counts.cjs
+          node scripts/generate-human-sitemap.cjs
           node scripts/sync-calculator-counts.cjs --check
+          node scripts/generate-human-sitemap.cjs --check
           node --test tests/calculator-counts.test.cjs
       - run: node --check scripts/sync-calculator-counts.cjs
 
@@ -45,9 +47,11 @@ jobs:
         run: node scripts/merge-search-index.cjs
       - name: Synchronize every public calculator count
         run: node scripts/sync-calculator-counts.cjs
-      - name: Verify synchronized counts
-        run: node scripts/sync-calculator-counts.cjs --check
-      - name: Commit updated index and count surfaces when changed
+      - name: Regenerate the human-readable sitemap
+        run: node scripts/generate-human-sitemap.cjs
+      - name: Verify synchronized counts and sitemap
+        run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check
+      - name: Commit updated index, count surfaces and human sitemap when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -61,10 +65,11 @@ jobs:
             calculators/salary-calculator.html \
             hi/calculator/about.html \
             hi/calculator/site-directory.html \
+            sitemap.html \
             ':(glob)*/index.html'
           if ! git diff --cached --quiet; then
             git commit -m "chore(catalogue): synchronize calculator index and public counts"
             git push
           else
-            echo "Search index and calculator counts are already up to date."
+            echo "Search index, counts and human sitemap are already up to date."
           fi
