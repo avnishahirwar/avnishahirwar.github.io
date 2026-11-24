@@ -691,5 +691,705 @@
     "category": "Everyday Life",
     "keywords": "pallet load calculator",
     "description": "Estimate how many cartons fit on a pallet layer and stack."
+  },
+  {
+    "name": "Apartment Rent Percentage",
+    "url": "/calculators/apartment-rent-percentage-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "apartment rent percentage",
+    "description": "Free apartment rent percentage with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Assignment Grade Weighted",
+    "url": "/calculators/assignment-grade-weighted-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "assignment grade weighted",
+    "description": "Free assignment grade weighted with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Baby Formula Amount",
+    "url": "/calculators/baby-formula-amount-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "baby formula amount",
+    "description": "Free baby formula amount with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Barcode Length",
+    "url": "/calculators/barcode-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "barcode length",
+    "description": "Free barcode length with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Bedsheet Size",
+    "url": "/calculators/bedsheet-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "bedsheet size",
+    "description": "Free bedsheet size with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Bike Chain Life",
+    "url": "/calculators/bike-chain-life-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "bike chain life",
+    "description": "Free bike chain life with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Bike Gear Ratio",
+    "url": "/calculators/bike-gear-ratio-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "bike gear ratio",
+    "description": "Free bike gear ratio with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Bird Seed",
+    "url": "/calculators/bird-seed-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "bird seed",
+    "description": "Free bird seed with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Budget Split Payday",
+    "url": "/calculators/budget-split-payday-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "budget split payday",
+    "description": "Free budget split payday with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Cadence Speed",
+    "url": "/calculators/cadence-speed-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cadence speed",
+    "description": "Free cadence speed with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Cashback Value",
+    "url": "/calculators/cashback-value-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cashback value",
+    "description": "Free cashback value with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Coffee Bloom Time",
+    "url": "/calculators/coffee-bloom-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "coffee bloom time",
+    "description": "Free coffee bloom time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Container Fill",
+    "url": "/calculators/container-fill-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "container fill",
+    "description": "Free container fill with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Couch To 5k Timer",
+    "url": "/calculators/couch-to-5k-timer-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "couch to 5k timer",
+    "description": "Free couch to 5k timer with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Crate Size",
+    "url": "/calculators/crate-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "crate size",
+    "description": "Free crate size with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Crochet Shell Width",
+    "url": "/calculators/crochet-shell-width-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "crochet shell width",
+    "description": "Free crochet shell width with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "CTR to Conversion Calculator",
+    "url": "/calculators/ctr-to-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ctr to conversion calculator",
+    "description": "Free ctr to conversion calculator with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Curtain Fabric",
+    "url": "/calculators/curtain-fabric-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "curtain fabric",
+    "description": "Free curtain fabric with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Cycling Speed Gear",
+    "url": "/calculators/cycling-speed-gear-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "cycling speed gear",
+    "description": "Free cycling speed gear with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Diaper Size",
+    "url": "/calculators/diaper-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "diaper size",
+    "description": "Free diaper size with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Dishwasher Cost Per Load",
+    "url": "/calculators/dishwasher-cost-per-load-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "dishwasher cost per load",
+    "description": "Free dishwasher cost per load with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Dryer Electricity Cost",
+    "url": "/calculators/dryer-electricity-cost-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "dryer electricity cost",
+    "description": "Free dryer electricity cost with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Egg Boil Time",
+    "url": "/calculators/egg-boil-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "egg boil time",
+    "description": "Free egg boil time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Electricity Bill Appliance",
+    "url": "/calculators/electricity-bill-appliance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "electricity bill appliance",
+    "description": "Free electricity bill appliance with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Elevation Gain",
+    "url": "/calculators/elevation-gain-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "elevation gain",
+    "description": "Free elevation gain with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Emi Affordability",
+    "url": "/calculators/emi-affordability-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "emi affordability",
+    "description": "Free emi affordability with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Ethernet Drop Count",
+    "url": "/calculators/ethernet-drop-count-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ethernet drop count",
+    "description": "Free ethernet drop count with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Exam Score Needed",
+    "url": "/calculators/exam-score-needed-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "exam score needed",
+    "description": "Free exam score needed with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Exposure Reciprocity",
+    "url": "/calculators/exposure-reciprocity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "exposure reciprocity",
+    "description": "Free exposure reciprocity with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Fabric Width Converter",
+    "url": "/calculators/fabric-width-converter-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "fabric width converter",
+    "description": "Free fabric width converter with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Fence Posts Spacing",
+    "url": "/calculators/fence-posts-spacing-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "fence posts spacing",
+    "description": "Free fence posts spacing with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Flash Guide Number",
+    "url": "/calculators/flash-guide-number-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "flash guide number",
+    "description": "Free flash guide number with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Freezer Storage Life",
+    "url": "/calculators/freezer-storage-life-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "freezer storage life",
+    "description": "Free freezer storage life with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Fuel Per Passenger",
+    "url": "/calculators/fuel-per-passenger-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "fuel per passenger",
+    "description": "Free fuel per passenger with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Fuel Tank Range",
+    "url": "/calculators/fuel-tank-range-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "fuel tank range",
+    "description": "Free fuel tank range with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Garden Plant Spacing",
+    "url": "/calculators/garden-plant-spacing-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "garden plant spacing",
+    "description": "Free garden plant spacing with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Golden Hour Time",
+    "url": "/calculators/golden-hour-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "golden hour time",
+    "description": "Free golden hour time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "GPA to Percentage Calculator",
+    "url": "/calculators/gpa-percent-converter-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "gpa to percentage calculator",
+    "description": "Free gpa to percentage calculator with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Grass Seed Quantity",
+    "url": "/calculators/grass-seed-quantity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "grass seed quantity",
+    "description": "Free grass seed quantity with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Grill Cooking Time",
+    "url": "/calculators/grill-cooking-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "grill cooking time",
+    "description": "Free grill cooking time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Grind Size Chart",
+    "url": "/calculators/grind-size-chart-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "grind size chart",
+    "description": "Free grind size chart with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Grocery Budget Per Person",
+    "url": "/calculators/grocery-budget-per-person-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "grocery budget per person",
+    "description": "Free grocery budget per person with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Hamster Wheel Distance",
+    "url": "/calculators/hamster-wheel-distance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "hamster wheel distance",
+    "description": "Free hamster wheel distance with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Honey Sugar Substitute",
+    "url": "/calculators/honey-sugar-substitute-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "honey sugar substitute",
+    "description": "Free honey sugar substitute with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Icing Sugar",
+    "url": "/calculators/icing-sugar-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "icing sugar",
+    "description": "Free icing sugar with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Infant Paracetamol Dose",
+    "url": "/calculators/infant-paracetamol-dose-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "infant paracetamol dose",
+    "description": "Free infant paracetamol dose with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Inverter Battery Backup",
+    "url": "/calculators/inverter-battery-backup-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "inverter battery backup",
+    "description": "Free inverter battery backup with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Invoice Late Fee",
+    "url": "/calculators/invoice-late-fee-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "invoice late fee",
+    "description": "Free invoice late fee with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Jetlag Adjustment",
+    "url": "/calculators/jetlag-adjustment-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "jetlag adjustment",
+    "description": "Free jetlag adjustment with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Kayak Paddle",
+    "url": "/calculators/kayak-paddle-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "kayak paddle",
+    "description": "Free kayak paddle with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Knitting Gauge",
+    "url": "/calculators/knitting-gauge-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "knitting gauge",
+    "description": "Free knitting gauge with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Lens Macro Magnification",
+    "url": "/calculators/lens-macro-magnification-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "lens macro magnification",
+    "description": "Free lens macro magnification with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Loan Emi Extra Payment",
+    "url": "/calculators/loan-emi-extra-payment-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "loan emi extra payment",
+    "description": "Free loan emi extra payment with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Luggage Weight Allowance",
+    "url": "/calculators/luggage-weight-allowance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "luggage weight allowance",
+    "description": "Free luggage weight allowance with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Meal Prep Portion",
+    "url": "/calculators/meal-prep-portion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "meal prep portion",
+    "description": "Free meal prep portion with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Meat Cooking Resting",
+    "url": "/calculators/meat-cooking-resting-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "meat cooking resting",
+    "description": "Free meat cooking resting with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Meat Thawing Time",
+    "url": "/calculators/meat-thawing-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "meat thawing time",
+    "description": "Free meat thawing time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Milk Powder Conversion",
+    "url": "/calculators/milk-powder-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "milk powder conversion",
+    "description": "Free milk powder conversion with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Naismith Rule Hiking Time Calculator",
+    "url": "/calculators/naismith-rule-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "naismith rule hiking time calculator",
+    "description": "Free naismith rule hiking time calculator with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Pantry Shelf Life",
+    "url": "/calculators/pantry-shelf-life-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pantry shelf life",
+    "description": "Free pantry shelf life with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Pet Medicine Dose",
+    "url": "/calculators/pet-medicine-dose-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pet medicine dose",
+    "description": "Free pet medicine dose with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Photo Print Size",
+    "url": "/calculators/photo-print-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "photo print size",
+    "description": "Free photo print size with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Plank Time",
+    "url": "/calculators/plank-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "plank time",
+    "description": "Free plank time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Plant Watering",
+    "url": "/calculators/plant-watering-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "plant watering",
+    "description": "Free plant watering with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Playlist Length",
+    "url": "/calculators/playlist-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "playlist length",
+    "description": "Free playlist length with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Podcast Episode Length",
+    "url": "/calculators/podcast-episode-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "podcast episode length",
+    "description": "Free podcast episode length with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Potted Plant Drainage",
+    "url": "/calculators/potted-plant-drainage-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "potted plant drainage",
+    "description": "Free potted plant drainage with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Potting Soil Mix",
+    "url": "/calculators/potting-soil-mix-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "potting soil mix",
+    "description": "Free potting soil mix with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Pressure Cooker Time",
+    "url": "/calculators/pressure-cooker-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "pressure cooker time",
+    "description": "Free pressure cooker time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "QR Code Capacity Calculator",
+    "url": "/calculators/qr-code-capacity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "qr code capacity calculator",
+    "description": "Free qr code capacity calculator with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Rabbit Pellet",
+    "url": "/calculators/rabbit-pellet-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rabbit pellet",
+    "description": "Free rabbit pellet with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Rainwater Tank Refill",
+    "url": "/calculators/rainwater-tank-refill-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rainwater tank refill",
+    "description": "Free rainwater tank refill with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Rent Increase Percent",
+    "url": "/calculators/rent-increase-percent-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rent increase percent",
+    "description": "Free rent increase percent with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Resting Heart Rate Zones",
+    "url": "/calculators/resting-heart-rate-zones-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "resting heart rate zones",
+    "description": "Free resting heart rate zones with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Retainer Equivalent",
+    "url": "/calculators/retainer-equivalent-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "retainer equivalent",
+    "description": "Free retainer equivalent with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Rice Cooker Conversion",
+    "url": "/calculators/rice-cooker-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "rice cooker conversion",
+    "description": "Free rice cooker conversion with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Room Paint Quantity",
+    "url": "/calculators/room-paint-quantity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "room paint quantity",
+    "description": "Free room paint quantity with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Salary Hike Percent",
+    "url": "/calculators/salary-hike-percent-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "salary hike percent",
+    "description": "Free salary hike percent with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Seam Allowance",
+    "url": "/calculators/seam-allowance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "seam allowance",
+    "description": "Free seam allowance with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Sleep Cycle Wake Time",
+    "url": "/calculators/sleep-cycle-wake-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "sleep cycle wake time",
+    "description": "Free sleep cycle wake time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Solar Panel Output",
+    "url": "/calculators/solar-panel-output-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "solar panel output",
+    "description": "Free solar panel output with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Spice Conversion",
+    "url": "/calculators/spice-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "spice conversion",
+    "description": "Free spice conversion with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Star Trail Length",
+    "url": "/calculators/star-trail-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "star trail length",
+    "description": "Free star trail length with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Study Time Planner",
+    "url": "/calculators/study-time-planner-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "study time planner",
+    "description": "Free study time planner with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Sunscreen Amount",
+    "url": "/calculators/sunscreen-amount-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "sunscreen amount",
+    "description": "Free sunscreen amount with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Tea Steeping Timer",
+    "url": "/calculators/tea-steeping-timer-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "tea steeping timer",
+    "description": "Free tea steeping timer with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Tile Quantity",
+    "url": "/calculators/tile-quantity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "tile quantity",
+    "description": "Free tile quantity with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Train Vs Car Emissions",
+    "url": "/calculators/train-vs-car-emissions-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "train vs car emissions",
+    "description": "Free train vs car emissions with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Typing Speed Words",
+    "url": "/calculators/typing-speed-words-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "typing speed words",
+    "description": "Free typing speed words with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Tyre Pressure Conversion",
+    "url": "/calculators/tyre-pressure-conversion-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "tyre pressure conversion",
+    "description": "Free tyre pressure conversion with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Utilities Split",
+    "url": "/calculators/utilities-split-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "utilities split",
+    "description": "Free utilities split with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Vehicle Resale Value",
+    "url": "/calculators/vehicle-resale-value-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "vehicle resale value",
+    "description": "Free vehicle resale value with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Walking Calories Distance",
+    "url": "/calculators/walking-calories-distance-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "walking calories distance",
+    "description": "Free walking calories distance with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Water Tank Capacity",
+    "url": "/calculators/water-tank-capacity-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "water tank capacity",
+    "description": "Free water tank capacity with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Ethernet Cable Length Calculator",
+    "url": "/calculators/wifi-cable-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "ethernet cable length calculator",
+    "description": "Free ethernet cable length calculator with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Wine Chilling Time",
+    "url": "/calculators/wine-chilling-time-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "wine chilling time",
+    "description": "Free wine chilling time with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Yarn Length",
+    "url": "/calculators/yarn-length-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "yarn length",
+    "description": "Free yarn length with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Yeast Water Temperature",
+    "url": "/calculators/yeast-water-temperature-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "yeast water temperature",
+    "description": "Free yeast water temperature with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "YouTube Thumbnail Size Checker",
+    "url": "/calculators/youtube-thumbnail-size-checker-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "youtube thumbnail size checker",
+    "description": "Free youtube thumbnail size checker with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Aquarium Filter Size",
+    "url": "/calculators/aquarium-filter-size-calculator.html",
+    "category": "Everyday Life",
+    "keywords": "aquarium filter size",
+    "description": "Free aquarium filter size with formula, worked example and instant in-browser results."
   }
 ]
