@@ -242,8 +242,10 @@ const ensurePwaInstallUi=()=>{
   document.body.append(button,panel,network);
 };
 
-// Do not load analytics tags on privacy or cookie policy URLs used for consent review (?:privacy|cookies).
-if(!/(^|\/)(?:privacy|privacy-policy|cookies)\.html$/.test(location.pathname)){
+// Keep production analytics data clean: never send preview or other-host traffic to the production GA4/GTM containers.
+const isProductionAnalyticsHost=['friendlycalculator.in','www.friendlycalculator.in'].includes(location.hostname.toLowerCase());
+// Do not load analytics tags on preview hosts or privacy/cookie policy URLs (?:privacy|cookies) used for consent review.
+if(isProductionAnalyticsHost&&!/(^|\/)(?:privacy|privacy-policy|cookies)\.html$/.test(location.pathname)){
 // Google Tag Manager container: loaded once on every page using this shared shell.
 // Keep the existing direct GA4 configuration below; do not add a second GA4 tag
 // inside GTM unless the direct GA4 installation is deliberately migrated.
