@@ -1,4 +1,5 @@
 name: One-time additive public social metadata repair
+# Trigger full repository CI on the PR branch after the generated metadata commit.
 
 on:
   push:
