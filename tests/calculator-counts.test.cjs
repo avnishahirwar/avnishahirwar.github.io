@@ -8,6 +8,13 @@ const root = path.join(__dirname, '..');
 
 test('global calculator total matches unique catalog routes with existing pages', () => {
   const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const additionsPath = path.join(root, 'assets/calculator-search-index-additions.json');
+  if (fs.existsSync(additionsPath)) {
+    const seenUrls = new Set(index.map(item => item.url));
+    for (const item of JSON.parse(fs.readFileSync(additionsPath, 'utf8'))) {
+      if (!seenUrls.has(item.url)) { index.push(item); seenUrls.add(item.url); }
+    }
+  }
   const routes = new Set(index.map(item => item.url).filter(url => typeof url === 'string' && url.startsWith('/') && url.endsWith('.html') && !url.includes('?') && !url.includes('#') && !url.split('/').includes('..') && fs.existsSync(path.join(root, url.slice(1)))));
   assert.equal(catalogueCount(), routes.size);
 });

@@ -6,10 +6,22 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
 const INDEX_FILE = path.join(ROOT, 'assets/calculator-search-index.json');
+const ADDITIONS_FILE = path.join(ROOT, 'assets/calculator-search-index-additions.json');
+
+function loadCatalogueEntries() {
+  const entries = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+  if (fs.existsSync(ADDITIONS_FILE)) {
+    const seen = new Set(entries.map(item => String(item.url || '')));
+    for (const item of JSON.parse(fs.readFileSync(ADDITIONS_FILE, 'utf8'))) {
+      if (!seen.has(String(item.url || ''))) { entries.push(item); seen.add(String(item.url || '')); }
+    }
+  }
+  return entries;
+}
 const DIRECTORY_FILES = ['calculator/site-directory.html', 'hi/calculator/site-directory.html'];
 
 function catalogueStats() {
-  const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+  const index = loadCatalogueEntries();
   const urls = new Set();
   for (const item of index) {
     const url = String(item.url || '');
@@ -54,7 +66,7 @@ function updateDirectoryCounters(html, total) {
     const re = new RegExp(`(<a\\b[^>]*href="#${id}"[^>]*>[\\s\\S]*?<span>)[\\d,]+(\\s+calculators?<\\/span>)`, 'i');
     html = html.replace(re, (_, a, b) => `${a}${count.toLocaleString('en-US')} ${count === 1 ? 'calculator' : 'calculators'}</span>`);
   }
-  html = html.replace(/(Browse\s+)[\d,]+(\s+calculators?\s+across\s+\d+\s+categories)/i, (_, a, b) => `${a}${groupedTotal.toLocaleString('en-US')}${b}`);
+  html = html.replace(/(Browse\s+)[\d,]+(\s+calculators?\s+across\s+\d+\s+categories(,\s*plus\s+international\s+calculator\s+tools\.)?)/i, (_, a, b) => `The complete catalogue includes ${total.toLocaleString('en-US')} calculators. Browse ${groupedTotal.toLocaleString('en-US')}${b}`);
   html = html.replace(/(Browse\s+all\s+)[\d,]+(\s+calculator\s+tools)/i, (_, a, b) => `${a}${total.toLocaleString('en-US')}${b}`);
   html = html.replace(/(Search\s+)[\d,]+(\s+calculators?\s+by\s+name)/i, (_, a, b) => `${a}${groupedTotal.toLocaleString('en-US')}${b}`);
   html = html.replace(/Showing\s+[\d,]+\s+(?:core calculator pages and selected international tools|calculator tools, including international VAT|core calculator pages|calculator links listed below), plus website resources\./gi,
@@ -100,6 +112,11 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
   html = html.replace(/full website directory contains\s+[\d,]+(?: core calculator pages plus the international VAT calculator| calculator pages, including international tools| core calculator pages plus\s+[\d,]+ international calculator pages)/gi,
     `full website directory contains ${coreFormatted} core calculator pages plus ${internationalFormatted} international calculator pages`);
   html = html.replace(/(Explore\s+all\s+)[\d,]+(\s+calculators?\s+(?:on\s+Friendly\s+Calculator)?)/gi, (_, a, b) => `${a}${formatted}${b}`);
+  html = html.replace(/[\d,]+ public calculators in the core sitemap catalogue, including [\d,]+ distinct calculator routes in the curated directory, plus [\d,]+ international calculator entries/gi,
+    `${coreFormatted} public calculators in the calculator catalogue, including ${internationalFormatted} international calculators`);
+  html = html.replace(/[\d,]+ calculator routes in the curated directory, plus/gi, `${internationalFormatted} international calculators, plus`);
+  html = html.replace(/[\d,]+ public calculators in the curated directory; [\d,]+ core catalogue entries are indexed for search/gi,
+    `${formatted} public calculators in the calculator catalogue; all catalogue entries are indexed for search`);
   return html;
 }
 
