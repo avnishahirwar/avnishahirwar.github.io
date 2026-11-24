@@ -182,19 +182,10 @@ jobs:
           homepage|${BASE_URL}/
           directory|${BASE_URL}/calculator/site-directory.html
           gst-calculator|${BASE_URL}/calculators/gst-calculator.html
-          loan-emi|${BASE_URL}/calculators/loan-emi-calculator.html
-          minutes-to-hours|${BASE_URL}/calculators/minutes-to-hours-calculator.html
-          finance-category|${BASE_URL}/calculator/finance-calculators.html
-          tax-category|${BASE_URL}/calculator/tax.html
           income-tax|${BASE_URL}/calculators/income-tax-calculator.html
-          sip-calculator|${BASE_URL}/calculators/sip-calculator.html
           mortgage-calculator|${BASE_URL}/calculators/mortgage-calculator.html
-          methodology|${BASE_URL}/calculator/methodology.html
-          about|${BASE_URL}/calculator/about.html
-          international-home|${BASE_URL}/international/
-          blog-home|${BASE_URL}/blog/
           hindi-home|${BASE_URL}/hi/index.html
-          spanish-home|${BASE_URL}/es/index.html
+          international-home|${BASE_URL}/international/
           legal-compliance|${BASE_URL}/calculator/legal-compliance.html
           URLS
 
