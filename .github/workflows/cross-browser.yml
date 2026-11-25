@@ -73,7 +73,7 @@ jobs:
       - name: Wait for pull request deploy preview
         if: github.event_name == 'pull_request'
         env:
-          FC_SITE_ORIGIN: https://deploy-preview-${{ github.event.pull_request.number }}--avnishahirwar.netlify.app
+          FC_SITE_ORIGIN: https://sres-auto-regional-20261125.friendly-calculator.pages.dev
         run: |
           for attempt in $(seq 1 30); do
             if curl --fail --silent --show-error "$FC_SITE_ORIGIN/" >/dev/null; then
@@ -86,7 +86,7 @@ jobs:
           exit 1
       - name: Run cross-browser smoke tests against PR preview or production
         env:
-          FC_SITE_ORIGIN: ${{ github.event_name == 'pull_request' && format('https://deploy-preview-{0}--avnishahirwar.netlify.app', github.event.pull_request.number) || 'https://friendlycalculator.in' }}
+          FC_SITE_ORIGIN: ${{ github.event_name == 'pull_request' && 'https://sres-auto-regional-20261125.friendly-calculator.pages.dev' || 'https://friendlycalculator.in' }}
           FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
   safari-native:
