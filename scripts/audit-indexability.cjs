@@ -35,6 +35,25 @@ const ALLOWED_NOINDEX_FILES = new Set([
   'ru/calculator/business-calculators.html', 'ru/calculator/free-tools-research.html',
   'ru/calculator/languages.html', 'ru/calculator/methodology.html', 'ru/calculator/tax.html',
   'ru/international/index.html', 'ru/international/vat-calculator.html',
+  // Redirects and deliberately unpublished/under-review locale pages.
+  'calculators/emi-calculator.html', 'calculators/index.html',
+  'de/calculators/basic-calculator.html', 'de/calculators/currency-converter-calculator.html',
+  'de/calculators/percentage-calculator.html', 'de/calculators/unit-converter.html',
+  'gu/calculators/basic-calculator.html', 'id/calculators/income-tax-calculator.html',
+  'it/calculators/basic-calculator.html', 'it/calculators/percentage-calculator.html',
+  'it/calculators/unit-converter.html', 'ja/calculators/basic-calculator.html',
+  'ja/calculators/mortgage-calculator.html', 'ja/calculators/percentage-calculator.html',
+  'kn/calculators/basic-calculator.html', 'ko/calculators/basic-calculator.html',
+  'ko/calculators/percentage-calculator.html', 'ko/calculators/unit-converter.html',
+  'ru/calculators/basic-calculator.html', 'ru/calculators/mortgage-calculator.html',
+  'ru/calculators/percentage-calculator.html', 'te/calculators/basic-calculator.html',
+  'tr/calculators/basic-calculator.html', 'tr/calculators/percentage-calculator.html',
+  'tr/calculators/unit-converter.html', 'ur/calculators/basic-calculator.html',
+  'ur/calculators/percentage-calculator.html', 'ur/calculators/unit-converter.html',
+  'vi/calculators/basic-calculator.html', 'zh/calculators/basic-calculator.html',
+  'zh/calculators/percentage-calculator.html', 'zh/calculators/unit-converter.html',
+  'hi/calculator/admin.html', 'hi/map.html', 'hi/maps.html', 'hi/offline.html',
+  'hi/seo-meta-tags.html',
 ]);
 const PRIVATE_DIRS = new Set(['.git', '.github', 'node_modules', 'admin', 'tests', 'avnish-ai']);
 
