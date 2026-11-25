@@ -45,7 +45,7 @@ try {
       return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
     };
     const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
-    const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\\/$/,'/')||'/');
+    const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\/$/,'/')||'/');
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
         const href=link.getAttribute('href');
