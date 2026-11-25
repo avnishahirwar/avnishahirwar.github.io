@@ -67,7 +67,7 @@ function parseHeaderRules(text) {
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
     if (!line || line.startsWith('#')) continue;
-    if (!/^\S+\s/.test(line)) {
+    if (/^\s/.test(raw)) {
       if (current) current.directives.push(line);
       continue;
     }
