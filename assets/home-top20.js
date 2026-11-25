@@ -10,7 +10,10 @@
   }
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
-  var INR = function (n) { return '₹' + Number(n).toLocaleString('en-IN', {maximumFractionDigits: 2, minimumFractionDigits: 0}); };
+  var displayCurrency = 'INR', displayRate = 1, displayLocale = 'en-IN';
+  var currencySymbol = function (code) { try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: code}).formatToParts(0).filter(function (p) { return p.type === 'currency'; })[0].value; } catch (_) { return code; } };
+  var INR = function (n) { var value = Number(n) * displayRate; try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: displayCurrency, maximumFractionDigits: 2, minimumFractionDigits: 0}).format(value); } catch (_) { return currencySymbol(displayCurrency) + value.toLocaleString(); } };
+  var configureDisplayCurrency = function (code, rate, locale) { if (!/^[A-Z]{3}$/.test(code) || !(Number(rate) > 0) || !isFinite(Number(rate))) return false; displayCurrency = code; displayRate = Number(rate); if (locale) displayLocale = locale; return true; };
   var NUM = function (n, d) { return Number(n).toLocaleString('en-IN', {maximumFractionDigits: d == null ? 2 : d}); };
   var PCT = function (n) { return NUM(n, 2) + '%'; };
   var bad = function (m) { return {error: m}; };
@@ -71,7 +74,7 @@
     return {maxEmi: maxEmi, loan: loan};
   }
 
-  var F = function (k, label, v, extra) { var o = {k: k, label: label, v: v}; for (var x in (extra || {})) o[x] = extra[x]; return o; };
+  var F = function (k, label, v, extra) { var o = {k: k, label: label, v: v, currency: String(label).indexOf('₹') !== -1}; for (var x in (extra || {})) o[x] = extra[x]; return o; };
 
   var CALCS = [
     {id: 'emi', name: 'EMI', url: '/calculators/emi-calculator.html', fields: [F('P', 'Loan amount (₹)', 2500000), F('rate', 'Interest rate (% per year)', 8.5, {step: 0.01}), F('years', 'Tenure (years)', 20)],
@@ -228,10 +231,43 @@
     var tabs = el('div', {'class': 'top20-tabs', role: 'tablist', 'aria-label': 'Top 20 calculators in India'});
     var panel = el('div', {'class': 'top20-panel', role: 'tabpanel', id: 'top20-panel'});
     host.appendChild(tabs); host.appendChild(panel);
-    var current = null, buttons = {};
+    var current = null, buttons = {}, currentForm = null, currencyStatus = el('p', {'class': 'top20-currency-status', 'role': 'status', 'aria-live': 'polite'});
+    panel.appendChild(currencyStatus);
+    function updateCurrencyLabels() {
+      var symbol = currencySymbol(displayCurrency);
+      if (!currentForm) return;
+      current.fields.forEach(function (f) {
+        if (!f.currency) return;
+        var label = currentForm.querySelector('label[for="top20-' + current.id + '-' + f.k + '"] span');
+        if (label) { if (!label.dataset.fcOriginalText) label.dataset.fcOriginalText = label.textContent; label.textContent = label.dataset.fcOriginalText.replace(/₹/g, symbol); }
+      });
+      var note = panel.querySelector('.top20-note');
+      if (note) { if (!note.dataset.fcOriginalText) note.dataset.fcOriginalText = note.textContent; note.textContent = note.dataset.fcOriginalText.replace(/₹/g, symbol); }
+    }
+    function loadDisplayCurrency() {
+      var localeApi = window.FCLocale;
+      var selected = localeApi && localeApi.getCurrency ? localeApi.getCurrency() : 'INR';
+      var locale = localeApi && localeApi.getLocale ? localeApi.getLocale() : 'en-IN';
+      if (selected === 'INR') { var oldRate = displayRate; configureDisplayCurrency('INR', 1, locale); if (currentForm && oldRate !== 1) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate; } }); updateCurrencyLabels(); if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true})); currencyStatus.textContent = 'Amounts shown in Indian Rupees (INR).'; return; }
+      currencyStatus.textContent = 'Loading the latest available INR to ' + selected + ' reference rate…';
+      fetch('https://api.frankfurter.dev/v2/rate/INR/' + encodeURIComponent(selected), {headers: {Accept: 'application/json'}, cache: 'no-cache'}).then(function (response) { if (!response.ok) throw new Error('Rate unavailable'); return response.json(); }).then(function (data) {
+        if (!data || !Number.isFinite(Number(data.rate)) || Number(data.rate) <= 0 || !data.date) throw new Error('Invalid reference rate');
+        var oldRate = displayRate, nextRate = Number(data.rate);
+        configureDisplayCurrency(selected, nextRate, locale);
+        if (currentForm) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate * nextRate; } });
+        updateCurrencyLabels();
+        currencyStatus.textContent = 'Amounts converted from INR to ' + selected + ' using the Frankfurter reference rate dated ' + data.date + '. Calculations retain their original INR-based formulas.';
+        if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true}));
+      }).catch(function () {
+        currencyStatus.textContent = 'Reference rate unavailable. Results are kept in INR to avoid showing an incorrect currency.';
+        if (localeApi && localeApi.setCurrency) localeApi.setCurrency('INR');
+      });
+    }
+    window.addEventListener('fc:localechange', loadDisplayCurrency);
+    window.addEventListener('fc:locale-ready', loadDisplayCurrency);
 
     function render() {
-      var c = current, form = el('form', {'class': 'top20-form', novalidate: 'novalidate'});
+      var c = current, form = el('form', {'class': 'top20-form', novalidate: 'novalidate'}); currentForm = form;
       form.addEventListener('submit', function (e) { e.preventDefault(); });
       c.fields.forEach(function (f) {
         var id = 'top20-' + c.id + '-' + f.k, input;
@@ -240,7 +276,7 @@
         } else if (f.type === 'date') {
           input = el('input', {id: id, name: f.k, type: 'date', value: f.today ? todayISO() : f.v});
         } else {
-          input = el('input', {id: id, name: f.k, type: 'number', inputmode: 'decimal', min: '0', step: f.step || 'any', value: f.v});
+          input = el('input', {id: id, name: f.k, type: 'number', inputmode: 'decimal', min: '0', step: f.step || 'any', value: f.currency ? f.v * displayRate : f.v});
         }
         form.appendChild(el('label', {'for': id}, [el('span', {text: f.label}), input]));
       });
@@ -251,7 +287,7 @@
         var v = {};
         c.fields.forEach(function (f) {
           var raw = form.elements[f.k].value;
-          v[f.k] = (f.type === 'select' ? (isNaN(Number(raw)) ? raw : Number(raw)) : f.type === 'date' ? raw : (raw === '' ? NaN : Number(raw)));
+          v[f.k] = (f.type === 'select' ? (isNaN(Number(raw)) ? raw : Number(raw)) : f.type === 'date' ? raw : (raw === '' ? NaN : Number(raw) / (f.currency ? displayRate : 1)));
         });
         var r;
         try { r = c.calc(v); } catch (err) { r = bad('Please check the values entered.'); }
@@ -286,7 +322,8 @@
       buttons[c.id] = b; tabs.appendChild(b);
     });
     select(CALCS[0].id);
+    loadDisplayCurrency();
   }
 
-  return {CALCS: CALCS, mount: mount, emi: emi, sipFV: sipFV, rdMaturity: rdMaturity, ppfMaturity: ppfMaturity, newRegimeTax: newRegimeTax, hraExemption: hraExemption, ageParts: ageParts, swp: swp, eligibility: eligibility};
+  return {CALCS: CALCS, mount: mount, configureDisplayCurrency: configureDisplayCurrency, getDisplayCurrency: function () { return {currency: displayCurrency, rate: displayRate, locale: displayLocale}; }, emi: emi, sipFV: sipFV, rdMaturity: rdMaturity, ppfMaturity: ppfMaturity, newRegimeTax: newRegimeTax, hraExemption: hraExemption, ageParts: ageParts, swp: swp, eligibility: eligibility};
 });
