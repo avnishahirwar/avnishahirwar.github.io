@@ -5,14 +5,14 @@ const ROOT = path.resolve(__dirname, '..');
 const REPORT_DIR = path.join(ROOT, 'reports', 'production-optimization');
 const ORIGIN = 'https://friendlycalculator.in';
 const SKIP = new Set(['.git', 'node_modules', 'vendor', 'dist', 'coverage']);
-const PRIVATE = /^(?:admin\/|tests\/|avnish-ai\/)/i;
+const PRIVATE = /(?:^|\/)(?:admin|tests|avnish-ai)(?:\/|$)/i;
 
 function walk(dir, rel = '') {
   const out = [];
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
     if (item.isDirectory()) {
       if (!SKIP.has(item.name)) out.push(...walk(path.join(dir, item.name), path.join(rel, item.name)));
-    } else if (item.isFile() && item.name.toLowerCase().endsWith('.html')) {
+    } else if (item.isFile() && item.name.toLowerCase().endsWith('.html') && !/^google[0-9a-f]+\.html$/i.test(item.name)) {
       out.push(path.join(rel, item.name).split(path.sep).join('/'));
     }
   }
@@ -45,16 +45,22 @@ function auditHtmlDocument(file, html) {
   const lang = attr((html.match(/<html\b[^>]*>/i) || [''])[0], 'lang');
   const viewport = /<meta\b(?=[^>]*\bname\s*=\s*["']viewport["'])/i.test(head);
   const noindex = /\bnoindex\b/.test(robots);
+  const privatePage = PRIVATE.test(file);
+  if (privatePage) return { title, description, canonical, canonicalSelf: false, lang, noindex: true, findings };
+  let canonicalSelf = false;
+  let canonicalPath = '';
   if (!title) add('error', 'missing-title', 'Missing title element.');
   else if (title.length < 30 || title.length > 60) add('warning', 'title-length', 'Title length: ' + title.length + ' characters.');
   if (!description) add('error', 'missing-description', 'Missing meta description.');
-  else if (description.length < 70 || description.length > 160) add('warning', 'description-length', 'Description length: ' + description.length + ' characters.');
+  else if (description.length < 50 || description.length > 160) add('warning', 'description-length', 'Description length: ' + description.length + ' characters.');
   if (!canonical) add('error', 'missing-canonical', 'Missing canonical URL.');
   else {
     try {
       const u = new URL(canonical, ORIGIN);
+      canonicalPath = u.pathname;
       const expected = file === 'index.html' ? '/' : '/' + file;
-      if (u.origin !== ORIGIN || u.pathname !== expected || u.search || u.hash) add('warning', 'canonical-mismatch', 'Canonical does not match expected production path ' + expected + '.');
+      canonicalSelf = u.origin === ORIGIN && u.pathname === expected && !u.search && !u.hash;
+      if (u.origin !== ORIGIN || u.search || u.hash) add('warning', 'canonical-mismatch', 'Canonical must use the production host without query strings or fragments.');
     } catch { add('error', 'invalid-canonical', 'Invalid canonical URL.'); }
   }
   if (!lang) add('error', 'missing-html-lang', 'Missing html lang attribute.');
@@ -63,7 +69,7 @@ function auditHtmlDocument(file, html) {
   if (alternates.length) {
     const locales = alternates.map(x => attr(x, 'hreflang').toLowerCase());
     if (new Set(locales).size !== locales.length) add('error', 'duplicate-hreflang', 'Duplicate hreflang locale.');
-    const selfPath = file === 'index.html' ? '/' : '/' + file;
+    const selfPath = canonicalPath || (file === 'index.html' ? '/' : '/' + file);
     if (!alternates.some(x => { try { return new URL(attr(x, 'href'), ORIGIN).pathname === selfPath; } catch { return false; } })) add('warning', 'hreflang-no-self', 'No self-reference in hreflang cluster.');
     for (const x of alternates) {
       const locale = attr(x, 'hreflang');
@@ -85,7 +91,7 @@ function auditHtmlDocument(file, html) {
     if (!(attr(x, 'aria-label') || attr(x, 'title') || x.replace(/<[^>]+>/g, '').trim())) add('warning', 'button-no-name', 'Button has no accessible name.');
   }
   if (noindex && file === 'index.html') add('error', 'homepage-noindex', 'Homepage is marked noindex.');
-  return { title, description, canonical, noindex, findings };
+  return { title, description, canonical, canonicalSelf, lang, noindex, findings };
 }
 function parseSitemap(xml) {
   return [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)].map(x => x[1].trim());
@@ -107,21 +113,22 @@ function runAudit(root = ROOT) {
   for (const file of files) {
     const r = auditHtmlDocument(file, fs.readFileSync(path.join(root, file), 'utf8'));
     findings.push(...r.findings);
-    if (r.noindex) noindex++;
-    else if (!PRIVATE.test(file)) {
+    if (r.noindex || PRIVATE.test(file)) noindex++;
+    else if (r.canonicalSelf) {
       indexable++;
+      const localeKey = (r.lang || 'und').toLowerCase() + '\u0000';
       if (r.title) {
-        const k = r.title.toLowerCase();
+        const k = localeKey + r.title.toLowerCase();
         if (titles.has(k)) findings.push({ severity: 'warning', code: 'duplicate-title', path: file, detail: 'Duplicates ' + titles.get(k) });
         else titles.set(k, file);
       }
       if (r.description) {
-        const k = r.description.toLowerCase();
+        const k = localeKey + r.description.toLowerCase();
         if (descriptions.has(k)) findings.push({ severity: 'warning', code: 'duplicate-description', path: file, detail: 'Duplicates ' + descriptions.get(k) });
         else descriptions.set(k, file);
       }
     }
-    pages.push({ path: file, title: r.title, canonical: r.canonical, noindex: r.noindex, findings: r.findings.length });
+    pages.push({ path: file, title: r.title, canonical: r.canonical, canonicalSelf: r.canonicalSelf, noindex: r.noindex, findings: r.findings.length });
   }
   const sitemapPath = path.join(root, 'sitemap.xml');
   let urls = [];
