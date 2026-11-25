@@ -117,7 +117,7 @@ test('currency loading state applies to every newly rendered calculator and skip
   assert.match(source, /out\.hidden = currencyLoading/);
   assert.match(source, /if \(input\.value !== ''\) input\.value = Number\(input\.value\) \/ oldRate/);
   assert.match(source, /if \(input\.value !== ''\) input\.value = Number\(input\.value\) \/ oldRate \* nextRate/);
-  assert.equal((source.match(/loadDisplayCurrency\(\);/g) || []).length, 2, 'register listeners then load once after initial calculator render');
+  assert.equal((source.match(/loadDisplayCurrency\(\);/g) || []).length, 1, 'load once after the initial calculator render to avoid duplicate rate requests');
 });
 
 test('homepage widget reads an already-initialized locale preference, not only future locale events', () => {
