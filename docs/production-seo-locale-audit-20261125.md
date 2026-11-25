@@ -63,3 +63,10 @@ Each of these locale sitemaps contained only its /locale/index.html landing page
 The repository's canonical config/language-catalogue.json currently defines 50 unique locale codes and marks all 50 as available. The production homepage's sampled hreflang cluster contains 48 language codes plus x-default, so the config and published alternate cluster do not match exactly. In addition, 27 of the fetched locale landing pages still use English fallback title/description metadata and their locale sitemaps contain only one landing page. Therefore the catalogue's "available" status must not be interpreted as proof of complete translation or full calculator coverage.
 
 The existing locale-coverage test in this branch still expects 17 available and 33 planned, which does not match the current canonical config. Update that test to validate the config schema and report actual content/metadata coverage separately; do not change the 50 locale statuses or remove locale routes/hreflang without explicit owner approval.
+
+
+## Additive social metadata repair — branch verification
+
+On the SRES feature branch, the repository's existing additive repair script was run through GitHub Actions workflow 45530393043. It scanned 4,165 HTML files, updated 688 pages that were missing route-specific Open Graph/Twitter metadata, and then re-ran its check successfully: **0 pages need repair**. Forty-one files were excluded or lacked the public title/description prerequisites for this repair.
+
+The repair preserved existing page titles, descriptions and canonical URLs; it adds missing social metadata only. The generated commit is fd543dec340771dc73d23025899fee5f9e9bddf2. This is a branch change only: it is not merged or production-deployed, and production remains unchanged until the reviewed PR is merged and the actual hosting deployment is verified.
