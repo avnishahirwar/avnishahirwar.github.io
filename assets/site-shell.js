@@ -507,6 +507,34 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
+  // Mirror the existing currency preference in the Header, immediately after Language.
+  // Keep the original selector in Settings so FCLocale retains its established ID and handler.
+  const headerCurrencySource=regionalControlsSource.querySelector('.fc-currency-control');
+  const headerLanguageControl=primaryNav?.querySelector('.fc-language-control');
+  if(headerCurrencySource&&headerLanguageControl&&!primaryNav.querySelector('.fc-header-currency-control')){
+    const headerCurrencyControl=headerCurrencySource.cloneNode(true);
+    headerCurrencyControl.className='fc-header-currency-control';
+    const headerCurrencySelect=headerCurrencyControl.querySelector('select');
+    const settingsCurrencySelect=headerCurrencySource.querySelector('select');
+    headerCurrencySelect.id='fc-header-currency-select';
+    headerCurrencySelect.setAttribute('aria-label',headerCurrencySelect.getAttribute('aria-label')||'Display currency');
+    const syncHeaderCurrency=()=>{
+      const value=window.FCLocale?.getCurrency?.()||settingsCurrencySelect.value;
+      headerCurrencySelect.value=value;
+    };
+    headerCurrencySelect.addEventListener('change',()=>{
+      if(window.FCLocale?.setCurrency){
+        window.FCLocale.setCurrency(headerCurrencySelect.value);
+      }else{
+        settingsCurrencySelect.value=headerCurrencySelect.value;
+        settingsCurrencySelect.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    window.addEventListener('fc:locale-ready',syncHeaderCurrency);
+    window.addEventListener('fc:localechange',syncHeaderCurrency);
+    headerLanguageControl.after(headerCurrencyControl);
+    syncHeaderCurrency();
+  }
 }
 // The header retains language and an accessible compact navigation toggle.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
