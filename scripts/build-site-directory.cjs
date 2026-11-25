@@ -119,7 +119,7 @@ function renderPage(lang, groups, total) {
     (hi ? 'कैलकुलेटर श्रेणियाँ' : 'Calculator categories') + '">' + nav + '</nav>' + sections +
     '</main><footer class="fc-footer"><div class="wrap"><strong>FRIENDLY CALCULATOR</strong><nav class="fc-footer-links">' +
     '<a href="/">Home</a><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a>' +
-    '<a href="/calculator/terms.html">Terms</a><a href="/calculator/contact.html">Contact</a></nav></div></footer>' +
+    '<a href="/calculator/terms.html">Terms</a><a href="/calculator/contact.html">Contact</a><a href="/calculator/physics-calculators.html">Physics calculators</a></nav></div></footer>' +
     '<script>(function(){var q=document.getElementById("q");if(!q)return;q.addEventListener("input",function(){var v=q.value.trim().toLowerCase();document.querySelectorAll(".card").forEach(function(card){card.classList.toggle("hidden",!!v&&!(card.getAttribute("data-search")||"").includes(v));});document.querySelectorAll(".calculator-category").forEach(function(section){section.classList.toggle("hidden",!!v&&!section.querySelector(".card:not(.hidden)"));});});})();</script>' +
     '<script src="/assets/site-shell.js" defer></script></body></html>';
 }
