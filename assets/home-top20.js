@@ -232,7 +232,6 @@
     var panel = el('div', {'class': 'top20-panel', role: 'tabpanel', id: 'top20-panel'});
     host.appendChild(tabs); host.appendChild(panel);
     var current = null, buttons = {}, currentForm = null, currencyStatus = el('p', {'class': 'top20-currency-status', 'role': 'status', 'aria-live': 'polite'});
-    panel.appendChild(currencyStatus);
     function updateCurrencyLabels() {
       var symbol = currencySymbol(displayCurrency);
       if (!currentForm) return;
@@ -292,7 +291,7 @@
         var r;
         try { r = c.calc(v); } catch (err) { r = bad('Please check the values entered.'); }
         out.textContent = '';
-        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: r.error})); return; }
+        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: String(r.error).replace(/₹/g, currencySymbol(displayCurrency))})); return; }
         r.rows.forEach(function (row) {
           out.appendChild(el('div', {'class': 'top20-row' + (row[2] ? ' top20-main' : '')}, [el('span', {text: row[0]}), el('strong', {text: row[1]})]));
         });
@@ -300,10 +299,12 @@
       form.addEventListener('input', compute); form.addEventListener('change', compute);
       panel.textContent = '';
       panel.setAttribute('aria-labelledby', 'top20-tab-' + c.id);
+      panel.appendChild(currencyStatus);
       panel.appendChild(el('h3', {text: c.name + ' Calculator'}));
       panel.appendChild(form); panel.appendChild(out);
       if (c.note) panel.appendChild(el('p', {'class': 'top20-note', text: c.note}));
       foot.appendChild(link); panel.appendChild(foot);
+      updateCurrencyLabels();
       compute();
     }
     function select(id, focus) {
