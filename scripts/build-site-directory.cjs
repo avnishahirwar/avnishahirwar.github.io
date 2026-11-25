@@ -38,8 +38,12 @@ function esc(value) {
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function collectGroups() {
-  const entries = catalogueStats().entries.filter(item =>
-    /^\\/(?:[a-z]{2,3}\\/)?calculators\\/[^?#]+\\.html$/i.test(String(item.url || '')));
+  const entries = catalogueStats().entries.filter(item => {
+    const url = String(item.url || '');
+    const parts = url.split('/');
+    return url.startsWith('/calculators/') ||
+      (parts.length > 3 && /^[a-z]{2,3}$/i.test(parts[1]) && parts[2] === 'calculators' && url.endsWith('.html'));
+  });
   const groups = CATEGORIES.map(([id,label,hiLabel,pattern]) => ({id,label,hiLabel,pattern,items:[]}));
   for (const item of entries) {
     const haystack = [item.category,item.name,item.keywords,item.description].join(' ');
