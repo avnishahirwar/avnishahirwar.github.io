@@ -111,6 +111,18 @@ async function checkPage(browser, url, label, viewport) {
   assert.ok(response && response.ok(), label + ': HTTP response');
   await page.locator('header.fc-global-header').waitFor({ state: 'visible', timeout: 20000 });
   await page.locator('footer.fc-global-footer').waitFor({ state: 'visible', timeout: 20000 });
+  const footerPaths = await page.locator('footer.fc-global-footer .fc-global-footer-links a').evaluateAll(links => links.map(link => new URL(link.href).pathname));
+  const headerOnlyCategoryPaths = [
+    '/', '/calculator/business-calculators.html', '/calculator/finance-calculators.html',
+    '/calculator/tax.html', '/calculator/industry-calculators.html',
+    '/calculator/manufacturing-calculators.html', '/calculator/everyday-calculators.html', '/blog/'
+  ];
+  for (const path of headerOnlyCategoryPaths) {
+    assert.ok(!footerPaths.includes(path), label + ': header-only category leaked into Footer: ' + path);
+  }
+  for (const path of ['/calculator/about.html', '/calculator/privacy.html', '/calculator/terms.html', '/calculator/disclaimer.html']) {
+    assert.ok(footerPaths.includes(path), label + ': required information link missing from Footer: ' + path);
+  }
   await page.locator('#fc-primary-navigation').waitFor({ state: 'attached', timeout: 20000 });
   const settings = page.locator('#fc-display-settings');
   await settings.waitFor({ state: 'visible', timeout: 20000 });
