@@ -234,6 +234,7 @@ test('shared Footer omits category links already available in the header', () =>
   ];
   assert.ok(shell.includes('fc-global-links'), 'Primary header navigation must remain available.');
   assert.ok(shell.includes("const footerCategoryHrefs=new Set("), 'Footer must explicitly filter header-only category destinations.');
+  assert.ok(shell.includes('!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some'), 'Legacy Footer links must also filter header-only category destinations before cloning.');
   for (const [label, href] of categoryLinks) {
     assert.ok(shell.includes("['" + label + "','" + href + "']") || shell.includes("'" + href + "'"), 'Header/category destination must remain configured: ' + label);
   }
