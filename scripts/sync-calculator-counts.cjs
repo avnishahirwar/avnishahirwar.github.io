@@ -127,12 +127,13 @@ function updateHomepage(html, total, localized = false, core = total, categoryCo
   return html;
 }
 
-function updateGlobalText(html, total, core = total, international = Math.max(0, total - core)) {
+function updateGlobalText(html, total, core = total, international = Math.max(0, total - core), directoryCore = core) {
   const formatted = total.toLocaleString('en-US');
   const coreFormatted = core.toLocaleString('en-US');
+  const directoryCoreFormatted = directoryCore.toLocaleString('en-US');
   const internationalFormatted = international.toLocaleString('en-US');
   html = html.replace(/(brings together\s*(?:<strong>)?)[\d,]+(\s+public calculators in the core sitemap catalogue)/i,
-    (_, a, b) => a + coreFormatted + b);
+    (_, a, b) => a + directoryCoreFormatted + b);
   html = html.replace(/([\d,]+)(\s+core catalogue entries are indexed for search)/i,
     (_, count, suffix) => coreFormatted + suffix);
   html = html.replace(/[\d,]+ public calculator pages, including international tools/gi,
@@ -149,6 +150,8 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
 
 function transformedFiles() {
   const {total, core, international, entries} = catalogueStats();
+  const directoryCounts = sectionCardCounts(fs.readFileSync(path.join(ROOT, 'calculator/site-directory.html'), 'utf8'));
+  const directoryCore = [...directoryCounts.values()].reduce((sum, count) => sum + count, 0);
   const result = new Map();
   const englishFiles = [
     'index.html', 'calculator/about.html', 'calculator/api.html',
@@ -161,7 +164,7 @@ function transformedFiles() {
     let html = fs.readFileSync(absolute, 'utf8');
     if (relative === 'index.html') html = updateHomepage(html, total, false, core, sectionCardCounts(fs.readFileSync(path.join(ROOT, 'calculator/site-directory.html'), 'utf8')));
     else if (DIRECTORY_FILES.includes(relative)) html = updateDirectoryCounters(html, total);
-    else if (relative === 'calculator/about.html') html = updateAboutCatalogue(updateGlobalText(html, total, core, international), entries);
+    else if (relative === 'calculator/about.html') html = updateAboutCatalogue(updateGlobalText(html, total, core, international, directoryCore), entries);
     else html = updateGlobalText(html, total, core, international);
     result.set(relative, html);
   }
