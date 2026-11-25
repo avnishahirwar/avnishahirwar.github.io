@@ -8,6 +8,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {catalogueStats} = require('./sync-calculator-counts.cjs');
 const ROOT = path.resolve(__dirname, '..');
+const SUPPLEMENTAL_PHYSICS_ROUTES = new Set(["/calculators/current-divider-calculator.html","/calculators/elastic-constants-calculator.html","/calculators/impulse-and-momentum-calculator.html","/calculators/light-year-conversion.html","/calculators/projectile-time-of-flight-calculator.html"]);
 const GROUPS = [
   {
     "id": "savings-investments",
@@ -147,7 +148,7 @@ function build() {
   const quick=GROUPS.map(group=>'<a href="#'+group.id+'">'+esc(group.label)+' <span>'+buckets.get(group.id).length.toLocaleString('en-US')+' calculators</span></a>').join('');
   const sections=GROUPS.map(group=>{
     const list=buckets.get(group.id),count=list.length;
-    const cards=list.map(item=>'<a class="card" href="'+esc(item.url)+'" data-search="'+esc([item.name,item.category,item.keywords,item.description].join(' ').toLowerCase())+'"><strong>'+esc(item.name)+'</strong><span>'+esc(item.description||item.keywords||group.desc)+'</span></a>').join('');
+    const cards=list.map(item=>'<a class="card" href="'+esc(item.url)+'" data-search="'+esc([item.name,item.category,item.keywords,item.description,SUPPLEMENTAL_PHYSICS_ROUTES.has(item.url)?'physics':''].join(' ').toLowerCase())+'"><strong>'+esc(item.name)+'</strong><span>'+esc(item.description||item.keywords||group.desc)+'</span></a>').join('');
     return '<section class="section calculator-category" id="'+group.id+'"><div class="section-head"><div><h2>'+esc(group.label)+'</h2><p>'+esc(group.desc)+'</p></div><strong>'+count.toLocaleString('en-US')+' tools</strong></div><div class="cards">'+cards+'</div></section>';
   }).join('');
   const intl=entries.filter(entry=>entry.url.startsWith('/international/')).map(item=>'<a class="card" href="'+esc(item.url)+'" data-search="'+esc([item.name,item.category,item.keywords,item.description].join(' ').toLowerCase())+'"><strong>'+esc(item.name)+'</strong><span>'+esc(item.description||item.keywords||'International calculator')+'</span></a>').join('');
