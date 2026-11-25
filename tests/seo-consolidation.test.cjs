@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
-const { canonicalCalculatorUrls, expectedCoreCalculatorCount } = require('./catalogue-counts.cjs')(root);
+const { canonicalCalculatorUrls, sitemapCalculatorUrls, expectedCoreCalculatorCount } = require('./catalogue-counts.cjs')(root);
 
 test('legacy overlapping category pages remain crawlable and point to retained categories', () => {
   const mappings = {
@@ -52,7 +52,7 @@ test('premium waitlist is indexable and included in the sitemap', () => {
 test('all canonical calculator routes remain in the sitemap after category cleanup', () => {
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, canonicalCalculatorUrls.length);
+  assert.equal(new Set(calculatorUrls).size, sitemapCalculatorUrls.length);
   assert.ok(canonicalCalculatorUrls.length >= expectedCoreCalculatorCount);
 });
 
@@ -74,7 +74,7 @@ test('Income Tax calculator links to the directory without a hard-coded catalogu
   const html = read('calculators/income-tax-calculator.html');
   const sitemap = read('sitemap.xml');
   const calculatorUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in\/calculators\/[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.equal(new Set(calculatorUrls).size, canonicalCalculatorUrls.length);
+  assert.equal(new Set(calculatorUrls).size, sitemapCalculatorUrls.length);
   assert.ok(html.includes('Explore the complete calculator directory to browse all current calculators.'));
   assert.doesNotMatch(html, /Explore all \\d+ calculators on Friendly Calculator\\./);
 });

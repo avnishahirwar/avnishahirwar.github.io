@@ -19,7 +19,9 @@ function publishedCalculatorEntries() {
     const html = fs.readFileSync(absolute, 'utf8');
     const noindex = /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
       /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
-    if (noindex) continue;
+    // Thin pages set to noindex by scripts/adsense-quality-pass.cjs stay in the public catalogue
+    // (search, directory, About, counts); only the sitemap and robots meta change.
+    if (noindex && !html.includes('data-quality-pass="thin"')) continue;
     const canonicalTag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
     const canonicalHref = canonicalTag && canonicalTag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
     let canonicalPath = url;
