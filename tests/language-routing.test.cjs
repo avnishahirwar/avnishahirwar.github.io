@@ -245,7 +245,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   assert.deepEqual(new Set(names), new Set(catalogue.locales.map(locale => locale.code)));
   assert.deepEqual(enabled.sort(), catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code).sort());
   assert.deepEqual(routed.sort(), enabled.sort());
-  assert.ok(shell.includes("fetch('/config/language-catalogue.json'"));
+  assert.ok(shell.includes("fetch('/config/language-catalogue.json?v=20261125-1',{cache:'no-store',credentials:'same-origin'})"));
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
   const directory = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
