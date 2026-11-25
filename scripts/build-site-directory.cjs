@@ -54,9 +54,18 @@ function collectGroups() {
   for (const url of physicsSupplemental) {
     if (byUrl.has(url) || !fs.existsSync(path.join(ROOT,url.slice(1)))) continue;
     const html = fs.readFileSync(path.join(ROOT,url.slice(1)),'utf8');
-    const title = (html.match(/<title\\b[^>]*>([\\s\\S]*?)<\\/title>/i) || [,''])[1]
-      .replace(/<[^>]*>/g,' ').replace(/\\s+/g,' ').trim().split(/\\s*[|–—]\\s*/)[0] || url.split('/').pop().replace(/\\.html$/,'').replace(/-/g,' ');
-    const description = (html.match(/<meta\\b[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) || [,''])[1];
+    const lower = html.toLowerCase();
+    const titleOpen = lower.indexOf('<title');
+    const titleStart = titleOpen >= 0 ? html.indexOf('>', titleOpen) + 1 : -1;
+    const titleEnd = titleStart > 0 ? lower.indexOf('</title>', titleStart) : -1;
+    const rawTitle = titleEnd > titleStart ? html.slice(titleStart, titleEnd) : '';
+    const title = rawTitle.replaceAll('<',' ').replaceAll('>',' ').replaceAll('&amp;','&')
+      .replaceAll(String.fromCharCode(10),' ').replaceAll(String.fromCharCode(13),' ')
+      .replaceAll(String.fromCharCode(9),' ').split(' ').filter(Boolean).join(' ').split(/[|–—]/)[0].trim() ||
+      url.split('/').pop().replace('.html','').replace(/-/g,' ');
+    const metaTag = html.split('<meta').find(part => part.toLowerCase().includes('name="description"'));
+    const contentStart = metaTag ? metaTag.toLowerCase().indexOf('content="') : -1;
+    const description = contentStart >= 0 ? metaTag.slice(contentStart + 9).split('"')[0] : '';
     byUrl.set(url,{name:title,url,category:'Physics',keywords:'physics',description});
   }
   const entries = [...byUrl.values()];
