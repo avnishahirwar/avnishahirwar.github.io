@@ -64,11 +64,12 @@ function renderPage(lang, groups, total) {
   const nav = groups.map(group => '<a class="category-link" href="#' + group.id + '"><span>' +
     esc(hi ? group.hiLabel : group.label) + '</span><span>' + group.items.length.toLocaleString('en-US') +
     ' calculators</span></a>').join('\n');
+  const physicsSupplemental = new Set(['/calculators/current-divider-calculator.html','/calculators/elastic-constants-calculator.html','/calculators/impulse-and-momentum-calculator.html','/calculators/light-year-conversion.html','/calculators/projectile-time-of-flight-calculator.html']);
   const sections = groups.map(group => '<section class="calculator-category" id="' + group.id +
     '"><header class="category-heading"><div><h2>' + esc(hi ? group.hiLabel : group.label) +
     '</h2><strong>' + group.items.length.toLocaleString('en-US') + ' tools</strong></div></header><div class="cards">' +
     group.items.map(item => '<a class="card" href="' + esc(item.url) + '" data-search="' +
-      esc([item.name,item.category,item.keywords,item.description].join(' ').toLowerCase()) +
+      esc([item.name,item.category,item.keywords,item.description,physicsSupplemental.has(item.url) ? 'physics' : ''].join(' ').toLowerCase()) +
       '"><strong>' + esc(item.name) + '</strong>' + (item.description ? '<span>' +
       esc(String(item.description).slice(0,180)) + '</span>' : '') + '</a>').join('\n') +
     '</div></section>').join('\n');
