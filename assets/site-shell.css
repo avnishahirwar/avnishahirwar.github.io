@@ -1608,3 +1608,33 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
   html:not([data-fc-theme="dark"]) .home-category-index a,
   html:not([data-fc-theme="dark"]) .home-popular-tools a {transition:none}
 }
+
+
+/* Follow operating-system accessibility preferences automatically. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+@media(prefers-contrast:more){
+  :root{--fc-shell-border:currentColor}
+  a{text-decoration:underline;text-underline-offset:.15em}
+  :where(button,input,select,textarea,[tabindex]):focus-visible{
+    outline:3px solid currentColor!important;
+    outline-offset:3px!important;
+  }
+}
+@media(forced-colors:active){
+  :where(button,input,select,textarea){border:1px solid ButtonText}
+  :where(a,button,input,select,textarea,[tabindex]):focus-visible{
+    outline:2px solid Highlight!important;
+    outline-offset:3px!important;
+  }
+  .fc-global-header,.fc-global-footer,.fc-display-panel{
+    forced-color-adjust:auto;
+  }
+}
