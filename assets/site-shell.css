@@ -1520,3 +1520,9 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
   html:not([data-fc-theme="dark"]) .home-category-index a,
   html:not([data-fc-theme="dark"]) .home-popular-tools a {transition:none}
 }
+
+
+/* Ensure the API Dashboard entry in More uses the same card treatment as sibling product links. */
+.fc-more-menu a.fc-login-link{display:flex;align-items:center;justify-content:flex-start;min-height:42px;padding:9px 12px;border:1px solid #3b536a;border-radius:8px;background:#182e43;color:#fff!important;font-weight:700;white-space:normal;text-decoration:none}
+.fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{background:#223b54;border-color:#d8bd82;color:#fff!important;text-decoration:none;outline:2px solid #d8bd82;outline-offset:2px}
+.fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}
