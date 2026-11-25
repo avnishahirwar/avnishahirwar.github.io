@@ -113,7 +113,7 @@ function renderPage(lang, groups, total) {
     (hi ? 'कैलकुलेटर निर्देशिका' : 'Calculator directory') + '</p><h1>' + (hi ? 'सभी ' : 'All ') +
     total.toLocaleString('en-US') + (hi ? ' कैलकुलेटर' : ' calculators') + '</h1><p>' +
     (hi ? 'श्रेणी चुनें या नाम से कैलकुलेटर खोजें।' : 'Browse by category or search the complete catalogue by calculator name.') +
-    '</p></header><section class="panel"><label for="q">' + (hi ? 'कैलकुलेटर खोजें' : 'Search calculators') +
+    '</p></header><section class="panel"><label for="q">' + (hi ? 'विषय के अनुसार कैलकुलेटर खोजें' : 'Search calculators by topic') +
     '</label><input class="search" id="q" type="search" placeholder="' + (hi ? 'नाम या विषय लिखें...' : 'Type a name or topic...') +
     '" autocomplete="off"></section><nav class="panel category-nav" aria-label="' +
     (hi ? 'कैलकुलेटर श्रेणियाँ' : 'Calculator categories') + '">' + nav + '</nav>' + sections +
