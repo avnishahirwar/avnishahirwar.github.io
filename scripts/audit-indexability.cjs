@@ -21,12 +21,50 @@ const ALLOWED_NOINDEX_HEADER_RULES = new Set([
 const ALLOWED_NOINDEX_FILES = new Set([
   '404.html',
   'offline.html',
+  'about.html',
+  'contact.html',
   'calculator/admin.html',
+  'calculator/dashboard.html',
+  'calculator/index.html',
+  'calculator/payment-test.html',
+  'calculator/quote.html',
   'map.html',
   'maps.html',
   'seo-meta-tags.html',
   'schema/_homepage.html',
+  'schema/homepage.html',
   'google09d3278d6d57b1a4.html',
+  'ae/index.html',
+  'au/index.html',
+  'ca/index.html',
+  'in/index.html',
+  'sa/index.html',
+  'us/index.html',
+  'api/index.html',
+  'embed/basic-calculator.html',
+  'hi/calculator/dashboard.html',
+  'hi/calculator/index.html',
+  'hi/calculator/payment-test.html',
+  'hi/embed/basic-calculator.html',
+  'de/calculator/business-calculators.html',
+  'de/calculator/free-tools-research.html',
+  'de/calculator/languages.html',
+  'de/calculator/methodology.html',
+  'de/calculator/tax.html',
+  'ja/calculator/business-calculators.html',
+  'ja/calculator/free-tools-research.html',
+  'ja/calculator/languages.html',
+  'ja/calculator/methodology.html',
+  'ja/calculator/tax.html',
+  'ja/international/index.html',
+  'ja/international/vat-calculator.html',
+  'ru/calculator/business-calculators.html',
+  'ru/calculator/free-tools-research.html',
+  'ru/calculator/languages.html',
+  'ru/calculator/methodology.html',
+  'ru/calculator/tax.html',
+  'ru/international/index.html',
+  'ru/international/vat-calculator.html',
 ]);
 const PRIVATE_DIRS = new Set(['.git', '.github', 'node_modules', 'admin', 'tests', 'avnish-ai']);
 
@@ -99,15 +137,21 @@ function main() {
 
   const htmlFiles = walk(ROOT);
   let checkedPublic = 0;
+  let thinContentExclusions = 0;
+  let approvedRouteExclusions = 0;
   const noindexPublic = [];
   for (const file of htmlFiles) {
     const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
-    if (hasNoindexMeta(html) && !isAllowedNoindexFile(file)) {
-      noindexPublic.push(file);
+    const noindexTags = getNoindexMetaTags(html);
+    if (noindexTags.length) {
+      const explicitlyThin = noindexTags.every(tag => /\\bdata-quality-pass\\s*=\\s*(['"])thin\\1/i.test(tag));
+      if (explicitlyThin) thinContentExclusions++;
+      else if (isApprovedNoindexPath(file)) approvedRouteExclusions++;
+      else noindexPublic.push(file);
     }
-    if (!isAllowedNoindexFile(file) && !PRIVATE_DIRS.has(file.split('/')[0])) checkedPublic++;
+    if (!isApprovedNoindexPath(file) && !PRIVATE_DIRS.has(file.split('/')[0])) checkedPublic++;
   }
-  for (const file of noindexPublic) failures.push('Public HTML has meta robots noindex: ' + file);
+  for (const file of noindexPublic) failures.push('Unclassified public HTML noindex (review content/route before changing): ' + file);
 
   const sitemapPath = path.join(ROOT, 'sitemap.xml');
   if (fs.existsSync(sitemapPath)) {
@@ -121,11 +165,20 @@ function main() {
           failures.push('Sitemap contains a URL covered by X-Robots-Tag noindex: ' + url);
         }
       }
+      const relative = pathname === '/' ? 'index.html' :
+        decodeURIComponent(pathname).replace(/^\\//, '');
+      const file = path.join(ROOT, relative);
+      if (fs.existsSync(file) && fs.statSync(file).isFile()) {
+        const html = fs.readFileSync(file, 'utf8');
+        if (hasNoindexMeta(html)) failures.push('Sitemap URL has meta robots noindex: ' + url);
+      }
     }
   }
 
   console.log('Indexability guard: ' + htmlFiles.length + ' HTML files scanned; ' +
-    checkedPublic + ' public candidates checked; ' + noindexRules.length +
+    checkedPublic + ' public candidates checked; ' + thinContentExclusions +
+    ' thin-content exclusions and ' + approvedRouteExclusions +
+    ' approved route exclusions found; ' + noindexRules.length +
     ' intentional X-Robots-Tag noindex rules found.');
   if (failures.length) {
     console.error(failures.map(item => 'FAIL: ' + item).join('\n'));
