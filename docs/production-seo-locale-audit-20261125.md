@@ -56,3 +56,10 @@ Each of these locale sitemaps contained only its /locale/index.html landing page
 - The 48 locale landing-page checks are live fetches of page heads and metadata; they do not establish translation quality across every calculator page.
 - Sitemap counts are per fetched sitemap file and must not be summed as a unique catalogue count without deduplicating URLs across the sitemap index.
 - No production files were modified by this audit.
+
+
+## Locale catalogue status reconciliation
+
+The repository's canonical config/language-catalogue.json currently defines 50 unique locale codes and marks all 50 as available. The production homepage's sampled hreflang cluster contains 48 language codes plus x-default, so the config and published alternate cluster do not match exactly. In addition, 27 of the fetched locale landing pages still use English fallback title/description metadata and their locale sitemaps contain only one landing page. Therefore the catalogue's "available" status must not be interpreted as proof of complete translation or full calculator coverage.
+
+The existing locale-coverage test in this branch still expects 17 available and 33 planned, which does not match the current canonical config. Update that test to validate the config schema and report actual content/metadata coverage separately; do not change the 50 locale statuses or remove locale routes/hreflang without explicit owner approval.
