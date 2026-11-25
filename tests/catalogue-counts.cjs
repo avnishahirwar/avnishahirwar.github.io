@@ -28,5 +28,5 @@ module.exports = function getCatalogueCounts(root) {
   const start = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(start, homepage.indexOf('</nav>', start));
   const homepageCoreCalculatorCount = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, m) => sum + Number(m[1]), 0);
-  return { sitemapCalculatorUrls, qualityPassUrls, canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength: expectedSearchIndexUrls.length, coreCalculatorUrls, expectedCoreCalculatorCount: coreCalculatorUrls.length, biologyChemistryCount, homepageCoreCalculatorCount };
+  return { sitemapCalculatorUrls, qualityPassUrls, canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength: expectedSearchIndexUrls.length, coreCalculatorUrls, expectedCoreCalculatorCount: sitemapCalculatorUrls.length, biologyChemistryCount, homepageCoreCalculatorCount };
 };
