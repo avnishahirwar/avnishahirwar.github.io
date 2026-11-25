@@ -2313,3 +2313,12 @@ test('regional preferences can be reset to automatic and accessibility preferenc
   assert.match(styles, /prefers-contrast:\s*more/);
   assert.match(styles, /forced-colors:\s*active/);
 });
+
+
+test('automatic regional detection supports locale lists, script subtags and non-US customary-unit regions', () => {
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.match(locale, /const browserLocales=/);
+  assert.match(locale, /new Intl\\.Locale\\(candidate\\)\\.region/);
+  assert.match(locale, /imperialRegions=new Set\\(\\['US','LR','MM'\\]\\)/);
+  assert.match(locale, /for\\(const candidate of browserLocales\\)/);
+});
