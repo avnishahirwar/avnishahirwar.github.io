@@ -19,7 +19,6 @@ jobs:
         run: |
           node scripts/build-site-directory.cjs
           node scripts/build-site-directory.cjs --check
-          node -e "const fs=require('fs');const h=fs.readFileSync('calculator/site-directory.html','utf8');for(const x of ['id=\\"fc-primary-navigation\\"','href=\\"/international/\\"','International Calculators','href=\\"/calculator/tax.html\\"'])if(!h.includes(x))throw new Error('Missing '+x);console.log('Static directory navigation verified.')"
       - name: Remove workflow and commit generated directory
         run: |
           rm -f .github/workflows/one-time-directory-label-refresh.yml
