@@ -111,6 +111,15 @@ test('SWP and loan eligibility', () => {
 });
 
 
+test('currency loading state applies to every newly rendered calculator and skips empty monetary inputs', () => {
+  const source = fs.readFileSync(path.join(root, 'assets/home-top20.js'), 'utf8');
+  assert.match(source, /form\.hidden = currencyLoading/);
+  assert.match(source, /out\.hidden = currencyLoading/);
+  assert.match(source, /if \(input\.value !== ''\) input\.value = Number\(input\.value\) \/ oldRate/);
+  assert.match(source, /if \(input\.value !== ''\) input\.value = Number\(input\.value\) \/ oldRate \* nextRate/);
+  assert.equal((source.match(/loadDisplayCurrency\(\);/g) || []).length, 2, 'register listeners then load once after initial calculator render');
+});
+
 test('homepage widget reads an already-initialized locale preference, not only future locale events', () => {
   const source = fs.readFileSync(path.join(root, 'assets/home-top20.js'), 'utf8');
   const listeners = source.indexOf("window.addEventListener('fc:locale-ready', loadDisplayCurrency);");
@@ -125,6 +134,9 @@ test('currency display converts INR-based homepage calculator amounts without ch
   assert.match(sip.rows[0][1], /^\$/);
   assert.equal(T.formatCurrencyText('Monthly investment (₹)'), 'Monthly investment ($)');
   assert.equal(T.formatCurrencyText('Investment limit ₹1,00,000'), 'Investment limit $1,200');
+  assert.equal(T.formatCurrencyText('Loan amount (₹)'), 'Loan amount ($)');
+  assert.equal(T.formatCurrencyText('Yearly deposit (₹, max 1,50,000)'), 'Yearly deposit ($, max $1,800)');
+  assert.equal(T.formatCurrencyText('max 1,50,000'), 'max $1,800');
   close(Number(sip.rows[0][1].replace(/[$,]/g, '')), T.sipFV(10000, 12, 10) * 0.012, 0.02);
   assert.equal(T.configureDisplayCurrency('INR', 1, 'en-IN'), true);
   assert.match(byId('sip').calc({m: 10000, rate: 12, years: 10}).rows[0][1], /^₹/);
