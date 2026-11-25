@@ -20,9 +20,9 @@ module.exports = function getCatalogueCounts(root) {
       sitemapUrls.some(url => new URL(url).pathname === pathname))
   ])].sort();
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
+  const sections = [...directory.matchAll(/<section\b[^>]*class="[^"]*\bcalculator-category\b[^"]*"[^>]*id="([^"]+)"[^>]*>([\s\S]*?)(?=<section\b[^>]*class="[^"]*\bcalculator-category\b[^"]*"|<footer|<\/main>)/g)];
   const coreCalculatorUrls = [...new Set(sections.flatMap(s => [...s[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])))].sort();
-  const biologySection = sections.find(section => section[1] === 'biology-chemistry');
+  const biologySection = sections.find(section => /^biology(?:-and)?-chemistry(?:-\d+)?$/.test(section[1]));
   const biologyChemistryCount = biologySection ? [...biologySection[2].matchAll(/<a class="card" href="\/calculators\//g)].length : 0;
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const start = homepage.indexOf('<nav class="home-category-index"');
