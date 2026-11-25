@@ -115,10 +115,13 @@
     {id: 'ppf', name: 'PPF', url: '/calculators/ppf-calculator.html', fields: [F('dep', 'Yearly deposit (₹, max 1,50,000)', 150000), F('rate', 'Interest rate (% per year)', 7.1, {step: 0.01}), F('years', 'Years (minimum 15)', 15)],
       note: 'The government revises the PPF rate every quarter; check the current rate. Deposit assumed at the start of each year.',
       calc: function (v) {
-        if (!(v.dep > 0 && v.dep <= 150000)) return bad('The yearly PPF deposit must be between ₹1 and ₹1,50,000.');
+        // Currency round-trips can introduce tiny IEEE-754 fractions at the INR limit.
+        // PPF deposits are rupee-denominated, so normalize only this boundary value before validation.
+        var deposit = Math.round(v.dep);
+        if (!(deposit > 0 && deposit <= 150000)) return bad('The yearly PPF deposit must be between ₹1 and ₹1,50,000.');
         if (!(v.years >= 15 && v.rate >= 0)) return bad('PPF runs for at least 15 years.');
-        var a = ppfMaturity(v.dep, v.rate, Math.round(v.years));
-        return {rows: [['Maturity amount', INR(a), 1], ['Total deposited', INR(v.dep * Math.round(v.years))], ['Interest earned', INR(a - v.dep * Math.round(v.years))]]};
+        var a = ppfMaturity(deposit, v.rate, Math.round(v.years));
+        return {rows: [['Maturity amount', INR(a), 1], ['Total deposited', INR(deposit * Math.round(v.years))], ['Interest earned', INR(a - deposit * Math.round(v.years))]]};
       }},
     {id: 'gst', name: 'GST', url: '/calculators/gst-calculator.html', fields: [F('amt', 'Amount (₹)', 10000), F('rate', 'GST rate (%)', 18, {step: 0.01}), F('mode', 'Amount is', 'excl', {type: 'select', options: [['excl', 'Without GST (add GST)'], ['incl', 'With GST (remove GST)']]})],
       calc: function (v) {
