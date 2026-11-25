@@ -134,10 +134,10 @@ function build() {
     indexEntries + '\n</sitemapindex>\n';
   if (Buffer.byteLength(index, 'utf8') > MAX_BYTES) throw new Error('Locale sitemap index exceeds 50 MB.');
   outputs.set('sitemap-locales.xml', index);
-  // Publish the standard top-level index requested by search engines. The
-  // locale index fans out to its individual locale segments, while the
-  // regional additive sitemap remains directly discoverable from robots.txt.
-  const topLevelFiles = ['sitemap.xml', 'sitemap-locales.xml', 'sitemap-uk-us.xml'];
+  // Keep the top-level index limited to URL-set sitemaps. The locale
+  // sitemap index is listed separately in robots.txt and points to its
+  // individual locale URL sets; do not nest one sitemap index inside another.
+  const topLevelFiles = ['sitemap.xml', 'sitemap-uk-us.xml'];
   const topLevelEntries = topLevelFiles.map(file => '  <sitemap><loc>' + ORIGIN + '/' + file + '</loc></sitemap>').join('\n');
   outputs.set('sitemap-index.xml', '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n' + topLevelEntries + '\n</sitemapindex>\n');
   return { outputs, groups, fileCount: files.length };
@@ -152,13 +152,16 @@ function main() {
       }
     }
     const topIndex = outputs.get('sitemap-index.xml');
-    for (const file of ['sitemap.xml', 'sitemap-locales.xml', 'sitemap-uk-us.xml']) {
+    for (const file of ['sitemap.xml', 'sitemap-uk-us.xml']) {
       if (!topIndex.includes('<loc>' + ORIGIN + '/' + file + '</loc>')) {
         throw new Error('Top-level sitemap index is missing ' + file);
       }
     }
-    if ((topIndex.match(/<sitemap>/g) || []).length !== 3) {
-      throw new Error('Top-level sitemap index must contain exactly three sitemap entries.');
+    if (topIndex.includes('<loc>' + ORIGIN + '/sitemap-locales.xml</loc>')) {
+      throw new Error('Top-level sitemap index must not nest the locale sitemap index.');
+    }
+    if ((topIndex.match(/<sitemap>/g) || []).length !== 2) {
+      throw new Error('Top-level sitemap index must contain exactly two URL-set sitemap entries.');
     }
     const counts = [...groups.entries()].map(([locale, entries]) => locale + '=' + entries.length).join(', ');
     console.log('Locale sitemap check passed: ' + [...groups.values()].reduce((n, items) => n + items.length, 0) +
