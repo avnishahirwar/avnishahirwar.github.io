@@ -567,8 +567,8 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
 }
 // The header retains language and an accessible compact navigation toggle.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
-  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴',pcm:'Menu',arz:'القائمة',sw:'Menyu',ha:'Menu',pa:'ਮੀਨੂ',fil:'Menu',yue:'選單',wuu:'菜单',fa:'منو',am:'ምናሌ',th:'เมนู',jv:'Menu',yo:'Àkójọ',bho:'मेन्यू',nl:'Menu',pl:'Menu',ml:'മെനു',or:'ମେନୁ',ne:'मेनु',si:'මෙනුව',uk:'Меню',uz:'Menyu',ps:'غورنۍ',so:'Liiska',he:'תפריט',my:'မီနူး',ro:'Meniu',sd:'مينيو'};
-  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기',pcm:'Close menu',arz:'إغلاق القائمة',sw:'Funga menyu',ha:'Rufe menu',pa:'ਮੀਨੂ ਬੰਦ ਕਰੋ',fil:'Isara ang menu',yue:'關閉選單',wuu:'关闭菜单',fa:'بستن منو',am:'ምናሌን ዝጋ',th:'ปิดเมนู',jv:'Tutup menu',yo:'Pa àkójọ',bho:'मेन्यू बंद करीं',nl:'Menu sluiten',pl:'Zamknij menu',ml:'മെനു അടയ്ക്കുക',or:'ମେନୁ ବନ୍ଦ କରନ୍ତୁ',ne:'मेनु बन्द गर्नुहोस्',si:'මෙනුව වසන්න',uk:'Закрити меню',uz:'Menyuni yopish',ps:'غورنۍ بنده کړئ',so:'Xir liiska',he:'סגירת התפריט',my:'မီနူးပိတ်ရန်',ro:'Închide meniul',sd:'مينيو بند ڪريو'};
+  const menuText={gu:'મેનુ',kn:'ಮೆನು',en:'Menu',hi:'मेन्यू',es:'Menú',fr:'Menu',pt:'Menu',de:'Menü',ar:'القائمة',id:'Menu',bn:'মেনু',ta:'பட்டியல்',ja:'メニュー',ru:'Меню',mr:'मेनू',zh:'菜单',ur:'مینو',tr:'Menü',it:'Menu',ko:'메뉴',pcm:'Menu',arz:'القائمة',sw:'Menyu',ha:'Menu',pa:'ਮੀਨੂ',fil:'Menu',yue:'選單',wuu:'菜单',fa:'منو',am:'ምናሌ',th:'เมนู',jv:'Menu',yo:'Àkójọ',bho:'मेन्यू',nl:'Menu',pl:'Menu',ml:'മെനു',or:'ମେନୁ',ne:'मेनु',si:'මෙනුව',uk:'Меню',uz:'Menyu',ps:'غورنۍ',so:'Liiska',he:'תפריט',my:'မီနူး',ro:'Meniu',sd:'مينيو',vi:'Menu',te:'మెనూ'};
+  const closeText={gu:'મેનુ બંધ કરો',kn:'ಮೆನು ಮುಚ್ಚಿ',en:'Close menu',hi:'मेन्यू बंद करें',es:'Cerrar menú',fr:'Fermer le menu',pt:'Fechar menu',de:'Menü schließen',ar:'إغلاق القائمة',id:'Tutup menu',bn:'মেনু বন্ধ করুন',ta:'பட்டியலை மூடு',ja:'メニューを閉じる',ru:'Меню закрыть',zh:'关闭菜单',ur:'مینو بند کریں',tr:'Menüyü kapat',it:'Chiudi menu',ko:'메뉴 닫기',pcm:'Close menu',arz:'إغلاق القائمة',sw:'Funga menyu',ha:'Rufe menu',pa:'ਮੀਨੂ ਬੰਦ ਕਰੋ',fil:'Isara ang menu',yue:'關閉選單',wuu:'关闭菜单',fa:'بستن منو',am:'ምናሌን ዝጋ',th:'ปิดเมนู',jv:'Tutup menu',yo:'Pa àkójọ',bho:'मेन्यू बंद करीं',nl:'Menu sluiten',pl:'Zamknij menu',ml:'മെനു അടയ്ക്കുക',or:'ମେନୁ ବନ୍ଦ କରନ୍ତୁ',ne:'मेनु बन्द गर्नुहोस्',si:'මෙනුව වසන්න',uk:'Закрити меню',uz:'Menyuni yopish',ps:'غورنۍ بنده کړئ',so:'Xir liiska',he:'סגירת התפריט',my:'မီနူးပိတ်ရန်',ro:'Închide meniul',sd:'مينيو بند ڪريو',vi:'Đóng menu',te:'మెనూను మూసివేయి'};
   const toggle=document.createElement('button');
   toggle.type='button';
   toggle.className='fc-nav-toggle';
@@ -631,35 +631,35 @@ const footerLabels={
   ur:['ہمارے بارے میں','طریقۂ کار','رازداری','شرائط','دستبرداری','قانونی اور تعمیل','ایمبیڈ','سائٹ میپ','رابطہ','اشتہارات'],
   tr:['Hakkımızda','Yöntem','Gizlilik','Koşullar','Sorumluluk Reddi','Hukuk ve Uyumluluk','Yerleştir','Site Haritası','İletişim','Reklam'],
   it:['Chi siamo','Metodo','Privacy','Termini','Esclusione di responsabilità','Note legali e conformità','Incorpora','Mappa del sito','Contatti','Pubblicità'],
-  ko:['소개','산정 방법','개인정보 처리방침','이용약관','면책 조항','법률 및 규정 준수','퍼가기','사이트맵','문의','광고'],,
-  pcm:['About','Method','Privacy','Terms','Disclaimer','About','Embed','Method','Contact','Business tools'],
-  arz:['عن الموقع','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','عن الموقع','تضمين','المنهجية','اتصل بنا','أدوات الأعمال'],
-  sw:['Kuhusu','Mbinu','Faragha','Masharti','Kanusho','Kuhusu','Pachika','Mbinu','Mawasiliano','Zana za biashara'],
-  ha:['Game da mu','Hanya','Sirri','Sharuɗɗa','Rashin alhaki','Game da mu','Saka','Hanya','Tuntuɓa','Kayan aikin kasuwanci'],
-  pa:['ਸਾਡੇ ਬਾਰੇ','ਤਰੀਕਾ','ਪਰਦੇਦਾਰੀ','ਸ਼ਰਤਾਂ','ਬੇਦਾਅਵਾ','ਸਾਡੇ ਬਾਰੇ','ਏਮਬੈਡ','ਤਰੀਕਾ','ਸੰਪਰਕ','ਕਾਰੋਬਾਰੀ ਸਾਧਨ'],
-  fil:['Tungkol sa amin','Pamamaraan','Privacy','Mga tuntunin','Pagtatanggi','Tungkol sa amin','I-embed','Pamamaraan','Makipag-ugnayan','Mga tool sa negosyo'],
-  yue:['關於我們','計算方法','私隱','條款','免責聲明','關於我們','嵌入','計算方法','聯絡我們','商業工具'],
-  wuu:['关于我们','计算方法','隐私','条款','免责声明','关于我们','嵌入','计算方法','联系我们','商业工具'],
-  fa:['درباره ما','روش محاسبه','حریم خصوصی','شرایط','سلب مسئولیت','درباره ما','جاسازی','روش محاسبه','تماس','ابزارهای کسب‌وکار'],
-  am:['ስለ እኛ','ዘዴ','ግላዊነት','ውሎች','የኃላፊነት መግለጫ','ስለ እኛ','አስገባ','ዘዴ','ያግኙን','የንግድ መሣሪያዎች'],
-  th:['เกี่ยวกับเรา','วิธีคำนวณ','ความเป็นส่วนตัว','ข้อกำหนด','ข้อจำกัดความรับผิด','เกี่ยวกับเรา','ฝัง','วิธีคำนวณ','ติดต่อ','เครื่องมือธุรกิจ'],
-  jv:['Babagan','Cara','Privasi','Katentuan','Panyingkiran tanggung jawab','Babagan','Sematake','Cara','Kontak','Piranti bisnis'],
-  yo:['Nípa wa','Ọ̀nà ìṣirò','Àṣírí','Àwọn òfin','Ìkìlọ̀ ojúṣe','Nípa wa','Fi sínú ojú-ìwé','Ọ̀nà ìṣirò','Kàn sí wa','Àwọn irinṣẹ́ iṣẹ́'],
-  bho:['हमरा बारे में','गणना तरीका','निजता','शर्त','अस्वीकरण','हमरा बारे में','एम्बेड करीं','गणना तरीका','संपर्क','कारोबार के औजार'],
-  nl:['Over ons','Methode','Privacy','Voorwaarden','Disclaimer','Over ons','Insluiten','Methode','Contact','Zakelijke tools'],
-  pl:['O nas','Metodologia','Prywatność','Warunki','Zastrzeżenia','O nas','Osadź','Metodologia','Kontakt','Narzędzia biznesowe'],
-  ml:['ഞങ്ങളെക്കുറിച്ച്','രീതി','സ്വകാര്യത','നിബന്ധനകൾ','നിരാകരണം','ഞങ്ങളെക്കുറിച്ച്','എംബെഡ്','രീതി','ബന്ധപ്പെടുക','ബിസിനസ് ഉപകരണങ്ങൾ'],
-  or:['ଆମ ବିଷୟରେ','ପଦ୍ଧତି','ଗୋପନୀୟତା','ସର୍ତ୍ତାବଳୀ','ଅସ୍ୱୀକାର','ଆମ ବିଷୟରେ','ଏମ୍ବେଡ୍','ପଦ୍ଧତି','ଯୋଗାଯୋଗ','ବ୍ୟବସାୟ ଉପକରଣ'],
-  ne:['हाम्रो बारेमा','विधि','गोपनीयता','सर्तहरू','अस्वीकरण','हाम्रो बारेमा','इम्बेड','विधि','सम्पर्क','व्यवसाय उपकरण'],
-  si:['අප ගැන','ක්‍රමවේදය','පෞද්ගලිකත්වය','නියමයන්','වගකීම් සීමා','අප ගැන','ඇතුළත් කරන්න','ක්‍රමවේදය','අමතන්න','ව්‍යාපාර මෙවලම්'],
-  uk:['Про нас','Методологія','Конфіденційність','Умови','Застереження','Про нас','Вбудувати','Методологія','Контакти','Бізнес-інструменти'],
-  uz:['Biz haqimizda','Hisoblash usuli','Maxfiylik','Shartlar','Rad etish','Biz haqimizda','Joylashtirish','Hisoblash usuli','Aloqa','Biznes vositalari'],
-  ps:['زموږ په اړه','طریقه','محرمیت','شرطونه','د مسؤلیت رد','زموږ په اړه','ځای پر ځای کول','طریقه','اړیکه','د سوداګرۍ وسایل'],
-  so:['Nagu saabsan','Habka','Asturnaanta','Shuruudaha','Afeef','Nagu saabsan','Ku dhex dar','Habka','Xiriir','Qalabka ganacsiga'],
-  he:['אודות','שיטת חישוב','פרטיות','תנאים','הסתייגות','אודות','הטמעה','שיטת חישוב','יצירת קשר','כלים עסקיים'],
-  my:['ကျွန်ုပ်တို့အကြောင်း','နည်းလမ်း','ကိုယ်ရေးလုံခြုံမှု','စည်းကမ်းချက်များ','တာဝန်ကင်းလွတ်ခွင့်','ကျွန်ုပ်တို့အကြောင်း','ထည့်သွင်းရန်','နည်းလမ်း','ဆက်သွယ်ရန်','စီးပွားရေးကိရိယာများ'],
-  ro:['Despre noi','Metodologie','Confidențialitate','Termeni','Declinarea răspunderii','Despre noi','Încorporează','Metodologie','Contact','Instrumente pentru afaceri'],
-  sd:['اسان بابت','طريقو','رازداري','شرطون','ذميواري کان انڪار','اسان بابت','شامل ڪريو','طريقو','رابطو','ڪاروباري اوزار']
+  ko:['소개','산정 방법','개인정보 처리방침','이용약관','면책 조항','법률 및 규정 준수','퍼가기','사이트맵','문의','광고'],
+  pcm:['About','Method','Privacy','Terms','Disclaimer','Legal & compliance','Embed','Sitemap','Contact','Advertising'],
+  arz:['عن الموقع','المنهجية','الخصوصية','الشروط','إخلاء المسؤولية','القانون والامتثال','تضمين','خريطة الموقع','اتصل بنا','الإعلانات'],
+  sw:['Kuhusu','Mbinu','Faragha','Masharti','Kanusho','Sheria na uzingatiaji','Pachika','Ramani ya tovuti','Mawasiliano','Matangazo'],
+  ha:['Game da mu','Hanya','Sirri','Sharuɗɗa','Rashin alhaki','Shari\'a da bin ƙa\'ida','Saka','Taswirar shafi','Tuntuɓa','Tallace-tallace'],
+  pa:['ਸਾਡੇ ਬਾਰੇ','ਤਰੀਕਾ','ਪਰਦੇਦਾਰੀ','ਸ਼ਰਤਾਂ','ਬੇਦਾਅਵਾ','ਕਾਨੂੰਨੀ ਅਤੇ ਪਾਲਣਾ','ਏਮਬੈਡ','ਸਾਈਟ ਨਕਸ਼ਾ','ਸੰਪਰਕ','ਇਸ਼ਤਿਹਾਰ'],
+  fil:['Tungkol sa amin','Pamamaraan','Privacy','Mga tuntunin','Pagtatanggi','Legal at pagsunod','I-embed','Mapa ng site','Makipag-ugnayan','Advertising'],
+  yue:['關於我們','計算方法','私隱','條款','免責聲明','法律及合規','嵌入','網站地圖','聯絡我們','廣告'],
+  wuu:['关于我们','计算方法','隐私','条款','免责声明','法律与合规','嵌入','网站地图','联系我们','广告'],
+  fa:['درباره ما','روش محاسبه','حریم خصوصی','شرایط','سلب مسئولیت','حقوقی و انطباق','جاسازی','نقشه سایت','تماس','تبلیغات'],
+  am:['ስለ እኛ','ዘዴ','ግላዊነት','ውሎች','የኃላፊነት መግለጫ','ሕጋዊነት እና ተገዢነት','አስገባ','የጣቢያ ካርታ','ያግኙን','ማስታወቂያ'],
+  th:['เกี่ยวกับเรา','วิธีคำนวณ','ความเป็นส่วนตัว','ข้อกำหนด','ข้อจำกัดความรับผิด','กฎหมายและการปฏิบัติตาม','ฝัง','แผนผังเว็บไซต์','ติดต่อ','โฆษณา'],
+  jv:['Babagan','Cara','Privasi','Katentuan','Panyingkiran tanggung jawab','Hukum lan kepatuhan','Sematake','Peta situs','Kontak','Iklan'],
+  yo:['Nípa wa','Ọ̀nà ìṣirò','Àṣírí','Àwọn òfin','Ìkìlọ̀ ojúṣe','Òfin àti ìbámu','Fi sínú ojú-ìwé','Àwòrán ojú-ìwé','Kàn sí wa','Ìpolówó'],
+  bho:['हमरा बारे में','गणना तरीका','निजता','शर्त','अस्वीकरण','कानूनी आ पालन','एम्बेड करीं','साइट नक्शा','संपर्क','विज्ञापन'],
+  nl:['Over ons','Methode','Privacy','Voorwaarden','Disclaimer','Juridisch en naleving','Insluiten','Sitemap','Contact','Advertenties'],
+  pl:['O nas','Metodologia','Prywatność','Warunki','Zastrzeżenia','Prawo i zgodność','Osadź','Mapa witryny','Kontakt','Reklama'],
+  ml:['ഞങ്ങളെക്കുറിച്ച്','രീതി','സ്വകാര്യത','നിബന്ധനകൾ','നിരാകരണം','നിയമവും അനുസരണവും','എംബെഡ്','സൈറ്റ് മാപ്പ്','ബന്ധപ്പെടുക','പരസ്യം'],
+  or:['ଆମ ବିଷୟରେ','ପଦ୍ଧତି','ଗୋପନୀୟତା','ସର୍ତ୍ତାବଳୀ','ଅସ୍ୱୀକାର','ଆଇନ ଓ ଅନୁପାଳନ','ଏମ୍ବେଡ୍','ସାଇଟ୍ ମାନଚିତ୍ର','ଯୋଗାଯୋଗ','ବିଜ୍ଞାପନ'],
+  ne:['हाम्रो बारेमा','विधि','गोपनीयता','सर्तहरू','अस्वीकरण','कानुनी तथा अनुपालन','इम्बेड','साइट नक्सा','सम्पर्क','विज्ञापन'],
+  si:['අප ගැන','ක්‍රමවේදය','පෞද්ගලිකත්වය','නියමයන්','වගකීම් සීමා','නීති සහ අනුකූලතාව','ඇතුළත් කරන්න','අඩවි සිතියම','අමතන්න','වෙළඳ දැන්වීම්'],
+  uk:['Про нас','Методологія','Конфіденційність','Умови','Застереження','Право та відповідність','Вбудувати','Мапа сайту','Контакти','Реклама'],
+  uz:['Biz haqimizda','Hisoblash usuli','Maxfiylik','Shartlar','Rad etish','Huquq va muvofiqlik','Joylashtirish','Sayt xaritasi','Aloqa','Reklama'],
+  ps:['زموږ په اړه','طریقه','محرمیت','شرطونه','د مسؤلیت رد','قانوني او اطاعت','ځای پر ځای کول','د وېبپاڼې نقشه','اړیکه','اعلانونه'],
+  so:['Nagu saabsan','Habka','Asturnaanta','Shuruudaha','Afeef','Sharci iyo u hoggaansanaan','Ku dhex dar','Khariidadda bogga','Xiriir','Xayeysiis'],
+  he:['אודות','שיטת חישוב','פרטיות','תנאים','הסתייגות','משפט וציות','הטמעה','מפת אתר','יצירת קשר','פרסום'],
+  my:['ကျွန်ုပ်တို့အကြောင်း','နည်းလမ်း','ကိုယ်ရေးလုံခြုံမှု','စည်းကမ်းချက်များ','တာဝန်ကင်းလွတ်ခွင့်','ဥပဒေနှင့် လိုက်နာမှု','ထည့်သွင်းရန်','ဆိုက်မြေပုံ','ဆက်သွယ်ရန်','ကြော်ငြာ'],
+  ro:['Despre noi','Metodologie','Confidențialitate','Termeni','Declinarea răspunderii','Juridic și conformitate','Încorporează','Harta site-ului','Contact','Publicitate'],
+  sd:['اسان بابت','طريقو','رازداري','شرطون','ذميواري کان انڪار','قانوني ۽ تعميل','شامل ڪريو','ويب سائيٽ جو نقشو','رابطو','اشتهار']
 };
 const footerPaths=[currentLocale==='hi'?'/hi/about.html':r+'about.html',currentLocale==='hi'?'/hi/methodology.html':r+'methodology.html',r+'privacy.html',r+'terms.html',r+'disclaimer.html','/calculator/legal-compliance.html','/embed/','/sitemap.html',currentLocale==='hi'?'/hi/contact.html':r+'contact.html','/calculator/advertise.html'];
 const footerLinks=footerLabels[currentLocale].map((label,index)=>[label,footerPaths[index]]);
