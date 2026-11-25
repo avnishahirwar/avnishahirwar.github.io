@@ -12,7 +12,10 @@ const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alt
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
- return fs.existsSync(file)&&!noindexOf(fs.readFileSync(file,'utf8'));
+ if(!fs.existsSync(file)) return false;
+ const html=fs.readFileSync(file,'utf8');
+ const lang=(html.match(/<html\\b[^>]*\\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase();
+ return !noindexOf(html)&&lang===locale;
 });
 const expectedPairs=(locales,route)=>[
  ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
