@@ -44,10 +44,12 @@ try {
       const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
       return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
     };
+    const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
+    const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\\/$/,'/')||'/');
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
         const href=link.getAttribute('href');
-        if(href&&!isFooterDirectoryLink(link)&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
+        if(href&&!isFooterDirectoryLink(link)&&!isHeaderOnlyCategoryLink(link)&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
       });
     };
     collectLinks(footer);
@@ -61,10 +63,7 @@ try {
     nav.className='fc-global-footer-links';
     nav.setAttribute('aria-label','Footer navigation');
     const requiredLinks=[
-      ['Home','/'],['Business','/calculator/business-calculators.html'],['Finance','/calculator/finance-calculators.html'],
-      ['Tax','/calculator/tax.html'],['Industry','/calculator/industry-calculators.html'],
-      ['Manufacturing','/calculator/manufacturing-calculators.html'],['Everyday','/calculator/everyday-calculators.html'],
-      ['All Calculators','/calculator/site-directory.html'],['Blog','/blog/'],['About','/calculator/about.html'],
+      ['All Calculators','/calculator/site-directory.html'],['About','/calculator/about.html'],
       ['Methodology','/calculator/methodology.html'],['Privacy','/calculator/privacy.html'],['Cookie Policy','/calculator/cookies.html'],
       ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['DMCA / Copyright','/dmca.html'],
       ['Legal & Compliance','/calculator/legal-compliance.html'],['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
