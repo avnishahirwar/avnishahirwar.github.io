@@ -2435,8 +2435,9 @@ test('Smart Regional Experience preserves SEO URLs and page metadata', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 
   // Explicit locale paths remain authoritative; browser defaults apply only to the root homepage.
-  assert.match(shell, /const currentLocale=\(\/\^/);
-  assert.match(shell, /p==='\/'\?preferredUiLocale:'en'/);
+  assert.match(shell, /const currentLocale=p==='\/'\?/);
+  assert.match(shell, /const preferredUiLocale=Object\.hasOwn\(supportedUiLocales,savedUiLocale\)\?savedUiLocale:browserUiLocale/);
+  assert.match(shell, /p==='\/'&&currentLocale!=='en'\)location\.replace/);
   assert.match(shell, /localStorage\.setItem\('fc-language-source','manual'\)/);
 
   // Regional formatting may update calculator labels and document data attributes,
