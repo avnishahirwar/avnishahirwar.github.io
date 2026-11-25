@@ -219,3 +219,34 @@ test('expanded More navigation renders every secondary link as a full-width menu
   assert.match(serviceWorker, /__fc_home_refresh/);
   assert.match(serviceWorker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
 });
+
+test('shared Footer includes the eight requested category links on every public page shell', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const start = shell.indexOf('<nav class="fc-footer-category-links"');
+  const end = shell.indexOf('</nav>', start);
+  assert.ok(start >= 0 && end > start, 'A dedicated calculator-category Footer navigation must exist.');
+  const categoryNav = shell.slice(start, end);
+  const expected = [
+    ['Home', '/'],
+    ['Business', '/calculator/business-calculators.html'],
+    ['Finance', '/calculator/finance-calculators.html'],
+    ['Tax', '/calculator/tax.html'],
+    ['Industry', '/calculator/industry-calculators.html'],
+    ['Manufacturing', '/calculator/manufacturing-calculators.html'],
+    ['Everyday', '/calculator/everyday-calculators.html'],
+    ['Blog', '/blog/']
+  ];
+  for (const [label, href] of expected) {
+    assert.ok(categoryNav.includes('href="' + href + '">' + label + '</a>'), 'Missing Footer category link: ' + label);
+  }
+  assert.equal((categoryNav.match(/<a href=/g) || []).length, 8, 'Footer category navigation must contain exactly eight links.');
+  assert.ok(shell.includes('aria-label="Calculator categories"'), 'Category navigation must have an accessible name.');
+  assert.ok(shell.includes('markCurrentNavigation(f.querySelector(\'.fc-footer-category-links\'))'), 'Current category page should be identified in Footer navigation.');
+  assert.ok(css.includes('.fc-footer-category-links{') && css.includes('.fc-footer-category-links a{'), 'Category links need dedicated styling.');
+  assert.ok(css.includes('.fc-footer-category-links{justify-content:flex-start;gap:6px 14px}'), 'Category links must wrap on mobile.');
+  for (const route of expected.slice(1, 7).map(([, href]) => href).concat(['/blog/'])) {
+    const file = route === '/blog/' ? 'blog/index.html' : route.replace(/^\//, '');
+    assert.ok(fs.existsSync(path.join(root, file)), 'Footer category destination must exist: ' + route);
+  }
+});
