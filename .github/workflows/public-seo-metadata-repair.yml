@@ -1,0 +1,44 @@
+name: Repair missing public social metadata on SRES branch
+
+on:
+  push:
+    branches:
+      - feat/auto-regional-accessibility-20261125
+    paths:
+      - '.github/workflows/public-seo-metadata-repair.yml'
+      - 'scripts/repair-public-social-metadata.cjs'
+      - '**/*.html'
+
+permissions:
+  contents: write
+
+jobs:
+  repair-public-metadata:
+    if: ${{ !contains(github.event.head_commit.message, 'chore: repair public social metadata') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out SRES branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Add missing route-specific social metadata
+        run: node scripts/repair-public-social-metadata.cjs --write
+      - name: Verify all eligible public pages
+        run: node scripts/repair-public-social-metadata.cjs --check
+      - name: Commit additive HTML metadata repairs
+        shell: bash
+        run: |
+          if git diff --quiet -- '*.html'; then
+            echo "No HTML metadata repairs were necessary."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "chore: repair public social metadata"
+          git push
