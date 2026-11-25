@@ -237,6 +237,8 @@ test('shared Footer omits category links already available in the header', () =>
   assert.ok(shell.includes('!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some'), 'Legacy Footer links must also filter header-only category destinations before cloning.');
   assert.ok(shell.indexOf('const isHeaderOnlyCategoryLink=') < shell.indexOf('try {'), 'The shared Footer filter must be declared outside the fallback try block so every Footer renderer can access it.');
   assert.ok(shell.indexOf('const isFooterDirectoryLink=') < shell.indexOf('try {'), 'The shared directory-link filter must be available to the canonical Footer renderer outside the fallback try block.');
+  assert.equal((shell.match(/const isHeaderOnlyCategoryLink=/g) || []).length, 1, 'Header-only category filter must have one shared declaration.');
+  assert.equal((shell.match(/const isFooterDirectoryLink=/g) || []).length, 1, 'Directory filter must have one shared declaration to avoid duplicate-const parse errors.');
   for (const [label, href] of categoryLinks) {
     assert.ok(shell.includes("['" + label + "','" + href + "']") || shell.includes("'" + href + "'"), 'Header/category destination must remain configured: ' + label);
   }
