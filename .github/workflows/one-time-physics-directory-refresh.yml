@@ -1,0 +1,27 @@
+name: One-time Physics directory refresh
+on:
+  push:
+    branches:
+      - seo/refresh-physics-directory-20261125
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerate physics directory from verified catalogue
+        run: node scripts/generate-physics-calculator-directory.cjs
+      - name: Remove one-time workflow and commit generated directory
+        run: |
+          rm .github/workflows/one-time-physics-directory-refresh.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add calculator/physics-calculators.html .github/workflows/one-time-physics-directory-refresh.yml
+          git commit -m "chore(physics): regenerate physics directory from catalogue [skip ci]"
+          git push
