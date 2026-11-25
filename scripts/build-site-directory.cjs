@@ -38,12 +38,28 @@ function esc(value) {
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function collectGroups() {
-  const entries = catalogueStats().entries.filter(item => {
+  const byUrl = new Map(catalogueStats().entries.filter(item => {
     const url = String(item.url || '');
     const parts = url.split('/');
     return url.startsWith('/calculators/') ||
       (parts.length > 3 && /^[a-z]{2,3}$/i.test(parts[1]) && parts[2] === 'calculators' && url.endsWith('.html'));
-  });
+  }).map(item => [item.url,item]));
+  const physicsSupplemental = [
+    '/calculators/current-divider-calculator.html',
+    '/calculators/elastic-constants-calculator.html',
+    '/calculators/impulse-and-momentum-calculator.html',
+    '/calculators/light-year-conversion.html',
+    '/calculators/projectile-time-of-flight-calculator.html'
+  ];
+  for (const url of physicsSupplemental) {
+    if (byUrl.has(url) || !fs.existsSync(path.join(ROOT,url.slice(1)))) continue;
+    const html = fs.readFileSync(path.join(ROOT,url.slice(1)),'utf8');
+    const title = (html.match(/<title\\b[^>]*>([\\s\\S]*?)<\\/title>/i) || [,''])[1]
+      .replace(/<[^>]*>/g,' ').replace(/\\s+/g,' ').trim().split(/\\s*[|–—]\\s*/)[0] || url.split('/').pop().replace(/\\.html$/,'').replace(/-/g,' ');
+    const description = (html.match(/<meta\\b[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) || [,''])[1];
+    byUrl.set(url,{name:title,url,category:'Physics',keywords:'physics',description});
+  }
+  const entries = [...byUrl.values()];
   const groups = CATEGORIES.map(([id,label,hiLabel,pattern]) => ({id,label,hiLabel,pattern,items:[]}));
   for (const item of entries) {
     const haystack = [item.category,item.name,item.keywords,item.description].join(' ');
