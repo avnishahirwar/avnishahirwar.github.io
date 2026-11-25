@@ -36,6 +36,8 @@ jobs:
         run: node scripts/generate-programmatic-seo.cjs
       - name: Validate programmatic SEO pages
         run: node --test tests/programmatic-seo.test.cjs
+      - name: Validate homepage Top 20 display currency conversion
+        run: node --test tests/home-top20.test.cjs
       - name: Validate global expansion landing pages
         run: node --test tests/global-expansion.test.cjs
       - name: Validate global sector calculator directory
