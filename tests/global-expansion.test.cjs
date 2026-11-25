@@ -196,7 +196,7 @@ test('regional defaults follow the visitor browser region and preserve explicit 
   assert.ok(locale.includes("read(COUNTRY_KEY,detectedCountry"), 'A saved country must override the detected browser country.');
   assert.ok(locale.includes("read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency"), 'Currency must default from the selected or detected country.');
   assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
-  assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
+  assert.ok(locale.includes("const imperialRegions=new Set(['US','LR','MM'])") && locale.includes("read(UNIT_KEY,imperialRegions.has(browserRegion)?'imperial':'metric'"), 'Measurement units must default by all customary-unit regions and retain saved preference.');
 });
 
 
