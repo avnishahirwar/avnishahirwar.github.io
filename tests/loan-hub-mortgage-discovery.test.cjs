@@ -1,8 +1,9 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
 
-const html = fs.readFileSync(new URL('../calculator/loan-calculators.html', import.meta.url), 'utf8');
+const html=fs.readFileSync(path.join(__dirname,'../calculator/loan-calculators.html'),'utf8');
 
 test('loan hub links to the English mortgage calculator', () => {
   assert.match(html, /href="\/calculators\/mortgage-calculator\.html"/);
