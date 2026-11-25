@@ -48,3 +48,24 @@ Do not infer a user's country from IP or request GPS for display preferences. Do
 
 ## Current staged work
 PR #805 contains automatic regional reset, accessibility media-query support, improved browser region detection (including script subtags), and tests for non-US customary-unit regions. It remains stacked on PR #730 and is not merged or deployed.
+
+
+## Non-negotiable SEO protection gate
+
+The regional experience must not create SEO regressions. Treat these as release-blocking acceptance criteria:
+
+1. **URL stability:** browser locale detection may choose the root homepage language experience only. An explicit locale route remains authoritative; automatic preference reset must not rewrite, redirect or canonicalize a URL to another locale.
+2. **Metadata immutability:** the regional preference runtime must not rewrite document.title, meta description, robots directives, canonical links, Open Graph/Twitter metadata, JSON-LD or hreflang tags.
+3. **Canonical integrity:** every indexable localized page keeps its correct self/approved canonical. Never canonicalize all translated pages to English by default.
+4. **Hreflang integrity:** include only live, genuinely translated equivalents; require valid language/region codes, reciprocal links, self-reference and appropriate x-default behavior. No planned/untranslated locale may be advertised as a completed alternate.
+5. **Sitemap integrity:** sitemap entries must resolve to unique, canonical, indexable HTTP 200 pages. Do not add redirects, noindex pages, duplicate variants, thin placeholders or planned locales.
+6. **Per-page metadata:** every indexable HTML page needs a unique, accurate title and description, correct robots policy and social metadata. Preserve good existing copy; repair only verified defects.
+7. **Content quality:** translated calculator pages must localize the actual calculator labels, explanation, formula, examples, FAQs, assumptions, units and error messages. A translated menu alone is not a translated page.
+8. **Structured data:** keep JSON-LD consistent with visible page content and locale; validate syntax and required properties. Do not promise rich results or ranking from schema alone.
+9. **Internal discovery:** important calculators remain reachable via crawlable HTML links and relevant category hubs, not only client-side search.
+10. **Performance:** test representative mobile and desktop page families. Track LCP, INP and CLS separately; never report lab TBT as field INP.
+11. **Release gates:** run the public SEO metadata quality check, sitemap validation, locale/hreflang coverage audit, page-level metadata checks, calculator regressions, mobile/cross-browser tests and Lighthouse. Investigate failures; do not weaken tests to obtain a green result.
+12. **Production verification:** after merge/deployment, independently verify representative English and localized URLs on https://friendlycalculator.in/, including status, canonical, robots, hreflang, title, description, structured data and sitemap inclusion.
+
+## Existing SEO baseline to keep visible
+The 21 Nov project audit recorded 4,165 HTML files scanned and 688 flagged for social metadata repair, with 17 published locales and 33 planned. It also recorded uneven translation coverage and historical mobile lab concerns (homepage CLS 0.108 and Income Tax LCP 4.2 s). These are historical audit figures, not a fresh current crawl. Keep them as a triage baseline until a new full inventory is produced; do not claim every webpage is already SEO-perfect.
