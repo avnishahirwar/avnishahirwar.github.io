@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch the top 14 calculators across all 50 locales in config/language-catalogue.json."""
+"""Launch the full core set of calculators (96+ calculators) across all 50 locales."""
 import html as html_mod
 import json
 import os
@@ -9,7 +9,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOGUE_PATH = os.path.join(ROOT, "config", "language-catalogue.json")
 
-TOP_CALCULATORS = [
+EXTRA_TOP = [
     "basic-calculator.html",
     "percentage-calculator.html",
     "age-calculator.html",
@@ -60,6 +60,16 @@ HREFLANG_RE = re.compile(r'\s*<link\b[^>]*\brel=["\']alternate["\'][^>]*\bhrefla
 HEAD_CLOSE_RE = re.compile(r"</head>", re.I)
 
 
+def get_core_calculators() -> list[str]:
+    slugs = set(EXTRA_TOP)
+    es_dir = os.path.join(ROOT, "es", "calculators")
+    if os.path.isdir(es_dir):
+        for f in os.listdir(es_dir):
+            if f.endswith(".html"):
+                slugs.add(f)
+    return sorted(slugs)
+
+
 def build_hreflang_block(slug: str, all_codes: list[str]) -> str:
     lines = [
         f'<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/{slug}">',
@@ -82,13 +92,11 @@ def localize_html(src_html: str, slug: str, loc: dict, all_codes: list[str]) -> 
 
     out = src_html
 
-    # 1. Update <html lang="..." dir="...">
     if direction == "rtl":
         out = HTML_TAG_RE.sub(f'<html lang="{code}" dir="rtl">', out, count=1)
     else:
         out = HTML_TAG_RE.sub(f'<html lang="{code}">', out, count=1)
 
-    # 2. Update <title> with native language qualifier (keep <= 68 chars)
     tm = TITLE_RE.search(out)
     new_title = ""
     if tm:
@@ -100,7 +108,6 @@ def localize_html(src_html: str, slug: str, loc: dict, all_codes: list[str]) -> 
         esc_t = html_mod.escape(new_title, quote=True)
         out = out[: tm.start(2)] + esc_t + out[tm.end(2) :]
 
-    # 3. Update <meta name="description"> with native language qualifier
     dm = DESC_RE.search(out)
     new_desc = ""
     if dm:
@@ -112,7 +119,6 @@ def localize_html(src_html: str, slug: str, loc: dict, all_codes: list[str]) -> 
         new_desc = html_mod.escape(candidate, quote=True)
         out = out[: dm.start(2)] + new_desc + out[dm.end(2) :]
 
-    # 4. Canonical & OG / Twitter URLs, titles, descriptions
     out = CANON_RE.sub(rf"\g<1>{target_url}\g<3>", out, count=1)
     out = OG_URL_RE.sub(rf"\g<1>{target_url}\g<3>", out, count=1)
     if new_title:
@@ -123,11 +129,9 @@ def localize_html(src_html: str, slug: str, loc: dict, all_codes: list[str]) -> 
         out = OG_DESC_RE.sub(rf"\g<1>{new_desc}\g<3>", out, count=1)
         out = TW_DESC_RE.sub(rf"\g<1>{new_desc}\g<3>", out, count=1)
 
-    # 5. Update JSON-LD URLs to point to this locale's canonical URL
     en_url = f"https://friendlycalculator.in/calculators/{slug}"
     out = out.replace(f'"{en_url}"', f'"{target_url}"')
 
-    # 6. Replace hreflang block with full 50-locale reciprocal links
     out = HREFLANG_RE.sub("", out)
     hm = HEAD_CLOSE_RE.search(out)
     if hm:
@@ -142,10 +146,11 @@ def main():
         cat = json.load(fh)
     locales = cat["locales"]
     all_codes = [x["code"] for x in locales]
+    core_slugs = get_core_calculators()
 
     created = 0
     skipped = 0
-    for slug in TOP_CALCULATORS:
+    for slug in core_slugs:
         src_path = os.path.join(ROOT, "calculators", slug)
         if not os.path.exists(src_path):
             continue
@@ -168,7 +173,7 @@ def main():
                 with open(dest_path, "w", encoding="utf-8") as fh:
                     fh.write(localized)
 
-    print(f"Top {len(TOP_CALCULATORS)} calculators across {len(locales)} locales (write={write}): created={created}, already_existed={skipped}")
+    print(f"Core {len(core_slugs)} calculators across {len(locales)} locales (write={write}): created={created}, already_existed={skipped}")
 
 
 if __name__ == "__main__":
