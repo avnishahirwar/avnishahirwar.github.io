@@ -2405,3 +2405,39 @@ test('country and format setting explains that website language is independent',
   assert.ok(shell.includes('countryFormatSelect.setAttribute(\'aria-description\',countryFormatHelpText)'));
   assert.ok(shell.includes('fc-country-format-help'));
 });
+
+
+test('regional preferences can be reset to automatic without clearing accessibility settings', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.ok(shell.includes('Use automatic regional settings'));
+  for (const key of ['fc-language-preference','fc-preferred-country','fc-preferred-currency','fc-preferred-format-locale','fc-preferred-unit-system']) {
+    assert.ok(shell.includes(key), 'Auto reset must clear only regional preference ' + key);
+  }
+  assert.ok(!/localStorage\.removeItem\('fc-display-(?:size|contrast|motion)'\)/.test(shell), 'Accessibility preferences must not be erased during page initialization.');
+  assert.ok(styles.includes('prefers-reduced-motion:reduce'));
+  assert.ok(styles.includes('prefers-contrast:more'));
+  assert.ok(styles.includes('forced-colors:active'));
+});
+
+test('automatic regional defaults use browser locale preferences and regional measurement conventions', () => {
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.ok(locale.includes('const browserLocales='));
+  assert.ok(locale.includes('new Intl.Locale(candidate).region'));
+  assert.ok(locale.includes("new Set(['US','LR','MM'])"));
+  assert.ok(locale.includes('for(const candidate of browserLocales)'));
+});
+
+test('automatic regional experience does not mutate search-facing SEO metadata or explicit locale URLs', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.ok(shell.includes('const currentLocale=') && shell.includes('preferredUiLocale'));
+  assert.ok(shell.includes("localStorage.setItem('fc-language-source','manual')"));
+  assert.ok(!/document\.title\s*=|document\.head\.appendChild|createElement\(['"]meta['"]\)|createElement\(['"]link['"]\)/.test(locale));
+  assert.ok(!/canonical|hreflang|name=['"]robots['"]/i.test(locale));
+  assert.ok(homepage.includes('<meta name="robots" content="index,follow'));
+  assert.ok(homepage.includes('<link rel="canonical" href="https://friendlycalculator.in/">'));
+  assert.match(homepage, /<title>[^<]+<\/title>/);
+  assert.match(homepage, /<meta name="description" content="[^"]+">/);
+});
