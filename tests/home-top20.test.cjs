@@ -113,8 +113,7 @@ test('SWP and loan eligibility', () => {
 
 test('currency loading state has an explicit CSS rule that overrides the calculator grid display', () => {
   const styles = fs.readFileSync(path.join(root, 'assets/home-top20.css'), 'utf8');
-  assert.match(styles, /\.top20-form\[hidden\][^{]*\{\s*display:\s*none\s*!important\s*\}/);
-  assert.match(styles, /\.top20-result\[hidden\][^{]*\{\s*display:\s*none\s*!important\s*\}/);
+  assert.match(styles, /\.top20-form\[hidden\]\s*,\s*\.top20-result\[hidden\]\s*\{\s*display:\s*none\s*!important\s*\}/);
 });
 
 test('currency loading state applies to every newly rendered calculator and skips empty monetary inputs', () => {
