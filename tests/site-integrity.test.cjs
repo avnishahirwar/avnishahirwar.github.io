@@ -2432,6 +2432,8 @@ test('automatic regional detection supports locale lists, script subtags and non
 test('Smart Regional Experience preserves SEO URLs and page metadata', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.match(shell, /regionalEngine\.src='\/assets\/global-locale\.js'/, 'Shared shell must load the regional engine on every page');
+  assert.match(shell, /regionalEngine\.dataset\.fcGlobalLocale='true'/, 'Regional engine loader must be identifiable and deduplicated');
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 
   // Explicit locale paths remain authoritative; browser defaults apply only to the root homepage.
