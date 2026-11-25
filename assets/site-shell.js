@@ -530,7 +530,7 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
         settingsCurrencySelect.dispatchEvent(new Event('change',{bubbles:true}));
       }
     });
-    document.addEventListener('fc:locale-ready',syncHeaderCurrency);
+    window.addEventListener('fc:locale-ready',syncHeaderCurrency);
     window.addEventListener('fc:localechange',syncHeaderCurrency);
     headerLanguageControl.after(headerCurrencyControl);
     syncHeaderCurrency();
