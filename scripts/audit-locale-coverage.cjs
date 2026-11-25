@@ -28,6 +28,23 @@ function walkHtml(root, relative = '') {
   });
 }
 
+const ENGLISH_FALLBACK_TITLE = 'Free Online Calculators India & Worldwide | EMI, GST & Tax';
+const ENGLISH_FALLBACK_DESCRIPTION = 'Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators.';
+
+function decodeHtml(value) {
+  return String(value || '').replace(/&amp;/gi, '&').replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'").replace(/&lt;/gi, '<').replace(/&gt;/gi, '>');
+}
+
+function readMetaContent(html, key) {
+  const tags = html.match(/<meta\b[^>]*>/gi) || [];
+  const tag = tags.find(item => {
+    const name = (item.match(/\bname=["']([^"']+)["']/i) || [])[1] || '';
+    return name.toLowerCase() === key.toLowerCase();
+  });
+  return decodeHtml((tag && (tag.match(/\bcontent=["']([^"']*)["']/i) || [])[1]) || '').replace(/\s+/g, ' ').trim();
+}
+
 function readPublicPages(root, files) {
   const pages = [];
   let excludedNoindexPageCount = 0;
@@ -43,7 +60,13 @@ function readPublicPages(root, files) {
       excludedCanonicalAliasPageCount++;
       continue;
     }
-    pages.push({ file, html });
+    const title = decodeHtml((html.match(/<title\\b[^>]*>([\\s\\S]*?)<\\/title>/i) || [])[1] || '').replace(/<[^>]+>/g, '').replace(/\\s+/g, ' ').trim();
+    const description = readMetaContent(html, 'description');
+    pages.push({
+      file, html, title, description,
+      englishFallbackTitle: title.toLowerCase() === ENGLISH_FALLBACK_TITLE.toLowerCase(),
+      englishFallbackDescription: description.toLowerCase() === ENGLISH_FALLBACK_DESCRIPTION.toLowerCase()
+    });
   }
   return { pages, excludedNoindexPageCount, excludedCanonicalAliasPageCount };
 }
@@ -113,6 +136,9 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
     let missingLangCount = 0;
     let missingSiteShellCount = 0;
     let missingHreflangCount = 0;
+    const englishFallbackTitlePages = present.filter(page => page.englishFallbackTitle).map(page => page.file);
+    const englishFallbackDescriptionPages = present.filter(page => page.englishFallbackDescription).map(page => page.file);
+    const englishFallbackMetadataPages = present.filter(page => page.englishFallbackTitle || page.englishFallbackDescription).map(page => page.file);
 
     for (const page of present) {
       const lang = page.html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase();
@@ -132,7 +158,13 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
       missingPages: missing.map(page => page.file).sort(),
       missingLangCount,
       missingSiteShellCount,
-      missingHreflangCount
+      missingHreflangCount,
+      englishFallbackTitleCount: englishFallbackTitlePages.length,
+      englishFallbackTitlePages,
+      englishFallbackDescriptionCount: englishFallbackDescriptionPages.length,
+      englishFallbackDescriptionPages,
+      englishFallbackMetadataCount: englishFallbackMetadataPages.length,
+      englishFallbackMetadataPages
     };
   }
 
@@ -149,7 +181,7 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
 
 function renderMarkdown(report) {
   const rows = Object.entries(report.locales).map(([locale, data]) =>
-    `| ${locale} | ${data.translatedPageCount} | ${data.englishPageCount} | ${data.coveragePercent}% | ${data.missingCount} | ${data.missingLangCount} | ${data.missingSiteShellCount} | ${data.missingHreflangCount} |`
+    `| ${locale} | ${data.translatedPageCount} | ${data.englishPageCount} | ${data.coveragePercent}% | ${data.missingCount} | ${data.missingLangCount} | ${data.missingSiteShellCount} | ${data.missingHreflangCount} | ${data.englishFallbackMetadataCount} |`
   );
   return [
     '# Locale page coverage audit',
@@ -158,12 +190,13 @@ function renderMarkdown(report) {
     '',
     `Public indexable English/root HTML pages: **${report.publicIndexableEnglishPageCount}**. Total HTML files: **${report.htmlPageCount}**. Excluded noindex pages: **${report.excludedNoindexPageCount}**. Excluded canonical aliases: **${report.excludedCanonicalAliasPageCount}**.`,
     '',
-    '| Locale | Existing locale pages | English pages | Path coverage | Missing paths | Missing lang | Missing site shell | Missing English hreflang |',
-    '|---|---:|---:|---:|---:|---:|---:|---:|',
+    '| Locale | Existing locale pages | English pages | Path coverage | Missing paths | Missing lang | Missing site shell | Missing English hreflang | English fallback metadata |',
+    '|---|---:|---:|---:|---:|---:|---:|---:|---:|',
     ...rows,
     '',
     'This audit measures route coverage and technical locale signals only. It does not certify that visible copy is translated accurately or that jurisdiction-specific content is correct.',
     'A matching HTML path may still contain untranslated text. Review page language, metadata, labels, FAQs, structured data and jurisdiction-specific assumptions before marking a locale complete.',
+    'English fallback metadata counts detect exact reuse of the current English homepage fallback title or description. They are a review signal and do not automatically change indexation or hreflang.',
     ''
   ].join('\n');
 }
