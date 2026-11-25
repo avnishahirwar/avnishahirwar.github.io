@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'assets/calculator-search-index-additions.json'
+      - 'scripts/build-site-directory.cjs'
+      - '.github/workflows/merge-search-index.yml'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -26,8 +28,10 @@ jobs:
       - name: Build and validate the merged catalogue and count surfaces
         run: |
           node scripts/merge-search-index.cjs
+          node scripts/build-site-directory.cjs
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
+          node scripts/build-site-directory.cjs --check
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
           node --test tests/calculator-counts.test.cjs
@@ -45,6 +49,8 @@ jobs:
           node-version: 20
       - name: Merge only additions with existing calculator pages
         run: node scripts/merge-search-index.cjs
+      - name: Rebuild English and Hindi category directories
+        run: node scripts/build-site-directory.cjs
       - name: Synchronize every public calculator count
         run: node scripts/sync-calculator-counts.cjs
       - name: Regenerate the human-readable sitemap
@@ -61,6 +67,7 @@ jobs:
             calculator/about.html \
             calculator/api.html \
             calculator/site-directory.html \
+            hi/calculator/site-directory.html \
             calculators/gst-calculator.html \
             calculators/salary-calculator.html \
             hi/calculator/about.html \
