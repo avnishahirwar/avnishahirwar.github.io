@@ -65,6 +65,10 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
   assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
+  assert.ok(shell.includes("headerCurrencySource.cloneNode(true)") && shell.includes("headerCurrencyControl.className='fc-header-currency-control'"), 'A separate currency selector must be mirrored into the Header without moving the Settings control.');
+  assert.ok(shell.includes("headerCurrencySelect.id='fc-header-currency-select'") && shell.includes("headerLanguageControl.after(headerCurrencyControl)"), 'Display currency must appear immediately after Language in the Header with a unique ID.');
+  assert.ok(shell.includes("window.FCLocale.setCurrency(headerCurrencySelect.value)") && shell.includes("window.addEventListener('fc:localechange',syncHeaderCurrency)"), 'Header currency changes must persist through FCLocale and stay synchronized with Settings.');
+
   assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
   assert.ok(shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
