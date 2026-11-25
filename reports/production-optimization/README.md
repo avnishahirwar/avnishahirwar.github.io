@@ -111,3 +111,32 @@ These are Lighthouse lab measurements on a PR preview, not production field Core
 
 ### Release decision
 PR #834 remains draft and unmerged. The two failed CI gates must be fixed and rerun before release. Production deployment, production browser verification, real response-header verification, Search Console indexing verification, live AdSense approval, and production field CWV remain unverified. The successful CI checks above are not a production deployment claim.
+
+
+## Follow-up checkpoint — 25 November 2026, 18:15 IST
+
+### Additional directory fixes
+- Updated the directory generator and output with the original Friendly Calculator brand illustration (fetchpriority=high, intrinsic 1200×630 dimensions), 20 visible quick links to existing calculator/resource hubs, and an accessible live search-result status.
+- The generated-directory workflow passed on commit 3566b59c076c6382458efef08f7a419c21b36422.
+- Site-health failures reduced from 20 to 14 on that exact tested commit. The six resolved checks were the image-tools discovery link, Bhopal/MP hub discovery link, directory LCP illustration, accessible category quick links/search status, and related directory resource links.
+
+### Safe hreflang additions
+- Enabled the existing one-time additive hreflang workflow for the production-optimization branch.
+- The workflow produced commit 81a0e2fd48d43813f44cde60236163c3bbb623f0 (seo: add missing hreflang reciprocals [skip ci]), changing 40 HTML pages. The preceding diagnostic had identified 101 unambiguous reciprocal additions; the workflow commits only additive tags and preserves existing tags.
+- This does not resolve conflicting/duplicate/mismatched or noindex hreflang defects. The full international audit and the six calculator test assertions must be rerun against the post-repair head before any claim of completion.
+
+### Exact tested head 3566b59c076c6382458efef08f7a419c21b36422
+- Passed: production optimization audit, public SEO metadata, locale coverage, search-index validation, generated directory, outbound-link policy, sitemap validation, Lighthouse mobile lab.
+- Cross-browser and site-health workflows completed; site health still failed 14 assertions.
+- Calculator regression still failed 6 assertions (priority Hindi calculator metadata/schema and four hreflang/reciprocity checks). This test run was initiated before the generated additive-repair commit 81a0e2f; it is not evidence about post-repair test status.
+- Lighthouse mobile lab succeeded. The detailed scores and limitations are in the preceding checkpoint; these remain PR-preview lab data, not production field measurements.
+
+### Remaining site-health failures (14)
+- Curated core directory and homepage/About/sitemap catalogue alignment.
+- Home-loan prepayment content coverage.
+- Homepage category totals and directory category markup (current generator is alphabetical while the homepage still points to 20 category anchors).
+- Five new informational calculator discovery/count alignment.
+- Nine Biology & Chemistry directory category-count assertions.
+
+### Release gate
+PR #834 remains draft/open/unmerged. The directory architecture mismatch and homepage category totals need a coherent source-of-truth repair; do not change expected test values to conceal it. The post-repair hreflang and calculator suite must be rerun before release. Production deployment, live domain QA, actual response headers, Search Console indexing, CrUX field CWV and AdSense account status remain unverified.
