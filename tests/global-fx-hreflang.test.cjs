@@ -5,7 +5,7 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const root=path.join(__dirname,'..');
 const origin='https://friendlycalculator.in';
-const locales=require('../config/language-catalogue.json').locales.map(locale=>locale.code);
+const locales=['hi','es','fr','pt','ar','id','bn','ta'];
 const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
 const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
