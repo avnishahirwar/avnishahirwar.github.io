@@ -20,7 +20,7 @@ jobs:
       - name: Validate exact count and directory metadata
         run: |
           node scripts/build-site-directory.cjs --check
-          node -e "const fs=require('fs');const h=fs.readFileSync('calculator/site-directory.html','utf8');const n=(h.match(/class=\\"card\\"/g)||[]).length;for(const x of ['og:type','og:site_name','og:title','og:description','og:url','og:image','twitter:card','twitter:title','twitter:description','twitter:image','/calculator/physics-calculators.html','Search calculators by topic'])if(!h.includes(x))throw new Error('Missing '+x);if(h.includes('&#39; + total + &#39;'))throw new Error('Unexpanded count placeholder');console.log('Directory generated with '+n+' cards and valid metadata.')"
+          node -e "const fs=require('fs');const h=fs.readFileSync('calculator/site-directory.html','utf8');for(const x of ['og:type','og:site_name','og:title','og:description','og:url','og:image','twitter:card','twitter:title','twitter:description','twitter:image','/calculator/physics-calculators.html','Search calculators by topic'])if(!h.includes(x))throw new Error('Missing '+x);if(h.includes('&#39; + total + &#39;'))throw new Error('Unexpanded count placeholder');console.log('Directory metadata and topic link verified.')"
       - name: Remove workflow and commit generated page
         run: |
           rm .github/workflows/one-time-final-directory-metadata-refresh.yml
