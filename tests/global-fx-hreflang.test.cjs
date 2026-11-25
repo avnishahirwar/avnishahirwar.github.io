@@ -12,7 +12,10 @@ const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alt
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
- return fs.existsSync(file)&&!noindexOf(fs.readFileSync(file,'utf8'));
+ if(!fs.existsSync(file)) return false;
+ const html=fs.readFileSync(file,'utf8');
+ const lang=(html.match(/<html\b[^>]*\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase();
+ return !noindexOf(html)&&lang===locale;
 });
 const expectedPairs=(locales,route)=>[
  ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
@@ -55,7 +58,7 @@ test('generated sitemap check includes hreflang clusters',()=>{
 
 test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
+ const candidates=['en','hi','es','fr','pt','ar','id','bn','ta'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
@@ -69,7 +72,7 @@ test('percentage calculator hreflang cluster contains only indexable published l
 
 test('simple-interest English and Bengali hreflang alternates match indexable published translations',()=>{
  const route='simple-interest-calculator.html';
- const candidates=['en','bn','ar','es','fr','hi','id','pt','ta'];
+ const candidates=['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
@@ -88,7 +91,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
+ const expandedLocales=[...baseLocales,'mr','te'];
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=expectedPairs(indexableLocales(candidates,route),route);

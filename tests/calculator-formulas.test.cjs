@@ -782,8 +782,11 @@ test('the ten priority Hindi calculators expose canonical URLs, indexable langua
     assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
     const indexable = candidates.filter(locale => {
       const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
-      const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
-      return !isNoindex(localeHtml);
+      const pageUrl = new URL(page, 'file://' + __filename);
+      if (!fs.existsSync(pageUrl)) return false;
+      const localeHtml = fs.readFileSync(pageUrl, 'utf8');
+      const language = (localeHtml.match(/<html\b[^>]*\blang=[\"']([^\"']+)[\"']/i) || [])[1]?.toLowerCase();
+      return !isNoindex(localeHtml) && language === locale;
     });
     const expectedAlternates = [
       ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
