@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - seo/additive-hreflang-reciprocals-2026-11-16
+      - fix/display-currency-top20-20261125
 
 permissions:
   contents: write
