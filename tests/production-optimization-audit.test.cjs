@@ -33,3 +33,9 @@ test('report explains measurement boundaries', () => {
   assert.match(md, /do not prove what production serves/);
   assert.match(md, /LCP, INP and CLS require Lighthouse/);
 });
+
+test('noindex pages are not treated as missing indexable SEO metadata', () => {
+  const html = '<html><head><meta name="robots" content="noindex,follow"><title>Utility view</title></head><body></body></html>';
+  const codes = auditHtmlDocument('offline.html', html).findings.map(x => x.code);
+  for (const code of ['missing-description', 'missing-canonical', 'missing-viewport', 'missing-html-lang']) assert.ok(!codes.includes(code));
+});
