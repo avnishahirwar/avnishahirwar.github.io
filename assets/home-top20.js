@@ -14,6 +14,7 @@
   var currencySymbol = function (code) { try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: code}).formatToParts(0).filter(function (p) { return p.type === 'currency'; })[0].value; } catch (_) { return code; } };
   var INR = function (n) { var value = Number(n) * displayRate; try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: displayCurrency, maximumFractionDigits: 2, minimumFractionDigits: 0}).format(value); } catch (_) { return currencySymbol(displayCurrency) + value.toLocaleString(); } };
   var configureDisplayCurrency = function (code, rate, locale) { if (!/^[A-Z]{3}$/.test(code) || !(Number(rate) > 0) || !isFinite(Number(rate))) return false; displayCurrency = code; displayRate = Number(rate); if (locale) displayLocale = locale; return true; };
+  var formatCurrencyText = function (text) { return String(text).replace(/₹\\s?([\\d,]+(?:\\.\\d+)?)/g, function (_, amount) { return INR(Number(amount.replace(/,/g, ''))); }); };
   var NUM = function (n, d) { return Number(n).toLocaleString('en-IN', {maximumFractionDigits: d == null ? 2 : d}); };
   var PCT = function (n) { return NUM(n, 2) + '%'; };
   var bad = function (m) { return {error: m}; };
@@ -238,10 +239,10 @@
       current.fields.forEach(function (f) {
         if (!f.currency) return;
         var label = currentForm.querySelector('label[for="top20-' + current.id + '-' + f.k + '"] span');
-        if (label) { if (!label.dataset.fcOriginalText) label.dataset.fcOriginalText = label.textContent; label.textContent = label.dataset.fcOriginalText.replace(/₹/g, symbol); }
+        if (label) { if (!label.dataset.fcOriginalText) label.dataset.fcOriginalText = label.textContent; label.textContent = formatCurrencyText(label.dataset.fcOriginalText); }
       });
       var note = panel.querySelector('.top20-note');
-      if (note) { if (!note.dataset.fcOriginalText) note.dataset.fcOriginalText = note.textContent; note.textContent = note.dataset.fcOriginalText.replace(/₹/g, symbol); }
+      if (note) { if (!note.dataset.fcOriginalText) note.dataset.fcOriginalText = note.textContent; note.textContent = formatCurrencyText(note.dataset.fcOriginalText); }
     }
     function loadDisplayCurrency() {
       var localeApi = window.FCLocale;
@@ -294,7 +295,7 @@
         var r;
         try { r = c.calc(v); } catch (err) { r = bad('Please check the values entered.'); }
         out.textContent = '';
-        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: String(r.error).replace(/₹/g, currencySymbol(displayCurrency))})); return; }
+        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: formatCurrencyText(r.error)})); return; }
         r.rows.forEach(function (row) {
           out.appendChild(el('div', {'class': 'top20-row' + (row[2] ? ' top20-main' : '')}, [el('span', {text: row[0]}), el('strong', {text: row[1]})]));
         });
