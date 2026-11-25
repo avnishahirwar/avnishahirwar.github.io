@@ -91,7 +91,7 @@ function parseSitemap(xml) {
   return [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)].map(x => x[1].trim());
 }
 function resolveLocalPath(href, from) {
-  if (!href || /^(?:#|mailto:|tel:|javascript:|data:|blob:|https?:|\/\/)/i.test(href)) return null;
+  if (!href || /^(?:#|mailto:|tel:|javascript:|data:|blob:)/i.test(href)) return null;
   let u;
   try { u = new URL(href, ORIGIN + '/' + from); } catch { return null; }
   if (u.origin !== ORIGIN) return null;
