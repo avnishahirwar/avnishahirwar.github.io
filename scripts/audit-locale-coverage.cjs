@@ -48,26 +48,26 @@ function decodeHtml(value) {
 }
 
 function readMetaContent(html, key) {
-  const tags = html.match(/<meta\\b[^>]*>/gi) || [];
+  const tags = html.match(/<meta\b[^>]*>/gi) || [];
   const tag = tags.find(item => {
-    const name = (item.match(/\\bname=["']([^"']+)["']/i) || [])[1] || '';
+    const name = (item.match(/\bname=["']([^"']+)["']/i) || [])[1] || '';
     return name.toLowerCase() === key.toLowerCase();
   });
-  return decodeHtml((tag && (tag.match(/\\bcontent=["']([^"']*)["']/i) || [])[1]) || '').replace(/\\s+/g, ' ').trim();
+  return decodeHtml((tag && (tag.match(/\bcontent=["']([^"']*)["']/i) || [])[1]) || '').replace(/\s+/g, ' ').trim();
 }
 
 function readPage(root, file) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
-  const lang = (html.match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i) || [])[1] || '';
-  const canonicalTag = (html.match(/<link\\b(?=[^>]*\\brel=["']canonical["'])[^>]*>/i) || [])[0] || '';
-  const canonical = (canonicalTag.match(/\\bhref=["']([^"']+)["']/i) || [])[1] || '';
-  const hreflangCount = [...html.matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])[^>]*\\bhreflang=["'][^"']+["']/gi)].length;
-  const title = decodeHtml((html.match(/<title\\b[^>]*>([\\s\\S]*?)<\\/title>/i) || [])[1] || '').replace(/<[^>]+>/g, '').replace(/\\s+/g, ' ').trim();
+  const lang = (html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i) || [])[1] || '';
+  const canonicalTag = (html.match(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i) || [])[0] || '';
+  const canonical = (canonicalTag.match(/\bhref=["']([^"']+)["']/i) || [])[1] || '';
+  const hreflangCount = [...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])[^>]*\bhreflang=["'][^"']+["']/gi)].length;
+  const title = decodeHtml((html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
   const description = readMetaContent(html, 'description');
   return {
     html, lang: lang.toLowerCase(), canonical, title, description,
     hasCanonical: Boolean(canonical),
-    hasSiteShell: /assets\\/site-shell\\.js/i.test(html),
+    hasSiteShell: /assets\/site-shell\.js/i.test(html),
     hreflangCount,
     englishFallbackTitle: title.toLowerCase() === ENGLISH_FALLBACK_TITLE.toLowerCase(),
     englishFallbackDescription: description.toLowerCase() === ENGLISH_FALLBACK_DESCRIPTION.toLowerCase(),
