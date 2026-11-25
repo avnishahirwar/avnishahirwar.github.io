@@ -14,7 +14,8 @@ test('global calculator total matches unique catalog routes with existing pages'
 
 test('English generated directory and Hindi category directory expose unique published calculator links', () => {
   const english = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const englishLinks = [...english.matchAll(/<a class="card" href="(\/calculators\/[^"]+\.html)"/g)].map(match => match[1]);
+  const groups = english.split('<section class="group"').slice(1);
+  const englishLinks = groups.flatMap(group => [...group.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.startsWith('/calculators/') && href.endsWith('.html')));
   const uniqueEnglishLinks = new Set(englishLinks);
   const rootPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html')).map(name => '/calculators/' + name);
   assert.match(english, /<section class="group" id="group-[a-z0-9]+">/, 'English directory should expose generated alphabetical groups');
@@ -29,9 +30,9 @@ test('English generated directory and Hindi category directory expose unique pub
   assert.ok(total > 3000, 'Hindi directory should cover a broad linked catalog');
   for (const [id, count] of counts) {
     const sectionStart = hindi.indexOf('id="' + id + '"');
-    const end = hindi.indexOf('</section>', sectionStart);
-    const section = hindi.slice(sectionStart, end < 0 ? undefined : end);
-    const expectedLinks = new Set([...section.matchAll(/href="((?:\/[a-z]{2,3})?\/calculators\/[^"]+)"/g)].map(match => match[1]));
+    const sectionEnd = hindi.indexOf('</section>', sectionStart);
+    const section = hindi.slice(sectionStart, sectionEnd < 0 ? undefined : sectionEnd);
+    const expectedLinks = new Set([...section.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.includes('/calculators/')));
     assert.equal(expectedLinks.size, count, 'Hindi directory ' + id + ' card count');
     const plural = count === 1 ? 'calculator' : 'calculators';
     assert.ok(hindi.includes('href="#' + id + '"'), 'Hindi directory category shortcut ' + id + ' should exist');
