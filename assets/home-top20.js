@@ -248,21 +248,30 @@
       var localeApi = window.FCLocale;
       var selected = localeApi && localeApi.getCurrency ? localeApi.getCurrency() : 'INR';
       var locale = localeApi && localeApi.getLocale ? localeApi.getLocale() : 'en-IN';
-      if (selected === 'INR') { var oldRate = displayRate; configureDisplayCurrency('INR', 1, locale); if (currentForm && oldRate !== 1) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate; } }); updateCurrencyLabels(); if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true})); currencyStatus.textContent = 'Amounts shown in Indian Rupees (INR).'; return; }
+      if (selected === 'INR') { currencyRequestId++; var oldRate = displayRate; configureDisplayCurrency('INR', 1, locale); if (currentForm) currentForm.hidden = false; var inrResult = panel.querySelector('.top20-result'); if (inrResult) inrResult.hidden = false; panel.setAttribute('aria-busy', 'false'); if (currentForm && oldRate !== 1) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate; } }); updateCurrencyLabels(); if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true})); currencyStatus.textContent = 'Amounts shown in Indian Rupees (INR).'; return; }
       var requestId = ++currencyRequestId;
+      panel.setAttribute('aria-busy', 'true');
+      if (currentForm) currentForm.hidden = true;
+      var pendingResult = panel.querySelector('.top20-result'); if (pendingResult) pendingResult.hidden = true;
       currencyStatus.textContent = 'Loading the latest available INR to ' + selected + ' reference rate…';
       fetch('https://api.frankfurter.dev/v2/rate/INR/' + encodeURIComponent(selected), {headers: {Accept: 'application/json'}, cache: 'no-cache'}).then(function (response) { if (!response.ok) throw new Error('Rate unavailable'); return response.json(); }).then(function (data) {
         if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
         if (!data || !Number.isFinite(Number(data.rate)) || Number(data.rate) <= 0 || !data.date) throw new Error('Invalid reference rate');
         var oldRate = displayRate, nextRate = Number(data.rate);
         configureDisplayCurrency(selected, nextRate, locale);
+        panel.setAttribute('aria-busy', 'false');
+        if (currentForm) currentForm.hidden = false;
+        var convertedResult = panel.querySelector('.top20-result'); if (convertedResult) convertedResult.hidden = false;
         if (currentForm) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate * nextRate; } });
         updateCurrencyLabels();
         currencyStatus.textContent = 'Amounts converted from INR to ' + selected + ' using the Frankfurter reference rate dated ' + data.date + '. Calculations retain their original INR-based formulas.';
         if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true}));
       }).catch(function () {
         if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
+        panel.setAttribute('aria-busy', 'false');
         currencyStatus.textContent = 'Reference rate unavailable. Results are kept in INR to avoid showing an incorrect currency.';
+        if (currentForm) currentForm.hidden = false;
+        var fallbackResult = panel.querySelector('.top20-result'); if (fallbackResult) fallbackResult.hidden = false;
         if (localeApi && localeApi.setCurrency) localeApi.setCurrency('INR');
       });
     }
