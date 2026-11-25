@@ -1475,6 +1475,11 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    const countryFormatHelpText=currentLocale==='hi'
+      ?'यह देश/क्षेत्र के अनुसार संख्या और तारीख का प्रारूप बदलता है; वेबसाइट की भाषा अलग रहती है।'
+      :'Sets regional number and date formatting. Website language stays unchanged.';
+    countryFormatSelect.title=countryFormatHelpText;
+    countryFormatSelect.setAttribute('aria-description',countryFormatHelpText);
     countrySelect.tabIndex=-1;
     localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
