@@ -72,7 +72,7 @@ test('percentage calculator hreflang cluster contains only indexable published l
 
 test('simple-interest English and Bengali hreflang alternates match indexable published translations',()=>{
  const route='simple-interest-calculator.html';
- const candidates=['en','hi','es','fr','pt','ar','id','bn','ta'];
+ const candidates=['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
@@ -91,7 +91,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=baseLocales;
+ const expandedLocales=[...baseLocales,'mr','te'];
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=expectedPairs(indexableLocales(candidates,route),route);
