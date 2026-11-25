@@ -14,7 +14,7 @@
   var currencySymbol = function (code) { try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: code}).formatToParts(0).filter(function (p) { return p.type === 'currency'; })[0].value; } catch (_) { return code; } };
   var INR = function (n) { var value = Number(n) * displayRate; try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: displayCurrency, maximumFractionDigits: 2, minimumFractionDigits: 0}).format(value); } catch (_) { return currencySymbol(displayCurrency) + value.toLocaleString(); } };
   var configureDisplayCurrency = function (code, rate, locale) { if (!/^[A-Z]{3}$/.test(code) || !(Number(rate) > 0) || !isFinite(Number(rate))) return false; displayCurrency = code; displayRate = Number(rate); if (locale) displayLocale = locale; return true; };
-  var formatCurrencyText = function (text) { return String(text).replace(/₹\\s?([\\d,]+(?:\\.\\d+)?)/g, function (_, amount) { return INR(Number(amount.replace(/,/g, ''))); }); };
+  var formatCurrencyText = function (text) { return String(text).replace(/₹\s?([\d,]+(?:\.\d+)?)/g, function (_, amount) { return INR(Number(amount.replace(/,/g, ''))); }); };
   var NUM = function (n, d) { return Number(n).toLocaleString('en-IN', {maximumFractionDigits: d == null ? 2 : d}); };
   var PCT = function (n) { return NUM(n, 2) + '%'; };
   var bad = function (m) { return {error: m}; };
