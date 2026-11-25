@@ -1508,6 +1508,18 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   mirrorSiteControl(countryFormatLabel,regionalSettingsControls);
   mirrorSiteControl(unitControl,regionalSettingsControls);
   panel.append(regionalSettingsControls);
+  const autoRegionalButton=document.createElement('button');
+  autoRegionalButton.type='button';
+  autoRegionalButton.className='fc-display-action fc-auto-regional-settings';
+  autoRegionalButton.textContent=(currentLocale==='hi'?'क्षेत्रीय सेटिंग्स Auto करें':'Use automatic regional settings');
+  autoRegionalButton.setAttribute('aria-label',autoRegionalButton.textContent);
+  autoRegionalButton.addEventListener('click',()=>{
+    try{
+      ['fc-language-preference','fc-preferred-country','fc-preferred-currency','fc-preferred-format-locale','fc-preferred-unit-system'].forEach(key=>localStorage.removeItem(key));
+    }catch(_){}
+    location.reload();
+  });
+  panel.append(autoRegionalButton);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
@@ -1521,10 +1533,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.body.appendChild(open);
   document.body.append(backdrop,panel);
   applyTheme(initialTheme);
-  document.documentElement.removeAttribute('data-fc-text-size');
-  document.documentElement.removeAttribute('data-fc-contrast');
-  document.documentElement.classList.remove('fc-reduce-motion');
-  try{localStorage.removeItem('fc-display-size');localStorage.removeItem('fc-display-contrast');localStorage.removeItem('fc-display-motion');}catch(_){}
+  // Do not erase accessibility preferences on page load. Browser/OS accessibility
+  // preferences are honored by CSS media queries; saved visitor choices remain intact.
 })();
 
 

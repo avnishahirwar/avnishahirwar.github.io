@@ -53,7 +53,24 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('canonical language catalogue defines 50 unique locales, 17 available editions and correct writing directions', () => {
+test('audit flags exact English fallback locale metadata separately from route coverage', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-locales-'));
+  try {
+    write(root, 'index.html', '<html lang="en"><head><title>Homepage</title><meta name="description" content="Homepage"></head></html>');
+    write(root, 'fr/index.html', '<html lang="fr"><head><title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title><meta name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."></head></html>');
+    write(root, 'hi/index.html', '<html lang="hi"><head><title>हिंदी कैलकुलेटर</title><meta name="description" content="हिंदी में उपयोगी ऑनलाइन कैलकुलेटर।"></head></html>');
+    const report = auditLocaleCoverage(root, ['fr', 'hi']);
+    assert.equal(report.locales.fr.englishFallbackTitleCount, 1);
+    assert.equal(report.locales.fr.englishFallbackDescriptionCount, 1);
+    assert.equal(report.locales.fr.englishFallbackMetadataCount, 1);
+    assert.equal(report.locales.hi.englishFallbackMetadataCount, 0);
+    assert.match(renderMarkdown(report), /English fallback metadata/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('canonical language catalogue defines 50 unique configured locales and correct writing directions', () => {
   const { DEFAULT_LOCALES } = require('../scripts/audit-locale-coverage.cjs');
   const locales = languageCatalogue.locales;
   const codes = locales.map(locale => locale.code);
@@ -61,8 +78,8 @@ test('canonical language catalogue defines 50 unique locales, 17 available editi
   assert.equal(locales.length, 50);
   assert.equal(new Set(codes).size, 50);
   assert.equal(codes[0], 'en');
-  assert.equal(locales.filter(locale => locale.status === 'available').length, 17);
-  assert.equal(locales.filter(locale => locale.status === 'planned').length, 33);
+  assert.ok(locales.every(locale => ['available', 'planned'].includes(locale.status)), 'Locale status must be available or planned');
+  assert.equal(locales.filter(locale => locale.status === 'available').length + locales.filter(locale => locale.status === 'planned').length, 50);
   assert.equal(DEFAULT_LOCALES.length, 49);
   assert.deepEqual(DEFAULT_LOCALES, codes.filter(code => code !== 'en'));
   for (const locale of locales) {

@@ -39,21 +39,41 @@ function isNoindex(html) {
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 
+const ENGLISH_FALLBACK_TITLE = 'Free Online Calculators India & Worldwide | EMI, GST & Tax';
+const ENGLISH_FALLBACK_DESCRIPTION = 'Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators.';
+
+function decodeHtml(value) {
+  return String(value || '').replace(/&amp;/gi, '&').replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'").replace(/&lt;/gi, '<').replace(/&gt;/gi, '>');
+}
+
+function readMetaContent(html, key) {
+  const tags = html.match(/<meta\b[^>]*>/gi) || [];
+  const tag = tags.find(item => {
+    const name = (item.match(/\bname=["']([^"']+)["']/i) || [])[1] || '';
+    return name.toLowerCase() === key.toLowerCase();
+  });
+  return decodeHtml((tag && (tag.match(/\bcontent=["']([^"']*)["']/i) || [])[1]) || '').replace(/\s+/g, ' ').trim();
+}
+
 function readPage(root, file) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   const lang = (html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i) || [])[1] || '';
   const canonicalTag = (html.match(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i) || [])[0] || '';
   const canonical = (canonicalTag.match(/\bhref=["']([^"']+)["']/i) || [])[1] || '';
   const hreflangCount = [...html.matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])[^>]*\bhreflang=["'][^"']+["']/gi)].length;
+  const title = decodeHtml((html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const description = readMetaContent(html, 'description');
   return {
-    html, lang: lang.toLowerCase(), canonical,
+    html, lang: lang.toLowerCase(), canonical, title, description,
     hasCanonical: Boolean(canonical),
     hasSiteShell: /assets\/site-shell\.js/i.test(html),
     hreflangCount,
+    englishFallbackTitle: title.toLowerCase() === ENGLISH_FALLBACK_TITLE.toLowerCase(),
+    englishFallbackDescription: description.toLowerCase() === ENGLISH_FALLBACK_DESCRIPTION.toLowerCase(),
     indexable: !isNoindex(html)
   };
 }
-
 function routeForLocale(file, localeSet) {
   const first = file.split('/')[0];
   return localeSet.has(first) ? file.slice(first.length + 1) : file;
@@ -77,6 +97,9 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
     const missingCanonical = localized.filter(page => !page.hasCanonical).map(page => page.file);
     const missingShell = localized.filter(page => !page.hasSiteShell).map(page => page.file);
     const missingHreflang = localized.filter(page => page.hreflangCount === 0).map(page => page.file);
+    const fallbackTitlePages = localized.filter(page => page.englishFallbackTitle).map(page => page.file);
+    const fallbackDescriptionPages = localized.filter(page => page.englishFallbackDescription).map(page => page.file);
+    const fallbackMetadataPages = localized.filter(page => page.englishFallbackTitle || page.englishFallbackDescription).map(page => page.file);
     byLocale[locale] = {
       translatedPageCount: localized.length,
       englishPageCount: englishPages.length,
@@ -93,7 +116,13 @@ function auditLocaleCoverage(root, locales = DEFAULT_LOCALES) {
       missingSiteShellCount: missingShell.length,
       missingSiteShellPages: missingShell,
       missingHreflangCount: missingHreflang.length,
-      missingHreflangPages: missingHreflang
+      missingHreflangPages: missingHreflang,
+      englishFallbackTitleCount: fallbackTitlePages.length,
+      englishFallbackTitlePages: fallbackTitlePages,
+      englishFallbackDescriptionCount: fallbackDescriptionPages.length,
+      englishFallbackDescriptionPages: fallbackDescriptionPages,
+      englishFallbackMetadataCount: fallbackMetadataPages.length,
+      englishFallbackMetadataPages: fallbackMetadataPages
     };
   }
 
@@ -112,7 +141,7 @@ function renderMarkdown(report) {
     ' | ' + data.coveragePercent + '% | ' + data.missingCount + ' | ' +
     data.missingLangCount + ' | ' + data.invalidLangCount + ' | ' +
     data.missingCanonicalCount + ' | ' + data.missingSiteShellCount + ' | ' +
-    data.missingHreflangCount + ' |'
+    data.missingHreflangCount + ' | ' + data.englishFallbackMetadataCount + ' |'
   );
   return [
     '# Locale page coverage audit',
@@ -123,11 +152,12 @@ function renderMarkdown(report) {
       '**. Public indexable HTML pages: **' + report.publicIndexableHtmlPageCount +
       '**. Excluded noindex HTML pages: **' + report.excludedNoindexPageCount + '**.',
     '',
-    '| Locale | Existing pages | English pages | Route coverage | Missing routes | Missing lang | Invalid lang | Missing canonical | Missing site shell | Missing hreflang |',
-    '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|',
+    '| Locale | Existing pages | English pages | Route coverage | Missing routes | Missing lang | Invalid lang | Missing canonical | Missing site shell | Missing hreflang | English fallback metadata |',
+    '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|',
     ...rows,
     '',
     'Route coverage only confirms that a corresponding locale HTML path exists. It does not certify that visible copy, calculator labels/results, formulas, examples, FAQs, metadata, structured data, or jurisdiction-specific rules are translated correctly.',
+    'English fallback metadata counts detect exact reuse of the current English homepage fallback title or description on locale pages. They are a review signal and do not automatically change indexation or hreflang.',
     'Missing hreflang is a review signal, not an automatic instruction to add tags: alternate clusters must be reciprocal and point to canonical URLs.',
     ''
   ].join('\n');

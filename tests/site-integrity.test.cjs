@@ -2299,3 +2299,49 @@ test('country and format setting explains that website language is independent',
   assert.ok(shell.includes('countryFormatSelect.setAttribute(\'aria-description\',countryFormatHelpText)'));
   assert.ok(shell.includes('fc-country-format-help'));
 });
+
+
+test('regional preferences can be reset to automatic and accessibility preferences are preserved', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shell, /Use automatic regional settings/);
+  for (const key of ['fc-language-preference','fc-preferred-country','fc-preferred-currency','fc-preferred-format-locale','fc-preferred-unit-system']) {
+    assert.ok(shell.includes(key), 'Auto reset must clear ' + key);
+  }
+  assert.doesNotMatch(shell, /localStorage\.removeItem\('fc-display-(?:size|contrast|motion)'\)/);
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(styles, /prefers-contrast:\s*more/);
+  assert.match(styles, /forced-colors:\s*active/);
+});
+
+
+test('automatic regional detection supports locale lists, script subtags and non-US customary-unit regions', () => {
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  assert.match(locale, /const browserLocales=/);
+  assert.match(locale, /new Intl\.Locale\(candidate\)\.region/);
+  assert.match(locale, /imperialRegions=new Set\(\['US','LR','MM'\]\)/);
+  assert.match(locale, /for\(const candidate of browserLocales\)/);
+});
+
+
+test('Smart Regional Experience preserves SEO URLs and page metadata', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+
+  // Explicit locale paths remain authoritative; browser defaults apply only to the root homepage.
+  assert.match(shell, /const currentLocale=\(\/\^/);
+  assert.match(shell, /p==='\/'\?preferredUiLocale:'en'/);
+  assert.match(shell, /localStorage\.setItem\('fc-language-source','manual'\)/);
+
+  // Regional formatting may update calculator labels and document data attributes,
+  // but must not rewrite search-facing metadata or canonical/hreflang links.
+  assert.doesNotMatch(locale, /document\.title\s*=|document\.head\.appendChild|createElement\(['"]meta['"]\)|createElement\(['"]link['"]\)/);
+  assert.doesNotMatch(locale, /rel=['"]canonical['"]|hreflang|name=['"]robots['"]/i);
+
+  // The homepage retains explicit indexability and its self-canonical URL.
+  assert.match(homepage, /<meta name="robots" content="index,follow/);
+  assert.match(homepage, /<link rel="canonical" href="https:\/\/friendlycalculator\.in\/">/);
+  assert.match(homepage, /<title>[^<]+<\/title>/);
+  assert.match(homepage, /<meta name="description" content="[^"]+">/);
+});
