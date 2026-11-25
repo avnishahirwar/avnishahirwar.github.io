@@ -38,6 +38,51 @@
       "amount": 1000000,
       "rate": 8,
       "description": "A larger-loan illustration for planning monthly repayments."
+    },
+    {
+      "slug": "emi-for-20-lakh-home-loan-at-8-5-percent",
+      "amount": 2000000,
+      "rate": 8.5,
+      "kind": "home",
+      "terms": [10, 15, 20, 25, 30],
+      "featuredYears": 20,
+      "description": "A first-home loan illustration showing how tenure from 10 to 30 years changes the monthly instalment and total interest."
+    },
+    {
+      "slug": "emi-for-30-lakh-home-loan-at-8-5-percent",
+      "amount": 3000000,
+      "rate": 8.5,
+      "kind": "home",
+      "terms": [10, 15, 20, 25, 30],
+      "featuredYears": 20,
+      "description": "A mid-sized home loan illustration for comparing long repayment periods."
+    },
+    {
+      "slug": "emi-for-50-lakh-home-loan-at-8-5-percent",
+      "amount": 5000000,
+      "rate": 8.5,
+      "kind": "home",
+      "terms": [10, 15, 20, 25, 30],
+      "featuredYears": 20,
+      "description": "A ₹50 lakh home loan illustration for metro-city purchases, comparing instalments across tenures."
+    },
+    {
+      "slug": "emi-for-75-lakh-home-loan-at-8-5-percent",
+      "amount": 7500000,
+      "rate": 8.5,
+      "kind": "home",
+      "terms": [10, 15, 20, 25, 30],
+      "featuredYears": 20,
+      "description": "A larger home loan illustration showing the interest cost of choosing a longer tenure."
+    },
+    {
+      "slug": "emi-for-1-crore-home-loan-at-8-5-percent",
+      "amount": 10000000,
+      "rate": 8.5,
+      "kind": "home",
+      "terms": [10, 15, 20, 25, 30],
+      "featuredYears": 20,
+      "description": "A ₹1 crore home loan illustration for premium property purchases and long-tenure planning."
     }
   ]
 }
