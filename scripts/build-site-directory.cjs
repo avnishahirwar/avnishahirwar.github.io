@@ -1,4 +1,6 @@
 'use strict';
+// Source of truth: rebuild the public alphabetical directory from every current HTML page in /calculators.
+// The main-branch workflow regenerates and commits this file after catalogue changes.
 /**
  * Rebuild calculator/site-directory.html from the calculators/ catalogue.
  * Usage: node scripts/build-site-directory.cjs [--check]
