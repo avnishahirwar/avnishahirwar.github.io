@@ -29,7 +29,7 @@ Base commit: e44299358689d63db281ddce6aa8eae03496e859
 - .github/workflows/production-optimization-audit.yml — report-only CI workflow.
 - reports/production-optimization/README.md — baseline and evidence limitations.
 
-## Latest repository-wide static audit (CI run 45615653139)
+## Latest repository-wide static audit (CI run 45615821814)
 
 The final audit job on branch commit 7cf09fba036e099c94ca46add6a1466db52317ff completed successfully. All 7 audit-rule tests passed.
 
