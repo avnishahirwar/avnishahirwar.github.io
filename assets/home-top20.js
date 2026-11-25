@@ -277,6 +277,9 @@
     }
     window.addEventListener('fc:localechange', loadDisplayCurrency);
     window.addEventListener('fc:locale-ready', loadDisplayCurrency);
+    // The locale bootstrap is injected dynamically by site-shell.js and may finish before or after this deferred script.
+    // Read the current saved preference immediately as well as listening for future locale events.
+    loadDisplayCurrency();
 
     function render() {
       var c = current, form = el('form', {'class': 'top20-form', novalidate: 'novalidate'}); currentForm = form;
