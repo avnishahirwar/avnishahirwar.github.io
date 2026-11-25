@@ -90,7 +90,7 @@ function renderPage(lang, groups, total) {
     esc(hi ? group.hiLabel : group.label) + '</span><span>' + group.items.length.toLocaleString('en-US') +
     ' calculators</span></a>').join('\n');
   const physicsSupplemental = new Set(['/calculators/current-divider-calculator.html','/calculators/elastic-constants-calculator.html','/calculators/impulse-and-momentum-calculator.html','/calculators/light-year-conversion.html','/calculators/projectile-time-of-flight-calculator.html']);
-  const sections = groups.map(group => '<section class="calculator-category" id="' + group.id +
+  const sections = groups.map(group => '<section class="section calculator-category" id="' + group.id +
     '"><header class="category-heading"><div><h2>' + esc(hi ? group.hiLabel : group.label) +
     '</h2><strong>' + group.items.length.toLocaleString('en-US') + ' tools</strong></div></header><div class="cards">' +
     group.items.map(item => '<a class="card" href="' + esc(item.url) + '" data-search="' +
