@@ -29,7 +29,9 @@ jobs:
           node-version: 20
       - run: node --check scripts/build-site-directory.cjs
       - run: node scripts/build-site-directory.cjs
+      - run: node scripts/generate-physics-calculator-directory.cjs
       - run: node scripts/build-site-directory.cjs --check
+      - run: node scripts/generate-physics-calculator-directory.cjs --check
 
   generate:
     if: github.event_name != 'pull_request'
@@ -42,12 +44,12 @@ jobs:
         with:
           node-version: 20
       - name: Rebuild English and Hindi calculator site directories from the catalogue
-        run: node scripts/build-site-directory.cjs
+        run: node scripts/build-site-directory.cjs && node scripts/generate-physics-calculator-directory.cjs
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add calculator/site-directory.html hi/calculator/site-directory.html
+          git add calculator/site-directory.html hi/calculator/site-directory.html calculator/physics-calculators.html
           if ! git diff --cached --quiet; then
             git commit -m "chore(seo): regenerate calculator site-directory from catalogue"
             git push
