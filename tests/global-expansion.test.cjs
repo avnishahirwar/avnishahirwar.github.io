@@ -65,6 +65,10 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   const headerMarkup = shell.slice(headerStart, headerEnd);
   assert.ok(!headerMarkup.includes('fc-settings-row'), 'Legacy regional row must not be rendered in the header.');
   assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
+  assert.ok(shell.includes("headerCurrencySource.cloneNode(true)") && shell.includes("headerCurrencyControl.className='fc-header-currency-control'"), 'A separate currency selector must be mirrored into the Header without moving the Settings control.');
+  assert.ok(shell.includes("headerCurrencySelect.id='fc-header-currency-select'") && shell.includes("headerLanguageControl.after(headerCurrencyControl)"), 'Display currency must appear immediately after Language in the Header with a unique ID.');
+  assert.ok(shell.includes("window.FCLocale.setCurrency(headerCurrencySelect.value)") && shell.includes("window.addEventListener('fc:localechange',syncHeaderCurrency) && shell.includes("window.addEventListener('fc:locale-ready',syncHeaderCurrency)")"), 'Header currency changes must persist through FCLocale and stay synchronized with Settings.');
+
   assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
   assert.ok(shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
   assert.ok(shell.includes("if(p==='/'&&currentLocale!=='en')location.replace(localeHome[currentLocale]+location.search+location.hash)"), 'The root page must respect a saved or browser-supported language preference by default.');
@@ -218,4 +222,40 @@ test('expanded More navigation renders every secondary link as a full-width menu
   assert.match(serviceWorker, /friendly-calculator-public-v12/);
   assert.match(serviceWorker, /__fc_home_refresh/);
   assert.match(serviceWorker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
+});
+
+test('shared Footer omits category links already available in the header', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const categoryLinks = [
+    ['Home', '/'],
+    ['Business', '/calculator/business-calculators.html'],
+    ['Finance', '/calculator/finance-calculators.html'],
+    ['Tax', '/calculator/tax.html'],
+    ['Industry', '/calculator/industry-calculators.html'],
+    ['Manufacturing', '/calculator/manufacturing-calculators.html'],
+    ['Everyday', '/calculator/everyday-calculators.html'],
+    ['Blog', '/blog/']
+  ];
+  assert.ok(shell.includes('fc-global-links'), 'Primary header navigation must remain available.');
+  assert.ok(shell.includes("const footerCategoryHrefs=new Set("), 'Footer must explicitly filter header-only category destinations.');
+  assert.ok(shell.includes('!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some'), 'Legacy Footer links must also filter header-only category destinations before cloning.');
+  assert.ok(shell.indexOf('const isHeaderOnlyCategoryLink=') < shell.indexOf('try {'), 'The shared Footer filter must be declared outside the fallback try block so every Footer renderer can access it.');
+  assert.ok(shell.indexOf('const isFooterDirectoryLink=') < shell.indexOf('try {'), 'The shared directory-link filter must be available to the canonical Footer renderer outside the fallback try block.');
+  assert.equal((shell.match(/const isHeaderOnlyCategoryLink=/g) || []).length, 1, 'Header-only category filter must have one shared declaration.');
+  assert.equal((shell.match(/const isFooterDirectoryLink=/g) || []).length, 1, 'Directory filter must have one shared declaration to avoid duplicate-const parse errors.');
+  for (const [label, href] of categoryLinks) {
+    assert.ok(shell.includes("['" + label + "','" + href + "']") || shell.includes("'" + href + "'"), 'Header/category destination must remain configured: ' + label);
+  }
+  assert.ok(!shell.includes('<nav class="fc-footer-category-links"'), 'The duplicate category Footer navigation must not be rendered.');
+  assert.ok(!shell.includes("['Home','/']") && !shell.includes("['Blog','/blog/']"), 'Home and Blog must not be added to required Footer links.');
+});
+
+
+test('language selector refreshes the published locale catalogue instead of reusing stale Coming soon labels', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'config/language-catalogue.json'), 'utf8'));
+  assert.match(shell, /fetch\('\/config\/language-catalogue\.json\?v=20261125-1',\{cache:'no-store',credentials:'same-origin'\}\)/);
+  assert.equal(catalogue.locales.length, catalogue.total, 'Every configured locale must be represented in the catalogue.');
+  assert.ok(catalogue.locales.some(locale => locale.code === 'hi'), 'Hindi must remain in the language catalogue.');
+  assert.ok(catalogue.locales.some(locale => locale.code === 'en'), 'English must remain in the language catalogue.');
 });

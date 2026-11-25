@@ -101,9 +101,13 @@ footer.fc-global-footer .fc-social-links .fc-social-link svg{width:19px!importan
 .fc-language-label{white-space:nowrap}
 .fc-language-control select{max-width:190px;min-width:120px;padding:7px 28px 7px 9px;border:1px solid #64758a;border-radius:6px;background:#fff;color:#172638;font:inherit;font-size:.82rem;cursor:pointer}
 .fc-language-control select:focus-visible{outline:3px solid #d8bd82;outline-offset:3px}
+.fc-header-currency-control{display:inline-flex;align-items:center;gap:6px;color:#e3eaf0;font-size:.82rem;font-weight:700}
+.fc-header-currency-control select{max-width:220px;min-width:150px;padding:7px 28px 7px 9px;border:1px solid #64758a;border-radius:6px;background:#fff;color:#172638;font:inherit;font-size:.82rem;cursor:pointer}
+.fc-header-currency-control select:focus-visible{outline:3px solid #d8bd82;outline-offset:3px}
+
 .fc-language-notice{width:min(1160px,94%);margin:12px auto;padding:10px 14px;border:1px solid #d8bd82;border-radius:8px;background:#fff8e8;color:#463719;font-size:.92rem}
-@media(max-width:1100px){.fc-language-control{padding:5px 0}.fc-language-control select{max-width:175px}}
-@media(max-width:640px){.fc-language-control{width:100%;justify-content:flex-start}.fc-language-control select{min-width:150px}}
+@media(max-width:1100px){.fc-language-control,.fc-header-currency-control{padding:5px 0}.fc-language-control select{max-width:175px}.fc-header-currency-control select{max-width:220px}}
+@media(max-width:640px){.fc-language-control,.fc-header-currency-control{width:100%;justify-content:flex-start;flex-direction:column;align-items:stretch;gap:5px}.fc-language-control select,.fc-header-currency-control select{width:100%;min-width:150px;max-width:100%}}
 /* Consistent small-screen layout for calculator input and result panels. */
 @media(max-width:640px){
   .fields,.result-grid,.form-grid,.input-grid,.calculator-fields{grid-template-columns:minmax(0,1fr)!important}
@@ -282,7 +286,7 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
  .fc-settings-controls{flex-wrap:wrap;justify-content:flex-start;padding:8px 0;gap:8px}
  .fc-settings-controls>label{padding:5px 12px;border-right:0}
  .fc-footer-top{flex-wrap:wrap;justify-content:flex-start;padding:8px 0}
- .fc-global-footer-links{justify-content:flex-start;flex-wrap:wrap;padding:8px 0}
+.fc-global-footer-links{justify-content:flex-start;flex-wrap:wrap;padding:8px 0}
  .fc-social-links{border-left:0;padding-left:0}
 }
 @media(max-width:760px){
@@ -1520,3 +1524,9 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
   html:not([data-fc-theme="dark"]) .home-category-index a,
   html:not([data-fc-theme="dark"]) .home-popular-tools a {transition:none}
 }
+
+
+/* API Dashboard in More: match the sibling product cards. */
+.fc-more-menu a.fc-login-link{display:flex;align-items:center;justify-content:flex-start;min-height:42px;padding:9px 12px;border:1px solid #3b536a;border-radius:8px;background:#182e43;color:#fff!important;font-weight:700;white-space:normal;text-decoration:none}
+.fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{background:#223b54;border-color:#d8bd82;color:#fff!important;text-decoration:none;outline:2px solid #d8bd82;outline-offset:2px}
+.fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}

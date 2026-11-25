@@ -1,6 +1,13 @@
 (()=>{'use strict';
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
+const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
+const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\/$/,'/')||'/');
+const isFooterDirectoryLink=link=>{
+  const href=(link.getAttribute('href')||'').toLowerCase();
+  const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
+  return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
+};
 try {
   const isPublicTopPage = new URLSearchParams(location.search).get('embed') !== '1' &&
     !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
@@ -39,15 +46,12 @@ try {
     footer.classList.add('fc-global-footer');
     footer.setAttribute('aria-label','Website footer');
     const preservedLinks=[];
-    const isFooterDirectoryLink=link=>{
-      const href=(link.getAttribute('href')||'').toLowerCase();
-      const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
-      return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
-    };
+
+
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
         const href=link.getAttribute('href');
-        if(href&&!isFooterDirectoryLink(link)&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
+        if(href&&!isFooterDirectoryLink(link)&&!isHeaderOnlyCategoryLink(link)&&!preservedLinks.some(item=>item.getAttribute('href')===href))preservedLinks.push(link);
       });
     };
     collectLinks(footer);
@@ -61,10 +65,7 @@ try {
     nav.className='fc-global-footer-links';
     nav.setAttribute('aria-label','Footer navigation');
     const requiredLinks=[
-      ['Home','/'],['Business','/calculator/business-calculators.html'],['Finance','/calculator/finance-calculators.html'],
-      ['Tax','/calculator/tax.html'],['Industry','/calculator/industry-calculators.html'],
-      ['Manufacturing','/calculator/manufacturing-calculators.html'],['Everyday','/calculator/everyday-calculators.html'],
-      ['All Calculators','/calculator/site-directory.html'],['Blog','/blog/'],['About','/calculator/about.html'],
+      ['All Calculators','/calculator/site-directory.html'],['About','/calculator/about.html'],
       ['Methodology','/calculator/methodology.html'],['Privacy','/calculator/privacy.html'],['Cookie Policy','/calculator/cookies.html'],
       ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['DMCA / Copyright','/dmca.html'],
       ['Legal & Compliance','/calculator/legal-compliance.html'],['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
@@ -506,6 +507,34 @@ if(regionalControlsSource&&!regionalControlsSource.querySelector('.fc-currency-c
   regionalMarkup.innerHTML=currencyControl+countryControl+unitControl;
   // Keep regional preferences out of the Header; Settings owns these controls.
   regionalControlsSource.append(...regionalMarkup.children);
+  // Mirror the existing currency preference in the Header, immediately after Language.
+  // Keep the original selector in Settings so FCLocale retains its established ID and handler.
+  const headerCurrencySource=regionalControlsSource.querySelector('.fc-currency-control');
+  const headerLanguageControl=primaryNav?.querySelector('.fc-language-control');
+  if(headerCurrencySource&&headerLanguageControl&&!primaryNav.querySelector('.fc-header-currency-control')){
+    const headerCurrencyControl=headerCurrencySource.cloneNode(true);
+    headerCurrencyControl.className='fc-header-currency-control';
+    const headerCurrencySelect=headerCurrencyControl.querySelector('select');
+    const settingsCurrencySelect=headerCurrencySource.querySelector('select');
+    headerCurrencySelect.id='fc-header-currency-select';
+    headerCurrencySelect.setAttribute('aria-label',headerCurrencySelect.getAttribute('aria-label')||'Display currency');
+    const syncHeaderCurrency=()=>{
+      const value=window.FCLocale?.getCurrency?.()||settingsCurrencySelect.value;
+      headerCurrencySelect.value=value;
+    };
+    headerCurrencySelect.addEventListener('change',()=>{
+      if(window.FCLocale?.setCurrency){
+        window.FCLocale.setCurrency(headerCurrencySelect.value);
+      }else{
+        settingsCurrencySelect.value=headerCurrencySelect.value;
+        settingsCurrencySelect.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    window.addEventListener('fc:locale-ready',syncHeaderCurrency);
+    window.addEventListener('fc:localechange',syncHeaderCurrency);
+    headerLanguageControl.after(headerCurrencyControl);
+    syncHeaderCurrency();
+  }
 }
 // The header retains language and an accessible compact navigation toggle.
 if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
@@ -582,11 +611,6 @@ const f=document.createElement('footer');f.className='fc-global-footer';
 f.innerHTML=`<div class="fc-global-footer-inner"><div class="fc-footer-top"><div class="fc-footer-intro"><img class="fc-footer-mark" src="/assets/friendly-calculator-logo.svg" width="42" height="42" alt="Friendly Calculator logo" loading="lazy" decoding="async"><div><strong>FRIENDLY <b>CALCULATOR</b><sup>®</sup></strong><small>${({en:'Practical tools for everyday calculations.',hi:'रोज़मर्रा की गणनाओं के लिए उपयोगी टूल।',es:'Herramientas prácticas para cálculos cotidianos.',fr:'Des outils pratiques pour les calculs quotidiens.',pt:'Ferramentas práticas para cálculos do dia a dia.',ar:'أدوات عملية للحسابات اليومية.',id:'Alat praktis untuk perhitungan sehari-hari.',bn:'দৈনন্দিন হিসাবের জন্য ব্যবহারিক টুল।',ta:'அன்றாடக் கணக்குகளுக்கான பயனுள்ள கருவிகள்.',mr:'दैनंदिन गणनांसाठी उपयुक्त साधने.',vi:'Công cụ hữu ích cho các phép tính hằng ngày.',te:'రోజువారీ లెక్కల కోసం ఉపయోగకరమైన సాధనాలు.',zh:'日常计算的实用工具。',ur:'روزمرہ حساب کے لیے مفید ٹولز۔',tr:'Günlük hesaplamalar için pratik araçlar.',it:'Strumenti pratici per i calcoli quotidiani.',ko:'일상 계산을 위한 실용적인 도구.'}[currentLocale]||'Practical tools for everyday calculations.')}</small></div></div><nav class="fc-global-footer-links" aria-label="Footer navigation">${footerLinks.map(([n,u])=>'<a href="'+u+'"'+(p===u?' aria-current="page"':'')+'>'+n+'</a>').join('')}</nav><nav class="fc-social-links" aria-label="Social media and contact"><a class="fc-social-link" href="https://www.instagram.com/avnish_ahirwar" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a class="fc-social-link" href="https://www.linkedin.com/in/avnishahirwar415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M5.2 3.5a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM3.4 9h3.6v11.5H3.4zM9.1 9h3.4v1.6h.1a3.7 3.7 0 0 1 3.3-1.8c3.5 0 4.2 2.3 4.2 5.2v6.5h-3.6v-5.8c0-1.4 0-3.2-2-3.2s-2.2 1.5-2.2 3.1v5.9H9.1z"/></svg></a><a class="fc-social-link" href="mailto:avnishahirwar415@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a></nav></div><div class="fc-footer-bottom"><small>© 2026 Friendly Calculator. All rights reserved.</small><div><span>Built by Avnish Ahirwar</span><span>Free Online Calculators for Everyone</span></div></div></div>`
 // Consolidate every legacy or nested footer into one direct child of body.
 const preservedFooterLinks=[];
-const isFooterDirectoryLink=link=>{
-  const href=(link.getAttribute('href')||'').toLowerCase();
-  const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
-  return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
-};
 const isFooterSocialLink=link=>{
   const href=(link.getAttribute('href')||'').trim().toLowerCase();
   const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
@@ -597,7 +621,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
     // Social/contact destinations already have one dedicated icon row in the shared Footer.
-    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
@@ -622,7 +646,7 @@ const markCurrentNavigation=navElement=>{
   if(current)current.setAttribute('aria-current','page');
 };
 markCurrentNavigation(activeHeader.querySelector('#fc-primary-navigation'));
-markCurrentNavigation(f.querySelector('.fc-global-footer-links'));
+markCurrentNavigation(f.querySelector('.fc-global-footer-links'));markCurrentNavigation(f.querySelector('.fc-footer-category-links'));
 const mountSharedInstallUi=()=>ensurePwaInstallUi();
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountSharedInstallUi,{once:true});
 else ensurePwaInstallUi();
@@ -705,7 +729,7 @@ if(languageSelect){
   });
 }
 // Keep the visible selector synchronized with the canonical 50-language catalogue.
-fetch('/config/language-catalogue.json',{cache:'force-cache',credentials:'same-origin'})
+fetch('/config/language-catalogue.json?v=20261125-1',{cache:'no-store',credentials:'same-origin'})
   .then(response=>response.ok?response.json():null)
   .then(catalogue=>{
     if(!catalogue||!Array.isArray(catalogue.locales))return;
