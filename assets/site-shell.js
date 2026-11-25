@@ -596,7 +596,7 @@ document.querySelectorAll('footer').forEach(oldFooter=>{
   oldFooter.querySelectorAll('a[href]').forEach(link=>{
     const href=link.getAttribute('href');
     // Social/contact destinations already have one dedicated icon row in the shared Footer.
-    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
+    if(href&&!isAdminRouteLink(link)&&!isFooterSocialLink(link)&&!isFooterDirectoryLink(link)&&!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some(item=>item.getAttribute('href')===href))preservedFooterLinks.push(link.cloneNode(true));
   });
 });
 const canonicalFooterNav=f.querySelector('.fc-global-footer-links');
