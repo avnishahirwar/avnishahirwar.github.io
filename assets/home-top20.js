@@ -231,7 +231,7 @@
     var tabs = el('div', {'class': 'top20-tabs', role: 'tablist', 'aria-label': 'Top 20 calculators in India'});
     var panel = el('div', {'class': 'top20-panel', role: 'tabpanel', id: 'top20-panel'});
     host.appendChild(tabs); host.appendChild(panel);
-    var current = null, buttons = {}, currentForm = null, currencyStatus = el('p', {'class': 'top20-currency-status', 'role': 'status', 'aria-live': 'polite'});
+    var current = null, buttons = {}, currentForm = null, currencyRequestId = 0, currencyStatus = el('p', {'class': 'top20-currency-status', 'role': 'status', 'aria-live': 'polite'});
     function updateCurrencyLabels() {
       var symbol = currencySymbol(displayCurrency);
       if (!currentForm) return;
@@ -248,8 +248,10 @@
       var selected = localeApi && localeApi.getCurrency ? localeApi.getCurrency() : 'INR';
       var locale = localeApi && localeApi.getLocale ? localeApi.getLocale() : 'en-IN';
       if (selected === 'INR') { var oldRate = displayRate; configureDisplayCurrency('INR', 1, locale); if (currentForm && oldRate !== 1) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; input.value = Number(input.value) / oldRate; } }); updateCurrencyLabels(); if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true})); currencyStatus.textContent = 'Amounts shown in Indian Rupees (INR).'; return; }
+      var requestId = ++currencyRequestId;
       currencyStatus.textContent = 'Loading the latest available INR to ' + selected + ' reference rate…';
       fetch('https://api.frankfurter.dev/v2/rate/INR/' + encodeURIComponent(selected), {headers: {Accept: 'application/json'}, cache: 'no-cache'}).then(function (response) { if (!response.ok) throw new Error('Rate unavailable'); return response.json(); }).then(function (data) {
+        if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
         if (!data || !Number.isFinite(Number(data.rate)) || Number(data.rate) <= 0 || !data.date) throw new Error('Invalid reference rate');
         var oldRate = displayRate, nextRate = Number(data.rate);
         configureDisplayCurrency(selected, nextRate, locale);
@@ -258,6 +260,7 @@
         currencyStatus.textContent = 'Amounts converted from INR to ' + selected + ' using the Frankfurter reference rate dated ' + data.date + '. Calculations retain their original INR-based formulas.';
         if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true}));
       }).catch(function () {
+        if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
         currencyStatus.textContent = 'Reference rate unavailable. Results are kept in INR to avoid showing an incorrect currency.';
         if (localeApi && localeApi.setCurrency) localeApi.setCurrency('INR');
       });
