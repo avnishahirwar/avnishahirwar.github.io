@@ -1,0 +1,31 @@
+name: One-time generated directory final validation
+on:
+  push:
+    branches:
+      - seo/fix-directory-social-metadata-v2-20261125
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Rebuild generated directory
+        run: node scripts/build-site-directory.cjs
+      - name: Verify directory output
+        run: |
+          node scripts/build-site-directory.cjs --check
+          node -e "const fs=require('fs');const h=fs.readFileSync('calculator/site-directory.html','utf8');for(const x of ['og:type','og:site_name','og:title','og:description','og:url','og:image','twitter:card','twitter:title','twitter:description','twitter:image','/calculator/physics-calculators.html','Search calculators by topic'])if(!h.includes(x))throw new Error('Missing '+x);console.log('Directory SEO metadata and Physics topic discovery verified.')"
+      - name: Remove one-time workflow and commit output
+        run: |
+          rm .github/workflows/one-time-generated-directory-validation.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/build-site-directory.cjs calculator/site-directory.html .github/workflows/one-time-generated-directory-validation.yml
+          git commit -m "seo: add Physics topic discovery to generated directory [skip ci]"
+          git push
