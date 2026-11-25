@@ -249,3 +249,13 @@ test('shared Footer omits category links already available in the header', () =>
   assert.ok(!shell.includes('<nav class="fc-footer-category-links"'), 'The duplicate category Footer navigation must not be rendered.');
   assert.ok(!shell.includes("['Home','/']") && !shell.includes("['Blog','/blog/']"), 'Home and Blog must not be added to required Footer links.');
 });
+
+
+test('language selector refreshes the published locale catalogue instead of reusing stale Coming soon labels', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const catalogue = JSON.parse(fs.readFileSync(path.join(root, 'config/language-catalogue.json'), 'utf8'));
+  assert.match(shell, /fetch\('\/config\/language-catalogue\.json\?v=20261125-1',\{cache:'no-store',credentials:'same-origin'\}\)/);
+  assert.equal(catalogue.locales.length, catalogue.total, 'Every configured locale must be represented in the catalogue.');
+  assert.ok(catalogue.locales.some(locale => locale.code === 'hi'), 'Hindi must remain in the language catalogue.');
+  assert.ok(catalogue.locales.some(locale => locale.code === 'en'), 'English must remain in the language catalogue.');
+});

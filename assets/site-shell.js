@@ -729,7 +729,7 @@ if(languageSelect){
   });
 }
 // Keep the visible selector synchronized with the canonical 50-language catalogue.
-fetch('/config/language-catalogue.json',{cache:'force-cache',credentials:'same-origin'})
+fetch('/config/language-catalogue.json?v=20261125-1',{cache:'no-store',credentials:'same-origin'})
   .then(response=>response.ok?response.json():null)
   .then(catalogue=>{
     if(!catalogue||!Array.isArray(catalogue.locales))return;
