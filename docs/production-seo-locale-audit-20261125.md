@@ -6,7 +6,7 @@
 ## Executive findings
 
 - The production homepage has a descriptive title and description, index,follow, a self-canonical URL, Open Graph/Twitter metadata and an x-default hreflang.
-- The homepage advertises **48 language alternates plus x-default**. All 48 destinations were fetched successfully in this audit; each returned a self-canonical URL, an indexable robots directive and a self-referencing hreflang entry.
+- The homepage advertises **49 language alternates (English plus 48 non-English locales) and x-default**. All 48 non-English destinations were fetched successfully in this audit; each returned a self-canonical URL, an indexable robots directive and a self-referencing hreflang entry.
 - **21 of 48 locale landing pages** had localized title and description metadata in the sampled crawl.
 - **27 of 48 locale landing pages** still used the English fallback title and description. Their locale-specific sitemaps each contained only the locale landing page, not translated calculator pages.
 - Hindi and Arabic have larger locale sitemaps (166 and 101 URLs respectively); the English sitemap had 1,922 URLs. The sitemap index exposed 49 locale sitemap files, including English.
@@ -60,7 +60,7 @@ Each of these locale sitemaps contained only its /locale/index.html landing page
 
 ## Locale catalogue status reconciliation
 
-The repository's canonical config/language-catalogue.json currently defines 50 unique locale codes and marks all 50 as available. The production homepage's sampled hreflang cluster contains 48 language codes plus x-default, so the config and published alternate cluster do not match exactly. In addition, 27 of the fetched locale landing pages still use English fallback title/description metadata and their locale sitemaps contain only one landing page. Therefore the catalogue's "available" status must not be interpreted as proof of complete translation or full calculator coverage.
+The repository's canonical config/language-catalogue.json currently defines 50 unique locale codes and marks all 50 as available. The production homepage's sampled hreflang cluster contains 49 language codes plus x-default; the only catalogue code missing from the production cluster is uk. The 49 published codes are en plus 48 non-English locales. In addition, 27 of the fetched locale landing pages still use English fallback title/description metadata and their locale sitemaps contain only one landing page. Therefore the catalogue's "available" status must not be interpreted as proof of complete translation or full calculator coverage.
 
 The existing locale-coverage test in this branch still expects 17 available and 33 planned, which does not match the current canonical config. Update that test to validate the config schema and report actual content/metadata coverage separately; do not change the 50 locale statuses or remove locale routes/hreflang without explicit owner approval.
 
@@ -70,3 +70,20 @@ The existing locale-coverage test in this branch still expects 17 available and 
 On the SRES feature branch, the repository's existing additive repair script was run through GitHub Actions workflow 45530393043. It scanned 4,165 HTML files, updated 688 pages that were missing route-specific Open Graph/Twitter metadata, and then re-ran its check successfully: **0 pages need repair**. Forty-one files were excluded or lacked the public title/description prerequisites for this repair.
 
 The repair preserved existing page titles, descriptions and canonical URLs; it adds missing social metadata only. The generated commit is fd543dec340771dc73d23025899fee5f9e9bddf2. This is a branch change only: it is not merged or production-deployed, and production remains unchanged until the reviewed PR is merged and the actual hosting deployment is verified.
+
+
+## Full repository locale coverage artifact
+
+The Locale coverage audit workflow (run 45530601455, artifact generated 25 Nov 2026 02:07 UTC) completed successfully and reported:
+
+- 3,246 indexable English/root HTML pages.
+- 4,124 public indexable HTML pages total; 26 HTML pages excluded as noindex.
+- Hindi: 150 locale pages, 4.4% route coverage, 3,102 corresponding routes missing, 8 pages missing hreflang.
+- Spanish, Arabic, French and Portuguese: 96 locale pages each, about 3.0% route coverage.
+- Bengali and Tamil: 99 locale pages each, about 3.0% route coverage.
+- Indonesian: 95 locale pages, 2.9% route coverage.
+- Five locales (zh, ur, tr, ko and it) had zero corresponding locale HTML files in the branch audit even though their production landing pages were fetched successfully. The branch source and production deployment therefore need a route/content parity reconciliation.
+- uk had one locale HTML page with an invalid html lang value; uk is also the only locale in the repository catalogue not present in the production homepage hreflang cluster.
+- Exact English fallback title/description was found on one landing page each for 27 locales in the branch source audit. This is a heuristic and not a complete copy-translation audit.
+
+These coverage percentages measure matching file paths, not translation quality. They show that even the larger translated editions cover only a small fraction of the English/root page inventory. Full calculator-page localization remains substantial work.
