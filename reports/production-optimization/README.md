@@ -140,3 +140,38 @@ PR #834 remains draft and unmerged. The two failed CI gates must be fixed and re
 
 ### Release gate
 PR #834 remains draft/open/unmerged. The directory architecture mismatch and homepage category totals need a coherent source-of-truth repair; do not change expected test values to conceal it. The post-repair hreflang and calculator suite must be rerun before release. Production deployment, live domain QA, actual response headers, Search Console indexing, CrUX field CWV and AdSense account status remain unverified.
+
+
+## Exact-head recheck — 25 November 2026, 19:16 IST
+
+Branch: `production-optimization` · PR [#834](https://github.com/avnishahirwar/avnishahirwar.github.io/pull/834) · tested head `862fdb4aec15bfb39831635c5d0298d9e164e179`.
+
+### Current check results
+
+Passed:
+- Production optimization audit.
+- Public SEO metadata quality.
+- Locale coverage audit.
+- Search-index additions validation.
+- Generated site-directory workflow.
+- Lighthouse mobile lab.
+- Cross-browser smoke tests (Chrome, Chromium, Edge, Firefox, Opera, WebKit and native Safari).
+- Cloudflare Pages PR preview deployment: [preview](https://production-optimization.friendly-calculator.pages.dev).
+
+Failed:
+- Site health: 14 assertions. The main failure groups are stale catalogue/category-directory contract, homepage category totals (3,130 versus 3,969 canonical sitemap calculator URLs), Home Loan & Loan Prepayment Calculator discovery/content, and Biology & Chemistry batch count labels in the directory.
+- Calculator regression: 5 assertions. The priority Hindi calculator hreflang cluster, percentage and simple-interest locale clusters, priority locale reciprocal clusters, and global international hreflang audit (80 defects).
+- Netlify preview failed; Vercel is rate-limited by the free deployment quota. Cloudflare Pages preview is available and successful.
+- Cloudflare Workers integration check failed; this is separate from the successful Cloudflare Pages preview and is not evidence that the production site failed.
+
+### Required repair sequence
+
+1. Reconcile the generated directory with the existing 20-category data source and canonical calculator URL set. Preserve the category browse experience and the separate curated homepage list; do not change counts to hide mismatches.
+2. Fix the Home Loan & Loan Prepayment Calculator explanation and ensure the existing canonical route is discoverable.
+3. Resolve the five hreflang assertions using only indexable, same-language, resolvable targets; never add alternates to noindex pages.
+4. Rerun all failing tests and the full exact-head CI matrix.
+5. Keep PR #834 draft/unmerged until all required gates pass; then verify the exact production domain after merge/deployment.
+
+### Current release boundary
+
+PR #834 is still draft, open and unmerged. The successful Cloudflare Pages deployment is a branch preview only. No production deployment or production visual verification is claimed. No SEO calendar, existing page content, Header/Footer, domain/DNS, billing/payment settings or repository permissions were changed by this checkpoint.
