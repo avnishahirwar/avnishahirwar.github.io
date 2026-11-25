@@ -39,22 +39,12 @@ function esc(value) {
 }
 function collectGroups() {
   const entries = catalogueStats().entries.filter(item =>
-    /^\/(?:[a-z]{2,3}\/)?calculators\/[^?#]+\.html$/i.test(String(item.url || '')));
-  const groups = CATEGORIES.map(([id,label,hiLabel]) => ({id,label,hiLabel,items:[]}));
+    /^\\/(?:[a-z]{2,3}\\/)?calculators\\/[^?#]+\\.html$/i.test(String(item.url || '')));
+  const groups = CATEGORIES.map(([id,label,hiLabel,pattern]) => ({id,label,hiLabel,pattern,items:[]}));
   for (const item of entries) {
     const haystack = [item.category,item.name,item.keywords,item.description].join(' ');
-    let group = groups.find(candidate => candidate.id === 'math-statistics' && /^(math|mathematics|statistics)$/i.test(String(item.category||'')));
-    if (!group) group = groups.find(candidate => candidate.id !== 'math-statistics' && candidate.id !== 'savings-investments' && candidate.id !== 'loans-credit' && candidate.id !== 'business-operations' && candidate.id !== 'health-family' && candidate.id !== 'home-travel' && candidate.id !== 'converters-technology' && candidate.id !== 'geometry-construction' && candidate.id !== 'tax-payroll' && candidate.id !== 'biology-chemistry' && candidate.id !== 'date-time-work' && candidate.id !== 'energy-sustainability' && candidate.id !== 'food-cooking' && candidate.id !== 'education-learning' && candidate.id !== 'career-salary' && candidate.id !== 'government-schemes' && candidate.id !== 'agriculture-rural' && candidate.id !== 'insurance-protection' && candidate.id !== 'astronomy-space' && candidate.id !== 'astrology-numerology' && candidate.pattern?.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'loans-credit' && /(loan|emi|mortgage|credit|debt)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'tax-payroll' && /(tax|gst|vat|tds|payroll|salary|paycheck|hra|ctc|gratuity)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'business-operations' && /(business|sales|marketing|operations|profit|revenue|inventory)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'savings-investments' && /(saving|investment|retirement|deposit|interest|wealth|sip|mutual fund|pension)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'health-family' && /(health|fitness|bmi|body|medical|family|sleep|sport|exercise|pet)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'home-travel' && /(home|travel|car|vehicle|fuel|trip|moving|rent|household|garden|pool)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'converters-technology' && /(converter|conversion|technology|data|digital|bandwidth|storage|network|computer)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'geometry-construction' && /(geometry|triangle|construction|measurement|area|volume|length|perimeter|roof|concrete|tile)/i.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.pattern.test(haystack));
-    if (!group) group = groups.find(candidate => candidate.id === 'math-statistics');
+    const group = groups.find(candidate => candidate.pattern.test(haystack)) ||
+      groups.find(candidate => candidate.id === 'math-statistics');
     group.items.push(item);
   }
   for (const group of groups) group.items.sort((a,b) => String(a.name).localeCompare(String(b.name),'en'));
