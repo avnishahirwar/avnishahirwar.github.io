@@ -240,6 +240,9 @@ test('shared Header follows the same navigation and regional-control order on ev
   assert.ok(!header.includes('+currencyControl+'));
   assert.match(shell,/fc-all-calculators-link/);
   assert.ok(!shell.includes('fc-all-dropdown'));
+  const shellCss=fs.readFileSync(path.join(root,'assets/site-shell.css'),'utf8');
+  assert.ok(shellCss.includes('.fc-more-menu a.fc-login-link{'),'API Dashboard menu link must use the card treatment');
+  assert.ok(shellCss.includes('.fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{'),'API Dashboard menu link must expose hover and keyboard-focus states');
   assert.ok(shell.includes('if(headerIsReady){existingHeader.replaceWith(h);'));
   assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'));
   assert.ok(shell.includes('regionalSettingsControls.appendChild(countryFormatLabel)'));
