@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 22
       - name: Check public page metadata
-        run: node scripts/repair-public-social-metadata.cjs --write && node scripts/repair-public-social-metadata.cjs --check
+        run: node scripts/add-hreflang-reciprocals.cjs --write && node scripts/add-hreflang-reciprocals.cjs && node scripts/repair-public-social-metadata.cjs --write && node scripts/repair-public-social-metadata.cjs --check
       - name: Run SEO publication tests
         run: node --test tests/public-seo-quality.test.cjs
       - name: Commit additive public metadata repairs on main
