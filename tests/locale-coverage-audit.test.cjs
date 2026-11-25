@@ -77,3 +77,21 @@ test('canonical language catalogue defines 50 unique available locales and corre
     assert.equal(locales.find(locale => locale.code === code).direction, 'rtl');
   }
 });
+
+
+test('audit flags English fallback title and description separately from route coverage', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-locales-'));
+  try {
+    write(root, 'index.html', '<html lang="en"><head><title>Homepage</title><meta name="description" content="Homepage"><link rel="canonical" href="https://friendlycalculator.in/"></head></html>');
+    write(root, 'fr/index.html', '<html lang="fr"><head><title>Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax</title><meta name="description" content="Free calculators for loan EMI, GST, income tax, salary, savings and everyday maths. India-focused tools and selected international calculators."><link rel="canonical" href="https://friendlycalculator.in/fr/"></head></html>');
+    write(root, 'hi/index.html', '<html lang="hi"><head><title>हिंदी कैलकुलेटर</title><meta name="description" content="हिंदी में उपयोगी ऑनलाइन कैलकुलेटर।"><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>');
+    const report = auditLocaleCoverage(root, ['fr', 'hi']);
+    assert.equal(report.locales.fr.englishFallbackTitleCount, 1);
+    assert.equal(report.locales.fr.englishFallbackDescriptionCount, 1);
+    assert.equal(report.locales.fr.englishFallbackMetadataCount, 1);
+    assert.equal(report.locales.hi.englishFallbackMetadataCount, 0);
+    assert.match(renderMarkdown(report), /English fallback metadata/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
