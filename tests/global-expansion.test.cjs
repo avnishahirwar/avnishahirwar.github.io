@@ -220,14 +220,9 @@ test('expanded More navigation renders every secondary link as a full-width menu
   assert.match(serviceWorker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
 });
 
-test('shared Footer includes the eight requested category links on every public page shell', () => {
+test('shared Footer omits category links already available in the header', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  const css = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  const start = shell.indexOf('<nav class="fc-footer-category-links"');
-  const end = shell.indexOf('</nav>', start);
-  assert.ok(start >= 0 && end > start, 'A dedicated calculator-category Footer navigation must exist.');
-  const categoryNav = shell.slice(start, end);
-  const expected = [
+  const categoryLinks = [
     ['Home', '/'],
     ['Business', '/calculator/business-calculators.html'],
     ['Finance', '/calculator/finance-calculators.html'],
@@ -237,16 +232,11 @@ test('shared Footer includes the eight requested category links on every public 
     ['Everyday', '/calculator/everyday-calculators.html'],
     ['Blog', '/blog/']
   ];
-  for (const [label, href] of expected) {
-    assert.ok(categoryNav.includes('href="' + href + '">' + label + '</a>'), 'Missing Footer category link: ' + label);
+  assert.ok(shell.includes('fc-global-links'), 'Primary header navigation must remain available.');
+  assert.ok(shell.includes("const footerCategoryHrefs=new Set("), 'Footer must explicitly filter header-only category destinations.');
+  for (const [label, href] of categoryLinks) {
+    assert.ok(shell.includes("['" + label + "','" + href + "']") || shell.includes("'" + href + "'"), 'Header/category destination must remain configured: ' + label);
   }
-  assert.equal((categoryNav.match(/<a href=/g) || []).length, 8, 'Footer category navigation must contain exactly eight links.');
-  assert.ok(shell.includes('aria-label="Calculator categories"'), 'Category navigation must have an accessible name.');
-  assert.ok(shell.includes('markCurrentNavigation(f.querySelector(\'.fc-footer-category-links\'))'), 'Current category page should be identified in Footer navigation.');
-  assert.ok(css.includes('.fc-footer-category-links{') && css.includes('.fc-footer-category-links a{'), 'Category links need dedicated styling.');
-  assert.ok(css.includes('.fc-footer-category-links{justify-content:flex-start;gap:6px 14px}'), 'Category links must wrap on mobile.');
-  for (const route of expected.slice(1, 7).map(([, href]) => href).concat(['/blog/'])) {
-    const file = route === '/blog/' ? 'blog/index.html' : route.replace(/^\//, '');
-    assert.ok(fs.existsSync(path.join(root, file)), 'Footer category destination must exist: ' + route);
-  }
+  assert.ok(!shell.includes('<nav class="fc-footer-category-links"'), 'The duplicate category Footer navigation must not be rendered.');
+  assert.ok(!shell.includes("['Home','/']") && !shell.includes("['Blog','/blog/']"), 'Home and Blog must not be added to required Footer links.');
 });
