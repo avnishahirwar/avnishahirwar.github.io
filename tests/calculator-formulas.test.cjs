@@ -773,7 +773,7 @@ test('Hindi Income Tax uses its reviewed localized model while other translated 
 
 test('the ten priority Hindi calculators expose canonical URLs, indexable language alternates, schemas, formula notes and visual results', () => {
   const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
-  const candidates = require('../config/language-catalogue.json').locales.map(locale => locale.code);
+  const candidates = ['en','hi','es','fr','pt','ar','id','bn','ta'];
   const isNoindex = html => /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html.slice(0, html.toLowerCase().indexOf('</head>')));
   const sortPairs = pairs => pairs.slice().sort(([a],[b]) => a.localeCompare(b));
   for (const slug of slugs) {
