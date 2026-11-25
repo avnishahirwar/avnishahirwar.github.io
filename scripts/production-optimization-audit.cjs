@@ -13,7 +13,8 @@ function walk(dir, rel = '') {
     if (item.isDirectory()) {
       if (!SKIP.has(item.name)) out.push(...walk(path.join(dir, item.name), path.join(rel, item.name)));
     } else if (item.isFile() && item.name.toLowerCase().endsWith('.html') && !/^google[0-9a-f]+\.html$/i.test(item.name)) {
-      out.push(path.join(rel, item.name).split(path.sep).join('/'));
+      const source = fs.readFileSync(path.join(dir, item.name), 'utf8');
+      if (/<html\b/i.test(source) && /<head\b/i.test(source)) out.push(path.join(rel, item.name).split(path.sep).join('/'));
     }
   }
   return out;
@@ -49,6 +50,7 @@ function auditHtmlDocument(file, html) {
   if (privatePage) return { title, description, canonical, canonicalSelf: false, lang, noindex: true, findings };
   let canonicalSelf = false;
   let canonicalPath = '';
+  if (!noindex) {
   if (!title) add('error', 'missing-title', 'Missing title element.');
   else if (title.length < 30 || title.length > 60) add('warning', 'title-length', 'Title length: ' + title.length + ' characters.');
   if (!description) add('error', 'missing-description', 'Missing meta description.');
@@ -77,6 +79,7 @@ function auditHtmlDocument(file, html) {
       try { if (new URL(attr(x, 'href'), ORIGIN).origin !== ORIGIN) add('warning', 'external-hreflang', 'Alternate URL is outside canonical host.'); }
       catch { add('error', 'invalid-hreflang-url', 'Invalid hreflang URL.'); }
     }
+  }
   }
   for (const block of html.matchAll(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try { JSON.parse(block[1].trim()); } catch { add('error', 'invalid-json-ld', 'Invalid JSON-LD JSON.'); }
