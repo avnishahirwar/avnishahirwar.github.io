@@ -4898,5 +4898,306 @@
     "category": "Health",
     "keywords": "resistance band tension calculator",
     "description": "Free Resistance Band Tension with formula, worked example and instant in-browser results."
+  },
+  {
+    "name": "Loan Amount from EMI Calculator",
+    "url": "/calculators/loan-amount-from-emi-calculator.html",
+    "category": "Finance",
+    "keywords": "loan amount from emi calculator work out how large a loan you can afford from the monthly emi you can pay the interest rate and the tenure",
+    "description": "Work out how large a loan you can afford from the monthly EMI you can pay, the interest rate and the tenure."
+  },
+  {
+    "name": "Late Payment Interest Calculator",
+    "url": "/calculators/late-payment-interest-calculator.html",
+    "category": "Finance",
+    "keywords": "late payment interest calculator estimate simple interest charged on an overdue invoice or bill from the amount annual rate and days late",
+    "description": "Estimate simple interest charged on an overdue invoice or bill from the amount, annual rate and days late."
+  },
+  {
+    "name": "Forex Spread Cost Calculator",
+    "url": "/calculators/forex-spread-cost-calculator.html",
+    "category": "Finance",
+    "keywords": "forex spread cost calculator see the hidden cost of a currency conversion by comparing the mid market rate with a rate that includes the provider spread",
+    "description": "See the hidden cost of a currency conversion by comparing the mid-market rate with a rate that includes the provider spread."
+  },
+  {
+    "name": "Earnings Yield Calculator",
+    "url": "/calculators/earnings-yield-calculator.html",
+    "category": "Finance",
+    "keywords": "earnings yield calculator calculate a share earnings yield and the matching price to earnings ratio from earnings per share and market price",
+    "description": "Calculate a share earnings yield and the matching price-to-earnings ratio from earnings per share and market price."
+  },
+  {
+    "name": "Savings Rate Calculator",
+    "url": "/calculators/savings-rate-calculator.html",
+    "category": "Finance",
+    "keywords": "savings rate calculator find the share of your income you save each month and how much that adds up to over a year",
+    "description": "Find the share of your income you save each month and how much that adds up to over a year."
+  },
+  {
+    "name": "Gordon Growth Model Calculator",
+    "url": "/calculators/gordon-growth-model-calculator.html",
+    "category": "Finance",
+    "keywords": "gordon growth model calculator estimate the intrinsic value of a dividend paying share from next year s dividend required return and growth rate",
+    "description": "Estimate the intrinsic value of a dividend-paying share from next year’s dividend, required return and growth rate."
+  },
+  {
+    "name": "Annuity Due Future Value Calculator",
+    "url": "/calculators/annuity-due-future-value-calculator.html",
+    "category": "Finance",
+    "keywords": "annuity due future value calculator compare the future value of regular deposits made at the start of each month with deposits made at month end",
+    "description": "Compare the future value of regular deposits made at the start of each month with deposits made at month end."
+  },
+  {
+    "name": "Price-to-Rent Ratio Calculator",
+    "url": "/calculators/price-to-rent-ratio-calculator.html",
+    "category": "Finance",
+    "keywords": "price to rent ratio calculator compare the price of a home with a year of comparable rent to judge whether buying or renting looks more expensive",
+    "description": "Compare the price of a home with a year of comparable rent to judge whether buying or renting looks more expensive."
+  },
+  {
+    "name": "Pro-Rata Salary Calculator",
+    "url": "/calculators/pro-rata-salary-calculator.html",
+    "category": "Finance",
+    "keywords": "pro rata salary calculator calculate pay for a part month from the monthly salary days worked and the number of days in the pay period",
+    "description": "Calculate pay for a part month from the monthly salary, days worked and the number of days in the pay period."
+  },
+  {
+    "name": "Stock Average Down Calculator",
+    "url": "/calculators/stock-average-down-calculator.html",
+    "category": "Finance",
+    "keywords": "stock average down calculator find your new average cost per share after a second purchase and the price needed to get back to break even",
+    "description": "Find your new average cost per share after a second purchase and the price needed to get back to break-even."
+  },
+  {
+    "name": "Stock Break-Even Price After Fees Calculator",
+    "url": "/calculators/stock-break-even-price-after-fees-calculator.html",
+    "category": "Finance",
+    "keywords": "stock break even price after fees calculator calculate the selling price needed to recover your purchase cost after buy and sell charges",
+    "description": "Calculate the selling price needed to recover your purchase cost after buy and sell charges."
+  },
+  {
+    "name": "Time to Reach Savings Goal Calculator",
+    "url": "/calculators/time-to-reach-savings-goal-calculator.html",
+    "category": "Finance",
+    "keywords": "time to reach savings goal calculator estimate how many months it takes to reach a savings target from a starting balance monthly deposits and an assumed return",
+    "description": "Estimate how many months it takes to reach a savings target from a starting balance, monthly deposits and an assumed return."
+  },
+  {
+    "name": "Inflation-Adjusted Salary Calculator",
+    "url": "/calculators/inflation-adjusted-salary-calculator.html",
+    "category": "Finance",
+    "keywords": "inflation adjusted salary calculator see what salary you would need in future to keep the same purchasing power as your salary today",
+    "description": "See what salary you would need in future to keep the same purchasing power as your salary today."
+  },
+  {
+    "name": "Purchasing Power of Money Calculator",
+    "url": "/calculators/purchasing-power-of-money-calculator.html",
+    "category": "Finance",
+    "keywords": "purchasing power of money calculator estimate what a sum of money will be worth in today s terms after years of inflation",
+    "description": "Estimate what a sum of money will be worth in today’s terms after years of inflation."
+  },
+  {
+    "name": "Declining Balance Depreciation Calculator",
+    "url": "/calculators/declining-balance-depreciation-calculator.html",
+    "category": "Finance",
+    "keywords": "declining balance depreciation calculator calculate depreciation and book value for a chosen year using the double declining balance method",
+    "description": "Calculate depreciation and book value for a chosen year using the double-declining balance method."
+  },
+  {
+    "name": "Units of Production Depreciation Calculator",
+    "url": "/calculators/units-of-production-depreciation-calculator.html",
+    "category": "Finance",
+    "keywords": "units of production depreciation calculator calculate depreciation per unit and for the period for machinery whose wear depends on output rather than time",
+    "description": "Calculate depreciation per unit and for the period for machinery whose wear depends on output rather than time."
+  },
+  {
+    "name": "BMI Prime Calculator",
+    "url": "/calculators/bmi-prime-calculator.html",
+    "category": "Health",
+    "keywords": "bmi prime calculator calculate bmi and bmi prime the ratio of your bmi to the upper limit of the commonly used healthy range",
+    "description": "Calculate BMI and BMI Prime, the ratio of your BMI to the upper limit of the commonly used healthy range."
+  },
+  {
+    "name": "Lean Body Mass from Body Fat Calculator",
+    "url": "/calculators/lean-body-mass-from-body-fat-calculator.html",
+    "category": "Health",
+    "keywords": "lean body mass from body fat calculator split body weight into fat mass and lean mass using a measured or estimated body fat percentage",
+    "description": "Split body weight into fat mass and lean mass using a measured or estimated body fat percentage."
+  },
+  {
+    "name": "Fiber Intake from Calories Calculator",
+    "url": "/calculators/fiber-intake-from-calories-calculator.html",
+    "category": "Health",
+    "keywords": "fiber intake from calories calculator estimate a daily dietary fiber target from your calorie intake using the common 14 g per 1 000 kcal guideline",
+    "description": "Estimate a daily dietary fiber target from your calorie intake using the common 14 g per 1,000 kcal guideline."
+  },
+  {
+    "name": "Katch-McArdle BMR Calculator",
+    "url": "/calculators/katch-mcardle-bmr-calculator.html",
+    "category": "Health",
+    "keywords": "katch mcardle bmr calculator estimate basal metabolic rate and daily calorie needs from lean body mass using the katch mcardle formula",
+    "description": "Estimate basal metabolic rate and daily calorie needs from lean body mass using the Katch-McArdle formula."
+  },
+  {
+    "name": "Ideal Body Weight (Devine) Calculator",
+    "url": "/calculators/ideal-body-weight-devine-calculator.html",
+    "category": "Health",
+    "keywords": "ideal body weight devine calculator estimate ideal body weight with the devine formula from height using a base of 50 kg for men or 45 5 kg for women",
+    "description": "Estimate ideal body weight with the Devine formula from height, using a base of 50 kg for men or 45.5 kg for women."
+  },
+  {
+    "name": "Centripetal Force Calculator",
+    "url": "/calculators/centripetal-force-calculator.html",
+    "category": "Physics",
+    "keywords": "centripetal force calculator calculate the force acceleration and g force needed to keep an object moving in a circle",
+    "description": "Calculate the force, acceleration and g-force needed to keep an object moving in a circle."
+  },
+  {
+    "name": "Coulomb’s Law Force Calculator",
+    "url": "/calculators/coulombs-law-force-calculator.html",
+    "category": "Physics",
+    "keywords": "coulomb s law force calculator calculate the electrostatic force between two point charges from their charges and separation distance",
+    "description": "Calculate the electrostatic force between two point charges from their charges and separation distance."
+  },
+  {
+    "name": "RC Time Constant Calculator",
+    "url": "/calculators/rc-time-constant-calculator.html",
+    "category": "Physics",
+    "keywords": "rc time constant calculator calculate the time constant settling time and cut off frequency of a resistor capacitor circuit",
+    "description": "Calculate the time constant, settling time and cut-off frequency of a resistor-capacitor circuit."
+  },
+  {
+    "name": "LC Resonant Frequency Calculator",
+    "url": "/calculators/lc-resonant-frequency-calculator.html",
+    "category": "Physics",
+    "keywords": "lc resonant frequency calculator calculate the resonant frequency of an inductor capacitor circuit from inductance and capacitance",
+    "description": "Calculate the resonant frequency of an inductor-capacitor circuit from inductance and capacitance."
+  },
+  {
+    "name": "Sound Level and Decibel Difference Calculator",
+    "url": "/calculators/sound-level-decibel-difference-calculator.html",
+    "category": "Physics",
+    "keywords": "sound level and decibel difference calculator convert two sound intensities to decibel levels and find the difference between them",
+    "description": "Convert two sound intensities to decibel levels and find the difference between them."
+  },
+  {
+    "name": "Snell’s Law Refraction Calculator",
+    "url": "/calculators/snells-law-refraction-calculator.html",
+    "category": "Physics",
+    "keywords": "snell s law refraction calculator find the angle of refraction when light passes between two media with different refractive indices",
+    "description": "Find the angle of refraction when light passes between two media with different refractive indices."
+  },
+  {
+    "name": "Thin Lens Equation Calculator",
+    "url": "/calculators/thin-lens-equation-calculator.html",
+    "category": "Physics",
+    "keywords": "thin lens equation calculator calculate the image distance and magnification of a converging lens from object distance and focal length",
+    "description": "Calculate the image distance and magnification of a converging lens from object distance and focal length."
+  },
+  {
+    "name": "Wind Turbine Power Output Calculator",
+    "url": "/calculators/wind-turbine-power-output-calculator.html",
+    "category": "Physics",
+    "keywords": "wind turbine power output calculator estimate the power available from wind using rotor diameter wind speed air density and an efficiency coefficient",
+    "description": "Estimate the power available from wind using rotor diameter, wind speed, air density and an efficiency coefficient."
+  },
+  {
+    "name": "LED Resistor Calculator",
+    "url": "/calculators/led-resistor-calculator.html",
+    "category": "Physics",
+    "keywords": "led resistor calculator choose a current limiting resistor for an led from the supply voltage led forward voltage and desired current",
+    "description": "Choose a current-limiting resistor for an LED from the supply voltage, LED forward voltage and desired current."
+  },
+  {
+    "name": "Battery Life Calculator",
+    "url": "/calculators/battery-life-calculator.html",
+    "category": "Physics",
+    "keywords": "battery life calculator estimate how long a battery will run a load from its capacity the load current and an efficiency factor",
+    "description": "Estimate how long a battery will run a load from its capacity, the load current and an efficiency factor."
+  },
+  {
+    "name": "Arithmetic Series Sum Calculator",
+    "url": "/calculators/arithmetic-series-sum-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "arithmetic series sum calculator find the nth term and the sum of an arithmetic series from the first term common difference and number of terms",
+    "description": "Find the nth term and the sum of an arithmetic series from the first term, common difference and number of terms."
+  },
+  {
+    "name": "Geometric Series Sum Calculator",
+    "url": "/calculators/geometric-series-sum-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "geometric series sum calculator find the nth term and the sum of a geometric series from the first term common ratio and number of terms",
+    "description": "Find the nth term and the sum of a geometric series from the first term, common ratio and number of terms."
+  },
+  {
+    "name": "Percentage Error Calculator",
+    "url": "/calculators/percentage-error-calculator.html",
+    "category": "Mathematics, Numbers & Statistics",
+    "keywords": "percentage error calculator compare a measured value with the true value to find absolute error and percentage error",
+    "description": "Compare a measured value with the true value to find absolute error and percentage error."
+  },
+  {
+    "name": "Pipe Flow Rate Calculator",
+    "url": "/calculators/pipe-flow-rate-calculator.html",
+    "category": "Physics",
+    "keywords": "pipe flow rate calculator calculate volume flow rate from pipe inner diameter and flow velocity",
+    "description": "Calculate volume flow rate from pipe inner diameter and flow velocity."
+  },
+  {
+    "name": "Simply Supported Beam with UDL Calculator",
+    "url": "/calculators/simply-supported-beam-udl-calculator.html",
+    "category": "Physics",
+    "keywords": "simply supported beam with udl calculator calculate maximum bending moment support reactions and midspan deflection for a simply supported beam under a uniform load",
+    "description": "Calculate maximum bending moment, support reactions and midspan deflection for a simply supported beam under a uniform load."
+  },
+  {
+    "name": "Specific Heat Energy Calculator",
+    "url": "/calculators/specific-heat-energy-calculator.html",
+    "category": "Physics",
+    "keywords": "specific heat energy calculator calculate the heat energy needed to change the temperature of a mass using its specific heat capacity",
+    "description": "Calculate the heat energy needed to change the temperature of a mass using its specific heat capacity."
+  },
+  {
+    "name": "Wire Resistance Calculator",
+    "url": "/calculators/wire-resistance-calculator.html",
+    "category": "Physics",
+    "keywords": "wire resistance calculator calculate wire resistance and voltage drop from material resistivity length cross sectional area and current",
+    "description": "Calculate wire resistance and voltage drop from material resistivity, length, cross-sectional area and current."
+  },
+  {
+    "name": "Gear Ratio and Output Speed Calculator",
+    "url": "/calculators/gear-ratio-output-speed-calculator.html",
+    "category": "Physics",
+    "keywords": "gear ratio and output speed calculator find the gear ratio output speed and ideal torque multiplier of a simple two gear drive",
+    "description": "Find the gear ratio, output speed and ideal torque multiplier of a simple two-gear drive."
+  },
+  {
+    "name": "Days Sales Outstanding Calculator",
+    "url": "/calculators/days-sales-outstanding-calculator.html",
+    "category": "Business",
+    "keywords": "days sales outstanding calculator measure how many days it takes on average to collect payment from credit sales",
+    "description": "Measure how many days it takes on average to collect payment from credit sales."
+  },
+  {
+    "name": "Seed Rate Calculator",
+    "url": "/calculators/seed-rate-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "seed rate calculator calculate the seed quantity needed for a field from area target plant population seed count per kilogram and germination rate",
+    "description": "Calculate the seed quantity needed for a field from area, target plant population, seed count per kilogram and germination rate."
+  },
+  {
+    "name": "Crop Yield per Hectare Calculator",
+    "url": "/calculators/crop-yield-per-hectare-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "crop yield per hectare calculator convert total harvested weight and field area into yield per hectare in kilograms quintals and tonnes",
+    "description": "Convert total harvested weight and field area into yield per hectare in kilograms, quintals and tonnes."
+  },
+  {
+    "name": "Livestock Stocking Rate Calculator",
+    "url": "/calculators/livestock-stocking-rate-calculator.html",
+    "category": "Agriculture & Rural Finance",
+    "keywords": "livestock stocking rate calculator calculate animals per hectare and the grazing area available to each animal",
+    "description": "Calculate animals per hectare and the grazing area available to each animal."
   }
 ]
