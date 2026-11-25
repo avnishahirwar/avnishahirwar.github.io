@@ -185,11 +185,11 @@ test('shared footer has identical responsive sizing rules across all public page
 
 test('regional defaults follow the visitor browser region and preserve explicit saved choices', () => {
   const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
-  assert.ok(locale.includes("navigator.languages?.[0]||navigator.language"), 'Browser locale must be used for first-visit regional defaults.');
+  assert.ok(locale.includes('const browserLocales=') && locale.includes('navigator.languages.length?navigator.languages:[navigator.language||\'\']'), 'Browser locale preference list and navigator.language fallback must drive first-visit regional defaults.');
   assert.ok(locale.includes("read(COUNTRY_KEY,detectedCountry"), 'A saved country must override the detected browser country.');
   assert.ok(locale.includes("read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency"), 'Currency must default from the selected or detected country.');
   assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
-  assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
+  assert.ok(locale.includes("imperialRegions=new Set(['US','LR','MM'])") && locale.includes('imperialRegions.has(browserRegion)'), 'Customary units must default for US, Liberia and Myanmar while preserving saved preferences.');
 });
 
 
