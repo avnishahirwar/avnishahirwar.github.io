@@ -256,6 +256,27 @@ test('language selector is synchronized with the canonical 50-language catalogue
 });
 
 
+test('all 50 configured locales have shared navigation and footer dictionaries', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const objectBody = key => {
+    const start = shell.indexOf(key);
+    assert.notEqual(start, -1, 'Missing ' + key);
+    const bodyStart = start + key.length;
+    const end = shell.indexOf('};', bodyStart);
+    assert.notEqual(end, -1, 'Unclosed ' + key);
+    return shell.slice(bodyStart, end);
+  };
+  const keySet = (key, pattern) => [...objectBody(key).matchAll(pattern)].map(match => match[1]);
+  for (const locale of catalogue.locales) {
+    const code = locale.code;
+    assert.ok(keySet('const chrome={', /(?:^|\\n)([a-z]{2,3}):\\{/g).includes(code), 'Missing shared navigation dictionary for ' + code);
+    assert.ok(keySet('const footerLabels={', /(?:^|\\n|,)([a-z]{2,3}):\\[/g).includes(code), 'Missing footer dictionary for ' + code);
+    assert.ok(keySet('const menuText={', /(?:^|,)([a-z]{2,3}):/g).includes(code), 'Missing mobile menu label for ' + code);
+    assert.ok(keySet('const closeText={', /(?:^|,)([a-z]{2,3}):/g).includes(code), 'Missing mobile close label for ' + code);
+    assert.ok(keySet('const shellSkipLabels={', /(?:^|,)([a-z]{2,3}):/g).includes(code), 'Missing skip-link label for ' + code);
+  }
+});
+ 
 test('configured language editions have complete shared navigation and footer dictionaries', () => {
   const match = shell.match(/const chrome=\{([\s\S]*?)\n\};/);
   assert.ok(match, 'Expected shared chrome dictionaries');
