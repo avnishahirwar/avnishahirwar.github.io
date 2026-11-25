@@ -111,6 +111,12 @@ test('SWP and loan eligibility', () => {
 });
 
 
+test('currency loading state has an explicit CSS rule that overrides the calculator grid display', () => {
+  const styles = fs.readFileSync(path.join(root, 'assets/home-top20.css'), 'utf8');
+  assert.match(styles, /\.top20-form\[hidden\][^{]*\{\s*display:\s*none\s*!important\s*\}/);
+  assert.match(styles, /\.top20-result\[hidden\][^{]*\{\s*display:\s*none\s*!important\s*\}/);
+});
+
 test('currency loading state applies to every newly rendered calculator and skips empty monetary inputs', () => {
   const source = fs.readFileSync(path.join(root, 'assets/home-top20.js'), 'utf8');
   assert.match(source, /form\.hidden = currencyLoading/);
@@ -137,6 +143,10 @@ test('currency display converts INR-based homepage calculator amounts without ch
   assert.equal(T.formatCurrencyText('Loan amount (₹)'), 'Loan amount ($)');
   assert.equal(T.formatCurrencyText('Yearly deposit (₹, max 1,50,000)'), 'Yearly deposit ($, max $1,800)');
   assert.equal(T.formatCurrencyText('max 1,50,000'), 'max $1,800');
+  const ppf = T.CALCS.find(function (calculator) { return calculator.id === 'ppf'; });
+  const ppfResult = ppf.calc({dep: 150000.00000000003, rate: 7.1, years: 15});
+  assert.equal(ppfResult.error, undefined, 'a valid maximum PPF deposit must survive currency round-trip precision');
+  assert.equal(ppfResult.rows[1][1], '$27,000', 'PPF total deposits should use the normalized INR boundary value');
   close(Number(sip.rows[0][1].replace(/[$,]/g, '')), T.sipFV(10000, 12, 10) * 0.012, 0.02);
   assert.equal(T.configureDisplayCurrency('INR', 1, 'en-IN'), true);
   assert.match(byId('sip').calc({m: 10000, rate: 12, years: 10}).rows[0][1], /^₹/);
