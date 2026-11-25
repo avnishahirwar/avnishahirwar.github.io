@@ -61,10 +61,7 @@ try {
     nav.className='fc-global-footer-links';
     nav.setAttribute('aria-label','Footer navigation');
     const requiredLinks=[
-      ['Home','/'],['Business','/calculator/business-calculators.html'],['Finance','/calculator/finance-calculators.html'],
-      ['Tax','/calculator/tax.html'],['Industry','/calculator/industry-calculators.html'],
-      ['Manufacturing','/calculator/manufacturing-calculators.html'],['Everyday','/calculator/everyday-calculators.html'],
-      ['All Calculators','/calculator/site-directory.html'],['Blog','/blog/'],['About','/calculator/about.html'],
+      ['All Calculators','/calculator/site-directory.html'],['About','/calculator/about.html'],
       ['Methodology','/calculator/methodology.html'],['Privacy','/calculator/privacy.html'],['Cookie Policy','/calculator/cookies.html'],
       ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['DMCA / Copyright','/dmca.html'],
       ['Legal & Compliance','/calculator/legal-compliance.html'],['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
