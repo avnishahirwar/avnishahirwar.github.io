@@ -271,27 +271,21 @@ test('all 50 configured locales have shared navigation, footer and accessible me
   const menuBody = objectBody('const menuText={');
   const closeBody = objectBody('const closeText={');
   const skipBody = objectBody('const shellSkipLabels={');
-  const keys = (body, pattern) => [...body.matchAll(pattern)].map(match => match[1]);
-  const chromeCodes = keys(chromeBody, /(?:^|\\n)([a-z]{2,3}):\\{/g);
-  const footerCodes = keys(footerBody, /^\\s*([a-z]{2,3}):\\[/gm);
-  const menuCodes = keys(menuBody, /(?:^|,)([a-z]{2,3}):/g);
-  const closeCodes = keys(closeBody, /(?:^|,)([a-z]{2,3}):/g);
-  const skipCodes = keys(skipBody, /(?:^|,)([a-z]{2,3}):/g);
+  const hasInline = (body, code) => new RegExp('(?:^|,)' + code + ':').test(body);
   for (const locale of catalogue.locales) {
     const code = locale.code;
-    assert.ok(chromeCodes.includes(code), 'Missing shared navigation dictionary for ' + code);
-    assert.ok(footerCodes.includes(code), 'Missing footer dictionary for ' + code);
-    assert.ok(menuCodes.includes(code), 'Missing mobile menu label for ' + code);
-    assert.ok(closeCodes.includes(code), 'Missing mobile close label for ' + code);
-    assert.ok(skipCodes.includes(code), 'Missing skip-link label for ' + code);
-    const line = chromeBody.split('\\n').find(value => value.startsWith(code + ':{'));
-    assert.ok(line, 'Missing chrome translation line for ' + code);
+    const chromeLine = chromeBody.split('\n').find(line => line.trimStart().startsWith(code + ':{'));
+    const footerLine = footerBody.split('\n').find(line => line.trimStart().startsWith(code + ':['));
+    assert.ok(chromeLine, 'Missing shared navigation dictionary for ' + code);
+    assert.ok(footerLine, 'Missing footer dictionary for ' + code);
+    assert.ok(hasInline(menuBody, code), 'Missing mobile menu label for ' + code);
+    assert.ok(hasInline(closeBody, code), 'Missing mobile close label for ' + code);
+    assert.ok(hasInline(skipBody, code), 'Missing skip-link label for ' + code);
     for (const key of ['home','login','all','search','finance','tax','business','global','everyday','blog','embed','forBusiness','api','plans','about','contact','admin','language','choose','change','footer']) {
-      assert.ok(line.includes(key + ':'), 'Missing ' + key + ' translation for ' + code);
+      assert.ok(chromeLine.includes(key + ':'), 'Missing ' + key + ' translation for ' + code);
     }
-    const footerLine = footerBody.split('\\n').find(value => value.trim().startsWith(code + ':['));
-    assert.ok(footerLine, 'Missing footer translation line for ' + code);
-    assert.equal((footerLine.match(/'/g) || []).length / 2, 10, 'Footer must keep ten destinations aligned for ' + code);
+    const footerValues = footerLine.slice(footerLine.indexOf('[') + 1, footerLine.lastIndexOf(']'));
+    assert.equal(footerValues.split(',').length, 10, 'Footer must keep ten destinations aligned for ' + code);
   }
 });
 
