@@ -67,3 +67,47 @@ The audit runner checks title/description presence and length, canonical host/pa
 - GitHub Pages does not apply Cloudflare Pages _headers / _redirects semantics automatically.
 - Open PRs #831 and #833 must be reconciled before overlapping fixes are proposed.
 - No DNS, billing, payment, database, authentication, analytics IDs, secrets, domain, SEO calendar, Header/Footer, or repository permissions are changed by this audit harness.
+
+
+## Execution checkpoint — 25 November 2026, 18:05 UTC
+
+Latest branch head at this checkpoint: `adee5efc0b647cb3b7450b709e514e8b1f5c4182` (16 commits, 9 changed files; PR #834 remains draft/open/unmerged).
+
+### Changes added after the baseline
+- Ported the verified global-expansion regression syntax correction, shared brand-link accessible name correction, and Hindi homepage hero loading improvement.
+- Updated `scripts/build-site-directory.cjs` to emit crawlable primary navigation with Home, All Calculators, Finance, Tax, Business Tools, Everyday and International Calculators.
+- Regenerated the committed `calculator/site-directory.html` output to match the generator. The generated-directory workflow now passes.
+- Removed the redundant Home link from the directory's own footer while retaining About, Privacy, Terms and Contact.
+- No existing calculator content, SEO calendar, shared Header/Footer implementation, production configuration, or repository permissions were deleted or changed.
+
+### Exact-head CI results — commit `adee5efc0b647cb3b7450b709e514e8b1f5c4182`
+Passed:
+- Production optimization static audit.
+- Public SEO metadata quality.
+- Locale coverage audit.
+- Search-index additions validation.
+- Calculator site-directory generation and freshness check.
+- Cross-browser compatibility smoke tests.
+- XML sitemap validation/generation.
+- Lighthouse mobile lab audit.
+
+Failed:
+- Site health: 20 assertions in the repository-wide integrity suite. These include outdated catalogue/category-directory assumptions, homepage category totals (3,130 displayed versus 3,969 canonical sitemap calculator URLs), missing directory quick links/brand illustration, and several discovery/resource-hub assertions. These are not safely resolved by changing test expectations; source/catalogue alignment is required.
+- Calculator regression: 6 assertions remain — the ten priority Hindi calculators' metadata/schema checks and four hreflang cluster/reciprocity checks. The additive hreflang diagnostic still reports 101 safe reciprocal additions and the full audit reports 179 defects.
+
+### Lighthouse mobile lab results (PR preview; artifact run 45619149177)
+| Page | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Homepage | 90 | 100 | 96 | 69 | 1.4 s | 0.204 | 0 ms |
+| Directory | 92 | 95 | 96 | 69 | 2.4 s | 0.000 | 180 ms |
+| Hindi homepage | 95 | 100 | 96 | 69 | 2.2 s | 0.115 | 10 ms |
+| GST Calculator | 94 | 100 | 96 | 69 | 1.0 s | 0.155 | 60 ms |
+| Income Tax | 79 | 100 | 96 | 69 | 4.2 s | 0.154 | 130 ms |
+| International homepage | 98 | 100 | 96 | 69 | 1.9 s | 0.033 | 30 ms |
+| Legal Compliance | 96 | 100 | 96 | 69 | 2.3 s | 0.000 | 40 ms |
+| Mortgage Calculator | 95 | 100 | 96 | 69 | 1.0 s | 0.090 | 200 ms |
+
+These are Lighthouse lab measurements on a PR preview, not production field Core Web Vitals. TBT is not INP. The SEO score of 69 is associated with the preview's non-crawlable/noindex condition and must not be interpreted as the production domain's SEO score. Priority performance follow-ups are homepage CLS 0.204, GST CLS 0.155, Income Tax LCP 4.2 s, and Hindi homepage CLS 0.115.
+
+### Release decision
+PR #834 remains draft and unmerged. The two failed CI gates must be fixed and rerun before release. Production deployment, production browser verification, real response-header verification, Search Console indexing verification, live AdSense approval, and production field CWV remain unverified. The successful CI checks above are not a production deployment claim.
