@@ -111,6 +111,13 @@ test('SWP and loan eligibility', () => {
 });
 
 
+test('homepage widget reads an already-initialized locale preference, not only future locale events', () => {
+  const source = fs.readFileSync(path.join(root, 'assets/home-top20.js'), 'utf8');
+  const listeners = source.indexOf("window.addEventListener('fc:locale-ready', loadDisplayCurrency);");
+  const initialRead = source.indexOf('loadDisplayCurrency();', listeners);
+  assert.ok(listeners >= 0 && initialRead > listeners, 'the widget must read FCLocale after registering listeners because site-shell injects global-locale.js dynamically');
+});
+
 test('currency display converts INR-based homepage calculator amounts without changing formula inputs', () => {
   assert.deepEqual(T.getDisplayCurrency(), {currency: 'INR', rate: 1, locale: 'en-IN'});
   assert.equal(T.configureDisplayCurrency('USD', 0.012, 'en-US'), true);
