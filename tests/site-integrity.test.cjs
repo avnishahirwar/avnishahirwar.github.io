@@ -2299,3 +2299,17 @@ test('country and format setting explains that website language is independent',
   assert.ok(shell.includes('countryFormatSelect.setAttribute(\'aria-description\',countryFormatHelpText)'));
   assert.ok(shell.includes('fc-country-format-help'));
 });
+
+
+test('regional preferences can be reset to automatic and accessibility preferences are preserved', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shell, /Use automatic regional settings/);
+  for (const key of ['fc-language-preference','fc-preferred-country','fc-preferred-currency','fc-preferred-format-locale','fc-preferred-unit-system']) {
+    assert.ok(shell.includes(key), 'Auto reset must clear ' + key);
+  }
+  assert.doesNotMatch(shell, /localStorage\.removeItem\('fc-display-(?:size|contrast|motion)'\)/);
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(styles, /prefers-contrast:\s*more/);
+  assert.match(styles, /forced-colors:\s*active/);
+});
