@@ -785,7 +785,8 @@ test('the ten priority Hindi calculators expose canonical URLs, indexable langua
       const pageUrl = new URL(page, 'file://' + __filename);
       if (!fs.existsSync(pageUrl)) return false;
       const localeHtml = fs.readFileSync(pageUrl, 'utf8');
-      return !isNoindex(localeHtml);
+      const language = (localeHtml.match(/<html\\b[^>]*\\blang=[\"']([^\"']+)[\"']/i) || [])[1]?.toLowerCase();
+      return !isNoindex(localeHtml) && language === locale;
     });
     const expectedAlternates = [
       ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
