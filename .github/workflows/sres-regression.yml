@@ -1,0 +1,40 @@
+name: Smart Regional Experience regression tests
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/sres-regression.yml"
+      - "assets/global-locale.js"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "tests/site-integrity.test.cjs"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/sres-regression.yml"
+      - "assets/global-locale.js"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "tests/site-integrity.test.cjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regional-experience:
+    name: SRES behavior and SEO regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run focused SRES regression tests
+        run: >-
+          node --test
+          --test-name-pattern="mobile Language|country and format setting|regional preferences can be reset|automatic regional detection|Smart Regional Experience preserves SEO URLs"
+          tests/site-integrity.test.cjs

@@ -1475,6 +1475,11 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
       syncCountryFormat();
     });
     countryFormatLabel.append(countryFormatText,countryFormatSelect);
+    const countryFormatHelpText=currentLocale==='hi'
+      ?'यह देश/क्षेत्र के अनुसार संख्या और तारीख का प्रारूप बदलता है; वेबसाइट की भाषा अलग रहती है।'
+      :'Sets regional number and date formatting. Website language stays unchanged.';
+    countryFormatSelect.title=countryFormatHelpText;
+    countryFormatSelect.setAttribute('aria-description',countryFormatHelpText);
     countrySelect.tabIndex=-1;
     localeSelect.tabIndex=-1;
     const compatibilityControls=document.createElement('div');
@@ -1505,6 +1510,16 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     if(!sourceSelect||!mirrorSelect)return;
     mirrorSelect.removeAttribute('id');
     mirrorSelect.value=sourceSelect.value;
+    if(source.classList.contains('fc-country-format-control')){
+      const help=document.createElement('small');
+      help.className='fc-country-format-help';
+      help.textContent=(document.documentElement.lang||'en').toLowerCase().startsWith('hi')
+        ?'यह देश/क्षेत्र के अनुसार संख्या और तारीख का प्रारूप बदलता है; वेबसाइट की भाषा अलग रहती है।'
+        :'Sets regional number and date formatting. Website language stays unchanged.';
+      help.id='fc-country-format-help';
+      mirrorSelect.setAttribute('aria-describedby',help.id);
+      mirror.appendChild(help);
+    }
     const sync=()=>{mirrorSelect.value=sourceSelect.value;};
     sourceSelect.addEventListener('change',sync);
     window.addEventListener('fc:localechange',sync);
@@ -1525,6 +1540,18 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   if(countryFormatSelect.options.length)regionalSettingsControls.appendChild(countryFormatLabel);
   if(unitControl)regionalSettingsControls.appendChild(unitControl);
   panel.append(regionalSettingsControls);
+  const autoRegionalButton=document.createElement('button');
+  autoRegionalButton.type='button';
+  autoRegionalButton.className='fc-display-action fc-auto-regional-settings';
+  autoRegionalButton.textContent=(currentLocale==='hi'?'क्षेत्रीय सेटिंग्स Auto करें':'Use automatic regional settings');
+  autoRegionalButton.setAttribute('aria-label',autoRegionalButton.textContent);
+  autoRegionalButton.addEventListener('click',()=>{
+    try{
+      ['fc-language-preference','fc-preferred-country','fc-preferred-currency','fc-preferred-format-locale','fc-preferred-unit-system'].forEach(key=>localStorage.removeItem(key));
+    }catch(_){}
+    location.reload();
+  });
+  panel.append(autoRegionalButton);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
@@ -1538,10 +1565,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.body.appendChild(open);
   document.body.append(backdrop,panel);
   applyTheme(initialTheme);
-  document.documentElement.removeAttribute('data-fc-text-size');
-  document.documentElement.removeAttribute('data-fc-contrast');
-  document.documentElement.classList.remove('fc-reduce-motion');
-  try{localStorage.removeItem('fc-display-size');localStorage.removeItem('fc-display-contrast');localStorage.removeItem('fc-display-motion');}catch(_){}
+  // Do not erase accessibility preferences on page load. Browser/OS accessibility
+  // preferences are honored by CSS media queries; saved visitor choices remain intact.
 })();
 
 
@@ -1649,6 +1674,18 @@ if(isCalculatorRoute&&main){
   });
   if(!existingFavourite&&heading)heading.insertAdjacentElement('afterend',favouriteButton);
   refreshFavourite();
+}
+
+/* Load the regional preference engine after the shared shell has mounted its
+   hidden source selectors and promoted the visible controls into Settings.
+   This ordering lets FCLocale bind the actual controls on every page that
+   includes the shared shell, without requiring per-page script edits. */
+if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale]')){
+  const regionalEngine=document.createElement('script');
+  regionalEngine.src='/assets/global-locale.js';
+  regionalEngine.dataset.fcGlobalLocale='true';
+  regionalEngine.async=true;
+  document.head.appendChild(regionalEngine);
 }
 
 })();

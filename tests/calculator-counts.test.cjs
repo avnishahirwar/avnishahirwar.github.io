@@ -19,6 +19,7 @@ test('English and Hindi category totals match their actual unique calculator lin
     const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
     assert.ok(counts.size >= 20, `${relative} should expose its category sections`);
     assert.ok(total > 3000, `${relative} should cover a broad linked catalog`);
+    assert.match(html, /href="\/calculators\/trig-calculator\.html"[^>]*><strong>Trigonometry Calculator<\/strong>/, `${relative} must expose calculator titles as semantic link text`);
     for (const [id, count] of counts) {
       const sectionStart = html.indexOf(`id="${id}"`);
       const end = html.indexOf('</section>', sectionStart);
