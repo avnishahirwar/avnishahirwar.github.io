@@ -123,6 +123,8 @@ test('currency display converts INR-based homepage calculator amounts without ch
   assert.equal(T.configureDisplayCurrency('USD', 0.012, 'en-US'), true);
   const sip = byId('sip').calc({m: 10000, rate: 12, years: 10});
   assert.match(sip.rows[0][1], /^\$/);
+  assert.equal(T.formatCurrencyText('Monthly investment (₹)'), 'Monthly investment ($)');
+  assert.equal(T.formatCurrencyText('Investment limit ₹1,00,000'), 'Investment limit $1,200');
   close(Number(sip.rows[0][1].replace(/[$,]/g, '')), T.sipFV(10000, 12, 10) * 0.012, 0.02);
   assert.equal(T.configureDisplayCurrency('INR', 1, 'en-IN'), true);
   assert.match(byId('sip').calc({m: 10000, rate: 12, years: 10}).rows[0][1], /^₹/);
