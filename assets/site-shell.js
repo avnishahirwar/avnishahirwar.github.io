@@ -1,6 +1,8 @@
 (()=>{'use strict';
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
+const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
+const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\/$/,'/')||'/');
 try {
   const isPublicTopPage = new URLSearchParams(location.search).get('embed') !== '1' &&
     !/^\/(?:admin|avnish-ai\/admin)(?:\/|$)/i.test(location.pathname);
@@ -44,8 +46,7 @@ try {
       const label=(link.getAttribute('aria-label')||link.getAttribute('title')||link.textContent||'').trim().toLowerCase();
       return /(?:^|\/)(?:all-pages(?:-directory)?|site-directory|page-directory|directory)(?:\.html|\/|$)/.test(href)||/^(?:all pages(?: directory)?|all pages index|page directory|site directory|directory|verzeichnis|seitenverzeichnis|directorio|índice de páginas|répertoire|annuaire|diretório|دليل|فهرس الصفحات|direktori|daftar halaman|ডিরেক্টরি|পৃষ্ঠা তালিকা|பட்டியல்|பக்கங்கள்|一覧|ページ一覧|каталог|список страниц|सभी पेज|पृष्ठ सूची)$/.test(label);
     };
-    const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
-    const isHeaderOnlyCategoryLink=link=>footerCategoryHrefs.has((link.getAttribute('href')||'').split(/[?#]/)[0].replace(/\/$/,'/')||'/');
+
     const collectLinks=source=>{
       source.querySelectorAll('a[href]').forEach(link=>{
         const href=link.getAttribute('href');
