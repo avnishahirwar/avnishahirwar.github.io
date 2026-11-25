@@ -29,6 +29,29 @@ Base commit: e44299358689d63db281ddce6aa8eae03496e859
 - .github/workflows/production-optimization-audit.yml — report-only CI workflow.
 - reports/production-optimization/README.md — baseline and evidence limitations.
 
+## Latest repository-wide static audit (CI run 45615653139)
+
+The final audit job on branch commit 7cf09fba036e099c94ca46add6a1466db52317ff completed successfully. All 7 audit-rule tests passed.
+
+| Metric | Result |
+|---|---:|
+| HTML documents scanned | 8,380 |
+| Self-canonical indexable pages (source heuristic) | 5,171 |
+| Noindex/private pages | 97 |
+| URLs in primary sitemap | 5,187 |
+| Static audit errors | 0 |
+| Static audit warnings | 1,100 |
+
+Warning breakdown:
+- 733 meta descriptions outside the 50–160 character heuristic.
+- 165 titles outside the 30–60 character heuristic.
+- 109 hreflang clusters without a self-reference according to the source parser.
+- 54 duplicate descriptions within the same html lang group.
+- 38 duplicate titles within the same html lang group.
+- 1 missing HSTS declaration in the _headers source file.
+
+The first broad scan reported 75 errors and 10,866 warnings because it treated intentional noindex pages, redirect aliases and HTML metadata fragments as indexable documents. The audit rules were refined to exclude those false-positive classes. This refinement changed the audit scope; it did not rewrite the website's SEO metadata. Zero errors means zero errors under this static audit's indexable-page rules, not a guarantee of Google indexing or complete SEO compliance.
+
 ## Performance report
 A valid before/after delta requires comparable Lighthouse mobile and desktop runs on the same page set and environment. LCP, INP, CLS, TBT, transfer size and request count must be reported separately. TBT is not INP. CrUX field data and Lighthouse lab data must not be mixed.
 
