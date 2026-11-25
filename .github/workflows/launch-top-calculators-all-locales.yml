@@ -1,0 +1,57 @@
+name: Launch top calculators across all 50 languages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/launch-top-calculators-all-locales.py"
+      - ".github/workflows/launch-top-calculators-all-locales.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  launch-locales:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate top 14 calculators across all 50 languages
+        run: python3 scripts/launch-top-calculators-all-locales.py --write
+
+      - name: Ensure public social metadata is complete
+        run: node scripts/repair-public-social-metadata.cjs --write
+
+      - name: Regenerate sitemaps for all locales
+        run: |
+          if [ -f scripts/generate-sitemaps.cjs ]; then node scripts/generate-sitemaps.cjs; fi
+          if [ -f scripts/generate-locale-sitemaps.cjs ]; then node scripts/generate-locale-sitemaps.cjs; fi
+
+      - name: Verify public SEO quality tests
+        run: node --test tests/public-seo-quality.test.cjs
+
+      - name: Commit and push localized calculators and sitemaps to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html' 'sitemap*.xml'
+          if ! git diff --cached --quiet; then
+            git commit -m "i18n: launch top 14 calculators across all 50 languages and update sitemaps"
+            git push
+          else
+            echo "All 50 languages already have the top 14 calculators."
+          fi
