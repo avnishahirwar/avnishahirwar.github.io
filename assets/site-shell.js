@@ -1676,4 +1676,16 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+/* Load the regional preference engine after the shared shell has mounted its
+   hidden source selectors and promoted the visible controls into Settings.
+   This ordering lets FCLocale bind the actual controls on every page that
+   includes the shared shell, without requiring per-page script edits. */
+if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale]')){
+  const regionalEngine=document.createElement('script');
+  regionalEngine.src='/assets/global-locale.js';
+  regionalEngine.dataset.fcGlobalLocale='true';
+  regionalEngine.async=true;
+  document.head.appendChild(regionalEngine);
+}
+
 })();
