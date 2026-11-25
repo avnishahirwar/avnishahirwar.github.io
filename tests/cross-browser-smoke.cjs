@@ -106,11 +106,22 @@ async function checkFinancialCalculatorInteractions(browser, name) {
 async function checkPage(browser, url, label, viewport) {
   const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
   const errors = [];
+  const consoleErrors = [];
   page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
   const response = await page.goto(new URL(url, origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   assert.ok(response && response.ok(), label + ': HTTP response');
   await page.locator('header.fc-global-header').waitFor({ state: 'visible', timeout: 20000 });
-  await page.locator('footer.fc-global-footer').waitFor({ state: 'visible', timeout: 20000 });
+  try {
+    await page.locator('footer.fc-global-footer').waitFor({ state: 'visible', timeout: 20000 });
+  } catch (error) {
+    const diagnostic = await page.evaluate(() => ({
+      footers: [...document.querySelectorAll('footer')].map(node => ({ className: node.className, hidden: node.hidden, text: (node.innerText || '').slice(0, 500) })),
+      shellScripts: [...document.scripts].map(script => script.src).filter(Boolean),
+      bodyTail: document.body?.innerHTML.slice(-3500) || ''
+    }));
+    throw new Error(label + ': shared Footer missing; pageErrors=' + JSON.stringify(errors) + '; consoleErrors=' + JSON.stringify(consoleErrors) + '; diagnostic=' + JSON.stringify(diagnostic) + '; original=' + error.message);
+  }
   const footerPaths = await page.locator('footer.fc-global-footer .fc-global-footer-links a').evaluateAll(links => links.map(link => new URL(link.href).pathname));
   const headerOnlyCategoryPaths = [
     '/', '/calculator/business-calculators.html', '/calculator/finance-calculators.html',
