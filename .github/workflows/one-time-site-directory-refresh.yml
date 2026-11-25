@@ -1,0 +1,27 @@
+name: One-time calculator site directory refresh
+on:
+  push:
+    branches:
+      - seo/refresh-site-directory-20261125
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerate searchable calculator directory from catalogue
+        run: node scripts/build-site-directory.cjs
+      - name: Remove one-time workflow and commit generated directory
+        run: |
+          rm .github/workflows/one-time-site-directory-refresh.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add calculator/site-directory.html .github/workflows/one-time-site-directory-refresh.yml
+          git commit -m "chore(seo): regenerate calculator directory from catalogue [skip ci]"
+          git push
