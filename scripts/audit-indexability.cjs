@@ -36,7 +36,7 @@ const ALLOWED_NOINDEX_FILES = new Set([
   'ru/calculator/languages.html', 'ru/calculator/methodology.html', 'ru/calculator/tax.html',
   'ru/international/index.html', 'ru/international/vat-calculator.html',
   // Redirects and deliberately unpublished/under-review locale pages.
-  'calculators/emi-calculator.html', 'calculators/index.html',
+  'calculators/emi-calculator.html', 'calculators/index.html', 'hi/calculators/emi-calculator.html',
   'de/calculators/basic-calculator.html', 'de/calculators/currency-converter-calculator.html',
   'de/calculators/percentage-calculator.html', 'de/calculators/unit-converter.html',
   'gu/calculators/basic-calculator.html', 'id/calculators/income-tax-calculator.html',
