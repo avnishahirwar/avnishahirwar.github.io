@@ -1,0 +1,52 @@
+name: Optimize SEO across all public pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/optimize-all-pages-seo.py"
+      - ".github/workflows/optimize-all-pages-seo.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Repair public social metadata (Open Graph & Twitter)
+        run: node scripts/repair-public-social-metadata.cjs --write
+
+      - name: Optimize titles, meta descriptions, and JSON-LD across all pages
+        run: python3 scripts/optimize-all-pages-seo.py --write
+
+      - name: Verify public SEO quality tests
+        run: node --test tests/public-seo-quality.test.cjs
+
+      - name: Commit and push SEO improvements to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: optimize titles, descriptions, social tags, and JSON-LD across all pages"
+            git push
+          else
+            echo "All pages are already SEO-optimized."
+          fi
