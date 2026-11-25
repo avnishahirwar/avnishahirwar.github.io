@@ -1,5 +1,7 @@
 name: Production optimization audit
 on:
+  push:
+    branches: [production-optimization]
   pull_request:
     branches: [main]
     paths:
