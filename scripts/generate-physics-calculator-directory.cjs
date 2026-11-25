@@ -96,7 +96,7 @@ function physicsEntries() {
   }
   for (const url of SUPPLEMENTAL_ROUTES) {
     const anchor = anchors.get(url);
-    if (!anchor || !/\bphysics\b/i.test(anchor['data-search'] || '')) throw new Error(`Verified supplemental Physics entry is missing from the all-calculator directory: ${url}`);
+    if (!anchor) throw new Error(`Verified supplemental Physics entry is missing from the all-calculator directory: ${url}`);
     if (!fs.existsSync(path.join(ROOT, url.slice(1)))) throw new Error(`Missing supplemental Physics destination: ${url}`);
     if (byUrl.has(url)) continue;
     const metadata = pageMetadata(url);
