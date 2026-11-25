@@ -1,4 +1,4 @@
-name: Temporary site directory regeneration
+name: Temporary site directory regeneration # final regeneration trigger
 
 on:
   push:
