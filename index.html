@@ -151,7 +151,38 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 .home-tool-search.is-searching{margin-bottom:18px}
 .home-popular-title{margin:16px 0 0;font-size:1.08rem;color:#24404c}.home-popular-intro{margin:3px 0 8px;color:var(--fc-muted);font-size:.88rem}.home-tool-search{position:relative}.home-tool-search-row{position:relative}.home-autocomplete{position:absolute;left:14px;right:14px;top:104px;z-index:8;background:#fff;border:1px solid #aebbc7;border-radius:8px;box-shadow:0 10px 26px #10243a20;overflow:hidden}.home-autocomplete[hidden]{display:none}.home-autocomplete a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid #eef2f5;color:#20364b;text-decoration:none}.home-autocomplete a:last-child{border-bottom:0}.home-autocomplete a:hover,.home-autocomplete a[aria-selected=true],.home-autocomplete a:focus-visible{background:#eef5f8;outline:none}.home-autocomplete strong{font-size:.92rem}.home-autocomplete span{color:var(--fc-muted);font-size:.76rem;white-space:nowrap}@media(max-width:520px){.home-autocomplete{position:static;margin-top:8px}.home-popular-title{margin-top:14px}}
 .home-partnership-cta{margin:12px 0 0!important;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.home-partnership-cta a{display:inline-block;background:#d8bd82;color:#101c2c;padding:9px 14px;border-radius:6px;text-decoration:none;font-weight:800}.home-partnership-cta a:hover{background:#ead7aa;color:#101c2c}.home-partnership-cta span{font-size:.9rem;color:#607080}
-</style>
+
+/* India Top 20 interactive calculators */
+.fc-top20{margin:0 0 22px;padding:20px;background:#fff;border:1px solid var(--fc-border);border-radius:10px;box-shadow:0 5px 18px #14283b0a}
+.fc-top20-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+.fc-top20-kicker{margin:0 0 4px;color:#8a6a31;font-size:.72rem;font-weight:850;letter-spacing:.13em}
+.fc-top20-heading h2{margin:0;color:#1c2b39;font-size:clamp(1.3rem,2.8vw,1.8rem)}
+.fc-top20-heading p{margin:5px 0 0;color:var(--fc-muted);font-size:.92rem}
+.fc-top20-heading>a,.fc-top20-panel-head>a{font-size:.86rem;font-weight:750;white-space:nowrap}
+.fc-top20-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.fc-top20-grid button{display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:84px;padding:10px;border:1px solid var(--fc-border);border-radius:7px;background:#f9fafb;color:#23394b;text-align:left;cursor:pointer}
+.fc-top20-grid button:hover,.fc-top20-grid button[aria-pressed=true]{border-color:#34516b;background:#eef3f7}
+.fc-top20-grid button>span{color:#92733d;font-size:.68rem;font-weight:850}
+.fc-top20-grid button strong{margin:3px 0 1px;font-size:.88rem;line-height:1.25}
+.fc-top20-grid button small{color:var(--fc-muted);font-size:.73rem;line-height:1.3}
+.fc-top20-panel{margin-top:14px;padding:16px;border:1px solid #d7e0e8;border-radius:8px;background:#f7f9fb}
+.fc-top20-panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+.fc-top20-selected{font-size:.67rem;letter-spacing:.1em;font-weight:850;color:#8a6a31}
+.fc-top20-panel-head h3{margin:2px 0 3px;font-size:1.2rem;color:#1d3042}
+.fc-top20-panel-head p{margin:0;color:var(--fc-muted);font-size:.88rem}
+.fc-top20-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fc-top20-field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fc-top20-field label{font-size:.8rem;font-weight:700;color:#344b5f}
+.fc-top20-field input,.fc-top20-field select{width:100%;min-width:0;padding:10px;border:1px solid #b8c5d0;border-radius:6px;background:#fff;color:#172638;font:inherit}
+.fc-top20-calculate{margin-top:12px;padding:10px 18px;border:0;border-radius:6px;background:#101c2c;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.fc-top20-calculate:hover{background:#263f58}
+.fc-top20-result{margin-top:12px;padding:12px;border-radius:6px;background:#fff;border:1px solid #d9e0e6;color:#20364b;font-weight:700;white-space:pre-line}
+.fc-top20-result:empty{display:none}
+.fc-top20-disclaimer{margin:8px 0 0;color:var(--fc-muted);font-size:.76rem}
+@media(max-width:850px){.fc-top20-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:620px){.fc-top20{padding:14px}.fc-top20-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fc-top20-heading{align-items:flex-start;flex-direction:column}.fc-top20-panel-head{flex-direction:column}.fc-top20-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){.fc-top20-fields{grid-template-columns:1fr}}
+\n</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://friendlycalculator.in/#organization","name":"Friendly Calculator","alternateName":"फ्रेंडली कैलकुलेटर","url":"https://friendlycalculator.in/","logo":"https://friendlycalculator.in/assets/friendly-calculator-logo.svg","founder":{"@id":"https://friendlycalculator.in/calculator/founder.html#person"},"email":"avnishahirwar420@gmail.com","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"avnishahirwar420@gmail.com","availableLanguage":["English","Hindi","Spanish","French","Portuguese","Arabic","Indonesian","Bengali","Tamil","German (selected tools)","Japanese (selected tools)","Russian (selected tools)"]},"sameAs":["https://www.instagram.com/avnish_ahirwar","https://www.linkedin.com/in/avnishahirwar420"]},{"@type":"WebSite","@id":"https://friendlycalculator.in/#website","name":"Friendly Calculator","alternateName":["फ्रेंडली कैलकुलेटर","Friendly Calculator India"],"url":"https://friendlycalculator.in/","inLanguage":"en"},{"@type":"Person","@id":"https://friendlycalculator.in/calculator/founder.html#person","name":"Avnish Ahirwar","jobTitle":"Founder and Author","url":"https://friendlycalculator.in/calculator/founder.html","image":"https://friendlycalculator.in/assets/founder-avnish-profile.webp","sameAs":["https://www.linkedin.com/in/avnishahirwar420","https://www.instagram.com/avnish_ahirwar"],"worksFor":{"@id":"https://friendlycalculator.in/#organization"}}]}</script>
 
 
@@ -219,7 +250,43 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <p class="home-founder-credit">Founded by <a href="/calculator/founder.html">Avnish Ahirwar</a> — <a href="/calculator/founder.html">meet the founder</a>.</p>
 <p class="home-partnership-cta"><a href="/business/partnerships.html">Business &amp; Partnership Enquiries</a> <span>For brands, publishers, educators and technology partners.</span></p>
 <p class="home-related-tool">Also explore: <a href="/calculators/friendship-calculator.html">Friendship Calculator</a>.</p></div></section>
-<main class="page-wrap home-main">
+<main class="page-wrap home-main">\n
+<section class="fc-top20" id="fc-top20" aria-labelledby="fc-top20-title">
+  <div class="fc-top20-heading">
+    <div><p class="fc-top20-kicker">INDIA • QUICK ACCESS</p><h2 id="fc-top20-title">India’s 20 Popular Calculators</h2>
+    <p>Choose a calculator, enter your figures and calculate instantly — without leaving the homepage.</p></div>
+    <a href="/calculator/site-directory.html">Explore all calculators →</a>
+  </div>
+  <div class="fc-top20-grid" id="fc-top20-grid" aria-label="20 popular India calculators">
+    <button type="button" data-tool="emi"><span>01</span><strong>Loan EMI</strong><small>Monthly instalment</small></button>
+    <button type="button" data-tool="home-emi"><span>02</span><strong>Home Loan EMI</strong><small>Home finance estimate</small></button>
+    <button type="button" data-tool="car-emi"><span>03</span><strong>Car Loan EMI</strong><small>Vehicle finance estimate</small></button>
+    <button type="button" data-tool="sip"><span>04</span><strong>SIP</strong><small>Monthly investment growth</small></button>
+    <button type="button" data-tool="lumpsum"><span>05</span><strong>Lumpsum</strong><small>One-time investment growth</small></button>
+    <button type="button" data-tool="gst"><span>06</span><strong>GST</strong><small>Add or remove GST</small></button>
+    <button type="button" data-tool="income-tax"><span>07</span><strong>Income Tax</strong><small>New regime estimate</small></button>
+    <button type="button" data-tool="fd"><span>08</span><strong>Fixed Deposit</strong><small>FD maturity estimate</small></button>
+    <button type="button" data-tool="rd"><span>09</span><strong>Recurring Deposit</strong><small>Monthly savings estimate</small></button>
+    <button type="button" data-tool="ppf"><span>10</span><strong>PPF</strong><small>Long-term savings estimate</small></button>
+    <button type="button" data-tool="epf"><span>11</span><strong>EPF</strong><small>Provident fund projection</small></button>
+    <button type="button" data-tool="hra"><span>12</span><strong>HRA Exemption</strong><small>Salary and rent estimate</small></button>
+    <button type="button" data-tool="salary"><span>13</span><strong>In-hand Salary</strong><small>Monthly take-home estimate</small></button>
+    <button type="button" data-tool="gratuity"><span>14</span><strong>Gratuity</strong><small>Illustrative gratuity amount</small></button>
+    <button type="button" data-tool="age"><span>15</span><strong>Age</strong><small>Years, months and days</small></button>
+    <button type="button" data-tool="percentage"><span>16</span><strong>Percentage</strong><small>Marks and percentage</small></button>
+    <button type="button" data-tool="basic"><span>17</span><strong>Basic Calculator</strong><small>Everyday arithmetic</small></button>
+    <button type="button" data-tool="electricity"><span>18</span><strong>Electricity Bill</strong><small>Units and tariff estimate</small></button>
+    <button type="button" data-tool="compound"><span>19</span><strong>Compound Interest</strong><small>Growth over time</small></button>
+    <button type="button" data-tool="land"><span>20</span><strong>Land Area</strong><small>Square feet conversions</small></button>
+  </div>
+  <section class="fc-top20-panel" aria-live="polite" aria-labelledby="fc-top20-active-title">
+    <div class="fc-top20-panel-head"><div><span class="fc-top20-selected">SELECTED CALCULATOR</span><h3 id="fc-top20-active-title">Loan EMI Calculator</h3><p id="fc-top20-description">Estimate a monthly instalment, total interest and total repayment.</p></div><a id="fc-top20-full-link" href="/calculators/loan-emi-calculator.html">Open full calculator ↗</a></div>
+    <form id="fc-top20-form" novalidate><div class="fc-top20-fields" id="fc-top20-fields"></div><button class="fc-top20-calculate" type="submit">Calculate now</button></form>
+    <div class="fc-top20-result" id="fc-top20-result" role="status" aria-live="polite">Enter your figures and select Calculate now.</div>
+    <p class="fc-top20-disclaimer" id="fc-top20-disclaimer">Estimates use the assumptions shown. Verify important financial, tax and employment figures with the relevant official source or provider.</p>
+  </section>
+</section>
+
 <section class="home-tool-search" aria-labelledby="home-tool-search-title">
 <label id="home-tool-search-title" for="fc-home-tool-search">Search all calculators</label>
 <div class="home-tool-search-row">
@@ -421,6 +488,6 @@ input.addEventListener('search',search);
 clear.addEventListener('click',()=>{input.value='';search();input.focus();});
 })();
 </script>
-<script src="/assets/homepage-personal-tools.js" defer></script>
+<script src="/assets/homepage-top20-calculators.js" defer></script>\n<script src="/assets/homepage-personal-tools.js" defer></script>
 <script src="/assets/site-shell.js" defer></script>
 </body></html>
