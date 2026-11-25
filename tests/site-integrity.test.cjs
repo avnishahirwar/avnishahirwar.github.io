@@ -2322,3 +2322,26 @@ test('automatic regional detection supports locale lists, script subtags and non
   assert.match(locale, /imperialRegions=new Set\\(\\['US','LR','MM'\\]\\)/);
   assert.match(locale, /for\\(const candidate of browserLocales\\)/);
 });
+
+
+test('Smart Regional Experience preserves SEO URLs and page metadata', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+
+  // Explicit locale paths remain authoritative; browser defaults apply only to the root homepage.
+  assert.match(shell, /const currentLocale=\(\/\^/);
+  assert.match(shell, /p==='\/'\?preferredUiLocale:'en'/);
+  assert.match(shell, /localStorage\.setItem\('fc-language-source','manual'\)/);
+
+  // Regional formatting may update calculator labels and document data attributes,
+  // but must not rewrite search-facing metadata or canonical/hreflang links.
+  assert.doesNotMatch(locale, /document\.title\s*=|document\.head\.appendChild|createElement\(['"]meta['"]\)|createElement\(['"]link['"]\)/);
+  assert.doesNotMatch(locale, /rel=['"]canonical['"]|hreflang|name=['"]robots['"]/i);
+
+  // The homepage retains explicit indexability and its self-canonical URL.
+  assert.match(homepage, /<meta name="robots" content="index,follow/);
+  assert.match(homepage, /<link rel="canonical" href="https:\/\/friendlycalculator\.in\/">/);
+  assert.match(homepage, /<title>[^<]+<\/title>/);
+  assert.match(homepage, /<meta name="description" content="[^"]+">/);
+});
