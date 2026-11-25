@@ -282,7 +282,7 @@ html[data-fc-theme="dark"] .fc-rate-update{background:#20334a!important;color:#e
  .fc-settings-controls{flex-wrap:wrap;justify-content:flex-start;padding:8px 0;gap:8px}
  .fc-settings-controls>label{padding:5px 12px;border-right:0}
  .fc-footer-top{flex-wrap:wrap;justify-content:flex-start;padding:8px 0}
- .fc-global-footer-links{justify-content:flex-start;flex-wrap:wrap;padding:8px 0}
+.fc-global-footer-links{justify-content:flex-start;flex-wrap:wrap;padding:8px 0}
  .fc-social-links{border-left:0;padding-left:0}
 }
 @media(max-width:760px){

@@ -219,3 +219,25 @@ test('expanded More navigation renders every secondary link as a full-width menu
   assert.match(serviceWorker, /__fc_home_refresh/);
   assert.match(serviceWorker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
 });
+
+test('shared Footer omits category links already available in the header', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const categoryLinks = [
+    ['Home', '/'],
+    ['Business', '/calculator/business-calculators.html'],
+    ['Finance', '/calculator/finance-calculators.html'],
+    ['Tax', '/calculator/tax.html'],
+    ['Industry', '/calculator/industry-calculators.html'],
+    ['Manufacturing', '/calculator/manufacturing-calculators.html'],
+    ['Everyday', '/calculator/everyday-calculators.html'],
+    ['Blog', '/blog/']
+  ];
+  assert.ok(shell.includes('fc-global-links'), 'Primary header navigation must remain available.');
+  assert.ok(shell.includes("const footerCategoryHrefs=new Set("), 'Footer must explicitly filter header-only category destinations.');
+  assert.ok(shell.includes('!isHeaderOnlyCategoryLink(link)&&!preservedFooterLinks.some'), 'Legacy Footer links must also filter header-only category destinations before cloning.');
+  for (const [label, href] of categoryLinks) {
+    assert.ok(shell.includes("['" + label + "','" + href + "']") || shell.includes("'" + href + "'"), 'Header/category destination must remain configured: ' + label);
+  }
+  assert.ok(!shell.includes('<nav class="fc-footer-category-links"'), 'The duplicate category Footer navigation must not be rendered.');
+  assert.ok(!shell.includes("['Home','/']") && !shell.includes("['Blog','/blog/']"), 'Home and Blog must not be added to required Footer links.');
+});
