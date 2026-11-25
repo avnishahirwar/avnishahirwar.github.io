@@ -14,7 +14,7 @@ const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
  if(!fs.existsSync(file)) return false;
  const html=fs.readFileSync(file,'utf8');
- const lang=(html.match(/<html\\b[^>]*\\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase();
+ const lang=(html.match(/<html\b[^>]*\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase();
  return !noindexOf(html)&&lang===locale;
 });
 const expectedPairs=(locales,route)=>[
