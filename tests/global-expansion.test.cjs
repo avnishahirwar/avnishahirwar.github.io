@@ -275,8 +275,8 @@ test('regional engine idempotently binds Settings controls created after engine 
   const engine = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.match(engine, /bindControls/);
-  assert.match(engine, /select\\.dataset\\.fcLocaleBound==='true'/);
-  assert.match(engine, /select\\.dataset\\.fcLocaleBound='true'/);
-  assert.match(shell, /window\\.FCLocale&&typeof window\\.FCLocale\\.bindControls==='function'\\)window\\.FCLocale\\.bindControls\\(\\)/);
+  assert.match(engine, /select\.dataset\.fcLocaleBound==='true'/);
+  assert.match(engine, /select\.dataset\.fcLocaleBound='true'/);
+  assert.match(shell, /window\.FCLocale&&typeof window\.FCLocale\.bindControls==='function'\\)window\.FCLocale\.bindControls\\(\\)/);
   assert.ok(shell.indexOf('window.FCLocale.bindControls()') < shell.indexOf("regionalEngine.src='/assets/global-locale.js'"));
 });
