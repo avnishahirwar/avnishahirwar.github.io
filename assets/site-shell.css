@@ -1530,3 +1530,63 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
 .fc-more-menu a.fc-login-link{display:flex;align-items:center;justify-content:flex-start;min-height:42px;padding:9px 12px;border:1px solid #3b536a;border-radius:8px;background:#182e43;color:#fff!important;font-weight:700;white-space:normal;text-decoration:none}
 .fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{background:#223b54;border-color:#d8bd82;color:#fff!important;text-decoration:none;outline:2px solid #d8bd82;outline-offset:2px}
 .fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}
+
+
+/* 26 Nov 2026 — balanced tablet and wide-desktop layouts.
+   Keep existing page components and content; adjust only responsive presentation. */
+@media (min-width: 1280px) {
+  .fc-global-nav,
+  .fc-global-footer-inner,
+  .page-wrap {
+    width: min(1240px, 92%);
+  }
+  .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .home-category-index {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-category-index {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 761px) and (max-width: 1023px) {
+  .category-grid,
+  .home-category-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-learning-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fc-global-nav,
+  .fc-global-footer-inner {
+    width: 94%;
+  }
+  .fc-global-links {
+    min-width: 0;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+}
+@media (min-width: 761px) {
+  .home-tool-search-row,
+  .search-row {
+    align-items: stretch;
+  }
+  .home-tool-search-row input,
+  .search-row input {
+    min-width: 0;
+  }
+  main,
+  .page-wrap,
+  .home-main,
+  .category,
+  .category-links {
+    min-width: 0;
+  }
+}
