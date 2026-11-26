@@ -5199,5 +5199,12 @@
     "category": "Agriculture & Rural Finance",
     "keywords": "livestock stocking rate calculator calculate animals per hectare and the grazing area available to each animal",
     "description": "Calculate animals per hectare and the grazing area available to each animal."
+  },
+  {
+    "name": "Negative Marking Calculator",
+    "url": "/calculators/negative-marking-calculator.html",
+    "category": "Education",
+    "keywords": "negative marking calculator, exam marks calculator, exam score calculator, accuracy, attempt rate, competitive exam maths",
+    "description": "Calculate net exam marks, negative marks, accuracy, attempt rate and unattempted questions using a configurable marking scheme."
   }
 ]

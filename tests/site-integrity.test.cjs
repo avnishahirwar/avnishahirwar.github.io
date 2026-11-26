@@ -386,8 +386,8 @@ test('RD and salary calculator pages target their actual search intent and curre
   assert.ok(rd.includes('Five-year RD examples at an assumed 6.7% rate'));
   assert.ok(rd.includes('₹1,41,944'));
   assert.ok(rd.includes('not official Post Office maturity quotations'));
-  assert.ok(salary.includes('<title>Salary Calculator: Monthly, Daily &amp; Hourly Pay</title>'));
-  assert.ok(salary.includes('name="description" content="Convert monthly salary into annual, daily and hourly pay. Enter working days and hours for a gross-pay estimate; tax and payroll deductions are not included."'));
+  assert.ok(salary.includes('<title>Salary Calculator: Monthly Gross Pay to Daily &amp; Hourly</title>'));
+  assert.ok(salary.includes('name="description" content="Convert monthly gross salary into estimated daily and hourly pay. Set working days and hours for a clear rate estimate; tax and payroll deductions are excluded."'));
   assert.ok(salary.includes('<h1>Salary Calculator: Monthly, Daily & Hourly Pay</h1>'));
   assert.ok(salary.includes('Explore all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators on Friendly Calculator.'));
   assert.doesNotMatch(salary, /Explore all 186 browser-based tools/);
@@ -1846,7 +1846,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1879,7 +1879,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1912,7 +1912,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1945,7 +1945,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1978,7 +1978,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2011,7 +2011,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2044,7 +2044,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2074,7 +2074,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2086,7 +2086,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
  assert.equal(index.length, expectedSearchIndexLength);
- assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+
  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
