@@ -11,7 +11,7 @@ const trackingScript = source.slice(source.indexOf(marker));
 assert.notEqual(source.indexOf(marker), -1, 'shared site shell must contain the outbound UTM module');
 
 class FakeAnchor {
-  constructor(href) { this._href = href; }
+  constructor(href) { this._href = href; this.nodeType = 1; }
   getAttribute(name) { return name === 'href' ? this._href : null; }
   get href() { return this._href; }
   set href(value) { this._href = value; }
