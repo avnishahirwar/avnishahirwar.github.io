@@ -35,6 +35,7 @@ REFRESH_RE = re.compile(r'<meta\b[^>]*\bhttp-equiv=["\']refresh["\']', re.I)
 TW_CARD_RE = re.compile(r'<meta\b[^>]*\bname=["\']twitter:card["\']', re.I)
 JSONLD_RE = re.compile(r'<script\b[^>]*\btype=["\']application/ld\+json["\']', re.I)
 HEAD_CLOSE_RE = re.compile(r"</head>", re.I)
+LOCK_RE = re.compile(r'<meta\b[^>]*\bname=["\']fc-seo-lock["\']', re.I)
 
 
 def trim_at_word(text: str, max_len: int) -> str:
@@ -105,6 +106,9 @@ def process_file(abs_path: str, rel_path: str, write: bool) -> dict:
         orig = fh.read()
 
     if REFRESH_RE.search(orig) or NOINDEX_RE.search(orig):
+        return {}
+    # Pages with hand-written SEO copy opt out of automatic title/description rewrites.
+    if LOCK_RE.search(orig):
         return {}
     if not HEAD_CLOSE_RE.search(orig):
         return {}
