@@ -57,7 +57,7 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('canonical language catalogue defines 50 unique available locales and correct writing directions', () => {
+test('canonical language catalogue defines 50 unique locales with honest availability and correct writing directions', () => {
   const { DEFAULT_LOCALES } = require('../scripts/audit-locale-coverage.cjs');
   const locales = languageCatalogue.locales;
   const codes = locales.map(locale => locale.code);
