@@ -29,13 +29,13 @@ test('all existing localized currency converters load the shared reference-rate 
  }
 });
 
-test('English currency converter does not target the noindex German page',()=>{
+test('English currency converter and German page carry no hreflang cross-links',()=>{
  const route='currency-converter-calculator.html';
  const english=fs.readFileSync(pageFor('en',route),'utf8');
  const german=fs.readFileSync(pageFor('de',route),'utf8');
- assert.ok(noindexOf(german),'German currency page keeps its explicit noindex policy');
- assert.deepEqual(alternatesOf(german),[],'German noindex page must not carry hreflang');
- assert.doesNotMatch(english,/hreflang="de"/,'indexable English page must not target a noindex German page');
+ assert.ok(!noindexOf(german),'German currency page is indexable');
+ assert.deepEqual(alternatesOf(german),[],'German page does not carry hreflang yet');
+ assert.doesNotMatch(english,/hreflang="de"/,'English page does not target German until reciprocal hreflang exists');
  assert.match(english,/hreflang="x-default"/);
  for(const html of [english,german]) assert.match(html,/\/assets\/currency-converter-live\.js/);
 });

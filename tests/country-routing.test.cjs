@@ -23,7 +23,7 @@ test('country selection updates default currency and number format independently
 test('US country hub is self-canonical, scoped to US tools and cites official US authorities',()=>{
  const html=fs.readFileSync(path.join(root,'us/index.html'),'utf8');
  assert.match(html,/rel="canonical" href="https:\/\/friendlycalculator\.in\/us\//);
- assert.match(html,/name="robots" content="noindex,follow"/);assert.doesNotMatch(html,/hreflang=/i);assert.match(html,/Tax Year 2026/);
+ assert.match(html,/name="robots" content="index,follow,max-image-preview:large"/);assert.doesNotMatch(html,/hreflang=/i);assert.match(html,/Tax Year 2026/);
  assert.match(html,/international\/us-income-tax-calculator\.html/);assert.match(html,/calculators\/401k-calculator\.html/);
  assert.match(html,/irs\.gov/);assert.match(html,/ssa\.gov/);
  assert.doesNotMatch(html,/GST Calculator|PPF Calculator|HRA Exemption/);

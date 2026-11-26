@@ -79,7 +79,7 @@ test('Japanese and Russian translated routes use hreflang only when their robots
    assert.match(html,new RegExp('<html lang="'+locale+'"'));
    assert.match(html,/rel="canonical"/);
    if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,locale+'/'+file+' is noindex');
-   else assert.match(html,/hreflang="x-default"/);
+   else if(/hreflang=/i.test(html)) assert.match(html,/hreflang="x-default"/,locale+'/'+file+' hreflang cluster needs x-default');
   }
  }
 });
@@ -116,7 +116,7 @@ test('localized basic calculators preserve their translated content and follow t
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
     assert.ok(html.includes('rel="canonical"'));
     if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,locale+' noindex page must not claim a language cluster');
-    else assert.match(html,/hreflang="x-default"/);
+    else if(/hreflang=/i.test(html)) assert.match(html,/hreflang="x-default"/,locale+'/'+file+' hreflang cluster needs x-default');
     for (const phrase of phrases) assert.ok(html.includes(phrase), 'Missing localized phrase: ' + phrase);
     assert.match(html, /data-action="equals"/);
     assert.match(html, /site-shell\.js/);
@@ -213,12 +213,12 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 });
 
 
-test('noindex Gujarati and Kannada basic calculators are excluded from language clusters',()=>{
+test('Gujarati and Kannada basic calculators are indexable and carry no language alternates',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const locale of ['gu','kn']){
   const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
-  assert.ok(isNoindex(html),locale+' basic calculator must retain its noindex policy');
-  assert.doesNotMatch(html,/hreflang=/i,locale+' noindex page must not carry alternates');
+  assert.ok(!isNoindex(html),locale+' basic calculator must be indexable');
+  assert.doesNotMatch(html,/hreflang=/i,locale+' page must not carry alternates');
  }
  for(const file of pages){
   const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
@@ -291,7 +291,7 @@ test('five configured language editions retain localized homepages and working b
     assert.match(home, new RegExp('<html lang="' + locale + '"'));
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
     assert.match(home, /name="robots" content="index,follow,max-image-preview:large"/);
-    assert.match(calculator, /name="robots" content="noindex,follow"/);
+    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
     assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
     for (const phrase of phrases) {
@@ -329,7 +329,7 @@ test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are loca
     assert.ok(fs.existsSync(file), 'Missing ' + locale + ' Unit Converter');
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
-    assert.match(html, /name="robots" content="noindex,follow"/);
+    assert.match(html, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.ok(html.includes('https://friendlycalculator.in/' + locale + '/calculators/unit-converter.html'));
     assert.match(html, /@type":"WebApplication"/);
     assert.match(html, /id="category"/);
@@ -367,7 +367,7 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
     const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'percentage-calculator.html'), 'utf8');
     const homepage = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
-    assert.match(calculator, /name="robots" content="noindex,follow"/);
+    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.match(calculator, /rel="canonical"/);
     assert.match(calculator, /data-mode="of"/);
     assert.match(calculator, /data-mode="is"/);

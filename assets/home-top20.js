@@ -190,7 +190,7 @@
         var s = v.price * v.off / 100;
         return {rows: [['Final price', INR(v.price - s), 1], ['You save', INR(s)]]};
       }},
-    {id: 'hike', name: 'Salary Hike', url: '/calculators/salary-calculator.html', fields: [F('cur', 'Current salary (₹ per month)', 50000), F('pct', 'Hike (%)', 12, {step: 0.01})],
+    {id: 'hike', name: 'Salary Hike', url: '/calculators/salary-hike-calculator.html', fields: [F('cur', 'Current salary (₹ per month)', 50000), F('pct', 'Hike (%)', 12, {step: 0.01})],
       calc: function (v) {
         if (!(v.cur > 0 && v.pct >= 0)) return bad('Enter a current salary above zero.');
         var n = v.cur * (1 + v.pct / 100);
