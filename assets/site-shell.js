@@ -299,7 +299,7 @@ const hi=p.startsWith('/hi/');
 // Keep category navigation inside the selected locale. A localized category card
 // links to its own anchor; on other localized pages it returns to that locale's hub.
 const locale=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
-const localeCodes=["zh", "hi", "es", "ar", "fr", "bn", "pt", "id", "ur", "ru", "de", "ja", "pcm", "arz", "mr", "vi", "te", "sw", "ha", "tr", "pa", "fil", "ta", "yue", "wuu", "fa", "ko", "am", "th", "jv", "it", "gu", "kn", "yo", "bho", "nl", "pl", "ml", "or", "ne", "si", "uk", "uz", "ps", "so", "he", "my", "ro", "sd"];
+const localeCodes=["zh", "hi", "es", "ar", "fr", "bn", "pt", "id", "ur", "ru", "de", "ja", "pcm", "arz", "mr", "vi", "te", "sw", "ha", "tr", "pa", "fil", "ta", "yue", "wuu", "fa", "ko", "am", "th", "jv", "it", "gu", "kn", "yo", "bho", "nl", "pl", "ml", "or", "ne", "si", "uz", "ps", "so", "he", "my", "ro", "sd"];
 if(localeCodes.includes(locale)){
   const categoryMap={
     '/calculator/finance-calculators.html':'finance',
