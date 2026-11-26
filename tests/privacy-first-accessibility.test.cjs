@@ -52,6 +52,27 @@ test('PWA manifest and service worker support installed, device-local public use
   assert.match(worker, /url\.search \|\| url\.hash/);
 });
 
+test('public HTML contains no executable or HTML-data link schemes', () => {
+  const htmlFiles = [];
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === '.git' || entry.name === 'node_modules') continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.isFile() && entry.name.endsWith('.html')) htmlFiles.push(full);
+    }
+  };
+  walk(root);
+  const unsafe = [];
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (/(?:href|src|action)\\s*=\\s*["']\\s*(?:javascript:|vbscript:|data:text\\/html)/i.test(html)) {
+      unsafe.push(path.relative(root, file));
+    }
+  }
+  assert.deepEqual(unsafe, [], 'Remove executable or HTML-data URLs from public HTML: ' + unsafe.join(', '));
+});
+
 test('privacy and cookie policies explain browser-local inputs and infrastructure caveats', () => {
   const privacy = read('calculator/privacy.html');
   const cookies = read('calculator/cookies.html');
