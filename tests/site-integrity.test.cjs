@@ -2407,3 +2407,32 @@ test('professional UI refinement keeps the shared Header accessible and improves
   assert.match(homepage,/class="home-top20"/);
   assert.match(homepage,/class="home-intro"/);
 });
+
+
+test('shared page-template polish targets existing calculator, category, blog and About markup', () => {
+  const shellCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const samples = {
+    calculator: fs.readFileSync(path.join(root, 'calculators/compound-interest-calculator.html'), 'utf8'),
+    category: fs.readFileSync(path.join(root, 'calculator/finance-calculators.html'), 'utf8'),
+    blogIndex: fs.readFileSync(path.join(root, 'blog/index.html'), 'utf8'),
+    blogArticle: fs.readFileSync(path.join(root, 'blog/compound-interest-how-it-grows.html'), 'utf8'),
+    about: fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8')
+  };
+  assert.match(samples.calculator, /class="panel"/);
+  assert.match(samples.calculator, /class="fields"/);
+  assert.match(samples.category, /class="card"/);
+  assert.match(samples.blogIndex, /class="panel"/);
+  assert.match(samples.blogArticle, /class="related"/);
+  assert.match(samples.about, /class="doc-content"/);
+  for (const selector of [
+    'main.wrap .hero',
+    'main.wrap .panel',
+    'main.wrap .card',
+    'main.wrap .field',
+    'main.wrap .results .result',
+    'main.wrap .article-cover',
+    'main.doc-main',
+    'html[data-fc-theme="dark"] main.wrap',
+    'prefers-reduced-motion:reduce'
+  ]) assert.ok(shellCss.includes(selector), 'Missing shared page-template style: ' + selector);
+});
