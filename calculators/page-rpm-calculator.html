@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page RPM Calculator | Friendly Calculator</title>
+<meta name="description" content="Calculate page revenue per thousand page views (Page RPM), estimate ad earnings from page views, or estimate the traffic needed for a target revenue.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://friendlycalculator.in/calculators/page-rpm-calculator.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site-shell.css">
+<link rel="stylesheet" href="/assets/site-chrome.css?v=1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Friendly Calculator">
+<meta property="og:title" content="Page RPM Calculator | Friendly Calculator">
+<meta property="og:description" content="Calculate Page RPM from estimated earnings and page views, or estimate revenue and required traffic.">
+<meta property="og:url" content="https://friendlycalculator.in/calculators/page-rpm-calculator.html">
+<meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<meta property="og:image:alt" content="Friendly Calculator Page RPM Calculator">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Page RPM Calculator | Friendly Calculator">
+<meta name="twitter:description" content="Calculate Page RPM from estimated earnings and page views, or estimate revenue and required traffic.">
+<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
+<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/page-rpm-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/page-rpm-calculator.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Page RPM Calculator","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://friendlycalculator.in/calculators/page-rpm-calculator.html","description":"Calculate page revenue per thousand page views, estimate ad earnings or estimate the page views needed for a revenue target."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"Business & Trade Calculators","item":"https://friendlycalculator.in/calculator/business-calculators.html"},{"@type":"ListItem","position":3,"name":"Page RPM Calculator","item":"https://friendlycalculator.in/calculators/page-rpm-calculator.html"}]}
+</script>
+<style>
+:root{--ink:#172638;--muted:#596b7c;--line:#e0e5ea;--paper:#f5f6f8;--navy:#101c2c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{width:min(940px,92%);margin:0 auto}
+.hero{padding:30px 0 12px}
+.hero h1{font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.15;margin:.35rem 0}
+.muted{color:var(--muted)}
+.panel,.content{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:6px;font-weight:700}
+input,select{width:100%;padding:11px;border:1px solid #aebbc7;border-radius:8px;font:inherit;background:#fff;color:var(--ink)}
+button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer;margin-top:16px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8bb8d8;outline-offset:2px}
+.output{display:none;margin-top:17px;padding:16px;background:#edf3f7;border-radius:10px}
+.output strong{font-size:1.35rem}
+.formula{overflow-wrap:anywhere;background:#f5f7f9;border-radius:8px;padding:12px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 16px;margin:10px 0}
+.faq summary{font-weight:750;cursor:pointer}
+.faq p{color:var(--muted);margin-bottom:0}
+@media(max-width:620px){.fields{grid-template-columns:1fr}.panel,.content{padding:17px}}
+</style>
+</head>
+<body data-calculator="page-rpm">
+<main class="wrap">
+<nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/business-calculators.html">Business Calculators</a> / Page RPM Calculator</nav>
+<header class="hero">
+<p class="muted">BUSINESS · WEBSITE MONETIZATION</p>
+<h1>Page RPM Calculator</h1>
+<p class="muted">Calculate how much estimated revenue a website earns per 1,000 page views. You can also estimate revenue from an assumed Page RPM or work out the traffic needed to reach a revenue target.</p>
+</header>
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title">Calculate Page RPM and estimated revenue</h2>
+<form id="rpm-form" novalidate>
+<div class="fields">
+<label class="field" for="mode">Calculation
+<select id="mode">
+<option value="rpm">Calculate Page RPM</option>
+<option value="revenue">Estimate revenue from page views</option>
+<option value="views">Estimate page views for a revenue target</option>
+</select></label>
+<label class="field" for="currency">Currency
+<select id="currency">
+<option value="INR" data-symbol="₹">Indian rupee (INR ₹)</option>
+<option value="USD" data-symbol="$">US dollar (USD $)</option>
+<option value="EUR" data-symbol="€">Euro (EUR €)</option>
+<option value="GBP" data-symbol="£">British pound (GBP £)</option>
+<option value="CAD" data-symbol="CA$">Canadian dollar (CAD CA$)</option>
+<option value="AUD" data-symbol="A$">Australian dollar (AUD A$)</option>
+<option value="AED" data-symbol="AED ">UAE dirham (AED)</option>
+<option value="JPY" data-symbol="¥">Japanese yen (JPY ¥)</option>
+</select></label>
+<div class="field" id="earnings-field"><label for="earnings">Estimated earnings</label><input id="earnings" type="number" min="0" step="any" inputmode="decimal" value="120" required></div>
+<div class="field" id="views-field"><label for="pageviews">Page views</label><input id="pageviews" type="number" min="1" step="1" inputmode="numeric" value="30000" required></div>
+<div class="field" id="rpm-field" hidden><label for="rpm">Page RPM</label><input id="rpm" type="number" min="0" step="any" inputmode="decimal" value="4" required></div>
+<div class="field" id="target-field" hidden><label for="target">Target earnings</label><input id="target" type="number" min="0" step="any" inputmode="decimal" value="1000" required></div>
+</div>
+<button type="submit">Calculate</button>
+</form>
+<div class="output" id="output" role="status" aria-live="polite"></div>
+<p class="muted">All calculations run locally in your browser. No account connection or personal information is required.</p>
+</section>
+<section class="content">
+<h2>What is Page RPM?</h2>
+<p>Page RPM means page revenue per thousand impressions. It expresses estimated earnings relative to the number of page views, making it easier to compare performance across pages, periods or websites. It is a reporting metric, not a guaranteed rate or a promise of future income.</p>
+<h2>Page RPM formula</h2>
+<p class="formula"><strong>Page RPM = (Estimated earnings ÷ Page views) × 1,000</strong></p>
+<p>For example, if a site records ₹600 in estimated earnings from 30,000 page views, its Page RPM is (₹600 ÷ 30,000) × 1,000 = ₹20.</p>
+<h2>How to use this calculator</h2>
+<ol>
+<li>Choose whether you want to calculate Page RPM, estimate revenue or estimate required page views.</li>
+<li>Select the currency used for your earnings figures. The selector changes the display only; it does not convert exchange rates.</li>
+<li>Enter your estimated earnings and page views, or the Page RPM and target value required for the selected calculation.</li>
+<li>Select Calculate to see the result and the formula used.</li>
+</ol>
+<h2>Understand the result</h2>
+<p>A higher Page RPM means more estimated revenue per thousand page views for the period and reporting basis used. RPM can vary with audience location, content topic, advertiser demand, seasonality, ad placement, consent choices and traffic quality. Compare like-for-like date ranges and use your own verified reporting data.</p>
+<h2>Page RPM vs. Ad RPM</h2>
+<p>Page RPM uses page views as its denominator. Ad RPM uses ad impressions instead. A page can contain more than one ad impression, so these metrics are not interchangeable. Use the metric that matches the denominator in the source report.</p>
+<h2>Limitations</h2>
+<p>This tool performs arithmetic using values you provide. It does not connect to Google AdSense or another advertising account, retrieve analytics, verify earnings, predict future results or recommend ad placements. Actual revenue can differ from an estimate. Review the reporting definitions and policies of your advertising provider.</p>
+</section>
+<section class="content faq">
+<h2>Frequently asked questions</h2>
+<details><summary>How is Page RPM calculated?</summary><p>Divide estimated earnings by page views, then multiply by 1,000.</p></details>
+<details><summary>Can Page RPM be calculated when earnings are zero?</summary><p>Yes. If page views are greater than zero and earnings are zero, Page RPM is zero.</p></details>
+<details><summary>Does this calculator connect to my AdSense account?</summary><p>No. Enter values manually. The calculator runs in your browser and does not request account access.</p></details>
+<details><summary>Does changing the currency convert my earnings?</summary><p>No. Currency selection changes the symbol and code shown in the result. Convert source values separately using an exchange rate appropriate to your reporting date.</p></details>
+<details><summary>Is Page RPM the same as Ad RPM?</summary><p>No. Page RPM is based on page views; Ad RPM is based on ad impressions.</p></details>
+</section>
+<section class="content"><h2>Related calculators</h2><ul>
+<li><a href="/calculators/google-adsense-revenue-calculator.html">Google AdSense Revenue Calculator</a> — estimate revenue from page views and an assumed Page RPM.</li>
+<li><a href="/calculators/website-ad-revenue-calculator.html">Website Ad Revenue Calculator</a> — explore website advertising income scenarios.</li>
+<li><a href="/calculator/business-calculators.html">Business &amp; Trade Calculators</a> — browse more business tools.</li>
+</ul></section>
+</main>
+<script>
+(() => {
+  const form = document.getElementById('rpm-form');
+  const mode = document.getElementById('mode');
+  const currency = document.getElementById('currency');
+  const output = document.getElementById('output');
+  const fields = {
+    earnings: document.getElementById('earnings-field'),
+    views: document.getElementById('views-field'),
+    rpm: document.getElementById('rpm-field'),
+    target: document.getElementById('target-field')
+  };
+  const inputs = {
+    earnings: document.getElementById('earnings'),
+    views: document.getElementById('pageviews'),
+    rpm: document.getElementById('rpm'),
+    target: document.getElementById('target')
+  };
+  const symbol = () => currency.selectedOptions[0].dataset.symbol || '';
+  const formatMoney = value => symbol() + new Intl.NumberFormat(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}).format(value) + ' ' + currency.value;
+  const formatNumber = value => new Intl.NumberFormat(undefined,{maximumFractionDigits:2}).format(value);
+  function showFields() {
+    const selected = mode.value;
+    fields.earnings.hidden = selected !== 'rpm';
+    fields.views.hidden = selected === 'views';
+    fields.rpm.hidden = selected === 'rpm';
+    fields.target.hidden = selected !== 'views';
+    output.style.display = 'none';
+  }
+  function number(input, label, allowZero = true) {
+    const value = input.valueAsNumber;
+    if (input.value.trim() === '' || !Number.isFinite(value) || value < 0 || (!allowZero && value === 0)) {
+      input.setAttribute('aria-invalid','true');
+      throw new Error(label + (allowZero ? ' must be a valid non-negative number.' : ' must be greater than zero.'));
+    }
+    input.removeAttribute('aria-invalid');
+    return value;
+  }
+  mode.addEventListener('change',showFields);
+  currency.addEventListener('change',() => { output.style.display = 'none'; });
+  form.addEventListener('submit',event => {
+    event.preventDefault();
+    try {
+      const selected = mode.value;
+      let title, result, detail;
+      if (selected === 'rpm') {
+        const earnings = number(inputs.earnings,'Estimated earnings');
+        const views = number(inputs.views,'Page views',false);
+        result = earnings / views * 1000;
+        title = 'Page RPM';
+        detail = formatMoney(earnings) + ' ÷ ' + formatNumber(views) + ' × 1,000';
+      } else if (selected === 'revenue') {
+        const views = number(inputs.views,'Page views',false);
+        const rpm = number(inputs.rpm,'Page RPM');
+        result = views / 1000 * rpm;
+        title = 'Estimated revenue';
+        detail = formatNumber(views) + ' ÷ 1,000 × ' + formatMoney(rpm);
+      } else {
+        const target = number(inputs.target,'Target earnings',false);
+        const rpm = number(inputs.rpm,'Page RPM',false);
+        result = target / rpm * 1000;
+        title = 'Required page views';
+        detail = formatMoney(target) + ' ÷ ' + formatMoney(rpm) + ' × 1,000';
+      }
+      if (!Number.isFinite(result)) throw new Error('The result is outside the supported numeric range. Check your inputs.');
+      output.innerHTML = '<strong>' + title + ': ' + (selected === 'views' ? formatNumber(Math.ceil(result)) : formatMoney(result)) + '</strong><p>' + detail + '</p>';
+      output.style.display = 'block';
+    } catch (error) {
+      output.textContent = error.message;
+      output.style.display = 'block';
+    }
+  });
+  showFields();
+})();
+</script>
+<script src="/assets/site-shell.js" defer></script>
+</body>
+</html>
