@@ -699,7 +699,7 @@ const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const normalizedPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+  const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(p==='/uk/'||p.startsWith('/uk/'))return localeHome[next];
   if(normalizedPath==='/'||normalizedPath==='/index.html')return localeHome[next];
@@ -713,7 +713,7 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    const englishPath=currentLocale==='en'?p:p.replace(/^\/(?:hi|de|es|fr|pt|ar|id|bn|ta|ja|ru|mr|vi|te|gu|kn)(?=\/)/,'');
+    const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern,''));
     // Use GET for static hosts/CDNs that do not implement HEAD consistently.
     // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
     const fallbackToEnglishPage=()=>{
