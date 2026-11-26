@@ -24,14 +24,14 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
-      - name: Build the current published calculator catalogue
-        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+      - name: Build the current published calculator catalogue and regenerate directory inputs
+        run: node scripts/merge-search-index.cjs && node scripts/generate-sitemaps.cjs && node scripts/build-site-directory.cjs && node scripts/generate-physics-calculator-directory.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Validate catalog-driven calculator counts
         run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check && node --test tests/calculator-counts.test.cjs
       - name: Validate physics calculator directory
         run: node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
-      - name: Generate current sitemap for repository QA
-        run: node scripts/generate-sitemaps.cjs
+      - name: Verify the generated sitemap for repository QA
+        run: node scripts/generate-sitemaps.cjs --check
       - name: Generate curated programmatic SEO pages
         run: node scripts/generate-programmatic-seo.cjs
       - name: Validate programmatic SEO pages
