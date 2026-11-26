@@ -152,7 +152,7 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:\n  node scripts/translate-locales.mjs --source index.html [--locale ur,zh]\n\n` +
-    `By default, translates each source to all 33 locales marked planned, writing review-only drafts under translation-drafts/.\n` +
+    `By default, translates each source to all locales marked planned, writing review-only drafts under translation-drafts/.\n` +
     `Options: --source FILE (repeatable), --locale CODE[,CODE], --output DIR, --batch-size N, --concurrency N, --dry-run, --help\n` +
     `Provider environment: TRANSLATION_API_BASE, TRANSLATION_API_KEY, TRANSLATION_MODEL.\n` +
     `Drafts are noindex and never change public locale pages or catalogue availability.`;
