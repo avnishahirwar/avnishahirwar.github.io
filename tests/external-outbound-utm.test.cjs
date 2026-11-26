@@ -8,7 +8,7 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 const marker = '/* Outbound UTM attribution for external links.';
 const start = source.indexOf(marker);
-const end = source.lastIndexOf('\\n})();');
+const end = source.lastIndexOf(String.fromCharCode(10) + '})();');
 assert.notEqual(start, -1, 'shared site shell must contain the outbound UTM module');
 assert.ok(end > start, 'outbound UTM module must remain inside the shared site shell');
 const trackingScript = source.slice(start, end);
