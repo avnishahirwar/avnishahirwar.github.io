@@ -305,8 +305,8 @@ test('calculator directory exposes its curated core catalogue and keeps business
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
   assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount, 'Homepage category totals count every core calculator exactly once.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
-  const services = directory.indexOf('<h2>Business & developer services</h2>');
-  const trust = directory.indexOf('<h2>About, trust & policies</h2>');
+  const services = directory.indexOf('<h2>Business &amp; developer services</h2>');
+  const trust = directory.indexOf('<h2>About, trust &amp; policies</h2>');
   assert.ok(services > directory.indexOf('<h2>Date, time and work calculators</h2>'));
   assert.ok(services < trust);
   const section = directory.slice(services, directory.indexOf('</section>', services));
