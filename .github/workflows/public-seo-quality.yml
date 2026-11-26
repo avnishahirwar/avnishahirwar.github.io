@@ -24,4 +24,5 @@ jobs:
       - name: Run SEO publication tests
         run: node --test tests/public-seo-quality.test.cjs
       - name: Validate the two daily editorial posts
+        if: always()
         run: node --test tests/daily-editorial-posts.test.cjs
