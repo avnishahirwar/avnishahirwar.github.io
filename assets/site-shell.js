@@ -67,7 +67,7 @@ try {
     const requiredLinks=[
       ['All Calculators','/calculator/site-directory.html'],['About','/calculator/about.html'],
       ['Methodology','/calculator/methodology.html'],['Privacy','/calculator/privacy.html'],['Cookie Policy','/calculator/cookies.html'],
-      ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['DMCA / Copyright','/dmca.html'],
+      ['Terms','/calculator/terms.html'],['Disclaimer','/calculator/disclaimer.html'],['Affiliate Disclosure','/affiliate-disclosure.html'],['DMCA / Copyright','/dmca.html'],
       ['Legal & Compliance','/calculator/legal-compliance.html'],['Embed','/embed/'],['Sitemap','/sitemap.html'],['Contact','/calculator/contact.html']
     ];
     const allLinks=[...preservedLinks];
