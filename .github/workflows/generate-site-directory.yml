@@ -11,6 +11,12 @@ on:
     paths:
       - 'scripts/build-site-directory.cjs'
       - 'calculator/site-directory.html'
+      - 'config/site-directory-category-assignments.json'
+      - 'index.html'
+      - 'sitemap.xml'
+      - 'assets/calculator-search-index.json'
+      - 'tests/calculator-counts.test.cjs'
+      - 'tests/site-integrity.test.cjs'
       - 'calculators/**'
   workflow_dispatch:
 
@@ -20,9 +26,12 @@ permissions:
 jobs:
   validate:
     if: github.event_name == 'pull_request'
+    needs: generate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -31,12 +40,13 @@ jobs:
       - run: node scripts/sync-calculator-counts.cjs --check
 
   generate:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -51,7 +61,7 @@ jobs:
           git add -A
           if ! git diff --cached --quiet; then
             git commit -m "chore(seo): rebuild curated calculator directory and counts"
-            git push
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
           else
             echo "site-directory.html is already up to date."
           fi
