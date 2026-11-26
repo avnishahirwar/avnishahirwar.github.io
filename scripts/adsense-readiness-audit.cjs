@@ -75,8 +75,8 @@ function audit(root) {
   const thinCandidates = indexable.filter(p => p.words < 150);
   const thinReviewCounts = {
     total: thinCandidates.length,
-    calculatorPages: thinCandidates.filter(p => /(^|\\/)calculators\\//.test(p.file)).length,
-    otherPages: thinCandidates.filter(p => !/(^|\\/)calculators\\//.test(p.file)).length
+    calculatorPages: thinCandidates.filter(p => /(^|\/)calculators\//.test(p.file)).length,
+    otherPages: thinCandidates.filter(p => !/(^|\/)calculators\//.test(p.file)).length
   };
   if (thinCandidates.length) findings.push({ severity: 'review', code: 'LOW_TEXT_PAGE_REVIEW', detail: thinCandidates.length + ' indexable HTML pages have fewer than 150 raw visible-text words; this is a review queue, NOT an automatic noindex/removal recommendation.' });
   return {
