@@ -28,6 +28,7 @@ jobs:
           node-version: 20
       - run: node --check scripts/build-site-directory.cjs
       - run: node scripts/build-site-directory.cjs --check
+      - run: node scripts/sync-calculator-counts.cjs --check
 
   generate:
     if: github.event_name != 'pull_request'
@@ -39,15 +40,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Rebuild calculator/site-directory.html from the catalogue
+      - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
+      - name: Synchronize homepage and catalogue counters
+        run: node scripts/sync-calculator-counts.cjs
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add calculator/site-directory.html
+          git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "chore(seo): regenerate calculator site-directory from catalogue"
+            git commit -m "chore(seo): rebuild curated calculator directory and counts"
             git push
           else
             echo "site-directory.html is already up to date."
