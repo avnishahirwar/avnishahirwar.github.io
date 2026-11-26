@@ -22,7 +22,7 @@
       const form=root.document.getElementById('negative-marking-form'), result=root.document.getElementById('calculator-result'), error=root.document.getElementById('calculator-error');
       if(!form||!result||form.dataset.fcNegativeMarkingBound==='true')return;
       form.dataset.fcNegativeMarkingBound='true';
-      const number=id=>{const field=root.document.getElementById(id);return field?Number(field.value):NaN;};
+      const number=id=>{const field=root.document.getElementById(id);return field&&field.value.trim()!==''?Number(field.value):NaN;};
       const format=value=>Number(value).toLocaleString('en-IN',{maximumFractionDigits:2});
       form.addEventListener('submit',event=>{
         event.preventDefault();if(error)error.textContent='';
