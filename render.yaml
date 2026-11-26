@@ -1,0 +1,11 @@
+previews:
+  generation: automatic
+
+services:
+  - type: web
+    name: friendlycalculator-preview
+    runtime: static
+    buildCommand: sh scripts/build-hosting-output.sh render-publish
+    staticPublishPath: render-publish
+    previews:
+      generation: automatic
