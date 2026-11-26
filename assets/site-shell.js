@@ -1677,7 +1677,7 @@ if(isCalculatorRoute&&main){
 
 
 /* Outbound UTM attribution for external links.
-   Keep internal navigation clean and preserve any existing campaign attribution. */
+   Keep internal navigation clean and preserve existing campaign attribution. */
 if (isProductionAnalyticsHost) {
   const isFriendlyCalculatorDomain = hostname => {
     const host = String(hostname || '').toLowerCase();
@@ -1699,13 +1699,9 @@ if (isProductionAnalyticsHost) {
     const url = getExternalHttpUrl(link);
     if (!url) return null;
     if (link.dataset.fcUtmTagged === '1') return url;
-    // Do not overwrite a publisher's or partner's existing UTM attribution.
-    if (url.searchParams.has('utm_source') || url.searchParams.has('utm_medium')) {
-      link.dataset.fcUtmTagged = '1';
-      return url;
-    }
-    url.searchParams.set('utm_source', 'friendlycalculator.in');
-    url.searchParams.set('utm_medium', 'referral');
+    // Fill only missing UTM fields; never overwrite existing publisher/partner values.
+    if (!url.searchParams.has('utm_source')) url.searchParams.set('utm_source', 'friendlycalculator.in');
+    if (!url.searchParams.has('utm_medium')) url.searchParams.set('utm_medium', 'referral');
     link.setAttribute('href', url.toString());
     link.dataset.fcUtmTagged = '1';
     return url;
@@ -1713,18 +1709,41 @@ if (isProductionAnalyticsHost) {
   const tagExistingExternalLinks = () => {
     document.querySelectorAll('a[href]').forEach(tagExternalLink);
   };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', tagExistingExternalLinks, { once: true });
-  } else {
+  const observeExternalLinks = () => {
+    if (typeof MutationObserver === 'undefined' || !document.documentElement) return;
+    const observer = new MutationObserver(records => {
+      records.forEach(record => {
+        if (record.type === 'attributes') tagExternalLink(record.target);
+        record.addedNodes.forEach(node => {
+          if (!node || node.nodeType !== 1) return;
+          if (typeof node.matches === 'function' && node.matches('a[href]')) tagExternalLink(node);
+          if (typeof node.querySelectorAll === 'function') node.querySelectorAll('a[href]').forEach(tagExternalLink);
+        });
+      });
+    });
+    observer.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ['href']
+    });
+  };
+  const initialiseOutboundTracking = () => {
     tagExistingExternalLinks();
+    observeExternalLinks();
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialiseOutboundTracking, { once: true });
+  } else {
+    initialiseOutboundTracking();
   }
-  // Delegated handling also covers links added later by calculator or affiliate UI.
+  // Delegated handling also covers dynamically inserted links before navigation.
   document.addEventListener('click', event => {
     const link = event.target && typeof event.target.closest === 'function'
       ? event.target.closest('a[href]')
       : null;
     const url = tagExternalLink(link);
-    if (!url || !window.gtag || isFriendlyCalculatorDomain(url.hostname)) return;
+    if (!url || typeof window.gtag !== 'function') return;
     // Record only the destination domain; do not send link text, query values or user data.
     window.gtag('event', 'outbound_click', {
       link_domain: url.hostname.toLowerCase(),
@@ -1732,5 +1751,4 @@ if (isProductionAnalyticsHost) {
     });
   }, true);
 }
-
 })();
