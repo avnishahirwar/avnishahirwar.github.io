@@ -18,6 +18,7 @@ test('Page RPM calculator is indexed, discoverable and has complete SEO content'
   assert.ok(page.includes('Page RPM = (Estimated earnings ÷ Page views) × 1,000'));
   assert.ok(page.includes('aria-live="polite"'));
   assert.ok(page.includes('All calculations run locally in your browser'));
+  assert.ok(page.includes('.field[hidden]{display:none}'), 'inactive calculator mode fields must be hidden');
 });
 
 test('Page RPM calculator calculations use the page-view denominator', () => {
