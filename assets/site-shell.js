@@ -1684,7 +1684,7 @@ if (isProductionAnalyticsHost) {
     return host === 'friendlycalculator.in' || host.endsWith('.friendlycalculator.in');
   };
   const getExternalHttpUrl = link => {
-    if (!link || !link.getAttribute || link.dataset.fcUtmTagged === '1') return null;
+    if (!link || !link.getAttribute) return null;
     const rawHref = link.getAttribute('href');
     if (!rawHref || link.hasAttribute('download')) return null;
     try {
@@ -1698,6 +1698,7 @@ if (isProductionAnalyticsHost) {
   const tagExternalLink = link => {
     const url = getExternalHttpUrl(link);
     if (!url) return null;
+    if (link.dataset.fcUtmTagged === '1') return url;
     // Do not overwrite a publisher's or partner's existing UTM attribution.
     if (url.searchParams.has('utm_source') || url.searchParams.has('utm_medium')) {
       link.dataset.fcUtmTagged = '1';
