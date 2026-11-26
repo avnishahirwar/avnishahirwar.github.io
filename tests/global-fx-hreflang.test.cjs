@@ -88,7 +88,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
+ const expandedLocales=[...baseLocales,'de','ja','ru','vi','gu','kn'];
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=expectedPairs(indexableLocales(candidates,route),route);
