@@ -177,11 +177,11 @@ async function checkPage(browser, url, label, viewport) {
       } else {
         browser = await engine.launch({ headless: true, ...launchOptions });
       }
-      for (const viewport of [{ width: 1365, height: 900 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
+      for (const viewport of [{ width: 1440, height: 900 }, { width: 1365, height: 900 }, { width: 1024, height: 768 }, { width: 768, height: 1024 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
         const dims = await checkPage(browser, '/', name + ' homepage ' + viewport.width, viewport);
         results.push({ browser: name, page: '/', width: viewport.width, ...dims });
       }
-      for (const viewport of [{ width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
+      for (const viewport of [{ width: 1024, height: 768 }, { width: 768, height: 1024 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
         const page = await browser.newPage({ viewport });
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
