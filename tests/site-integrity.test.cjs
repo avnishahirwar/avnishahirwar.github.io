@@ -295,6 +295,7 @@ test('GA4 records calculator actions and privacy-safe search metadata', () => {
   assert.doesNotMatch(shell, /search_term:\s*field\.value/);
 });
 
+// The directory is the canonical, duplicate-free index of all sitemap calculator routes.
 test('calculator directory exposes its curated core catalogue and keeps business services separate', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const links = [...directory.matchAll(/href="(\/calculators\/[^"]+)"/g)].map(m => m[1]);
