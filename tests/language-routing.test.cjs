@@ -400,7 +400,7 @@ test('locale switching strips every translated locale prefix and keeps the UK ma
   const end = shell.indexOf(';', start);
   assert.ok(start >= 0 && end > start, 'Expected a shared locale path-prefix matcher.');
   const body = shell.slice(start, end);
-  const codes = body.match(/\\(\\?:([^)]+)\\)/)?.[1]?.split('|') || [];
+  const codes = body.slice(body.indexOf('(?:') + 3, body.indexOf(')(?=')).split('|');
   assert.equal(codes.length, 48, 'Every live locale except Ukrainian must have a routable language prefix.');
   assert.ok(!codes.includes('uk'), 'The /uk/ prefix belongs to the English-GB market hub.');
   assert.ok(shell.includes("const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');"));
