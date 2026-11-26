@@ -24,6 +24,7 @@ const HUBS = [
   ['/calculator/science-calculators.html', 'Science'],
   ['/calculator/money-calculators.html', 'Money & finance'],
   ['/calculator/economic-calculators.html', 'Economics'],
+  ['/calculator/agriculture-calculators.html', 'Agriculture Calculators'],
   ['/international/', 'International Calculators']
 ];
 
