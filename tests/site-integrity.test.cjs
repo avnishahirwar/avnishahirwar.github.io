@@ -225,7 +225,7 @@ test('owner-designated permanent website features are protected from accidental 
   assert.match(dashboard, /Try API/i);
 
   assert.match(business, /Permanent catalogue policy/i);
-  assert.match(contact, /Business Enquiries & Partnerships/i);
+  assert.match(contact, /Business Enquiries (?:&|&amp;) Partnerships/i);
   assert.match(contact, /Custom calculator development/i);
   assert.match(shell, /instagram\.com\/avnish_ahirwar/);
   assert.match(shell, /linkedin\.com\/in\/avnishahirwar415/);
