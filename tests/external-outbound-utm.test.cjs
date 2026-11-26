@@ -27,7 +27,7 @@ function createHarness(links, readyState = 'complete') {
     readyState,
     documentElement: {},
     addEventListener(name, callback) { listeners[name] = callback; },
-    querySelectorAll() { return links.filter(link => /^https?:\/\//i.test(link.getAttribute('href') || '')); }
+    querySelectorAll() { return links.filter(link => link.getAttribute('href') !== null); }
   };
   vm.runInNewContext(trackingScript, {
     document,
@@ -47,6 +47,14 @@ test('adds referral source and medium while preserving query strings and fragmen
   assert.equal(url.searchParams.get('utm_source'), 'friendlycalculator.in');
   assert.equal(url.searchParams.get('utm_medium'), 'referral');
   assert.equal(url.hash, '#details');
+});
+
+test('attributes uppercase HTTP and HTTPS schemes too', () => {
+  const http = new FakeAnchor('HTTP://partner.example/path');
+  const https = new FakeAnchor('HTTPS://partner.example/path');
+  createHarness([http, https]);
+  assert.equal(new URL(http.href).searchParams.get('utm_source'), 'friendlycalculator.in');
+  assert.equal(new URL(https.href).searchParams.get('utm_medium'), 'referral');
 });
 
 test('leaves relative, internal, subdomain and non-HTTP links unchanged', () => {
