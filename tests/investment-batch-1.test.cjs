@@ -23,6 +23,7 @@ test('investment batch 1 exposes eleven unique functional pages in all discovery
     assert.ok(additions.some(x => x.url === item.url && x.name === item.name), 'missing search index ' + item.url);
     assert.ok(directory.includes('href="' + item.url + '"'), 'missing money directory ' + item.url);
     assert.ok(category.urls.includes(item.url), 'missing site-directory assignment ' + item.url);
+    if (item.url === '/calculators/portfolio-risk-contribution-calculator.html') assert.ok(html.includes('const [we0,wd0,wc0,se0,sd0,sc0,red,rec,rdc]=v'), 'correlations must remain unitless values in the covariance matrix');
   }
   assert.ok(!additions.some(x => x.url === '/calculators/jensen-alpha-calculator.html'), 'do not add the semantic duplicate of the existing Jensen alpha calculator');
   assert.ok(!fs.existsSync(path.join(root, 'calculators/jensen-alpha-calculator.html')), 'do not publish the duplicate Jensen alpha route');
