@@ -1676,3 +1676,46 @@ if(isCalculatorRoute&&main){
 }
 
 })();
+
+/* External outbound referral attribution: preserve existing campaign parameters. */
+(()=>{'use strict';
+  const processLink=link=>{
+    if(!(link instanceof HTMLAnchorElement))return;
+    const rawHref=link.getAttribute('href')||'';
+    if(!/^https?:\/\//i.test(rawHref))return;
+    try{
+      const url=new URL(rawHref);
+      if(url.protocol!=='http:'&&url.protocol!=='https:')return;
+      const hostname=url.hostname.toLowerCase();
+      if(hostname==='friendlycalculator.in'||hostname.endsWith('.friendlycalculator.in'))return;
+      // Existing source means this link already belongs to another campaign.
+      if(url.searchParams.has('utm_source'))return;
+      url.searchParams.set('utm_source','friendlycalculator.in');
+      // Preserve a medium supplied by the destination or another integration.
+      if(!url.searchParams.has('utm_medium'))url.searchParams.set('utm_medium','referral');
+      link.href=url.toString();
+    }catch(error){/* Ignore malformed external URLs without affecting navigation. */}
+  };
+  const scan=root=>{
+    if(!root)return;
+    if(root instanceof HTMLAnchorElement)processLink(root);
+    if(typeof root.querySelectorAll==='function'){
+      root.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach(processLink);
+    }
+  };
+  const start=()=>{
+    scan(document);
+    // Also cover links inserted later by search, widgets, or other page scripts.
+    if(typeof MutationObserver!=='undefined'){
+      const observer=new MutationObserver(records=>{
+        records.forEach(record=>{
+          if(record.type==='attributes')scan(record.target);
+          record.addedNodes.forEach(node=>{if(node.nodeType===1)scan(node);});
+        });
+      });
+      observer.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['href']});
+    }
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
+})();
