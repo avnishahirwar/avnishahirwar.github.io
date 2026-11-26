@@ -52,7 +52,7 @@ test('requested public index targets explicitly allow indexing and declare stabl
   for (const [relativePath, canonical] of checks) {
     const html = fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
     assert.match(html, /<meta\\s+name=["']robots["']\\s+content=["']index,follow(?:,max-image-preview:large)?["']/i, relativePath + ' must explicitly allow indexing');
-    assert.match(html, new RegExp('<link\\\\s+rel=["\\\\']canonical["\\\\']\\\\s+href=["\\\\']' + canonical.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&') + '["\\\\']', 'i'), relativePath + ' must declare its intended canonical');
+    assert.ok(html.includes('<link rel="canonical" href="' + canonical + '"'), relativePath + ' must declare its intended canonical');
     assert.doesNotMatch(html, /<meta\\s+name=["']robots["']\\s+content=["'][^"']*noindex/i, relativePath + ' must not contain noindex');
   }
 });
