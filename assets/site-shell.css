@@ -1590,3 +1590,117 @@ html[data-fc-theme="dark"] .fc-global-links>a[aria-current="page"]:not(.fc-heade
 @media(prefers-reduced-motion:reduce){
  .fc-global-links>a:not(.fc-header-search-link),.home-search-result{transition:none}
 }
+
+
+/* Phase 2 — consistent page-template polish for calculators, directories, editorial and About. */
+:root{
+  --fc-card-radius:14px;
+  --fc-card-shadow:0 8px 24px rgba(16,28,44,.055);
+  --fc-card-border:#dfe6ed;
+  --fc-content-width:1080px;
+}
+main.wrap{width:min(var(--fc-content-width),92%);margin-inline:auto}
+main.wrap>.crumb,main.wrap>.muted:first-child{font-size:.88rem;color:#667789}
+main.wrap h1{font-size:clamp(2rem,4.2vw,3.15rem);line-height:1.12;letter-spacing:-.035em;margin-block:.45em .35em}
+main.wrap h2{letter-spacing:-.018em;line-height:1.25}
+main.wrap .hero{padding:clamp(24px,4vw,42px) 0 20px}
+main.wrap .hero>p,main.wrap>.intro{max-width:780px;color:#5c6d7e}
+main.wrap :is(.panel,.related,.note,.section,.card,.founder-profile){
+  border:1px solid var(--fc-card-border);
+  border-radius:var(--fc-card-radius);
+  box-shadow:var(--fc-card-shadow);
+}
+main.wrap :is(.panel,.related){padding:clamp(17px,2.5vw,25px);margin:18px 0}
+main.wrap .panel h2:first-child,main.wrap .related h2:first-child{margin-top:0}
+main.wrap .panel h2 a,main.wrap .related h2 a{text-decoration-thickness:1px;text-underline-offset:3px}
+main.wrap :is(.grid,.results,.fields){gap:14px}
+main.wrap .card{
+  padding:20px;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+main.wrap .card:hover{
+  transform:translateY(-2px);
+  border-color:#c7a45f;
+  box-shadow:0 12px 28px rgba(16,28,44,.09);
+}
+main.wrap .card h2{font-size:1.08rem}
+main.wrap .card p{line-height:1.55}
+main.wrap :is(.money-directory-callout,.callout){
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(16,28,44,.035);
+}
+main.wrap .field label{font-size:.93rem;color:#263b50}
+main.wrap .field :is(input,select,textarea){
+  min-height:46px;
+  border-radius:9px;
+  border-color:#c8d3de;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+main.wrap .field :is(input,select,textarea):focus{
+  border-color:#a47c36;
+  box-shadow:0 0 0 3px rgba(216,189,130,.22);
+  outline:0;
+}
+main.wrap :is(.btn,.cta,button[type="submit"],button.calc){
+  min-height:44px;
+  border-radius:9px;
+  padding:11px 18px;
+  font-weight:750;
+}
+main.wrap .results .result{
+  border:1px solid #dce5ed;
+  border-radius:12px;
+  padding:16px;
+}
+main.wrap .results .result strong{font-variant-numeric:tabular-nums}
+main.wrap .formula{border:1px solid #dfe7ee;border-radius:11px;line-height:1.8}
+main.wrap .faq details{
+  border-radius:11px;
+  box-shadow:0 3px 12px rgba(16,28,44,.035);
+}
+main.wrap .faq summary{padding:2px 0}
+main.wrap :is(table,.fc-result-table){border-radius:10px;overflow:hidden}
+main.wrap :is(th,td){line-height:1.5}
+main.wrap :is(.article-cover,.fc-brand-visual img){box-shadow:0 10px 28px rgba(16,28,44,.08)}
+main.wrap .article-cover{border-radius:15px}
+main.wrap .article-cover-caption{line-height:1.45}
+main.wrap .related{background:#fff}
+main.wrap .related a{font-weight:650;text-underline-offset:3px}
+main.doc-main{width:min(1100px,92%);margin-inline:auto}
+.doc-hero{position:relative;overflow:hidden}
+.doc-hero:after{
+  content:"";position:absolute;inset:auto -8% -72% auto;width:min(440px,55vw);aspect-ratio:1;
+  border:1px solid rgba(216,189,130,.22);border-radius:50%;pointer-events:none;
+}
+.doc-content{box-shadow:0 14px 38px rgba(16,36,58,.07)}
+.doc-content p{line-height:1.78}
+.doc-content h2{letter-spacing:-.02em}
+.founder-profile{box-shadow:none}
+.fc-brand-visual img{border-radius:15px}
+@media(max-width:700px){
+  main.wrap{width:92%}
+  main.wrap :is(.panel,.related){padding:16px;margin:14px 0}
+  main.wrap .card{padding:17px}
+  main.wrap .hero{padding-top:24px}
+  main.wrap .results{grid-template-columns:1fr}
+  main.doc-main{width:92%}
+}
+@media(prefers-reduced-motion:reduce){
+  main.wrap .card,main.wrap .field :is(input,select,textarea){transition:none}
+  main.wrap .card:hover{transform:none}
+}
+html[data-fc-theme="dark"] main.wrap :is(.panel,.related,.note,.section,.card,.founder-profile){
+  background:#142235!important;border-color:#34475d!important;color:#e6edf4;
+  box-shadow:0 8px 24px rgba(0,0,0,.14);
+}
+html[data-fc-theme="dark"] main.wrap :is(.panel h2,.card h2,.field label,.related h2){color:#edf3f8}
+html[data-fc-theme="dark"] main.wrap :is(.panel p,.card p,.related p,.muted){color:#bdc9d5}
+html[data-fc-theme="dark"] main.wrap .field :is(input,select,textarea){
+  background:#0f1d2d;color:#edf3f8;border-color:#52657a;
+}
+html[data-fc-theme="dark"] main.wrap .results .result,
+html[data-fc-theme="dark"] main.wrap .formula{background:#1b3047;border-color:#40566d;color:#edf3f8}
+html[data-fc-theme="dark"] main.wrap .faq details{background:#142235;border-color:#34475d}
+html[data-fc-theme="dark"] .doc-content{background:#142235;border-color:#34475d;color:#e6edf4}
+html[data-fc-theme="dark"] .doc-content :is(h2,strong){color:#edf3f8}
+html[data-fc-theme="dark"] .doc-content :is(p,li){color:#bdc9d5}
