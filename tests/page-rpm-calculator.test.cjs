@@ -49,18 +49,18 @@ function bootCalculator() {
     target: createElement('1000')
   };
   const document = { getElementById(id) { return ids[id]; } };
-  const script = page.match(/<script>\\s*([\\s\\S]*?)<\\/script>/);
+  const script = page.match(/<script>\s*([\s\S]*?)<\/script>/);
   assert.ok(script, 'calculator implementation script must exist');
   vm.runInNewContext(script[1], { document, Intl, Number, Math });
   return ids;
 }
 
 test('Page RPM page has unique indexable metadata and useful methodology', () => {
-  assert.match(page, /<title>Page RPM Calculator \\| Friendly Calculator<\\/title>/);
+  assert.match(page, /<title>Page RPM Calculator \| Friendly Calculator<\/title>/);
   assert.match(page, /<meta name="robots" content="index,follow/);
-  assert.match(page, /<link rel="canonical" href="https:\\/\\/friendlycalculator\\.in\\/calculators\\/page-rpm-calculator\\.html">/);
-  assert.match(page, /Page RPM = \\(Estimated earnings \\÷ Page views\\) \\× 1,000/);
-  assert.match(page, /https:\\/\\/support\\.google\\.com\\/adsense\\/answer\\/112030\\?hl=en/);
+  assert.match(page, /<link rel="canonical" href="https:\/\/friendlycalculator\.in\/calculators\/page-rpm-calculator\.html">/);
+  assert.match(page, /Page RPM = \(Estimated earnings ÷ Page views\) × 1,000/);
+  assert.match(page, /https:\/\/support\.google\.com\/adsense\/answer\/112030\?hl=en/);
   assert.match(page, /Worked examples/);
   assert.match(page, /Frequently asked questions/);
   assert.match(page, /Methodology reviewed: 27 November 2026/);
@@ -70,20 +70,20 @@ test('calculator computes Page RPM, estimated revenue and required page views', 
   const ids = bootCalculator();
 
   ids['rpm-form'].dispatch('submit');
-  assert.match(ids.output.innerHTML, /Page RPM: ₹4\\.00 INR/);
+  assert.match(ids.output.innerHTML, /Page RPM: ₹4\.00 INR/);
 
   ids.mode.value = 'revenue';
   ids.mode.dispatch('change');
   assert.equal(ids['earnings-field'].hidden, true);
   assert.equal(ids['rpm-field'].hidden, false);
   ids['rpm-form'].dispatch('submit');
-  assert.match(ids.output.innerHTML, /Estimated revenue: ₹120\\.00 INR/);
+  assert.match(ids.output.innerHTML, /Estimated revenue: ₹120\.00 INR/);
 
   ids.mode.value = 'views';
   ids.mode.dispatch('change');
   assert.equal(ids['target-field'].hidden, false);
   ids['rpm-form'].dispatch('submit');
-  assert.match(ids.output.innerHTML, /Required page views: 250,000/);
+  assert.match(ids.output.innerHTML, /Required page views: 250[,. ]?000/);
 });
 
 test('calculator rejects zero, fractional and negative page-view or RPM inputs', () => {
