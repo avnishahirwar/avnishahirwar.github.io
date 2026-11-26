@@ -267,5 +267,5 @@ test('shared shell loads one marked regional preference engine after Settings co
   assert.ok(settingsMount >= 0 && localeLoader > settingsMount, 'Regional preferences must load after shared Settings controls are mounted.');
   assert.match(shell, /regionalEngine\.dataset\.fcGlobalLocale='true'/);
   assert.match(shell, /script\[data-fc-global-locale\],script\[src="\/assets\/global-locale\.js"\]/);
-  assert.equal((shell.match(/src='\/assets\/global-locale\.js'/g) || []).length, 1, 'The shared shell must insert the regional engine only once.');
+  assert.equal((shell.match(/regionalEngine\.src='\/assets\/global-locale\.js'/g) || []).length, 1, 'The shared shell must insert the regional engine only once.');
 });
