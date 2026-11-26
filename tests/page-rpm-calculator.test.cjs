@@ -10,9 +10,11 @@ test('Page RPM calculator is indexed, discoverable and has complete SEO content'
   const page = fs.readFileSync(path.join(root, pagePath.slice(1)), 'utf8');
   const additions = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index-additions.json'), 'utf8'));
   const business = fs.readFileSync(path.join(root, 'calculator/business-calculators.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
 
   assert.ok(additions.some(item => item.url === pagePath && item.name === 'Page RPM Calculator'));
   assert.ok(business.includes('href="' + pagePath + '"'));
+  assert.ok(directory.includes('href="' + pagePath + '"'), 'Page RPM must appear in the generated all-calculators directory');
   assert.ok(page.includes('<link rel="canonical" href="https://friendlycalculator.in' + pagePath + '">'));
   assert.ok(page.includes('"@type":"WebApplication"'));
   assert.ok(page.includes('Page RPM = (Estimated earnings ÷ Page views) × 1,000'));
