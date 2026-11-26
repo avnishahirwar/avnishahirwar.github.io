@@ -72,3 +72,5 @@ jobs:
         run: node --test tests/embed-mode.test.cjs
       - name: Check shared JavaScript syntax
         run: node --check assets/sector-calculators.js && node --check assets/worldwide-mortgage-calculator.js && node --check assets/asia-pacific-tax-pages.js && node --check assets/country-tax-pages.js && node --check assets/friendly-ai-assistant.js && node --check assets/site-shell.js && node --check assets/page-calculators.js && node --check assets/extra-calculators.js && node --check assets/extended-science-astrology.js && node --check assets/phase5-custom-calculators.js && node --check assets/rural-tools.js && node --check assets/matrix-calculator.js && node --check assets/image-tools.js && node --check assets/graphing-calculator.js && node --check assets/mortgage-tools.js
+      - name: Validate privacy-first defaults and accessibility preferences
+        run: node --check assets/adsense-domain-gate.js && node --test tests/privacy-first-accessibility.test.cjs
