@@ -12,7 +12,7 @@
     const attempted=correctAnswers+incorrectAnswers, unattempted=totalQuestions-attempted;
     const marksEarned=correctAnswers*marksPerCorrect, marksDeducted=incorrectAnswers*negativeMarksPerWrong;
     const netScore=marksEarned-marksDeducted, maximumMarks=totalQuestions*marksPerCorrect;
-    return {totalQuestions,correctAnswers,incorrectAnswers,attempted,unattempted,marksEarned,marksDeducted,netScore,maximumMarks,accuracyPercent:attempted===0?0:correctAnswers/attempted*100,attemptRatePercent:attempted/totalQuestions*100,scorePercent:netScore/maximumMarks*100};
+    return {totalQuestions,correctAnswers,incorrectAnswers,attempted,unattempted,marksEarned,marksDeducted,netScore,maximumMarks,accuracyPercent:attempted===0?0:correctAnswers/attempted*100,attemptRatePercent:attempted/totalQuestions*100,scorePercent:Math.round(netScore/maximumMarks*10000)/100};
   }
   const api={calculate};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
