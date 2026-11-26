@@ -1678,7 +1678,10 @@ if(isCalculatorRoute&&main){
 /* Load the regional preference engine after the shared shell has mounted
    its selectors and Settings mirrors. This binds the controls on every page
    that includes the shared shell, without per-page script edits. */
-if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale]')){
+const existingRegionalEngine=document.querySelector('script[data-fc-global-locale],script[src="/assets/global-locale.js"]');
+if(existingRegionalEngine){
+  existingRegionalEngine.dataset.fcGlobalLocale='true';
+}else if(!window.FCLocale){
   const regionalEngine=document.createElement('script');
   regionalEngine.src='/assets/global-locale.js';
   regionalEngine.dataset.fcGlobalLocale='true';
