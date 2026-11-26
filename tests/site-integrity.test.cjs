@@ -2391,7 +2391,7 @@ test('shared Header exposes Calculator Search and connects it to the existing fu
   const homepage=fs.readFileSync(path.join(root,'index.html'),'utf8');
   assert.match(shell,/fc-header-search-link/);
   assert.match(shell,/aria-label="'\+nav\.search\+'">'\+nav\.search\+'<\/a>/);
-  assert.match(shell,/\/#fc-home-tool-search/);
+  assert.match(shell,/\/index\.html#fc-home-tool-search/);
   assert.match(shell,/getElementById\('fc-home-tool-search'\)/);
   assert.match(shell,/scrollIntoView\(\{behavior:'smooth',block:'center'\}\)/);
   assert.match(homepage,/id="fc-home-tool-search"/);
