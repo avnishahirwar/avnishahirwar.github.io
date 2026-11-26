@@ -2385,3 +2385,13 @@ test('About and Methodology use the hostname-gated shared analytics bootstrap', 
     assert.doesNotMatch(html, /gtag\(['"]config['"],\s*['"]G-QVWQSEDRGL['"]\)/i, relative + ' must not contain a direct GA4 config');
   }
 });
+
+test('shared Header exposes Calculator Search and connects it to the existing full-catalogue search', () => {
+  const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+  const homepage=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(shell,/fc-header-search-link/);
+  assert.match(shell,/\/#fc-home-tool-search/);
+  assert.match(shell,/getElementById\('fc-home-tool-search'\)/);
+  assert.match(shell,/scrollIntoView\(\{behavior:'smooth',block:'center'\}\)/);
+  assert.match(homepage,/id="fc-home-tool-search"/);
+});
