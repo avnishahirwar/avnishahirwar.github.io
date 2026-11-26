@@ -32,8 +32,8 @@ jobs:
         run: node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Generate current sitemap for repository QA
         run: node scripts/generate-sitemaps.cjs
-      - name: Generate curated calculator directory for repository QA
-        run: node scripts/build-site-directory.cjs
+      - name: Generate and verify curated calculator directory for repository QA
+        run: node scripts/build-site-directory.cjs && node scripts/build-site-directory.cjs --check
       - name: Generate curated programmatic SEO pages
         run: node scripts/generate-programmatic-seo.cjs
       - name: Validate programmatic SEO pages
