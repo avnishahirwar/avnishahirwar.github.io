@@ -46,24 +46,32 @@ test('AdSense publisher loader is not duplicated and configured ad slots have a 
   }
   assert.deepEqual(failures, [], 'AdSense must use one domain-gated loader per ad-slot page: ' + failures.join(', '));
 });
-test('AdSense publisher script loads only on the canonical production hostname', () => {
+test('AdSense publisher script requires verified CMP, explicit visitor opt-in and canonical production hostname', () => {
   const gate = fs.readFileSync(path.join(root, 'assets/adsense-domain-gate.js'), 'utf8');
-  function injectedScripts(hostname) {
+  function injectedScripts(hostname, cmpReady = false, optedIn = false) {
     const inserted = [];
     const document = {
+      documentElement: { dataset: { fcCmpReady: cmpReady ? 'true' : 'false' } },
       querySelector: () => null,
       createElement: tag => ({ tagName: tag.toUpperCase() }),
       head: { appendChild: script => inserted.push(script) }
     };
-    vm.runInNewContext(gate, { window: { location: { hostname } }, document });
+    const window = {
+      location: { hostname },
+      __tcfapi: cmpReady ? function () {} : undefined,
+      __fcPrivacyConsent: { ads: optedIn }
+    };
+    vm.runInNewContext(gate, { window, document });
     return inserted;
   }
-  const production = injectedScripts('friendlycalculator.in');
+  assert.equal(injectedScripts('friendlycalculator.in').length, 0, 'No ads without a verified CMP.');
+  assert.equal(injectedScripts('friendlycalculator.in', true, false).length, 0, 'No ads before explicit visitor opt-in.');
+  const production = injectedScripts('friendlycalculator.in', true, true);
   assert.equal(production.length, 1);
   assert.equal(production[0].src, 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404');
   assert.equal(production[0].crossOrigin, 'anonymous');
   for (const hostname of ['www.friendlycalculator.in', 'branch.pages.dev', 'friendlycalculator.in.example.com']) {
-    assert.equal(injectedScripts(hostname).length, 0, hostname + ' must not load publisher ads');
+    assert.equal(injectedScripts(hostname, true, true).length, 0, hostname + ' must not load publisher ads');
   }
 });
 test('AdSense auto ads are excluded from navigation, contact and interactive calculator pages', () => {
@@ -906,9 +914,10 @@ test('Cookie Policy is discoverable from Privacy, excluded from analytics and ke
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   assert.ok(privacy.includes('href="/calculator/cookies.html"'));
   assert.ok(urls.includes('https://friendlycalculator.in/calculator/cookies.html'));
-  assert.ok(shell.includes('(?:privacy|cookies)'));
-  assert.match(cookies, /Last updated: 14 November 2026/);
-  assert.match(cookies, /does not currently operate a separate, custom cookie-preference centre/);
+  assert.doesNotMatch(shell, /googletagmanager\.com|G-QVWQSEDRGL|GTM-MGJQH4DB/, 'Optional analytics and tag-manager scripts remain disabled by default.');
+  assert.match(cookies, /Last updated: 26 November 2026/);
+  assert.match(cookies, /disabled by default/);
+  assert.match(cookies, /certified consent management platform \(CMP\) has been published and verified/);
   assert.ok(shell.includes("en:['About','Methodology','Privacy','Terms','Disclaimer','Legal & Compliance','Embed','Sitemap','Contact','Advertising']"), 'The shared Footer must retain the approved policy links and Sitemap.');
   assert.doesNotMatch(shell.slice(shell.indexOf('const footerPaths='), shell.indexOf('const footerLinks=')), /cookies\.html/i, 'Cookie Policy remains linked from Privacy, not the compact footer');
   
@@ -1377,13 +1386,16 @@ test('business page clearly exposes live selected-calculator iframe embeds', () 
 });
 
 
-test('display settings provide only Normal Mode and Dark Mode', () => {
+test('display settings provide theme controls plus accessible text, contrast and motion preferences', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   for (const token of ['fc-display-settings', 'fc-display-panel', 'fc-display-theme', 'normalModeButton', 'darkModeButton', 'aria-pressed', "initialTheme=theme==='dark'?'dark':'light'"]) {
     assert.ok(shell.includes(token), 'Missing display setting token: ' + token);
   }
-  assert.ok(!shell.includes('contrastButton') && !shell.includes('sizeLabel') && !shell.includes('motionButton'));
+  for (const token of ['textSizeHeading', 'contrastButton', 'motionButton', 'fc-display-size', 'fc-display-contrast', 'fc-display-motion']) assert.ok(shell.includes(token), 'Missing accessibility control: ' + token);
+  assert.match(styles, /data-fc-text-size="largest"/);
+  assert.match(styles, /data-fc-contrast="high"/);
+  assert.match(styles, /fc-reduce-motion/);
   assert.match(styles, /data-fc-theme="dark"/);
   assert.match(styles, /fc-theme-mode-options/);
   assert.match(styles, /color-scheme:dark/);
@@ -2149,7 +2161,7 @@ test('Settings trigger is the final Footer item; regional preferences stay in Se
   assert.ok(shell.includes("countryFormatSelect") && shell.includes("Object.entries(localeNames)"));
   assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
   assert.ok(shell.includes("themeModes.append(normalModeButton,darkModeButton)"), 'Accessibility must offer Normal Mode and Dark Mode.');
-  assert.ok(!shell.includes("contrastButton") && !shell.includes("sizeLabel") && !shell.includes("motionButton"));
+  assert.ok(shell.includes('textSizeHeading') && shell.includes('contrastButton') && shell.includes('motionButton'), 'Settings must expose text size, contrast and reduced-motion controls.');
   assert.ok(shell.includes('footerNavigation.appendChild(trigger)'), 'Settings must be the final Footer navigation item.');
   assert.ok(shell.includes('fc-settings-site-controls') && shell.includes('siteSettingsControls.appendChild(currencyControl)') && shell.includes('regionalSettingsControls.appendChild(countryFormatLabel)') && shell.includes('regionalSettingsControls.appendChild(unitControl)'), 'Settings must contain mirrored Currency and regional preferences.');
   assert.ok(!shell.includes('dock.appendChild(trigger)'), 'Settings must not remain in a floating dock.');
@@ -2173,10 +2185,11 @@ test('homepage uses the shared PWA install action and preserves language, analyt
   assert.ok(shared.includes('quickActions.appendChild(installButton)'), 'The shared shell must place the install action inside Settings Quick Actions.');
   assert.ok(!shared.includes('footerInner.appendChild(button)'), 'The install action must not be mounted in the Footer.');
   assert.ok(shared.includes("position:static!important"), 'The install action must not float over page content.');
-  for (const feature of ['fc-language-select', 'gtm.js', 'fc-display-settings', 'fc-ai-lazy-launch', 'fc-skip-link']) {
+  for (const feature of ['fc-language-select', 'fc-display-settings', 'fc-display-contrast', 'fc-display-motion', 'fc-ai-lazy-launch', 'fc-skip-link']) {
     assert.ok(script.includes(feature), 'Missing homepage feature: ' + feature);
   }
   assert.ok(shared.includes('serviceWorker.register'), 'The shared shell must retain service-worker registration.');
+  assert.doesNotMatch(shared, /gtm\.js|G-QVWQSEDRGL/, 'Analytics and tag-manager scripts must not load by default.');
 });
 
 
@@ -2374,14 +2387,12 @@ test('Fuel Cost Calculator copy has clear inputs and no stale catalogue count or
 });
 
 
-test('About and Methodology use the hostname-gated shared analytics bootstrap', () => {
+test('About and Methodology load the shared shell without analytics or tag-manager tracking', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /const isProductionAnalyticsHost=\['friendlycalculator\.in','www\.friendlycalculator\.in'\]/);
-  assert.match(shell, /if\(isProductionAnalyticsHost/);
+  assert.doesNotMatch(shell, /googletagmanager\.com|G-QVWQSEDRGL|GTM-MGJQH4DB/);
   for (const relative of ['calculator/about.html', 'calculator/methodology.html']) {
     const html = fs.readFileSync(path.join(root, relative), 'utf8');
     assert.match(html, /assets\/site-shell\.js/, relative + ' must load the shared shell');
-    assert.doesNotMatch(html, /googletagmanager\.com\/gtag\/js\?id=G-QVWQSEDRGL/i, relative + ' must not bypass the hostname guard');
-    assert.doesNotMatch(html, /gtag\(['"]config['"],\s*['"]G-QVWQSEDRGL['"]\)/i, relative + ' must not contain a direct GA4 config');
+    assert.doesNotMatch(html, /googletagmanager\.com|G-QVWQSEDRGL|GTM-MGJQH4DB/i, relative + ' must not load analytics or tag-manager scripts');
   }
 });
