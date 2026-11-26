@@ -396,9 +396,13 @@ test('sitemap hreflang grouping recognizes every published locale prefix', () =>
 
 
 test('locale switching strips every translated locale prefix and keeps the UK market hub separate', () => {
-  assert.match(shell, /const localePathPrefixPattern=\/\^\\\/(?:zh\\|hi[\\s\\S]*?sd)\(\?=\\\/\)\//);
+  const prefix = 'const localePathPrefixPattern=/^\\\\/(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)(?=\\\\/)/;';
+  assert.ok(shell.includes(prefix), 'All 48 live locale prefixes must be normalized when switching languages.');
   assert.ok(shell.includes("const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');"));
   assert.ok(shell.includes("if(p==='/uk/'||p.startsWith('/uk/'))return localeHome[next];"));
   assert.ok(shell.includes("const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern,''));"));
-  assert.doesNotMatch(shell.match(/const localeHome=\\{([^}]+)\\}/)?.[1] || '', /uk:/, 'Ukrainian must not route to the English-GB /uk/ market hub.');
+  const start = shell.indexOf('const localeHome={');
+  const end = shell.indexOf('};', start);
+  assert.ok(start >= 0 && end > start);
+  assert.doesNotMatch(shell.slice(start, end), /uk:/, 'Ukrainian must not route to the English-GB /uk/ market hub.');
 });
