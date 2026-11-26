@@ -1,6 +1,6 @@
 # Machine-translation draft generator
 
-`scripts/translate-locales.mjs` generates **review-only HTML drafts** for languages whose status is `planned` in `config/language-catalogue.json`. The default set is every locale currently marked `planned` in the catalogue (currently Ukrainian, because `/uk/` is reserved for the English-GB market hub). It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
+`scripts/translate-locales.mjs` generates **review-only HTML drafts** for configured non-default languages. By default it selects locales marked `planned`; an explicit `--locale` can select any configured `available` or `planned` locale, including languages whose existing public editions have incomplete page coverage. It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Never place API keys in this repository or command-line arguments. Keep them in 
 node scripts/translate-locales.mjs --source index.html --dry-run
 ```
 
-This reports text-node counts for all currently planned languages and performs no network calls or writes. To create drafts for a limited pilot:
+This reports text-node counts for all currently planned languages and performs no network calls or writes. To create drafts for a limited pilot in an already configured language (or a planned language):
 
 ```sh
 TRANSLATION_API_BASE="https://api.example.com/v1" \
@@ -25,7 +25,7 @@ TRANSLATION_MODEL="your-selected-model" \
 node scripts/translate-locales.mjs --source index.html --locale sw,ha --output /tmp/friendly-translation-drafts
 ```
 
-`--source` is repeatable. The script preserves HTML tags and attributes, excludes executable/code-like element contents, protects common placeholders, URLs, identifiers and numbers, and writes drafts into `<output>/<locale>/<source-relative-path>`. Existing draft files are never overwritten; choose a new output directory to regenerate. Concurrency defaults to 2 and batch size to 24 text nodes.
+`--locale` may select any configured non-default locale, not only `planned` entries. The default remains planned locales only. `--source` is repeatable. The script preserves HTML tags and attributes, excludes executable/code-like element contents, protects common placeholders, URLs, identifiers and numbers, and writes drafts into `<output>/<locale>/<source-relative-path>`. Existing draft files are never overwritten; choose a new output directory to regenerate. Concurrency defaults to 2 and batch size to 24 text nodes.
 
 ## Review and publication gate
 
