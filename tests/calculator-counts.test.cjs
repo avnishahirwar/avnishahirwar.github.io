@@ -1,3 +1,4 @@
+// Regression coverage for the canonical 20-category directory and its sitemap-backed catalogue.
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
