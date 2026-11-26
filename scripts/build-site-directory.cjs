@@ -45,8 +45,8 @@ function readPageEntry(url, indexByUrl) {
   const file = path.join(ROOT, url.slice(1));
   const html = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
   const rawTitle = (html.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '';
-  const title = decodeEntities(rawTitle.split('|')[0].replace(/\s+/g, ' ').trim()) ||
-    decodeEntities(indexByUrl.get(url)?.name) || path.basename(url, '.html').replace(/-/g, ' ');
+  const title = decodeEntities(indexByUrl.get(url)?.name) ||
+    decodeEntities(rawTitle.split('|')[0].replace(/\s+/g, ' ').trim()) || path.basename(url, '.html').replace(/-/g, ' ');
   const rawDescription = (html.match(/<meta\s+name="description"\s+content="([^"]*)"/i) || [])[1] || indexByUrl.get(url)?.description || '';
   const description = decodeEntities(rawDescription).replace(/\s+/g, ' ').trim().slice(0, 190);
   return { url, title, description, category: decodeEntities(indexByUrl.get(url)?.category || ''), keywords: decodeEntities(indexByUrl.get(url)?.keywords || '') };
