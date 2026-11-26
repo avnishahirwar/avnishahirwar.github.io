@@ -891,7 +891,10 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
     assert.ok(counts.has(card[1]), 'Directory must expose the homepage category: ' + card[1]);
   }
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>949 calculators<\/span><\/a>/);
+  const mathSection = sections.find(section => section[1] === 'math-statistics');
+  const mathCount = mathSection ? [...mathSection[2].matchAll(/href="\\/calculators\\//g)].length : 0;
+  assert.ok(mathCount > 0, 'Mathematics category must contain calculator links');
+  assert.match(homepage, new RegExp('href="/calculator/site-directory\\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\\/strong><span>' + mathCount.toLocaleString('en-US') + ' calculators<\\/span><\\/a>'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
