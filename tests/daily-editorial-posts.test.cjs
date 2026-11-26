@@ -10,6 +10,7 @@ const articles = [
     canonical: 'https://friendlycalculator.in/blog/daily/2026-11-27-uk-mortgage-overpayments.html',
     calculator: '/international/uk-mortgage-overpayment-calculator.html',
     source: 'moneyhelper.org.uk',
+    sourceUrl: 'https://www.moneyhelper.org.uk/en/homes/buying-a-home/should-you-pay-off-your-mortgage-early',
     expected: ['£975.13', '£19,202.89', '45 months']
   },
   {
@@ -17,6 +18,7 @@ const articles = [
     canonical: 'https://friendlycalculator.in/blog/daily/2026-11-27-business-loan-emi.html',
     calculator: '/calculators/business-loan-emi-calculator.html',
     source: 'rbi.org.in',
+    sourceUrl: 'https://www.rbi.org.in/scripts/FS_Notification.aspx?Id=12663',
     expected: ['₹33,214.31', '₹1,95,715.15', '₹68,308.95']
   }
 ];
@@ -42,6 +44,7 @@ for (const item of articles) {
     assert.match(html, /<meta name="author" content="Friendly Calculator Editorial Team"/);
     assert.ok(html.includes(item.calculator));
     assert.ok(html.includes(item.source));
+    assert.ok(html.includes(item.sourceUrl), 'missing verified official source URL');
     assert.match(html, /<section class="faq"/);
     assert.match(html, /<time datetime="2026-11-27"/);
     assert.doesNotMatch(html, /<meta name="robots" content="noindex/i);
