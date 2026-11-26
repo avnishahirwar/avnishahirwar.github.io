@@ -104,3 +104,20 @@ test('calculator rejects zero, fractional and negative page-view or RPM inputs',
   ids['rpm-form'].dispatch('submit');
   assert.match(ids.output.textContent, /Page RPM must be a valid non-negative number/);
 });
+
+
+test('Page RPM calculator is discoverable in the canonical search index, sitemap and directories', () => {
+  const url = '/calculators/page-rpm-calculator.html';
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'calculator-search-index.json'), 'utf8'));
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  const assignments = JSON.parse(fs.readFileSync(path.join(root, 'config', 'site-directory-category-assignments.json'), 'utf8'));
+  const businessDirectory = fs.readFileSync(path.join(root, 'calculator', 'business-calculators.html'), 'utf8');
+  const allDirectory = fs.readFileSync(path.join(root, 'calculator', 'site-directory.html'), 'utf8');
+  const businessCategory = assignments.categories.find(category => category.id === 'business-operations');
+
+  assert.ok(index.some(item => item.url === url && item.name === 'Page RPM Calculator'));
+  assert.ok(sitemap.includes('https://friendlycalculator.in' + url));
+  assert.ok(businessCategory && businessCategory.urls.includes(url));
+  assert.ok(businessDirectory.includes('href="' + url + '"'));
+  assert.ok(allDirectory.includes('href="' + url + '"'));
+});
