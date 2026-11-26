@@ -1675,4 +1675,13 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+/* Load the regional preference engine only after all shared selectors and Settings mirrors exist. */
+if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale],script[src="/assets/global-locale.js"]')){
+  const regionalEngine=document.createElement('script');
+  regionalEngine.src='/assets/global-locale.js';
+  regionalEngine.dataset.fcGlobalLocale='true';
+  regionalEngine.async=true;
+  document.head.appendChild(regionalEngine);
+}
+
 })();
