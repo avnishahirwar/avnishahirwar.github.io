@@ -892,7 +892,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   }
   assert.equal(navCategoryCount, 20);
   const mathSection = sections.find(section => section[1] === 'math-statistics');
-  const mathCount = mathSection ? [...mathSection[2].matchAll(/href="\\/calculators\\//g)].length : 0;
+  const mathCount = mathSection ? [...mathSection[2].matchAll(/href="\/calculators\//g)].length : 0;
   assert.ok(mathCount > 0, 'Mathematics category must contain calculator links');
   assert.match(homepage, new RegExp('href="/calculator/site-directory\\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\\/strong><span>' + mathCount.toLocaleString('en-US') + ' calculators<\\/span><\\/a>'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
