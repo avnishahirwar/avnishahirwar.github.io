@@ -1,18 +1,48 @@
 'use strict';
 
 const { Builder, By, until } = require('selenium-webdriver');
+const assert = require('node:assert/strict');
 
 const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
+
+async function setContentViewport(driver, profile) {
+  await driver.manage().window().setRect({ width: profile.width, height: profile.height });
+  let measured;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    measured = await driver.executeScript(
+      'return { width: window.innerWidth, height: window.innerHeight };'
+    );
+    const widthDelta = profile.width - measured.width;
+    const heightDelta = profile.height - measured.height;
+    if (Math.abs(widthDelta) <= 2 && Math.abs(heightDelta) <= 2) break;
+    const outer = await driver.manage().window().getRect();
+    await driver.manage().window().setRect({
+      width: outer.width + widthDelta,
+      height: outer.height + heightDelta
+    });
+  }
+  measured = await driver.executeScript(
+    'return { width: window.innerWidth, height: window.innerHeight };'
+  );
+  assert.ok(
+    Math.abs(measured.width - profile.width) <= 2 &&
+    Math.abs(measured.height - profile.height) <= 2,
+    'Safari ' + profile.label + ': requested content viewport ' +
+      profile.width + 'x' + profile.height + ', measured ' +
+      measured.width + 'x' + measured.height
+  );
+  return measured;
+}
 
 (async () => {
   const driver = await new Builder().forBrowser('safari').build();
   try {
     for (const viewport of [
-      { width: 390, height: 844, label: 'iPhone-sized' },
-      { width: 820, height: 1180, label: 'iPad-sized' },
-      { width: 1365, height: 900, label: 'desktop' }
+      { width: 390, height: 844, label: 'phone-width' },
+      { width: 820, height: 1180, label: 'tablet-width' },
+      { width: 1365, height: 900, label: 'desktop-width' }
     ]) {
-      await driver.manage().window().setRect({ width: viewport.width, height: viewport.height });
+      await setContentViewport(driver, viewport);
       await driver.get(origin + '/');
       await driver.wait(until.elementLocated(By.css('header.fc-global-header')), 20000);
       await driver.wait(until.elementLocated(By.css('footer.fc-global-footer')), 20000);
@@ -42,7 +72,7 @@ const origin = process.env.FC_SITE_ORIGIN || 'https://friendlycalculator.in';
       );
       if (calculatorOverflow) throw new Error('Safari ' + viewport.label + ': calculator horizontal overflow');
     }
-    process.stdout.write('Safari iPhone-sized, iPad-sized and desktop viewport smoke tests passed.\\n');
+    process.stdout.write('Safari phone-width, tablet-width and desktop-width content viewport smoke tests passed.\\n');
   } finally {
     await driver.quit();
   }
