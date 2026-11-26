@@ -243,47 +243,8 @@ const ensurePwaInstallUi=()=>{
   document.body.append(button,panel,network);
 };
 
-// Keep production analytics data clean: never send preview or other-host traffic to the production GA4/GTM containers.
-const isProductionAnalyticsHost=['friendlycalculator.in','www.friendlycalculator.in'].includes(location.hostname.toLowerCase());
-// Do not load analytics tags on preview hosts or privacy/cookie policy URLs (?:privacy|cookies) used for consent review.
-if(isProductionAnalyticsHost&&!/(^|\/)(?:privacy|privacy-policy|cookies)\.html$/.test(location.pathname)){
-// Google Tag Manager container: loaded once on every page using this shared shell.
-// Keep the existing direct GA4 configuration below; do not add a second GA4 tag
-// inside GTM unless the direct GA4 installation is deliberately migrated.
-window.dataLayer=window.dataLayer||[];
-if(!window.__fcGtmContainerLoaded){
-  window.__fcGtmContainerLoaded=true;
-  const injectGtm=()=>{
-    if(window.__fcGtmScriptStarted)return;
-    window.__fcGtmScriptStarted=true;
-    const gtmScript=document.createElement('script');
-    gtmScript.async=true;
-    gtmScript.fetchPriority='low';
-    gtmScript.src='https://www.googletagmanager.com/gtm.js?id=GTM-MGJQH4DB';
-    document.head.appendChild(gtmScript);
-  };
-  const scheduleGtm=()=>{
-    // Direct GA4 remains available through its queued gtag commands. Delay the
-    // additional GTM container until the visitor has had time to use the page.
-    window.setTimeout(()=>{
-      if('requestIdleCallback' in window)window.requestIdleCallback(injectGtm,{timeout:8000});
-      else injectGtm();
-    },8000);
-  };
-  if(document.readyState==='complete')scheduleGtm();
-  else window.addEventListener('load',scheduleGtm,{once:true});
-}
-// Privacy-first analytics: GA4 is the only configured analytics provider.
-// Ensure localized pages also report to the same Friendly Calculator GA4 stream.
-if(typeof window.gtag!=='function'){
-  window.dataLayer=window.dataLayer||[];
-  window.gtag=function(){window.dataLayer.push(arguments)};
-  window.gtag('js',new Date());window.gtag('config','G-QVWQSEDRGL');
-  const gaScript=document.createElement('script');gaScript.async=true;gaScript.src='https://www.googletagmanager.com/gtag/js?id=G-QVWQSEDRGL';document.head.appendChild(gaScript);
-}
-
-
-}
+// Privacy-first default: no analytics, tag manager, session replay or advertising tags are loaded by the shared shell.
+// Calculator inputs and browser preferences stay on this device unless a visitor deliberately uses a separate external service.
 const p=location.pathname;
 // The locale prefix is authoritative for document language and writing direction.
 // This also repairs older localized templates that omitted or misstated lang/dir metadata.
@@ -1334,8 +1295,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   if(!document.body||embedMode||document.getElementById('fc-display-settings'))return;
   const lang=(document.documentElement.lang||'en').toLowerCase().split('-')[0];
   const labels={
-    en:{open:'Settings',title:'Settings & Accessibility',region:'Regional settings',accessibility:'Accessibility',quick:'Quick actions',currency:'Display currency',countryFormat:'Country & format',units:'Units',normalMode:'Normal Mode',theme:'Dark Mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size'},
-    hi:{open:'सेटिंग्स',title:'सेटिंग्स और सुलभता',region:'क्षेत्रीय सेटिंग्स',accessibility:'सुलभता',quick:'त्वरित सुविधाएँ',currency:'प्रदर्शन मुद्रा',countryFormat:'देश और प्रारूप',units:'इकाइयाँ',normalMode:'सामान्य मोड',theme:'डार्क मोड',smaller:'अ−',larger:'अ+',close:'बंद करें',themeOn:'डार्क मोड चालू',themeOff:'डार्क मोड बंद',text:'अक्षर का आकार'},
+    en:{open:'Settings',title:'Settings & Accessibility',region:'Regional settings',accessibility:'Accessibility',quick:'Quick actions',currency:'Display currency',countryFormat:'Country & format',units:'Units',normalMode:'Normal Mode',theme:'Dark Mode',smaller:'A−',larger:'A+',close:'Close',themeOn:'Dark mode on',themeOff:'Dark mode off',text:'Text size',highContrast:'High contrast',highContrastOn:'High contrast on',highContrastOff:'High contrast off',reduceMotion:'Reduce motion',motionOn:'Reduced motion on',motionOff:'System motion setting restored'},
+    hi:{open:'सेटिंग्स',title:'सेटिंग्स और सुलभता',region:'क्षेत्रीय सेटिंग्स',accessibility:'सुलभता',quick:'त्वरित सुविधाएँ',currency:'प्रदर्शन मुद्रा',countryFormat:'देश और प्रारूप',units:'इकाइयाँ',normalMode:'सामान्य मोड',theme:'डार्क मोड',smaller:'अ−',larger:'अ+',close:'बंद करें',themeOn:'डार्क मोड चालू',themeOff:'डार्क मोड बंद',text:'अक्षर का आकार',highContrast:'हाई कॉन्ट्रास्ट',highContrastOn:'हाई कॉन्ट्रास्ट चालू',highContrastOff:'हाई कॉन्ट्रास्ट बंद',reduceMotion:'कम एनिमेशन',motionOn:'कम एनिमेशन चालू',motionOff:'सिस्टम मोशन सेटिंग बहाल'},
     es:{open:'Ajustes',title:'Ajustes y accesibilidad',region:'Configuración regional',accessibility:'Accesibilidad',quick:'Acciones rápidas',currency:'Moneda de visualización',countryFormat:'País y formato',units:'Unidades',normalMode:'Modo normal',theme:'Modo oscuro',smaller:'A−',larger:'A+',close:'Cerrar',themeOn:'Modo oscuro activado',themeOff:'Modo oscuro desactivado',text:'Tamaño del texto'},
     fr:{open:'Paramètres',title:'Paramètres et accessibilité',region:'Paramètres régionaux',accessibility:'Accessibilité',quick:'Actions rapides',currency:'Devise affichée',countryFormat:'Pays et format',units:'Unités',normalMode:'Mode normal',theme:'Mode sombre',smaller:'A−',larger:'A+',close:'Fermer',themeOn:'Mode sombre activé',themeOff:'Mode sombre désactivé',text:'Taille du texte'},
     pt:{open:'Configurações',title:'Configurações e acessibilidade',region:'Configurações regionais',accessibility:'Acessibilidade',quick:'Ações rápidas',currency:'Moeda de exibição',countryFormat:'País e formato',units:'Unidades',normalMode:'Modo normal',theme:'Modo escuro',smaller:'A−',larger:'A+',close:'Fechar',themeOn:'Modo escuro ativado',themeOff:'Modo escuro desativado',text:'Tamanho do texto'},
@@ -1350,6 +1311,8 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
     te:{open:'సెట్టింగ్‌లు',title:'సెట్టింగ్‌లు & అందుబాటు',region:'ప్రాంతీయ సెట్టింగ్‌లు',accessibility:'అందుబాటు',quick:'త్వరిత చర్యలు',currency:'ప్రదర్శన కరెన్సీ',countryFormat:'దేశం & ఫార్మాట్',units:'యూనిట్లు',normalMode:'సాధారణ మోడ్',theme:'డార్క్ మోడ్',smaller:'అ−',larger:'అ+',close:'మూసివేయి',themeOn:'డార్క్ మోడ్ ఆన్‌లో ఉంది',themeOff:'డార్క్ మోడ్ ఆఫ్‌లో ఉంది',text:'అక్షర పరిమాణం'}
   };
   const t=labels[lang]||labels.en;
+  t.highContrast=t.highContrast||'High contrast';t.highContrastOn=t.highContrastOn||'High contrast on';t.highContrastOff=t.highContrastOff||'High contrast off';
+  t.reduceMotion=t.reduceMotion||'Reduce motion';t.motionOn=t.motionOn||'Reduced motion on';t.motionOff=t.motionOff||'System motion setting restored';
   t.siteSettings=({hi:'साइट सेटिंग्स',es:'Ajustes del sitio',fr:'Paramètres du site',de:'Website-Einstellungen',pt:'Configurações do site',ar:'إعدادات الموقع',id:'Pengaturan situs',bn:'সাইট সেটিংস',ta:'தள அமைப்புகள்',ja:'サイト設定',ru:'Настройки сайта',vi:'Cài đặt trang web',te:'సైట్ సెట్టింగ్‌లు'}[lang]||'Site Settings');
   const read=(key,fallback)=>{try{return localStorage.getItem(key)||fallback;}catch(_){return fallback;}};
   const write=(key,value)=>{try{localStorage.setItem(key,value);}catch(_){}};
@@ -1551,6 +1514,26 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   panel.append(regionalSettingsControls);
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
+
+  // Persist practical accessibility preferences locally; never read or store calculator input values.
+  const textSizeHeading=document.createElement('h4');textSizeHeading.className='fc-settings-subheading';textSizeHeading.textContent=t.text;
+  const textSizeGroup=document.createElement('div');textSizeGroup.className='fc-accessibility-actions';textSizeGroup.setAttribute('role','group');textSizeGroup.setAttribute('aria-label',t.text);
+  const smallerButton=document.createElement('button');smallerButton.type='button';smallerButton.className='fc-display-action';smallerButton.textContent=t.smaller;smallerButton.setAttribute('aria-label',lang==='hi'?'अक्षर छोटा करें':'Decrease text size');
+  const largerButton=document.createElement('button');largerButton.type='button';largerButton.className='fc-display-action';largerButton.textContent=t.larger;largerButton.setAttribute('aria-label',lang==='hi'?'अक्षर बड़ा करें':'Increase text size');
+  const textSizes=['normal','large','largest'];let textSize=textSizes.includes(read('fc-display-size','normal'))?read('fc-display-size','normal'):'normal';
+  const applyTextSize=()=>{document.documentElement.setAttribute('data-fc-text-size',textSize);write('fc-display-size',textSize);smallerButton.disabled=textSize==='normal';largerButton.disabled=textSize==='largest';};
+  smallerButton.addEventListener('click',()=>{textSize=textSizes[Math.max(0,textSizes.indexOf(textSize)-1)];applyTextSize();status.textContent=t.text+' — '+textSize;});
+  largerButton.addEventListener('click',()=>{textSize=textSizes[Math.min(textSizes.length-1,textSizes.indexOf(textSize)+1)];applyTextSize();status.textContent=t.text+' — '+textSize;});
+  textSizeGroup.append(smallerButton,largerButton);
+  const contrastButton=document.createElement('button');contrastButton.type='button';contrastButton.className='fc-display-action';contrastButton.textContent=t.highContrast;
+  let highContrast=read('fc-display-contrast','normal')==='high';
+  const applyContrast=()=>{document.documentElement.setAttribute('data-fc-contrast',highContrast?'high':'normal');write('fc-display-contrast',highContrast?'high':'normal');contrastButton.setAttribute('aria-pressed',String(highContrast));};
+  contrastButton.addEventListener('click',()=>{highContrast=!highContrast;applyContrast();status.textContent=highContrast?t.highContrastOn:t.highContrastOff;});
+  const motionButton=document.createElement('button');motionButton.type='button';motionButton.className='fc-display-action';motionButton.textContent=t.reduceMotion;
+  let reduceMotion=read('fc-display-motion','system')==='reduce';
+  const applyMotion=()=>{document.documentElement.classList.toggle('fc-reduce-motion',reduceMotion);write('fc-display-motion',reduceMotion?'reduce':'system');motionButton.setAttribute('aria-pressed',String(reduceMotion));};
+  motionButton.addEventListener('click',()=>{reduceMotion=!reduceMotion;applyMotion();status.textContent=reduceMotion?t.motionOn:t.motionOff;});
+  applyTextSize();applyContrast();applyMotion();panel.append(textSizeHeading,textSizeGroup,contrastButton,motionButton);
   const quickDivider=document.createElement('div');
   quickDivider.className='fc-display-settings-divider';
   quickDivider.setAttribute('aria-hidden','true');
@@ -1562,10 +1545,7 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   document.body.appendChild(open);
   document.body.append(backdrop,panel);
   applyTheme(initialTheme);
-  document.documentElement.removeAttribute('data-fc-text-size');
-  document.documentElement.removeAttribute('data-fc-contrast');
-  document.documentElement.classList.remove('fc-reduce-motion');
-  try{localStorage.removeItem('fc-display-size');localStorage.removeItem('fc-display-contrast');localStorage.removeItem('fc-display-motion');}catch(_){}
+  // Saved accessibility preferences are intentionally preserved on this device.
 })();
 
 
