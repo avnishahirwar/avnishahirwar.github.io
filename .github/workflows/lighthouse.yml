@@ -106,7 +106,7 @@ jobs:
         if: github.event_name == 'push'
         run: node scripts/check-site-shell-runtime.cjs
 
-      - name: Wait for the pull-request Cloudflare preview and select audit base URL
+      - name: Select Cloudflare or free local pull-request preview
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -115,27 +115,70 @@ jobs:
         run: |
           set -euo pipefail
           slug="$(printf '%s' "$GITHUB_HEAD_REF" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | cut -c1-28 | sed -E 's/-+$//')"
-          for attempt in {1..30}; do
+          base_url=""
+          for attempt in {1..10}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            base_url="$(grep -Eo "https://${slug}(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
-            if [ -z "$base_url" ]; then
-              base_url="$(grep -Eo "https://deploy-preview-${PR_NUMBER}--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
+            candidate="$(grep -Eo "https://$slug(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            if [ -z "$candidate" ]; then
+              candidate="$(grep -Eo "https://deploy-preview-$PR_NUMBER--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
             fi
-            if [ -n "$base_url" ]; then
-              html="$(curl -fsSL "$base_url/calculators/income-tax-calculator.html" || true)"
-              service_worker="$(curl -fsSL "$base_url/sw.js" || true)"
+            if [ -n "$candidate" ]; then
+              html="$(curl -fsSL "$candidate/calculators/income-tax-calculator.html" || true)"
+              service_worker="$(curl -fsSL "$candidate/sw.js" || true)"
               if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
-                echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
-                echo "Auditing pull-request preview: $base_url"
-                exit 0
+                base_url="$candidate"
+                echo "Using published pull-request preview: $base_url"
+                break
               fi
             fi
-            echo "Waiting for Cloudflare branch preview comment and reserved calculator section (attempt $attempt/30)."
+            echo "Waiting for an optional Cloudflare/Netlify preview comment (attempt $attempt/10)."
             sleep 10
           done
-          echo "::error::Cloudflare branch preview was not published with the reserved calculator section."
-          exit 1
 
+          if [ -z "$base_url" ]; then
+            echo "No hosted preview was published; starting a zero-cost local static preview of this PR checkout."
+            python3 - <<'PY' >/tmp/fc-local-preview.log 2>&1 &
+          from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+          from pathlib import Path
+          from urllib.parse import urlsplit, unquote
+
+          class PreviewHandler(SimpleHTTPRequestHandler):
+              def do_GET(self):
+                  parsed = urlsplit(self.path)
+                  path = unquote(parsed.path)
+                  if path != "/" and not path.endswith("/") and "." not in Path(path).name:
+                      candidate = Path("." + path + ".html")
+                      if candidate.is_file():
+                          location = path + ".html" + (("?" + parsed.query) if parsed.query else "")
+                          self.send_response(301)
+                          self.send_header("Location", location)
+                          self.end_headers()
+                          return
+                  super().do_GET()
+
+          ThreadingHTTPServer(("127.0.0.1", 4173), PreviewHandler).serve_forever()
+          PY
+            for attempt in {1..20}; do
+              if curl -fsS "http://127.0.0.1:4173/calculators/income-tax-calculator.html" >/tmp/fc-preview-income-tax.html; then
+                base_url="http://127.0.0.1:4173"
+                break
+              fi
+              sleep 1
+            done
+            if [ -z "$base_url" ]; then
+              cat /tmp/fc-local-preview.log || true
+              echo "::error::Local static preview could not be started."
+              exit 1
+            fi
+            html="$(cat /tmp/fc-preview-income-tax.html)"
+            service_worker="$(curl -fsSL "$base_url/sw.js")"
+            if ! grep -q 'fc-calculator-reserved' <<<"$html" || ! grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" || ! grep -q "__fc_home_refresh" <<<"$service_worker"; then
+              echo "::error::Local static preview does not contain the expected calculator and service-worker markers."
+              exit 1
+            fi
+          fi
+
+          echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
       - name: Verify shared Header/Footer and Settings on the pull-request preview in Chrome
         if: github.event_name == 'pull_request'
         run: FC_SITE_ORIGIN="$BASE_URL" node scripts/check-site-shell-runtime.cjs
