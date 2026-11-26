@@ -5199,5 +5199,12 @@
     "category": "Agriculture & Rural Finance",
     "keywords": "livestock stocking rate calculator calculate animals per hectare and the grazing area available to each animal",
     "description": "Calculate animals per hectare and the grazing area available to each animal."
+  },
+  {
+    "name": "Portfolio Rebalancing Calculator",
+    "url": "/calculators/portfolio-rebalancing-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio rebalancing target allocation buy sell amount",
+    "description": "Calculate target portfolio values and illustrative buy or sell amounts for three asset groups."
   }
 ]
