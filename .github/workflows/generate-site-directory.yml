@@ -5,6 +5,15 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/sync-calculator-counts.cjs'
+      - 'config/site-directory-category-assignments.json'
+      - 'index.html'
+      - 'sitemap.xml'
+      - 'assets/calculator-search-index.json'
+      - 'calculator/site-directory.html'
+      - 'hi/calculator/site-directory.html'
+      - 'tests/calculator-counts.test.cjs'
+      - 'tests/site-integrity.test.cjs'
       - 'calculators/**'
   pull_request:
     branches: [main]
