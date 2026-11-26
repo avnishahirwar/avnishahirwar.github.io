@@ -1530,3 +1530,19 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
 .fc-more-menu a.fc-login-link{display:flex;align-items:center;justify-content:flex-start;min-height:42px;padding:9px 12px;border:1px solid #3b536a;border-radius:8px;background:#182e43;color:#fff!important;font-weight:700;white-space:normal;text-decoration:none}
 .fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{background:#223b54;border-color:#d8bd82;color:#fff!important;text-decoration:none;outline:2px solid #d8bd82;outline-offset:2px}
 .fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}
+
+/* Privacy-first accessibility preferences: scalable type, high contrast and reduced motion. */
+html[data-fc-text-size="large"]{font-size:112.5%}html[data-fc-text-size="largest"]{font-size:125%}
+.fc-settings-subheading{margin:12px 0 6px;font-size:.95rem;color:var(--fc-shell-ink)}
+.fc-accessibility-actions{display:flex;gap:8px;margin:0 0 10px}
+.fc-accessibility-actions button,.fc-display-panel>.fc-display-action{min-height:44px}
+.fc-display-action:disabled{opacity:.45;cursor:not-allowed}
+html[data-fc-contrast="high"] body{background:#fff!important;color:#000!important}
+html[data-fc-contrast="high"] :where(main,main p,main li,main label,main small,main span,main td,main th,main h1,main h2,main h3,main h4,main strong,main legend){color:#000!important}
+html[data-fc-contrast="high"] :where(main a){color:#0037b8!important;text-decoration:underline!important}
+html[data-fc-contrast="high"] :where(main input,main select,main textarea,main button){border:2px solid #000!important}
+html[data-fc-contrast="high"] :where(main .panel,main .card,main .content,main .note,main .section,main .formula,main .result){background:#fff!important;border:2px solid #000!important}
+html[data-fc-contrast="high"] .fc-global-header,html[data-fc-contrast="high"] .fc-global-footer{background:#000!important;color:#fff!important}
+html[data-fc-contrast="high"] .fc-global-header a,html[data-fc-contrast="high"] .fc-global-footer a{color:#fff!important;text-decoration:underline!important}
+html.fc-reduce-motion *,html.fc-reduce-motion *::before,html.fc-reduce-motion *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+@media(prefers-reduced-motion:reduce){html:not(.fc-motion-override) *,html:not(.fc-motion-override) *::before,html:not(.fc-motion-override) *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
