@@ -260,10 +260,8 @@ test('language selector refreshes the published locale catalogue instead of reus
   assert.ok(catalogue.locales.some(locale => locale.code === 'en'), 'English must remain in the language catalogue.');
 });
 
-test('shared shell loads one regional preference engine and marks an existing script', () => {
+test('shared shell marks its single regional preference engine loader for duplicate detection', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /script\[data-fc-global-locale\],script\[src="\/assets\/global-locale\.js"\]/);
-  assert.match(shell, /existingRegionalEngine\.dataset\.fcGlobalLocale='true'/);
-  assert.match(shell, /regionalEngine\.src='\/assets\/global-locale\.js'/);
-  assert.match(shell, /regionalEngine\.async=true/);
+  assert.match(shell, /localeScript\.src='\/assets\/global-locale\.js';localeScript\.defer=true;localeScript\.dataset\.fcGlobalLocale='true';document\.head\.appendChild\(localeScript\)/);
+  assert.equal((shell.match(/src='\/assets\/global-locale\.js'/g) || []).length, 1, 'The shared shell must insert the regional engine only once.');
 });
