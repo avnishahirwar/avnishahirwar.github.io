@@ -1675,4 +1675,61 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+
+/* Outbound UTM attribution for external links.
+   Keep internal navigation clean and preserve any existing campaign attribution. */
+if (isProductionAnalyticsHost) {
+  const isFriendlyCalculatorDomain = hostname => {
+    const host = String(hostname || '').toLowerCase();
+    return host === 'friendlycalculator.in' || host.endsWith('.friendlycalculator.in');
+  };
+  const getExternalHttpUrl = link => {
+    if (!link || !link.getAttribute || link.dataset.fcUtmTagged === '1') return null;
+    const rawHref = link.getAttribute('href');
+    if (!rawHref || link.hasAttribute('download')) return null;
+    try {
+      const url = new URL(rawHref, location.href);
+      if (!/^https?:$/.test(url.protocol) || isFriendlyCalculatorDomain(url.hostname)) return null;
+      return url;
+    } catch (_) {
+      return null;
+    }
+  };
+  const tagExternalLink = link => {
+    const url = getExternalHttpUrl(link);
+    if (!url) return null;
+    // Do not overwrite a publisher's or partner's existing UTM attribution.
+    if (url.searchParams.has('utm_source') || url.searchParams.has('utm_medium')) {
+      link.dataset.fcUtmTagged = '1';
+      return url;
+    }
+    url.searchParams.set('utm_source', 'friendlycalculator.in');
+    url.searchParams.set('utm_medium', 'referral');
+    link.setAttribute('href', url.toString());
+    link.dataset.fcUtmTagged = '1';
+    return url;
+  };
+  const tagExistingExternalLinks = () => {
+    document.querySelectorAll('a[href]').forEach(tagExternalLink);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tagExistingExternalLinks, { once: true });
+  } else {
+    tagExistingExternalLinks();
+  }
+  // Delegated handling also covers links added later by calculator or affiliate UI.
+  document.addEventListener('click', event => {
+    const link = event.target && typeof event.target.closest === 'function'
+      ? event.target.closest('a[href]')
+      : null;
+    const url = tagExternalLink(link);
+    if (!url || !window.gtag || isFriendlyCalculatorDomain(url.hostname)) return;
+    // Record only the destination domain; do not send link text, query values or user data.
+    window.gtag('event', 'outbound_click', {
+      link_domain: url.hostname.toLowerCase(),
+      outbound: true
+    });
+  }, true);
+}
+
 })();
