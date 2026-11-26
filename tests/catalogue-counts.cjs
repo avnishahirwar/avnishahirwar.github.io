@@ -26,7 +26,7 @@ module.exports = function getCatalogueCounts(root) {
   const biologyChemistryCount = biologySection ? [...biologySection[2].matchAll(/<a class="card" href="\/calculators\//g)].length : 0;
   // The current directory is alphabetically grouped, not category grouped.
   // Validate its complete calculator inventory against the visible total.
-  const directoryCalculatorCount = [...directory.matchAll(/<a class="card" href="\/calculators\//g)].length;
+  const directoryCalculatorCount = new Set([...directory.matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])).size;
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const start = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(start, homepage.indexOf('</nav>', start));
