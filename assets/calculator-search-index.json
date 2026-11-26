@@ -27783,5 +27783,82 @@
     "category": "Agriculture & Rural Finance",
     "keywords": "livestock stocking rate calculator calculate animals per hectare and the grazing area available to each animal",
     "description": "Calculate animals per hectare and the grazing area available to each animal."
+  },
+  {
+    "name": "Portfolio Rebalancing Calculator",
+    "url": "/calculators/portfolio-rebalancing-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio rebalancing asset allocation target weights buy sell trade drift",
+    "description": "Calculate buy and sell amounts to move a portfolio from its current asset mix to a target allocation."
+  },
+  {
+    "name": "Tax-Loss Harvesting Calculator",
+    "url": "/calculators/tax-loss-harvesting-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "tax loss harvesting capital gains unrealized loss tax offset illustrative",
+    "description": "Estimate a hypothetical tax offset from an eligible realised capital gain and an unrealised investment loss."
+  },
+  {
+    "name": "Dollar-Cost Averaging vs Lump-Sum Calculator",
+    "url": "/calculators/dollar-cost-averaging-vs-lump-sum-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "dollar cost averaging DCA lump sum comparison monthly investing timing",
+    "description": "Compare a one-time investment with equal monthly investments of the same total amount over the same period."
+  },
+  {
+    "name": "Sequence of Returns Risk Calculator",
+    "url": "/calculators/sequence-of-returns-risk-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "sequence of returns risk retirement withdrawal order portfolio returns",
+    "description": "Illustrate how the order of annual portfolio returns can affect a portfolio when fixed withdrawals are taken each year."
+  },
+  {
+    "name": "Bond Ladder Calculator",
+    "url": "/calculators/bond-ladder-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "bond ladder maturity schedule coupon cash flow fixed income",
+    "description": "Model equal-sized bond ladder rungs, annual coupon cash flows and scheduled principal maturities over a chosen term."
+  },
+  {
+    "name": "Stock Position Sizing Calculator",
+    "url": "/calculators/stock-position-sizing-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "stock position sizing risk per trade stop loss share quantity",
+    "description": "Estimate a share quantity from a portfolio risk budget and the price distance between an entry and stop level."
+  },
+  {
+    "name": "Dividend Reinvestment vs Cash Calculator",
+    "url": "/calculators/dividend-reinvestment-vs-cash-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "dividend reinvestment DRIP cash payout compounding dividend growth",
+    "description": "Compare a simplified dividend reinvestment scenario with taking dividends as cash while holding the same starting shares."
+  },
+  {
+    "name": "Inflation-Adjusted Investment Goal Calculator",
+    "url": "/calculators/inflation-adjusted-investment-goal-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "inflation adjusted investment goal future corpus monthly contribution purchasing power",
+    "description": "Estimate the future nominal amount needed to meet a goal in today's purchasing power and the monthly contribution required under an assumed return."
+  },
+  {
+    "name": "Macaulay Bond Duration Calculator",
+    "url": "/calculators/macaulay-bond-duration-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "Macaulay duration modified duration bond price interest rate sensitivity",
+    "description": "Calculate a coupon bond's price, Macaulay duration and modified duration from coupon, yield, maturity and payment frequency."
+  },
+  {
+    "name": "Portfolio Drawdown Recovery Calculator",
+    "url": "/calculators/portfolio-drawdown-recovery-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio drawdown recovery required gain loss recovery percentage",
+    "description": "Calculate the gain required to recover a portfolio from its current value back to a previous peak after a decline."
+  },
+  {
+    "name": "Portfolio Risk Contribution Calculator",
+    "url": "/calculators/portfolio-risk-contribution-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio risk contribution component risk marginal risk contribution covariance volatility correlation weights",
+    "description": "Estimate how equity, bonds and cash contribute to a three-asset portfolio's volatility using weights, standard deviations and pairwise correlations."
   }
 ]
