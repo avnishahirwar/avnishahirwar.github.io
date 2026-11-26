@@ -321,8 +321,9 @@ a{color:var(--fc-blue)}a:hover{color:var(--fc-blue-dark);text-decoration:underli
 <section class="home-note"><strong>About these tools:</strong> Calculators provide estimates based on the values and assumptions entered. Review each tool's method and limitations; verify important financial, tax or health decisions with the relevant official source or a qualified professional.</section>
 </main>
 
-<script src="/assets/calculator-search-matcher.js"></script>
+<script src="/assets/calculator-search-matcher.js" defer></script>
 <script>
+document.addEventListener('DOMContentLoaded',()=>{
 (()=>{'use strict';
 const input=document.getElementById('fc-home-tool-search');
 const clear=document.getElementById('fc-home-search-clear');
@@ -422,6 +423,7 @@ input.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(search,
 input.addEventListener('search',search);
 clear.addEventListener('click',()=>{input.value='';search();input.focus();});
 })();
+});
 </script>
 <script src="/assets/homepage-personal-tools.js" defer></script>
 <script src="/assets/site-shell.js" defer></script>
