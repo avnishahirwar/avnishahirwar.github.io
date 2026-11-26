@@ -1309,7 +1309,7 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v12/);
+  assert.match(worker, /friendly-calculator-public-v13/);
   assert.match(worker, /__fc_home_refresh/);
   assert.match(worker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
   assert.match(worker, /key !== CACHE_NAME/);
@@ -2384,4 +2384,64 @@ test('About and Methodology use the hostname-gated shared analytics bootstrap', 
     assert.doesNotMatch(html, /googletagmanager\.com\/gtag\/js\?id=G-QVWQSEDRGL/i, relative + ' must not bypass the hostname guard');
     assert.doesNotMatch(html, /gtag\(['"]config['"],\s*['"]G-QVWQSEDRGL['"]\)/i, relative + ' must not contain a direct GA4 config');
   }
+});
+
+test('shared Header exposes Calculator Search and connects it to the existing full-catalogue search', () => {
+  const shell=fs.readFileSync(path.join(root,'assets/site-shell.js'),'utf8');
+  const homepage=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(shell,/fc-header-search-link/);
+  assert.match(shell,/aria-label="'\+nav\.search\+'">'\+nav\.search\+'<\/a>/);
+  assert.match(shell,/\/index\.html#fc-home-tool-search/);
+  assert.match(shell,/getElementById\('fc-home-tool-search'\)/);
+  assert.match(shell,/scrollIntoView\(\{behavior:'smooth',block:'center'\}\)/);
+  assert.match(homepage,/id="fc-home-tool-search"/);
+});
+
+
+test('professional UI refinement keeps the shared Header accessible and improves homepage hierarchy', () => {
+  const shellCss=fs.readFileSync(path.join(root,'assets/site-shell.css'),'utf8');
+  const homepage=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(shellCss,/fc-global-links \.fc-header-search-link/);
+  assert.match(shellCss,/\.fc-global-links>a:not\(\.fc-header-search-link\):focus-visible/);
+  assert.match(shellCss,/\.home-top20/);
+  assert.match(shellCss,/prefers-reduced-motion:reduce/);
+  assert.match(homepage,/class="home-top20"/);
+  assert.match(homepage,/class="home-intro"/);
+});
+
+
+test('shared page-template polish targets existing calculator, category, blog and About markup', () => {
+  const shellCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const samples = {
+    calculator: fs.readFileSync(path.join(root, 'calculators/compound-interest-calculator.html'), 'utf8'),
+    category: fs.readFileSync(path.join(root, 'calculator/finance-calculators.html'), 'utf8'),
+    blogIndex: fs.readFileSync(path.join(root, 'blog/index.html'), 'utf8'),
+    blogArticle: fs.readFileSync(path.join(root, 'blog/compound-interest-how-it-grows.html'), 'utf8'),
+    about: fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8')
+  };
+  assert.match(samples.calculator, /class="panel"/);
+  assert.match(samples.calculator, /class="fields"/);
+  assert.match(samples.category, /class="card"/);
+  assert.match(samples.blogIndex, /class="panel"/);
+  assert.match(samples.blogArticle, /class="related"/);
+  assert.match(samples.about, /class="doc-content"/);
+  for (const selector of [
+    'main.wrap .hero',
+    'main.wrap .panel',
+    'main.wrap .card',
+    'main.wrap .field',
+    'main.wrap .results .result',
+    'main.wrap .article-cover',
+    'main.doc-main',
+    'html[data-fc-theme="dark"] main.wrap',
+    'prefers-reduced-motion:reduce'
+  ]) assert.ok(shellCss.includes(selector), 'Missing shared page-template style: ' + selector);
+});
+
+
+test('shared stylesheet rollout increments the public PWA cache generation', () => {
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.match(worker, /const CACHE_NAME = 'friendly-calculator-public-v13'/);
+  assert.match(worker, /\/assets\/site-shell\.css/);
+  assert.match(worker, /key !== CACHE_NAME/);
 });
