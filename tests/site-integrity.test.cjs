@@ -1309,7 +1309,7 @@ test('browser image resizer and converter process files locally without upload c
 test('PWA manifest is installable and service worker caches only public query-free GET pages', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest'), 'utf8'));
   const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
-  assert.match(worker, /friendly-calculator-public-v12/);
+  assert.match(worker, /friendly-calculator-public-v13/);
   assert.match(worker, /__fc_home_refresh/);
   assert.match(worker, /searchParams\.set\('__fc_home_refresh',\s*CACHE_NAME\)/);
   assert.match(worker, /key !== CACHE_NAME/);
@@ -2436,4 +2436,12 @@ test('shared page-template polish targets existing calculator, category, blog an
     'html[data-fc-theme="dark"] main.wrap',
     'prefers-reduced-motion:reduce'
   ]) assert.ok(shellCss.includes(selector), 'Missing shared page-template style: ' + selector);
+});
+
+
+test('shared stylesheet rollout increments the public PWA cache generation', () => {
+  const worker = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
+  assert.match(worker, /const CACHE_NAME = 'friendly-calculator-public-v13'/);
+  assert.match(worker, /\/assets\/site-shell\.css/);
+  assert.match(worker, /key !== CACHE_NAME/);
 });
