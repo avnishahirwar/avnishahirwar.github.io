@@ -269,3 +269,14 @@ test('shared shell loads one marked regional preference engine after Settings co
   assert.match(shell, /script\[data-fc-global-locale\],script\[src="\/assets\/global-locale\.js"\]/);
   assert.equal((shell.match(/src='\/assets\/global-locale\.js'/g) || []).length, 1, 'The shared shell must insert the regional engine only once.');
 });
+
+
+test('regional engine idempotently binds Settings controls created after engine load', () => {
+  const engine = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(engine, /bindControls/);
+  assert.match(engine, /select\.dataset\.fcLocaleBound==='true'/);
+  assert.match(engine, /select\.dataset\.fcLocaleBound='true'/);
+  assert.match(shell, /window\.FCLocale&&typeof window\.FCLocale\.bindControls==='function'\)window\.FCLocale\.bindControls\(\)/);
+  assert.ok(shell.indexOf('window.FCLocale.bindControls()') < shell.indexOf("regionalEngine.src='/assets/global-locale.js'"));
+});
