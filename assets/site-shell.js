@@ -1675,6 +1675,8 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+/* Bind Settings controls when the locale engine ran before this shared shell. */
+if(window.FCLocale&&typeof window.FCLocale.bindControls==='function')window.FCLocale.bindControls();
 /* Load the regional preference engine only after all shared selectors and Settings mirrors exist. */
 if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale],script[src="/assets/global-locale.js"]')){
   const regionalEngine=document.createElement('script');
