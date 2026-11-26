@@ -20,5 +20,5 @@ test('extracts AdSense publisher association IDs', () => {
 
 test('counts visible text approximately and excludes scripts/styles', () => {
   const words = countWords('<main><h1>Useful calculator guide</h1><p>Formula and example</p><script>hidden tracking code</script><style>.x{}</style></main>');
-  assert.equal(words, 7);
+  assert.equal(words, 6);
 });
