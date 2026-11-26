@@ -1532,3 +1532,61 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
 .fc-more-menu a.fc-login-link{display:flex;align-items:center;justify-content:flex-start;min-height:42px;padding:9px 12px;border:1px solid #3b536a;border-radius:8px;background:#182e43;color:#fff!important;font-weight:700;white-space:normal;text-decoration:none}
 .fc-more-menu a.fc-login-link:hover,.fc-more-menu a.fc-login-link:focus-visible{background:#223b54;border-color:#d8bd82;color:#fff!important;text-decoration:none;outline:2px solid #d8bd82;outline-offset:2px}
 .fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}
+
+
+/* Professional UI refinement — shared navigation and homepage hierarchy. */
+.fc-global-header{border-bottom:1px solid #34475d;box-shadow:0 5px 20px #07132124}
+.fc-global-nav{row-gap:10px}
+.fc-global-brand{letter-spacing:.055em}
+.fc-global-links{gap:5px 7px}
+.fc-global-links>a:not(.fc-header-search-link){display:inline-flex;align-items:center;min-height:38px;padding:7px 10px;border:1px solid transparent;border-radius:8px;transition:background-color .16s ease,border-color .16s ease,color .16s ease}
+.fc-global-links>a:not(.fc-header-search-link):hover,
+.fc-global-links>a:not(.fc-header-search-link):focus-visible,
+.fc-global-links>a[aria-current="page"]:not(.fc-header-search-link){background:#20364e;border-color:#40536a;text-decoration:none}
+.fc-global-links .fc-header-search-link{min-height:38px;padding:7px 13px;border-radius:8px;background:#d8bd82;color:#101c2c;border-color:#d8bd82;font-weight:800}
+.fc-global-links .fc-header-search-link:hover,
+.fc-global-links .fc-header-search-link:focus-visible{background:#f0dfb5;color:#101c2c;border-color:#f0dfb5}
+.fc-more-navigation>summary{min-height:38px}
+.home-intro .page-wrap{position:relative}
+.home-intro h1{max-width:900px}
+.home-founder-credit,.home-partnership-cta,.home-related-tool{font-size:.9rem}
+.home-founder-credit a,.home-partnership-cta a{font-weight:700;text-underline-offset:3px}
+.home-main{max-width:1200px}
+.home-top20{margin:0 0 20px;padding:20px 22px;border:1px solid #dce4ec;border-radius:14px;background:#fff;box-shadow:0 8px 24px #152d450d}
+.home-top20>h2{margin:0 0 6px;color:#19344e;font-size:1.35rem;letter-spacing:-.02em}
+.home-top20>p{margin:0;color:#64717d}
+.home-top20 [data-top20]{margin-top:14px}
+.home-top20 .top20-all{display:flex;flex-wrap:wrap;gap:8px 18px;margin:12px 0 0;padding:12px 0 0;border-top:1px solid #e8edf2;list-style:none}
+.home-top20 .top20-all li{margin:0}
+.home-top20 .top20-all a{font-size:.9rem;font-weight:650;text-decoration:none;text-underline-offset:3px}
+.home-top20 .top20-all a:hover{text-decoration:underline;color:#916a2d}
+.home-tool-search{scroll-margin-top:24px}
+.home-tool-search label{font-size:1.12rem}
+.home-tool-search input{min-height:50px}
+.home-tool-search button{min-width:92px}
+.home-search-result{transition:border-color .15s ease,box-shadow .15s ease}
+.home-search-result:hover{border-color:#c6a15b!important;box-shadow:0 5px 16px #152d4510;text-decoration:none}
+@media(max-width:1100px){
+ .fc-global-links>a:not(.fc-header-search-link){min-height:40px;padding:7px 9px}
+}
+@media(max-width:760px){
+ .fc-global-links{gap:6px 7px}
+ .fc-global-links>a:not(.fc-header-search-link),.fc-global-links .fc-header-search-link{min-height:42px;padding:8px 10px}
+ .home-top20{padding:16px;border-radius:12px}
+ .home-top20>h2{font-size:1.2rem}
+ .home-top20 .top20-all{gap:9px 14px}
+}
+@media(max-width:380px){
+ .fc-global-links>a:not(.fc-header-search-link),.fc-global-links .fc-header-search-link{font-size:.76rem;padding:7px 8px}
+}
+html[data-fc-theme="dark"] .home-top20{background:#142235;border-color:#34475d;color:#e6edf4}
+html[data-fc-theme="dark"] .home-top20>h2{color:#edf3f8}
+html[data-fc-theme="dark"] .home-top20>p{color:#bdc9d5}
+html[data-fc-theme="dark"] .home-top20 .top20-all{border-top-color:#34475d}
+html[data-fc-theme="dark"] .home-top20 .top20-all a{color:#91c8ff}
+html[data-fc-theme="dark"] .fc-global-links>a:not(.fc-header-search-link):hover,
+html[data-fc-theme="dark"] .fc-global-links>a:not(.fc-header-search-link):focus-visible,
+html[data-fc-theme="dark"] .fc-global-links>a[aria-current="page"]:not(.fc-header-search-link){background:#263f59;border-color:#52657a}
+@media(prefers-reduced-motion:reduce){
+ .fc-global-links>a:not(.fc-header-search-link),.home-search-result{transition:none}
+}
