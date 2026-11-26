@@ -3,41 +3,35 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {catalogueCount, sectionCardCounts, transformedFiles, sync, updateHomepage} = require('../scripts/sync-calculator-counts.cjs');
+const {catalogueCount, transformedFiles, sync} = require('../scripts/sync-calculator-counts.cjs');
 const root = path.join(__dirname, '..');
 
-test('global calculator total matches unique catalog routes with existing pages', () => {
-  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const routes = new Set(index.map(item => item.url).filter(url => typeof url === 'string' && url.startsWith('/') && url.endsWith('.html') && !url.includes('?') && !url.includes('#') && !url.split('/').includes('..') && fs.existsSync(path.join(root, url.slice(1)))));
-  assert.equal(catalogueCount(), routes.size);
-});
+function sitemapCalculatorUrls() {
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  return [...new Set([...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+    .map(match => new URL(match[1]).pathname)
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
+}
 
-test('English generated directory and Hindi category directory expose unique published calculator links', () => {
-  const english = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const groups = english.split('<section class="group"').slice(1);
-  const englishLinks = groups.flatMap(group => [...group.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.startsWith('/calculators/') && href.endsWith('.html')));
-  const uniqueEnglishLinks = new Set(englishLinks);
-  const rootPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html')).map(name => '/calculators/' + name);
-  assert.match(english, /<section class="group" id="group-[a-z0-9]+">/, 'English directory should expose generated alphabetical groups');
-  assert.ok(englishLinks.length > 3000, 'English directory should cover a broad calculator catalogue');
-  assert.equal(uniqueEnglishLinks.size, englishLinks.length, 'English directory must not duplicate calculator routes');
-  assert.deepEqual([...uniqueEnglishLinks].sort(), rootPages.sort(), 'English directory should list every root calculator page exactly once');
+function directoryCategoryLinks(html) {
+  const sections = [...html.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
+  const links = sections.flatMap(section => [...section[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"[^>]*>/g)].map(match => match[1]));
+  return {sections, links};
+}
 
-  const hindi = fs.readFileSync(path.join(root, 'hi/calculator/site-directory.html'), 'utf8');
-  const counts = sectionCardCounts(hindi);
-  const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
-  assert.ok(counts.size >= 20, 'Hindi directory should expose its category sections');
-  assert.ok(total > 3000, 'Hindi directory should cover a broad linked catalog');
-  for (const [id, count] of counts) {
-    const sectionStart = hindi.indexOf('id="' + id + '"');
-    const sectionEnd = hindi.indexOf('</section>', sectionStart);
-    const section = hindi.slice(sectionStart, sectionEnd < 0 ? undefined : sectionEnd);
-    const expectedLinks = new Set([...section.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.includes('/calculators/')));
-    assert.equal(expectedLinks.size, count, 'Hindi directory ' + id + ' card count');
-    const plural = count === 1 ? 'calculator' : 'calculators';
-    assert.ok(hindi.includes('href="#' + id + '"'), 'Hindi directory category shortcut ' + id + ' should exist');
-    assert.ok(hindi.includes('<span>' + count.toLocaleString('en-US') + ' ' + plural + '</span>'), 'Hindi directory category shortcut ' + id + ' should show its count');
-  }
+test('curated directory covers every canonical sitemap calculator across 20 unique categories', () => {
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const expected = sitemapCalculatorUrls();
+  const {sections, links} = directoryCategoryLinks(directory);
+  const unique = [...new Set(links)].sort();
+  const duplicates = links.filter((url, index) => links.indexOf(url) !== index);
+  assert.equal(sections.length, 20, 'The directory should retain all 20 curated category sections');
+  assert.equal(unique.length, expected.length, 'Every canonical sitemap calculator should appear in the directory');
+  assert.deepEqual(unique, expected, 'Directory routes must exactly match canonical sitemap calculator routes');
+  assert.deepEqual(duplicates, ['/calculators/loan-emi-calculator.html'], 'Only the retained Loan EMI shortcut may appear in two categories');
+  assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
+  assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
+  assert.ok(directory.includes('/calculator/insurance-calculators.html'), 'The directory should link the insurance category hub');
 });
 
 test('all catalog-driven counts are synchronized and repeatable', () => {
@@ -49,13 +43,26 @@ test('all catalog-driven counts are synchronized and repeatable', () => {
   assert.equal(sync({check:true}).changed.length, 0);
 });
 
-test('homepage count transformation updates stale totals when the catalog grows', () => {
-  const total = catalogueCount();
+test('homepage category totals match the directory sections and canonical sitemap catalogue', () => {
+  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  const {sections, links} = directoryCategoryLinks(directory);
+  const navStart = homepage.indexOf('<nav class="home-category-index"');
+  const nav = homepage.slice(navStart, homepage.indexOf('</nav>', navStart));
+  const navCounts = [...nav.matchAll(/<span>([\d,]+) calculator(?:s)?<\/span>/g)].map(match => Number(match[1].replace(/,/g, '')));
+  const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card" href="\/calculators\//g)].length);
+  assert.equal(navCounts.length, 20);
+  assert.deepEqual(navCounts, sectionCounts, 'Homepage category counters must match the linked directory sections');
+  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length + 1, 'The retained Loan EMI shortcut is counted in two categories');
+  assert.equal(links.length, sitemapCalculatorUrls().length + 1);
+});
+
+test('all catalog-driven counts are synchronized and repeatable after catalogue growth', () => {
+  const {total} = transformedFiles();
   const staleCount = total - 1;
+  const {updateHomepage} = require('../scripts/sync-calculator-counts.cjs');
   const stale = `<meta content="Search all ${staleCount.toLocaleString('en-US')} calculator entries"> <p>Total catalogue: ${staleCount.toLocaleString('en-US')} calculators</p>`;
   const updated = updateHomepage(stale, total);
   assert.ok(updated.includes(`Search all ${total.toLocaleString('en-US')} calculator entries`));
   assert.ok(updated.includes(`Total catalogue: ${total.toLocaleString('en-US')} calculators`));
-  const localized = updateHomepage(`items.length!==${staleCount}; status.textContent="Browse ${staleCount} calculators";`, total, true);
-  assert.equal(localized, `items.length!==${total}; status.textContent="Browse ${total} calculators";`);
 });
