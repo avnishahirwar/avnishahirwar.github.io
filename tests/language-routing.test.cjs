@@ -18,7 +18,7 @@ test('global language selector supports all configured locales', () => {
   assert.ok(supported, 'Expected supported language set');
   const enabled = [...supported[1].matchAll(/([a-z]{2,3}):1/g)].map(match => match[1]);
   const catalogue = require('../config/language-catalogue.json');
-  assert.deepEqual(new Set(enabled), new Set(catalogue.locales.map(locale => locale.code)));
+  assert.deepEqual(new Set(enabled), new Set(catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code)));
 });
 
 test('language switching preserves the current route when its translation exists', () => {
