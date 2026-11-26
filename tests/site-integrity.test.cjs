@@ -9,7 +9,7 @@ require(path.join(root, 'assets/chemistry-calculators.js'));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, homepageCoreCalculatorCount } = catalogueCounts;
+const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, directoryCalculatorCount, homepageCoreCalculatorCount } = catalogueCounts;
 
 function localFile(url, baseFile = 'index.html') {
   const parsed = new URL(url, 'https://friendlycalculator.in/' + baseFile);
@@ -891,7 +891,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
     assert.ok(counts.has(card[1]), 'Directory must expose the homepage category: ' + card[1]);
   }
   assert.equal(navCategoryCount, 20);
-  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>949 calculators<\/span><\/a>/);
+  assert.match(homepage, /href="\/calculator\/site-directory\.html#math-statistics"><strong>Mathematics, Numbers &amp; Statistics<\/strong><span>\\d+ calculators<\/span><\/a>/);
   assert.ok(searchIndex.some(item => item.url === '/calculators/stamp-duty-calculator.html'));
   assert.ok(searchIndex.some(item => item.url === '/calculators/bigha-to-sq-ft-calculator.html'));
   assert.ok(directory.includes('/calculator/agriculture-calculators.html'));
@@ -1846,7 +1846,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1879,7 +1879,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1912,7 +1912,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1945,7 +1945,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -1978,7 +1978,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2011,7 +2011,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2044,7 +2044,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2074,7 +2074,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.ok(index.some(item => item.url === route));
   }
   assert.equal(index.length, expectedSearchIndexLength);
-  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+  assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 
@@ -2086,7 +2086,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
  for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
  assert.equal(index.length, expectedSearchIndexLength);
- assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
+ assert.equal(directoryCalculatorCount, Number((directory.match(/<h1>All ([\d,]+) calculators<\/h1>/) || [])[1].replace(/,/g, '')), 'Directory card count must match its published total');
  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
 });
 

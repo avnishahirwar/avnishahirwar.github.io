@@ -24,9 +24,12 @@ module.exports = function getCatalogueCounts(root) {
   const coreCalculatorUrls = [...new Set(sections.flatMap(s => [...s[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])))].sort();
   const biologySection = sections.find(section => section[1] === 'biology-chemistry');
   const biologyChemistryCount = biologySection ? [...biologySection[2].matchAll(/<a class="card" href="\/calculators\//g)].length : 0;
+  // The current directory is alphabetically grouped, not category grouped.
+  // Validate its complete calculator inventory against the visible total.
+  const directoryCalculatorCount = new Set([...directory.matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])).size;
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const start = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(start, homepage.indexOf('</nav>', start));
   const homepageCoreCalculatorCount = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, m) => sum + Number(m[1]), 0);
-  return { sitemapCalculatorUrls, qualityPassUrls, canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength: expectedSearchIndexUrls.length, coreCalculatorUrls, expectedCoreCalculatorCount: sitemapCalculatorUrls.length, biologyChemistryCount, homepageCoreCalculatorCount };
+  return { sitemapCalculatorUrls, qualityPassUrls, canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength: expectedSearchIndexUrls.length, coreCalculatorUrls, expectedCoreCalculatorCount: sitemapCalculatorUrls.length, biologyChemistryCount, directoryCalculatorCount, homepageCoreCalculatorCount };
 };

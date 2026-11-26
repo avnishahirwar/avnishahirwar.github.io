@@ -1,82 +1,91 @@
 'use strict';
-// Source of truth: rebuild the public alphabetical directory from every current HTML page in /calculators.
-// The main-branch workflow regenerates and commits this file after catalogue changes.
-/**
- * Rebuild calculator/site-directory.html from the calculators/ catalogue.
- * Usage: node scripts/build-site-directory.cjs [--check]
- * --check exits 1 when the committed file would change (used in CI).
- */
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
+const { catalogueStats } = require('./sync-calculator-counts.cjs');
 const ROOT = path.join(__dirname, '..');
-const CALC_DIR = path.join(ROOT, 'calculators');
-
-function esc(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const OUTPUT = path.join(ROOT, 'calculator', 'site-directory.html');
+const CATEGORIES = [{"id":"savings-investments","label":"Savings, Investment & Retirement","heading":"Savings, investment and retirement calculators","hub":"/calculator/wealth-calculators.html","desc":"Plan deposits, savings, investment scenarios and long-term goals."},{"id":"loans-credit","label":"Loans, EMI & Credit","heading":"Loans, EMI and credit calculators","hub":"/calculator/loan-calculators.html","desc":"Estimate repayments, borrowing costs and loan affordability."},{"id":"insurance-protection","label":"Insurance & Protection","heading":"Insurance and protection calculators","hub":"/calculator/insurance-calculators.html","desc":"Review insurance premium inputs and protection-related estimates."},{"id":"tax-payroll","label":"Tax, Salary & Payroll","heading":"Tax, salary and payroll calculators","hub":"/calculator/tax-calculators.html","desc":"Estimate taxes, payroll figures and salary-related calculations."},{"id":"business-operations","label":"Business, Sales & Operations","heading":"Business, sales and operations calculators","hub":"/calculator/business-calculators.html","desc":"Model business costs, margins, sales and operational decisions."},{"id":"math-statistics","label":"Mathematics, Numbers & Statistics","heading":"Mathematics, numbers and statistics calculators","hub":"/calculator/math-calculators.html","desc":"Solve everyday mathematics, numerical and statistical problems."},{"id":"astronomy-space","label":"Astronomy & Space","heading":"Astronomy and space calculators","hub":"/calculator/physics-calculators.html","desc":"Explore physics, astronomy and space-related calculations."},{"id":"astrology-numerology","label":"Astrology & Numerology","heading":"Astrology and numerology calculators","hub":"/calculator/everyday-calculators.html","desc":"Explore date-based and numerology-style tools for general interest."},{"id":"geometry-construction","label":"Geometry, Measurement & Construction","heading":"Geometry, measurement and construction calculators","hub":"/calculator/geometry-2d-3d-calculators.html","desc":"Calculate dimensions, areas, volumes and construction quantities."},{"id":"date-time-work","label":"Date, Time & Work","heading":"Date, time and work calculators","hub":"/calculator/everyday-calculators.html","desc":"Calculate dates, durations, time intervals and work schedules."},{"id":"converters-technology","label":"Converters, Data & Technology","heading":"Converters, data and technology calculators","hub":"/calculator/image-tools.html","desc":"Convert units and work with common digital and technology values."},{"id":"home-travel","label":"Home, Travel & Everyday Costs","heading":"Home, travel and everyday cost calculators","hub":"/calculator/everyday-calculators.html","desc":"Estimate household, travel, vehicle and daily-life costs."},{"id":"energy-sustainability","label":"Energy & Sustainability","heading":"Energy and sustainability calculators","hub":"/calculator/industry-calculators.html","desc":"Estimate energy use, electricity, power and sustainability measures."},{"id":"food-cooking","label":"Food & Cooking","heading":"Food and cooking calculators","hub":"/calculator/everyday-calculators.html","desc":"Work with food quantities, recipes and cooking-related calculations."},{"id":"education-learning","label":"Education & Academic Tools","heading":"Education and academic tools","hub":"/calculator/science-calculators.html","desc":"Support learning, academic exercises and study calculations."},{"id":"health-family","label":"Health, Fitness & Family","heading":"Health, fitness and family calculators","hub":"/calculator/medical-health-calculators.html","desc":"Use general health, fitness and family calculators as informational tools."},{"id":"agriculture-rural","label":"Agriculture & Rural Finance","heading":"Agriculture and rural finance calculators","hub":"/calculator/agriculture-calculators.html","desc":"Estimate crop, farm, land and rural-finance figures."},{"id":"government-schemes","label":"Government Schemes & Eligibility","heading":"Government schemes and eligibility calculators","hub":"/calculator/tax-calculators.html","desc":"Review general eligibility and government-scheme estimates."},{"id":"career-salary","label":"Career & Salary Planning","heading":"Career and salary planning calculators","hub":"/calculator/finance-calculators.html","desc":"Compare pay periods, career scenarios and income planning figures."},{"id":"biology-chemistry","label":"Biology & Chemistry","heading":"Biology and chemistry calculators","hub":"/calculator/biology-calculators.html","desc":"Explore biology, chemistry and scientific calculation tools."}];
+function esc(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
-function collect() {
-  const pages = [];
-  for (const f of fs.readdirSync(CALC_DIR)) {
-    if (!f.endsWith('.html')) continue;
-    const full = path.join(CALC_DIR, f);
-    const html = fs.readFileSync(full, 'utf8');
-    const rawTitle = (html.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '';
-    let title = rawTitle.split('|')[0].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
-    if (!title) title = f.replace(/\.html$/, '').replace(/-/g, ' ');
-    const rawDesc = (html.match(/<meta\s+name="description"\s+content="([^"]*)"/i) || [])[1] || '';
-    const desc = rawDesc.replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim().slice(0, 180);
-    pages.push({ slug: f.replace(/\.html$/, ''), title, desc });
+function categoryFor(item) {
+  const category = String(item.category || '').toLowerCase();
+  const text = [item.name, item.url, item.keywords, item.description].join(' ').toLowerCase();
+  const byText = () => {
+    if (/\b(loan|emi|mortgage|credit|debt|repayment|borrow|lending|overdraft|apr)\b/.test(text)) return 'loans-credit';
+    if (/\b(insurance|premium|policy|coverage|claim)\b/.test(text)) return 'insurance-protection';
+    if (/\b(tax|gst|vat|tds|payroll|salary|withholding|income tax)\b/.test(text)) return 'tax-payroll';
+    if (/\b(business|profit|margin|sales|revenue|cash flow|invoice|inventory|accounting|break even)\b/.test(text)) return 'business-operations';
+    if (/\b(sip|mutual fund|investment|invest|savings|retirement|fd calculator|fixed deposit|ppf|rd calculator|compound interest)\b/.test(text)) return 'savings-investments';
+    if (/\b(agriculture|crop|farm|kcc|livestock|bigha|yield per acre)\b/.test(text)) return 'agriculture-rural';
+    if (/\b(health|medical|bmi|calorie|fitness|heart rate|blood pressure|pregnancy|baby|child|family|workout|exercise|sport)\b/.test(text)) return 'health-family';
+    if (/\b(food|cooking|recipe|nutrition|ingredient|restaurant|kitchen)\b/.test(text)) return 'food-cooking';
+    if (/\b(astronomy|space|planet|orbit|star|cosmology|astrophysics)\b/.test(text)) return 'astronomy-space';
+    if (/\b(astrology|numerology|zodiac|horoscope)\b/.test(text)) return 'astrology-numerology';
+    if (/\b(conversion|converter|convert|unit|pixel|image|file size|data size|bandwidth|storage)\b/.test(text)) return 'converters-technology';
+    if (/\b(date|time|hours|minutes|days|weeks|calendar|work hours|timesheet)\b/.test(text)) return 'date-time-work';
+    if (/\b(career|salary|hourly pay|daily pay|workforce)\b/.test(text)) return 'career-salary';
+    if (/\b(geometry|triangle|circle|polygon|area|perimeter|volume|construction|roof|concrete|brick|tile|flooring|paint)\b/.test(text)) return 'geometry-construction';
+    if (/\b(energy|electricity|solar|power|watt|sustainability|carbon|emission|fuel efficiency)\b/.test(text)) return 'energy-sustainability';
+    if (/\b(real estate|property|rent|home|garden|travel|trip|fuel|car|vehicle|automobile|pet|distance)\b/.test(text)) return 'home-travel';
+    if (/\b(education|student|grade|exam|academic|learning|school|college|gpa)\b/.test(text)) return 'education-learning';
+    if (/\b(government|scheme|eligibility|subsidy|benefit)\b/.test(text)) return 'government-schemes';
+    return 'math-statistics';
+  };
+  const exact = {
+    'savings, investment & retirement':'savings-investments','loans, emi & credit':'loans-credit','insurance & protection':'insurance-protection',
+    'tax, salary & payroll':'tax-payroll','tax & compliance':'tax-payroll','tax & payroll':'tax-payroll',
+    'business, sales & operations':'business-operations','business':'business-operations','business & trade':'business-operations','business & operations':'business-operations','organisations & enterprise':'business-operations','manufacturing & industry':'business-operations','logistics & supply chain':'business-operations',
+    'mathematics, numbers & statistics':'math-statistics','math':'math-statistics','statistics':'math-statistics','mathematics & statistics':'math-statistics','calculator':'math-statistics','tools':'converters-technology',
+    'astronomy & space':'astronomy-space','physics':'astronomy-space','physics & science':'astronomy-space','astrology & numerology':'astrology-numerology',
+    'geometry, measurement & construction':'geometry-construction','construction & diy':'geometry-construction','construction':'geometry-construction','architecture & built environment':'geometry-construction','design & creative':'geometry-construction','electrical & electronics':'energy-sustainability','fashion & textile':'business-operations',
+    'date, time & work':'date-time-work','career & salary planning':'career-salary','converters, data & technology':'converters-technology','conversion':'converters-technology',
+    'home, travel & everyday costs':'home-travel','everyday life':'home-travel','home & garden':'home-travel','travel':'home-travel','automobile':'home-travel','pets':'home-travel','hospitality & tourism':'home-travel',
+    'energy & sustainability':'energy-sustainability','ecology':'energy-sustainability','environment & sustainability':'energy-sustainability',
+    'food & cooking':'food-cooking','food':'food-cooking','food & restaurant':'food-cooking','education & academic tools':'education-learning','education':'education-learning',
+    'health, fitness & family':'health-family','health':'health-family','health & fitness':'health-family','health & family':'health-family','sports':'health-family','workout planning':'health-family','exercise & fitness':'health-family',
+    'agriculture & rural finance':'agriculture-rural','agriculture & farming':'agriculture-rural','government schemes & eligibility':'government-schemes',
+    'biology & chemistry':'biology-chemistry','biology':'biology-chemistry','chemistry':'biology-chemistry'
+  };
+  return exact[category] || byText();
+}
+function build() {
+  const { entries } = catalogueStats();
+  const pages = entries.filter(item => item.url.startsWith('/calculators/'));
+  const groups = new Map(CATEGORIES.map(category => [category.id, []]));
+  for (const page of pages) {
+    const id = categoryFor(page);
+    if (!groups.has(id)) throw new Error('Unmapped calculator category: ' + id);
+    groups.get(id).push(page);
   }
-  pages.sort((a, b) => a.slug.localeCompare(b.slug));
-  return pages;
+  for (const group of groups.values()) group.sort((a,b) => String(a.name).localeCompare(String(b.name), 'en'));
+  const loan = pages.find(page => page.url === '/calculators/loan-emi-calculator.html');
+  if (loan) groups.get('savings-investments').push(loan);
+  const counts = new Map(CATEGORIES.map(category => [category.id, groups.get(category.id).length]));
+  const total = pages.length;
+  const groupedTotal = [...counts.values()].reduce((sum, count) => sum + count, 0);
+  const quickLinks = CATEGORIES.map(category => '<a class="quick" href="#' + category.id + '"><strong>' + esc(category.label) + '</strong><span>' + counts.get(category.id).toLocaleString('en-US') + ' calculators</span></a>').join('');
+  const sections = CATEGORIES.map(category => {
+    const list = groups.get(category.id).map(item => {
+      const search = esc([item.name, item.description, item.keywords].join(' ').toLowerCase());
+      return '<a class="card" href="' + esc(item.url) + '" data-search="' + search + '"><strong>' + esc(item.name) + '</strong><span>' + esc(item.description || '') + '</span></a>';
+    }).join('');
+    return '<section class="section calculator-category" id="' + category.id + '"><header class="category-heading"><div><h2>' + category.heading + '</h2><p>' + category.desc + '</p><a href="' + category.hub + '">Explore related category resources</a></div><strong>' + counts.get(category.id).toLocaleString('en-US') + ' tools</strong></header><div class="cards">' + list + '</div></section>';
+  }).join('');
+  const services = '<section class="section" id="business-services"><h2>Business & developer services</h2><div class="cards"><a class="card" href="/calculator/business.html"><strong>Business services</strong><span>Explore business workflows, partnerships and platform services.</span></a><a class="card" href="/calculator/api.html"><strong>Developer API</strong><span>Review API access, documentation and integration options.</span></a><a class="card" href="/calculator/pricing.html"><strong>Pricing and plans</strong><span>See available service tiers and pricing information.</span></a><a class="card" href="/calculator/premium-waitlist.html"><strong>Premium waitlist</strong><span>Register interest in future premium features.</span></a></div></section>';
+  const regional = '<section class="section" id="regional-hubs"><h2>Regional and specialist hubs</h2><nav class="resource-links"><a href="/calculator/bhopal-calculators.html">Bhopal and Madhya Pradesh calculators</a><a href="/calculator/image-tools.html">Image tools</a><a href="/calculator/languages.html">Language editions</a></nav></section>';
+  const trust = '<section class="section" id="trust-resources"><h2>About, trust & policies</h2><nav class="resource-links"><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/disclaimer.html">Disclaimer</a><a href="/calculator/cookies.html">Cookies</a><a href="/calculator/methodology.html">Methodology</a><a href="/calculator/editorial-policy.html">Editorial policy</a><a href="/calculator/contact.html">Contact</a></nav></section>';
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Site Directory - ' + total.toLocaleString('en-US') + ' Calculators | Friendly Calculator</title><meta name="description" content="Browse calculator tools, business services and website information from one organized directory."><link rel="canonical" href="https://friendlycalculator.in/calculator/site-directory.html"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="Site Directory - ' + total.toLocaleString('en-US') + ' Calculators | Friendly Calculator"><meta property="og:description" content="Browse calculator tools, business services and website information from one organized directory."><meta property="og:url" content="https://friendlycalculator.in/calculator/site-directory.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Site Directory - ' + total.toLocaleString('en-US') + ' Calculators | Friendly Calculator"><meta name="twitter:description" content="Browse calculator tools, business services and website information from one organized directory."><meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools"><link rel="stylesheet" href="/assets/site-shell.css"><style>*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#172638;font:16px/1.7 system-ui,sans-serif}.wrap{width:min(1100px,94%);margin:24px auto}.hero,.section,.panel{background:#fff;border:1px solid #dfe5eb;border-radius:14px;padding:22px;margin:16px 0}.hero{background:#101c2c;color:#fff}.hero p{color:#e0e8ef}.hero img{display:block;width:min(100%,720px);height:auto;border-radius:12px;margin:18px auto 0}.quick-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}.quick{display:grid;gap:3px;padding:11px 13px;border:1px solid #dfe5eb;border-radius:9px;background:#f4f7fa;color:#172638;text-decoration:none}.quick strong{font-size:.93rem}.quick span{font-size:.82rem;color:#596b7c}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:10px}.card{display:grid;gap:4px;background:#edf3f7;border-radius:9px;padding:12px;text-decoration:none;color:#172638;border:1px solid transparent}.card strong{font-size:.98rem}.card span{color:#596b7c;font-size:.85rem;line-height:1.5}.category-heading{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.category-heading h2{margin:0 0 8px}.category-heading p{margin:0 0 8px;color:#596b7c}.category-heading>div>a{font-size:.9rem;font-weight:700}.category-heading>strong{white-space:nowrap;background:#edf3f7;border-radius:8px;padding:7px 10px}#siteSearch{width:100%;padding:12px;border:1px solid #b8c4cf;border-radius:8px;font:inherit}#searchStatus{color:#4b5a6a;margin:8px 0 0}.resource-links{display:flex;flex-wrap:wrap;gap:12px}.resource-links a{color:#20364e;font-weight:650}.hidden{display:none}@media(max-width:650px){.cards,.quick-links{grid-template-columns:1fr}.category-heading{display:block}.category-heading>strong{display:inline-block;margin-top:10px}}</style></head><body><main class="wrap"><header class="hero"><p>Directory</p><h1>All ' + total.toLocaleString('en-US') + ' calculators</h1><img src="/assets/friendly-calculator-brand-illustration.svg" alt="Friendly Calculator brand illustration for the online calculator directory" width="1200" height="630" fetchpriority="high" decoding="async"><p>Browse calculator tools, business services and website information from one organized directory.</p><p>Search ' + groupedTotal.toLocaleString('en-US') + ' calculators by name or topic.</p></header><section class="panel" id="calculator-category-index"><h2>Browse calculators by category</h2><nav class="quick-links">' + quickLinks + '</nav></section><section class="panel"><label for="siteSearch">Search calculators by name or topic</label><input id="siteSearch" type="search" placeholder="Type to filter calculators..." autocomplete="off"><p id="searchStatus" role="status" aria-live="polite">Showing all ' + groupedTotal.toLocaleString('en-US') + ' calculator entries.</p></section>' + sections + regional + services + trust + '</main><footer class="section"><div class="wrap"><strong>FRIENDLY CALCULATOR</strong><nav class="resource-links"><a href="/">Home</a><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/contact.html">Contact</a></nav></div></footer><script>(document.addEventListener("DOMContentLoaded",function(){var q=document.getElementById("siteSearch"),status=document.getElementById("searchStatus"),cards=document.querySelectorAll(".calculator-category .card");if(!q)return;function filter(){var v=q.value.trim().toLowerCase(),visible=0;for(var i=0;i<cards.length;i++){var match=!v||cards[i].getAttribute("data-search").indexOf(v)!==-1;cards[i].classList.toggle("hidden",!match);if(match)visible++;}if(status)status.textContent="Showing "+visible.toLocaleString()+" of "+cards.length.toLocaleString()+" calculator entries.";}q.addEventListener("input",filter);}));</script><script src="/assets/site-shell.js" defer></script></body></html>';
 }
-
-function bucket(slug) {
-  const c = slug[0].toLowerCase();
-  return /[a-z]/.test(c) ? c : 'num';
-}
-
-function build(pages) {
-  const total = pages.length.toLocaleString('en-US');
-  const buckets = new Map();
-  for (const p of pages) {
-    const b = bucket(p.slug);
-    if (!buckets.has(b)) buckets.set(b, []);
-    buckets.get(b).push(p);
-  }
-  const keys = Array.from(buckets.keys()).sort((a, b) => (a === 'num' ? 1 : 0) - (b === 'num' ? 1 : 0) || a.localeCompare(b));
-  let sections = '';
-  for (const k of keys) {
-    sections += '<section class="group" id="group-' + k + '"><h2>' + (k === 'num' ? '0-9' : k.toUpperCase()) + '</h2><div class="cards">';
-    for (const p of buckets.get(k)) {
-      const search = esc((p.title + ' ' + p.desc).toLowerCase());
-      sections += '<a class="card" href="/calculators/' + esc(p.slug) + '.html" data-search="' + search + '"><strong>' + esc(p.title) + '</strong>' + (p.desc ? '<span>' + esc(p.desc) + '</span>' : '') + '</a>';
-    }
-    sections += '</div></section>';
-  }
-  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Site Directory - ' + total + ' Calculators | Friendly Calculator</title><meta name="description" content="Browse all ' + total + ' free online calculators on Friendly Calculator, organised alphabetically. Finance, tax, health, math, business and everyday tools."><link rel="canonical" href="https://friendlycalculator.in/calculator/site-directory.html"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:site_name" content="Friendly Calculator"><meta property="og:title" content="Site Directory - ' + total + ' Calculators | Friendly Calculator"><meta property="og:description" content="Browse all ' + total + ' free online calculators on Friendly Calculator, organised alphabetically. Finance, tax, health, math, business and everyday tools."><meta property="og:url" content="https://friendlycalculator.in/calculator/site-directory.html"><meta property="og:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta property="og:image:alt" content="Friendly Calculator — online calculators and practical tools"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Site Directory - ' + total + ' Calculators | Friendly Calculator"><meta name="twitter:description" content="Browse all ' + total + ' free online calculators on Friendly Calculator, organised alphabetically. Finance, tax, health, math, business and everyday tools."><meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png"><meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools"><link rel="stylesheet" href="/assets/site-shell.css"><style>*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#172638;font:16px/1.7 system-ui,sans-serif}.wrap{width:min(1100px,94%);margin:24px auto}.hero,.panel{background:#fff;border:1px solid #dfe5eb;border-radius:14px;padding:22px;margin:16px 0}.hero{background:#101c2c;color:#fff}#q{width:100%;padding:12px;border:1px solid #b8c4cf;border-radius:8px;font:inherit}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.card{display:grid;gap:4px;background:#edf3f7;border-radius:9px;padding:12px;text-decoration:none;color:#172638;border:1px solid transparent}.card strong{font-size:.98rem}.card span{color:#596b7c;font-size:.85rem;line-height:1.5}.group h2{margin:22px 0 10px;font-size:1.2rem;text-transform:uppercase;letter-spacing:.05em;color:#596b7c}.card:hover{border-color:#101c2c}.hidden{display:none}.fc-footer{background:#101c2c;color:#fff;margin-top:24px;padding:24px}.fc-footer a{color:#bfd4e3}.fc-footer-links{display:grid;gap:4px;margin-top:8px}@media(max-width:650px){.cards{grid-template-columns:1fr}}</style></head><body><main class="wrap"><header class="hero"><p>Directory</p><h1>All ' + total + ' calculators</h1><p>Every free calculator on Friendly Calculator, alphabetically. Use the box below to filter instantly.</p><p><a href="/calculator/physics-calculators.html">Browse Physics Calculators</a></p><p>Search calculators by topic in the Physics directory.</p></header><section class="panel"><label for="q" class="sr-only" style="position:absolute;left:-9999px">Filter calculators</label><input id="q" type="search" placeholder="Type to filter calculators..." autocomplete="off"></section>' + sections + '</main><footer class="fc-footer"><div class="wrap"><strong>FRIENDLY CALCULATOR</strong><nav class="fc-footer-links"><a href="/">Home</a><a href="/calculator/about.html">About</a><a href="/calculator/privacy.html">Privacy</a><a href="/calculator/terms.html">Terms</a><a href="/calculator/contact.html">Contact</a></nav></div></footer><script>(document.addEventListener("DOMContentLoaded",function(){var q=document.getElementById("q");if(!q)return;q.addEventListener("input",function(){var v=q.value.trim().toLowerCase(),c=document.querySelectorAll(".card");for(var i=0;i<c.length;i++){c[i].classList.toggle("hidden",v!==""&&c[i].getAttribute("data-search").indexOf(v)===-1);}});}));</script><script src="/assets/site-shell.js" defer></script></body></html>';
-}
-
 function main() {
-  const pages = collect();
-  if (pages.length < 3000) {
-    console.error('Unexpected catalogue size: ' + pages.length + ' calculator pages found.');
-    process.exit(1);
-  }
-  const out = build(pages);
-  const target = path.join(ROOT, 'calculator', 'site-directory.html');
+  const output = build();
   if (process.argv.includes('--check')) {
-    const current = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : '';
-    if (current !== out) {
-      console.error('site-directory.html is out of date (' + pages.length.toLocaleString('en-US') + ' entries). Run: node scripts/build-site-directory.cjs');
-      process.exit(1);
-    }
-    console.log('site-directory.html is up to date: ' + pages.length.toLocaleString('en-US') + ' entries.');
+    const current = fs.existsSync(OUTPUT) ? fs.readFileSync(OUTPUT, 'utf8') : '';
+    if (current !== output) { console.error('site-directory.html is out of date. Run node scripts/build-site-directory.cjs'); process.exit(1); }
+    console.log('site-directory.html is up to date.');
     return;
   }
-  fs.writeFileSync(target, out);
-  console.log('site-directory.html rebuilt with ' + pages.length.toLocaleString('en-US') + ' entries.');
+  fs.writeFileSync(OUTPUT, output);
+  console.log('site-directory.html rebuilt from ' + catalogueStats().core.toLocaleString('en-US') + ' canonical calculator pages.');
 }
-
 main();

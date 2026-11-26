@@ -67,7 +67,7 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
   assert.ok(shell.includes('siteSettingsControls.appendChild(currencyControl)'), 'Currency remains functional in Settings.');
   assert.ok(shell.includes("headerCurrencySource.cloneNode(true)") && shell.includes("headerCurrencyControl.className='fc-header-currency-control'"), 'A separate currency selector must be mirrored into the Header without moving the Settings control.');
   assert.ok(shell.includes("headerCurrencySelect.id='fc-header-currency-select'") && shell.includes("headerLanguageControl.after(headerCurrencyControl)"), 'Display currency must appear immediately after Language in the Header with a unique ID.');
-  assert.ok(shell.includes("window.FCLocale.setCurrency(headerCurrencySelect.value)") && shell.includes("window.addEventListener('fc:localechange',syncHeaderCurrency) && shell.includes("window.addEventListener('fc:locale-ready',syncHeaderCurrency)")"), 'Header currency changes must persist through FCLocale and stay synchronized with Settings.');
+  assert.ok(shell.includes("window.FCLocale.setCurrency(headerCurrencySelect.value)") && shell.includes("window.addEventListener('fc:localechange',syncHeaderCurrency)") && shell.includes("window.addEventListener('fc:locale-ready',syncHeaderCurrency)"), 'Header currency changes must persist through FCLocale and stay synchronized with Settings.');
 
   assert.ok(shell.includes("regionalMarkup.innerHTML=currencyControl+countryControl+unitControl") && shell.includes("regionalControlsSource.append(...regionalMarkup.children)"), 'Country & format and Units must remain staged for Settings.');
   assert.ok(shell.includes("regionalSettingsControls.appendChild(countryFormatLabel)") && shell.includes("regionalSettingsControls.appendChild(unitControl)") && shell.includes("panel.append(regionalSettingsControls)"), 'Country & format and Units remain available as synchronized Settings mirrors.');
@@ -117,25 +117,26 @@ test('header order places Login immediately before Language and keeps Sitemap on
   assert.ok(css.includes('.fc-global-links>.fc-all-calculators-link'));
 });
 
-test('directory promotes the global hub and current tax category route', () => {
+test('directory loads shared navigation that exposes the global hub and canonical tax route', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  assert.match(directory, /href="\/international\/"/);
-  assert.match(directory, /href="\/calculator\/tax\.html"/);
-  assert.match(directory, /International Calculators/);
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(directory, /\/assets\/site-shell\.js/);
+  assert.ok(shell.includes('globalCalculatorsUrl'), 'Shared navigation must define the international hub URL.');
+  assert.ok(shell.includes('[nav.global,globalCalculatorsUrl]'), 'Shared More navigation must expose the international hub.');
+  assert.ok(shell.includes("r+'tax.html'"), 'Shared navigation must use the canonical tax category route.');
 });
 
-test('static directory navigation is crawlable and uses the canonical tax category route', () => {
-  const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const header = directory.slice(directory.indexOf('<nav id="fc-primary-navigation"'), directory.indexOf('</nav>', directory.indexOf('<nav id="fc-primary-navigation"')));
+test('shared navigation exposes the canonical category routes and international hub', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   for (const route of [
-    '/calculator/finance-calculators.html',
-    '/calculator/tax.html',
-    '/calculator/business-calculators.html',
-    '/calculator/everyday-calculators.html',
-    '/international/',
-    '/calculator/site-directory.html'
-  ]) assert.ok(header.includes('href="' + route + '"'), 'Missing crawlable header route: ' + route);
-  assert.ok(!header.includes('/calculator/tax-calculators.html'), 'Retired tax category URL must not be in primary navigation');
+    "r+'finance-calculators.html'",
+    "r+'tax.html'",
+    "r+'business-calculators.html'",
+    "r+'everyday-calculators.html'",
+    '[nav.global,globalCalculatorsUrl]',
+    "r+'site-directory.html'"
+  ]) assert.ok(shell.includes(route), 'Missing shared navigation route: ' + route);
+  assert.ok(!shell.includes("r+'tax-calculators.html'"), 'Retired tax category URL must not be in primary navigation');
 });
 
 
