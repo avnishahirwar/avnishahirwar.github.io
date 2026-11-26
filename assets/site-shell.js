@@ -1675,4 +1675,15 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+/* Load the regional preference engine after the shared shell has mounted
+   its selectors and Settings mirrors. This binds the controls on every page
+   that includes the shared shell, without per-page script edits. */
+if(!window.FCLocale&&!document.querySelector('script[data-fc-global-locale]')){
+  const regionalEngine=document.createElement('script');
+  regionalEngine.src='/assets/global-locale.js';
+  regionalEngine.dataset.fcGlobalLocale='true';
+  regionalEngine.async=true;
+  document.head.appendChild(regionalEngine);
+}
+
 })();
