@@ -1675,4 +1675,80 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
+
+/* Outbound UTM attribution for external links.
+   Keep internal navigation clean and preserve existing campaign attribution. */
+if (isProductionAnalyticsHost) {
+  const isFriendlyCalculatorDomain = hostname => {
+    const host = String(hostname || '').toLowerCase();
+    return host === 'friendlycalculator.in' || host.endsWith('.friendlycalculator.in');
+  };
+  const getExternalHttpUrl = link => {
+    if (!link || !link.getAttribute) return null;
+    const rawHref = link.getAttribute('href');
+    if (!rawHref || link.hasAttribute('download')) return null;
+    try {
+      const url = new URL(rawHref, location.href);
+      if (!/^https?:$/.test(url.protocol) || isFriendlyCalculatorDomain(url.hostname)) return null;
+      return url;
+    } catch (_) {
+      return null;
+    }
+  };
+  const tagExternalLink = link => {
+    const url = getExternalHttpUrl(link);
+    if (!url) return null;
+    if (link.dataset.fcUtmTagged === '1') return url;
+    // Fill only missing UTM fields; never overwrite existing publisher/partner values.
+    if (!url.searchParams.has('utm_source')) url.searchParams.set('utm_source', 'friendlycalculator.in');
+    if (!url.searchParams.has('utm_medium')) url.searchParams.set('utm_medium', 'referral');
+    link.setAttribute('href', url.toString());
+    link.dataset.fcUtmTagged = '1';
+    return url;
+  };
+  const tagExistingExternalLinks = () => {
+    document.querySelectorAll('a[href]').forEach(tagExternalLink);
+  };
+  const observeExternalLinks = () => {
+    if (typeof MutationObserver === 'undefined' || !document.documentElement) return;
+    const observer = new MutationObserver(records => {
+      records.forEach(record => {
+        if (record.type === 'attributes') tagExternalLink(record.target);
+        record.addedNodes.forEach(node => {
+          if (!node || node.nodeType !== 1) return;
+          if (typeof node.matches === 'function' && node.matches('a[href]')) tagExternalLink(node);
+          if (typeof node.querySelectorAll === 'function') node.querySelectorAll('a[href]').forEach(tagExternalLink);
+        });
+      });
+    });
+    observer.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ['href']
+    });
+  };
+  const initialiseOutboundTracking = () => {
+    tagExistingExternalLinks();
+    observeExternalLinks();
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialiseOutboundTracking, { once: true });
+  } else {
+    initialiseOutboundTracking();
+  }
+  // Delegated handling also covers dynamically inserted links before navigation.
+  document.addEventListener('click', event => {
+    const link = event.target && typeof event.target.closest === 'function'
+      ? event.target.closest('a[href]')
+      : null;
+    const url = tagExternalLink(link);
+    if (!url || typeof window.gtag !== 'function') return;
+    // Record only the destination domain; do not send link text, query values or user data.
+    window.gtag('event', 'outbound_click', {
+      link_domain: url.hostname.toLowerCase(),
+      outbound: true
+    });
+  }, true);
+}
 })();
