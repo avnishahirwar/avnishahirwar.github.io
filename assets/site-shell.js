@@ -578,7 +578,7 @@ if(primaryNav&&!activeHeader.querySelector('.fc-nav-toggle')){
   (activeHeader.querySelector('.fc-top-row')||activeHeader.querySelector('.fc-global-nav'))?.insertBefore(toggle,primaryNav);
 }
 const routeLanguageSelect=document.getElementById('fc-language-select');
-const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;document.head.appendChild(localeScript);
+const localeScript=document.createElement('script');localeScript.src='/assets/global-locale.js';localeScript.defer=true;localeScript.dataset.fcGlobalLocale='true';document.head.appendChild(localeScript);
 if(routeLanguageSelect){routeLanguageSelect.value=currentLocale;routeLanguageSelect.setAttribute('autocomplete','off');}
 const footerLabels={
   gu:['અમારા વિશે (અંગ્રેજી)','પદ્ધતિ (અંગ્રેજી)','ગોપનીયતા (અંગ્રેજી)','શરતો (અંગ્રેજી)','અસ્વીકરણ (અંગ્રેજી)','કાનૂની અને અનુપાલન (અંગ્રેજી)','એમ્બેડ','સાઇટમેપ (અંગ્રેજી)','સંપર્ક (અંગ્રેજી)','જાહેરાત'],
@@ -1675,18 +1675,6 @@ if(isCalculatorRoute&&main){
   refreshFavourite();
 }
 
-/* Load the regional preference engine after the shared shell has mounted
-   its selectors and Settings mirrors. This binds the controls on every page
-   that includes the shared shell, without per-page script edits. */
-const existingRegionalEngine=document.querySelector('script[data-fc-global-locale],script[src="/assets/global-locale.js"]');
-if(existingRegionalEngine){
-  existingRegionalEngine.dataset.fcGlobalLocale='true';
-}else if(!window.FCLocale){
-  const regionalEngine=document.createElement('script');
-  regionalEngine.src='/assets/global-locale.js';
-  regionalEngine.dataset.fcGlobalLocale='true';
-  regionalEngine.async=true;
-  document.head.appendChild(regionalEngine);
-}
+/* The regional engine is loaded once above and marked for duplicate detection. */
 
 })();
