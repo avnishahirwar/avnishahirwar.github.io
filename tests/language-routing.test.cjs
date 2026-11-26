@@ -393,3 +393,12 @@ test('sitemap hreflang grouping recognizes every published locale prefix', () =>
   const catalogue = require('../config/language-catalogue.json');
   assert.deepEqual(actual, catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk'));
 });
+
+
+test('locale switching strips every translated locale prefix and keeps the UK market hub separate', () => {
+  assert.match(shell, /const localePathPrefixPattern=\/\^\\\/(?:zh\\|hi[\\s\\S]*?sd)\(\?=\\\/\)\//);
+  assert.ok(shell.includes("const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');"));
+  assert.ok(shell.includes("if(p==='/uk/'||p.startsWith('/uk/'))return localeHome[next];"));
+  assert.ok(shell.includes("const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern,''));"));
+  assert.doesNotMatch(shell.match(/const localeHome=\\{([^}]+)\\}/)?.[1] || '', /uk:/, 'Ukrainian must not route to the English-GB /uk/ market hub.');
+});
