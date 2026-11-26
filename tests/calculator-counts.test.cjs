@@ -30,7 +30,7 @@ test('curated directory covers every canonical sitemap calculator across 20 uniq
   assert.equal(sections.length, 20, 'The directory should retain all 20 curated category sections');
   assert.equal(unique.length, expected.length, 'Every canonical sitemap calculator should appear in the directory');
   assert.deepEqual(unique, expected, 'Directory routes must exactly match canonical sitemap calculator routes');
-  assert.deepEqual(duplicates, ['/calculators/loan-emi-calculator.html'], 'Only the retained Loan EMI shortcut may appear in two categories');
+  assert.deepEqual(duplicates, [], 'Every calculator route must appear exactly once across the 20 categories');
   assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
   assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
   assert.ok(directory.includes('/calculator/insurance-calculators.html'), 'The directory should link the insurance category hub');
@@ -55,8 +55,8 @@ test('homepage category totals match the directory sections and canonical sitema
   const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card"[^>]*href="\/calculators\//g)].length);
   assert.equal(navCounts.length, 20);
   assert.deepEqual(navCounts, sectionCounts, 'Homepage category counters must match the linked directory sections');
-  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length + 1, 'The retained Loan EMI shortcut is counted in two categories');
-  assert.equal(links.length, sitemapCalculatorUrls().length + 1);
+  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length, 'Every canonical calculator route is counted exactly once');
+  assert.equal(links.length, sitemapCalculatorUrls().length);
 });
 
 test('all catalog-driven counts are synchronized and repeatable after catalogue growth', () => {
