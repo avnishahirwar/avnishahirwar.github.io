@@ -1,5 +1,5 @@
 // Regression coverage for the canonical 20-category directory and its sitemap-backed catalogue.
-// Card links keep href adjacent to the class for stable semantic test selectors.
+// Match card links regardless of the order of their HTML attributes.
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -17,7 +17,7 @@ function sitemapCalculatorUrls() {
 
 function directoryCategoryLinks(html) {
   const sections = [...html.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
-  const links = sections.flatMap(section => [...section[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"[^>]*>/g)].map(match => match[1]));
+  const links = sections.flatMap(section => [...section[2].matchAll(/<a class="card"[^>]*href="(\/calculators\/[^"]+)"[^>]*>/g)].map(match => match[1]));
   return {sections, links};
 }
 
@@ -52,7 +52,7 @@ test('homepage category totals match the directory sections and canonical sitema
   const navStart = homepage.indexOf('<nav class="home-category-index"');
   const nav = homepage.slice(navStart, homepage.indexOf('</nav>', navStart));
   const navCounts = [...nav.matchAll(/<span>([\d,]+) calculator(?:s)?<\/span>/g)].map(match => Number(match[1].replace(/,/g, '')));
-  const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card" href="\/calculators\//g)].length);
+  const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card"[^>]*href="\/calculators\//g)].length);
   assert.equal(navCounts.length, 20);
   assert.deepEqual(navCounts, sectionCounts, 'Homepage category counters must match the linked directory sections');
   assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length + 1, 'The retained Loan EMI shortcut is counted in two categories');
