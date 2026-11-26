@@ -1,5 +1,6 @@
 // Regression coverage for the canonical 20-category directory and its sitemap-backed catalogue.
-// Match card links regardless of the order of their HTML attributes.
+// Match card links regardless of attribute order; generated pages must be refreshed before CI checks.
+// The catalogue and all 20 category sections must remain duplicate-free.
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
