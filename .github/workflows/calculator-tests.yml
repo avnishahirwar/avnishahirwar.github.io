@@ -54,4 +54,4 @@ jobs:
         with:
           node-version: 22
       - name: Prevent competitor calculator outbound URLs
-        run: node --test tests/no-competitor-outbound-links.test.cjs
+        run: node --test tests/no-competitor-outbound-links.test.cjs tests/external-outbound-utm.test.cjs
