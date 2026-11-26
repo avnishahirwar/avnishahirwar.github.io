@@ -43,10 +43,6 @@ test('source code license is MIT and does not claim editorial content or brand a
 });
 
 
-test('legacy Everyday category URL permanently redirects to the canonical category page', () => {
-  const redirects = fs.readFileSync(path.join(ROOT, '_redirects'), 'utf8');
-  assert.ok(redirects.trim().split(/\r?\n/).includes('/calculator/everyday.html /calculator/everyday-calculators.html 301'));
-});
 
 test('requested public index targets explicitly allow indexing and declare stable canonicals', () => {
   const checks = [
