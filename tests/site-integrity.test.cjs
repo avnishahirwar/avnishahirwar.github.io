@@ -2395,3 +2395,15 @@ test('shared Header exposes Calculator Search and connects it to the existing fu
   assert.match(shell,/scrollIntoView\(\{behavior:'smooth',block:'center'\}\)/);
   assert.match(homepage,/id="fc-home-tool-search"/);
 });
+
+
+test('professional UI refinement keeps the shared Header accessible and improves homepage hierarchy', () => {
+  const shellCss=fs.readFileSync(path.join(root,'assets/site-shell.css'),'utf8');
+  const homepage=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(shellCss,/fc-global-links \.fc-header-search-link/);
+  assert.match(shellCss,/\.fc-global-links>a:not\(\.fc-header-search-link\):focus-visible/);
+  assert.match(shellCss,/\.home-top20/);
+  assert.match(shellCss,/prefers-reduced-motion:reduce/);
+  assert.match(homepage,/class="home-top20"/);
+  assert.match(homepage,/class="home-intro"/);
+});
