@@ -72,16 +72,21 @@ function audit(root) {
   const missingDocs = REQUIRED_DOCS.filter(file => !fs.existsSync(path.join(root, file)));
   if (missingDocs.length) findings.push({ severity: 'high', code: 'REQUIRED_TRUST_PAGES_MISSING', detail: missingDocs.join(', ') });
   const indexable = pageRecords.filter(p => !p.noindex);
-  const thinCandidates = indexable.filter(p => p.words < 150).map(p => ({ file: p.file, words: p.words }));
+  const thinCandidates = indexable.filter(p => p.words < 150);
+  const thinReviewCounts = {
+    total: thinCandidates.length,
+    calculatorPages: thinCandidates.filter(p => /(^|\\/)calculators\\//.test(p.file)).length,
+    otherPages: thinCandidates.filter(p => !/(^|\\/)calculators\\//.test(p.file)).length
+  };
   if (thinCandidates.length) findings.push({ severity: 'review', code: 'LOW_TEXT_PAGE_REVIEW', detail: thinCandidates.length + ' indexable HTML pages have fewer than 150 raw visible-text words; this is a review queue, NOT an automatic noindex/removal recommendation.' });
   return {
     generatedAt: new Date().toISOString(),
     mode: 'read-only',
-    totals: { htmlFiles: files.length, indexableHtml: indexable.length, noindexHtml: pageRecords.length - indexable.length, thinTextReviewCandidates: thinCandidates.length },
+    totals: { htmlFiles: files.length, indexableHtml: indexable.length, noindexHtml: pageRecords.length - indexable.length, thinTextReviewCandidates: thinReviewCounts },
     adsTxt: { exists: adsTxtExists, googleDirectPublisherIds: adsTxtIds },
     publisher: { ids: publisherIds, standardAdLoaderOccurrences: loaderCount },
     requiredTrustPages: { expected: REQUIRED_DOCS.length, present: REQUIRED_DOCS.length - missingDocs.length, missing: missingDocs },
-    thinTextReviewCandidates: thinCandidates,
+    thinTextReviewCandidates: thinReviewCounts,
     findings
   };
 }
