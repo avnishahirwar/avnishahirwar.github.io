@@ -119,9 +119,10 @@ test('header order places Login immediately before Language and keeps Sitemap on
 
 test('directory promotes the global hub and current tax category route', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
+  // Keep the global hub discoverable by both its canonical destination and descriptive link text.
   assert.match(directory, /href="\/international\/"/);
   assert.match(directory, /href="\/calculator\/tax\.html"/);
-  assert.match(directory, /International Calculators/);
+  assert.match(directory, /href="\/international\/">International Calculators<\/a>/);
 });
 
 test('static directory navigation is crawlable and uses the canonical tax category route', () => {
