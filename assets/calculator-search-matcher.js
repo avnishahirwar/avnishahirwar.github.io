@@ -20,6 +20,7 @@
   };
 
   const normalize = value => String(value || '').normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   const tokensOf = value => normalize(value).split(/\s+/).filter(Boolean);
   // Short acronyms must match whole tokens; longer words retain prefix matching.
