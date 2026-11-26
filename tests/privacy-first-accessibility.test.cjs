@@ -17,6 +17,27 @@ test('homepage, terms and contact pages contain no direct GA4 loader', () => {
   }
 });
 
+test('public HTML has no direct GA4, GTM or HubSpot tracking/form loaders', () => {
+  const htmlFiles = [];
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === '.git' || entry.name === 'node_modules' || entry.name === 'tests') continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.isFile() && entry.name.endsWith('.html')) htmlFiles.push(full);
+    }
+  };
+  walk(root);
+  const violations = [];
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (/googletagmanager\\.com\\/(?:gtag|gtm)\\.js|G-QVWQSEDRGL|GTM-MGJQH4DB|hsforms\\.net/i.test(html)) {
+      violations.push(path.relative(root, file));
+    }
+  }
+  assert.deepEqual(violations, [], 'Remove direct tracking or embedded marketing-form loaders: ' + violations.join(', '));
+});
+
 test('contact page does not embed a third-party form or collect form fields', () => {
   const contact = read('calculator/contact.html');
   assert.doesNotMatch(contact, /hsforms\.net|hs-form-frame|<form\b/i);
