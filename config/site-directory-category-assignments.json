@@ -635,7 +635,7 @@
     {
       "id": "business-operations",
       "title": "Business, Sales &amp; Operations",
-      "description": "Pricing, profit, margins, invoices, cash flow, inventory, business costs and operating metrics. 34 tools",
+      "description": "Pricing, profit, margins, invoices, cash flow, inventory, business costs and operating metrics. 35 tools",
       "urls": [
         "/calculators/profit-loss-calculator.html",
         "/calculators/discount-calculator.html",
@@ -661,6 +661,7 @@
         "/calculators/pert-calculator.html",
         "/calculators/gmroi-calculator.html",
         "/calculators/google-adsense-revenue-calculator.html",
+        "/calculators/page-rpm-calculator.html",
         "/calculators/roas-calculator.html",
         "/calculators/saas-metrics-calculator.html",
         "/calculators/pre-post-money-valuation-calculator.html",
