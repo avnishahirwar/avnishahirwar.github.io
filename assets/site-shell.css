@@ -1532,7 +1532,7 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
 .fc-more-menu a.fc-login-link[aria-current=page]{border-color:#d8bd82;box-shadow:inset 3px 0 0 #d8bd82}
 
 /* Privacy-first accessibility preferences: scalable type, high contrast and reduced motion. */
-html[data-fc-text-size="large"]{font-size:112.5%}html[data-fc-text-size="largest"]{font-size:125%}
+html[data-fc-text-size="large"]{font-size:112.5%}html[data-fc-text-size="largest"]{font-size:125%}html[data-fc-text-size="large"] body{font-size:1.125rem!important}html[data-fc-text-size="largest"] body{font-size:1.25rem!important}
 .fc-settings-subheading{margin:12px 0 6px;font-size:.95rem;color:var(--fc-shell-ink)}
 .fc-accessibility-actions{display:flex;gap:8px;margin:0 0 10px}
 .fc-accessibility-actions button,.fc-display-panel>.fc-display-action{min-height:44px}
