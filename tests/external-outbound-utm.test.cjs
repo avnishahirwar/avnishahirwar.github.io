@@ -22,6 +22,7 @@ class FakeAnchor {
     this.children = options.children || [];
   }
   getAttribute(name) { return name === 'href' ? this._href : null; }
+  get href() { return this._href; }
   setAttribute(name, value) { if (name === 'href') this._href = value; }
   hasAttribute(name) { return name === 'download' && this.download; }
   matches(selector) { return selector === 'a[href]' && Boolean(this._href); }
