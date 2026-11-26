@@ -5243,13 +5243,6 @@
     "description": "Estimate a share quantity from a portfolio risk budget and the price distance between an entry and stop level."
   },
   {
-    "name": "Jensen's Alpha Calculator",
-    "url": "/calculators/jensen-alpha-calculator.html",
-    "category": "Savings, Investment & Retirement",
-    "keywords": "Jensen alpha CAPM portfolio benchmark beta risk free rate risk adjusted return",
-    "description": "Estimate a portfolio's Jensen alpha using portfolio return, benchmark return, risk-free rate and beta."
-  },
-  {
     "name": "Dividend Reinvestment vs Cash Calculator",
     "url": "/calculators/dividend-reinvestment-vs-cash-calculator.html",
     "category": "Savings, Investment & Retirement",
@@ -5276,5 +5269,12 @@
     "category": "Savings, Investment & Retirement",
     "keywords": "portfolio drawdown recovery required gain loss recovery percentage",
     "description": "Calculate the gain required to recover a portfolio from its current value back to a previous peak after a decline."
+  },
+  {
+    "name": "Portfolio Risk Contribution Calculator",
+    "url": "/calculators/portfolio-risk-contribution-calculator.html",
+    "category": "Savings, Investment & Retirement",
+    "keywords": "portfolio risk contribution component risk marginal risk contribution covariance volatility correlation weights",
+    "description": "Estimate how equity, bonds and cash contribute to a three-asset portfolio's volatility using weights, standard deviations and pairwise correlations."
   }
 ]

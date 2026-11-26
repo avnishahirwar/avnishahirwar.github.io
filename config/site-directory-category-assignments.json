@@ -5,7 +5,7 @@
     {
       "id": "savings-investments",
       "title": "Savings, Investment &amp; Retirement",
-      "description": "Bank deposits, government savings schemes, investment returns, portfolio planning and retirement estimates. 545 tools",
+      "description": "Bank deposits, government savings schemes, investment returns, portfolio planning and retirement estimates. 556 tools",
       "urls": [
         "/calculators/compound-interest-calculator.html",
         "/calculators/rd-calculator.html",
@@ -551,7 +551,18 @@
         "/calculators/price-to-earnings-ratio-calculator.html",
         "/calculators/market-capitalization-calculator.html",
         "/calculators/enterprise-value-calculator.html",
-        "/calculators/return-on-equity-calculator.html"
+        "/calculators/return-on-equity-calculator.html",
+        "/calculators/portfolio-rebalancing-calculator.html",
+        "/calculators/tax-loss-harvesting-calculator.html",
+        "/calculators/dollar-cost-averaging-vs-lump-sum-calculator.html",
+        "/calculators/sequence-of-returns-risk-calculator.html",
+        "/calculators/bond-ladder-calculator.html",
+        "/calculators/stock-position-sizing-calculator.html",
+        "/calculators/portfolio-risk-contribution-calculator.html",
+        "/calculators/dividend-reinvestment-vs-cash-calculator.html",
+        "/calculators/inflation-adjusted-investment-goal-calculator.html",
+        "/calculators/macaulay-bond-duration-calculator.html",
+        "/calculators/portfolio-drawdown-recovery-calculator.html"
       ]
     },
     {
