@@ -134,7 +134,7 @@ function build() {
     const cards = category.urls.map(url => {
       const item = entries.get(url);
       const search = esc(normalize([item.title, item.description, item.keywords].join(' ')));
-      return '<a class="card" data-search="' + search + '" data-type="calculator" href="' + esc(url) + '"><strong>' + esc(item.title) + '</strong><span>' + esc(item.description || item.title + ' calculator') + '</span></a>';
+      return '<a class="card" href="' + esc(url) + '" data-search="' + search + '" data-type="calculator"><strong>' + esc(item.title) + '</strong><span>' + esc(item.description || item.title + ' calculator') + '</span></a>';
     }).join('\n');
     const count = category.urls.length;
     return '<section class="section calculator-category" id="' + esc(category.id) + '"><div class="section-head"><div><h2>' + esc(category.title) + '</h2><p>' + esc(category.description) + ' <strong>' + count.toLocaleString('en-US') + ' tools</strong></p></div></div><div class="grid">' + cards + '</div></section>';
