@@ -103,6 +103,45 @@ test('shared footer retains Sitemap; regional preferences stay in Settings and S
 });
 
 
+test('footer excludes eight category links while header retains them', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+
+  // Footer must not contain these eight category links
+  const excludedFooterLinks = [
+    ['Home', '/'],
+    ['Business', '/calculator/business-calculators.html'],
+    ['Finance', '/calculator/finance-calculators.html'],
+    ['Tax', '/calculator/tax.html'],
+    ['Industry', '/calculator/industry-calculators.html'],
+    ['Manufacturing', '/calculator/manufacturing-calculators.html'],
+    ['Everyday', '/calculator/everyday-calculators.html'],
+    ['Blog', '/blog/']
+  ];
+
+  const footerStart = shell.indexOf('const requiredLinks=');
+  const footerEnd = shell.indexOf('const allLinks=[...preservedLinks];', footerStart);
+  const footerMarkup = shell.slice(footerStart, footerEnd);
+
+  for (const [label, href] of excludedFooterLinks) {
+    assert.ok(!footerMarkup.includes("['" + label + "','" + href + "']"), 'Footer must not contain ' + label + ' link');
+  }
+
+  // Header source must retain patterns that generate all eight category links
+  // The links array defines: Home, Business, Finance, Tax, Everyday, Blog, Login
+  // The moreLinks array adds: Industry, Manufacturing, Global Calculators
+  assert.ok(shell.includes("links=["), 'Header links array must exist');
+  assert.ok(shell.includes("nav.home"), 'Header must define Home link');
+  assert.ok(shell.includes("nav.business"), 'Header must define Business link');
+  assert.ok(shell.includes("nav.finance"), 'Header must define Finance link');
+  assert.ok(shell.includes("nav.tax"), 'Header must define Tax link');
+  assert.ok(shell.includes("nav.everyday"), 'Header must define Everyday link');
+  assert.ok(shell.includes("nav.blog"), 'Header must define Blog link');
+  assert.ok(shell.includes("nav.global"), 'Header must define Global Calculators link');
+  assert.ok(shell.includes("'Industry',r+'industry-calculators.html'"), 'Header moreLinks must include Industry');
+  assert.ok(shell.includes("'Manufacturing',r+'manufacturing-calculators.html'"), 'Header moreLinks must include Manufacturing');
+});
+
+
 test('header order places Login immediately before Language and keeps Sitemap only in Footer', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const headerStart = shell.indexOf('h.innerHTML=');
