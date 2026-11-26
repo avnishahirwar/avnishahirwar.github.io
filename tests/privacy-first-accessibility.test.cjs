@@ -31,7 +31,7 @@ test('public HTML has no direct GA4, GTM or HubSpot tracking/form loaders', () =
   const violations = [];
   for (const file of htmlFiles) {
     const html = fs.readFileSync(file, 'utf8');
-    if (/googletagmanager\\.com\\/(?:gtag|gtm)\\.js|G-QVWQSEDRGL|GTM-MGJQH4DB|hsforms\\.net/i.test(html)) {
+    if (/googletagmanager\.com\/(?:gtag|gtm)\.js|G-QVWQSEDRGL|GTM-MGJQH4DB|hsforms\.net/i.test(html)) {
       violations.push(path.relative(root, file));
     }
   }
@@ -87,7 +87,7 @@ test('public HTML contains no executable or HTML-data link schemes', () => {
   const unsafe = [];
   for (const file of htmlFiles) {
     const html = fs.readFileSync(file, 'utf8');
-    if (/(?:href|src|action)\\s*=\\s*["']\\s*(?:javascript:|vbscript:|data:text\\/html)/i.test(html)) {
+    if (/(?:href|src|action)\s*=\s*["']\s*(?:javascript:|vbscript:|data:text\/html)/i.test(html)) {
       unsafe.push(path.relative(root, file));
     }
   }
