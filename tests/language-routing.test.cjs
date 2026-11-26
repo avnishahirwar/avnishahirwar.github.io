@@ -144,7 +144,7 @@ test('language selector lists 50 high-reach languages and only enables configure
   for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(codes.includes(code), 'Missing language code: '+code);
   assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
   assert.match(shell, / — Coming soon/);
-  assert.match(shell, /<option value=\"uk\" disabled>Українська — Coming soon<\\/option>/);
+  assert.ok(shell.includes('<option value="uk" disabled>Українська — Coming soon</option>'));
   assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
 });
 
