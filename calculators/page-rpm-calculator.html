@@ -93,7 +93,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </section>
 <section class="content">
 <h2>What is Page RPM?</h2>
-<p>Page RPM means page revenue per thousand impressions. It expresses estimated earnings relative to the number of page views, making it easier to compare performance across pages, periods or websites. It is a reporting metric, not a guaranteed rate or a promise of future income.</p>
+<p>Page RPM means page revenue per thousand page views. It expresses estimated earnings relative to the number of page views, making it easier to compare performance across pages, periods or websites. It is a reporting metric, not a guaranteed rate or a promise of future income.</p>
 <h2>Page RPM formula</h2>
 <p class="formula"><strong>Page RPM = (Estimated earnings ÷ Page views) × 1,000</strong></p>
 <p>For example, if a site records ₹600 in estimated earnings from 30,000 page views, its Page RPM is (₹600 ÷ 30,000) × 1,000 = ₹20.</p>
@@ -156,9 +156,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
   }
   function number(input, label, allowZero = true) {
     const value = input.valueAsNumber;
-    if (input.value.trim() === '' || !Number.isFinite(value) || value < 0 || (!allowZero && value === 0)) {
+    if (input.value.trim() === '' || !Number.isFinite(value) || value < 0 || (!allowZero && value === 0) || (input === inputs.views && !Number.isInteger(value))) {
       input.setAttribute('aria-invalid','true');
-      throw new Error(label + (allowZero ? ' must be a valid non-negative number.' : ' must be greater than zero.'));
+      throw new Error(label + (input === inputs.views ? ' must be a whole number greater than zero.' : (allowZero ? ' must be a valid non-negative number.' : ' must be greater than zero.')));
     }
     input.removeAttribute('aria-invalid');
     return value;
