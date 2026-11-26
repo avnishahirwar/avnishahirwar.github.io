@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {catalogueCount, sectionCardCounts, transformedFiles, sync, updateHomepage} = require('../scripts/sync-calculator-counts.cjs');
+const {catalogueCount, catalogueStats, sectionCardCounts, transformedFiles, sync, updateHomepage} = require('../scripts/sync-calculator-counts.cjs');
 const root = path.join(__dirname, '..');
 
 test('global calculator total matches unique catalog routes with existing pages', () => {
@@ -12,16 +12,19 @@ test('global calculator total matches unique catalog routes with existing pages'
   assert.equal(catalogueCount(), routes.size);
 });
 
-test('English generated directory and Hindi category directory expose unique published calculator links', () => {
+test('English and Hindi categorized directories expose unique published calculator links', () => {
   const english = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const groups = english.split('<section class="group"').slice(1);
-  const englishLinks = groups.flatMap(group => [...group.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.startsWith('/calculators/') && href.endsWith('.html')));
+  const categorySections = english.split('<section class="section calculator-category"').slice(1);
+  const englishLinks = categorySections.flatMap(section => [...section.matchAll(/href="([^"]+)"/g)].map(match => match[1]).filter(href => href.startsWith('/calculators/') && href.endsWith('.html')));
   const uniqueEnglishLinks = new Set(englishLinks);
-  const rootPages = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html')).map(name => '/calculators/' + name);
-  assert.match(english, /<section class="group" id="group-[a-z0-9]+">/, 'English directory should expose generated alphabetical groups');
+  const expectedEnglishLinks = catalogueStats().entries.filter(item => item.url.startsWith('/calculators/')).map(item => item.url).sort();
+  const duplicateEnglishLinks = englishLinks.filter((url, index) => englishLinks.indexOf(url) !== index);
+  assert.match(english, /<section class="section calculator-category" id="[a-z0-9-]+">/, 'English directory should expose generated category sections');
   assert.ok(englishLinks.length > 3000, 'English directory should cover a broad calculator catalogue');
-  assert.equal(uniqueEnglishLinks.size, englishLinks.length, 'English directory must not duplicate calculator routes');
-  assert.deepEqual([...uniqueEnglishLinks].sort(), rootPages.sort(), 'English directory should list every root calculator page exactly once');
+  assert.equal(uniqueEnglishLinks.size, expectedEnglishLinks.length, 'English directory should contain each canonical calculator route');
+  assert.equal(englishLinks.length, expectedEnglishLinks.length + 1, 'Loan EMI is intentionally cross-listed in savings and loan categories');
+  assert.deepEqual([...uniqueEnglishLinks].sort(), expectedEnglishLinks, 'English directory should list every canonical calculator route');
+  assert.deepEqual(duplicateEnglishLinks, ['/calculators/loan-emi-calculator.html'], 'Only the Loan EMI shortcut should be cross-listed');
 
   const hindi = fs.readFileSync(path.join(root, 'hi/calculator/site-directory.html'), 'utf8');
   const counts = sectionCardCounts(hindi);
