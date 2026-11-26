@@ -27,7 +27,8 @@ test('AdSense loader remains disabled until a verified CMP signal is present', (
   const gate = read('assets/adsense-domain-gate.js');
   assert.match(gate, /dataset\.fcCmpReady === 'true'/);
   assert.match(gate, /typeof window\.__tcfapi === 'function' \|\| !!window\.googlefc/);
-  assert.match(gate, /if \(!consentPlatformVerified \|\| !consentApiAvailable\) return/);
+  assert.match(gate, /window\.__fcPrivacyConsent && window\.__fcPrivacyConsent\.ads === true/);
+  assert.match(gate, /if \(!consentPlatformVerified \|\| !consentApiAvailable \|\| !visitorOptedInToAds\) return/);
 });
 
 test('accessibility settings provide persistent text size, contrast and motion controls', () => {
@@ -40,6 +41,15 @@ test('accessibility settings provide persistent text size, contrast and motion c
   assert.match(css, /data-fc-contrast="high"/);
   assert.match(css, /fc-reduce-motion/);
   assert.doesNotMatch(shell, /removeItem\('fc-display-(?:size|contrast|motion)'\)/);
+});
+
+test('PWA manifest and service worker support installed, device-local public use without caching private routes', () => {
+  const manifest = JSON.parse(read('manifest.webmanifest'));
+  const worker = read('sw.js');
+  assert.equal(manifest.display, 'standalone');
+  assert.match(worker, /isPrivatePath/);
+  assert.match(worker, /url\.origin !== self\.location\.origin/);
+  assert.match(worker, /url\.search \|\| url\.hash/);
 });
 
 test('privacy and cookie policies explain browser-local inputs and infrastructure caveats', () => {
