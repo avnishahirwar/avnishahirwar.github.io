@@ -128,7 +128,7 @@ function build() {
   if (!math || math.urls.length < 900) throw new Error('Mathematics category unexpectedly incomplete: ' + (math?.urls.length || 0));
   const allLinks = categories.reduce((sum, category) => sum + category.urls.length, 0);
   const expectedDuplicate = allLinks - unique.size;
-  if (expectedDuplicate !== 1) throw new Error('Expected only the retained Loan EMI shortcut to be duplicated, found ' + expectedDuplicate + ' duplicate links');
+  if (expectedDuplicate !== 0) throw new Error('Directory routes must be unique; found ' + expectedDuplicate + ' duplicate links');
 
   const categoryEntries = categories.map(category => {
     const cards = category.urls.map(url => {
