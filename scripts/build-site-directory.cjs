@@ -137,7 +137,8 @@ function build() {
       return '<a class="card" href="' + esc(url) + '" data-search="' + search + '" data-type="calculator"><strong>' + esc(item.title) + '</strong><span>' + esc(item.description || item.title + ' calculator') + '</span></a>';
     }).join('\n');
     const count = category.urls.length;
-    return '<section class="section calculator-category" id="' + esc(category.id) + '"><div class="section-head"><div><h2>' + esc(category.title) + '</h2><p>' + esc(category.description) + ' <strong>' + count.toLocaleString('en-US') + ' tools</strong></p></div></div><div class="grid">' + cards + '</div></section>';
+    const cleanDescription = category.description.replace(/\s+\d[\d,]*\s+tools?\b/gi, '').trim();
+    return '<section class="section calculator-category" id="' + esc(category.id) + '"><div class="section-head"><div><h2>' + esc(category.title) + '</h2><p>' + esc(cleanDescription) + ' <strong>' + count.toLocaleString('en-US') + ' tools</strong></p></div></div><div class="grid">' + cards + '</div></section>';
   });
   const quickLinks = categories.map(category => '<a class="quick" href="#' + esc(category.id) + '"><strong>' + esc(category.title) + '</strong><span>' + category.urls.length.toLocaleString('en-US') + ' calculators</span></a>').join('\n');
   const total = allLinks.toLocaleString('en-US');
