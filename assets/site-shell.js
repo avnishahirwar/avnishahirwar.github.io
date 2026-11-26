@@ -1700,7 +1700,7 @@ if(isCalculatorRoute&&main){
     if(!root)return;
     if(root instanceof HTMLAnchorElement)processLink(root);
     if(typeof root.querySelectorAll==='function'){
-      root.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach(processLink);
+      root.querySelectorAll('a[href]').forEach(processLink);
     }
   };
   const start=()=>{
