@@ -103,6 +103,34 @@ async function checkFinancialCalculatorInteractions(browser, name) {
   await worldwide.close();
 }
 
+async function checkTouchProfile(browser, name, profile) {
+  const options = {
+    viewport: profile.viewport,
+    deviceScaleFactor: profile.deviceScaleFactor,
+    hasTouch: true
+  };
+  // Playwright's Firefox engine does not support the isMobile emulation flag.
+  if (name !== 'Firefox') options.isMobile = true;
+  const page = await browser.newPage(options);
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const response = await page.goto(new URL('/', origin).href, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  assert.ok(response && response.ok(), name + ' ' + profile.label + ': HTTP response');
+  const viewportMeta = await page.locator('meta[name="viewport"]').getAttribute('content');
+  assert.match(viewportMeta || '', /width=device-width/i, name + ' ' + profile.label + ': responsive viewport metadata');
+  await page.locator('header.fc-global-header').waitFor({ state: 'visible', timeout: 20000 });
+  await page.locator('footer.fc-global-footer').waitFor({ state: 'visible', timeout: 20000 });
+  const settings = page.locator('#fc-display-settings');
+  await settings.waitFor({ state: 'visible', timeout: 20000 });
+  await settings.tap();
+  await page.locator('#fc-display-panel').waitFor({ state: 'visible', timeout: 10000 });
+  const dims = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, document: document.documentElement.scrollWidth }));
+  assert.ok(dims.document <= dims.viewport + 2, name + ' ' + profile.label + ': horizontal overflow ' + JSON.stringify(dims));
+  assert.deepEqual(errors, [], name + ' ' + profile.label + ': JavaScript errors');
+  await page.close();
+  return { browser: name, profile: profile.label, ...dims };
+}
+
 async function checkPage(browser, url, label, viewport) {
   const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
   const errors = [];
@@ -177,11 +205,24 @@ async function checkPage(browser, url, label, viewport) {
       } else {
         browser = await engine.launch({ headless: true, ...launchOptions });
       }
-      for (const viewport of [{ width: 1365, height: 900 }, { width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
+      for (const viewport of [
+        { width: 1440, height: 900 }, { width: 1365, height: 900 },
+        { width: 1024, height: 768 }, { width: 820, height: 1180 },
+        { width: 768, height: 1024 }, { width: 430, height: 932 },
+        { width: 412, height: 915 }, { width: 390, height: 844 },
+        { width: 375, height: 812 }, { width: 360, height: 800 },
+        { width: 320, height: 720 }
+      ]) {
         const dims = await checkPage(browser, '/', name + ' homepage ' + viewport.width, viewport);
         results.push({ browser: name, page: '/', width: viewport.width, ...dims });
       }
-      for (const viewport of [{ width: 390, height: 844 }, { width: 375, height: 812 }, { width: 320, height: 720 }]) {
+      for (const viewport of [
+        { width: 1024, height: 768 }, { width: 820, height: 1180 },
+        { width: 768, height: 1024 }, { width: 430, height: 932 },
+        { width: 412, height: 915 }, { width: 390, height: 844 },
+        { width: 375, height: 812 }, { width: 360, height: 800 },
+        { width: 320, height: 720 }
+      ]) {
         const page = await browser.newPage({ viewport });
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
@@ -196,6 +237,14 @@ async function checkPage(browser, url, label, viewport) {
         assert.deepEqual(errors, [], name + ': calculator JavaScript errors');
         results.push({ browser: name, page: '/calculators/simple-interest-calculator.html', width: viewport.width, ...dims });
         await page.close();
+      }
+      for (const profile of [
+        { label: 'iPhone-sized touch viewport', viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 },
+        { label: 'Android phone-sized touch viewport', viewport: { width: 412, height: 915 }, deviceScaleFactor: 2.625 },
+        { label: 'iPad/tablet touch viewport', viewport: { width: 820, height: 1180 }, deviceScaleFactor: 2 }
+      ]) {
+        const result = await checkTouchProfile(browser, name, profile);
+        results.push(result);
       }
       await checkFinancialCalculatorInteractions(browser, name);
     } finally {

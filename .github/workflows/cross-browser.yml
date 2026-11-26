@@ -7,23 +7,27 @@ on:
       - ".github/workflows/cross-browser.yml"
       - "tests/cross-browser-smoke.cjs"
       - "tests/safari-smoke.cjs"
-      - "assets/site-shell.js"
-      - "assets/site-shell.css"
-      - "assets/site-chrome.js"
-      - "assets/site-chrome.css"
+      - "assets/**/*.js"
+      - "assets/**/*.css"
       - "index.html"
-      - "calculators/simple-interest-calculator.html"
+      - "calculator/**/*.html"
+      - "calculators/**/*.html"
+      - "international/**/*.html"
+      - "blog/**/*.html"
+      - "hi/**/*.html"
   pull_request:
     paths:
       - ".github/workflows/cross-browser.yml"
       - "tests/cross-browser-smoke.cjs"
       - "tests/safari-smoke.cjs"
-      - "assets/site-shell.js"
-      - "assets/site-shell.css"
-      - "assets/site-chrome.js"
-      - "assets/site-chrome.css"
+      - "assets/**/*.js"
+      - "assets/**/*.css"
       - "index.html"
-      - "calculators/simple-interest-calculator.html"
+      - "calculator/**/*.html"
+      - "calculators/**/*.html"
+      - "international/**/*.html"
+      - "blog/**/*.html"
+      - "hi/**/*.html"
   workflow_dispatch:
 
 permissions:
@@ -70,9 +74,20 @@ jobs:
               npx playwright install --with-deps "${{ matrix.browser }}"
               ;;
           esac
-      - name: Run cross-browser smoke tests against production
+      - name: Serve checked-out pull request site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/fc-site-server.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fc-site-server.log
+          exit 1
+      - name: Run cross-browser smoke tests against checked-out site
         env:
-          FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_SITE_ORIGIN: http://127.0.0.1:4173
           FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
   safari-native:
@@ -90,7 +105,18 @@ jobs:
         run: npm install --no-save selenium-webdriver
       - name: Enable Safari WebDriver
         run: sudo safaridriver --enable
-      - name: Run native Safari smoke tests against production
+      - name: Serve checked-out pull request site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/fc-site-server.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/fc-site-server.log
+          exit 1
+      - name: Run native Safari smoke tests against checked-out site
         env:
-          FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_SITE_ORIGIN: http://127.0.0.1:4173
         run: node tests/safari-smoke.cjs
