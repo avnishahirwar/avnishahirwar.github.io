@@ -10,7 +10,11 @@
   }
 })(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
-  var INR = function (n) { return '₹' + Number(n).toLocaleString('en-IN', {maximumFractionDigits: 2, minimumFractionDigits: 0}); };
+  var displayCurrency = 'INR', displayRate = 1, displayLocale = 'en-IN';
+  var currencySymbol = function (code) { try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: code}).formatToParts(0).filter(function (p) { return p.type === 'currency'; })[0].value; } catch (_) { return code; } };
+  var INR = function (n) { var value = Number(n) * displayRate; try { return new Intl.NumberFormat(displayLocale, {style: 'currency', currency: displayCurrency, maximumFractionDigits: 2, minimumFractionDigits: 0}).format(value); } catch (_) { return currencySymbol(displayCurrency) + value.toLocaleString(); } };
+  var configureDisplayCurrency = function (code, rate, locale) { if (!/^[A-Z]{3}$/.test(code) || !(Number(rate) > 0) || !isFinite(Number(rate))) return false; displayCurrency = code; displayRate = Number(rate); if (locale) displayLocale = locale; return true; };
+  var formatCurrencyText = function (text) { return String(text).replace(/max\s+([0-9][0-9,]*(?:\.\d+)?)/gi, function (_, amount) { return 'max ' + INR(Number(amount.replace(/,/g, ''))); }).replace(/₹\s*([0-9][0-9,]*(?:\.\d+)?)/g, function (_, amount) { return INR(Number(amount.replace(/,/g, ''))); }).replace(/₹/g, currencySymbol(displayCurrency)); };
   var NUM = function (n, d) { return Number(n).toLocaleString('en-IN', {maximumFractionDigits: d == null ? 2 : d}); };
   var PCT = function (n) { return NUM(n, 2) + '%'; };
   var bad = function (m) { return {error: m}; };
@@ -71,7 +75,7 @@
     return {maxEmi: maxEmi, loan: loan};
   }
 
-  var F = function (k, label, v, extra) { var o = {k: k, label: label, v: v}; for (var x in (extra || {})) o[x] = extra[x]; return o; };
+  var F = function (k, label, v, extra) { var o = {k: k, label: label, v: v, currency: String(label).indexOf('₹') !== -1}; for (var x in (extra || {})) o[x] = extra[x]; return o; };
 
   var CALCS = [
     {id: 'emi', name: 'EMI', url: '/calculators/emi-calculator.html', fields: [F('P', 'Loan amount (₹)', 2500000), F('rate', 'Interest rate (% per year)', 8.5, {step: 0.01}), F('years', 'Tenure (years)', 20)],
@@ -111,10 +115,13 @@
     {id: 'ppf', name: 'PPF', url: '/calculators/ppf-calculator.html', fields: [F('dep', 'Yearly deposit (₹, max 1,50,000)', 150000), F('rate', 'Interest rate (% per year)', 7.1, {step: 0.01}), F('years', 'Years (minimum 15)', 15)],
       note: 'The government revises the PPF rate every quarter; check the current rate. Deposit assumed at the start of each year.',
       calc: function (v) {
-        if (!(v.dep > 0 && v.dep <= 150000)) return bad('The yearly PPF deposit must be between ₹1 and ₹1,50,000.');
+        // Currency round-trips can introduce tiny IEEE-754 fractions at the INR limit.
+        // PPF deposits are rupee-denominated, so normalize only this boundary value before validation.
+        var deposit = Math.round(v.dep);
+        if (!(deposit > 0 && deposit <= 150000)) return bad('The yearly PPF deposit must be between ₹1 and ₹1,50,000.');
         if (!(v.years >= 15 && v.rate >= 0)) return bad('PPF runs for at least 15 years.');
-        var a = ppfMaturity(v.dep, v.rate, Math.round(v.years));
-        return {rows: [['Maturity amount', INR(a), 1], ['Total deposited', INR(v.dep * Math.round(v.years))], ['Interest earned', INR(a - v.dep * Math.round(v.years))]]};
+        var a = ppfMaturity(deposit, v.rate, Math.round(v.years));
+        return {rows: [['Maturity amount', INR(a), 1], ['Total deposited', INR(deposit * Math.round(v.years))], ['Interest earned', INR(a - deposit * Math.round(v.years))]]};
       }},
     {id: 'gst', name: 'GST', url: '/calculators/gst-calculator.html', fields: [F('amt', 'Amount (₹)', 10000), F('rate', 'GST rate (%)', 18, {step: 0.01}), F('mode', 'Amount is', 'excl', {type: 'select', options: [['excl', 'Without GST (add GST)'], ['incl', 'With GST (remove GST)']]})],
       calc: function (v) {
@@ -228,10 +235,56 @@
     var tabs = el('div', {'class': 'top20-tabs', role: 'tablist', 'aria-label': 'Top 20 calculators in India'});
     var panel = el('div', {'class': 'top20-panel', role: 'tabpanel', id: 'top20-panel'});
     host.appendChild(tabs); host.appendChild(panel);
-    var current = null, buttons = {};
-
+    var current = null, buttons = {}, currentForm = null, currencyRequestId = 0, currencyLoading = false, currencyStatus = el('p', {'class': 'top20-currency-status', 'role': 'status', 'aria-live': 'polite'});
+    function updateCurrencyLabels() {
+      var symbol = currencySymbol(displayCurrency);
+      if (!currentForm) return;
+      current.fields.forEach(function (f) {
+        if (!f.currency) return;
+        var label = currentForm.querySelector('label[for="top20-' + current.id + '-' + f.k + '"] span');
+        if (label) { if (!label.dataset.fcOriginalText) label.dataset.fcOriginalText = label.textContent; label.textContent = formatCurrencyText(label.dataset.fcOriginalText); }
+      });
+      var note = panel.querySelector('.top20-note');
+      if (note) { if (!note.dataset.fcOriginalText) note.dataset.fcOriginalText = note.textContent; note.textContent = formatCurrencyText(note.dataset.fcOriginalText); }
+    }
+    function loadDisplayCurrency() {
+      var localeApi = window.FCLocale;
+      var selected = localeApi && localeApi.getCurrency ? localeApi.getCurrency() : 'INR';
+      var locale = localeApi && localeApi.getLocale ? localeApi.getLocale() : 'en-IN';
+      if (selected === 'INR') { currencyRequestId++; currencyLoading = false; var oldRate = displayRate; configureDisplayCurrency('INR', 1, locale); if (currentForm) currentForm.hidden = false; var inrResult = panel.querySelector('.top20-result'); if (inrResult) inrResult.hidden = false; panel.setAttribute('aria-busy', 'false'); if (currentForm && oldRate !== 1) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; if (input.value !== '') input.value = Number(input.value) / oldRate; } }); updateCurrencyLabels(); if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true})); currencyStatus.textContent = 'Amounts shown in Indian Rupees (INR).'; return; }
+      var requestId = ++currencyRequestId;
+      currencyLoading = true;
+      panel.setAttribute('aria-busy', 'true');
+      if (currentForm) currentForm.hidden = true;
+      var pendingResult = panel.querySelector('.top20-result'); if (pendingResult) pendingResult.hidden = true;
+      currencyStatus.textContent = 'Loading the latest available INR to ' + selected + ' reference rate…';
+      fetch('https://api.frankfurter.dev/v2/rate/INR/' + encodeURIComponent(selected), {headers: {Accept: 'application/json'}, cache: 'no-cache'}).then(function (response) { if (!response.ok) throw new Error('Rate unavailable'); return response.json(); }).then(function (data) {
+        if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
+        if (!data || !Number.isFinite(Number(data.rate)) || Number(data.rate) <= 0 || !data.date) throw new Error('Invalid reference rate');
+        var oldRate = displayRate, nextRate = Number(data.rate);
+        configureDisplayCurrency(selected, nextRate, locale);
+        currencyLoading = false;
+        panel.setAttribute('aria-busy', 'false');
+        if (currentForm) currentForm.hidden = false;
+        var convertedResult = panel.querySelector('.top20-result'); if (convertedResult) convertedResult.hidden = false;
+        if (currentForm) current.fields.forEach(function (f) { if (f.currency) { var input = currentForm.elements[f.k]; if (input.value !== '') input.value = Number(input.value) / oldRate * nextRate; } });
+        updateCurrencyLabels();
+        currencyStatus.textContent = 'Amounts converted from INR to ' + selected + ' using the Frankfurter reference rate dated ' + data.date + '. Calculations retain their original INR-based formulas.';
+        if (currentForm) currentForm.dispatchEvent(new Event('input', {bubbles: true}));
+      }).catch(function () {
+        if (requestId !== currencyRequestId || (localeApi && localeApi.getCurrency && localeApi.getCurrency() !== selected)) return;
+        panel.setAttribute('aria-busy', 'false');
+        currencyLoading = false;
+        currencyStatus.textContent = 'Reference rate unavailable. Results are kept in INR to avoid showing an incorrect currency.';
+        if (currentForm) currentForm.hidden = false;
+        var fallbackResult = panel.querySelector('.top20-result'); if (fallbackResult) fallbackResult.hidden = false;
+        if (localeApi && localeApi.setCurrency) localeApi.setCurrency('INR');
+      });
+    }
+    window.addEventListener('fc:localechange', loadDisplayCurrency);
+    window.addEventListener('fc:locale-ready', loadDisplayCurrency);
     function render() {
-      var c = current, form = el('form', {'class': 'top20-form', novalidate: 'novalidate'});
+      var c = current, form = el('form', {'class': 'top20-form', novalidate: 'novalidate'}); currentForm = form; form.hidden = currencyLoading;
       form.addEventListener('submit', function (e) { e.preventDefault(); });
       c.fields.forEach(function (f) {
         var id = 'top20-' + c.id + '-' + f.k, input;
@@ -240,23 +293,23 @@
         } else if (f.type === 'date') {
           input = el('input', {id: id, name: f.k, type: 'date', value: f.today ? todayISO() : f.v});
         } else {
-          input = el('input', {id: id, name: f.k, type: 'number', inputmode: 'decimal', min: '0', step: f.step || 'any', value: f.v});
+          input = el('input', {id: id, name: f.k, type: 'number', inputmode: 'decimal', min: '0', step: f.step || 'any', value: f.currency ? f.v * displayRate : f.v});
         }
         form.appendChild(el('label', {'for': id}, [el('span', {text: f.label}), input]));
       });
-      var out = el('div', {'class': 'top20-result', 'aria-live': 'polite'});
+      var out = el('div', {'class': 'top20-result', 'aria-live': 'polite'}); out.hidden = currencyLoading;
       var foot = el('p', {'class': 'top20-foot'});
       var link = el('a', {href: c.url, text: 'Open the full ' + c.name + ' calculator →'});
       function compute() {
         var v = {};
         c.fields.forEach(function (f) {
           var raw = form.elements[f.k].value;
-          v[f.k] = (f.type === 'select' ? (isNaN(Number(raw)) ? raw : Number(raw)) : f.type === 'date' ? raw : (raw === '' ? NaN : Number(raw)));
+          v[f.k] = (f.type === 'select' ? (isNaN(Number(raw)) ? raw : Number(raw)) : f.type === 'date' ? raw : (raw === '' ? NaN : Number(raw) / (f.currency ? displayRate : 1)));
         });
         var r;
         try { r = c.calc(v); } catch (err) { r = bad('Please check the values entered.'); }
         out.textContent = '';
-        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: r.error})); return; }
+        if (r.error) { out.appendChild(el('p', {'class': 'top20-error', text: formatCurrencyText(r.error)})); return; }
         r.rows.forEach(function (row) {
           out.appendChild(el('div', {'class': 'top20-row' + (row[2] ? ' top20-main' : '')}, [el('span', {text: row[0]}), el('strong', {text: row[1]})]));
         });
@@ -264,10 +317,12 @@
       form.addEventListener('input', compute); form.addEventListener('change', compute);
       panel.textContent = '';
       panel.setAttribute('aria-labelledby', 'top20-tab-' + c.id);
+      panel.appendChild(currencyStatus);
       panel.appendChild(el('h3', {text: c.name + ' Calculator'}));
       panel.appendChild(form); panel.appendChild(out);
       if (c.note) panel.appendChild(el('p', {'class': 'top20-note', text: c.note}));
       foot.appendChild(link); panel.appendChild(foot);
+      updateCurrencyLabels();
       compute();
     }
     function select(id, focus) {
@@ -286,7 +341,8 @@
       buttons[c.id] = b; tabs.appendChild(b);
     });
     select(CALCS[0].id);
+    loadDisplayCurrency();
   }
 
-  return {CALCS: CALCS, mount: mount, emi: emi, sipFV: sipFV, rdMaturity: rdMaturity, ppfMaturity: ppfMaturity, newRegimeTax: newRegimeTax, hraExemption: hraExemption, ageParts: ageParts, swp: swp, eligibility: eligibility};
+  return {CALCS: CALCS, mount: mount, configureDisplayCurrency: configureDisplayCurrency, formatCurrencyText: formatCurrencyText, getDisplayCurrency: function () { return {currency: displayCurrency, rate: displayRate, locale: displayLocale}; }, emi: emi, sipFV: sipFV, rdMaturity: rdMaturity, ppfMaturity: ppfMaturity, newRegimeTax: newRegimeTax, hraExemption: hraExemption, ageParts: ageParts, swp: swp, eligibility: eligibility};
 });

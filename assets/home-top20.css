@@ -32,3 +32,7 @@ body .home-intro .home-partnership-cta a{padding:6px 12px!important;font-size:.9
 body .home-intro .home-partnership-cta span{display:none}
 body .home-intro .button,body .home-intro .btn,body .home-intro a[class*="basic"]{padding:8px 14px!important;font-size:.95rem!important}
 @media (max-width:560px){body .home-intro p{font-size:.92rem!important}}
+
+.top20-currency-status{margin:0 0 12px;padding:8px 10px;border-left:3px solid #b9954b;background:#f7f4ec;color:#405064;font-size:.84rem;line-height:1.45}
+
+.top20-form[hidden],.top20-result[hidden]{display:none!important}
