@@ -260,9 +260,10 @@ test('language selector refreshes the published locale catalogue instead of reus
   assert.ok(catalogue.locales.some(locale => locale.code === 'en'), 'English must remain in the language catalogue.');
 });
 
-test('shared shell loads the regional preference engine after mounting its controls', () => {
+test('shared shell loads one regional preference engine and marks an existing script', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /data-fc-global-locale/);
+  assert.match(shell, /script\[data-fc-global-locale\],script\[src="\/assets\/global-locale\.js"\]/);
+  assert.match(shell, /existingRegionalEngine\.dataset\.fcGlobalLocale='true'/);
   assert.match(shell, /regionalEngine\.src='\/assets\/global-locale\.js'/);
   assert.match(shell, /regionalEngine\.async=true/);
 });
