@@ -299,11 +299,11 @@ test('calculator directory exposes its curated core catalogue and keeps business
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const links = [...directory.matchAll(/href="(\/calculators\/[^"]+)"/g)].map(m => m[1]);
   const duplicateLinks = links.filter((url, index) => links.indexOf(url) !== index);
-  assert.deepEqual(duplicateLinks, ['/calculators/loan-emi-calculator.html']);
+  assert.deepEqual(duplicateLinks, [], 'The directory must not repeat calculator routes across categories.');
   assert.equal(new Set(links).size, expectedCoreCalculatorCount);
   assert.ok(links.every(url => canonicalCalculatorUrls.includes(url)));
   assert.equal(coreCalculatorUrls.length, expectedCoreCalculatorCount);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount, 'Homepage category totals count every core calculator exactly once.');
   assert.ok(coreCalculatorUrls.every(url => links.includes(url)));
   const services = directory.indexOf('<h2>Business & developer services</h2>');
   const trust = directory.indexOf('<h2>About, trust & policies</h2>');
@@ -859,8 +859,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.ok([...directoryLinks].every(url => canonicalCalculatorUrls.includes(url)));
   assert.deepEqual(aboutLinks, canonicalCalculatorUrls);
   assert.ok(coreCalculatorUrls.every(url => directoryLinks.has(url)));
-  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount + 1, 'The retained Loan EMI shortcut appears in two category groups; unique calculator URLs remain deduplicated.');
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
+  assert.equal(navCalculatorTotal, expectedCoreCalculatorCount, 'Homepage category totals must match the duplicate-free core catalogue.');
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount, 'Homepage category totals count every core calculator exactly once.');
   assert.doesNotMatch(homepage, /class="search-panel"/);
   assert.ok(shell.includes('fc-all-calculators-link') && shell.includes('nav.all') && shell.includes("r+'site-directory.html'") && shell.includes('globalCalculatorsUrl'), 'The header must expose the site directory and global calculators as direct links.');
   assert.ok(!shell.includes('fc-all-dropdown'), 'All Calculators must remain a plain link without a dropdown.');
@@ -868,7 +868,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   assert.doesNotMatch(globalHeader, /nav\.search|Search Calculator/);
   assert.match(directory, /id="siteSearch"/);
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
-  assert.match(directory, new RegExp('Search ' + (expectedCoreCalculatorCount + 1).toLocaleString('en-US') + ' calculators by name or topic'));
+  assert.match(directory, new RegExp('Search ' + expectedCoreCalculatorCount.toLocaleString('en-US') + ' calculators by name or topic'));
   assert.ok(directory.includes('Browse calculator tools, business services and website information from one organized directory.'));
   assert.equal(categoryCount, 20, 'Expected 20 calculator-category sections; found ' + categoryCount + ': ' + [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"/g)].map(match => match[1]).join(', '));
   const directoryIndexStart = directory.indexOf('<section class="section" id="calculator-category-index">');
@@ -1279,7 +1279,7 @@ test('homepage category summary and directory markup match the published catalog
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(homepage, /organised into clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
-  assert.ok(directory.includes('Browse calculators by category'));
+  assert.ok(directory.includes('Browse by category'));
 });
 
 
@@ -1770,7 +1770,7 @@ test('five new informational calculators are indexed, discoverable and use bound
     assert.ok(about.includes('href="/calculators/' + slug + '.html"'), slug + ' must be linked from About catalogue');
   }
   assert.equal(searchIndex.length, expectedSearchIndexLength);
-  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount + 1, 'Homepage category totals include the retained Loan EMI shortcut in both category groups.');
+  assert.equal(homepageCoreCalculatorCount, expectedCoreCalculatorCount, 'Homepage category totals count every core calculator exactly once.');
 });
 
  
