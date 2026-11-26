@@ -24,6 +24,8 @@ jobs:
         run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Verify additive repair is complete and non-destructive
         run: node --test tests/international-seo-diagnostic.test.cjs
+      - name: Verify full international hreflang integrity
+        run: node --test tests/international-seo.test.cjs
       - name: Commit additive page updates
         run: |
           git config user.name "github-actions[bot]"
