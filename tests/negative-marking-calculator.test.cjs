@@ -4,7 +4,7 @@ const calculator=require('../assets/negative-marking-calculator.js');
 test('calculates net score, accuracy, attempt rate and unattempted questions',()=>{
  const r=calculator.calculate({totalQuestions:100,correctAnswers:62,incorrectAnswers:18,marksPerCorrect:4,negativeMarksPerWrong:1});
  assert.equal(r.marksEarned,248);assert.equal(r.marksDeducted,18);assert.equal(r.netScore,230);assert.equal(r.maximumMarks,400);
- assert.equal(r.attempted,80);assert.equal(r.unattempted,20);assert.equal(r.accuracyPercent,77.5);assert.equal(r.attemptRatePercent,80);assert.equal(r.scorePercent,57.5);
+ assert.equal(r.attempted,80);assert.equal(r.unattempted,20);assert.equal(r.accuracyPercent,77.5);assert.equal(r.attemptRatePercent,80);assert.ok(Math.abs(r.scorePercent-57.5)<1e-10);
 });
 test('supports no penalty and no attempted answers',()=>{
  const r=calculator.calculate({totalQuestions:20,correctAnswers:0,incorrectAnswers:0,marksPerCorrect:2,negativeMarksPerWrong:0});
