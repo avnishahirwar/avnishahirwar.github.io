@@ -19,3 +19,13 @@ test('recognises substantive page signals and canonical metadata',()=>{
 test('stripMarkup removes HTML tags and entities safely',()=>{
  assert.equal(stripMarkup('<p>One&nbsp;two &amp; three</p>'),'One two three');
 });
+
+test('penalises repeated template paragraphs instead of treating them as original content',()=>{
+ const repeated='This generic explanation is repeated across many calculator pages and adds no page-specific guidance.';
+ const html='<main><h1>Specific calculator</h1><p>'+repeated+'</p><p>This page explains a distinct measurement method and its relevant units and practical constraints.</p><label>Wall length<input></label></main>';
+ const page=auditPage('specific-calculator.html',html,new Set([repeated.toLowerCase()]));
+ assert.ok(page.features.repeatedParagraphWords>0);
+ assert.ok(page.features.pageSpecificWords<page.features.words);
+ assert.ok(page.features.repeatedParagraphRatio>0);
+ assert.equal(page.features.qualityEligible,false);
+});
