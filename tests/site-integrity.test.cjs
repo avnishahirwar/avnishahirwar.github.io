@@ -498,16 +498,17 @@ test('every public sitemap page has a valid favicon reference and matching asset
 });
 
 
-test('homepage structured data and copy accurately describe all supported languages', () => {
+test('homepage metadata and About copy accurately describe all supported languages', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const supportedLanguages = ['English', 'Hindi', 'Spanish', 'French', 'Portuguese', 'Arabic', 'Indonesian', 'Bengali', 'Tamil'];
   const availableLanguage = homepage.match(/\"availableLanguage\":\[([^\]]+)\]/);
   assert.ok(availableLanguage, 'Homepage ContactPoint must declare available languages');
   for (const language of supportedLanguages) {
     assert.ok(availableLanguage[1].includes('"' + language + '"'), 'ContactPoint must include ' + language);
   }
-  assert.match(homepage, /as a multilingual platform/i);
-  assert.match(homepage, /Use the language selector to choose from the available languages/i);
+  assert.match(about, /as a multilingual platform/i);
+  assert.match(about, /Use the language selector to choose from the available languages/i);
   assert.doesNotMatch(homepage, /as a bilingual platform/i);
 });
 
@@ -1275,10 +1276,10 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
   assert.match(page, /Does the calculator automatically exclude Indian public holidays\?/);
 });
 
-test('homepage category summary and directory markup match the published catalogue', () => {
-  const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+test('About page category summary and directory markup match the published catalogue', () => {
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  assert.match(homepage, /organised into clearly labelled categories/);
+  assert.match(about, /organised into clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse by category'));
 });
@@ -2309,13 +2310,13 @@ test('visible brand text is included in accessible names and homepage feature ic
 });
 
 
-test('homepage points to the current 50-language directory without overstating translated coverage', () => {
-  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+test('About page points to the current 50-language directory without overstating translated coverage', () => {
+  const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const catalogue = require('../config/language-catalogue.json');
   assert.equal(catalogue.locales.length, 50);
-  assert.match(html, /language directory lists all 50 configured language options/i);
-  assert.match(html, /translation coverage varies by language and calculator/i);
-  assert.match(html, /href="\/calculator\/languages\.html"/);
+  assert.match(about, /language directory lists all 50 configured language options/i);
+  assert.match(about, /translation coverage varies by language and calculator/i);
+  assert.match(about, /href="\/calculator\/languages\.html"/);
 });
 
 
