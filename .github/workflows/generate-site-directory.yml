@@ -7,6 +7,7 @@ on:
       - 'scripts/build-site-directory.cjs'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
       - 'config/site-directory-category-assignments.json'
       - 'index.html'
       - 'sitemap.xml'
@@ -74,6 +75,8 @@ jobs:
         run: node scripts/generate-physics-calculator-directory.cjs
       - name: Synchronize homepage and catalogue counters
         run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+      - name: Add only safe reciprocal hreflang links
+        run: node --check scripts/add-hreflang-reciprocals.cjs && node scripts/add-hreflang-reciprocals.cjs --write
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
