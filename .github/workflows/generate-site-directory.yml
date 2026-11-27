@@ -5,8 +5,6 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
-      - 'scripts/add-hreflang-reciprocals.cjs'
-      - 'config/language-catalogue.json'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
       - 'scripts/add-hreflang-reciprocals.cjs'
@@ -25,6 +23,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
+      - 'config/language-catalogue.json'
       - 'calculator/site-directory.html'
       - 'calculator/physics-calculators.html'
       - 'config/site-directory-category-assignments.json'
