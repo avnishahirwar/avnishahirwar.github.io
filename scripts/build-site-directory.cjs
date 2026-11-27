@@ -38,9 +38,30 @@ function esc(value) {
 }
 function readCanonicalCalculatorUrls() {
   const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
-  return [...new Set([...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+  const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
     .map(match => new URL(match[1]).pathname)
-    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
+  // The directory also includes quality-reviewed pages intentionally retained
+  // in the public search index while excluded from XML sitemaps. This preserves
+  // user-facing discovery without making those pages indexable in search engines.
+  const searchIndex = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+  const indexedUrls = searchIndex.map(item => item && item.url).filter(url => {
+    if (typeof url !== 'string' || !url.startsWith('/calculators/') ||
+        !url.endsWith('.html') || url.includes('?') || url.includes('#') ||
+        url.split('/').includes('..')) return false;
+    const file = path.join(ROOT, url.slice(1));
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return false;
+    const html = fs.readFileSync(file, 'utf8');
+    const canonicalTag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+    const href = canonicalTag && canonicalTag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
+    if (!href) return false;
+    try {
+      const canonical = new URL(href[1], 'https://friendlycalculator.in');
+      return canonical.origin === 'https://friendlycalculator.in' &&
+        canonical.pathname === url && !canonical.search && !canonical.hash;
+    } catch { return false; }
+  });
+  return [...new Set([...sitemapUrls, ...indexedUrls])].sort();
 }
 function readPageEntry(url, indexByUrl) {
   const file = path.join(ROOT, url.slice(1));
