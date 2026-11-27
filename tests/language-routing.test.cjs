@@ -160,7 +160,7 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 
 test('homepage hreflang clusters include published language homepages and exclude the UK market hub', () => {
   const catalogue = require('../config/language-catalogue.json');
-  const locales = catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk');
+  const locales = catalogue.locales.map(locale => locale.code).filter(code => code !== 'en');
   const pages = ['index.html', ...locales.map(locale => locale + '/index.html')];
   for (const file of pages) {
     const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
