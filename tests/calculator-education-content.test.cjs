@@ -10,7 +10,7 @@ const pages = [
   {
     file: 'calculators/basic-calculator.html',
     history: 'https://www.whipplemuseum.cam.ac.uk/explore-whipple-collections/calculating-devices/mechanical-calculation',
-    facts: 'automatic carry mechanism',
+    facts: 'carry mechanism',
   },
   {
     file: 'calculators/simple-interest-calculator.html',
