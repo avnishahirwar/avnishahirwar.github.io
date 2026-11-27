@@ -558,7 +558,7 @@ test('Hindi RD calculator is localized and linked from the English alternate', (
   assert.ok(fs.existsSync(file));
   const html = fs.readFileSync(file, 'utf8');
   assert.match(html, /<html lang="hi">/);
-  assert.ok(html.includes('rel="canonical"');
+  assert.ok(html.includes('rel="canonical"'));
   for (const id of ['monthly','rate','years','months','calculate','invested','interest','maturity']) assert.ok(html.includes('id="' + id + '"'));
   assert.ok(html.includes('Math.pow(1+quarterly,1/3)-1'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/rd-calculator.html'));
