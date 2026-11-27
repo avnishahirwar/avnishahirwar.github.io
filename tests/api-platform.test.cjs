@@ -162,7 +162,9 @@ test('API documentation uses the current public calculator catalogue count', () 
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const searchUrls = new Set(searchIndex.map(item => item.url));
   const sitemapOnly = expectedSearchIndexUrls.filter(url => !searchUrls.has(url));
-  const indexOnly = [...searchUrls].filter(url => !expectedSearchIndexUrls.includes(url));
+  // Pages deliberately set to noindex stay searchable on-site but are not in the sitemap.
+  const isNoindex = url => { try { return /<meta\s+name="robots"\s+content="[^"]*noindex/i.test(fs.readFileSync(path.join(root, url.replace(/^\//, '')), 'utf8')); } catch (_) { return false; } };
+  const indexOnly = [...searchUrls].filter(url => !expectedSearchIndexUrls.includes(url) && !isNoindex(url));
   assert.equal(sitemapOnly.length, 0, 'Sitemap routes missing from the calculator search index: ' + sitemapOnly.join(', '));
   assert.equal(indexOnly.length, 0, 'Search-index routes missing from the sitemap: ' + indexOnly.join(', '));
   assert.ok(docs.includes('The full website directory contains ' + indexedCatalogue.core.toLocaleString('en-US') + ' core calculator pages plus ' + indexedCatalogue.international.toLocaleString('en-US') + ' international calculator pages'));

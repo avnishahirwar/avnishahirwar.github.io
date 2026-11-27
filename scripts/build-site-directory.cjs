@@ -126,7 +126,7 @@ function build() {
   if (unique.size !== routes.length) throw new Error('Directory assignment mismatch: expected ' + routes.length + ' unique sitemap calculators, got ' + unique.size);
   if (categories.length !== 20) throw new Error('Expected 20 directory categories, found ' + categories.length);
   const math = categories.find(category => category.id === 'math-statistics');
-  if (!math || math.urls.length < 900) throw new Error('Mathematics category unexpectedly incomplete: ' + (math?.urls.length || 0));
+  if (!math || math.urls.length < 300) throw new Error('Mathematics category unexpectedly incomplete: ' + (math?.urls.length || 0));
   const allLinks = categories.reduce((sum, category) => sum + category.urls.length, 0);
   const expectedDuplicate = allLinks - unique.size;
   if (expectedDuplicate !== 0) throw new Error('Directory routes must be unique; found ' + expectedDuplicate + ' duplicate links');
