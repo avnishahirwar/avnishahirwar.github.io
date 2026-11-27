@@ -773,7 +773,9 @@ test('Hindi Income Tax uses its reviewed localized model while other translated 
 
 test('the ten priority Hindi calculators expose canonical URLs, indexable language alternates, schemas, formula notes and visual results', () => {
   const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
-  const candidates = ['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
+  const candidates = JSON.parse(fs.readFileSync(new URL('../config/language-catalogue.json', 'file://' + __filename), 'utf8')).locales
+    .filter(locale => locale.status === 'available')
+    .map(locale => locale.code);
   const isNoindex = html => /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html.slice(0, html.toLowerCase().indexOf('</head>')));
   const sortPairs = pairs => pairs.slice().sort(([a],[b]) => a.localeCompare(b));
   for (const slug of slugs) {
@@ -782,8 +784,12 @@ test('the ten priority Hindi calculators expose canonical URLs, indexable langua
     assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
     const indexable = candidates.filter(locale => {
       const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
-      const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
-      return !isNoindex(localeHtml);
+      const pageUrl = new URL(page, 'file://' + __filename);
+      if (!fs.existsSync(pageUrl)) return false;
+      const localeHtml = fs.readFileSync(pageUrl, 'utf8');
+      const canonical = localeHtml.match(/<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="([^"]+)")[^>]*>/i);
+      const expectedUrl = 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html';
+      return !isNoindex(localeHtml) && canonical?.[1] === expectedUrl;
     });
     const expectedAlternates = [
       ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
