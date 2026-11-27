@@ -3,14 +3,14 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/credit-utilization-calculator.html">
+
+
+
+
+
+
+
+
+
+
 </head><body><header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/pt/index.html">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links"><a href="/pt/index.html">Início</a><a href="/calculator/site-directory.html">Todas as calculadoras</a></nav></div></header><main class="wrap"><p class="muted"><a href="/pt/index.html">Início</a> / Calculadora de utilização de crédito</p><header class="hero"><h1>Calculadora de utilização de crédito</h1><p class="muted">Introduza o limite total de crédito e o saldo em dívida para ver a percentagem utilizada.</p></header><section class="panel"><form id="calc"><div class="fields"><div class="field"><label for="v0">Limite total de crédito disponível (₹)</label><input id="v0" type="number" min="0" max="1000000000000" step="any" value="100000" required></div><div class="field"><label for="v1">Saldo atualmente em dívida (₹)</label><input id="v1" type="number" min="0" max="1000000000000" step="any" value="25000" required></div></div><div class="actions"><button class="btn" type="submit">Calcular</button><button class="btn alt" type="button" id="reset">Limpar</button></div><p id="error" class="error" role="alert"></p></form><div class="results" aria-live="polite"><div class="result"><span>Utilização de crédito (%)</span><strong id="ratio">—</strong></div><div class="result"><span>Crédito disponível restante</span><strong id="available">—</strong></div></div><p class="note">Este cálculo é educativo e não estima uma pontuação de crédito nem a elegibilidade para um empréstimo. Confirme o saldo junto do emissor.</p></section><section class="panel"><h2>Perguntas frequentes</h2><details><summary>Como é calculada a utilização de crédito?</summary><p>Divide-se o saldo em dívida pelo limite total e multiplica-se por 100.</p></details><details><summary>Pode ultrapassar 100 %?</summary><p>Sim. Se o saldo exceder o limite, a utilização será superior a 100 %.</p></details><details><summary>Este cálculo indica a minha pontuação de crédito?</summary><p>Não. Mostra apenas a proporção utilizada; a pontuação depende de vários fatores.</p></details></section><section class="panel"><p><a href="/calculators/credit-utilization-calculator.html">English</a> · <a href="/pt/index.html">Início</a></p></section></main><script>(()=>{'use strict';const f=document.getElementById('calc'),err=document.getElementById('error'),fmt=new Intl.NumberFormat('pt-PT',{style:'currency',currency:'INR',maximumFractionDigits:2});function calc(e){if(e)e.preventDefault();const limit=Number(document.getElementById('v0').value),balance=Number(document.getElementById('v1').value);if(!(Number.isFinite(limit)&&limit>0&&limit<=1e12&&Number.isFinite(balance)&&balance>=0&&balance<=1e12)){err.textContent="Introduza um limite e um saldo válidos.";return;}document.getElementById('ratio').textContent=(balance/limit*100).toLocaleString('pt-PT',{maximumFractionDigits:2})+'%';document.getElementById('available').textContent=fmt.format(limit-balance);err.textContent='';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}f.addEventListener('submit',calc);document.getElementById('reset').addEventListener('click',()=>{f.reset();document.getElementById('ratio').textContent='—';document.getElementById('available').textContent='—';err.textContent='';});calc();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>

@@ -20,7 +20,8 @@ const EXCLUDED_PATHS = new Set([
   'map.html',
   'maps.html',
   'schema/_homepage.html',
-  'seo-meta-tags.html'
+  'seo-meta-tags.html',
+  'calculators/muzzle-velocity-calculator.html'
 ]);
 const BRAND_IMAGE_URL = SITE_ORIGIN + '/assets/friendly-calculator-brand-illustration.svg';
 const BRAND_IMAGE_PAGES = new Set([
@@ -78,14 +79,29 @@ function isNoindex(html) {
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 
+let lastmodByFile;
 function getLastmod(file) {
-  try {
-    return execFileSync('git', ['log', '-1', '--format=%cs', '--', file], {
-      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']
-    }).trim();
-  } catch {
-    return '';
+  if (!lastmodByFile) {
+    lastmodByFile = new Map();
+    try {
+      // Resolve all HTML last-modified dates in one Git query instead of
+      // spawning one git process for each of the 12,000+ published pages.
+      const output = execFileSync('git', [
+        'log', '--format=COMMIT:%cs', '--name-only', '--no-renames', '--', '*.html'
+      ], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
+      let currentDate = '';
+      for (const line of output.split(/\r?\n/)) {
+        if (line.startsWith('COMMIT:')) {
+          currentDate = line.slice('COMMIT:'.length).trim();
+        } else if (line && currentDate && !lastmodByFile.has(line)) {
+          lastmodByFile.set(line, currentDate);
+        }
+      }
+    } catch {
+      // Lastmod is optional in XML sitemaps; omit it if Git history is unavailable.
+    }
   }
+  return lastmodByFile.get(file) || '';
 }
 
 function xmlEscape(value) {

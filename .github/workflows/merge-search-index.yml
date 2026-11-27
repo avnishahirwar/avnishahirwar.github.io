@@ -22,10 +22,10 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
-      - run: node scripts/merge-search-index.cjs --check
-      - name: Build and validate the merged catalogue and count surfaces
+      - name: Build and validate the eligible canonical search catalogue
         run: |
           node scripts/merge-search-index.cjs
+          node scripts/merge-search-index.cjs --check
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
           node scripts/sync-calculator-counts.cjs --check
