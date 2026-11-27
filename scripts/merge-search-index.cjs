@@ -4,6 +4,8 @@
  * Keep the deferred search index aligned with canonical, indexable calculator
  * pages. Explicitly quality-passed thin pages remain searchable by policy.
  * Merge pending additions only when their published page is eligible.
+ * Pages carrying noindex stay out of the public search catalogue unless they
+ * carry the site's explicit data-quality-pass marker.
  */
 const fs = require('node:fs');
 const path = require('node:path');
