@@ -13,6 +13,7 @@ function boot(initial={},browserLocale='') {
  const context={
   Intl,Number,Date,Object,navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
+  location:{pathname:'/'},
   document:{documentElement:{dataset:{}},getElementById:id=>elements[id],querySelectorAll:()=>[]},
   window:{dispatchEvent:event=>events.push(event),addEventListener:(type,fn)=>{(listeners['window:'+type]??=[]).push(fn);}},
   CustomEvent:function(type,init){this.type=type;this.detail=init.detail;}
