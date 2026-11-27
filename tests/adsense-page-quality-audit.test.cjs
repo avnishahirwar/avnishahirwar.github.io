@@ -67,7 +67,7 @@ test('index shortlist eligibility requires unique page metadata, one meaningful 
 });
 
 test('a single low word-count signal alone does not recommend noindex',()=>{
- const html='<head><title>Short equation helper | Friendly Calculator</title><link rel="canonical" href="https://friendlycalculator.in/calculators/short-equation-helper.html"></head><main><h1>Short equation helper</h1><label>Value<input type="number"></label><p>Formula: result = value × 2.</p></main>';
+ const html='<head><title>Short equation helper | Friendly Calculator</title><link rel="canonical" href="https://friendlycalculator.in/calculators/short-equation-helper.html"></head><main><h1>Short equation helper</h1><label>Starting amount<input type="number"></label><p>Formula: result = value × 2.</p></main>';
  const page=auditPage('short-equation-helper.html',html);
  assert.equal(page.features.pageSpecificWords<120,true);
  assert.equal(page.features.hardThin,false);
