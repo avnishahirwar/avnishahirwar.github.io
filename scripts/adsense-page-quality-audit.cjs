@@ -38,7 +38,7 @@ function extractDescription(html){
  return ((tag.match(/\bcontent=["']([^"']*)["']/i)||[])[1]||'').trim();
 }
 function countMatches(text,re){const globalRe=new RegExp(re.source,re.flags.includes('g')?re.flags:re.flags+'g');return [...text.matchAll(globalRe)].length;}
-function extractParagraphs(html){return [...html.matchAll(/<p\\b[^>]*>([\\s\\S]*?)<\\/p>/gi)].map(m=>stripMarkup(m[1]).toLowerCase().replace(/\\s+/g,' ').trim()).filter(p=>p.split(/\\s+/).length>=10);}
+function extractParagraphs(html){const main=(html.match(/<main\b[\s\S]*?<\/main>/i)||[])[0]||html;return [...main.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)].map(m=>stripMarkup(m[1]).toLowerCase().replace(/\s+/g,' ').trim()).filter(p=>p.split(/\s+/).length>=10);}
 function auditPage(file,html,repeatedParagraphs=new Set()){
  const text=mainText(html), words=text?text.split(/\s+/).length:0;
  const paragraphs=[...new Set(extractParagraphs(html))];
