@@ -1807,6 +1807,15 @@ html[data-fc-theme="dark"] main #live-page-calculator [aria-live="polite"] {
   color: #e6edf4 !important;
   border-color: #34475d;
 }
+html[data-fc-theme="dark"] main #live-page-calculator small,
+html[data-fc-theme="dark"] main .fields small,
+html[data-fc-theme="dark"] main .fc-fields small,
+html[data-fc-theme="dark"] main .mc-fields small,
+html[data-fc-theme="dark"] main .mortgage-tool-fields small,
+html[data-fc-theme="dark"] main #extraForm small,
+html[data-fc-theme="dark"] main form#gst-live-form small {
+  color: #bdc9d5 !important;
+}
 @media (max-width: 620px) {
   main #live-page-calculator { padding: 15px; }
   main #live-page-calculator form > label {
