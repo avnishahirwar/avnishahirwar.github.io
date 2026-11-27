@@ -38,9 +38,19 @@ function esc(value) {
 }
 function readCanonicalCalculatorUrls() {
   const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
-  return [...new Set([...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+  const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\\.in[^<]*)<\\/loc>/g)]
     .map(match => new URL(match[1]).pathname)
-    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
+
+  // Quality-reviewed thin pages remain searchable and directory-visible even while
+  // their robots meta keeps them out of the XML sitemap. This mirrors the published
+  // catalogue policy in sync-calculator-counts.cjs without changing indexing signals.
+  const qualityPassUrls = fs.readdirSync(path.join(ROOT, 'calculators'))
+    .filter(name => name.endsWith('.html') &&
+      fs.readFileSync(path.join(ROOT, 'calculators', name), 'utf8').includes('data-quality-pass="thin"'))
+    .map(name => '/calculators/' + name);
+
+  return [...new Set([...sitemapUrls, ...qualityPassUrls])].sort();
 }
 function readPageEntry(url, indexByUrl) {
   const file = path.join(ROOT, url.slice(1));
