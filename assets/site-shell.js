@@ -1773,18 +1773,4 @@ if (isProductionAnalyticsHost) {
     });
   }, true);
 }
-
-/* Add a shared, page-specific learning panel to individual calculator pages. */
-try {
-  const isCalculatorPageRoute = /(?:^|\/)calculators\/[^/]+\.html$/i.test(location.pathname);
-  if (isCalculatorPageRoute && !window.__fcCalculatorEducationLoaded) {
-    window.__fcCalculatorEducationLoaded = true;
-    const learningScript = document.createElement('script');
-    learningScript.src = '/assets/calculator-education-sections.js';
-    learningScript.async = true;
-    document.head.appendChild(learningScript);
-  }
-} catch (error) {
-  console.error('Friendly Calculator learning panel could not be loaded:', error);
-}
 })();
