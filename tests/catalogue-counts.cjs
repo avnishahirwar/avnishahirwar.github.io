@@ -6,27 +6,42 @@ module.exports = function getCatalogueCounts(root) {
   const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
   const sitemapCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/')))].sort();
   // Thin pages marked by scripts/adsense-quality-pass.cjs are published (searchable, listed) but kept out of the sitemap.
-  const qualityPassUrls = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html') &&
-    fs.readFileSync(path.join(root, 'calculators', name), 'utf8').includes('data-quality-pass="thin"')).map(name => '/calculators/' + name);
-  const actualSearchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
-  const indexedUrls = [...new Set(actualSearchIndex.map(item => String(item.url || '')).filter(url =>
-    url.startsWith('/calculators/') && url.endsWith('.html') && !url.includes('?') && !url.includes('#') &&
-    !url.split('/').includes('..')))].filter(url => {
-      const absolute = path.resolve(root, url.slice(1));
-      if (!absolute.startsWith(path.join(root, 'calculators') + path.sep) ||
-          !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
-      const html = fs.readFileSync(absolute, 'utf8');
-      const tag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
-      const href = tag && tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
-      if (!href) return false;
-      try {
-        const canonical = new URL(href[1], 'https://friendlycalculator.in');
-        return canonical.origin === 'https://friendlycalculator.in' && canonical.pathname === url &&
-          !canonical.search && !canonical.hash;
-      } catch { return false; }
+  const selfCanonical = url => {
+    if (!url.startsWith('/calculators/') || !url.endsWith('.html') ||
+        url.includes('?') || url.includes('#') || url.split('/').includes('..')) return false;
+    const absolute = path.resolve(root, url.slice(1));
+    const calculatorRoot = path.join(root, 'calculators') + path.sep;
+    if (!absolute.startsWith(calculatorRoot) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
+    const html = fs.readFileSync(absolute, 'utf8');
+    const tag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+    const href = tag && tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
+    if (!href) return false;
+    try {
+      const canonical = new URL(href[1], 'https://friendlycalculator.in');
+      return canonical.origin === 'https://friendlycalculator.in' && canonical.pathname === url &&
+        !canonical.search && !canonical.hash;
+    } catch { return false; }
+  };
+  // Thin pages marked by the quality pass remain searchable on-site but stay out of the sitemap.
+  // Derive this set from published files themselves, not from the search index being tested.
+  const qualityPassUrls = fs.readdirSync(path.join(root, 'calculators'))
+    .filter(name => name.endsWith('.html'))
+    .map(name => '/calculators/' + name)
+    .filter(url => {
+      if (!selfCanonical(url)) return false;
+      return fs.readFileSync(path.join(root, url.slice(1)), 'utf8').includes('data-quality-pass="thin"');
     });
-  const canonicalCalculatorUrls = [...new Set([...sitemapCalculatorUrls, ...qualityPassUrls, ...indexedUrls])].sort();
-  const expectedSearchIndexUrls = [...new Set(actualSearchIndex.map(item => String(item.url || '')).filter(Boolean))].sort();
+  const canonicalCalculatorUrls = [...new Set([...sitemapCalculatorUrls, ...qualityPassUrls])].sort();
+  const searchableInternationalPaths = [
+    '/international/vat-calculator.html',
+    '/international/uk-student-loan-calculator.html',
+    '/international/us-home-affordability-calculator.html'
+  ];
+  const expectedSearchIndexUrls = [...new Set([
+    ...canonicalCalculatorUrls,
+    ...searchableInternationalPaths.filter(route =>
+      sitemapUrls.some(url => new URL(url).pathname === route))
+  ])].sort();
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   const coreCalculatorUrls = [...new Set(sections.flatMap(s => [...s[2].matchAll(/<a class="card" href="(\/calculators\/[^"]+)"/g)].map(m => m[1])))].sort();
