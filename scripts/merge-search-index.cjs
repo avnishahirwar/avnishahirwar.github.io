@@ -20,6 +20,7 @@ const INTERNATIONAL = new Set([
   '/international/uk-student-loan-calculator.html',
   '/international/us-home-affordability-calculator.html'
 ]);
+const SAFETY_EXCLUDED_PATHS = new Set(['/calculators/muzzle-velocity-calculator.html']);
 
 const index = JSON.parse(fs.readFileSync(INDEX, 'utf8'));
 const additions = JSON.parse(fs.readFileSync(ADDITIONS, 'utf8'));
@@ -30,6 +31,7 @@ if (!Array.isArray(index) || !Array.isArray(additions)) {
 function pageFor(url) {
   if (typeof url !== 'string' || !url.startsWith('/') || !url.endsWith('.html') ||
       url.includes('?') || url.includes('#') || url.split('/').includes('..')) return null;
+  if (SAFETY_EXCLUDED_PATHS.has(url)) return null;
   if (!url.startsWith('/calculators/') && !INTERNATIONAL.has(url)) return null;
   const absolute = path.resolve(ROOT, url.slice(1));
   if (!absolute.startsWith(ROOT + path.sep) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return null;
