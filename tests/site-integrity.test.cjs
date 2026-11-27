@@ -1665,15 +1665,18 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 
 
-test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
+test('homepage keeps language choices in the selector and hreflang metadata', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
   assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
   assert.match(homepage, /<meta name="description" content="[^"]*(?:calculators|calculators)[^"]*">/i);
   assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
-  assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
-  assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
+  assert.ok(homepage.includes('id="fc-language-select"'), 'Language choices remain available in the header selector.');
+  assert.ok(homepage.includes('hreflang="hi"'), 'Hindi edition remains discoverable to search engines.');
+  assert.ok(homepage.includes('hreflang="ar"'), 'Arabic edition remains discoverable to search engines.');
+  assert.ok(!homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'), 'Do not add a separate Hindi edition link below the homepage content.');
+  assert.ok(!homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'), 'Do not add a separate Arabic edition link below the homepage content.');
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/ar/index.html'));
 });
