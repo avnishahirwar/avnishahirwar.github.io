@@ -1,4 +1,62 @@
 (()=>{'use strict';
+/* Bandwidth-aware Lite Mode: user choice wins; browser network hints are optional progressive enhancement. */
+const fcLiteMode=(()=>{
+  const key='fc-lite-mode';
+  const getPreference=()=>{
+    try{
+      const value=localStorage.getItem(key);
+      return ['auto','on','off'].includes(value)?value:'auto';
+    }catch(_){return 'auto';}
+  };
+  const shouldReduce=()=>{
+    try{
+      const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+      if(connection?.saveData===true)return true;
+      if(['slow-2g','2g'].includes(connection?.effectiveType))return true;
+      if(Number.isFinite(connection?.downlink)&&connection.downlink<1.5)return true;
+      if(Number.isFinite(connection?.rtt)&&connection.rtt>=1200)return true;
+    }catch(_){}
+    try{
+      return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-data: reduce)').matches);
+    }catch(_){return false;}
+  };
+  const apply=()=>{
+    const preference=getPreference();
+    const enabled=preference==='on'||(preference==='auto'&&shouldReduce());
+    document.documentElement.setAttribute('data-fc-lite-mode',enabled?'on':'off');
+    try{window.dispatchEvent(new Event('fc:litechange'));}catch(_){}
+    return enabled;
+  };
+  const setPreference=value=>{
+    if(!['auto','on','off'].includes(value))return apply();
+    try{localStorage.setItem(key,value);}catch(_){}
+    return apply();
+  };
+  apply();
+  try{
+    const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+    connection?.addEventListener?.('change',apply);
+  }catch(_){}
+  try{
+    const reducedData=window.matchMedia?.('(prefers-reduced-data: reduce)');
+    reducedData?.addEventListener?.('change',apply);
+  }catch(_){}
+  return {apply,getPreference,setPreference,isEnabled:()=>document.documentElement.getAttribute('data-fc-lite-mode')==='on'};
+})();
+const fcLiteStyle=document.createElement('style');
+fcLiteStyle.id='fc-lite-mode-styles';
+fcLiteStyle.textContent=`
+html[data-fc-lite-mode="on"] [data-fc-lite-decorative="true"]{display:none!important}
+html[data-fc-lite-mode="on"] *{animation:none!important;transition:none!important;scroll-behavior:auto!important;box-shadow:none!important;text-shadow:none!important}
+html[data-fc-lite-mode="on"] .fc-brand-visual{display:none!important}
+html[data-fc-lite-mode="on"] .fc-global-header,html[data-fc-lite-mode="on"] .fc-global-footer,html[data-fc-lite-mode="on"] .fc-display-panel{filter:none!important}
+.fc-lite-mode-control{display:grid;gap:6px;margin:8px 0 12px}
+.fc-lite-mode-control span{font-weight:700}
+.fc-lite-mode-control select{width:100%;min-height:42px;padding:8px 10px;border:1px solid #aebbc7;border-radius:7px;background:#fff;color:#172638;font:inherit}
+.fc-lite-mode-status{margin:4px 0 12px;color:#64717d;font-size:.84rem;line-height:1.45}
+html[data-fc-theme="dark"] .fc-lite-mode-control select{background:#0e1b2b;color:#edf3f8;border-color:#52657a}
+`;
+if(document.head)document.head.appendChild(fcLiteStyle);
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
 const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
@@ -1571,6 +1629,38 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   if(countryFormatSelect.options.length)regionalSettingsControls.appendChild(countryFormatLabel);
   if(unitControl)regionalSettingsControls.appendChild(unitControl);
   panel.append(regionalSettingsControls);
+  const liteCopy=lang==='hi'
+    ?{heading:'डेटा बचत मोड',label:'इंटरनेट स्पीड के अनुसार',auto:'ऑटो (नेटवर्क के अनुसार)',on:'Lite मोड हमेशा चालू',off:'सामान्य वर्जन',autoLite:'धीमे नेटवर्क या डेटा बचत सेटिंग के कारण Lite मोड सक्रिय है।',autoFull:'ऑटो मोड: सामान्य वर्जन। जरूरत पर Lite मोड चुनें।',onStatus:'Lite मोड चालू है। गणना और जरूरी जानकारी उपलब्ध रहेगी।',offStatus:'सामान्य वर्जन चालू है।'}
+    :{heading:'Data saving mode',label:'Choose how the site adapts',auto:'Automatic (recommended)',on:'Always use Lite mode',off:'Full version',autoLite:'Lite mode is active because your browser reports a slow connection or data-saving preference.',autoFull:'Automatic mode is using the full version. Choose Lite mode any time to reduce visual effects and decorative downloads.',onStatus:'Lite mode is on. Calculators and essential explanations remain available.',offStatus:'Full version is on.'};
+  addSectionHeading(liteCopy.heading);
+  const liteModeLabel=document.createElement('label');
+  liteModeLabel.className='fc-lite-mode-control';
+  const liteModeLabelText=document.createElement('span');
+  liteModeLabelText.textContent=liteCopy.label;
+  const liteModeSelect=document.createElement('select');
+  liteModeSelect.id='fc-lite-mode-select';
+  liteModeSelect.setAttribute('aria-label',liteCopy.label);
+  [['auto',liteCopy.auto],['on',liteCopy.on],['off',liteCopy.off]].forEach(([value,label])=>{
+    const option=document.createElement('option');option.value=value;option.textContent=label;liteModeSelect.appendChild(option);
+  });
+  liteModeSelect.value=fcLiteMode.getPreference();
+  const liteModeStatus=document.createElement('p');
+  liteModeStatus.className='fc-lite-mode-status';
+  liteModeStatus.setAttribute('role','status');
+  liteModeStatus.setAttribute('aria-live','polite');
+  const updateLiteStatus=()=>{
+    const preference=fcLiteMode.getPreference();
+    liteModeSelect.value=preference;
+    liteModeStatus.textContent=preference==='on'?liteCopy.onStatus:preference==='off'?liteCopy.offStatus:(fcLiteMode.isEnabled()?liteCopy.autoLite:liteCopy.autoFull);
+  };
+  liteModeSelect.addEventListener('change',()=>{
+    fcLiteMode.setPreference(liteModeSelect.value);
+    updateLiteStatus();
+  });
+  window.addEventListener('fc:litechange',updateLiteStatus);
+  liteModeLabel.append(liteModeLabelText,liteModeSelect);
+  panel.append(liteModeLabel,liteModeStatus);
+  updateLiteStatus();
   addSectionHeading(t.accessibility);
   panel.append(themeModes);
   const quickDivider=document.createElement('div');
