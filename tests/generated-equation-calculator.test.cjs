@@ -44,6 +44,7 @@ function makeElement(tagName) {
 }
 
 function boot(config) {
+  const created = [];
   const elements = {
     calc: makeElement('form'),
     out: makeElement('div'),
@@ -51,13 +52,13 @@ function boot(config) {
   };
   const document = {
     getElementById(id) { return elements[id] || null; },
-    createElement(tag) { return makeElement(tag); }
+    createElement(tag) { const node=makeElement(tag); created.push(node); return node; }
   };
   const context = {window:{FC_EQUATION_CONFIG:config},document,Intl,Date,Math,Number,Object,String,Array};
   vm.runInNewContext(engine, context, {timeout:1000});
   const click = () => elements.go.listeners.click();
   const input = name => elements.calc.elements.find(item => item.name === name);
-  return {elements,click,input};
+  return {elements,click,input,created};
 }
 
 test('variable keys become readable labels and explicit labels override defaults',()=>{
@@ -66,7 +67,7 @@ test('variable keys become readable labels and explicit labels override defaults
     inputLabels:{base_amount:'Principal amount',interestRate:'Annual rate (%)'},
     outputLabels:{dragCoefficient:'Drag force'}
   });
-  const labels=app.elements.calc.elements.map(input=>input.attributes['aria-label']);
+  const labels=app.created.filter(node=>node.tagName==='INPUT').map(input=>input.attributes['aria-label']);
   assert.deepEqual(labels,['Principal amount','Annual rate (%)','Drag coefficient','Significant figures']);
   assert.equal(app.input('base_amount').attributes['aria-label'],'Principal amount');
   assert.ok(app.input('base_amount').id.startsWith('fc-equation-'));
