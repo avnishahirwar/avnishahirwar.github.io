@@ -1,0 +1,46 @@
+name: Repair invalid hreflang metadata safely
+
+on:
+  push:
+    branches:
+      - seo/og-meta-description-align-2026-11-27
+
+permissions:
+  contents: write
+
+concurrency:
+  group: friendly-calculator-hreflang-cleanup
+  cancel-in-progress: false
+
+jobs:
+  clean-invalid-hreflang:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check repair scripts
+        run: node --check scripts/add-hreflang-reciprocals.cjs && node --check scripts/clean-invalid-hreflang.cjs
+      - name: Add only safe missing reciprocal links
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Remove invalid hreflang links and all alternates from noindex pages
+        run: node scripts/clean-invalid-hreflang.cjs --write
+      - name: Verify hreflang validity and noindex protection
+        run: node --test tests/add-hreflang-reciprocals.test.cjs tests/clean-invalid-hreflang.test.cjs tests/international-seo-diagnostic.test.cjs tests/international-seo.test.cjs
+      - name: Commit only cleaned HTML pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: remove invalid hreflang metadata safely [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No invalid hreflang page tags remain."
+          fi
