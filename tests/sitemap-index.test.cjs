@@ -11,14 +11,13 @@ test('top-level sitemap index is valid and points to the canonical sitemap set',
   assert.match(index, /^<\?xml version="1\.0" encoding="UTF-8"\?>/);
   assert.match(index, /<sitemapindex\s+xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const urls = [...index.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(urls, [
-    `${origin}/sitemap.xml`,
-    `${origin}/sitemap-locales.xml`,
-    `${origin}/sitemap-uk-us.xml`
-  ]);
+  const pageShards = fs.readdirSync(root).filter(name => /^sitemap-pages-\d+\.xml$/.test(name)).sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
+  const expectedFiles = ['sitemap.xml', ...pageShards, 'sitemap-locales.xml', 'sitemap-uk-us.xml'];
+  assert.deepEqual(urls, expectedFiles.map(file => `${origin}/${file}`));
   for (const url of urls) {
     const filename = new URL(url).pathname.slice(1);
     assert.ok(fs.existsSync(path.join(root, filename)), `Missing referenced sitemap: ${filename}`);
+    assert.ok(fs.statSync(path.join(root, filename)).size < 25 * 1024 * 1024, `Sitemap exceeds Cloudflare Pages 25 MiB limit: ${filename}`);
   }
 });
 
