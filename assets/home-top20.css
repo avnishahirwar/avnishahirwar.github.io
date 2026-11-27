@@ -32,3 +32,9 @@ body .home-intro .home-partnership-cta a{padding:6px 12px!important;font-size:.9
 body .home-intro .home-partnership-cta span{display:none}
 body .home-intro .button,body .home-intro .btn,body .home-intro a[class*="basic"]{padding:8px 14px!important;font-size:.95rem!important}
 @media (max-width:560px){body .home-intro p{font-size:.92rem!important}}
+
+/* World Top 20 reuses the India calculator controls with a separate data mount. */
+.home-top20-world{margin-top:0}
+.home-top20-world>p{max-width:900px}
+.home-top20-world .top20-all{margin-top:14px}
+@media(max-width:560px){.home-top20-world{padding:14px}}
