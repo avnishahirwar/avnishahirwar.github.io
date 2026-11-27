@@ -2,7 +2,7 @@ name: Generate XML sitemap
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/world-top20-clean-20261127]
   pull_request:
     branches: [main]
   schedule:
