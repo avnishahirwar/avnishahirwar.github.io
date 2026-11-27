@@ -65,7 +65,8 @@ test('variable keys become readable labels and explicit labels override defaults
   const app=boot({
     variables:['base_amount','interestRate','dragCoefficient','sig_fig'],
     inputLabels:{base_amount:'Principal amount',interestRate:'Annual rate (%)'},
-    outputLabels:{dragCoefficient:'Drag force'}
+    outputLabels:{dragCoefficient:'Drag force'},
+    equations:[]
   });
   const labels=['base_amount','interestRate','dragCoefficient','sig_fig'].map(key=>app.input(key).attributes['aria-label']);
   assert.deepEqual(labels,['Principal amount','Annual rate (%)','Drag coefficient','Significant figures']);
