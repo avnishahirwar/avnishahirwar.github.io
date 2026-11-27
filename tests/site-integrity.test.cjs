@@ -2404,3 +2404,54 @@ test('shared header loads a site-restricted Google Programmable Search outside e
   assert.match(styles, /\.fc-header-search/);
   assert.match(styles, /gsc-search-button-v2/);
 });
+
+
+test('calculator page forms use consistent line-by-line input rows and preserve result regions', () => {
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  const cssRuleBody = (source, marker) => {
+    const start = source.indexOf(marker);
+    assert.notEqual(start, -1, 'Missing CSS rule marker: ' + marker);
+    const open = source.indexOf('{', start);
+    assert.notEqual(open, -1, 'Missing CSS rule opening brace: ' + marker);
+    let depth = 0;
+    for (let i = open; i < source.length; i += 1) {
+      if (source[i] === '{') depth += 1;
+      if (source[i] === '}') {
+        depth -= 1;
+        if (depth === 0) return source.slice(open + 1, i);
+      }
+    }
+    assert.fail('Unclosed CSS rule: ' + marker);
+  };
+
+  const sharedFormRule = cssRuleBody(styles, 'main #live-page-calculator form,');
+  assert.match(sharedFormRule, /grid-template-columns:\s*minmax\(0, 1fr\)/);
+
+  const dividerRule = cssRuleBody(styles, 'main #live-page-calculator form > label,');
+  assert.match(dividerRule, /border-bottom:\s*1px solid/);
+
+  const fieldGridMarker = [
+    'main .fields > .field,',
+    'main .fc-fields > .fc-field,',
+    'main .mc-fields > .mc-field,',
+    'main .mortgage-tool-fields > .mortgage-tool-field,',
+    'main #extraForm > .field,',
+    'main form#gst-live-form > label {',
+    '  display: grid !important;'
+  ].join('\n');
+  const fieldGridRule = cssRuleBody(styles, fieldGridMarker);
+  assert.match(fieldGridRule, /grid-template-columns:\s*minmax\(0, \.85fr\) minmax\(0, 1\.15fr\)/);
+
+  const mobileMediaRule = cssRuleBody(styles, '@media (max-width: 620px)');
+  const mobileFieldRule = cssRuleBody(mobileMediaRule, 'main .fields > .field,');
+  assert.match(mobileFieldRule, /grid-template-columns:\s*minmax\(0, 1fr\)/);
+
+  assert.match(styles, /\.fields > \.field input:not\(\[type="range"\]\):not\(\[type="checkbox"\]\):not\(\[type="radio"\]\)/);
+  assert.match(styles, /form#gst-live-form > label input:not\(\[type="checkbox"\]\):not\(\[type="radio"\]\)/);
+  assert.match(styles, /\.fc-fields > \.fc-field/);
+  assert.match(styles, /\.mc-fields > \.mc-field/);
+  assert.match(styles, /\.mortgage-tool-fields > \.mortgage-tool-field/);
+  assert.match(styles, /form#gst-live-form/);
+  assert.match(styles, /#live-page-calculator \.fc-result-chart/);
+  assert.match(styles, /html\[data-fc-theme="dark"\] main \.mortgage-tool-fields small[\s\S]*color:\s*#bdc9d5 !important/);
+});
