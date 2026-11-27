@@ -69,3 +69,22 @@ test('all catalog-driven counts are synchronized and repeatable after catalogue 
   assert.ok(updated.includes(`Search all ${total.toLocaleString('en-US')} calculator entries`));
   assert.ok(updated.includes(`Total catalogue: ${total.toLocaleString('en-US')} calculators`));
 });
+
+test('search index contains only unique, existing, canonical indexable routes',()=>{
+ const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
+ const urls=index.map(item=>item.url);
+ assert.equal(new Set(urls).size,urls.length,'Search index URLs must be unique');
+ for(const url of urls){
+  assert.ok(typeof url==='string'&&url.startsWith('/')&&url.endsWith('.html'));
+  const file=path.resolve(root,url.slice(1));
+  assert.ok(file.startsWith(root+path.sep)&&fs.existsSync(file),url+' must point to an existing page');
+  const html=fs.readFileSync(file,'utf8');
+  const noindex=/<meta\b[^>]*(?:name\s*=\s*["'](?:robots|googlebot)["'][^>]*content\s*=\s*["'][^"']*\bnoindex\b|content\s*=\s*["'][^"']*\bnoindex\b[^>]*name\s*=\s*["'](?:robots|googlebot)["'])/i.test(html);
+  assert.equal(noindex,false,url+' must not be in the searchable index when noindex is present');
+  const canonicalTag=(html.match(/<link\b(?=[^>]*rel=["']canonical["'])[^>]*>/i)||[])[0];
+  if(canonicalTag){
+   const href=(canonicalTag.match(/\bhref=["']([^"']+)["']/i)||[])[1];
+   assert.equal(new URL(href,'https://friendlycalculator.in').pathname,url,url+' must be self-canonical to appear in search');
+  }
+ }
+});

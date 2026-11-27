@@ -11778,13 +11778,6 @@
     "description": "Estimate a livestock fence project total from your own installed rate, gate costs, additional costs, and optional contingency. No market-price defaults are included."
   },
   {
-    "name": "Llama Calculator",
-    "url": "/calculators/llama-calculator.html",
-    "category": "BIOLOGY",
-    "keywords": "llama calculator",
-    "description": "Llama Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
     "name": "LM317 Calculator",
     "url": "/calculators/lm317-calculator.html",
     "category": "OTHER",
@@ -11958,13 +11951,6 @@
     "category": "FINANCE",
     "keywords": "loss ratio calculator",
     "description": "Loss Ratio Calculator — requested calculator in the Friendly Calculator directory."
-  },
-  {
-    "name": "Lost Socks Calculator",
-    "url": "/calculators/lost-socks-calculator.html",
-    "category": "Everyday Life",
-    "keywords": "lost socks calculator",
-    "description": "Lost Socks Calculator: a transparent browser-based calculator with formula, sample and assumptions."
   },
   {
     "name": "Lot Size to Acres Calculator",
