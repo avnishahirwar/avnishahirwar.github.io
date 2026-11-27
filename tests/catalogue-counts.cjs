@@ -3,9 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 module.exports = function getCatalogueCounts(root) {
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
-  const sitemapCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/')))].sort();
-  // Thin pages marked by scripts/adsense-quality-pass.cjs are published (searchable, listed) but kept out of the sitemap.
+  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\\.in[^<]*)<\\/loc>/g)].map(m => m[1]);
+  const sitemapCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
   const selfCanonical = url => {
     if (!url.startsWith('/calculators/') || !url.endsWith('.html') ||
         url.includes('?') || url.includes('#') || url.split('/').includes('..')) return false;
@@ -13,8 +12,8 @@ module.exports = function getCatalogueCounts(root) {
     const calculatorRoot = path.join(root, 'calculators') + path.sep;
     if (!absolute.startsWith(calculatorRoot) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
     const html = fs.readFileSync(absolute, 'utf8');
-    const tag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
-    const href = tag && tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
+    const tag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
+    const href = tag && tag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
     if (!href) return false;
     try {
       const canonical = new URL(href[1], 'https://friendlycalculator.in');
@@ -22,16 +21,13 @@ module.exports = function getCatalogueCounts(root) {
         !canonical.search && !canonical.hash;
     } catch { return false; }
   };
-  // Thin pages marked by the quality pass remain searchable on-site but stay out of the sitemap.
-  // Derive this set from published files themselves, not from the search index being tested.
-  const qualityPassUrls = fs.readdirSync(path.join(root, 'calculators'))
+  // The on-site catalogue intentionally includes self-canonical noindex pages.
+  // Robots directives control search-engine indexing; they do not hide useful tools from site visitors.
+  const canonicalCalculatorUrls = fs.readdirSync(path.join(root, 'calculators'))
     .filter(name => name.endsWith('.html'))
     .map(name => '/calculators/' + name)
-    .filter(url => {
-      if (!selfCanonical(url)) return false;
-      return fs.readFileSync(path.join(root, url.slice(1)), 'utf8').includes('data-quality-pass="thin"');
-    });
-  const canonicalCalculatorUrls = [...new Set([...sitemapCalculatorUrls, ...qualityPassUrls])].sort();
+    .filter(selfCanonical)
+    .sort();
   const searchableInternationalPaths = [
     '/international/vat-calculator.html',
     '/international/uk-student-loan-calculator.html',
