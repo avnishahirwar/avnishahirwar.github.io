@@ -783,7 +783,9 @@ test('the ten priority Hindi calculators expose canonical URLs, indexable langua
     const indexable = candidates.filter(locale => {
       const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
       const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
-      return !isNoindex(localeHtml);
+      const localeHead = localeHtml.slice(0, localeHtml.toLowerCase().indexOf('</head>'));
+      const reciprocallyLinkedToHindi = /<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']hi["'])(?=[^>]*\bhref=["']https:\/\/friendlycalculator\.in\/hi\/calculators\/[^"']+["'])[^>]*>/i.test(localeHead);
+      return !isNoindex(localeHtml) && reciprocallyLinkedToHindi;
     });
     const expectedAlternates = [
       ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),

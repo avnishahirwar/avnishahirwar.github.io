@@ -6,7 +6,13 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
-const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+function readAllSitemaps() {
+  const names = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\d+\.xml$/.test(name))
+    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]))];
+  return names.map(name => fs.readFileSync(path.join(root, name), 'utf8')).join('\n');
+}
+const sitemap = readAllSitemaps();
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, homepageCoreCalculatorCount } = catalogueCounts;
@@ -26,6 +32,15 @@ test('international hub hero links meet the dark-header contrast style', () => {
   assert.match(html, /\.hero\s+\.links\s+a\s*\{[^}]*color:\s*#e6d6b2/i);
 });
 
+test('all XML sitemap shards stay below the Cloudflare Pages per-file limit', () => {
+  const names = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\d+\.xml$/.test(name))];
+  assert.ok(names.length >= 1);
+  for (const name of names) {
+    const size = fs.statSync(path.join(root, name)).size;
+    assert.ok(size < 25 * 1024 * 1024, name + ' exceeds Cloudflare Pages 25 MiB asset limit: ' + size);
+  }
+});
 test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.match(sitemap, /^<\?xml/);
   assert.ok(urls.length >= 20, 'Expected public site pages in sitemap');
@@ -1221,7 +1236,7 @@ test('Avnish Ahirwar founder identity is crawlable and consistently linked', () 
   const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  const sitemap = readAllSitemaps();
   assert.match(home, /Founded by <a href="\/calculator\/founder\.html">Avnish Ahirwar<\/a>/);
   assert.match(home, /"@type":"Person","@id":"https:\/\/friendlycalculator\.in\/calculator\/founder\.html#person","name":"Avnish Ahirwar"/);
   assert.match(founder, /"@type":"ProfilePage"/);
@@ -1665,15 +1680,18 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 
 
-test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
+test('homepage keeps language choices in the selector and hreflang metadata', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
   assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
   assert.match(homepage, /<meta name="description" content="[^"]*(?:calculators|calculators)[^"]*">/i);
   assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
-  assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
-  assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
+  assert.ok(homepage.includes('id="fc-language-select"'), 'Language choices remain available in the header selector.');
+  assert.ok(homepage.includes('hreflang="hi"'), 'Hindi edition remains discoverable to search engines.');
+  assert.ok(homepage.includes('hreflang="ar"'), 'Arabic edition remains discoverable to search engines.');
+  assert.ok(!homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'), 'Do not add a separate Hindi edition link below the homepage content.');
+  assert.ok(!homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'), 'Do not add a separate Arabic edition link below the homepage content.');
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/ar/index.html'));
 });
@@ -1693,7 +1711,7 @@ test('income tax page title and heading identify the current salary-estimate tax
   assert.ok(tax.includes('<h1>Income Tax Calculator India for Tax Year 2026–27</h1>'));
   assert.ok(tax.includes('name="description" content="Estimate Indian salary income tax for Tax Year 2026–27'));
   assert.match(tax, /Explore the complete calculator directory to browse all current calculators/);
-  assert.doesNotMatch(tax, /Explore all \\d+ calculators on Friendly Calculator/);
+  assert.doesNotMatch(tax, /Explore all \d+ calculators on Friendly Calculator/);
 });
 
 
