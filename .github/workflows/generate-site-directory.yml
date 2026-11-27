@@ -24,6 +24,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/build-physics-directory-index.cjs'
+      - 'assets/physics-directory-index.json'
       - 'calculator/site-directory.html'
       - 'calculator/physics-calculators.html'
       - 'config/site-directory-category-assignments.json'
