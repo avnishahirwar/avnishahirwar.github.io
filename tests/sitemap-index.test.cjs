@@ -27,3 +27,18 @@ test('robots declares the top-level sitemap index and keeps crawler policy publi
   assert.match(robots, /Allow:\s*\//i);
   assert.match(robots, /Disallow:\s*\/calculator\/admin\.html/i);
 });
+
+test('all page sitemap shards preserve unique canonical URLs and hreflang metadata', () => {
+  const filenames = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name))
+    .sort((a, b) => Number(a.match(/\\d+/)[0]) - Number(b.match(/\\d+/)[0]))];
+  const urls = filenames.flatMap(filename => {
+    const xml = fs.readFileSync(path.join(root, filename), 'utf8');
+    assert.match(xml, /<urlset\\s+xmlns="http:\\/\\/www\\.sitemaps\\.org\\/schemas\\/sitemap\\/0\\.9"/);
+    assert.ok(xml.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"'));
+    return [...xml.matchAll(/<loc>(https:\\/\\/friendlycalculator\\.in[^<]*)<\\/loc>/g)].map(match => match[1]);
+  });
+  assert.ok(urls.length > 3000, 'Expected the complete public sitemap catalogue');
+  assert.equal(new Set(urls).size, urls.length, 'Canonical URL entries must not be duplicated across shards');
+  assert.ok(filenames.length >= 2, 'Oversized sitemap must be split into multiple page files');
+});
