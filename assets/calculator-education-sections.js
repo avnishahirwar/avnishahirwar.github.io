@@ -3,7 +3,7 @@
 
   // Read existing page copy and equation metadata; never alter calculation inputs or logic.
   if (new URLSearchParams(location.search).get('embed') === '1') return;
-  if (!/(?:^|\\/)calculators\\/[^/]+\\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)calculators\/[^/]+\.html$/i.test(location.pathname)) return;
 
   const main = document.querySelector('main');
   if (!main || main.querySelector('#fc-learning-sections')) return;
@@ -17,7 +17,7 @@
   const excludedTopic = /(?:firearm|weapon|ammunition|opioid|overdose|dosage|drug-dose|poison|toxic-substance|casino|gambling|sports-bet|wager|alcohol|nicotine|vape|self-harm)/i;
   if (excludedTopic.test(route) || excludedTopic.test(pageTitle)) return;
 
-  const headingText = node => (node.textContent || '').replace(/\\s+/g, ' ').trim();
+  const headingText = node => (node.textContent || '').replace(/\s+/g, ' ').trim();
   const headings = Array.from(main.querySelectorAll('h2, h3, h4'));
   const findHeading = patterns => headings.find(node => patterns.some(pattern => pattern.test(headingText(node))));
 
@@ -26,7 +26,7 @@
     const pieces = [];
     let node = heading.nextElementSibling;
     while (node && !/^H[1-6]$/.test(node.tagName)) {
-      const value = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
+      const value = (node.innerText || node.textContent || '').replace(/\s+/g, ' ').trim();
       if (value) pieces.push(value);
       node = node.nextElementSibling;
     }
@@ -34,7 +34,7 @@
       const parent = heading.parentElement;
       if (parent && parent !== main) {
         const value = (parent.innerText || parent.textContent || '')
-          .replace(headingText(heading), '').replace(/\\s+/g, ' ').trim();
+          .replace(headingText(heading), '').replace(/\s+/g, ' ').trim();
         if (value) pieces.push(value);
       }
     }
