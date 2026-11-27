@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ORIGIN = 'https://friendlycalculator.in';
-const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd']);
+const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd','uk']);
 const FALLBACK_LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru']);
 const IGNORED_DIRS = new Set(['.git','.github','node_modules','vendor','_site','tests','admin','avnish-ai']);
 
@@ -197,4 +197,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { normalizeDirectory };
+module.exports = { normalizeDirectory, LANGUAGE_PREFIXES };
