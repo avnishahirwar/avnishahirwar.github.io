@@ -98,6 +98,7 @@ test('distributive browser renderer formats expansion without using map index as
   }
   const form = makeNode('form');
   form.elements = { multiplier: { value: '3' }, terms: { value: '2,4' } };
+  Object.defineProperty(form.elements, 'namedItem', { value: name => form.elements[name] || null, enumerable: false });
   form.addEventListener = (name, handler) => { form.submitHandler = handler; };
   form.requestSubmit = () => form.submitHandler({ preventDefault() {} });
   const nodes = { calcForm: form, calcStatus: makeNode('p'), calcResults: makeNode('section') };

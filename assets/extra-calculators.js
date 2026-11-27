@@ -44,7 +44,7 @@ case'taxsimple':r={'Estimated tax':v.income*rate,'Income after estimated tax':v.
 case'latefee':r={'Estimated late fee':Math.min(v.days*v.daily,v.cap)};break;
 case'interest':r={'Estimated simple interest':v.tax*rate*v.days/365,'Principal plus interest':v.tax*(1+rate*v.days/365)};break;
 case'itc':r={'Net GST payable (not below zero)':Math.max(0,v.output-v.itc),'Excess ITC entered':Math.max(0,v.itc-v.output)};break;
-case'gst':r={'Estimated GST':v.value*rate,'Total including GST':v.value*(1+rate)};break;
+case'gst':{const base=v.value!==undefined?v.value:v.rent;r={'Estimated GST':base*rate,'Total including GST':base*(1+rate)};break;}
 case'payback':if(v.cashflow<=0){r={'Simple payback period':'Not calculable when annual cash inflow is zero'};}else{r={'Simple payback period (years)':v.investment/v.cashflow,'Simple payback period (months)':12*v.investment/v.cashflow};}break;
 case'invoice':{const gross=v.qty*v.price,disc=gross*v.discount/100,taxable=gross-disc,tax=taxable*v.gst/100;r={'Gross amount':gross,'Discount':disc,'Taxable amount':taxable,'GST':tax,'Invoice total':taxable+tax};break;}
 case'salary':{const gross=v.basic+v.allowances;r={'Gross monthly earnings':gross,'Total deductions':v.deductions,'Estimated take-home pay':gross-v.deductions};break;}

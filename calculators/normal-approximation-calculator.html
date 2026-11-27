@@ -16,4 +16,45 @@
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/normal-approximation-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/normal-approximation-calculator.html">
 <meta name="robots" content="index,follow,max-image-preview:large">  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Normal Approximation Calculator | Friendly Calculator","description":"Use the normal approximation calculator to approximate the probability for a binomial event with a normal distribution.","url":"https://friendlycalculator.in/calculators/normal-approximation-calculator.html","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Friendly Calculator","url":"https://friendlycalculator.in/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Friendly Calculator","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://friendlycalculator.in/calculators/"},{"@type":"ListItem","position":3,"name":"Normal Approximation Calculator","item":"https://friendlycalculator.in/calculators/normal-approximation-calculator.html"}]}]}</script>
-</head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Normal Approximation Calculator</nav><header class="hero"><p class="muted">STATISTICS · LOCAL CALCULATOR</p><h1>Normal Approximation Calculator</h1><p class="muted">Use the normal approximation calculator to approximate the probability for a binomial event with a normal distribution.</p></header><section class="panel"><h2>Enter values</h2><form id="calc" class="fields"></form><button id="go" type="button">Calculate</button><div id="out" class="out" aria-live="polite"></div></section><section class="content"><h2>How it works</h2><p>This calculator evaluates the displayed equation variants locally in your browser. Enter the known values; results are shown for equations whose required inputs are available.</p><p>Check units, assumptions and professional guidance before using results for medical, financial, legal, engineering or safety-critical decisions.</p></section></main><script>window.FC_EQUATION_CONFIG="{\"variables\":[\"n\",\"p\",\"q\",\"n2\",\"sd\",\"prob1\",\"prob2\",\"prob5\",\"VarSub\",\"z_perc1\",\"z_perc2\",\"z_score\",\"z_value\",\"variance\",\"x_limit1\",\"x_limit2\",\"z_score1\",\"z_score2\",\"meanValue\",\"prob1_percent\",\"prob2_percent\",\"prob5_percent\",\"z_perc1_percent\",\"z_perc2_percent\"],\"equations\":[{\"lhs\":\"q\",\"rhs\":[\"p\"],\"formula\":\"1 - p\"},{\"lhs\":\"p\",\"rhs\":[\"q\"],\"formula\":\"1 - q\"},{\"lhs\":\"meanValue\",\"rhs\":[\"p\",\"n\"],\"formula\":\"n*p\"},{\"lhs\":\"p\",\"rhs\":[\"meanValue\",\"n\"],\"formula\":\"meanValue/n\"},{\"lhs\":\"n\",\"rhs\":[\"meanValue\",\"p\"],\"formula\":\"meanValue/p\"},{\"lhs\":\"sd\",\"rhs\":[\"n\",\"p\",\"q\"],\"formula\":\"(sqrt((n*p*q)))\"},{\"lhs\":\"variance\",\"rhs\":[\"n\",\"p\",\"q\"],\"formula\":\"(n*p*q)\"},{\"lhs\":\"z_score\",\"rhs\":[\"VarSub\",\"meanValue\",\"n\",\"n2\",\"p\",\"q\"],\"formula\":\"getz_score(n2, meanValue, (sqrt((n*p*q))), VarSub)\"},{\"lhs\":\"z_value\",\"rhs\":[\"VarSub\",\"meanValue\",\"n\",\"n2\",\"p\",\"q\"],\"formula\":\"getz_value(getz_score(n2, meanValue, (sqrt((n*p*q))), VarSub))\"}]}";</script><script src="/assets/generated-equation-calculator.js" defer></script><script src="/assets/site-shell.js" defer></script></body></html>
+</head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Normal Approximation Calculator</nav><header class="hero"><p class="muted">STATISTICS · LOCAL CALCULATOR</p><h1>Normal Approximation Calculator</h1><p class="muted">Use the normal approximation calculator to approximate the probability for a binomial event with a normal distribution.</p></header><section class="panel"><h2>Enter values</h2><form id="calc" class="fields"></form><button id="go" type="button">Calculate</button><div id="out" class="out" aria-live="polite"></div></section><section class="content"><h2>How it works</h2><p>This calculator evaluates the displayed equation variants locally in your browser. Enter the known values; results are shown for equations whose required inputs are available.</p><p>Check units, assumptions and professional guidance before using results for medical, financial, legal, engineering or safety-critical decisions.</p></section>
+<section class="content" id="formula-reference">
+<h2>Formulas used by this calculator</h2>
+<p>The Normal Approximation Calculator works with 24 quantities and 7 relations between them. Enter the values you know, leave the one you want to find blank, and press Calculate. Blank fields are never treated as zero. Each formula below is solved for one quantity.</p>
+<ul>
+<li><strong>Mean Value</strong> (<code>meanValue</code>) = <code>n × p</code></li>
+<li><strong>q</strong> (<code>q</code>) = <code>1 - p</code></li>
+<li><strong>p</strong> (<code>p</code>) = <code>1 - q</code></li>
+<li><strong>Variance</strong> (<code>variance</code>) = <code>(n × p × q)</code></li>
+<li><strong>n</strong> (<code>n</code>) = <code>meanValue/p</code></li>
+<li><strong>sd</strong> (<code>sd</code>) = <code>(sqrt((n × p × q)))</code></li>
+</ul>
+<p>1 further rearrangement of the same relations let you solve for other quantities.</p>
+<h2>Inputs</h2>
+<table><thead><tr><th>Field</th><th>Name in formulas</th><th>Can be solved for</th></tr></thead><tbody>
+<tr><td>n</td><td><code>n</code></td><td>Yes</td></tr>
+<tr><td>p</td><td><code>p</code></td><td>Yes</td></tr>
+<tr><td>q</td><td><code>q</code></td><td>Yes</td></tr>
+<tr><td>n2</td><td><code>n2</code></td><td>Input only</td></tr>
+<tr><td>sd</td><td><code>sd</code></td><td>Yes</td></tr>
+<tr><td>Prob1</td><td><code>prob1</code></td><td>Input only</td></tr>
+<tr><td>Prob2</td><td><code>prob2</code></td><td>Input only</td></tr>
+<tr><td>Prob5</td><td><code>prob5</code></td><td>Input only</td></tr>
+<tr><td>Var Sub</td><td><code>VarSub</code></td><td>Input only</td></tr>
+<tr><td>Z perc1</td><td><code>z_perc1</code></td><td>Input only</td></tr>
+<tr><td>Z perc2</td><td><code>z_perc2</code></td><td>Input only</td></tr>
+<tr><td>Z score</td><td><code>z_score</code></td><td>Input only</td></tr>
+<tr><td>Z value</td><td><code>z_value</code></td><td>Input only</td></tr>
+<tr><td>Variance</td><td><code>variance</code></td><td>Yes</td></tr>
+<tr><td>X limit1</td><td><code>x_limit1</code></td><td>Input only</td></tr>
+<tr><td>X limit2</td><td><code>x_limit2</code></td><td>Input only</td></tr>
+<tr><td>Z score1</td><td><code>z_score1</code></td><td>Input only</td></tr>
+<tr><td>Z score2</td><td><code>z_score2</code></td><td>Input only</td></tr>
+<tr><td>Mean Value</td><td><code>meanValue</code></td><td>Yes</td></tr>
+<tr><td>Prob1 percent</td><td><code>prob1_percent</code></td><td>Input only</td></tr>
+<tr><td>Prob2 percent</td><td><code>prob2_percent</code></td><td>Input only</td></tr>
+<tr><td>Prob5 percent</td><td><code>prob5_percent</code></td><td>Input only</td></tr>
+<tr><td>Z perc1 percent</td><td><code>z_perc1_percent</code></td><td>Input only</td></tr>
+<tr><td>Z perc2 percent</td><td><code>z_perc2_percent</code></td><td>Input only</td></tr>
+</tbody></table>
+<p><strong>Limitation:</strong> 2 of the 9 underlying relations rely on lookup tables or helper routines that run only on the original source calculator, so this page skips them. Quantities that depend on those relations are not solved here.</p>
+</section></main><script>window.FC_EQUATION_CONFIG="{\"variables\":[\"n\",\"p\",\"q\",\"n2\",\"sd\",\"prob1\",\"prob2\",\"prob5\",\"VarSub\",\"z_perc1\",\"z_perc2\",\"z_score\",\"z_value\",\"variance\",\"x_limit1\",\"x_limit2\",\"z_score1\",\"z_score2\",\"meanValue\",\"prob1_percent\",\"prob2_percent\",\"prob5_percent\",\"z_perc1_percent\",\"z_perc2_percent\"],\"equations\":[{\"lhs\":\"q\",\"rhs\":[\"p\"],\"formula\":\"1 - p\"},{\"lhs\":\"p\",\"rhs\":[\"q\"],\"formula\":\"1 - q\"},{\"lhs\":\"meanValue\",\"rhs\":[\"p\",\"n\"],\"formula\":\"n*p\"},{\"lhs\":\"p\",\"rhs\":[\"meanValue\",\"n\"],\"formula\":\"meanValue/n\"},{\"lhs\":\"n\",\"rhs\":[\"meanValue\",\"p\"],\"formula\":\"meanValue/p\"},{\"lhs\":\"sd\",\"rhs\":[\"n\",\"p\",\"q\"],\"formula\":\"(sqrt((n*p*q)))\"},{\"lhs\":\"variance\",\"rhs\":[\"n\",\"p\",\"q\"],\"formula\":\"(n*p*q)\"},{\"lhs\":\"z_score\",\"rhs\":[\"VarSub\",\"meanValue\",\"n\",\"n2\",\"p\",\"q\"],\"formula\":\"getz_score(n2, meanValue, (sqrt((n*p*q))), VarSub)\"},{\"lhs\":\"z_value\",\"rhs\":[\"VarSub\",\"meanValue\",\"n\",\"n2\",\"p\",\"q\"],\"formula\":\"getz_value(getz_score(n2, meanValue, (sqrt((n*p*q))), VarSub))\"}]}";</script><script src="/assets/generated-equation-calculator.js" defer></script><script src="/assets/site-shell.js" defer></script></body></html>

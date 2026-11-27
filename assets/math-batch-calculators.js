@@ -393,7 +393,7 @@
     const key = document.body?.dataset?.calculator;
     if (!form || !status || !output || !key) return;
     const run = {
-      'power-set': () => renderPowerSet(output, powerSet(form.elements.elements.value)),
+      'power-set': () => renderPowerSet(output, powerSet(form.querySelector('[name="elements"]').value)),
       'truth-table': () => renderTruthTable(output, truthTable(form.elements.expression.value)),
       'descartes-rule': () => renderDescartes(output, descartes(form.elements.coefficients.value)),
       'synthetic-division': () => renderSyntheticDivision(output, syntheticDivision(form.elements.coefficients.value, form.elements.divisorRoot.value)),

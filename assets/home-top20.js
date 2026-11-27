@@ -74,7 +74,7 @@
   var F = function (k, label, v, extra) { var o = {k: k, label: label, v: v}; for (var x in (extra || {})) o[x] = extra[x]; return o; };
 
   var CALCS = [
-    {id: 'emi', name: 'EMI', url: '/calculators/emi-calculator.html', fields: [F('P', 'Loan amount (₹)', 2500000), F('rate', 'Interest rate (% per year)', 8.5, {step: 0.01}), F('years', 'Tenure (years)', 20)],
+    {id: 'emi', name: 'EMI', url: '/calculators/loan-emi-calculator.html', fields: [F('P', 'Loan amount (₹)', 2500000), F('rate', 'Interest rate (% per year)', 8.5, {step: 0.01}), F('years', 'Tenure (years)', 20)],
       calc: function (v) {
         if (!(v.P > 0 && v.rate >= 0 && v.years > 0)) return bad('Enter a loan amount and tenure above zero.');
         var e = emi(v.P, v.rate, v.years), n = Math.round(v.years * 12);
@@ -250,7 +250,7 @@
       function compute() {
         var v = {};
         c.fields.forEach(function (f) {
-          var raw = form.elements[f.k].value;
+          var raw = form.elements.namedItem(f.k).value;
           v[f.k] = (f.type === 'select' ? (isNaN(Number(raw)) ? raw : Number(raw)) : f.type === 'date' ? raw : (raw === '' ? NaN : Number(raw)));
         });
         var r;

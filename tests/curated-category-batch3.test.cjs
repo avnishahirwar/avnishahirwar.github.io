@@ -97,6 +97,7 @@ test('all 12 new browser forms initialize and render their calculation results',
   for (const [key] of routes) {
     const form = makeNode('form');
     form.elements = Object.fromEntries(Object.entries(samples[key]).map(([name, value]) => [name, { value }]));
+    Object.defineProperty(form.elements, 'namedItem', { value: name => form.elements[name] || null, enumerable: false });
     form.addEventListener = (name, handler) => { if (name === 'submit') form.submitHandler = handler; };
     form.requestSubmit = () => form.submitHandler({ preventDefault() {} });
     const nodes = { calcForm: form, calcStatus: makeNode('p'), calcResults: makeNode('section') };

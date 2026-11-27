@@ -428,7 +428,7 @@
     const output = document.getElementById('calcResults');
     const key = document.body?.dataset?.calculator;
     if (!form || !status || !output || !key) return;
-    const value = name => form.elements[name]?.value ?? '';
+    const value = name => form.elements.namedItem(name)?.value ?? '';
   const extendedRenderers = {
     'cricket-thermometer': () => { const r = calculateCricketTemperature({ chirps: value('chirps') }); renderSimple(output, 'Cricket chirp temperature estimate', `${format(r.fahrenheit)}°F (${format(r.celsius, 6)}°C), using the NOAA +40°F convention.`, [['15-second chirp count', r.chirps], ['NOAA rule', `${r.chirps} + 40 = ${r.fahrenheit}°F`], ['Converted temperature', `${format(r.celsius, 6)}°C`]]); },
     'countersink-depth': () => { const r = calculateCountersinkDepth({ majorDiameter: value('majorDiameter'), pilotDiameter: value('pilotDiameter'), angleDegrees: value('angleDegrees') }); renderSimple(output, 'Ideal countersink depth', `${format(r.depth)} ${value('lengthUnit')}.`, [['Countersink diameter', `${format(r.majorDiameter)} ${value('lengthUnit')}`], ['Pilot-hole diameter', `${format(r.pilotDiameter)} ${value('lengthUnit')}`], ['Included angle', `${format(r.angleDegrees)}°`], ['Ideal geometric depth', `${format(r.depth)} ${value('lengthUnit')}`]]); },

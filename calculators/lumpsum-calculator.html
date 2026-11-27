@@ -16,4 +16,40 @@
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/lumpsum-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/lumpsum-calculator.html">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"Lumpsum Calculator | Friendly Calculator","description":"Use the lumpsum calculator to estimate the final balance or compute any lumpsum-related factors, for example, the required rate of return or the necessary","url":"https://friendlycalculator.in/calculators/lumpsum-calculator.html","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Friendly Calculator","url":"https://friendlycalculator.in/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Friendly Calculator","item":"https://friendlycalculator.in/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://friendlycalculator.in/calculators/"},{"@type":"ListItem","position":3,"name":"Lumpsum Calculator","item":"https://friendlycalculator.in/calculators/lumpsum-calculator.html"}]}]}</script>
-</head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Lumpsum Calculator</nav><header class="hero"><p class="muted">FINANCE · LOCAL CALCULATOR</p><h1>Lumpsum Calculator</h1><p class="muted">Use the lumpsum calculator to estimate the final balance or compute any lumpsum-related factors, for example, the required rate of return or the necessary periods to reach a certain final balance.</p></header><section class="panel"><h2>Enter values</h2><form id="calc" class="fields"></form><button id="go" type="button">Calculate</button><div id="out" class="out" aria-live="polite"></div></section><section class="content"><h2>How it works</h2><p>This calculator evaluates the displayed equation variants locally in your browser. Enter the known values; results are shown for equations whose required inputs are available.</p><p>Check units, assumptions and professional guidance before using results for medical, financial, legal, engineering or safety-critical decisions.</p></section></main><script>window.FC_EQUATION_CONFIG="{\"variables\":[\"g\",\"q\",\"r\",\"t\",\"g_p\",\"Infl\",\"InDep\",\"Today\",\"t_res\",\"FinBal\",\"EndDate\",\"Subject\",\"CompFreq\",\"end_date\",\"StartDate\",\"t_res_mos\",\"t_res_yrs\",\"total_return\",\"return_status\",\"final_balance_res\",\"inital_lumpsum_res\",\"rate_of_return_res\",\"final_balance_infl_res\"],\"equations\":[{\"lhs\":\"g_p\",\"rhs\":[\"q\",\"g\"],\"formula\":\"pow(g + 1, 1/q) - 1\"},{\"lhs\":\"q\",\"rhs\":[\"g_p\",\"g\"],\"formula\":\"log(g + 1)/log(g_p + 1)\"},{\"lhs\":\"g\",\"rhs\":[\"g_p\",\"q\"],\"formula\":\"pow(g_p + 1, q) - 1\"},{\"lhs\":\"return_status\",\"rhs\":[\"CompFreq\",\"FinBal\",\"InDep\",\"Infl\",\"StartDate\",\"Subject\",\"Today\",\"r\",\"t\"],\"formula\":\"run_calculator(Subject, InDep, FinBal, CompFreq, t, StartDate, Infl, r, Today)\"}]}";</script><script src="/assets/generated-equation-calculator.js" defer></script><script src="/assets/site-shell.js" defer></script></body></html>
+</head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/calculator/site-directory.html">All Calculators</a> / Lumpsum Calculator</nav><header class="hero"><p class="muted">FINANCE · LOCAL CALCULATOR</p><h1>Lumpsum Calculator</h1><p class="muted">Use the lumpsum calculator to estimate the final balance or compute any lumpsum-related factors, for example, the required rate of return or the necessary periods to reach a certain final balance.</p></header><section class="panel"><h2>Enter values</h2><form id="calc" class="fields"></form><button id="go" type="button">Calculate</button><div id="out" class="out" aria-live="polite"></div></section><section class="content"><h2>How it works</h2><p>This calculator evaluates the displayed equation variants locally in your browser. Enter the known values; results are shown for equations whose required inputs are available.</p><p>Check units, assumptions and professional guidance before using results for medical, financial, legal, engineering or safety-critical decisions.</p></section>
+<section class="content" id="formula-reference">
+<h2>Formulas used by this calculator</h2>
+<p>The Lumpsum Calculator works with 23 quantities and 3 relations between them. Enter the values you know, leave the one you want to find blank, and press Calculate. Blank fields are never treated as zero. Each formula below is solved for one quantity.</p>
+<ul>
+<li><strong>G p</strong> (<code>g_p</code>) = <code>pow(g + 1, 1/q) - 1</code></li>
+<li><strong>g</strong> (<code>g</code>) = <code>pow(g_p + 1, q) - 1</code></li>
+<li><strong>q</strong> (<code>q</code>) = <code>log(g + 1)/log(g_p + 1)</code></li>
+</ul>
+<h2>Inputs</h2>
+<table><thead><tr><th>Field</th><th>Name in formulas</th><th>Can be solved for</th></tr></thead><tbody>
+<tr><td>g</td><td><code>g</code></td><td>Yes</td></tr>
+<tr><td>q</td><td><code>q</code></td><td>Yes</td></tr>
+<tr><td>r</td><td><code>r</code></td><td>Input only</td></tr>
+<tr><td>t</td><td><code>t</code></td><td>Input only</td></tr>
+<tr><td>G p</td><td><code>g_p</code></td><td>Yes</td></tr>
+<tr><td>Infl</td><td><code>Infl</code></td><td>Input only</td></tr>
+<tr><td>In Dep</td><td><code>InDep</code></td><td>Input only</td></tr>
+<tr><td>Today</td><td><code>Today</code></td><td>Input only</td></tr>
+<tr><td>T res</td><td><code>t_res</code></td><td>Input only</td></tr>
+<tr><td>Fin Bal</td><td><code>FinBal</code></td><td>Input only</td></tr>
+<tr><td>End Date</td><td><code>EndDate</code></td><td>Input only</td></tr>
+<tr><td>Subject</td><td><code>Subject</code></td><td>Input only</td></tr>
+<tr><td>Comp Freq</td><td><code>CompFreq</code></td><td>Input only</td></tr>
+<tr><td>End date</td><td><code>end_date</code></td><td>Input only</td></tr>
+<tr><td>Start Date</td><td><code>StartDate</code></td><td>Input only</td></tr>
+<tr><td>T res mos</td><td><code>t_res_mos</code></td><td>Input only</td></tr>
+<tr><td>T res yrs</td><td><code>t_res_yrs</code></td><td>Input only</td></tr>
+<tr><td>Total return</td><td><code>total_return</code></td><td>Input only</td></tr>
+<tr><td>Return status</td><td><code>return_status</code></td><td>Input only</td></tr>
+<tr><td>Final balance res</td><td><code>final_balance_res</code></td><td>Input only</td></tr>
+<tr><td>Inital lumpsum res</td><td><code>inital_lumpsum_res</code></td><td>Input only</td></tr>
+<tr><td>Rate of return res</td><td><code>rate_of_return_res</code></td><td>Input only</td></tr>
+<tr><td>Final balance infl res</td><td><code>final_balance_infl_res</code></td><td>Input only</td></tr>
+</tbody></table>
+<p><strong>Limitation:</strong> 1 of the 4 underlying relations rely on lookup tables or helper routines that run only on the original source calculator, so this page skips them. Quantities that depend on those relations are not solved here.</p>
+</section></main><script>window.FC_EQUATION_CONFIG="{\"variables\":[\"g\",\"q\",\"r\",\"t\",\"g_p\",\"Infl\",\"InDep\",\"Today\",\"t_res\",\"FinBal\",\"EndDate\",\"Subject\",\"CompFreq\",\"end_date\",\"StartDate\",\"t_res_mos\",\"t_res_yrs\",\"total_return\",\"return_status\",\"final_balance_res\",\"inital_lumpsum_res\",\"rate_of_return_res\",\"final_balance_infl_res\"],\"equations\":[{\"lhs\":\"g_p\",\"rhs\":[\"q\",\"g\"],\"formula\":\"pow(g + 1, 1/q) - 1\"},{\"lhs\":\"q\",\"rhs\":[\"g_p\",\"g\"],\"formula\":\"log(g + 1)/log(g_p + 1)\"},{\"lhs\":\"g\",\"rhs\":[\"g_p\",\"q\"],\"formula\":\"pow(g_p + 1, q) - 1\"},{\"lhs\":\"return_status\",\"rhs\":[\"CompFreq\",\"FinBal\",\"InDep\",\"Infl\",\"StartDate\",\"Subject\",\"Today\",\"r\",\"t\"],\"formula\":\"run_calculator(Subject, InDep, FinBal, CompFreq, t, StartDate, Infl, r, Today)\"}]}";</script><script src="/assets/generated-equation-calculator.js" defer></script><script src="/assets/site-shell.js" defer></script></body></html>
