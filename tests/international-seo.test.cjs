@@ -2,6 +2,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
+const {execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const origin='https://friendlycalculator.in';
 const ignored=new Set(['node_modules','vendor','_site','tests','.git','.github','admin','avnish-ai']);
@@ -24,12 +25,14 @@ function langOf(html,file){
 function canonicalOf(html){const m=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return m?new URL(m[1],origin).href:null;}
 function noindexOf(html){const h=headOf(html);return /<meta\b[^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\'][^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b/i.test(h)||/<meta\b[^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b[^"\']*["\'][^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\']/i.test(h);}
 function alternatesOf(html){return [...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>({lang:m[1].toLowerCase(),href:new URL(m[2],origin).href}));}
-function localFile(url){
+function localPath(url){
  const u=new URL(url);if(u.origin!==origin||u.search||u.hash)return null;
  let p=decodeURIComponent(u.pathname);if(p==='/')p='/index.html';else if(p.endsWith('/'))p+='index.html';
  const f=path.resolve(root,'.'+p);
  if(!f.startsWith(root+path.sep)&&f!==path.join(root,'index.html'))return null;
- return fs.existsSync(f)&&fs.statSync(f).isFile()?f:null;
+ return f;
+}
+function localFile(url){const f=localPath(url);return f&&fs.existsSync(f)&&fs.statSync(f).isFile()?f:null;
 }
 test('changed international hreflang alternates are unique, same-domain, resolvable and reciprocal',()=>{
  const pages=walk(root),cache=new Map();
@@ -54,8 +57,9 @@ test('changed international hreflang alternates are unique, same-domain, resolva
    checked++;
    if(seen.has(link.lang))record(file,null,file+': duplicate hreflang '+link.lang);
    seen.add(link.lang);
+   const targetPath=localPath(link.href);
    const targetFile=localFile(link.href);
-   if(!targetFile){record(file,null,file+': '+link.lang+' target missing/off-domain: '+link.href);continue;}
+   if(!targetFile){record(file,targetPath,file+': '+link.lang+' target missing/off-domain: '+link.href);continue;}
    if(link.lang==='x-default')continue;
    const targetHtml=cache.get(targetFile)||fs.readFileSync(targetFile,'utf8');
    if(noindexOf(targetHtml)){record(file,targetFile,file+': '+link.lang+' target is noindex: '+link.href);continue;}
