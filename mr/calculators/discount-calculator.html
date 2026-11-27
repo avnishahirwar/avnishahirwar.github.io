@@ -5,19 +5,19 @@
 <meta name="twitter:title" content="सूट (Discount) कॅल्क्युलेटर | Friendly Calculator">
 <meta name="twitter:description" content="मूळ किमतीवर दिलेल्या सूटीनंतरची किंमत व बचत मोजा.">
 <meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/discount-calculator.html">
-<link rel="alternate" hreflang="mr" href="https://friendlycalculator.in/mr/calculators/discount-calculator.html"><link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/discount-calculator.html">
+
+
+
+
+
+
+
+
+
+
 
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
-<link rel="alternate" hreflang="te" href="https://friendlycalculator.in/te/calculators/discount-calculator.html">
+
 </head><body><main class="wrap"><p><a href="/mr/index.html">होम</a> / कॅल्क्युलेटर / सूट (Discount) कॅल्क्युलेटर</p><header class="hero"><p>मराठी · Friendly Calculator</p><h1>सूट (Discount) कॅल्क्युलेटर</h1><p>मूळ किमतीवर दिलेल्या सूटीनंतरची किंमत व बचत मोजा.</p></header><section class="panel"><form id="f"><div class="fields"><label>मूळ किंमत (₹)<input id="v0" type="number" step="any" value="1200" ></label><label>सूट (%)<input id="v1" type="number" step="any" value="25" ></label></div><p><button class="btn">मोजा</button></p></form><div class="results" aria-live="polite"><div class="res"><span>सूट रक्कम</span><b id="o0">—</b></div><div class="res"><span>अंतिम किंमत</span><b id="o1">—</b></div><div class="res"><span>तुमची बचत</span><b id="o2">—</b></div></div><p id="status" class="note">वस्तू शुल्क व कूपन वेगळे लागू होतात.</p></section><section class="panel"><h2>सूत्र आणि पद्धत</h2><p>अंतिम = मूळ × (1 − दर/100); बचत = मूळ − अंतिम.</p><p>वस्तू शुल्क व कूपन वेगळे लागू होतात.</p></section></main><script>(()=>{'use strict';const f=document.getElementById("f"),s=document.getElementById("status"),fmt=new Intl.NumberFormat("mr-IN",{maximumFractionDigits:2});
 function bad(){s.textContent="कृपया वैध संख्या द्या (मर्यादांमध्ये)."}f.addEventListener("submit",e=>{e.preventDefault();const v=[0,1,2,3].map(i=>document.getElementById("v"+i)?.value??"");const p=+v[0],d=+v[1];if(!(p>0&&d>=0&&d<=100))return bad();const save=p*d/100;const final=p-save;const res=[save,final,p-final];document.getElementById("o"+0).textContent=fmt.format(res[0])+" ₹";document.getElementById("o1").textContent=fmt.format(final)+" ₹";document.getElementById("o2").textContent=fmt.format(save)+" ₹";s.textContent="परतीची किंमत तटस्थ";});
 f.requestSubmit();})();</script><script src="/assets/site-shell.js" defer></script></body></html>
