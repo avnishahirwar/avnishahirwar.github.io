@@ -498,7 +498,7 @@ test('every public sitemap page has a valid favicon reference and matching asset
 });
 
 
-test('homepage structured data and copy accurately describe all supported languages', () => {
+test('homepage metadata and About copy accurately describe all supported languages', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const supportedLanguages = ['English', 'Hindi', 'Spanish', 'French', 'Portuguese', 'Arabic', 'Indonesian', 'Bengali', 'Tamil'];
@@ -1276,7 +1276,7 @@ test('working-days page documents inclusive dates, weekends, custom holidays and
   assert.match(page, /Does the calculator automatically exclude Indian public holidays\?/);
 });
 
-test('homepage category summary and directory markup match the published catalogue', () => {
+test('About page category summary and directory markup match the published catalogue', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   assert.match(about, /organised into clearly labelled categories/);
@@ -2310,7 +2310,7 @@ test('visible brand text is included in accessible names and homepage feature ic
 });
 
 
-test('homepage points to the current 50-language directory without overstating translated coverage', () => {
+test('About page points to the current 50-language directory without overstating translated coverage', () => {
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
   const catalogue = require('../config/language-catalogue.json');
   assert.equal(catalogue.locales.length, 50);
