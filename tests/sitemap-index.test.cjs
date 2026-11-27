@@ -28,3 +28,23 @@ test('robots declares the top-level sitemap index and keeps crawler policy publi
   assert.match(robots, /Allow:\s*\//i);
   assert.match(robots, /Disallow:\s*\/calculator\/admin\.html/i);
 });
+
+test('every XML sitemap URL uses the canonical production host, never a preview host', () => {
+  const sitemapFiles = fs.readdirSync(root)
+    .filter(name => /^sitemap.*\.xml$/i.test(name));
+  assert.ok(sitemapFiles.length >= 3, 'Expected the main, locale and regional sitemap files');
+
+  const previewHost = /(?:pages\.dev|manus\.space|vercel\.app|netlify\.app|github\.io|localhost|127\.0\.0\.1)/i;
+  for (const filename of sitemapFiles) {
+    const xml = fs.readFileSync(path.join(root, filename), 'utf8');
+    const urls = [
+      ...[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]),
+      ...[...xml.matchAll(/(?:href|src)="(https?:\/\/[^"]+)"/g)].map(match => match[1])
+    ];
+    for (const value of urls) {
+      const parsed = new URL(value);
+      assert.equal(parsed.origin, origin, `${filename} contains a non-production URL: ${value}`);
+      assert.doesNotMatch(parsed.hostname, previewHost, `${filename} contains a preview host: ${value}`);
+    }
+  }
+});
