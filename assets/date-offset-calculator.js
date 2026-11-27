@@ -2,7 +2,7 @@
   'use strict';
 
   function parseDate(value) {
-    var match = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(String(value || ''));
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ''));
     if (!match) return null;
     var year = Number(match[1]);
     var month = Number(match[2]);
