@@ -70,9 +70,20 @@ jobs:
               npx playwright install --with-deps "${{ matrix.browser }}"
               ;;
           esac
-      - name: Run cross-browser smoke tests against production
+      - name: Start the checked-out site for browser tests
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory . >/tmp/friendly-calculator-http.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/friendly-calculator-http.log
+          exit 1
+      - name: Run cross-browser smoke tests against this checkout
         env:
-          FC_SITE_ORIGIN: https://friendlycalculator.in
+          FC_SITE_ORIGIN: http://127.0.0.1:4173
           FC_BROWSER: ${{ matrix.browser }}
         run: node tests/cross-browser-smoke.cjs
   safari-native:

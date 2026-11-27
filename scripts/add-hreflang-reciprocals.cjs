@@ -51,6 +51,7 @@ function linksOf(html) {
   return [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
     .filter(tag => /\brel=["']alternate["']/i.test(tag))
     .map(tag => ({
+      tag,
       lang: (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1]?.toLowerCase(),
       href: (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1]
     })).filter(link => link.lang && link.href);
@@ -72,7 +73,42 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, invalidRemoved: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+
+  // Optional one-time cleanup: remove only alternate tags that cannot be valid
+  // references (missing target, noindex target, language mismatch, or noncanonical target).
+  // No page copy, content, canonical, or valid alternate is changed.
+  if (process.argv.includes('--prune-invalid')) {
+    const removals = new Map();
+    for (const [sourceFile, sourceHtml] of cache) {
+      if (isNoindex(sourceHtml)) continue;
+      const sourceCanonical = canonicalOf(sourceHtml);
+      if (!sourceCanonical || !selfCanonicalCandidates(sourceFile).has(sourceCanonical)) continue;
+      for (const link of linksOf(sourceHtml)) {
+        if (link.lang === 'x-default') continue;
+        const target = targetFile(link.href);
+        let invalid = !target;
+        if (target) {
+          const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
+          invalid = isNoindex(targetHtml) ||
+            langOf(targetHtml, target) !== link.lang ||
+            canonicalOf(targetHtml) !== new URL(link.href, ORIGIN).href;
+        }
+        if (invalid) {
+          if (!removals.has(sourceFile)) removals.set(sourceFile, new Set());
+          removals.get(sourceFile).add(link.tag);
+        }
+      }
+    }
+    for (const [file, tags] of removals) {
+      let html = cache.get(file);
+      for (const tag of tags) html = html.split(tag).join('');
+      if (html === cache.get(file)) continue;
+      cache.set(file, html);
+      stats.invalidRemoved += tags.size;
+      if (process.argv.includes('--write')) fs.writeFileSync(file, html);
+    }
+  }
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }

@@ -1,5 +1,7 @@
 name: Calculator formula tests
 # Run the additional Omni math expansion regression suite.
+permissions:
+  contents: write
 on:
   push:
     branches: [main]
@@ -17,12 +19,26 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Repair reciprocal hreflang metadata on this PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          node scripts/add-hreflang-reciprocals.cjs --write --prune-invalid
+          if ! git diff --quiet -- '*.html'; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -- '*.html'
+            git commit -m "SEO: repair reciprocal hreflang tags"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
+          node scripts/add-hreflang-reciprocals.cjs
       - name: Build the complete published calculator catalogue
         run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run landed cost calculator regression tests
         run: node --test tests/landed-cost-calculator.test.cjs
+      - name: Run worldwide Top 20 homepage calculator tests
+        run: node --test tests/world-top20.test.cjs
       - name: Run calculator regression tests
         run: node --test tests/calculator-formulas.test.cjs tests/extended-science-astrology.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs tests/omni-math-expansion.test.cjs tests/omni-home-productivity-expansion.test.cjs tests/omni-construction-expansion.test.cjs tests/financial-yml-content.test.cjs tests/global-fx-hreflang.test.cjs tests/international-seo.test.cjs tests/global-locale.test.cjs tests/country-routing.test.cjs tests/us-uk-mortgage-calculators.test.cjs tests/us-sales-tax-calculator.test.cjs tests/us-auto-loan-calculator.test.cjs tests/us-personal-loan-calculator.test.cjs tests/uk-mortgage-overpayment-calculator.test.cjs tests/uk-workplace-pension-calculator.test.cjs tests/study-calculator.test.cjs tests/international-seo-diagnostic.test.cjs tests/brand-discovery.test.cjs tests/global-locale-sitemaps.test.cjs tests/us-additional-medicare-tax.test.cjs tests/brazil-indonesia-payroll.test.cjs tests/international-calculators.test.cjs tests/human-sitemap.test.cjs tests/worldwide-mortgage-calculator.test.cjs tests/mortgage-tools.test.cjs tests/trigonometry-calculator.test.cjs tests/uk-us-expansion.test.cjs tests/uk-student-loan-us-affordability.test.cjs
   catalogue-audit:

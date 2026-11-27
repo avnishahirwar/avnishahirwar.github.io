@@ -18,6 +18,34 @@ test('additive hreflang repair has no remaining unambiguous reciprocal additions
   assert.match(output, /Dry run only\. No files were changed\./);
 });
 
+test('opt-in hreflang cleanup removes only invalid targets and keeps valid alternates', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-prune-invalid-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  try {
+    write('index.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/"><link rel="alternate" hreflang="ur" href="https://friendlycalculator.in/ur/"></head></html>');
+    write('fr/index.html', '<html lang="fr"><head><link rel="canonical" href="https://friendlycalculator.in/fr/"></head></html>');
+    write('hi/index.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>');
+    write('de/index.html', '<html lang="de"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/de/"></head></html>');
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs'), '--write', '--prune-invalid'], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    const english = fs.readFileSync(path.join(temp, 'index.html'), 'utf8');
+    const french = fs.readFileSync(path.join(temp, 'fr/index.html'), 'utf8');
+    assert.equal(summary.invalidRemoved, 3);
+    assert.match(english, /hreflang="fr"/);
+    assert.doesNotMatch(english, /hreflang="(?:hi|de|ur)"/);
+    assert.match(french, /hreflang="en"/, 'the remaining valid alternate receives its reciprocal');
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
+
 test('additive hreflang repair never adds alternates to noindex pages', () => {
   const os = require('node:os');
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-noindex-'));
