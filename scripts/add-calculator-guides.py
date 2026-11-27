@@ -203,6 +203,230 @@ pages['simple-interest-calculator'] = dict(
   ('Is simple interest better for the borrower?', 'For the same stated rate, yes, since interest does not compound; but check whether the quoted rate is comparable.'),
  ])
 
+import datetime
+
+# ---------- Recurring deposit ----------
+rd_R, rd_r, rd_m = 5000, 6.5, 24
+q = rd_m / 3; qi = rd_r / 400
+rd_mat = rd_R * ((1 + qi) ** q - 1) / (1 - (1 + qi) ** (-1 / 3))
+rd_dep = rd_R * rd_m
+pages['rd-calculator'] = dict(
+ title='RD Calculator',
+ sections=[
+ ('How a recurring deposit matures', [
+  'A recurring deposit asks you to put a fixed amount into the bank every month for a chosen period. Each instalment earns interest only for the time it actually stays in the account, so the first deposit earns for the full term and the last for a single month. Most Indian banks compound RD interest quarterly.',
+  'With quarterly compounding, i = annual rate ÷ 400 and n = months ÷ 3, the maturity amount is <code>M = R × [(1 + i)<sup>n</sup> − 1] ÷ [1 − (1 + i)<sup>−1/3</sup>]</code>, where R is the monthly instalment. Banks round differently, so the passbook figure can differ by a few rupees.']),
+ ('Worked example', [
+  f'Deposit {inr_ind(rd_R)} a month for {rd_m} months at {rd_r}%. You pay in {inr_ind(rd_dep)} in total, and the maturity value is about {inr_ind(rd_mat)}, so the interest earned is {inr_ind(rd_mat-rd_dep)}. The effective gain is roughly {((rd_mat-rd_dep)/rd_dep*100):.1f}% on the money deposited, which looks low next to the headline rate because on average each rupee sits in the account for only about half the term.']),
+ ('RD versus FD versus SIP', [
+  'An FD needs the whole amount upfront; an RD suits people who save from a monthly salary. The rate on an RD is fixed at opening, so it is predictable, but returns on market-linked SIPs can be higher or lower. Use RD for goals within a few years where losing capital is not acceptable, such as a fee or a down payment.']),
+ ('Points to check before opening one', [
+  'Missed instalments usually attract a small penalty per hundred rupees, and too many misses can close the account.',
+  'Interest is taxable every year as income, and banks may deduct TDS above a threshold set by the tax rules.',
+  'Premature closure normally lowers the rate; check the bank’s schedule.']),
+ ],
+ faqs=[
+  ('How is RD maturity calculated?', 'Each instalment compounds quarterly for the months it remains deposited; the formula sums these as a geometric series.'),
+  (f'What will {inr_ind(rd_R)} a month for {rd_m} months at {rd_r}% give?', f'About {inr_ind(rd_mat)}.'),
+  ('Is RD interest taxable?', 'Yes, it is taxed as income at your slab, and banks may deduct TDS above a limit.'),
+  ('Can I withdraw before maturity?', 'Usually yes, with a lower rate applied; terms vary by bank.'),
+ ])
+
+# ---------- Compound interest ----------
+cp, cr, ct = 100000, 8, 5
+ca = {m: cp * (1 + cr / 100 / m) ** (m * ct) for m in (1, 4, 12)}
+pages['compound-interest-calculator'] = dict(
+ title='Compound Interest Calculator',
+ sections=[
+ ('Interest on interest', [
+  'Compound interest adds each period’s interest to the balance before the next period’s interest is calculated. The formula is <code>A = P × (1 + r ÷ m)<sup>m × t</sup></code>, where m is the number of compounding periods a year (1 for yearly, 4 for quarterly, 12 for monthly) and t is time in years. Compound interest is A − P.']),
+ ('Worked example: how frequency changes the result', [
+  f'{inr_ind(cp)} at {cr}% for {ct} years grows to {inr_ind(ca[1])} with yearly compounding, {inr_ind(ca[4])} with quarterly compounding and {inr_ind(ca[12])} with monthly compounding. More frequent compounding helps, but the gain flattens quickly: going from yearly to monthly adds {inr_ind(ca[12]-ca[1])}, while the choice of rate or tenure would move the result far more.',
+  f'For comparison, simple interest on the same deposit gives {inr_ind(cp*cr*ct/100)}. The extra {inr_ind(ca[1]-cp-cp*cr*ct/100)} under yearly compounding is the interest earned on interest.']),
+ ('Reading offers correctly', [
+  'Two products with the same stated rate can differ if one compounds quarterly and the other yearly. Compare the effective annual rate, <code>(1 + r ÷ m)<sup>m</sup> − 1</code>: for 8% compounded quarterly it is 8.24%. Loans work the same way against you, which is why credit card balances grow so fast.']),
+ ('Habits that use compounding well', [
+  'Start early, because time is the strongest input.',
+  'Do not interrupt: withdrawing interest returns the plan to simple interest.',
+  'On debt, pay the highest-rate balance first; compounding works for the lender otherwise.']),
+ ],
+ faqs=[
+  ('What is the compound interest formula?', 'A = P(1 + r/m)^(mt); the interest is A − P.'),
+  ('Does compounding frequency matter?', 'Yes, but modestly: higher frequency gives slightly more, with diminishing gains.'),
+  ('How is it different from simple interest?', 'Simple interest is calculated on the principal alone; compound interest includes accumulated interest.'),
+  (f'What is {inr_ind(cp)} at {cr}% for {ct} years compounded yearly?', f'{inr_ind(ca[1])}.'),
+ ])
+
+# ---------- Percentage ----------
+pages['percentage-calculator'] = dict(
+ title='Percentage Calculator',
+ sections=[
+ ('The three questions percentages answer', [
+  'Almost every percentage problem is one of three forms. First, X% of Y: multiply Y by X ÷ 100, so 18% of 2,400 is 432. Second, X is what percent of Y: divide X by Y and multiply by 100, so 36 out of 240 is 15%. Third, percentage change: (new − old) ÷ old × 100, so a rise from 800 to 920 is 15%.']),
+ ('Why +20% then −20% does not return you to the start', [
+  f'Raise 1,000 by 20% to get 1,200, then cut 20% of 1,200 (which is 240) to get 960. A net fall of 4%, not zero, because the second percentage applies to a bigger base. The general rule: to undo a rise of p%, you need a fall of p ÷ (100 + p) × 100%, which for 20% is {20/120*100:.1f}%.']),
+ ('Percent versus percentage points', [
+  'If an interest rate moves from 6% to 7%, it has risen by 1 percentage point but by 16.7% in relative terms (1 ÷ 6). News reports often mix the two, so check which one is being quoted.']),
+ ('Everyday uses', [
+  'Discounts and sale prices, GST on a bill, marks and grades, tips, salary changes and loan interest.',
+  'Reverse a GST-inclusive price by dividing by 1 + rate, not by subtracting the rate: a ₹1,180 bill including 18% GST has a base of ₹1,000.',
+  'Margin and markup differ: a product bought for 80 and sold for 100 has a 25% markup but a 20% margin.']),
+ ],
+ faqs=[
+  ('How do I find what percent one number is of another?', 'Divide the part by the whole and multiply by 100.'),
+  ('How do I calculate percentage increase?', '(New − old) ÷ old × 100.'),
+  ('Why is a 50% fall followed by a 50% rise not break-even?', 'Because 50% of the lower number is smaller; 100 → 50 → 75.'),
+  ('What is the difference between percent and percentage points?', 'Percentage points measure the absolute gap between two percentages; percent measures relative change.'),
+ ])
+
+# ---------- PPF ----------
+pf_d, pf_r, pf_n = 150000, 7.0, 15
+pf_fv = pf_d * (((1 + pf_r / 100) ** pf_n - 1) / (pf_r / 100)) * (1 + pf_r / 100)
+pages['ppf-calculator'] = dict(
+ title='PPF Calculator',
+ sections=[
+ ('How the Public Provident Fund works', [
+  'PPF is a government-backed small-savings scheme with a 15-year term. The government announces the interest rate periodically; interest is worked out monthly on the lowest balance held between the 5th and the last day of the month, and credited at the end of the financial year. That rule gives a practical tip: deposit before the 5th of the month to earn interest for that month.',
+  'Deposits are limited to a yearly minimum of ₹500 and a maximum of ₹1.5 lakh. Under the old tax regime, deposits qualify for deduction, the interest is not taxed and the maturity amount is not taxed, a combination often called exempt-exempt-exempt.']),
+ ('Worked example', [
+  f'Deposit {inr_ind(pf_d)} at the start of each year for {pf_n} years at an assumed {pf_r}%. You invest {inr_ind(pf_d*pf_n)} and the maturity value is about {inr_ind(pf_fv)}, of which {inr_ind(pf_fv-pf_d*pf_n)} is interest. The rate is set by the government and changes, so treat the figure as an illustration and enter the current rate to see your own result.']),
+ ('Rules worth knowing', [
+  'Partial withdrawals are allowed from the seventh financial year, up to a fixed share of the balance.',
+  'After 15 years you can extend the account in blocks of five years, with or without further deposits.',
+  'A loan against the balance is available in the early years.',
+  'One person can hold only one PPF account in their own name.']),
+ ],
+ faqs=[
+  ('What is the lock-in period?', '15 years, counted from the end of the financial year of the first deposit.'),
+  ('Is PPF interest taxable?', 'Under current rules it is exempt, but check the latest tax rules and regime.'),
+  ('Is the interest rate fixed?', 'No. The government reviews it periodically.'),
+  (f'What do {inr_ind(pf_d)} yearly deposits become in {pf_n} years at {pf_r}%?', f'About {inr_ind(pf_fv)}, if deposited at the start of each year.'),
+ ])
+
+# ---------- HRA ----------
+hb, hh, hrent = 40000, 16000, 15000
+h_a, h_b, h_c = hh, hrent - 0.1 * hb, 0.5 * hb
+h_ex = min(h_a, h_b, h_c)
+pages['hra-calculator'] = dict(
+ title='HRA Calculator',
+ sections=[
+ ('The three-way test for HRA exemption', [
+  'For salaried people who pay rent, the HRA exemption under the old tax regime is the least of three amounts: the HRA actually received; the rent paid minus 10% of basic salary plus dearness allowance; and 50% of that salary if you live in a metro, or 40% otherwise. Whatever is exempt reduces taxable salary; the rest of the HRA is taxed.']),
+ ('Worked example (monthly)', [
+  f'Basic {inr_ind(hb)}, HRA received {inr_ind(hh)}, rent {inr_ind(hrent)}, metro city. The three figures are {inr_ind(h_a)}, {inr_ind(h_b)} (rent {inr_ind(hrent)} − 10% of basic {inr_ind(0.1*hb)}) and {inr_ind(h_c)} (50% of basic). The least is {inr_ind(h_ex)}, so {inr_ind(h_ex*12)} a year is exempt and {inr_ind((hh-h_ex)*12)} of the HRA is taxable.']),
+ ('Documents and conditions', [
+  'Keep rent receipts and a rental agreement; employers usually ask for proof.',
+  'If yearly rent exceeds ₹1 lakh you must give the landlord’s PAN to your employer.',
+  'If you pay rent to a parent, they must declare it as income, and the arrangement must be genuine.',
+  'HRA exemption is not available under the new tax regime, so compare both regimes before choosing.']),
+ ],
+ faqs=[
+  ('How is HRA exemption calculated?', 'It is the least of actual HRA, rent paid less 10% of salary, and 50% (metro) or 40% (non-metro) of salary.'),
+  ('Does salary here mean CTC?', 'No. It means basic salary plus dearness allowance (and commission on a fixed percentage of turnover, where applicable).'),
+  ('Can I claim HRA if I own a house?', 'Yes if you live in a different city or genuinely pay rent; the facts decide.'),
+  ('Is HRA available in the new regime?', 'No, the exemption is a feature of the old regime.'),
+ ])
+
+# ---------- FD ----------
+fd_p, fd_r, fd_y = 100000, 7, 3
+fd_q = fd_p * (1 + fd_r / 400) ** (4 * fd_y)
+pages['fd-calculator'] = dict(
+ title='FD Calculator',
+ sections=[
+ ('How fixed deposit interest is computed', [
+  'Banks in India typically compound FD interest quarterly, so the maturity value is <code>A = P × (1 + r ÷ 400)<sup>4t</sup></code> with r as the annual percentage. With a cumulative deposit the interest is reinvested and paid at the end; with a payout option it is paid out monthly, quarterly or yearly and the principal stays constant.',
+  f'Example: {inr_ind(fd_p)} at {fd_r}% for {fd_y} years, compounded quarterly, matures at about {inr_ind(fd_q)}, an interest of {inr_ind(fd_q-fd_p)}. The effective annual yield is {((1+fd_r/400)**4-1)*100:.2f}%, slightly above the stated {fd_r}%.']),
+ ('Cumulative versus payout', [
+  'Choose cumulative for a growing sum with a goal date, and payout when you need regular income, accepting that the payout version earns less in total because interest is not reinvested.']),
+ ('Check before booking', [
+  'Interest is taxable as income, with TDS deducted above a limit; Form 15G or 15H can be given where eligible.',
+  'Premature withdrawal usually reduces the rate for the period run and may attract a penalty.',
+  'Senior citizens often get a higher rate; deposit insurance covers a limited sum per depositor per bank, so spread large deposits.']),
+ ],
+ faqs=[
+  ('How is FD maturity calculated?', 'A = P(1 + r/400)^(4t) for quarterly compounding, with r in percent.'),
+  (f'What does {inr_ind(fd_p)} become in {fd_y} years at {fd_r}%?', f'About {inr_ind(fd_q)} with quarterly compounding.'),
+  ('Is the FD rate fixed?', 'Yes, it is fixed for the booked term.'),
+  ('Is FD interest taxable?', 'Yes, as income at your slab.'),
+ ])
+
+# ---------- BMI ----------
+bw, bh = 70, 1.70
+bmi = bw / bh ** 2
+pages['bmi-calculator'] = dict(
+ title='BMI Calculator',
+ sections=[
+ ('What BMI measures', [
+  'Body mass index relates weight to height: <code>BMI = weight (kg) ÷ height (m)<sup>2</sup></code>. For 70 kg and 170 cm the result is ' + f'{bmi:.1f}' + '. It is a screening number that is quick to compute and useful for groups of people, but it does not measure body fat or tell you where fat is stored.']),
+ ('Categories', [
+  'The World Health Organization’s adult ranges are: below 18.5 underweight, 18.5 to 24.9 normal, 25 to 29.9 overweight and 30 or above obese. For people of Asian origin, health guidance in India and the region uses lower cut-offs, around 23 for overweight and 25 for obese, because health risks appear at lower BMI. A result near a boundary is not a diagnosis.']),
+ ('Where BMI misleads', [
+  'Muscular people can have a high BMI with low body fat.',
+  'Older adults can have a normal BMI with little muscle and extra fat.',
+  'It does not apply in the same way to children and teens, who are assessed against growth charts by age and sex, nor to pregnancy.',
+  'Waist circumference and waist-to-hip ratio add information about abdominal fat.']),
+ ('What to do with the number', [
+  'Treat it as a starting point for a conversation with a doctor or dietitian, together with blood pressure, blood sugar, cholesterol, activity and family history. This tool does not give medical advice.']),
+ ],
+ faqs=[
+  ('How do I calculate BMI?', 'Weight in kilograms divided by the square of height in metres.'),
+  (f'What is the BMI of {bw} kg and {int(bh*100)} cm?', f'{bmi:.1f}, in the normal range by the WHO classification.'),
+  ('Is BMI accurate for athletes?', 'Not always, since muscle weighs more than fat.'),
+  ('Are the cut-offs the same in India?', 'Indian guidance uses lower thresholds for overweight and obesity than the WHO general ranges.'),
+ ])
+
+# ---------- Age ----------
+d1, d2 = datetime.date(1990, 1, 15), datetime.date(2026, 11, 27)
+yy = d2.year - d1.year; mm = d2.month - d1.month; dd = d2.day - d1.day
+if dd < 0:
+    mm -= 1
+    pm = d2.month - 1 or 12; py = d2.year if d2.month > 1 else d2.year - 1
+    dd += (datetime.date(py + (pm == 12), (pm % 12) + 1, 1) - datetime.date(py, pm, 1)).days
+if mm < 0: yy -= 1; mm += 12
+tot = (d2 - d1).days
+pages['age-calculator'] = dict(
+ title='Age Calculator',
+ sections=[
+ ('How exact age is counted', [
+  'Age in completed years, months and days is found by subtracting the birth date from the target date field by field, borrowing from the month before when the day or month is smaller. The number of days in that month matters, which is why a naive “divide days by 365” gives results that drift.',
+  f'Example: born 15 January 1990, on 27 November 2026 the age is {yy} years, {mm} months and {dd} days, which is {tot:,} days in total.']),
+ ('Leap-day birthdays', [
+  'Someone born on 29 February has an official birthday only in leap years. Legal systems differ on whether the birthday falls on 28 February or 1 March in other years; check the rule that applies to your document, such as an exam or insurance form.']),
+ ('Where exact age matters in India', [
+  'Entry-age cut-offs for competitive exams and government jobs are counted as on a stated date, not on today’s date.',
+  'Insurance premiums often use age at the last or nearest birthday.',
+  'School admission, pension and senior-citizen benefits have their own cut-off dates; read the notification before relying on a calculator.']),
+ ],
+ faqs=[
+  ('How do I calculate age from date of birth?', 'Subtract the birth date from the reference date in years, months and days, borrowing days from the previous month where needed.'),
+  ('Can I find age on a past or future date?', 'Yes, set the “age at” date to that day.'),
+  ('How many days old am I?', f'For a birth date of 15 Jan 1990, the count on 27 Nov 2026 is {tot:,} days.'),
+  ('Why does my exam age differ?', 'Exams count age as on a notified cut-off date, not today.'),
+ ])
+
+# ---------- Discount ----------
+dp, d1p, d2p = 2500, 20, 10
+single = dp * (1 - d1p / 100); succ = single * (1 - d2p / 100)
+pages['discount-calculator'] = dict(
+ title='Discount Calculator',
+ sections=[
+ ('The basic formulas', [
+  'Discount amount = price × discount % ÷ 100, and sale price = price − discount amount, which equals <code>price × (1 − d ÷ 100)</code>. To find the discount percent from two prices, use (original − sale) ÷ original × 100.',
+  f'Example: a {inr_ind(dp)} item at {d1p}% off saves {inr_ind(dp*d1p/100)} and costs {inr_ind(single)}.']),
+ ('Successive discounts are not added', [
+  f'“{d1p}% off plus an extra {d2p}% off” is not {d1p+d2p}%. The second discount applies to the reduced price: {inr_ind(single)} × 0.9 = {inr_ind(succ)}, a total saving of {inr_ind(dp-succ)}, or {(1-succ/dp)*100:.0f}% overall. Stacking always gives slightly less than the sum.']),
+ ('Check the real saving', [
+  'Compare the final price across shops, not the percentage; a large discount on an inflated list price may cost more than a smaller discount elsewhere.',
+  'GST is normally charged on the price after discount, so check whether the displayed price is inclusive.',
+  'Buy-one-get-one offers work out to 50% off on two items, and “buy two get one free” to about 33% off on three.']),
+ ],
+ faqs=[
+  ('How do I calculate a discount?', 'Multiply the price by the discount percent and divide by 100; subtract the result from the price.'),
+  ('How do I find the original price?', 'Divide the sale price by (1 − discount ÷ 100).'),
+  ('Do two discounts add up?', f'No. {d1p}% then {d2p}% equals {(1-succ/dp)*100:.0f}% in total.'),
+  ('Is GST charged before or after discount?', 'Generally on the discounted transaction value, but follow the invoice.'),
+ ])
+
 def build(slug, d):
     out = ['<section class="content" id="guide">', f'<h2>Guide to the {html.escape(d["title"])}: method, example and FAQs</h2>']
     for h, paras in d['sections']:
