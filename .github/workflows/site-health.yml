@@ -34,10 +34,10 @@ jobs:
         run: node scripts/build-physics-directory-index.cjs && node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Reconcile the search index with canonical published calculator pages
         run: node scripts/merge-search-index.cjs
-      - name: Rebuild the curated calculator directory for repository QA
-        run: node scripts/build-site-directory.cjs
       - name: Build the current published calculator catalogue
         run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+      - name: Rebuild the curated calculator directory after count synchronization
+        run: node scripts/build-site-directory.cjs
       - name: Validate catalog-driven calculator counts
         run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check && node --test tests/calculator-counts.test.cjs
       - name: Generate curated programmatic SEO pages
