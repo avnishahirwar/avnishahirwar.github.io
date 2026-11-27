@@ -278,4 +278,4 @@ if(require.main===module){
   report:'artifacts/adsense-page-quality-audit.md'
  }));
 }
-module.exports={audit,auditPage,extractParagraphs,extractTitle,extractDescription,extractCanonical,hasNoindex,hasRefreshRedirect,isSelfCanonical,mainHeadingInfo,mainText,stripMarkup};
+module.exports={audit,auditPage,extractParagraphs,extractTitle,extractDescription,extractCanonical,hasNoindex,hasRefreshRedirect,isSelfCanonical,isHistoricalPrimaryYear,mainHeadingInfo,mainText,stripMarkup};
