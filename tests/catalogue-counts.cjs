@@ -8,8 +8,24 @@ module.exports = function getCatalogueCounts(root) {
   // Thin pages marked by scripts/adsense-quality-pass.cjs are published (searchable, listed) but kept out of the sitemap.
   const qualityPassUrls = fs.readdirSync(path.join(root, 'calculators')).filter(name => name.endsWith('.html') &&
     fs.readFileSync(path.join(root, 'calculators', name), 'utf8').includes('data-quality-pass="thin"')).map(name => '/calculators/' + name);
-  const canonicalCalculatorUrls = [...new Set([...sitemapCalculatorUrls, ...qualityPassUrls])].sort();
   const actualSearchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const indexedUrls = [...new Set(actualSearchIndex.map(item => String(item.url || '')).filter(url =>
+    url.startsWith('/calculators/') && url.endsWith('.html') && !url.includes('?') && !url.includes('#') &&
+    !url.split('/').includes('..')))].filter(url => {
+      const absolute = path.resolve(root, url.slice(1));
+      if (!absolute.startsWith(path.join(root, 'calculators') + path.sep) ||
+          !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
+      const html = fs.readFileSync(absolute, 'utf8');
+      const tag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
+      const href = tag && tag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+      if (!href) return false;
+      try {
+        const canonical = new URL(href[1], 'https://friendlycalculator.in');
+        return canonical.origin === 'https://friendlycalculator.in' && canonical.pathname === url &&
+          !canonical.search && !canonical.hash;
+      } catch { return false; }
+    });
+  const canonicalCalculatorUrls = [...new Set([...sitemapCalculatorUrls, ...qualityPassUrls, ...indexedUrls])].sort();
   const expectedSearchIndexUrls = [...new Set(actualSearchIndex.map(item => String(item.url || '')).filter(Boolean))].sort();
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const sections = [...directory.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
