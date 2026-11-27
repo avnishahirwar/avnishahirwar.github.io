@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Audit public page indexability and intentional exclusions
+        run: node scripts/audit-indexability.cjs
       - name: Check public page metadata
         run: node scripts/repair-public-social-metadata.cjs --check
       - name: Run SEO publication tests
