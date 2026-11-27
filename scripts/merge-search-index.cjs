@@ -21,10 +21,24 @@ if (!Array.isArray(index) || !Array.isArray(additions)) {
   throw new Error('Expected both files to be JSON arrays');
 }
 
+// Keep one searchable record per canonical URL. Duplicate search rows do not
+// represent additional calculators and inflate public catalogue counts.
+const seenUrls = new Set();
+let duplicateEntries = 0;
+const uniqueIndex = index.filter((entry) => {
+  const url = entry && entry.url;
+  if (typeof url !== 'string' || !url) return true;
+  if (seenUrls.has(url)) {
+    duplicateEntries += 1;
+    return false;
+  }
+  seenUrls.add(url);
+  return true;
+});
+index.splice(0, index.length, ...uniqueIndex);
 const existing = new Set(index.map((entry) => entry && entry.url).filter(Boolean));
 const missingPages = [];
 let added = 0;
-let duplicateEntries = 0;
 
 for (const entry of additions) {
   if (!entry || typeof entry.name !== 'string' || !entry.name.trim() ||
@@ -68,12 +82,15 @@ console.log(
 );
 
 if (CHECK) {
+  if (duplicateEntries > 0) {
+    throw new Error('Search index contains ' + duplicateEntries + ' duplicate URL row(s); run without --check to normalize it.');
+  }
   if (added === 0 && missingPages.length === 0) {
     console.log('Search index is already up to date.');
   }
   process.exit(0);
 }
 
-if (added > 0) {
+if (added > 0 || duplicateEntries > 0) {
   fs.writeFileSync(INDEX, JSON.stringify(index, null, 2) + '\n');
 }
