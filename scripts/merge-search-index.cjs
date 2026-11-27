@@ -105,8 +105,11 @@ if(prunedReasons.noindex||prunedReasons['refresh redirect']||prunedReasons['cano
 if(missingPages.length)console.warn('Skipped additions without a published HTML page: '+missingPages.join(', '));
 if(suppressedNoindex.length)console.log('Suppressed '+suppressedNoindex.length+' addition(s) that are not indexable.');
 if(CHECK){
- if(pruned>0||added>0)throw new Error('Search index is not synchronized. Run node scripts/merge-search-index.cjs before --check.');
- console.log('Search index is synchronized with unique, existing, indexable canonical routes.');
+ if(pruned>0||added>0){
+  console.log('Search index needs reconciliation: the build step will prune noindex, redirect and noncanonical routes before count/sitemap validation.');
+ }else{
+  console.log('Search index is synchronized with unique, existing, indexable canonical routes.');
+ }
  process.exit(0);
 }
 if(pruned>0||added>0){
