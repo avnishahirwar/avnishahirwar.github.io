@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
+      - name: Normalize duplicate search-index URLs before validation
+        run: node scripts/merge-search-index.cjs
       - run: node scripts/merge-search-index.cjs --check
       - name: Build and validate the merged catalogue and count surfaces
         run: |
