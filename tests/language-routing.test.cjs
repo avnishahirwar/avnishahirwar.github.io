@@ -256,6 +256,39 @@ test('language selector is synchronized with the canonical 50-language catalogue
 });
 
 
+test('all 50 configured locales have shared navigation, footer and accessible menu dictionaries', () => {
+  const catalogue = require('../config/language-catalogue.json');
+  const objectBody = key => {
+    const start = shell.indexOf(key);
+    assert.notEqual(start, -1, 'Missing ' + key);
+    const bodyStart = start + key.length;
+    const end = shell.indexOf('};', bodyStart);
+    assert.notEqual(end, -1, 'Unclosed ' + key);
+    return shell.slice(bodyStart, end);
+  };
+  const chromeBody = objectBody('const chrome={');
+  const footerBody = objectBody('const footerLabels={');
+  const menuBody = objectBody('const menuText={');
+  const closeBody = objectBody('const closeText={');
+  const skipBody = objectBody('const shellSkipLabels={');
+  const hasInline = (body, code) => new RegExp('(?:^|,)' + code + ':').test(body);
+  for (const locale of catalogue.locales) {
+    const code = locale.code;
+    const chromeLine = chromeBody.split('\n').find(line => line.trimStart().startsWith(code + ':{'));
+    const footerLine = footerBody.split('\n').find(line => line.trimStart().startsWith(code + ':['));
+    assert.ok(chromeLine, 'Missing shared navigation dictionary for ' + code);
+    assert.ok(footerLine, 'Missing footer dictionary for ' + code);
+    assert.ok(hasInline(menuBody, code), 'Missing mobile menu label for ' + code);
+    assert.ok(hasInline(closeBody, code), 'Missing mobile close label for ' + code);
+    assert.ok(hasInline(skipBody, code), 'Missing skip-link label for ' + code);
+    for (const key of ['home','login','all','search','finance','tax','business','global','everyday','blog','embed','forBusiness','api','plans','about','contact','admin','language','choose','change','footer']) {
+      assert.ok(chromeLine.includes(key + ':'), 'Missing ' + key + ' translation for ' + code);
+    }
+    const footerValues = footerLine.slice(footerLine.indexOf('[') + 1, footerLine.lastIndexOf(']'));
+    assert.equal(footerValues.split(',').length, 10, 'Footer must keep ten destinations aligned for ' + code);
+  }
+});
+
 test('configured language editions have complete shared navigation and footer dictionaries', () => {
   const match = shell.match(/const chrome=\{([\s\S]*?)\n\};/);
   assert.ok(match, 'Expected shared chrome dictionaries');
