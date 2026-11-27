@@ -104,7 +104,7 @@ function build() {
     const loc = getCanonical(file, html);
     if (!loc || !canonicalMatchesFile(file, loc) || seen.has(loc)) continue;
     seen.add(loc);
-    entries.push({ loc, lastmod: getLastmod(file), file });
+    entries.push({ loc, lastmod: getLastmod(file), file, html });
   }
 
   if (!seen.has(SITE_ORIGIN + '/')) {
@@ -114,22 +114,29 @@ function build() {
     throw new Error('Single sitemap limit exceeded: ' + entries.length + ' URLs (maximum ' + MAX_URLS + ').');
   }
 
+  const FALLBACK_LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru']);
   const languageGroups = new Map();
+  const languageConflicts = new Set();
   for (const entry of entries) {
+    const langMatch = entry.html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i);
+    const firstPathSegment = entry.file.split('/')[0];
+    const locale = langMatch
+      ? langMatch[1].trim().toLowerCase()
+      : (FALLBACK_LANGUAGE_PREFIXES.has(firstPathSegment) ? firstPathSegment : 'en');
     const parts = entry.file.split('/');
-    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
-    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
+    const key = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts.slice(1).join('/') : entry.file;
+    entry.locale = locale;
+    entry.groupKey = key;
     if (!languageGroups.has(key)) languageGroups.set(key, new Map());
-    languageGroups.get(key).set(locale, entry.loc);
+    const group = languageGroups.get(key);
+    if (group.has(locale) && group.get(locale) !== entry.loc) languageConflicts.add(key);
+    else group.set(locale, entry.loc);
   }
   for (const entry of entries) {
-    const parts = entry.file.split('/');
-    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
-    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
-    const group = languageGroups.get(key);
-    entry.alternates = group && group.size > 1 ? group : null;
+    const group = languageGroups.get(entry.groupKey);
+    entry.alternates = group && group.size > 1 && !languageConflicts.has(entry.groupKey) ? group : null;
   }
-  const hreflangGroups = [...languageGroups.values()].filter(group => group.size > 1).length;
+  const hreflangGroups = [...languageGroups.entries()].filter(([key, group]) => group.size > 1 && !languageConflicts.has(key)).length;
   entries.sort((a, b) => a.loc.localeCompare(b.loc));
   const body = entries.map(entry =>
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
