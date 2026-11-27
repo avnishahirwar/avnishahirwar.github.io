@@ -720,7 +720,7 @@ test('Dividend yield and markup margin calculators are localized in all nine lan
       assert.match(html,new RegExp('<html lang="'+locale+'"'));
       assert.ok(html.includes('hreflang="x-default"'));
       for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing hreflang '+alt+': '+url);
-      assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);
+      assertSitemapEligibility(url, html);
       assert.ok(html.includes('application/ld+json'),'Missing structured data: '+url);
       if(locale==='en')assert.ok(html.includes('id="form"'),'Missing English form: '+url);
       else assert.ok(html.includes('id="calcForm"'),'Missing localized form: '+url);
