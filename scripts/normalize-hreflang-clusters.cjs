@@ -8,6 +8,7 @@ const ORIGIN = 'https://friendlycalculator.in';
 const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd','uk']);
 const FALLBACK_LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru']);
 const IGNORED_DIRS = new Set(['.git','.github','node_modules','vendor','_site','tests','admin','avnish-ai']);
+const HREFLANG_EXCLUDED_ROUTES = new Set(['uk/index.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html']);
 
 function walk(dir, root, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -129,10 +130,11 @@ function normalizeDirectory(root, { write = false } = {}) {
     const canonical = getCanonical(html);
     const lang = getLanguage(html, relativePath);
     const validLanguage = /^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/.test(lang);
-    const eligible = !noindex && validLanguage && hasSelfCanonical(relativePath, canonical);
+    const hreflangExcluded = HREFLANG_EXCLUDED_ROUTES.has(relativePath);
+    const eligible = !hreflangExcluded && !noindex && validLanguage && hasSelfCanonical(relativePath, canonical);
 
     const page = {
-      absolute, html, head, lang, canonical, eligible,
+      absolute, html, head, lang, canonical, eligible, hreflangExcluded,
       tags: [], routeKey: routeKey(relativePath)
     };
     pages.set(relativePath, page);
