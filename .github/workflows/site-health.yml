@@ -30,6 +30,8 @@ jobs:
         run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check && node --test tests/calculator-counts.test.cjs
       - name: Validate physics calculator directory
         run: node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
+      - name: Normalize reciprocal hreflang clusters before site SEO checks
+        run: node scripts/normalize-hreflang-clusters.cjs --write && node scripts/normalize-hreflang-clusters.cjs --check
       - name: Generate current sitemap for repository QA
         run: node scripts/generate-sitemaps.cjs
       - name: Rebuild curated calculator directory for repository QA
