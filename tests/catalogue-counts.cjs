@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 module.exports = function getCatalogueCounts(root) {
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\\.in[^<]*)<\\/loc>/g)].map(m => m[1]);
+  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
   const sitemapCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
   const selfCanonical = url => {
     if (!url.startsWith('/calculators/') || !url.endsWith('.html') ||
@@ -12,8 +12,8 @@ module.exports = function getCatalogueCounts(root) {
     const calculatorRoot = path.join(root, 'calculators') + path.sep;
     if (!absolute.startsWith(calculatorRoot) || !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
     const html = fs.readFileSync(absolute, 'utf8');
-    const tag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
-    const href = tag && tag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+    const tag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+    const href = tag && tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
     if (!href) return false;
     try {
       const canonical = new URL(href[1], 'https://friendlycalculator.in');
