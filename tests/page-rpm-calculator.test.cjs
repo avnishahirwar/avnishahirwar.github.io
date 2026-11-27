@@ -121,3 +121,14 @@ test('Page RPM calculator is discoverable in the canonical search index, sitemap
   assert.ok(businessDirectory.includes('href="' + url + '"'));
   assert.ok(allDirectory.includes('href="' + url + '"'));
 });
+
+
+test('required page views are rounded up to the next whole view', () => {
+  const ids = bootCalculator();
+  ids.mode.value = 'views';
+  ids.mode.dispatch('change');
+  ids.target.value = '1000';
+  ids.rpm.value = '30';
+  ids['rpm-form'].dispatch('submit');
+  assert.match(ids.output.innerHTML, /Required page views: 33,334|Required page views: 33334/);
+});
