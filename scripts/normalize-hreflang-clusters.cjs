@@ -171,10 +171,11 @@ function normalizeDirectory(root, { write = false } = {}) {
       /<link\b(?=[^>]*\brel\s*=\s*["']alternate["'])(?=[^>]*\bhreflang\s*=\s*["'][^"']+["'])[^>]*>\s*/gi,
       ''
     );
-    const trimmedHead = cleanHead.replace(/[ \t]+\n/g, '\n').trimEnd();
-    const nextHead = trimmedHead + (page.tags.length ? '\n' + page.tags.join('\n') + '\n' : '\n');
+    const nextHead = page.tags.length
+      ? cleanHead.replace(/[ \t]+\n/g, '\n').trimEnd() + '\n' + page.tags.join('\n') + '\n'
+      : cleanHead;
     const headEnd = page.html.toLowerCase().indexOf('</head>');
-    const nextHtml = page.html.slice(0, headEnd) + nextHead + page.html.slice(headEnd);
+    const nextHtml = nextHead + page.html.slice(headEnd);
     if (nextHtml !== page.html) {
       stats.changedPages++;
       stats.newAlternateTags += page.tags.length;
