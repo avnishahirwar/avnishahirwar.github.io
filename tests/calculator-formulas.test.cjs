@@ -773,18 +773,29 @@ test('Hindi Income Tax uses its reviewed localized model while other translated 
 
 test('the ten priority Hindi calculators expose canonical URLs, indexable language alternates, schemas, formula notes and visual results', () => {
   const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
-  const candidates = ['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
+  const localeDirectories = fs.readdirSync(new URL('../', 'file://' + __filename), { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && /^[a-z]{2,3}$/i.test(entry.name))
+    .map(entry => entry.name.toLowerCase());
   const isNoindex = html => /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html.slice(0, html.toLowerCase().indexOf('</head>')));
+  const indexableLocalesFor = slug => {
+    const locales = ['en'];
+    for (const locale of localeDirectories) {
+      const file = new URL('../' + locale + '/calculators/' + slug + '.html', 'file://' + __filename);
+      if (!fs.existsSync(file)) continue;
+      const localeHtml = fs.readFileSync(file, 'utf8');
+      const declaredLang = (localeHtml.match(/<html\b[^>]*\blang=["']([^"']+)["']/i) || [])[1]?.toLowerCase();
+      const canonical = (localeHtml.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i) || [])[1];
+      const expected = 'https://friendlycalculator.in/' + locale + '/calculators/' + slug + '.html';
+      if (declaredLang === locale && canonical === expected && !isNoindex(localeHtml)) locales.push(locale);
+    }
+    return locales;
+  };
   const sortPairs = pairs => pairs.slice().sort(([a],[b]) => a.localeCompare(b));
   for (const slug of slugs) {
     const html = fs.readFileSync(new URL('../hi/calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
     assert.match(html, /<html[^>]+lang="hi"/, slug + ' is marked Hindi');
     assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
-    const indexable = candidates.filter(locale => {
-      const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
-      const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
-      return !isNoindex(localeHtml);
-    });
+    const indexable = indexableLocalesFor(slug);
     const expectedAlternates = [
       ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
       ['x-default', 'https://friendlycalculator.in/calculators/' + slug + '.html']
