@@ -45,3 +45,10 @@ test('the shared Settings panel uses the Lite Mode API exposed by the early boot
   assert.match(shell, /window\.FCLiteMode\.getPreference\(\)/);
   assert.match(shell, /window\.FCLiteMode\.setPreference\(liteModeSelect\.value\)/);
 });
+
+test('Lite mode defers the third-party Google search runtime until requested', () => {
+  assert.match(shell, /if\(window\.FCLiteMode\?\.isEnabled\(\)\)/);
+  assert.match(shell, /Load Google Search \(uses extra data\)/);
+  assert.match(shell, /loadSearchButton\.addEventListener\('click',loadGoogleCse\)/);
+  assert.match(shell, /fc:litechange',\(\)=>\{if\(!window\.FCLiteMode\.isEnabled\(\)\)loadGoogleCse\(\)\}/);
+});
