@@ -20,7 +20,8 @@ const EXCLUDED_PATHS = new Set([
   'map.html',
   'maps.html',
   'schema/_homepage.html',
-  'seo-meta-tags.html'
+  'seo-meta-tags.html',
+  'calculators/muzzle-velocity-calculator.html'
 ]);
 const BRAND_IMAGE_URL = SITE_ORIGIN + '/assets/friendly-calculator-brand-illustration.svg';
 const BRAND_IMAGE_PAGES = new Set([
