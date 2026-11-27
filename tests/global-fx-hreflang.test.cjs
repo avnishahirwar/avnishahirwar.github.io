@@ -55,7 +55,7 @@ test('generated sitemap check includes hreflang clusters',()=>{
 
 test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
+ const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
