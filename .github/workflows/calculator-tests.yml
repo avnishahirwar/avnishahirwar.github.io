@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 22
       - name: Build the complete published calculator catalogue
-        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+        run: node scripts/merge-search-index.cjs && node scripts/generate-sitemaps.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run landed cost calculator regression tests
