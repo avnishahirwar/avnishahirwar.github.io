@@ -37,7 +37,7 @@ function extractDescription(html){
  const tag=(html.match(/<meta\b(?=[^>]*name=["']description["'])[^>]*>/i)||[])[0]||'';
  return ((tag.match(/\bcontent=["']([^"']*)["']/i)||[])[1]||'').trim();
 }
-function countMatches(text,re){return [...text.matchAll(re)].length;}
+function countMatches(text,re){const globalRe=new RegExp(re.source,re.flags.includes('g')?re.flags:re.flags+'g');return [...text.matchAll(globalRe)].length;}
 function auditPage(file,html){
  const text=mainText(html), words=text?text.split(/\s+/).length:0;
  const tokens=text.toLowerCase().match(/[a-z0-9₹$%]+/g)||[];
