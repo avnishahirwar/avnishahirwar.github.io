@@ -91,7 +91,6 @@ function main() {
         const lang = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1]?.toLowerCase();
         const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
         if (!lang || !href || seenLanguages.has(lang)) return true;
-        seenLanguages.add(lang);
         const target = targetFile(href);
         if (!target) return true;
         const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
@@ -100,6 +99,7 @@ function main() {
         if (canonicalOf(targetHtml) !== targetUrl) return true;
         if (lang !== 'x-default' && langOf(targetHtml, target) !== lang) return true;
         if (lang === 'x-default' && langOf(targetHtml, target) !== 'en') return true;
+        seenLanguages.add(lang);
         return false;
       });
     if (!invalidTags.length) continue;
