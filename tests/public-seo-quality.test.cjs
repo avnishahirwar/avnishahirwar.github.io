@@ -41,3 +41,19 @@ test('source code license is MIT and does not claim editorial content or brand a
   assert.match(readme, /CC BY 4\.0/i);
   assert.match(readme, /Logos, trademarks, brand illustrations, third-party assets/i);
 });
+
+
+
+test('requested public index targets explicitly allow indexing and declare stable canonicals', () => {
+  const checks = [
+    ['calculator/premium-waitlist.html', 'https://friendlycalculator.in/calculator/premium-waitlist.html'],
+    ['calculator/everyday.html', 'https://friendlycalculator.in/calculator/everyday-calculators.html'],
+    ['embed/index.html', 'https://friendlycalculator.in/embed/'],
+  ];
+  for (const [relativePath, canonical] of checks) {
+    const html = fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
+    assert.match(html, /<meta\s+name=["']robots["']\s+content=["']index,follow(?:,max-image-preview:large)?["']/i, relativePath + ' must explicitly allow indexing');
+    assert.ok(html.includes('<link rel="canonical" href="' + canonical + '"'), relativePath + ' must declare its intended canonical');
+    assert.doesNotMatch(html, /<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i, relativePath + ' must not contain noindex');
+  }
+});
