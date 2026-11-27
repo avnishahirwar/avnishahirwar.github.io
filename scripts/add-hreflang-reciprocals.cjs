@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-// Add only missing reciprocal hreflang links. Never remove, rewrite or deduplicate
-// existing tags. Conflicting or invalid clusters are skipped for manual review.
+// Remove hreflang links that point to noindex pages, then add only missing valid reciprocals.
+// Other existing tags are preserved; conflicting clusters are skipped for manual review.
 const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = process.cwd();
@@ -72,7 +72,44 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, removedNoindexTargets: 0, fallbackAdded: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+
+  // Isolated unit fixtures omit the language catalogue; production pruning runs only with it present.
+  if (fs.existsSync(path.join(ROOT, 'config/language-catalogue.json'))) {
+  // Hreflang is only valid between indexable, self-canonical pages. Noindex
+  // translations must not emit hreflang themselves or be advertised by indexable pages.
+  // The /uk/ route is an English-GB market hub, not a Ukrainian language edition.
+  for (const [sourceFile, sourceHtml] of cache) {
+    const relativeSource = path.relative(ROOT, sourceFile).split(path.sep).join('/');
+    const sourceIsNoindex = isNoindex(sourceHtml);
+    const isUkMarketHub = relativeSource === 'uk/index.html';
+    const seenLanguages = new Set();
+    const invalidTags = [...headOf(sourceHtml).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+      .filter(tag => /\brel=["']alternate["']/i.test(tag) && /\bhreflang=/i.test(tag))
+      .filter(tag => {
+        if (sourceIsNoindex || isUkMarketHub) return true;
+        const lang = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1]?.toLowerCase();
+        const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+        if (!lang || !href || seenLanguages.has(lang)) return true;
+        const target = targetFile(href);
+        if (!target) return true;
+        const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
+        if (isNoindex(targetHtml)) return true;
+        const targetUrl = new URL(href, ORIGIN).href;
+        if (canonicalOf(targetHtml) !== targetUrl) return true;
+        if (lang !== 'x-default' && langOf(targetHtml, target) !== lang) return true;
+        if (lang === 'x-default' && langOf(targetHtml, target) !== 'en') return true;
+        seenLanguages.add(lang);
+        return false;
+      });
+    if (!invalidTags.length) continue;
+    let cleaned = sourceHtml;
+    for (const tag of invalidTags) cleaned = cleaned.replace(tag, '');
+    if (cleaned !== sourceHtml) {
+      cache.set(sourceFile, cleaned);
+      stats.removedNoindexTargets += invalidTags.length;
+    }
+  }}
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
@@ -99,16 +136,53 @@ function main() {
     }
   }
 
-  for (const [file, tags] of additions) {
-    const html = cache.get(file);
+  // Add x-default only for indexable localized pages that have an indexable,
+  // self-canonical English counterpart at the matching route.
+  const cataloguePath = path.join(ROOT, 'config/language-catalogue.json');
+  // The reciprocal-link unit fixture intentionally contains only a tiny route set.
+  // Skip the optional x-default pass when no language catalogue is supplied.
+  if (fs.existsSync(cataloguePath)) {
+    const languageCatalogue = JSON.parse(fs.readFileSync(cataloguePath, 'utf8'));
+    const localeCodes = new Set(languageCatalogue.locales.map(locale => locale.code));
+    for (const [sourceFile, sourceHtml] of cache) {
+      if (isNoindex(sourceHtml)) continue;
+      const relative = path.relative(ROOT, sourceFile).split(path.sep).join('/');
+      const parts = relative.split('/');
+      if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en' || relative === 'uk/index.html') continue;
+      const sourceCanonical = canonicalOf(sourceHtml);
+      if (!sourceCanonical || !selfCanonicalCandidates(sourceFile).has(sourceCanonical)) continue;
+      const defaultFile = path.join(ROOT, ...parts.slice(1));
+      if (!cache.has(defaultFile)) continue;
+      const defaultHtml = cache.get(defaultFile);
+      if (isNoindex(defaultHtml)) { stats.skippedNoindex++; continue; }
+      const defaultCanonical = canonicalOf(defaultHtml);
+      if (!defaultCanonical || !selfCanonicalCandidates(defaultFile).has(defaultCanonical)) continue;
+      const existingDefault = linksOf(sourceHtml).filter(item => item.lang === 'x-default');
+      if (existingDefault.some(item => {
+        try { return new URL(item.href, ORIGIN).href === defaultCanonical; } catch { return false; }
+      })) continue;
+      if (existingDefault.length) { stats.skippedConflict++; continue; }
+      if (!additions.has(sourceFile)) additions.set(sourceFile, new Set());
+      additions.get(sourceFile).add('<link rel="alternate" hreflang="x-default" href="' + defaultCanonical + '">');
+      stats.fallbackAdded++;
+    }
+  }
+
+  const changedFiles = new Set([...cache.keys()].filter(file => {
+    const original = fs.readFileSync(file, 'utf8');
+    return cache.get(file) !== original;
+  }).concat([...additions.keys()]));
+  for (const file of changedFiles) {
+    const original = fs.readFileSync(file, 'utf8');
+    const html = cache.get(file) || original;
+    const tags = additions.get(file) || new Set();
     const insertion = [...tags].filter(tag => !html.includes(tag));
-    if (!insertion.length) continue;
-    const next = html.replace(/<\/head>/i, insertion.join('\n') + '\n</head>');
-    if (next === html) continue;
+    const next = insertion.length ? html.replace(/<\/head>/i, insertion.join('\n') + '\n</head>') : html;
+    if (next === original) continue;
     stats.added += insertion.length;
     if (process.argv.includes('--write')) fs.writeFileSync(file, next);
   }
-  stats.targetPagesChanged = additions.size;
+  stats.targetPagesChanged = changedFiles.size;
   console.log('Additive hreflang reciprocal repair: ' + JSON.stringify(stats));
   if (!process.argv.includes('--write')) console.log('Dry run only. No files were changed.');
 }

@@ -38,9 +38,32 @@ function esc(value) {
 }
 function readCanonicalCalculatorUrls() {
   const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
-  return [...new Set([...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+  const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
     .map(match => new URL(match[1]).pathname)
-    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
+
+  // Keep every existing self-canonical calculator in the on-site directory,
+  // including noindex pages. Robots directives still decide search-engine indexing.
+  const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+  const indexedUrls = index.map(item => String(item.url || ''))
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html') &&
+      !url.includes('?') && !url.includes('#') && !url.split('/').includes('..'))
+    .filter(url => {
+      const file = path.resolve(ROOT, url.slice(1));
+      if (!file.startsWith(path.join(ROOT, 'calculators') + path.sep) ||
+          !fs.existsSync(file) || !fs.statSync(file).isFile()) return false;
+      const html = fs.readFileSync(file, 'utf8');
+      const canonicalTag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+      const canonicalHref = canonicalTag && canonicalTag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
+      if (!canonicalHref) return false;
+      try {
+        const canonical = new URL(canonicalHref[1], 'https://friendlycalculator.in');
+        return canonical.origin === 'https://friendlycalculator.in' &&
+          canonical.pathname === url && !canonical.search && !canonical.hash;
+      } catch { return false; }
+    });
+
+  return [...new Set([...sitemapUrls, ...indexedUrls])].sort();
 }
 function readPageEntry(url, indexByUrl) {
   const file = path.join(ROOT, url.slice(1));

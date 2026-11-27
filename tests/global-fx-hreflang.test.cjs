@@ -34,7 +34,7 @@ test('English currency converter and German page carry no hreflang cross-links',
  const english=fs.readFileSync(pageFor('en',route),'utf8');
  const german=fs.readFileSync(pageFor('de',route),'utf8');
  assert.ok(!noindexOf(german),'German currency page is indexable');
- assert.deepEqual(alternatesOf(german),[],'German page does not carry hreflang yet');
+ assert.deepEqual(alternatesOf(german),[['x-default',origin+'/calculators/'+route]],'German page has only the English x-default fallback until a reciprocal locale cluster is published');
  assert.doesNotMatch(english,/hreflang="de"/,'English page does not target German until reciprocal hreflang exists');
  assert.match(english,/hreflang="x-default"/);
  for(const html of [english,german]) assert.match(html,/\/assets\/currency-converter-live\.js/);

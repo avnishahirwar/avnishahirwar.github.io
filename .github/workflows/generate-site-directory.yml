@@ -7,6 +7,7 @@ on:
       - 'scripts/build-site-directory.cjs'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
       - 'config/site-directory-category-assignments.json'
       - 'index.html'
       - 'sitemap.xml'
@@ -22,6 +23,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
+      - 'config/language-catalogue.json'
       - 'calculator/site-directory.html'
       - 'calculator/physics-calculators.html'
       - 'config/site-directory-category-assignments.json'
@@ -64,12 +67,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Merge pending calculator search-index additions
+        run: node scripts/merge-search-index.cjs
+      - name: Regenerate canonical XML sitemap before the directory
+        run: node scripts/generate-sitemaps.cjs
       - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
       - name: Regenerate the physics subject directory from the curated catalogue
         run: node scripts/generate-physics-calculator-directory.cjs
       - name: Synchronize homepage and catalogue counters
-        run: node scripts/sync-calculator-counts.cjs
+        run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+      - name: Add only safe reciprocal hreflang links
+        run: node --check scripts/add-hreflang-reciprocals.cjs && node scripts/add-hreflang-reciprocals.cjs --write
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
