@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'assets/calculator-search-index-additions.json'
+      - 'assets/calculator-search-index.json'
+      - 'scripts/merge-search-index.cjs'
+      - 'scripts/sync-calculator-counts.cjs'
+      - '.github/workflows/merge-search-index.yml'
   pull_request:
     branches: [main]
   workflow_dispatch:
