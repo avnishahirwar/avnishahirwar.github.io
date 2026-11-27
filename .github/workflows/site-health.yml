@@ -27,7 +27,7 @@ jobs:
       - name: Generate canonical XML sitemap from published HTML pages
         run: node scripts/generate-sitemaps.cjs
       - name: Generate and validate the Physics directory from the full source catalogue
-        run: node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
+        run: node scripts/build-physics-directory-index.cjs && node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Reconcile the search index with canonical published calculator pages
         run: node scripts/merge-search-index.cjs
       - name: Rebuild the curated calculator directory for repository QA
