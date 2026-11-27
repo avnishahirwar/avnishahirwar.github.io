@@ -6,7 +6,13 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
-const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+function readAllSitemaps() {
+  const names = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name))
+    .sort((a, b) => Number(a.match(/\\d+/)[0]) - Number(b.match(/\\d+/)[0]))];
+  return names.map(name => fs.readFileSync(path.join(root, name), 'utf8')).join('\\n');
+}
+const sitemap = readAllSitemaps();
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, homepageCoreCalculatorCount } = catalogueCounts;
@@ -26,6 +32,15 @@ test('international hub hero links meet the dark-header contrast style', () => {
   assert.match(html, /\.hero\s+\.links\s+a\s*\{[^}]*color:\s*#e6d6b2/i);
 });
 
+test('all XML sitemap shards stay below the Cloudflare Pages per-file limit', () => {
+  const names = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name))];
+  assert.ok(names.length >= 1);
+  for (const name of names) {
+    const size = fs.statSync(path.join(root, name)).size;
+    assert.ok(size < 25 * 1024 * 1024, name + ' exceeds Cloudflare Pages 25 MiB asset limit: ' + size);
+  }
+});
 test('sitemap is valid XML-shaped content with unique canonical URLs', () => {
   assert.match(sitemap, /^<\?xml/);
   assert.ok(urls.length >= 20, 'Expected public site pages in sitemap');
@@ -1221,7 +1236,7 @@ test('Avnish Ahirwar founder identity is crawlable and consistently linked', () 
   const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const founder = fs.readFileSync(path.join(root, 'calculator/founder.html'), 'utf8');
   const about = fs.readFileSync(path.join(root, 'calculator/about.html'), 'utf8');
-  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  const sitemap = readAllSitemaps();
   assert.match(home, /Founded by <a href="\/calculator\/founder\.html">Avnish Ahirwar<\/a>/);
   assert.match(home, /"@type":"Person","@id":"https:\/\/friendlycalculator\.in\/calculator\/founder\.html#person","name":"Avnish Ahirwar"/);
   assert.match(founder, /"@type":"ProfilePage"/);
