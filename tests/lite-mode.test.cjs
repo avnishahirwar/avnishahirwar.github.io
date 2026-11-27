@@ -39,3 +39,9 @@ test('Lite mode defers decorative image downloads and restores them when disable
   assert.match(shell, /setAttribute\('src',source\)/);
   assert.match(shell, /removeAttribute\('data-fc-lite-src'\)/);
 });
+
+test('the shared Settings panel uses the Lite Mode API exposed by the early bootstrap', () => {
+  assert.match(shell, /window\.FCLiteMode=fcLiteMode/);
+  assert.match(shell, /window\.FCLiteMode\.getPreference\(\)/);
+  assert.match(shell, /window\.FCLiteMode\.setPreference\(liteModeSelect\.value\)/);
+});
