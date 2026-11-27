@@ -26,7 +26,8 @@ test('calculator education module is limited to individual calculator pages', ()
   const source = fs.readFileSync(modulePath, 'utf8');
   assert.ok(source.includes('calculators'));
   assert.ok(source.includes("get('embed') === '1'"));
-  assert.ok(source.includes('excludedTopic'));
+  assert.ok(source.includes('approvedTopic'));
+  assert.match(source, /if \(!approvedTopic\.test/);
   assert.ok(source.includes("querySelector('form, [data-fc-native-calculator]"));
 });
 
