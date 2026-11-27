@@ -6,7 +6,7 @@ const path = require('node:path');
 
 const root = path.join(__dirname, '..');
 
-test('additive hreflang repair has no remaining unambiguous reciprocal additions', () => {
+test('additive hreflang repair reports repository-wide legacy debt without modifying files', () => {
   const output = execFileSync(process.execPath, ['scripts/add-hreflang-reciprocals.cjs'], {
     cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
   });
