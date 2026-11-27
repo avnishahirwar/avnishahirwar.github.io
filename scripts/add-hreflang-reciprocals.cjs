@@ -148,7 +148,7 @@ function main() {
       if (isNoindex(sourceHtml)) continue;
       const relative = path.relative(ROOT, sourceFile).split(path.sep).join('/');
       const parts = relative.split('/');
-      if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en' || parts[0] === 'uk') continue;
+      if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en' || relative === 'uk/index.html') continue;
       const sourceCanonical = canonicalOf(sourceHtml);
       if (!sourceCanonical || !selfCanonicalCandidates(sourceFile).has(sourceCanonical)) continue;
       const defaultFile = path.join(ROOT, ...parts.slice(1));
