@@ -72,7 +72,7 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, fallbackAdded: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
@@ -97,6 +97,33 @@ function main() {
       if (!additions.has(target)) additions.set(target, new Set());
       additions.get(target).add('<link rel="alternate" hreflang="' + sourceLang + '" href="' + sourceCanonical + '">');
     }
+  }
+
+  // Add x-default only for indexable localized pages that have an indexable,
+  // self-canonical English counterpart at the matching route.
+  const languageCatalogue = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/language-catalogue.json'), 'utf8'));
+  const localeCodes = new Set(languageCatalogue.locales.map(locale => locale.code));
+  for (const [sourceFile, sourceHtml] of cache) {
+    if (isNoindex(sourceHtml)) continue;
+    const relative = path.relative(ROOT, sourceFile).split(path.sep).join('/');
+    const parts = relative.split('/');
+    if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en') continue;
+    const sourceCanonical = canonicalOf(sourceHtml);
+    if (!sourceCanonical || !selfCanonicalCandidates(sourceFile).has(sourceCanonical)) continue;
+    const defaultFile = path.join(ROOT, ...parts.slice(1));
+    if (!cache.has(defaultFile)) continue;
+    const defaultHtml = cache.get(defaultFile);
+    if (isNoindex(defaultHtml)) { stats.skippedNoindex++; continue; }
+    const defaultCanonical = canonicalOf(defaultHtml);
+    if (!defaultCanonical || !selfCanonicalCandidates(defaultFile).has(defaultCanonical)) continue;
+    const existingDefault = linksOf(sourceHtml).filter(item => item.lang === 'x-default');
+    if (existingDefault.some(item => {
+      try { return new URL(item.href, ORIGIN).href === defaultCanonical; } catch { return false; }
+    })) continue;
+    if (existingDefault.length) { stats.skippedConflict++; continue; }
+    if (!additions.has(sourceFile)) additions.set(sourceFile, new Set());
+    additions.get(sourceFile).add('<link rel="alternate" hreflang="x-default" href="' + defaultCanonical + '">');
+    stats.fallbackAdded++;
   }
 
   for (const [file, tags] of additions) {
