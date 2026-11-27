@@ -84,6 +84,15 @@ test('calculator computes Page RPM, estimated revenue and required page views', 
   assert.equal(ids['target-field'].hidden, false);
   ids['rpm-form'].dispatch('submit');
   assert.match(ids.output.innerHTML, /Required page views: 250[,. ]?000/);
+
+  ids.target.value = '4.2';
+  ids.rpm.value = '6';
+  ids['rpm-form'].dispatch('submit');
+  assert.match(ids.output.innerHTML, /Required page views: 700(?:\\D|<)/);
+
+  ids.target.value = '4.201';
+  ids['rpm-form'].dispatch('submit');
+  assert.match(ids.output.innerHTML, /Required page views: 701(?:\\D|<)/);
 });
 
 test('calculator rejects zero, fractional and negative page-view or RPM inputs', () => {

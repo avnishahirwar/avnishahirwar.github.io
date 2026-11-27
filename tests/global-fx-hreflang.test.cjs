@@ -88,7 +88,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','gu','kn'];
+ const expandedLocales=["en","hi","es","fr","pt","ar","id","bn","ta"];
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=expectedPairs(indexableLocales(candidates,route),route);
@@ -102,3 +102,13 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   }
  }
 });
+test('indexable standalone German and Kannada basic-calculator pages are not falsely treated as hreflang cluster members',()=>{
+ for(const locale of ['de','kn']){
+  const file=pageFor(locale,'basic-calculator.html');
+  assert.ok(fs.existsSync(file),locale+' standalone page must remain published');
+  const html=fs.readFileSync(file,'utf8');
+  assert.equal(noindexOf(html),false,locale+' standalone page should remain indexable');
+  assert.deepEqual(alternatesOf(html),[],locale+' standalone page must not claim an unsupported hreflang cluster');
+ }
+});
+

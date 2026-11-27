@@ -212,7 +212,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
         detail = formatMoney(target) + ' ÷ ' + formatMoney(rpm) + ' × 1,000';
       }
       if (!Number.isFinite(result)) throw new Error('The result is outside the supported numeric range. Check your inputs.');
-      output.innerHTML = '<strong>' + title + ': ' + (selected === 'views' ? formatNumber(Math.ceil(result)) : formatMoney(result)) + '</strong><p>' + detail + '</p>';
+      output.innerHTML = '<strong>' + title + ': ' + (selected === 'views' ? formatNumber(Math.ceil(result - Number.EPSILON * Math.max(1, Math.abs(result)))) : formatMoney(result)) + '</strong><p>' + detail + '</p>';
       output.style.display = 'block';
     } catch (error) {
       output.textContent = error.message;
