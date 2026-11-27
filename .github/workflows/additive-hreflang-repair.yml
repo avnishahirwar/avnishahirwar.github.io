@@ -1,15 +1,15 @@
-name: One-time additive hreflang reciprocal repair
+name: One-time safe hreflang cluster normalization
 
 on:
   push:
     branches:
-      - seo/additive-hreflang-reciprocals-2026-11-16
+      - fix/page-rpm-current-main-20261127
 
 permissions:
   contents: write
 
 jobs:
-  add-only-reciprocals:
+  normalize-hreflang:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,20 +18,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check repair script syntax
-        run: node --check scripts/add-hreflang-reciprocals.cjs
-      - name: Add only unambiguous reciprocal links
-        run: node scripts/add-hreflang-reciprocals.cjs --write
-      - name: Verify additive repair is complete and non-destructive
-        run: node --test tests/international-seo-diagnostic.test.cjs
-      - name: Commit additive page updates
+      - name: Check normalizer syntax and isolated safety tests
+        run: node --check scripts/normalize-hreflang-clusters.cjs && node --test tests/hreflang-cluster-normalizer.test.cjs
+      - name: Normalize reciprocal alternates from canonical indexable locale pages only
+        run: node scripts/normalize-hreflang-clusters.cjs --write
+      - name: Verify normalization is idempotent
+        run: node scripts/normalize-hreflang-clusters.cjs --check
+      - name: Verify complete reciprocal hreflang integrity
+        run: node --test tests/international-seo.test.cjs
+      - name: Verify priority Hindi calculator alternates
+        run: node --test --test-name-pattern="the ten priority Hindi calculators" tests/calculator-formulas.test.cjs
+      - name: Regenerate sitemap alternates from canonical locale pages
+        run: node scripts/generate-sitemaps.cjs && node scripts/generate-sitemaps.cjs --check
+      - name: Commit normalized HTML metadata and sitemap
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- '*.html'
+          git add -A -- '*.html' sitemap.xml
           if ! git diff --cached --quiet; then
-            git commit -m "seo: add missing hreflang reciprocals [skip ci]"
+            git commit -m "seo: normalize reciprocal hreflang clusters [skip ci]"
             git push
           else
-            echo "No safe additive reciprocal links were missing."
+            echo "All hreflang clusters are already normalized."
           fi

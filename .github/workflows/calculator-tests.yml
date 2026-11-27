@@ -18,7 +18,11 @@ jobs:
         with:
           node-version: 22
       - name: Build the complete published calculator catalogue
-        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs && node scripts/generate-sitemaps.cjs && node scripts/build-site-directory.cjs
+      - name: Normalize reciprocal hreflang clusters before calculator SEO tests
+        run: node scripts/normalize-hreflang-clusters.cjs --write && node scripts/normalize-hreflang-clusters.cjs --check && node scripts/generate-sitemaps.cjs && node scripts/generate-sitemaps.cjs --check
+      - name: Run Page RPM calculator regression tests
+        run: node --test tests/page-rpm-calculator.test.cjs
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run landed cost calculator regression tests
