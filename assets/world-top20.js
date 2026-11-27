@@ -18,7 +18,7 @@
   var bad = function (message) { return {error: message}; };
   var rows = function () { return {rows: Array.prototype.slice.call(arguments)}; };
   var finite = function () { return Array.prototype.every.call(arguments, Number.isFinite); };
-  var money = function (n) { return num(n, 2) + ' (your currency)'; };
+  var money = function (n) { return Number(n).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' (your currency)'; };
   var field = function (key, label, value, extra) { var f = {key:key,label:label,value:value}; Object.assign(f, extra || {}); return f; };
 
   var CALCS = [
