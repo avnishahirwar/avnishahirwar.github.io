@@ -69,7 +69,7 @@ test('percentage calculator hreflang cluster contains only indexable published l
 
 test('simple-interest English and Bengali hreflang alternates match indexable published translations',()=>{
  const route='simple-interest-calculator.html';
- const candidates=['en','bn','ar','es','fr','hi','id','pt','ta'];
+ const candidates=['en','bn','ar','es','fr','hi','id','pt','ta','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
