@@ -84,7 +84,7 @@ function hasRefreshRedirect(html){
  return /<meta\b(?=[^>]*http-equiv\s*=\s*["']refresh["'])[^>]*>/i.test(html);
 }
 function isSelfCanonical(file,canonical){
- const expected='https://friendlycalculator.in/'+file.replace(/\\/g,'/');
+ const expected='https://friendlycalculator.in/calculators/'+file.replace(/\\/g,'/');
  return canonical===expected;
 }
 function extractParagraphs(html){
