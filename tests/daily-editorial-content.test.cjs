@@ -46,6 +46,9 @@ test('both daily posts have complete metadata, one H1, editorial disclosure and 
     assert.equal(meta(html, 'og:url', 'property'), canonicalUrl, relative + ': Open Graph URL must match canonical');
     assert.equal(meta(html, 'og:description', 'property'), meta(html, 'description'), relative + ': Open Graph description must match');
     assert.equal(meta(html, 'twitter:description'), meta(html, 'description'), relative + ': Twitter description must match');
+    assert.equal(meta(html, 'og:image', 'property'), 'https://friendlycalculator.in/og-friendly-calculator.png', relative + ': Open Graph image must use the verified site image');
+    assert.equal(meta(html, 'twitter:image'), 'https://friendlycalculator.in/og-friendly-calculator.png', relative + ': Twitter image must use the verified site image');
+    assert.equal(meta(html, 'twitter:card'), 'summary_large_image', relative + ': large-image card is required');
     assert.equal(h1Count, 1, relative + ': exactly one H1 is required');
     assert.match(html, /AI-assisted article; not independently reviewed by a human editor/i, relative + ': editorial disclosure is required');
     assert.match(html, /Worked example/i, relative + ': a worked example is required');
