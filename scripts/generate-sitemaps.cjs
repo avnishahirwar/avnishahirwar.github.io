@@ -14,6 +14,7 @@ const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai', 'artifacts'
 ]);
 const EXCLUDED_FILES = new Set(['404.html', 'offline.html']);
+const HREFLANG_EXCLUDED_PATHS = new Set(['uk/index.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html']);
 const EXCLUDED_PATHS = new Set([
   'calculator/admin.html',
   'google09d3278d6d57b1a4.html',
@@ -127,12 +128,18 @@ function build() {
     const key = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts.slice(1).join('/') : entry.file;
     entry.locale = locale;
     entry.groupKey = key;
+    entry.hreflangExcluded = HREFLANG_EXCLUDED_PATHS.has(entry.file);
+    if (entry.hreflangExcluded) continue;
     if (!languageGroups.has(key)) languageGroups.set(key, new Map());
     const group = languageGroups.get(key);
     if (group.has(locale) && group.get(locale) !== entry.loc) languageConflicts.add(key);
     else group.set(locale, entry.loc);
   }
   for (const entry of entries) {
+    if (entry.hreflangExcluded) {
+      entry.alternates = null;
+      continue;
+    }
     const group = languageGroups.get(entry.groupKey);
     entry.alternates = group && group.size > 1 && !languageConflicts.has(entry.groupKey) ? group : null;
   }
