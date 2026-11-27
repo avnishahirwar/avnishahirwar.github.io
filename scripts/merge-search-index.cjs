@@ -66,6 +66,7 @@ for (const entry of index) {
 
 const missingPages = [];
 let added = 0;
+let skippedIneligibleAdditions = 0;
 for (const entry of additions) {
   if (!entry || typeof entry.name !== 'string' || !entry.name.trim() ||
       typeof entry.url !== 'string' || !entry.url.startsWith('/calculators/') ||
@@ -81,7 +82,7 @@ for (const entry of additions) {
     const absolute = path.resolve(ROOT, entry.url.slice(1));
     if (!absolute.startsWith(path.join(ROOT, 'calculators') + path.sep) ||
         !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) missingPages.push(entry.url);
-    else removedEntries++;
+    else skippedIneligibleAdditions++;
     continue;
   }
   filtered.push({
@@ -99,7 +100,7 @@ filtered.sort((a, b) => a.url.localeCompare(b.url));
 console.log(
   'calculator-search-index: ' + index.length + ' -> ' + filtered.length +
   ' entries (added ' + added + ', removed ineligible/duplicate ' + removedEntries +
-  ', already indexed additions ' + duplicateEntries + ', missing page ' + missingPages.length + ')'
+  ', already indexed additions ' + duplicateEntries + ', skipped ineligible additions ' + skippedIneligibleAdditions + ', missing page ' + missingPages.length + ')'
 );
 if (missingPages.length) {
   console.warn('Skipped ' + missingPages.length + ' addition(s) without a published HTML page: ' + missingPages.join(', '));
