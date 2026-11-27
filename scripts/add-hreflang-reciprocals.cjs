@@ -68,9 +68,27 @@ function targetFile(href) {
   } catch { return null; }
 }
 
+function defaultPageFor(file) {
+  const relative = path.relative(ROOT, file).split(path.sep).join('/');
+  const parts = relative.split('/');
+  if (parts.length > 1 && /^[a-z]{2,3}$/i.test(parts[0])) {
+    return path.join(ROOT, ...parts.slice(1));
+  }
+  return file;
+}
+function defaultAlternateTag(file, html) {
+  const defaultFile = defaultPageFor(file);
+  const defaultHtml = cacheHtml.get(defaultFile);
+  if (!defaultHtml || isNoindex(defaultHtml)) return null;
+  const canonical = canonicalOf(defaultHtml);
+  if (!canonical || !selfCanonicalCandidates(defaultFile).has(canonical)) return null;
+  return '<link rel="alternate" hreflang="x-default" href="' + canonical + '">';
+}
+
 function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
+  const cacheHtml = cache;
   const additions = new Map();
   const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
 
@@ -96,6 +114,24 @@ function main() {
       if (!headOf(targetHtml)) { stats.skippedNoHead++; continue; }
       if (!additions.has(target)) additions.set(target, new Set());
       additions.get(target).add('<link rel="alternate" hreflang="' + sourceLang + '" href="' + sourceCanonical + '">');
+    }
+  }
+
+  // Every indexable member of a valid language cluster should point x-default
+  // to the corresponding English canonical page. This is added only when the
+  // default page exists, is indexable and is self-canonical.
+  for (const [file, html] of cache) {
+    if (isNoindex(html)) continue;
+    const canonical = canonicalOf(html);
+    if (!canonical || !selfCanonicalCandidates(file).has(canonical)) continue;
+    const hasLanguageAlternate = linksOf(html).some(link => link.lang !== 'x-default');
+    const hasIncomingReciprocal = additions.has(file) && [...additions.get(file)].some(tag => !/hreflang="x-default"/i.test(tag));
+    if (!hasLanguageAlternate && !hasIncomingReciprocal) continue;
+    if (linksOf(html).some(link => link.lang === 'x-default')) continue;
+    const tag = defaultAlternateTag(file, html);
+    if (tag) {
+      if (!additions.has(file)) additions.set(file, new Set());
+      additions.get(file).add(tag);
     }
   }
 
