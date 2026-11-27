@@ -22,8 +22,8 @@ function localFile(url, baseFile = 'index.html') {
 }
 
 function isNoindexPage(html) {
-  return /<meta\\b[^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["'][^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b/i.test(html) ||
-    /<meta\\b[^>]*\\bcontent\\s*=\\s*["'][^"']*\\bnoindex\\b[^"']*["'][^>]*\\bname\\s*=\\s*["'](?:robots|googlebot)["']/i.test(html);
+  return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(html) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 function assertCatalogueEligibility(page, route, directory, about, index) {
   const inDirectory = directory.includes('href="' + route + '"');
