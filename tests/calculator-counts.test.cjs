@@ -16,14 +16,10 @@ function sitemapCalculatorUrls() {
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   const retainedQualityPages = searchIndex.map(item => item && item.url).filter(url => {
-    if (typeof url !== 'string' || !url.startsWith('/calculators/') || !url.endsWith('.html')) return false;
-    const file = path.join(root, url.slice(1));
-    if (!fs.existsSync(file)) return false;
-    const html = fs.readFileSync(file, 'utf8');
-    const canonical = html.match(/<link\\b[^>]*\\brel=["']canonical["'][^>]*>/i);
-    const href = canonical && canonical[0].match(/\\bhref=["']([^"']+)["']/i);
-    if (!href) return false;
-    try { return new URL(href[1], 'https://friendlycalculator.in').pathname === url; } catch { return false; }
+    if (typeof url !== 'string' || !url.startsWith('/calculators/') ||
+        !url.endsWith('.html') || url.includes('?') || url.includes('#') ||
+        url.split('/').includes('..')) return false;
+    return fs.existsSync(path.join(root, url.slice(1)));
   });
   return [...new Set([...sitemapUrls, ...retainedQualityPages])].sort();
 }
