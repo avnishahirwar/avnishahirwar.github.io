@@ -12,6 +12,7 @@ function boot(initial={},browserLocale='') {
  const elements={'fc-currency-select':select(),'fc-locale-select':select(),'fc-unit-system-select':select()};
  const context={
   Intl,Number,Date,Object,navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
+  location:{pathname:'/'},
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
   document:{documentElement:{dataset:{}},getElementById:id=>elements[id],querySelectorAll:()=>[]},
   window:{dispatchEvent:event=>events.push(event),addEventListener:(type,fn)=>{(listeners['window:'+type]??=[]).push(fn);}},

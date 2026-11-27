@@ -10,11 +10,19 @@ test('load translator module', async () => {
   assert.equal(typeof api.tokenizeHtml, 'function');
 });
 
-test('catalogue keeps all 50 configured locales available and does not queue them for translation', async () => {
+test('catalogue distinguishes available and planned locales and supports explicit draft selection', async () => {
   const catalogue = require('../config/language-catalogue.json').locales;
   assert.equal(catalogue.length, 50);
-  assert.ok(catalogue.every(x => x.status === 'available'));
-  assert.deepEqual(await api.loadPlannedLocales(), []);
+  assert.equal(catalogue.filter(x => x.status === 'available').length, 49);
+  assert.equal(catalogue.filter(x => x.status === 'planned').length, 1);
+  assert.equal(catalogue.find(x => x.code === 'uk').status, 'planned');
+  const locales = await api.loadLocales();
+  assert.equal(locales.length, 49);
+  assert.deepEqual((await api.loadPlannedLocales()).map(x => x.code), ['uk']);
+  assert.deepEqual(api.selectLocales(locales, []).map(x => x.code), ['uk']);
+  assert.deepEqual(api.selectLocales(locales, ['sw', 'ar']).map(x => x.code), ['sw', 'ar']);
+  assert.throws(() => api.selectLocales(locales, ['en']), /Unknown, default, or unsupported locale/);
+  assert.throws(() => api.selectLocales(locales, ['not-a-language']), /Unknown, default, or unsupported locale/);
   assert.ok(catalogue.some(x => x.direction === 'rtl'));
 });
 
