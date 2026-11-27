@@ -55,7 +55,7 @@ test('generated sitemap check includes hreflang clusters',()=>{
 
 test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
+ const candidates=['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
@@ -88,7 +88,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'ppf-calculator.html'
  ];
  const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
+ const expandedLocales=baseLocales;
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
   const expected=expectedPairs(indexableLocales(candidates,route),route);
@@ -102,3 +102,13 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   }
  }
 });
+test('indexable standalone German and Kannada basic-calculator pages are not falsely treated as hreflang cluster members',()=>{
+ for(const locale of ['de','kn','mr']){
+  const file=pageFor(locale,'basic-calculator.html');
+  assert.ok(fs.existsSync(file),locale+' standalone page must remain published');
+  const html=fs.readFileSync(file,'utf8');
+  assert.equal(noindexOf(html),false,locale+' standalone page should remain indexable');
+  assert.deepEqual(alternatesOf(html),[],locale+' standalone page must not claim an unsupported hreflang cluster');
+ }
+});
+
