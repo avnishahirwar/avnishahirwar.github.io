@@ -14,7 +14,7 @@
   const pageTitle = (titleNode.textContent || '').trim();
   const route = location.pathname.toLowerCase();
   // Skip restricted or safety-sensitive calculator topics.
-  const excludedTopic = /(?:firearm|weapon|ammunition|opioid|overdose|dosage|drug-dose|poison|toxic-substance|casino|gambling|sports-bet|wager|alcohol|nicotine|vape|self-harm)/i;
+  const excludedTopic = /(?:firearm|weapon|ammunition|rounds-per-minute|twist-rate|bullet|rifle|opioid|overdose|dosage|drug-dose|medication|paracetamol|acetaminophen|prescription|poison|toxic-substance|casino|gambling|sports-bet|wager|betting|alcohol|nicotine|vape|self-harm)/i;
   if (excludedTopic.test(route) || excludedTopic.test(pageTitle)) return;
 
   const headingText = node => (node.textContent || '').replace(/\s+/g, ' ').trim();
