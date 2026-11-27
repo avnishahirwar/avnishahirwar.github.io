@@ -50,5 +50,5 @@ test('Lite mode defers the third-party Google search runtime until requested', (
   assert.match(shell, /if\(window\.FCLiteMode\?\.isEnabled\(\)\)/);
   assert.match(shell, /Load Google Search \(uses extra data\)/);
   assert.match(shell, /loadSearchButton\.addEventListener\('click',loadGoogleCse\)/);
-  assert.match(shell, /fc:litechange',\(\)=>\{if\(!window\.FCLiteMode\.isEnabled\(\)\)loadGoogleCse\(\)\}/);
+  assert.match(shell, /fc:litechange',\(\)=>\{if\(!window\.FCLiteMode\.isEnabled\(\)\)loadGoogleCse\(\);\}/);
 });
