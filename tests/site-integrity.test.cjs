@@ -854,7 +854,7 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.deepEqual(searchUrls, expectedSearchIndexUrls);
-  assert.deepEqual(sitemapCalc, canonicalCalculatorUrls);
+  assert.deepEqual(sitemapCalc, sitemapCalculatorUrls);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(searchIndex.some(item => item.name === 'UK Student Loan Calculator' && item.url === '/international/uk-student-loan-calculator.html'));
   assert.ok(searchIndex.some(item => item.name === 'US Home Affordability Calculator' && item.url === '/international/us-home-affordability-calculator.html'));
