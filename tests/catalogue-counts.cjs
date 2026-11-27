@@ -2,7 +2,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 module.exports = function getCatalogueCounts(root) {
-  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  const sitemapFiles = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name))
+    .sort((a, b) => Number(a.match(/\\d+/)[0]) - Number(b.match(/\\d+/)[0]))];
+  const sitemap = sitemapFiles.map(name => fs.readFileSync(path.join(root, name), 'utf8')).join('\\n');
   const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
   const sitemapCalculatorUrls = [...new Set(sitemapUrls.map(url => new URL(url).pathname).filter(url => url.startsWith('/calculators/')))].sort();
   // Thin pages marked by scripts/adsense-quality-pass.cjs are published (searchable, listed) but kept out of the sitemap.
