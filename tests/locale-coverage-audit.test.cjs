@@ -57,7 +57,7 @@ test('audit report distinguishes route coverage from translation quality', () =>
 });
 
 
-test('canonical language catalogue defines 50 unique available locales and correct writing directions', () => {
+test('canonical language catalogue defines 50 unique locales with honest availability and correct writing directions', () => {
   const { DEFAULT_LOCALES } = require('../scripts/audit-locale-coverage.cjs');
   const locales = languageCatalogue.locales;
   const codes = locales.map(locale => locale.code);
@@ -65,8 +65,9 @@ test('canonical language catalogue defines 50 unique available locales and corre
   assert.equal(locales.length, 50);
   assert.equal(new Set(codes).size, 50);
   assert.equal(codes[0], 'en');
-  assert.equal(locales.filter(locale => locale.status === 'available').length, 50);
-  assert.equal(locales.filter(locale => locale.status === 'planned').length, 0);
+  assert.equal(locales.filter(locale => locale.status === 'available').length, 49);
+  assert.equal(locales.filter(locale => locale.status === 'planned').length, 1);
+  assert.equal(locales.find(locale => locale.code === 'uk').status, 'planned', 'Ukrainian must not be advertised as available while /uk/ is the English-GB market hub.');
   assert.equal(DEFAULT_LOCALES.length, 49);
   assert.deepEqual(DEFAULT_LOCALES, codes.filter(code => code !== 'en'));
   for (const locale of locales) {

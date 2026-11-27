@@ -18,7 +18,7 @@ test('global language selector supports all configured locales', () => {
   assert.ok(supported, 'Expected supported language set');
   const enabled = [...supported[1].matchAll(/([a-z]{2,3}):1/g)].map(match => match[1]);
   const catalogue = require('../config/language-catalogue.json');
-  assert.deepEqual(new Set(enabled), new Set(catalogue.locales.map(locale => locale.code)));
+  assert.deepEqual(new Set(enabled), new Set(catalogue.locales.filter(locale => locale.status === 'available').map(locale => locale.code)));
 });
 
 test('language switching preserves the current route when its translation exists', () => {
@@ -90,7 +90,7 @@ test('Japanese and Russian calculator routes receive localized shell behavior', 
   const catalogue = require('../config/language-catalogue.json');
   const match = shell.match(/const localeCodes=(\[[^;]+\]);/);
   assert.ok(match, 'Expected the shared-shell locale code list');
-  assert.deepEqual(JSON.parse(match[1]), catalogue.locales.filter(locale => locale.code !== 'en').map(locale => locale.code));
+  assert.deepEqual(JSON.parse(match[1]), catalogue.locales.filter(locale => locale.code !== 'en' && locale.status === 'available').map(locale => locale.code));
 });
 
 
@@ -144,6 +144,7 @@ test('language selector lists 50 high-reach languages and only enables configure
   for (const code of ['en','zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uk','uz','ps','so','he','my','ro','sd']) assert.ok(codes.includes(code), 'Missing language code: '+code);
   assert.match(shell, /Object\.hasOwn\(supportedUiLocales,code\)\?'':' disabled'/);
   assert.match(shell, / — Coming soon/);
+  assert.ok(shell.includes('<option value="uk" disabled>Українська — Coming soon</option>'));
   assert.equal((shell.match(/<option value="[a-z]{2,3}"/g)||[]).length >= 50, true, 'Fallback selector should expose the language catalogue');
 });
 
@@ -249,7 +250,7 @@ test('language selector is synchronized with the canonical 50-language catalogue
   assert.ok(shell.includes("option.disabled=locale.status!=='available'"));
   assert.ok(shell.includes('option.textContent=locale.nativeName'));
   const directory = fs.readFileSync(path.join(__dirname, '..', 'calculator', 'languages.html'), 'utf8');
-  assert.equal((directory.match(/class="status-live"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'available').length - 1);
+  assert.equal((directory.match(/class="status-live"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'available').length);
   assert.equal((directory.match(/class="status-configured"/g) || []).length, 1);
   assert.equal((directory.match(/class="status-soon"/g) || []).length, catalogue.locales.filter(locale => locale.status === 'planned').length);
   for (const locale of catalogue.locales) assert.ok(directory.includes(locale.nativeName), 'Language directory is missing ' + locale.code);
@@ -392,4 +393,22 @@ test('sitemap hreflang grouping recognizes every published locale prefix', () =>
   const actual = [...prefixes[1].matchAll(/'([a-z]{2,3})'/g)].map(match => match[1]);
   const catalogue = require('../config/language-catalogue.json');
   assert.deepEqual(actual, catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk'));
+});
+
+
+test('locale switching strips every translated locale prefix and keeps the UK market hub separate', () => {
+  const start = shell.indexOf('const localePathPrefixPattern=');
+  const end = shell.indexOf(';', start);
+  assert.ok(start >= 0 && end > start, 'Expected a shared locale path-prefix matcher.');
+  const body = shell.slice(start, end);
+  const codes = body.slice(body.indexOf('(?:') + 3, body.indexOf(')(?=')).split('|');
+  assert.equal(codes.length, 48, 'Every live locale except Ukrainian must have a routable language prefix.');
+  assert.ok(!codes.includes('uk'), 'The /uk/ prefix belongs to the English-GB market hub.');
+  assert.ok(shell.includes("const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');"));
+  assert.ok(shell.includes("if(p==='/uk/'||p.startsWith('/uk/'))return localeHome[next];"));
+  assert.ok(shell.includes("const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern,''));"));
+  const homeStart = shell.indexOf('const localeHome={');
+  const homeEnd = shell.indexOf('};', homeStart);
+  assert.ok(homeStart >= 0 && homeEnd > homeStart);
+  assert.doesNotMatch(shell.slice(homeStart, homeEnd), /uk:/, 'Ukrainian must not route to the English-GB /uk/ market hub.');
 });

@@ -19,12 +19,26 @@ const SKIP_TAGS = new Set(['script', 'style', 'noscript', 'template', 'code', 'p
 const TOKEN_RE = /\{\{[^{}]+\}\}|\$\{[^{}]+\}|\{[A-Za-z_][\w.-]*\}|\bhttps?:\/\/[^\s<>]+|\b[A-Z][A-Z0-9_]{1,}\b|\b\d+(?:[.,]\d+)*(?:%|\b)/g;
 const HTML_TOKEN_RE = /<!--[\s\S]*?-->|<![^>]*>|<\?[\s\S]*?\?>|<\/?[A-Za-z][^>]*>/g;
 
-export async function loadPlannedLocales(cataloguePath = CATALOGUE) {
+export async function loadLocales(cataloguePath = CATALOGUE) {
   const catalogue = JSON.parse(await fs.readFile(cataloguePath, 'utf8'));
   if (!Array.isArray(catalogue.locales) || catalogue.total !== catalogue.locales.length) {
     throw new Error('Language catalogue is malformed or its total does not match its locale list.');
   }
-  return catalogue.locales.filter(x => x.code !== catalogue.defaultLocale && x.status === 'planned');
+  return catalogue.locales.filter(x => x.code !== catalogue.defaultLocale && ['available', 'planned'].includes(x.status));
+}
+
+export async function loadPlannedLocales(cataloguePath = CATALOGUE) {
+  return (await loadLocales(cataloguePath)).filter(x => x.status === 'planned');
+}
+
+export function selectLocales(locales, requestedCodes = []) {
+  const candidates = locales.filter(locale => locale.code !== 'en' && ['available', 'planned'].includes(locale.status));
+  if (!requestedCodes.length) return candidates.filter(locale => locale.status === 'planned');
+  const uniqueCodes = [...new Set(requestedCodes)];
+  const selected = uniqueCodes.map(code => candidates.find(locale => locale.code === code)).filter(Boolean);
+  const invalid = uniqueCodes.filter(code => !selected.some(locale => locale.code === code));
+  if (invalid.length) throw new Error(`Unknown, default, or unsupported locale(s): ${invalid.join(', ')}. No files changed.`);
+  return selected;
 }
 
 export function protectedText(text) {
@@ -152,7 +166,7 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:\n  node scripts/translate-locales.mjs --source index.html [--locale ur,zh]\n\n` +
-    `By default, translates each source to all 33 locales marked planned, writing review-only drafts under translation-drafts/.\n` +
+    `By default, translates each source to locales marked planned. Use --locale to select any configured non-default locale. All output is review-only under translation-drafts/.\n` +
     `Options: --source FILE (repeatable), --locale CODE[,CODE], --output DIR, --batch-size N, --concurrency N, --dry-run, --help\n` +
     `Provider environment: TRANSLATION_API_BASE, TRANSLATION_API_KEY, TRANSLATION_MODEL.\n` +
     `Drafts are noindex and never change public locale pages or catalogue availability.`;
@@ -205,11 +219,9 @@ async function run(args) {
   if (!Number.isInteger(args.batchSize) || args.batchSize < 1 || args.batchSize > 100) throw new Error('--batch-size must be an integer from 1 to 100.');
   if (!Number.isInteger(args.concurrency) || args.concurrency < 1 || args.concurrency > 8) throw new Error('--concurrency must be an integer from 1 to 8.');
 
-  const locales = await loadPlannedLocales();
-  const selected = args.locales.length ? locales.filter(x => args.locales.includes(x.code)) : locales;
-  const invalid = args.locales.filter(code => !selected.some(x => x.code === code));
-  if (invalid.length) throw new Error(`These locales are not marked planned in the catalogue: ${invalid.join(', ')}. No files changed.`);
-  if (!selected.length) throw new Error('No planned locales selected.');
+  const locales = await loadLocales();
+  const selected = selectLocales(locales, args.locales);
+  if (!selected.length) throw new Error('No locales selected. Use --locale CODE[,CODE] to create review drafts for available locales, or add a locale marked planned to the catalogue.');
 
   const sources = args.sources.map(source => path.resolve(ROOT, source));
   for (const source of sources) {
@@ -223,7 +235,7 @@ async function run(args) {
       const texts = tokenizeHtml(html).filter(x => x.type === 'text' && htmlUnescape(x.value).trim());
       console.log(`${path.relative(ROOT, source)}: ${texts.length} translatable text nodes × ${selected.length} locales`);
     }
-    console.log(`Selected planned locales: ${selected.map(x => x.code).join(', ')}`);
+    console.log(`Selected review-draft locales: ${selected.map(x => x.code).join(', ')}`);
     console.log('Dry run only: no network requests or files written.');
     return;
   }
