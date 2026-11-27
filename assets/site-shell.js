@@ -481,6 +481,28 @@ else if(reservedHeader){reservedHeader.replaceWith(h);if(existingHeaderIsNavigat
 else if(existingHeaderIsNavigation){existingHeader.replaceWith(h);}
 else document.body.prepend(h);
 const activeHeader=h;
+
+// Site-restricted Google Programmable Search is part of the shared public header.
+// Keep it out of calculator embed mode and load the Google runtime only once.
+if(!embedMode){
+  const headerSearch=document.createElement('div');
+  headerSearch.className='fc-header-search';
+  headerSearch.setAttribute('role','search');
+  headerSearch.setAttribute('aria-label',currentLocale==='hi'?'Friendly Calculator वेबसाइट खोजें':'Search Friendly Calculator');
+  const searchElement=document.createElement('div');
+  searchElement.className='gcse-search';
+  searchElement.setAttribute('data-as_sitesearch','friendlycalculator.in');
+  headerSearch.appendChild(searchElement);
+  activeHeader.querySelector('.fc-global-nav')?.appendChild(headerSearch);
+
+  if(!document.querySelector('script[data-fc-google-cse]')&&!document.querySelector('script[src^="https://cse.google.com/cse.js?cx="]')){
+    const googleCseScript=document.createElement('script');
+    googleCseScript.async=true;
+    googleCseScript.src='https://cse.google.com/cse.js?cx=17b864c76cb8f48b3';
+    googleCseScript.setAttribute('data-fc-google-cse','true');
+    document.head.appendChild(googleCseScript);
+  }
+}
 const removeDuplicateLegacyHeaders=()=>{
   // Remove legacy navigation bars on every page, while retaining content hero headers.
   document.querySelectorAll('body header:not(.fc-global-header)').forEach(legacy=>{
