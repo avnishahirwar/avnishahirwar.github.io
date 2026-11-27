@@ -1049,8 +1049,8 @@ test('Hindi decimal-to-percent converter is localized, reciprocal and indexed', 
   const hindi = fs.readFileSync(hindiPath, 'utf8');
   const english = fs.readFileSync(englishPath, 'utf8');
   assert.match(hindi, /<html lang="hi">/);
-  assertIndexableLocaleHreflang(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html', ['en','hi']);
-  assert.ok(english.includes('hreflang="hi"'));
+  assertIndexableLocaleHreflang(hindi, 'https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html', ['en','hi']);
+  assertIndexableLocaleHreflang(english, 'https://friendlycalculator.in/calculators/decimal-to-percent-converter.html', ['en','hi']);
   for (const phrase of ['दशमलव से प्रतिशत कनवर्टर','प्रतिशत = दशमलव मान × 100','अक्सर पूछे जाने वाले सवाल','गणना करें']) assert.ok(hindi.includes(phrase), 'Hindi page is missing: ' + phrase);
   assertSitemapEligibility('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html', hindi);
 });
