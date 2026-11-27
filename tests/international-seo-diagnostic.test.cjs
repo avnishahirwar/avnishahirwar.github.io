@@ -34,7 +34,7 @@ test('opt-in hreflang cleanup removes only invalid targets and keeps valid alter
     const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs'), '--write', '--prune-invalid'], {
       cwd: temp, encoding: 'utf8'
     });
-    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\\{[^\\n]+\\})/)[1]);
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     const english = fs.readFileSync(path.join(temp, 'index.html'), 'utf8');
     const french = fs.readFileSync(path.join(temp, 'fr/index.html'), 'utf8');
     assert.equal(summary.invalidRemoved, 3);
