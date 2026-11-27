@@ -2410,6 +2410,8 @@ test('calculator page forms use consistent line-by-line input rows and preserve 
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.match(styles, /#live-page-calculator form[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\)/);
   assert.match(styles, /\.fields > \.field[\s\S]*border-bottom:\s*1px solid/);
+  assert.match(styles, /\.fields > \.field[\s\S]*grid-template-columns:\s*minmax\(0, \.85fr\) minmax\(0, 1\.15fr\)/);
+  assert.match(styles, /@media \(max-width: 620px\)[\s\S]*\.fields > \.field[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\)/);
   assert.match(styles, /\.fc-fields > \.fc-field/);
   assert.match(styles, /\.mc-fields > \.mc-field/);
   assert.match(styles, /\.mortgage-tool-fields > \.mortgage-tool-field/);
