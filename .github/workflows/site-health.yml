@@ -26,16 +26,16 @@ jobs:
         run: node --test tests/cloudflare-preview-redirect.test.cjs
       - name: Generate canonical XML sitemap from published HTML pages
         run: node scripts/generate-sitemaps.cjs
+      - name: Generate and validate the Physics directory from the full source catalogue
+        run: node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Reconcile the search index with canonical published calculator pages
         run: node scripts/merge-search-index.cjs
-      - name: Rebuild curated calculator directories for repository QA
-        run: node scripts/build-site-directory.cjs && node scripts/generate-physics-calculator-directory.cjs
+      - name: Rebuild the curated calculator directory for repository QA
+        run: node scripts/build-site-directory.cjs
       - name: Build the current published calculator catalogue
         run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Validate catalog-driven calculator counts
         run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check && node --test tests/calculator-counts.test.cjs
-      - name: Validate physics calculator directory
-        run: node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Generate curated programmatic SEO pages
         run: node scripts/generate-programmatic-seo.cjs
       - name: Validate programmatic SEO pages
