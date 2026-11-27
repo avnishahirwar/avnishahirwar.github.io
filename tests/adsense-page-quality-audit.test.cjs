@@ -65,3 +65,15 @@ test('index shortlist eligibility requires unique page metadata, one meaningful 
  const noindex= auditPage('quality-calculator.html',html.replace('</head>','<meta name="robots" content="noindex,follow"></head>'));
  assert.equal(noindex.features.baseEligible,false);
 });
+
+test('a single low word-count signal alone does not recommend noindex',()=>{
+ const html='<head><title>Short equation helper | Friendly Calculator</title><link rel="canonical" href="https://friendlycalculator.in/calculators/short-equation-helper.html"></head><main><h1>Short equation helper</h1><label>Value<input type="number"></label><p>Formula: result = value × 2.</p></main>';
+ const page=auditPage('short-equation-helper.html',html);
+ assert.equal(page.features.pageSpecificWords<120,true);
+ assert.equal(page.features.hardThin,false);
+});
+test('two distinct thin-content signals can enter the suggested noindex review queue',()=>{
+ const html='<head><title>Generic helper | Friendly Calculator</title><link rel="canonical" href="https://friendlycalculator.in/calculators/generic-helper.html"></head><main><h1>Generic helper</h1><p>This calculator performs the displayed calculation. This calculator performs the displayed calculation.</p></main>';
+ const page=auditPage('generic-helper.html',html);
+ assert.equal(page.features.hardThin,true);
+});
