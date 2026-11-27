@@ -720,6 +720,22 @@ test('GST calculator avoids obsolete general-rate presets and asks for a verifie
   assert.match(html, /22 September 2025/);
 });
 
+test('GST calculator includes a sourced India history and an interesting fact', () => {
+  const html = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
+  const start = html.indexOf('<section class="panel" id="gst-history">');
+  assert.ok(start >= 0, 'GST history section must be present as a standalone panel');
+  const end = html.indexOf('</section>', start);
+  assert.ok(end > start, 'GST history panel must be closed');
+  const section = html.slice(start, end);
+  assert.match(section, /Constitution \(One Hundred and First Amendment\) Act, 2016/);
+  assert.match(section, /GST Council was constituted in September 2016/);
+  assert.match(section, /GST was launched across India on 1 July 2017/);
+  assert.match(section, /Interesting fact:/);
+  assert.match(section, /https:\/\/www\.gstcouncil\.gov\.in\/about-us/);
+  assert.match(section, /https:\/\/www\.pib\.gov\.in\/FactsheetDetails\.aspx\?Id=148644&amp;lang=1&amp;reg=3/);
+  assert.doesNotMatch(html, /<section class="panel"><section class="panel" id="gst-history">/);
+});
+
 test('Income Tax calculator explanation matches the expanded Tax Year 2026–27 model and states its limits', () => {
   assert.match(source, /Age attained during the tax year/);
   assert.match(source, /surcharge marginal relief and 4% health and education cess/);
