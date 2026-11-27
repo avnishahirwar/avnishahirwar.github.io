@@ -36,6 +36,12 @@ function decodeEntities(value) {
 function esc(value) {
   return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
+function readSitemapOnlyUrlsForDirectory() {
+  const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
+  return [...new Set([...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+    .map(match => new URL(match[1]).pathname)
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))];
+}
 function readCanonicalCalculatorUrls() {
   const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
   const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
@@ -163,6 +169,12 @@ function build() {
     return '<section class="section calculator-category" id="' + esc(category.id) + '"><div class="section-head"><div><h2>' + esc(category.title) + '</h2><p>' + esc(cleanDescription) + ' <strong>' + count.toLocaleString('en-US') + (count === 1 ? ' tool' : ' tools') + '</strong></p></div></div><div class="grid">' + cards + '</div></section>';
   });
   const quickLinks = categories.map(category => '<a class="quick" href="#' + esc(category.id) + '"><strong>' + esc(category.title) + '</strong><span>' + category.urls.length.toLocaleString('en-US') + (category.urls.length === 1 ? ' calculator' : ' calculators') + '</span></a>').join('\n');
+  const sitemapUrlsForDirectory = new Set(readSitemapOnlyUrlsForDirectory());
+  const missingDirectoryLinks = routes.filter(url => !categoryEntries.some(section => section.includes('href="' + esc(url) + '"')));
+  if (missingDirectoryLinks.length) {
+    throw new Error('Directory generator omitted ' + missingDirectoryLinks.length + ' canonical/search-index routes: ' + missingDirectoryLinks.slice(0, 30).join(', '));
+  }
+  console.log('Directory source reconciliation: ' + routes.length + ' routes (' + routes.filter(url => !sitemapUrlsForDirectory.has(url)).length + ' retained search-index routes).');
   const total = allLinks.toLocaleString('en-US');
   const hubLinks = HUBS.map(([url, label]) => '<a href="' + esc(url) + '">' + esc(label) + '</a>').join(' · ');
   const intro = 'Browse calculator tools, business services and website information from one organized directory.';
