@@ -52,6 +52,7 @@ const fcLiteMode=(()=>{
   }catch(_){}
   return {apply,getPreference,setPreference,isEnabled:()=>document.documentElement.getAttribute('data-fc-lite-mode')==='on'};
 })();
+window.FCLiteMode=fcLiteMode;
 const fcLiteStyle=document.createElement('style');
 fcLiteStyle.id='fc-lite-mode-styles';
 fcLiteStyle.textContent=`
@@ -1652,18 +1653,18 @@ if(!document.querySelector('#fc-ai-lazy-launch')&&!document.querySelector('scrip
   [['auto',liteCopy.auto],['on',liteCopy.on],['off',liteCopy.off]].forEach(([value,label])=>{
     const option=document.createElement('option');option.value=value;option.textContent=label;liteModeSelect.appendChild(option);
   });
-  liteModeSelect.value=fcLiteMode.getPreference();
+  liteModeSelect.value=window.FCLiteMode.getPreference();
   const liteModeStatus=document.createElement('p');
   liteModeStatus.className='fc-lite-mode-status';
   liteModeStatus.setAttribute('role','status');
   liteModeStatus.setAttribute('aria-live','polite');
   const updateLiteStatus=()=>{
-    const preference=fcLiteMode.getPreference();
+    const preference=window.FCLiteMode.getPreference();
     liteModeSelect.value=preference;
-    liteModeStatus.textContent=preference==='on'?liteCopy.onStatus:preference==='off'?liteCopy.offStatus:(fcLiteMode.isEnabled()?liteCopy.autoLite:liteCopy.autoFull);
+    liteModeStatus.textContent=preference==='on'?liteCopy.onStatus:preference==='off'?liteCopy.offStatus:(window.FCLiteMode.isEnabled()?liteCopy.autoLite:liteCopy.autoFull);
   };
   liteModeSelect.addEventListener('change',()=>{
-    fcLiteMode.setPreference(liteModeSelect.value);
+    window.FCLiteMode.setPreference(liteModeSelect.value);
     updateLiteStatus();
   });
   window.addEventListener('fc:litechange',updateLiteStatus);
