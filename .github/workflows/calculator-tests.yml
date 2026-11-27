@@ -1,5 +1,7 @@
 name: Calculator formula tests
 # Run the additional Omni math expansion regression suite.
+permissions:
+  contents: write
 on:
   push:
     branches: [main]
@@ -17,6 +19,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Repair reciprocal hreflang metadata on this PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          node scripts/add-hreflang-reciprocals.cjs --write --prune-invalid
+          if ! git diff --quiet -- '*.html'; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -- '*.html'
+            git commit -m "SEO: repair reciprocal hreflang tags"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
+          node scripts/add-hreflang-reciprocals.cjs
       - name: Build the complete published calculator catalogue
         run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Run calculator search matcher regression tests
