@@ -716,11 +716,11 @@ else ensurePwaInstallUi();
   const anchor=[...main.querySelectorAll('h2')].find(h=>/related calculators|related tools|frequently asked questions/i.test(h.textContent||''));
   if(anchor&&anchor.closest('section'))anchor.closest('section').before(box);else main.append(box);
 })();
+const localePathPrefixPattern=/^\/(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)(?=\/)/;
 const buildLocaleTarget=next=>{
   // Preserve the current page path when an equivalent translation exists.
   // Special English/Hindi pages use their established route aliases.
   // Locale-specific route aliases are not assumed; test the equivalent URL below.
-  const localePathPrefixPattern=/^\/(?:zh|hi|es|ar|fr|bn|pt|id|ur|ru|de|ja|pcm|arz|mr|vi|te|sw|ha|tr|pa|fil|ta|yue|wuu|fa|ko|am|th|jv|it|gu|kn|yo|bho|nl|pl|ml|or|ne|si|uz|ps|so|he|my|ro|sd)(?=\/)/;
   const normalizedPath=currentLocale==='en'?p:p.replace(localePathPrefixPattern,'');
   if(next==='en')return normalizedPath==='/index.html'?'/':normalizedPath;
   if(p==='/uk/'||p.startsWith('/uk/'))return localeHome[next];
@@ -735,7 +735,7 @@ if(languageSelect){
     try{localStorage.setItem('fc-language-preference',next);localStorage.setItem('fc-language-source','manual')}catch(_){}
     if(next===currentLocale)return;
     const target=buildLocaleTarget(next);
-    const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern ,''));
+    const englishPath=p==='/uk/'||p.startsWith('/uk/')?'/':(currentLocale==='en'?p:p.replace(localePathPrefixPattern,'')));
     // Use GET for static hosts/CDNs that do not implement HEAD consistently.
     // Cancel the body as soon as headers arrive to avoid downloading the full page twice.
     const fallbackToEnglishPage=()=>{
