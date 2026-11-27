@@ -2389,3 +2389,18 @@ test('About and Methodology use the hostname-gated shared analytics bootstrap', 
     assert.doesNotMatch(html, /gtag\(['"]config['"],\s*['"]G-QVWQSEDRGL['"]\)/i, relative + ' must not contain a direct GA4 config');
   }
 });
+
+
+test('shared header loads a site-restricted Google Programmable Search outside embed mode', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(shell, /className='fc-header-search'/);
+  assert.match(shell, /className='gcse-search'/);
+  assert.match(shell, /data-as_sitesearch/);
+  assert.match(shell, /friendlycalculator\.in/);
+  assert.match(shell, /cse\.google\.com\/cse\.js\?cx=17b864c76cb8f48b3/);
+  assert.match(shell, /data-fc-google-cse/);
+  assert.match(shell, /if\(!embedMode\)/);
+  assert.match(styles, /\.fc-header-search/);
+  assert.match(styles, /gsc-search-button-v2/);
+});
