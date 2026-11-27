@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
+      - name: Preserve full Physics directory source before SEO index pruning
+        run: node scripts/build-physics-directory-index.cjs
+      - name: Preserve full Physics directory source before SEO index pruning
+        run: node scripts/build-physics-directory-index.cjs
       - name: Generate canonical sitemap before search-index reconciliation
         run: node scripts/generate-sitemaps.cjs
       - name: Reconcile search index to canonical published calculator pages
@@ -64,6 +68,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- \
             assets/calculator-search-index.json \
+            assets/physics-directory-index.json \
             index.html \
             calculator/about.html \
             calculator/api.html \
