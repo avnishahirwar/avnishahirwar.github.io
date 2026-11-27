@@ -5199,5 +5199,12 @@
     "category": "Agriculture & Rural Finance",
     "keywords": "livestock stocking rate calculator calculate animals per hectare and the grazing area available to each animal",
     "description": "Calculate animals per hectare and the grazing area available to each animal."
+  },
+  {
+    "name": "Page RPM Calculator",
+    "url": "/calculators/page-rpm-calculator.html",
+    "category": "Business, Sales & Operations",
+    "keywords": "page rpm calculator calculate page revenue per thousand page views estimate publisher revenue and required traffic",
+    "description": "Calculate Page RPM from estimated earnings and page views, estimate revenue from page views and an assumed RPM, or estimate traffic for a revenue target."
   }
 ]
