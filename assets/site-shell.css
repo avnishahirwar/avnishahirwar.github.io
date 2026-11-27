@@ -1635,3 +1635,266 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
     min-width: 0;
   }
 }
+
+
+/* 27 Nov 2026 — consistent line-by-line calculator input layout.
+   Scoped to the live calculator mount so editorial content and unrelated forms stay unchanged. */
+main #live-page-calculator {
+  padding: clamp(16px, 2.5vw, 26px);
+  border: 1px solid #d9e1e8;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(16, 28, 44, .055);
+}
+main #live-page-calculator > h2 {
+  margin: 0 0 14px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #e3e9ef;
+  color: #172638;
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+}
+main #live-page-calculator form {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+  margin: 0;
+}
+main #live-page-calculator form > label {
+  display: grid !important;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 12px 18px !important;
+  min-width: 0;
+  padding: 13px 2px;
+  border-bottom: 1px solid #e7ecf1;
+  color: #26394c;
+  font-size: .96rem;
+  line-height: 1.4;
+}
+main #live-page-calculator form > label input,
+main #live-page-calculator form > label select,
+main #live-page-calculator form > label textarea {
+  width: 100% !important;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px !important;
+  border: 1px solid #cbd5df !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #172638 !important;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+main #live-page-calculator form > label input:focus-visible,
+main #live-page-calculator form > label select:focus-visible,
+main #live-page-calculator form > label textarea:focus-visible {
+  outline: 3px solid #b58b43;
+  outline-offset: 2px;
+  border-color: #9b783d !important;
+}
+main #live-page-calculator form > button,
+main #live-page-calculator form > input[type="submit"] {
+  justify-self: stretch;
+  min-height: 48px;
+  margin-top: 16px;
+  border-radius: 9px;
+  font-weight: 750;
+}
+main #live-page-calculator [aria-live="polite"] {
+  margin-top: 18px !important;
+  padding: 16px !important;
+  border: 1px solid #d7e2e9;
+  border-radius: 11px;
+  background: #f4f8fa !important;
+  overflow-wrap: anywhere;
+}
+main #live-page-calculator .fc-result-table {
+  margin: 8px 0 16px;
+}
+main #live-page-calculator .fc-result-chart,
+main #live-page-calculator .fc-amortization,
+main #live-page-calculator .fc-calculation-solution {
+  margin-top: 16px;
+  padding: 15px;
+  border: 1px solid #e0e6ec;
+  border-radius: 10px;
+  background: #fff;
+}
+@media (max-width: 620px) {
+  main #live-page-calculator { padding: 15px; }
+  main #live-page-calculator form > label {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px !important;
+    padding: 12px 1px;
+  }
+  main #live-page-calculator form > label input,
+  main #live-page-calculator form > label select,
+  main #live-page-calculator form > label textarea { min-height: 48px; }
+  main #live-page-calculator [aria-live="polite"] { padding: 12px !important; }
+}
+
+
+/* Extend the same one-field-per-row system to the calculator templates
+   used by the main catalogue (legacy, FC, math-batch and mortgage tools). */
+main .fields,
+main .fc-fields,
+main .mc-fields,
+main .mortgage-tool-fields,
+main #extraForm {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+main .fields > .field,
+main .fc-fields > .fc-field,
+main .mc-fields > .mc-field,
+main .mortgage-tool-fields > .mortgage-tool-field,
+main #extraForm > .field {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: stretch;
+  gap: 7px !important;
+  min-width: 0;
+  padding: 13px 2px;
+  border-bottom: 1px solid #e7ecf1;
+  color: #26394c;
+  font-size: .96rem;
+  line-height: 1.4;
+}
+main .fields > .field input:not([type="range"]),
+main .fields > .field select,
+main .fc-fields > .fc-field input:not([type="range"]),
+main .fc-fields > .fc-field select,
+main .mc-fields > .mc-field input:not([type="range"]),
+main .mc-fields > .mc-field select,
+main .mc-fields > .mc-field textarea,
+main .mortgage-tool-fields > .mortgage-tool-field input:not([type="range"]),
+main .mortgage-tool-fields > .mortgage-tool-field select,
+main #extraForm > .field input:not([type="range"]) {
+  width: 100% !important;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px !important;
+  border: 1px solid #cbd5df !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #172638 !important;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+main .fields > .field input[type="range"],
+main .fc-fields > .fc-field input[type="range"],
+main .mc-fields > .mc-field input[type="range"],
+main .mortgage-tool-fields > .mortgage-tool-field input[type="range"] {
+  width: 100%;
+  min-height: 28px;
+  margin: 5px 0;
+  accent-color: #9b783d;
+}
+main .fields > .field small,
+main .fc-fields > .fc-field small,
+main .mc-fields > .mc-field small,
+main .mortgage-tool-fields > .mortgage-tool-field small,
+main #extraForm > .field small {
+  color: #64717d;
+  font-size: .86rem;
+}
+main form#gst-live-form {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+main form#gst-live-form > label {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 7px !important;
+  min-width: 0;
+  padding: 13px 2px;
+  border-bottom: 1px solid #e7ecf1;
+}
+main form#gst-live-form > label input,
+main form#gst-live-form > label select {
+  width: 100% !important;
+  min-height: 46px;
+  padding: 10px 12px !important;
+  border: 1px solid #cbd5df !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #172638 !important;
+  font: inherit;
+}
+@media (max-width: 620px) {
+  main .fields > .field,
+  main .fc-fields > .fc-field,
+  main .mc-fields > .mc-field,
+  main .mortgage-tool-fields > .mortgage-tool-field,
+  main #extraForm > .field,
+  main form#gst-live-form > label {
+    padding: 12px 1px;
+  }
+}
+
+
+/* Dark-theme overrides for the shared calculator row layout. */
+html[data-fc-theme="dark"] main #live-page-calculator > h2 {
+  color: #edf3f8 !important;
+  border-bottom-color: #34475d;
+}
+html[data-fc-theme="dark"] main #live-page-calculator form > label {
+  color: #edf3f8 !important;
+  border-bottom-color: #34475d;
+}
+html[data-fc-theme="dark"] main #live-page-calculator form > label input,
+html[data-fc-theme="dark"] main #live-page-calculator form > label select,
+html[data-fc-theme="dark"] main #live-page-calculator form > label textarea,
+html[data-fc-theme="dark"] main form#gst-live-form > label input,
+html[data-fc-theme="dark"] main form#gst-live-form > label select,
+html[data-fc-theme="dark"] main .fields > .field input:not([type="range"]),
+html[data-fc-theme="dark"] main .fields > .field select,
+html[data-fc-theme="dark"] main .fc-fields > .fc-field input:not([type="range"]),
+html[data-fc-theme="dark"] main .fc-fields > .fc-field select,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field input:not([type="range"]),
+html[data-fc-theme="dark"] main .mc-fields > .mc-field select,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field textarea,
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field input:not([type="range"]),
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field select,
+html[data-fc-theme="dark"] main #extraForm > .field input:not([type="range"]) {
+  background: #0e1b2b !important;
+  color: #edf3f8 !important;
+  border-color: #52657a !important;
+}
+html[data-fc-theme="dark"] main #live-page-calculator [aria-live="polite"] {
+  background: #0e1b2b !important;
+  color: #e6edf4 !important;
+  border-color: #34475d;
+}
+html[data-fc-theme="dark"] main #live-page-calculator .fc-result-chart,
+html[data-fc-theme="dark"] main #live-page-calculator .fc-amortization,
+html[data-fc-theme="dark"] main #live-page-calculator .fc-calculation-solution {
+  background: #142235 !important;
+  color: #e6edf4 !important;
+  border-color: #34475d;
+}
+html[data-fc-theme="dark"] main .fields > .field,
+html[data-fc-theme="dark"] main .fc-fields > .fc-field,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field,
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field,
+html[data-fc-theme="dark"] main #extraForm > .field,
+html[data-fc-theme="dark"] main form#gst-live-form > label {
+  color: #edf3f8 !important;
+  border-bottom-color: #34475d;
+}
+html[data-fc-theme="dark"] main .fields > .field label,
+html[data-fc-theme="dark"] main .fc-fields > .fc-field label,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field label,
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field label,
+html[data-fc-theme="dark"] main #extraForm > .field label {
+  color: #edf3f8 !important;
+}
+html[data-fc-theme="dark"] main .fields > .field small,
+html[data-fc-theme="dark"] main .fc-fields > .fc-field small,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field small,
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field small,
+html[data-fc-theme="dark"] main #extraForm > .field small {
+  color: #bdc9d5 !important;
+}
