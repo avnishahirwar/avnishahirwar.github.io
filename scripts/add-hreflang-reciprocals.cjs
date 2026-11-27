@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-// Add only missing reciprocal hreflang links. Never remove, rewrite or deduplicate
-// existing tags. Conflicting or invalid clusters are skipped for manual review.
+// Remove hreflang links that point to noindex pages, then add only missing valid reciprocals.
+// Other existing tags are preserved; conflicting clusters are skipped for manual review.
 const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = process.cwd();
@@ -72,7 +72,31 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, fallbackAdded: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, removedNoindexTargets: 0, fallbackAdded: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+
+  // A page must not advertise a noindex translation as an hreflang alternate.
+  // Remove only those invalid target links from indexable source pages; noindex pages
+  // themselves remain untouched, and all other existing alternate tags are preserved.
+  for (const [sourceFile, sourceHtml] of cache) {
+    if (isNoindex(sourceHtml)) continue;
+    const invalidTags = [...headOf(sourceHtml).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+      .filter(tag => /\brel=["']alternate["']/i.test(tag))
+      .filter(tag => {
+        const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
+        if (!href) return false;
+        const target = targetFile(href);
+        if (!target) return false;
+        const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
+        return isNoindex(targetHtml);
+      });
+    if (!invalidTags.length) continue;
+    let cleaned = sourceHtml;
+    for (const tag of invalidTags) cleaned = cleaned.replace(tag, '');
+    if (cleaned !== sourceHtml) {
+      cache.set(sourceFile, cleaned);
+      stats.removedNoindexTargets += invalidTags.length;
+    }
+  }
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
@@ -131,16 +155,20 @@ function main() {
     }
   }
 
-  for (const [file, tags] of additions) {
+  const changedFiles = new Set([...cache.keys()].filter(file => {
+    const original = fs.readFileSync(file, 'utf8');
+    return cache.get(file) !== original;
+  }).concat([...additions.keys()]));
+  for (const file of changedFiles) {
     const html = cache.get(file);
+    const tags = additions.get(file) || new Set();
     const insertion = [...tags].filter(tag => !html.includes(tag));
-    if (!insertion.length) continue;
-    const next = html.replace(/<\/head>/i, insertion.join('\n') + '\n</head>');
+    const next = insertion.length ? html.replace(/<\/head>/i, insertion.join('\n') + '\n</head>') : html;
     if (next === html) continue;
     stats.added += insertion.length;
     if (process.argv.includes('--write')) fs.writeFileSync(file, next);
   }
-  stats.targetPagesChanged = additions.size;
+  stats.targetPagesChanged = changedFiles.size;
   console.log('Additive hreflang reciprocal repair: ' + JSON.stringify(stats));
   if (!process.argv.includes('--write')) console.log('Dry run only. No files were changed.');
 }
