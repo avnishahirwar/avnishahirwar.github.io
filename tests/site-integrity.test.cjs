@@ -2404,3 +2404,17 @@ test('shared header loads a site-restricted Google Programmable Search outside e
   assert.match(styles, /\.fc-header-search/);
   assert.match(styles, /gsc-search-button-v2/);
 });
+
+
+test('calculator page forms use consistent line-by-line input rows and preserve result regions', () => {
+  const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
+  assert.match(styles, /#live-page-calculator form[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\)/);
+  assert.match(styles, /\.fields > \.field[\s\S]*border-bottom:\s*1px solid/);
+  assert.match(styles, /\.fc-fields > \.fc-field/);
+  assert.match(styles, /\.mc-fields > \.mc-field/);
+  assert.match(styles, /\.mortgage-tool-fields > \.mortgage-tool-field/);
+  assert.match(styles, /form#gst-live-form/);
+  assert.match(styles, /#live-page-calculator \.fc-result-chart/);
+  assert.match(styles, /data-fc-theme="dark"/);
+  assert.match(styles, /@media \(max-width: 620px\)/);
+});
