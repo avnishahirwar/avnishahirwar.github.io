@@ -37,7 +37,7 @@ test('changed international hreflang alternates are unique, same-domain, resolva
  try {
   const baseRef=process.env.GITHUB_BASE_REF;
   const range=baseRef?'origin/'+baseRef+'...HEAD':'HEAD^...HEAD';
-  changedFiles=new Set(execFileSync('git',['diff','--name-only',range,'--','*.html'],{cwd:root,encoding:'utf8'}).split(/\\r?\\n/).filter(Boolean));
+  changedFiles=new Set(execFileSync('git',['diff','--name-only',range,'--','*.html'],{cwd:root,encoding:'utf8'}).split(/\r?\n/).filter(Boolean));
  } catch { changedFiles=null; }
  const isRelevant=(source,target)=>changedFiles===null||changedFiles.has(path.relative(root,source).split(path.sep).join('/'))||(target&&changedFiles.has(path.relative(root,target).split(path.sep).join('/')));
  const record=(source,target,message)=>{if(isRelevant(source,target))errors.push(message);};
@@ -58,7 +58,7 @@ test('changed international hreflang alternates are unique, same-domain, resolva
    if(!targetFile){record(file,null,file+': '+link.lang+' target missing/off-domain: '+link.href);continue;}
    if(link.lang==='x-default')continue;
    const targetHtml=cache.get(targetFile)||fs.readFileSync(targetFile,'utf8');
-   if(noindexOf(targetHtml)){errors.push(file+': '+link.lang+' target is noindex: '+link.href);continue;}
+   if(noindexOf(targetHtml)){record(file,targetFile,file+': '+link.lang+' target is noindex: '+link.href);continue;}
    const targetLang=langOf(targetHtml,targetFile);
    if(targetLang!==link.lang)record(file,targetFile,file+': hreflang '+link.lang+' points to page declaring lang='+targetLang);
    const targetLinks=alternatesOf(targetHtml);
