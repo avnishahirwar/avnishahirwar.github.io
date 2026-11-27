@@ -131,4 +131,9 @@ test('required page views are rounded up to the next whole view', () => {
   ids.rpm.value = '30';
   ids['rpm-form'].dispatch('submit');
   assert.match(ids.output.innerHTML, /Required page views: 33,334|Required page views: 33334/);
+
+  ids.target.value = '2.10';
+  ids.rpm.value = '0.30';
+  ids['rpm-form'].dispatch('submit');
+  assert.match(ids.output.innerHTML, /Required page views: 7,000|Required page views: 7000/);
 });
