@@ -1,0 +1,27 @@
+name: Generated equation calculator tests
+on:
+  pull_request:
+    paths:
+      - 'assets/generated-equation-calculator.js'
+      - 'tests/generated-equation-calculator.test.cjs'
+      - '.github/workflows/generated-equation-calculator.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/generated-equation-calculator.js'
+      - 'tests/generated-equation-calculator.test.cjs'
+      - '.github/workflows/generated-equation-calculator.yml'
+permissions:
+  contents: read
+jobs:
+  generated-equation-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check shared calculator engine syntax
+        run: node --check assets/generated-equation-calculator.js
+      - name: Run generated equation calculator tests
+        run: node --test tests/generated-equation-calculator.test.cjs
