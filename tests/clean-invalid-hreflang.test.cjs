@@ -62,3 +62,29 @@ test('hreflang cleanup removes noindex, missing, mismatched and non-reciprocal a
   assert.equal(second.status, 0, second.stderr || second.stdout);
   assert.match(second.stdout, /"filesChanged":0/);
 });
+
+test('hreflang cleanup rejects non-reciprocal, wrong-language and noncanonical targets', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-clean-hreflang-invalid-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const source = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/source.html">' +
+    '<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/no-reciprocal.html">' +
+    '<link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/wrong-language.html">' +
+    '<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/wrong-canonical.html">' +
+    '</head><body>Source stays.</body></html>';
+  write(root, 'calculators/source.html', source);
+  write(root, 'fr/calculators/no-reciprocal.html',
+    '<html lang="fr"><head><link rel="canonical" href="https://friendlycalculator.in/fr/calculators/no-reciprocal.html"></head><body>French</body></html>');
+  write(root, 'de/calculators/wrong-language.html',
+    '<html lang="it"><head><link rel="canonical" href="https://friendlycalculator.in/de/calculators/wrong-language.html"></head><body>Italian</body></html>');
+  write(root, 'es/calculators/wrong-canonical.html',
+    '<html lang="es"><head><link rel="canonical" href="https://friendlycalculator.in/es/calculators/other.html"></head><body>Spanish</body></html>');
+
+  const run = spawnSync(process.execPath, [script, '--write'], { cwd: root, encoding: 'utf8' });
+  assert.equal(run.status, 0, run.stderr || run.stdout);
+  assert.match(run.stdout, /"removedNonReciprocalLinks":1/);
+  assert.match(run.stdout, /"removedLanguageMismatches":1/);
+  assert.match(run.stdout, /"removedCanonicalMismatches":1/);
+  const after = fs.readFileSync(path.join(root, 'calculators/source.html'), 'utf8');
+  assert.doesNotMatch(after, /rel="alternate"/);
+  assert.match(after, /Source stays\./);
+});
