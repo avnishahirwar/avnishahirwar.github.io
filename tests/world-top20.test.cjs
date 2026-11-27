@@ -40,7 +40,7 @@ test('monthly-payment tools reject terms shorter than one payment period', () =>
     assert.ok(result.error, id + ' must reject a rounded payment count below one');
   }
   const zeroRate = W.CALCS.find(c => c.id === 'mortgage').calc({ principal: 1200, rate: 0, years: 1 });
-  assert.equal(zeroRate.rows[0][1], '100 (your currency)');
+  assert.equal(zeroRate.rows[0][1], '100.00 (your currency)');
 });
 
 test('age calculator handles month ends and leap years without negative day components', () => {
