@@ -29,3 +29,39 @@ test('penalises repeated template paragraphs instead of treating them as origina
  assert.ok(page.features.repeatedParagraphRatio>0);
  assert.equal(page.features.qualityEligible,false);
 });
+
+test('detects noindex and refresh-only pages regardless of meta attribute order',()=>{
+ const {hasNoindex,hasRefreshRedirect}=require('../scripts/adsense-page-quality-audit.cjs');
+ assert.equal(hasNoindex('<meta name="robots" content="noindex,follow">'),true);
+ assert.equal(hasNoindex('<meta content="noindex" name="googlebot">'),true);
+ assert.equal(hasNoindex('<meta name="robots" content="index,follow">'),false);
+ assert.equal(hasRefreshRedirect('<meta http-equiv="refresh" content="0;url=/new.html">'),true);
+ assert.equal(hasRefreshRedirect('<meta name="description" content="A calculator">'),false);
+});
+
+test('requires a canonical URL to match the actual calculator route',()=>{
+ const {isSelfCanonical}=require('../scripts/adsense-page-quality-audit.cjs');
+ assert.equal(isSelfCanonical('emi-calculator.html','https://friendlycalculator.in/calculators/emi-calculator.html'),true);
+ assert.equal(isSelfCanonical('emi-calculator.html','https://friendlycalculator.in/calculators/loan-emi-calculator.html'),false);
+ assert.equal(isSelfCanonical('emi-calculator.html','https://example.com/calculators/emi-calculator.html'),false);
+});
+
+test('flags historical year-specific pages for manual review',()=>{
+ const {isHistoricalPrimaryYear}=require('../scripts/adsense-page-quality-audit.cjs');
+ assert.equal(isHistoricalPrimaryYear('income-tax-calculator-2020-21.html','Income Tax Calculator for 2020–21'),true);
+ assert.equal(isHistoricalPrimaryYear('income-tax-calculator.html','Income Tax Calculator for Tax Year 2026–27'),false);
+});
+
+test('index shortlist eligibility requires unique page metadata, one meaningful H1 and self canonical',()=>{
+ const body=Array.from({length:190},(_,i)=>'scenario'+i).join(' ');
+ const html='<head><title>Quality Calculator — Practical estimate</title><meta name="description" content="Calculate a specific result with a clear formula, worked example, assumptions and limitations for your chosen inputs."><link rel="canonical" href="https://friendlycalculator.in/calculators/quality-calculator.html"></head><main><h1>Quality Calculator</h1><h2>Formula and worked example</h2><p>Formula: total = amount × rate. Worked example: use a principal value and an annual rate.</p><h2>Assumptions and limitations</h2><p>'+body+'</p><label>Amount<input type="number"></label><button type="button">Calculate</button></main>';
+ const page=auditPage('quality-calculator.html',html);
+ assert.equal(page.features.baseEligible,true);
+ assert.equal(page.features.selfCanonical,true);
+ assert.equal(page.features.h1Count,1);
+ assert.equal(page.features.meaningfulH1,true);
+ const noCanonical= auditPage('quality-calculator.html',html.replace(/<link rel="canonical"[^>]*>/,''));
+ assert.equal(noCanonical.features.baseEligible,false);
+ const noindex= auditPage('quality-calculator.html',html.replace('</head>','<meta name="robots" content="noindex,follow"></head>'));
+ assert.equal(noindex.features.baseEligible,false);
+});
