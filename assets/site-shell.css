@@ -1839,3 +1839,72 @@ html[data-fc-theme="dark"] main form#gst-live-form small {
     padding: 12px 1px;
   }
 }
+
+/* Shared educational sections below individual calculator pages. */
+.fc-learning-sections {
+  margin: 26px 0 20px;
+  padding: clamp(16px, 2.4vw, 24px);
+  border: 1px solid var(--fc-shell-border, #d9e0e6);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--fc-shell-ink, #172638);
+}
+.fc-learning-sections > h2 {
+  margin: 0 0 6px;
+  font-size: clamp(1.25rem, 2.8vw, 1.7rem);
+  line-height: 1.25;
+}
+.fc-learning-intro {
+  margin: 0 0 16px;
+  color: var(--fc-shell-muted, #5f6b76);
+}
+.fc-learning-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.fc-learning-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #e0e5ea;
+  border-radius: 12px;
+  background: #f8fafb;
+  overflow-wrap: anywhere;
+}
+.fc-learning-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+.fc-learning-card p {
+  margin: 0;
+  color: #394b5c;
+}
+.fc-learning-pending {
+  border-style: dashed;
+  background: #fbfcfd;
+}
+.fc-learning-pending p {
+  color: #667584;
+  font-size: .94rem;
+}
+html[data-fc-theme="dark"] .fc-learning-sections {
+  border-color: #34475d;
+  background: #142235;
+  color: #e6edf4;
+}
+html[data-fc-theme="dark"] .fc-learning-intro,
+html[data-fc-theme="dark"] .fc-learning-card p {
+  color: #bdc9d5;
+}
+html[data-fc-theme="dark"] .fc-learning-card,
+html[data-fc-theme="dark"] .fc-learning-pending {
+  border-color: #34475d;
+  background: #0e1b2b;
+}
+@media (max-width: 620px) {
+  .fc-learning-sections { padding: 15px; }
+  .fc-learning-grid { grid-template-columns: minmax(0, 1fr); }
+  .fc-learning-card { padding: 14px; }
+}
+
