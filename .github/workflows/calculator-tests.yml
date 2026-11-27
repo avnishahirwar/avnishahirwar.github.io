@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Remove invalid hreflang metadata from non-indexable or invalid targets
+        run: node scripts/normalize-hreflang-indexability.cjs --write
+      - name: Restore only valid reciprocal hreflang alternates
+        run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Generate canonical sitemap before calculator catalogue reconciliation
         run: node scripts/generate-sitemaps.cjs
       - name: Preserve the full Physics directory source before SEO index pruning
