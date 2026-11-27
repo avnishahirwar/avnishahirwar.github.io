@@ -24,6 +24,15 @@ const fcLiteMode=(()=>{
     const preference=getPreference();
     const enabled=preference==='on'||(preference==='auto'&&shouldReduce());
     document.documentElement.setAttribute('data-fc-lite-mode',enabled?'on':'off');
+    document.querySelectorAll('[data-fc-lite-decorative="true"]').forEach(image=>{
+      if(enabled){
+        const source=image.getAttribute('src');
+        if(source){image.setAttribute('data-fc-lite-src',source);image.removeAttribute('src');}
+      }else{
+        const source=image.getAttribute('data-fc-lite-src');
+        if(source){image.setAttribute('src',source);image.removeAttribute('data-fc-lite-src');}
+      }
+    });
     try{window.dispatchEvent(new Event('fc:litechange'));}catch(_){}
     return enabled;
   };
