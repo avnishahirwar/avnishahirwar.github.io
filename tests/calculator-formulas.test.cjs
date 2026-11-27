@@ -729,10 +729,11 @@ test('GST calculator includes a sourced India history and an interesting fact', 
   const section = html.slice(start, end);
   assert.match(section, /Constitution \(One Hundred and First Amendment\) Act, 2016/);
   assert.match(section, /GST Council was constituted in September 2016/);
-  assert.match(section, /GST was launched across India on 1 July 2017/);
+  assert.match(section, /GST was launched from midnight on 1 July 2017 in all States except Jammu and Kashmir, which joined the GST regime on 8 July 2017/);
   assert.match(section, /Interesting fact:/);
   assert.match(section, /https:\/\/www\.gstcouncil\.gov\.in\/about-us/);
   assert.match(section, /https:\/\/www\.pib\.gov\.in\/FactsheetDetails\.aspx\?Id=148644&amp;lang=1&amp;reg=3/);
+  assert.match(section, /https:\/\/www\.pib\.gov\.in\/PressReleasePage\.aspx\?PRID=1494898&amp;lang=2&amp;reg=3/);
   assert.doesNotMatch(html, /<section class="panel"><section class="panel" id="gst-history">/);
 });
 
