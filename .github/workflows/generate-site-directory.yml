@@ -5,9 +5,6 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
-      - 'scripts/generate-sitemaps.cjs'
-      - 'scripts/generate-human-sitemap.cjs'
-      - 'scripts/merge-search-index.cjs'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
       - 'config/site-directory-category-assignments.json'
@@ -53,10 +50,8 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/build-site-directory.cjs
-      - run: node scripts/generate-sitemaps.cjs --check
       - run: node scripts/build-site-directory.cjs --check
       - run: node scripts/sync-calculator-counts.cjs --check
-      - run: node scripts/generate-human-sitemap.cjs --check
 
   generate:
     runs-on: ubuntu-latest
@@ -69,16 +64,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Regenerate XML sitemaps after indexing and robots changes
-        run: node scripts/generate-sitemaps.cjs
-      - name: Rebuild the curated calculator directory from the refreshed canonical sitemap
+      - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
       - name: Regenerate the physics subject directory from the curated catalogue
         run: node scripts/generate-physics-calculator-directory.cjs
       - name: Synchronize homepage and catalogue counters
         run: node scripts/sync-calculator-counts.cjs
-      - name: Rebuild the human-readable sitemap from the searchable index
-        run: node scripts/generate-human-sitemap.cjs
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
