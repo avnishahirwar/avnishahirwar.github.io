@@ -8,6 +8,8 @@ const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const urls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)].map(m => m[1]);
+const sitemapCalculatorUrls = [...new Set(urls.map(url => new URL(url).pathname)
+  .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, coreCalculatorUrls, expectedCoreCalculatorCount, biologyChemistryCount, homepageCoreCalculatorCount } = catalogueCounts;
 
