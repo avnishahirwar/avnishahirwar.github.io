@@ -86,5 +86,5 @@ test('search index contains only unique, existing, canonical indexable routes',(
    const href=(canonicalTag.match(/\bhref=["']([^"']+)["']/i)||[])[1];
    assert.equal(new URL(href,'https://friendlycalculator.in').pathname,url,url+' must be self-canonical to appear in search');
   }
- });
+ }
 });
