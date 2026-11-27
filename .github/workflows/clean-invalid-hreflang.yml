@@ -31,16 +31,32 @@ jobs:
         run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Remove invalid hreflang links and all alternates from noindex pages
         run: node scripts/clean-invalid-hreflang.cjs --write
-      - name: Verify hreflang validity and noindex protection
-        run: node --test tests/add-hreflang-reciprocals.test.cjs tests/clean-invalid-hreflang.test.cjs tests/international-seo-diagnostic.test.cjs tests/international-seo.test.cjs
-      - name: Commit only cleaned HTML pages
+      - name: Filter the internal search catalogue to eligible canonical calculators
+        run: node scripts/merge-search-index.cjs
+      - name: Regenerate the canonical sitemap
+        run: node scripts/generate-sitemaps.cjs
+      - name: Rebuild the curated calculator directory
+        run: node scripts/build-site-directory.cjs
+      - name: Synchronize homepage and public catalogue counts
+        run: node scripts/sync-calculator-counts.cjs
+      - name: Regenerate the human-readable sitemap
+        run: node scripts/generate-human-sitemap.cjs
+      - name: Verify catalogue counts and hreflang validity
+        run: |
+          node scripts/merge-search-index.cjs --check
+          node scripts/sync-calculator-counts.cjs --check
+          node scripts/generate-human-sitemap.cjs --check
+          node --test tests/add-hreflang-reciprocals.test.cjs tests/clean-invalid-hreflang.test.cjs tests/international-seo-diagnostic.test.cjs tests/international-seo.test.cjs tests/calculator-counts.test.cjs
+      - name: Verify calculator pages, formulas and metadata
+        run: node --test tests/site-integrity.test.cjs
+      - name: Commit repaired hreflang and synchronized catalogue files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- '*.html'
+          git add -A -- '*.html' assets/calculator-search-index.json sitemap.xml sitemap.html
           if ! git diff --cached --quiet; then
-            git commit -m "seo: remove invalid hreflang metadata safely [skip ci]"
+            git commit -m "seo: clean hreflang and synchronize eligible calculator catalogue"
             git push origin HEAD:${{ github.ref_name }}
           else
-            echo "No invalid hreflang page tags remain."
+            echo "Hreflang and catalogue files are already synchronized."
           fi
