@@ -38,8 +38,14 @@ function extractDescription(html){
  return ((tag.match(/\bcontent=["']([^"']*)["']/i)||[])[1]||'').trim();
 }
 function countMatches(text,re){const globalRe=new RegExp(re.source,re.flags.includes('g')?re.flags:re.flags+'g');return [...text.matchAll(globalRe)].length;}
-function auditPage(file,html){
+function extractParagraphs(html){return [...html.matchAll(/<p\\b[^>]*>([\\s\\S]*?)<\\/p>/gi)].map(m=>stripMarkup(m[1]).toLowerCase().replace(/\\s+/g,' ').trim()).filter(p=>p.split(/\\s+/).length>=10);}
+function auditPage(file,html,repeatedParagraphs=new Set()){
  const text=mainText(html), words=text?text.split(/\s+/).length:0;
+ const paragraphs=[...new Set(extractParagraphs(html))];
+ const repeated=paragraphs.filter(p=>repeatedParagraphs.has(p));
+ const repeatedParagraphWords=repeated.reduce((n,p)=>n+p.split(/\s+/).length,0);
+ const pageSpecificWords=Math.max(0,words-repeatedParagraphWords);
+ const repeatedParagraphRatio=words?repeatedParagraphWords/words:0;
  const tokens=text.toLowerCase().match(/[a-z0-9₹$%]+/g)||[];
  const uniqueRatio=tokens.length?new Set(tokens).size/tokens.length:0;
  const labels=[...html.matchAll(/<label\b[^>]*>([\s\S]*?)<\/label>/gi)].map(m=>stripMarkup(m[1])).filter(Boolean);
@@ -52,19 +58,24 @@ function auditPage(file,html){
  const generic=BOILERPLATE.reduce((n,re)=>n+countMatches(text,re),0);
  const placeholderLabels=labels.filter(x=>/^(input\s*[a-z0-9]+|value\s*[a-z0-9]*|variable\s*[a-z0-9]*|enter value)$/i.test(x)).length;
  const rawIdentifiers=labels.filter(x=>/(?:[a-z]+[A-Z][a-zA-Z0-9]*|difference_negative|difference_positive|latestdueDate|earliestmatingDate)/.test(x)).length;
- const hasCalculator=/<input\b|<select\b|<button\b/i.test(html);
+ const hasCalculator=/<input\b|<select\b|<button\b|FC_EQUATION_CONFIG|generated-equation-calculator/i.test(html);
  const hasCanonical=/<link\b(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["'][^"']+["'])[^>]*>/i.test(html);
  const hasDescription=description.length>=45;
  const meaningfulLabels=labels.length>0&&placeholderLabels===0&&rawIdentifiers===0;
  const core=CORE_SLUGS.includes(slug);
- const features={words,uniqueRatio,formula,workedExample,faq,assumptions,source,meaningfulLabels,hasCalculator,hasCanonical,hasDescription,core,placeholderLabels,rawIdentifiers,generic};
- let score=Math.min(words,700)/700*18+uniqueRatio*12+(formula?12:0)+(workedExample?12:0)+(faq?8:0)+(assumptions?8:0)+(source?8:0)+(meaningfulLabels?8:0)+(hasCalculator?5:0)+(hasCanonical?3:0)+(hasDescription?3:0)+(core?12:0)-Math.min(generic,5)*5-placeholderLabels*8-rawIdentifiers*8;
+ const qualityEligible=pageSpecificWords>=180&&repeatedParagraphRatio<=0.35&&placeholderLabels===0&&rawIdentifiers===0&&generic===0&&hasCalculator;
+ const features={words,pageSpecificWords,repeatedParagraphWords,repeatedParagraphRatio,uniqueRatio,formula,workedExample,faq,assumptions,source,meaningfulLabels,hasCalculator,hasCanonical,hasDescription,core,placeholderLabels,rawIdentifiers,generic,qualityEligible};
+ let score=Math.min(pageSpecificWords,700)/700*20+uniqueRatio*10+(formula?12:0)+(workedExample?12:0)+(faq?6:0)+(assumptions?6:0)+(source?8:0)+(meaningfulLabels?8:0)+(hasCalculator?5:0)+(hasCanonical?3:0)+(hasDescription?3:0)+(core?10:0)-Math.min(generic,5)*5-placeholderLabels*8-rawIdentifiers*8-repeatedParagraphRatio*30;
  return {file,slug,title,description,score:Math.max(0,Math.min(100,Math.round(score))),features};
 }
 function audit(root=ROOT){
  const files=walk(path.join(root,'calculators')).filter(f=>!f.includes('/'));
- const pages=files.map(file=>auditPage(file,fs.readFileSync(path.join(root,'calculators',file),'utf8')));
- const byScore=[...pages].sort((a,b)=>b.score-a.score||a.slug.localeCompare(b.slug));
+ const sourcePages=files.map(file=>({file,html:fs.readFileSync(path.join(root,'calculators',file),'utf8')}));
+ const paragraphFrequency=new Map();
+ for(const p of sourcePages)for(const paragraph of new Set(extractParagraphs(p.html)))paragraphFrequency.set(paragraph,(paragraphFrequency.get(paragraph)||0)+1);
+ const repeatedParagraphs=new Set([...paragraphFrequency].filter(([,count])=>count>=25).map(([paragraph])=>paragraph));
+ const pages=sourcePages.map(p=>auditPage(p.file,p.html,repeatedParagraphs));
+ const byScore=pages.filter(p=>p.features.qualityEligible).sort((a,b)=>b.score-a.score||a.slug.localeCompare(b.slug));
  const candidates=byScore.slice(0,TARGET), candidateSet=new Set(candidates.map(p=>p.file));
  const summary={
   generatedAt:new Date().toISOString(),
@@ -74,6 +85,7 @@ function audit(root=ROOT){
   scoreMethod:'Heuristic prioritisation for manual review; not a Google quality score and not an automatic index/noindex decision.',
   signalCounts:Object.fromEntries(['formula','workedExample','faq','assumptions','source','meaningfulLabels','hasCalculator','hasCanonical','hasDescription','core'].map(k=>[k,pages.filter(p=>p.features[k]).length])),
   highRiskSignals:{
+   repeatedParagraphTemplates:repeatedParagraphs.size,
    placeholderLabelPages:pages.filter(p=>p.features.placeholderLabels>0).length,
    rawVariableLabelPages:pages.filter(p=>p.features.rawIdentifiers>0).length,
    genericTemplatePhrasePages:pages.filter(p=>p.features.generic>0).length
@@ -96,6 +108,8 @@ function audit(root=ROOT){
  '- Root calculator pages: '+summary.totalRootCalculatorPages,
  '- Candidate shortlist: '+summary.candidatesSelected,
  '- Remaining review queue: '+summary.remainingForNoindexReview,
+ '- Pages meeting the content-specific eligibility gate: '+summary.candidatesSelected,
+ '- Repeated paragraph templates detected across 25+ pages: '+summary.highRiskSignals.repeatedParagraphTemplates,
  '- Placeholder input labels: '+summary.highRiskSignals.placeholderLabelPages,
  '- Raw variable labels: '+summary.highRiskSignals.rawVariableLabelPages,
  '- Generic template phrase signals: '+summary.highRiskSignals.genericTemplatePhrasePages,'',
@@ -110,4 +124,4 @@ function audit(root=ROOT){
  return summary;
 }
 if(require.main===module){const r=audit();console.log(JSON.stringify({total:r.totalRootCalculatorPages,candidates:r.candidatesSelected,reviewQueue:r.remainingForNoindexReview,risks:r.highRiskSignals,report:'artifacts/adsense-page-quality-audit.md'}));}
-module.exports={audit,auditPage,mainText,stripMarkup};
+module.exports={audit,auditPage,extractParagraphs,mainText,stripMarkup};
