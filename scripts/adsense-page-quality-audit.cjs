@@ -48,8 +48,15 @@ function tagText(html,tag){
   .map(m=>stripMarkup(m[1])).filter(Boolean);
 }
 function attrValue(tag,name){
- const m=tag.match(new RegExp("\\b"+name+"\\s*=\\s*(['"])(.*?)\\1","i"));
- return m?m[2]:'';
+ const match=new RegExp("\\b"+name+"\\s*=\\s*","i").exec(tag);
+ if(!match)return '';
+ const rest=tag.slice(match.index+match[0].length);
+ const quote=rest[0];
+ if(quote==='"'||quote==="'"){
+  const end=rest.indexOf(quote,1);
+  return end<0?'':rest.slice(1,end);
+ }
+ return (rest.match(/^[^\s>]+/)||[''])[0];
 }
 function extractTitle(html){
  const tag=(html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)||[])[1]||'';
