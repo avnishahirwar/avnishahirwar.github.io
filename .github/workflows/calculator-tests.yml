@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test sourced calculator history and facts content
+        run: node --test tests/calculator-education-content.test.cjs
+      - name: Audit root English calculator education coverage
+        run: node scripts/audit-calculator-education.cjs
       - name: Build the complete published calculator catalogue
         run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Run calculator search matcher regression tests
