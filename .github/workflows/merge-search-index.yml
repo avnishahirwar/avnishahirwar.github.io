@@ -30,12 +30,11 @@ jobs:
       - name: Reconcile search index to canonical published calculator pages
         run: node scripts/merge-search-index.cjs
       - run: node scripts/merge-search-index.cjs --check
-      - name: Rebuild the curated calculator discovery directory from the normalized index
-        run: node scripts/build-site-directory.cjs
       - name: Build and validate the merged catalogue and count surfaces
         run: |
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
+          node scripts/build-site-directory.cjs
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
           node scripts/generate-sitemaps.cjs --check
