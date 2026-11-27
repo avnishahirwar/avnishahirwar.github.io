@@ -61,6 +61,7 @@ html[data-fc-lite-mode="on"] *{animation:none!important;transition:none!importan
 html[data-fc-lite-mode="on"] .fc-brand-visual{display:none!important}
 html[data-fc-lite-mode="on"] .fc-global-header,html[data-fc-lite-mode="on"] .fc-global-footer,html[data-fc-lite-mode="on"] .fc-display-panel{filter:none!important}
 .fc-lite-mode-control{display:grid;gap:6px;margin:8px 0 12px}
+.fc-lite-search-load{min-height:42px;padding:9px 13px;border:1px solid #52657a;border-radius:7px;background:#20344b;color:#fff;font:700 .9rem/1.3 system-ui,sans-serif;cursor:pointer}
 .fc-lite-mode-control span{font-weight:700}
 .fc-lite-mode-control select{width:100%;min-height:42px;padding:8px 10px;border:1px solid #aebbc7;border-radius:7px;background:#fff;color:#172638;font:inherit}
 .fc-lite-mode-status{margin:4px 0 12px;color:#64717d;font-size:.84rem;line-height:1.45}
@@ -562,14 +563,26 @@ if(!embedMode){
   searchElement.setAttribute('data-as_sitesearch','friendlycalculator.in');
   headerSearch.appendChild(searchElement);
   activeHeader.querySelector('.fc-global-nav')?.appendChild(headerSearch);
-
-  if(!document.querySelector('script[data-fc-google-cse]')&&!document.querySelector('script[src^="https://cse.google.com/cse.js?cx="]')){
-    const googleCseScript=document.createElement('script');
-    googleCseScript.async=true;
-    googleCseScript.src='https://cse.google.com/cse.js?cx=17b864c76cb8f48b3';
-    googleCseScript.setAttribute('data-fc-google-cse','true');
-    document.head.appendChild(googleCseScript);
-  }
+  let loadSearchButton=null;
+  const loadGoogleCse=()=>{
+    if(!document.querySelector('script[data-fc-google-cse]')&&!document.querySelector('script[src^="https://cse.google.com/cse.js?cx="]')){
+      const googleCseScript=document.createElement('script');
+      googleCseScript.async=true;
+      googleCseScript.src='https://cse.google.com/cse.js?cx=17b864c76cb8f48b3';
+      googleCseScript.setAttribute('data-fc-google-cse','true');
+      document.head.appendChild(googleCseScript);
+    }
+    loadSearchButton?.remove();
+  };
+  if(window.FCLiteMode?.isEnabled()){
+    loadSearchButton=document.createElement('button');
+    loadSearchButton.type='button';
+    loadSearchButton.className='fc-lite-search-load';
+    loadSearchButton.textContent=currentLocale==='hi'?'Google खोज लोड करें (अतिरिक्त डेटा)':'Load Google Search (uses extra data)';
+    loadSearchButton.addEventListener('click',loadGoogleCse);
+    headerSearch.appendChild(loadSearchButton);
+    window.addEventListener('fc:litechange',()=>{if(!window.FCLiteMode.isEnabled())loadGoogleCse();});
+  }else loadGoogleCse();
 }
 const removeDuplicateLegacyHeaders=()=>{
   // Remove legacy navigation bars on every page, while retaining content hero headers.
