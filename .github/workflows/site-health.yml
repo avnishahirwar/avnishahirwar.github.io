@@ -24,6 +24,10 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
+      - name: Normalize hreflang to indexable canonical pages
+        run: node scripts/normalize-hreflang-indexability.cjs --write
+      - name: Restore valid reciprocal hreflang alternates
+        run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Generate canonical XML sitemap from published HTML pages
         run: node scripts/generate-sitemaps.cjs
       - name: Generate and validate the Physics directory from the full source catalogue
