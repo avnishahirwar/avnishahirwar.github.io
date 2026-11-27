@@ -28,6 +28,8 @@ module.exports = function getCatalogueCounts(root) {
     .map(name => '/calculators/' + name)
     .filter(selfCanonical)
     .sort();
+  const qualityPassUrls = canonicalCalculatorUrls.filter(url =>
+    fs.readFileSync(path.join(root, url.slice(1)), 'utf8').includes('data-quality-pass="thin"'));
   const searchableInternationalPaths = [
     '/international/vat-calculator.html',
     '/international/uk-student-loan-calculator.html',
