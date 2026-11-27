@@ -8,6 +8,7 @@ const ORIGIN = 'https://friendlycalculator.in';
 const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd','uk']);
 const FALLBACK_LANGUAGE_PREFIXES = new Set(['hi','de','es','fr','pt','ar','id','bn','ta','ja','ru']);
 const IGNORED_DIRS = new Set(['.git','.github','node_modules','vendor','_site','tests','admin','avnish-ai']);
+// Explicit exceptions: /uk/ is an en-GB market hub, while gu/kn basic calculators stay indexable but are intentionally not translation alternates.
 const HREFLANG_EXCLUDED_ROUTES = new Set(['uk/index.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html']);
 
 function walk(dir, root, files = []) {
