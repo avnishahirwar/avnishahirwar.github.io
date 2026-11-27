@@ -43,3 +43,18 @@ test('longer partial words still match their intended calculator names', () => {
   };
   assert.notEqual(getCalculatorMatch(item, ['percent'], 'percent', 'Mathematics'), null);
 });
+
+
+test('homepage defers the search matcher and initializes search after deferred scripts', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const matcherPosition = html.indexOf('<script src="/assets/calculator-search-matcher.js"');
+  assert.notEqual(matcherPosition, -1, 'homepage includes the shared calculator search matcher');
+  const matcherTagEnd = html.indexOf('>', matcherPosition);
+  const matcherTag = html.slice(matcherPosition, matcherTagEnd + 1);
+  assert.ok(matcherTag.includes(' defer'), 'search matcher must not block HTML parsing');
+  const bootstrap = html.indexOf("document.addEventListener('DOMContentLoaded',()=>{", matcherTagEnd);
+  assert.ok(bootstrap > matcherTagEnd, 'homepage search bootstrap waits until deferred scripts have executed');
+  assert.equal(html.split('calculator-search-matcher.js').length - 1, 1, 'homepage loads the matcher once');
+});
