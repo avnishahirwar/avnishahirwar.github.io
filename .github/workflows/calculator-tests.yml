@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test read-only AdSense readiness audit
+        run: node --test tests/adsense-readiness-audit.test.cjs
+      - name: Generate AdSense readiness inventory
+        run: node scripts/adsense-readiness-audit.cjs > /tmp/adsense-readiness-report.json
       - name: Build the complete published calculator catalogue
         run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Run calculator search matcher regression tests

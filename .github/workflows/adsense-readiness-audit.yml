@@ -1,0 +1,31 @@
+name: AdSense readiness inventory
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readiness-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test read-only audit helpers
+        run: node --test tests/adsense-readiness-audit.test.cjs
+      - name: Generate repository readiness inventory
+        run: node scripts/adsense-readiness-audit.cjs > adsense-readiness-report.json
+      - name: Upload readiness report
+        uses: actions/upload-artifact@v4
+        with:
+          name: adsense-readiness-report
+          path: adsense-readiness-report.json
+          if-no-files-found: error
