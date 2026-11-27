@@ -3,14 +3,14 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/factorial-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/factorial-calculator.html">
+
+
+
+
+
+
+
+
+
+
 </head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/bn/index.html">হোম</a> / <a href="/calculator/site-directory.html">সব ক্যালকুলেটর</a> / ফ্যাক্টোরিয়াল ক্যালকুলেটর</nav><header class="hero"><h1>ফ্যাক্টোরিয়াল ক্যালকুলেটর</h1><p>n ফ্যাক্টোরিয়াল হিসাব করুন, অর্থাৎ ১ থেকে n পর্যন্ত সব ধনাত্মক পূর্ণসংখ্যার গুণফল।</p></header><section class="panel"><h2>মান লিখুন</h2><div class="fields"><label class="field"><span>পূর্ণসংখ্যা (n)</span><input id="n" type="number" min="0" max="170" step="1" value="5" required></label></div><div class="actions"><button class="btn" id="calculate" type="button">হিসাব করুন</button><button class="btn alt" id="reset" type="button">রিসেট</button></div><p id="error" class="error" role="alert" aria-live="polite"></p></section><section class="panel" aria-live="polite"><h2>ফলাফল</h2><div class="results"><div class="result"><span>ফ্যাক্টোরিয়াল (n!)</span><strong id="result">—</strong></div></div></section><section class="panel"><h2>এই ক্যালকুলেটর কীভাবে ব্যবহার করবেন</h2><p>ফ্যাক্টোরিয়াল হিসাব করতে ০ থেকে ১৭০-এর মধ্যে পূর্ণসংখ্যা লিখুন।</p><h2>সূত্র ও পদ্ধতি</h2><p>n! = n × (n − 1) × … × 2 × 1 এবং 0! = 1।</p><h2>ফলাফল বুঝুন</h2><p>ফ্যাক্টোরিয়ালে n পর্যন্ত সব ধনাত্মক পূর্ণসংখ্যা গুণ করা হয়। শূন্যের ফ্যাক্টোরিয়াল সংজ্ঞা অনুযায়ী এক।</p><h2>গুরুত্বপূর্ণ সীমাবদ্ধতা</h2><p>এই ক্যালকুলেটর ০ থেকে ১৭০ পর্যন্ত পূর্ণসংখ্যা গ্রহণ করে। ফ্যাক্টোরিয়াল দ্রুত বাড়ে; উপরের সীমা ফলাফলের নির্ভুলতা বজায় রাখতে সাহায্য করে।</p></section><section class="panel faq"><h2>প্রায়শই জিজ্ঞাসিত প্রশ্ন</h2><details><summary>শূন্যের ফ্যাক্টোরিয়াল কী?</summary><p>সংজ্ঞা অনুযায়ী 0! = 1।</p></details><details><summary>ফ্যাক্টোরিয়াল কোথায় ব্যবহৃত হয়?</summary><p>গণনা, বিন্যাস, সমাবেশ এবং সম্ভাব্যতায় ব্যবহৃত হয়।</p></details><details><summary>উপরের সীমা কেন আছে?</summary><p>ফ্যাক্টোরিয়াল দ্রুত বাড়ে এবং সাধারণ সংখ্যার নির্ভুলতা ছাড়িয়ে যেতে পারে।</p></details></section></main><script>(()=>{'use strict';const $=id=>document.getElementById(id),fmt=new Intl.NumberFormat("bn-BD",{maximumFractionDigits:8});function fail(){$('error').textContent="০ থেকে ১৭০-এর মধ্যে পূর্ণসংখ্যা লিখুন।";}function calc(){$('error').textContent='';const n=Number($('n').value);if(!Number.isInteger(n)||n<0||n>170){fail();return;}let value=1n;for(let i=2n;i<=BigInt(n);i++)value*=i;$('result').textContent=value.toLocaleString("bn-BD");if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});} $('calculate').addEventListener('click',calc);$('reset').addEventListener('click',()=>{$('n').value='5';calc();});calc();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>
