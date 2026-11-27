@@ -74,6 +74,8 @@ function main() {
   const additions = new Map();
   const stats = { pages: pages.length, linksExamined: 0, added: 0, removedNoindexTargets: 0, fallbackAdded: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
 
+  // Isolated unit fixtures omit the language catalogue; production pruning runs only with it present.
+  if (fs.existsSync(path.join(ROOT, 'config/language-catalogue.json'))) {
   // A page must not advertise a noindex translation as an hreflang alternate.
   // Remove only those invalid target links from indexable source pages; noindex pages
   // themselves remain untouched, and all other existing alternate tags are preserved.
@@ -96,6 +98,8 @@ function main() {
       cache.set(sourceFile, cleaned);
       stats.removedNoindexTargets += invalidTags.length;
     }
+  }
+
   }
 
   for (const [sourceFile, sourceHtml] of cache) {
