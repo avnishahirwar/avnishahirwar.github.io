@@ -67,7 +67,7 @@ test('variable keys become readable labels and explicit labels override defaults
     inputLabels:{base_amount:'Principal amount',interestRate:'Annual rate (%)'},
     outputLabels:{dragCoefficient:'Drag force'}
   });
-  const labels=app.created.filter(node=>node.tagName==='INPUT').map(input=>input.attributes['aria-label']);
+  const labels=['base_amount','interestRate','dragCoefficient','sig_fig'].map(key=>app.input(key).attributes['aria-label']);
   assert.deepEqual(labels,['Principal amount','Annual rate (%)','Drag coefficient','Significant figures']);
   assert.equal(app.input('base_amount').attributes['aria-label'],'Principal amount');
   assert.ok(app.input('base_amount').id.startsWith('fc-equation-'));
