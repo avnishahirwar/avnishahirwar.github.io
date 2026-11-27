@@ -87,3 +87,36 @@ test('normalizer never changes body content or adds alternates to canonical alia
     fs.rmSync(f.root, { recursive: true, force: true });
   }
 });
+
+test('normalizer excludes the UK market hub and indexable Gujarati/Kannada basic calculators from hreflang clusters', () => {
+  const f = fixture();
+  try {
+    const en = 'https://friendlycalculator.in/calculators/basic-calculator.html';
+    const hi = 'https://friendlycalculator.in/hi/calculators/basic-calculator.html';
+    const gu = 'https://friendlycalculator.in/gu/calculators/basic-calculator.html';
+    const kn = 'https://friendlycalculator.in/kn/calculators/basic-calculator.html';
+    const uk = 'https://friendlycalculator.in/uk/';
+    f.write('calculators/basic-calculator.html', f.page('en', en));
+    f.write('hi/calculators/basic-calculator.html', f.page('hi', hi));
+    f.write('gu/calculators/basic-calculator.html', f.page('gu', gu));
+    f.write('kn/calculators/basic-calculator.html', f.page('kn', kn));
+    f.write('uk/index.html', f.page('en-GB', uk,
+      '<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/">'));
+
+    const result = normalizeDirectory(f.root, { write: true });
+    assert.equal(result.translatedRouteGroups, 1);
+    const enHtml = fs.readFileSync(path.join(f.root, 'calculators/basic-calculator.html'), 'utf8');
+    const hiHtml = fs.readFileSync(path.join(f.root, 'hi/calculators/basic-calculator.html'), 'utf8');
+    const guHtml = fs.readFileSync(path.join(f.root, 'gu/calculators/basic-calculator.html'), 'utf8');
+    const knHtml = fs.readFileSync(path.join(f.root, 'kn/calculators/basic-calculator.html'), 'utf8');
+    const ukHtml = fs.readFileSync(path.join(f.root, 'uk/index.html'), 'utf8');
+    for (const html of [enHtml, hiHtml]) {
+      assert.match(html, /hreflang="en"/);
+      assert.match(html, /hreflang="hi"/);
+      assert.doesNotMatch(html, /hreflang="(?:gu|kn|uk|en-GB)"/);
+    }
+    for (const html of [guHtml, knHtml, ukHtml]) assert.doesNotMatch(html, /hreflang=/);
+  } finally {
+    fs.rmSync(f.root, { recursive: true, force: true });
+  }
+});
