@@ -1635,3 +1635,193 @@ html:not([data-fc-theme="dark"]) .fc-home-personal-item {
     min-width: 0;
   }
 }
+
+
+/* 27 Nov 2026 — calculator pages: clean, line-by-line input rows.
+   Scope to calculator form patterns; keep editorial content and calculation logic unchanged. */
+main #live-page-calculator,
+main .calculator-container {
+  min-width: 0;
+}
+main #live-page-calculator {
+  padding: clamp(15px, 2.4vw, 26px);
+  border: 1px solid #d9e1e8;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(16, 28, 44, .055);
+}
+main #live-page-calculator form,
+main .fields,
+main .fc-fields,
+main .mc-fields,
+main .mortgage-tool-fields,
+main #extraForm,
+main form#gst-live-form {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+main #live-page-calculator form > label {
+  display: grid !important;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 12px 18px !important;
+}
+main #live-page-calculator form > label,
+main .fields > .field,
+main .fc-fields > .fc-field,
+main .mc-fields > .mc-field,
+main .mortgage-tool-fields > .mortgage-tool-field,
+main #extraForm > .field,
+main form#gst-live-form > label {
+  min-width: 0;
+  padding: 13px 2px;
+  border-bottom: 1px solid #e7ecf1;
+  color: #26394c;
+  font-size: .96rem;
+  line-height: 1.45;
+}
+main .fields > .field,
+main .fc-fields > .fc-field,
+main .mc-fields > .mc-field,
+main .mortgage-tool-fields > .mortgage-tool-field,
+main #extraForm > .field,
+main form#gst-live-form > label {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: stretch;
+  gap: 7px !important;
+}
+main #live-page-calculator input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+main #live-page-calculator select,
+main #live-page-calculator textarea,
+main .fields > .field input:not([type="range"]),
+main .fields > .field select,
+main .fc-fields > .fc-field input:not([type="range"]),
+main .fc-fields > .fc-field select,
+main .mc-fields > .mc-field input:not([type="range"]),
+main .mc-fields > .mc-field select,
+main .mc-fields > .mc-field textarea,
+main .mortgage-tool-fields > .mortgage-tool-field input:not([type="range"]),
+main .mortgage-tool-fields > .mortgage-tool-field select,
+main #extraForm > .field input:not([type="range"]),
+main form#gst-live-form > label input,
+main form#gst-live-form > label select {
+  width: 100% !important;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px !important;
+  border: 1px solid #cbd5df !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: #172638 !important;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+main #live-page-calculator input:focus-visible,
+main #live-page-calculator select:focus-visible,
+main #live-page-calculator textarea:focus-visible,
+main .fields input:focus-visible,
+main .fields select:focus-visible,
+main .fc-fields input:focus-visible,
+main .fc-fields select:focus-visible,
+main .mc-fields input:focus-visible,
+main .mc-fields select:focus-visible {
+  outline: 3px solid #b58b43;
+  outline-offset: 2px;
+}
+main .fields input[type="range"],
+main .fc-fields input[type="range"],
+main .mc-fields input[type="range"],
+main .mortgage-tool-fields input[type="range"] {
+  width: 100%;
+  min-height: 28px;
+  margin: 5px 0;
+  accent-color: #9b783d;
+}
+main .fields small,
+main .fc-fields small,
+main .mc-fields small,
+main .mortgage-tool-fields small,
+main #extraForm small {
+  color: #64717d;
+  font-size: .86rem;
+}
+main #live-page-calculator [aria-live="polite"] {
+  margin-top: 18px !important;
+  padding: 16px !important;
+  border: 1px solid #d7e2e9;
+  border-radius: 11px;
+  background: #f4f8fa !important;
+  overflow-wrap: anywhere;
+}
+main #live-page-calculator .fc-result-table { margin: 8px 0 16px; }
+main #live-page-calculator .fc-result-chart,
+main #live-page-calculator .fc-amortization,
+main #live-page-calculator .fc-calculation-solution {
+  margin-top: 16px;
+  padding: 15px;
+  border: 1px solid #e0e6ec;
+  border-radius: 10px;
+  background: #fff;
+}
+html[data-fc-theme="dark"] main #live-page-calculator,
+html[data-fc-theme="dark"] main #live-page-calculator .fc-result-chart,
+html[data-fc-theme="dark"] main #live-page-calculator .fc-amortization,
+html[data-fc-theme="dark"] main #live-page-calculator .fc-calculation-solution {
+  background: #142235;
+  border-color: #34475d;
+  color: #e6edf4;
+}
+html[data-fc-theme="dark"] main #live-page-calculator form > label,
+html[data-fc-theme="dark"] main .fields > .field,
+html[data-fc-theme="dark"] main .fc-fields > .fc-field,
+html[data-fc-theme="dark"] main .mc-fields > .mc-field,
+html[data-fc-theme="dark"] main .mortgage-tool-fields > .mortgage-tool-field,
+html[data-fc-theme="dark"] main #extraForm > .field,
+html[data-fc-theme="dark"] main form#gst-live-form > label {
+  color: #edf3f8 !important;
+  border-bottom-color: #34475d;
+}
+html[data-fc-theme="dark"] main #live-page-calculator input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html[data-fc-theme="dark"] main #live-page-calculator select,
+html[data-fc-theme="dark"] main #live-page-calculator textarea,
+html[data-fc-theme="dark"] main .fields input:not([type="range"]),
+html[data-fc-theme="dark"] main .fields select,
+html[data-fc-theme="dark"] main .fc-fields input:not([type="range"]),
+html[data-fc-theme="dark"] main .fc-fields select,
+html[data-fc-theme="dark"] main .mc-fields input:not([type="range"]),
+html[data-fc-theme="dark"] main .mc-fields select,
+html[data-fc-theme="dark"] main .mc-fields textarea,
+html[data-fc-theme="dark"] main .mortgage-tool-fields input:not([type="range"]),
+html[data-fc-theme="dark"] main .mortgage-tool-fields select,
+html[data-fc-theme="dark"] main #extraForm input:not([type="range"]),
+html[data-fc-theme="dark"] main form#gst-live-form input,
+html[data-fc-theme="dark"] main form#gst-live-form select {
+  background: #0e1b2b !important;
+  color: #edf3f8 !important;
+  border-color: #52657a !important;
+}
+html[data-fc-theme="dark"] main #live-page-calculator [aria-live="polite"] {
+  background: #0e1b2b !important;
+  color: #e6edf4 !important;
+  border-color: #34475d;
+}
+@media (max-width: 620px) {
+  main #live-page-calculator { padding: 15px; }
+  main #live-page-calculator form > label {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px !important;
+    padding: 12px 1px;
+  }
+  main #live-page-calculator form > label input,
+  main #live-page-calculator form > label select,
+  main #live-page-calculator form > label textarea { min-height: 48px; }
+  main #live-page-calculator [aria-live="polite"] { padding: 12px !important; }
+  main .fields > .field,
+  main .fc-fields > .fc-field,
+  main .mc-fields > .mc-field,
+  main .mortgage-tool-fields > .mortgage-tool-field,
+  main #extraForm > .field,
+  main form#gst-live-form > label { padding: 12px 1px; }
+}
