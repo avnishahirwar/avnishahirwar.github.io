@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {catalogueCount, transformedFiles, sync} = require('../scripts/sync-calculator-counts.cjs');
+const {catalogueCount, catalogueStats, transformedFiles, sync} = require('../scripts/sync-calculator-counts.cjs');
 const root = path.join(__dirname, '..');
 
 function sitemapCalculatorUrls() {
@@ -16,21 +16,30 @@ function sitemapCalculatorUrls() {
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
 }
 
+function directoryCalculatorUrls() {
+  return catalogueStats().entries
+    .map(item => item.url)
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'))
+    .sort();
+}
+
 function directoryCategoryLinks(html) {
   const sections = [...html.matchAll(/<section class="section calculator-category" id="([^"]+)"[^>]*>([\s\S]*?)(?=<section class="section calculator-category"|<section class="section"|<footer|<\/main>)/g)];
   const links = sections.flatMap(section => [...section[2].matchAll(/<a class="card"[^>]*href="(\/calculators\/[^"]+)"[^>]*>/g)].map(match => match[1]));
   return {sections, links};
 }
 
-test('curated directory covers every canonical sitemap calculator across 20 unique categories', () => {
+test('curated directory covers every self-canonical calculator in the on-site catalogue across 20 unique categories', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
-  const expected = sitemapCalculatorUrls();
+  const expected = directoryCalculatorUrls();
+  const indexable = sitemapCalculatorUrls();
   const {sections, links} = directoryCategoryLinks(directory);
   const unique = [...new Set(links)].sort();
   const duplicates = links.filter((url, index) => links.indexOf(url) !== index);
   assert.equal(sections.length, 20, 'The directory should retain all 20 curated category sections');
   assert.equal(unique.length, expected.length, 'Every canonical sitemap calculator should appear in the directory');
-  assert.deepEqual(unique, expected, 'Directory routes must exactly match canonical sitemap calculator routes');
+  assert.deepEqual(unique, expected, 'Directory routes must exactly match the self-canonical on-site catalogue');
+  assert.ok(indexable.every(url => unique.includes(url)), 'Every indexable sitemap calculator must also appear in the user-facing directory');
   assert.deepEqual(duplicates, [], 'Every calculator route must appear exactly once across the 20 categories');
   assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
   assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
@@ -46,7 +55,7 @@ test('all catalog-driven counts are synchronized and repeatable', () => {
   assert.equal(sync({check:true}).changed.length, 0);
 });
 
-test('homepage category totals match the directory sections and canonical sitemap catalogue', () => {
+test('homepage category totals match the full directory while sitemap URLs remain a subset', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const {sections, links} = directoryCategoryLinks(directory);
@@ -56,8 +65,9 @@ test('homepage category totals match the directory sections and canonical sitema
   const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card"[^>]*href="\/calculators\//g)].length);
   assert.equal(navCounts.length, 20);
   assert.deepEqual(navCounts, sectionCounts, 'Homepage category counters must match the linked directory sections');
-  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length, 'Every canonical calculator route is counted exactly once');
-  assert.equal(links.length, sitemapCalculatorUrls().length);
+  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), directoryCalculatorUrls().length, 'Every public on-site calculator route is counted exactly once');
+  assert.equal(links.length, directoryCalculatorUrls().length);
+  assert.ok(sitemapCalculatorUrls().every(url => links.includes(url)), 'All sitemap calculators must remain discoverable in the directory');
 });
 
 test('all catalog-driven counts are synchronized and repeatable after catalogue growth', () => {
