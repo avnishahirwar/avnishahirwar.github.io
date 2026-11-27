@@ -26,6 +26,8 @@ jobs:
         run: node scripts/generate-sitemaps.cjs
       - name: Preserve the full Physics directory source before SEO index pruning
         run: node scripts/build-physics-directory-index.cjs
+      - name: Reconcile the calculator search index with the canonical sitemap
+        run: node scripts/merge-search-index.cjs && node scripts/merge-search-index.cjs --check
       - name: Rebuild the complete calculator discovery directory
         run: node scripts/build-site-directory.cjs
       - name: Build the complete published calculator catalogue
