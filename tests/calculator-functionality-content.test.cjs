@@ -72,3 +72,81 @@ test('2D distance calculator returns Euclidean distance and explains inverse-sol
   assert.match(html, /Interesting fact/);
   assert.match(html, /Frequently asked questions/);
 });
+
+
+function fakeElement(tagName = 'div') {
+  return {
+    tagName: tagName.toUpperCase(),
+    children: [],
+    listeners: {},
+    attributes: {},
+    style: {},
+    value: '',
+    _text: '',
+    set textContent(value) {
+      this._text = String(value);
+      this.children = [];
+    },
+    get textContent() {
+      return this._text + this.children.map(child => child.textContent).join('');
+    },
+    appendChild(child) {
+      this.children.push(child);
+      return child;
+    },
+    addEventListener(name, callback) {
+      this.listeners[name] = callback;
+    },
+    setAttribute(name, value) {
+      this.attributes[name] = String(value);
+    },
+    removeAttribute(name) {
+      delete this.attributes[name];
+    },
+    getAttribute(name) {
+      return this.attributes[name] || '';
+    },
+    focus() {
+      this.focused = true;
+    },
+    querySelector(selector) {
+      return selector === 'input[name="startDate"]' ? this.input : null;
+    }
+  };
+}
+
+test('date calculator UI wires calculate, invalid-date feedback and reset actions', () => {
+  const form = fakeElement('form');
+  const input = fakeElement('input');
+  const button = fakeElement('button');
+  const reset = fakeElement('button');
+  const output = fakeElement('div');
+  form.setAttribute('data-date-offset', '100');
+  form.input = input;
+  input.value = '2025-01-01';
+  const elements = { calc: form, go: button, reset, out: output };
+  const doc = {
+    getElementById(id) { return elements[id] || null; },
+    createElement(tag) { return fakeElement(tag); }
+  };
+
+  dates.wireCalculator(doc);
+  assert.equal(typeof button.listeners.click, 'function');
+
+  button.listeners.click();
+  assert.match(output.textContent, /Target date: 2025-04-11/);
+  assert.equal(output.style.display, 'block');
+  assert.equal(input.attributes['aria-invalid'], undefined);
+
+  input.value = '2025-02-29';
+  button.listeners.click();
+  assert.match(output.textContent, /Enter a valid calendar date/);
+  assert.equal(input.attributes['aria-invalid'], 'true');
+  assert.equal(input.focused, true);
+
+  reset.listeners.click();
+  assert.equal(input.value, '');
+  assert.equal(output.textContent, '');
+  assert.equal(output.style.display, 'none');
+  assert.equal(input.attributes['aria-invalid'], undefined);
+});
