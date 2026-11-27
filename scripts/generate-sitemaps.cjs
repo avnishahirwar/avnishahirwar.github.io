@@ -89,7 +89,7 @@ function getLastmod(file) {
         'log', '--format=COMMIT:%cs', '--name-only', '--no-renames', '--', '*.html'
       ], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
       let currentDate = '';
-      for (const line of output.split(/\\r?\\n/)) {
+      for (const line of output.split(/\r?\n/)) {
         if (line.startsWith('COMMIT:')) {
           currentDate = line.slice('COMMIT:'.length).trim();
         } else if (line && currentDate && !lastmodByFile.has(line)) {
