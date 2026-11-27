@@ -48,7 +48,7 @@ function tagText(html,tag){
   .map(m=>stripMarkup(m[1])).filter(Boolean);
 }
 function attrValue(tag,name){
- const m=tag.match(new RegExp('\\b'+name+'\\s*=\\s*(["\\'])(.*?)\\1','i'));
+ const m=tag.match(new RegExp("\\b"+name+"\\s*=\\s*(['"])(.*?)\\1","i"));
  return m?m[2]:'';
 }
 function extractTitle(html){
@@ -152,7 +152,8 @@ function auditPage(file,html,repeatedParagraphs=new Set()){
  const veryShort=pageSpecificWords<120;
  const rawUi=placeholderLabels>0||rawIdentifiers>0;
  const missingPurpose=!hasCalculator||(!formula&&pageSpecificWords<220);
- const hardThin=(veryShort||obviousTemplate||repeatedThin||rawUi||missingPurpose||(historicalYear&&rateSensitive))&&selfCanonical&&!noindex&&!redirectOnly&&!sensitiveExcluded;
+ const qualitySignalCount=[veryShort,obviousTemplate,repeatedThin,rawUi,missingPurpose,(historicalYear&&rateSensitive)].filter(Boolean).length;
+ const hardThin=qualitySignalCount>=2&&selfCanonical&&!noindex&&!redirectOnly&&!sensitiveExcluded;
  return {file,slug,title,description,canonical,h1,score:Math.max(0,Math.min(100,Math.round(score))),features:{...features,baseEligible,qualityEligible:false,hardThin}};
 }
 function countBy(items,key){
