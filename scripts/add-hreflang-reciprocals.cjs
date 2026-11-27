@@ -76,20 +76,31 @@ function main() {
 
   // Isolated unit fixtures omit the language catalogue; production pruning runs only with it present.
   if (fs.existsSync(path.join(ROOT, 'config/language-catalogue.json'))) {
-  // A page must not advertise a noindex translation as an hreflang alternate.
-  // Remove only those invalid target links from indexable source pages; noindex pages
-  // themselves remain untouched, and all other existing alternate tags are preserved.
+  // Hreflang is only valid between indexable, self-canonical pages. Noindex
+  // translations must not emit hreflang themselves or be advertised by indexable pages.
+  // The /uk/ route is an English-GB market hub, not a Ukrainian language edition.
   for (const [sourceFile, sourceHtml] of cache) {
-    if (isNoindex(sourceHtml)) continue;
+    const relativeSource = path.relative(ROOT, sourceFile).split(path.sep).join('/');
+    const sourceIsNoindex = isNoindex(sourceHtml);
+    const isUkMarketHub = relativeSource === 'uk/index.html';
+    const seenLanguages = new Set();
     const invalidTags = [...headOf(sourceHtml).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
-      .filter(tag => /\brel=["']alternate["']/i.test(tag))
+      .filter(tag => /\brel=["']alternate["']/i.test(tag) && /\bhreflang=/i.test(tag))
       .filter(tag => {
+        if (sourceIsNoindex || isUkMarketHub) return true;
+        const lang = (tag.match(/\bhreflang=["']([^"']+)["']/i) || [])[1]?.toLowerCase();
         const href = (tag.match(/\bhref=["']([^"']+)["']/i) || [])[1];
-        if (!href) return false;
+        if (!lang || !href || seenLanguages.has(lang)) return true;
+        seenLanguages.add(lang);
         const target = targetFile(href);
-        if (!target) return false;
+        if (!target) return true;
         const targetHtml = cache.get(target) || fs.readFileSync(target, 'utf8');
-        return isNoindex(targetHtml);
+        if (isNoindex(targetHtml)) return true;
+        const targetUrl = new URL(href, ORIGIN).href;
+        if (canonicalOf(targetHtml) !== targetUrl) return true;
+        if (lang !== 'x-default' && langOf(targetHtml, target) !== lang) return true;
+        if (lang === 'x-default' && langOf(targetHtml, target) !== 'en') return true;
+        return false;
       });
     if (!invalidTags.length) continue;
     let cleaned = sourceHtml;
@@ -98,9 +109,7 @@ function main() {
       cache.set(sourceFile, cleaned);
       stats.removedNoindexTargets += invalidTags.length;
     }
-  }
-
-  }
+  }}
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
@@ -139,7 +148,7 @@ function main() {
       if (isNoindex(sourceHtml)) continue;
       const relative = path.relative(ROOT, sourceFile).split(path.sep).join('/');
       const parts = relative.split('/');
-      if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en') continue;
+      if (parts.length < 2 || !localeCodes.has(parts[0]) || parts[0] === 'en' || parts[0] === 'uk') continue;
       const sourceCanonical = canonicalOf(sourceHtml);
       if (!sourceCanonical || !selfCanonicalCandidates(sourceFile).has(sourceCanonical)) continue;
       const defaultFile = path.join(ROOT, ...parts.slice(1));
@@ -164,11 +173,12 @@ function main() {
     return cache.get(file) !== original;
   }).concat([...additions.keys()]));
   for (const file of changedFiles) {
-    const html = cache.get(file);
+    const original = fs.readFileSync(file, 'utf8');
+    const html = cache.get(file) || original;
     const tags = additions.get(file) || new Set();
     const insertion = [...tags].filter(tag => !html.includes(tag));
     const next = insertion.length ? html.replace(/<\/head>/i, insertion.join('\n') + '\n</head>') : html;
-    if (next === html) continue;
+    if (next === original) continue;
     stats.added += insertion.length;
     if (process.argv.includes('--write')) fs.writeFileSync(file, next);
   }
