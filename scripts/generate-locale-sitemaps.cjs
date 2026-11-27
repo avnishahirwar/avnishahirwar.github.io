@@ -5,7 +5,6 @@
 // preserved and remains available as the original all-pages sitemap.
 const fs = require('node:fs');
 const path = require('node:path');
-const { execFileSync } = require('node:child_process');
 
 const ROOT = process.cwd();
 const ORIGIN = 'https://friendlycalculator.in';
@@ -73,16 +72,7 @@ function isNoindex(html) {
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 
-function lastmodFor(file) {
-  try {
-    return execFileSync('git', ['log', '-1', '--format=%cs', '--', file], {
-      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']
-    }).trim();
-  } catch {
-    return '';
-  }
-}
-
+function lastmodFor() { return ''; }
 function localeFor(file) {
   const first = file.split('/')[0];
   return file.includes('/') && LOCALES.has(first) ? first : 'en';
