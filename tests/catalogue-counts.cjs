@@ -16,8 +16,8 @@ module.exports = function getCatalogueCounts(root) {
       if (!absolute.startsWith(path.join(root, 'calculators') + path.sep) ||
           !fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) return false;
       const html = fs.readFileSync(absolute, 'utf8');
-      const tag = html.match(/<link\\b[^>]*\\brel\\s*=\\s*["']canonical["'][^>]*>/i);
-      const href = tag && tag[0].match(/\\bhref\\s*=\\s*["']([^"']+)["']/i);
+      const tag = html.match(/<link\b[^>]*\brel\s*=\s*["']canonical["'][^>]*>/i);
+      const href = tag && tag[0].match(/\bhref\s*=\s*["']([^"']+)["']/i);
       if (!href) return false;
       try {
         const canonical = new URL(href[1], 'https://friendlycalculator.in');
