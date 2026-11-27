@@ -12,9 +12,13 @@ const REGION_LOCALES={US:'en-US',GB:'en-GB',CA:'en-CA',AU:'en-AU',DE:'de-DE',FR:
 const detectedFormat=Object.hasOwn(LOCALES,browserLocale)?browserLocale:(REGION_LOCALES[browserRegion]||'en-IN');
 const COUNTRY_CURRENCY={IN:'INR',US:'USD',GB:'GBP',CA:'CAD',AU:'AUD',AE:'AED',SA:'SAR',DE:'EUR',FR:'EUR',BR:'BRL',MX:'MXN',ID:'IDR',PH:'PHP',NG:'NGN',ZA:'ZAR',PK:'PKR',BD:'BDT',ES:'EUR',JP:'JPY',CN:'CNY',RU:'RUB',TR:'TRY',KR:'KRW',VN:'VND',AR:'ARS',CL:'CLP',CO:'COP',SG:'SGD',NZ:'NZD',CH:'CHF',MY:'MYR',IE:'EUR',IT:'EUR',NL:'EUR',PT:'EUR',PL:'PLN',SE:'SEK',NO:'NOK',DK:'DKK',KE:'KES',NP:'NPR',IL:'ILS',EG:'EGP',QA:'QAR',KW:'KWD',OM:'OMR'};
 const COUNTRY_LOCALE={IN:'en-IN',US:'en-US',GB:'en-GB',CA:'en-CA',AU:'en-AU',AE:'ar-AE',SA:'ar-SA',DE:'de-DE',FR:'fr-FR',BR:'pt-BR',MX:'es-MX',ID:'id-ID',PH:'fil-PH',NG:'en-NG',ZA:'en-ZA',PK:'en-PK',BD:'bn-BD',ES:'es-ES',JP:'ja-JP',CN:'zh-CN',RU:'ru-RU',TR:'tr-TR',KR:'ko-KR',VN:'vi-VN',AR:'es-AR',CL:'es-CL',CO:'es-CO',SG:'en-SG',NZ:'en-AU',CH:'de-CH',MY:'ms-MY',IE:'en-IE',IT:'it-IT',NL:'nl-NL',PT:'pt-PT',SE:'sv-SE',NO:'nb-NO',DK:'da-DK',IL:'he-IL',EG:'ar-EG',QA:'ar-QA',KW:'ar-KW',OM:'ar-OM'};
+// India-first defaults: Hindi pages and unknown regions prefer INR
+const isHindiPath=/^\/hi(?:\/|$)/i.test(location.pathname||'');
 const detectedCountry=Object.hasOwn(COUNTRY_CURRENCY,browserRegion)?browserRegion:'IN';
 let country=read(COUNTRY_KEY,detectedCountry,v=>Object.hasOwn(COUNTRY_CURRENCY,v));
-let currency=read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency,v=>Object.hasOwn(CURRENCIES,v));
+let currencyDefault=(isHindiPath||country==='IN')?'INR':(COUNTRY_CURRENCY[country]||browserCurrency);
+if(isHindiPath && !localStorage.getItem(CURRENCY_KEY)) currencyDefault='INR';
+let currency=read(CURRENCY_KEY,currencyDefault,v=>Object.hasOwn(CURRENCIES,v));
 let formatLocale=read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat,v=>Object.hasOwn(LOCALES,v));
 let unitSystem=read(UNIT_KEY,browserRegion==='US'?'imperial':'metric',v=>v==='metric'||v==='imperial');
 const formatNumber=(value,options={})=>new Intl.NumberFormat(formatLocale,options).format(Number(value));
