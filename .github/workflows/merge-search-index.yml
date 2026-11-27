@@ -23,16 +23,18 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
-      - name: Normalize duplicate search-index URLs before validation
+      - name: Generate canonical sitemap before search-index reconciliation
+        run: node scripts/generate-sitemaps.cjs
+      - name: Reconcile search index to canonical published calculator pages
         run: node scripts/merge-search-index.cjs
       - run: node scripts/merge-search-index.cjs --check
       - name: Build and validate the merged catalogue and count surfaces
         run: |
-          node scripts/merge-search-index.cjs
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
+          node scripts/generate-sitemaps.cjs --check
           node --test tests/calculator-counts.test.cjs
       - run: node --check scripts/sync-calculator-counts.cjs
 
@@ -46,7 +48,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Merge only additions with existing calculator pages
+      - name: Generate canonical sitemap before search-index reconciliation
+        run: node scripts/generate-sitemaps.cjs
+      - name: Reconcile search index to canonical published calculator pages
         run: node scripts/merge-search-index.cjs
       - name: Synchronize every public calculator count
         run: node scripts/sync-calculator-counts.cjs
