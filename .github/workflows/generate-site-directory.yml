@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
+      - 'config/language-catalogue.json'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
       - 'scripts/add-hreflang-reciprocals.cjs'
