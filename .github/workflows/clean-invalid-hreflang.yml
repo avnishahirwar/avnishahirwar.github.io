@@ -37,6 +37,8 @@ jobs:
         run: node scripts/generate-sitemaps.cjs
       - name: Rebuild the curated calculator directory
         run: node scripts/build-site-directory.cjs
+      - name: Regenerate the Physics subject directory from eligible catalogue entries
+        run: node scripts/generate-physics-calculator-directory.cjs
       - name: Synchronize homepage and public catalogue counts
         run: node scripts/sync-calculator-counts.cjs
       - name: Regenerate the human-readable sitemap
@@ -46,7 +48,8 @@ jobs:
           node scripts/merge-search-index.cjs --check
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
-          node --test tests/add-hreflang-reciprocals.test.cjs tests/clean-invalid-hreflang.test.cjs tests/international-seo-diagnostic.test.cjs tests/international-seo.test.cjs tests/calculator-counts.test.cjs
+          node scripts/generate-physics-calculator-directory.cjs --check
+          node --test tests/add-hreflang-reciprocals.test.cjs tests/clean-invalid-hreflang.test.cjs tests/international-seo-diagnostic.test.cjs tests/international-seo.test.cjs tests/calculator-counts.test.cjs tests/physics-calculator-directory.test.cjs
       - name: Verify calculator pages, formulas and metadata
         run: node --test tests/site-integrity.test.cjs
       - name: Commit repaired hreflang and synchronized catalogue files
