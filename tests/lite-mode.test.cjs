@@ -31,3 +31,11 @@ test('Lite mode reduces decorative effects without hiding calculator content', (
   assert.match(home, /data-fc-lite-decorative="true" loading="lazy"/);
   assert.doesNotMatch(shell, /html\[data-fc-lite-mode="on"\] body\s*\{[^}]*display\s*:\s*none/i);
 });
+
+test('Lite mode defers decorative image downloads and restores them when disabled', () => {
+  assert.match(shell, /data-fc-lite-decorative="true"/);
+  assert.match(shell, /setAttribute\('data-fc-lite-src',source\)/);
+  assert.match(shell, /removeAttribute\('src'\)/);
+  assert.match(shell, /setAttribute\('src',source\)/);
+  assert.match(shell, /removeAttribute\('data-fc-lite-src'\)/);
+});
