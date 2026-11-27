@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 require(path.join(root, 'assets/chemistry-calculators.js'));
 function readAllSitemaps() {
   const names = ['sitemap.xml', ...fs.readdirSync(root)
-    .filter(name => /^sitemap-pages-\d+\\.xml$/.test(name))
+    .filter(name => /^sitemap-pages-\d+\.xml$/.test(name))
     .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]))];
   return names.map(name => fs.readFileSync(path.join(root, name), 'utf8')).join('\n');
 }
@@ -34,7 +34,7 @@ test('international hub hero links meet the dark-header contrast style', () => {
 
 test('all XML sitemap shards stay below the Cloudflare Pages per-file limit', () => {
   const names = ['sitemap.xml', ...fs.readdirSync(root)
-    .filter(name => /^sitemap-pages-\d+\\.xml$/.test(name))];
+    .filter(name => /^sitemap-pages-\d+\.xml$/.test(name))];
   assert.ok(names.length >= 1);
   for (const name of names) {
     const size = fs.statSync(path.join(root, name)).size;
