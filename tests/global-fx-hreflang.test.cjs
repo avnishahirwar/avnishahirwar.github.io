@@ -55,7 +55,7 @@ test('generated sitemap check includes hreflang clusters',()=>{
 
 test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
+ const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
@@ -69,7 +69,7 @@ test('percentage calculator hreflang cluster contains only indexable published l
 
 test('simple-interest English and Bengali hreflang alternates match indexable published translations',()=>{
  const route='simple-interest-calculator.html';
- const candidates=['en','bn','ar','es','fr','hi','id','pt','ta'];
+ const candidates=['en','bn','ar','es','fr','hi','id','pt','ta','mr','te'];
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
@@ -87,7 +87,7 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'discount-calculator.html',
   'ppf-calculator.html'
  ];
- const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
+ const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta','mr'];
  const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
  for(const route of routes){
   const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
