@@ -11,9 +11,17 @@ const root = path.join(__dirname, '..');
 
 function sitemapCalculatorUrls() {
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
-  return [...new Set([...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
+  const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
     .map(match => new URL(match[1]).pathname)
-    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html')))].sort();
+    .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
+  const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const retainedQualityPages = searchIndex.map(item => item && item.url).filter(url => {
+    if (typeof url !== 'string' || !url.startsWith('/calculators/') ||
+        !url.endsWith('.html') || url.includes('?') || url.includes('#') ||
+        url.split('/').includes('..')) return false;
+    return fs.existsSync(path.join(root, url.slice(1)));
+  });
+  return [...new Set([...sitemapUrls, ...retainedQualityPages])].sort();
 }
 
 function directoryCategoryLinks(html) {
@@ -22,15 +30,15 @@ function directoryCategoryLinks(html) {
   return {sections, links};
 }
 
-test('curated directory covers every canonical sitemap calculator across 20 unique categories', () => {
+test('curated directory covers every sitemap and retained quality-pass calculator across 20 unique categories', () => {
   const directory = fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8');
   const expected = sitemapCalculatorUrls();
   const {sections, links} = directoryCategoryLinks(directory);
   const unique = [...new Set(links)].sort();
   const duplicates = links.filter((url, index) => links.indexOf(url) !== index);
   assert.equal(sections.length, 20, 'The directory should retain all 20 curated category sections');
-  assert.equal(unique.length, expected.length, 'Every canonical sitemap calculator should appear in the directory');
-  assert.deepEqual(unique, expected, 'Directory routes must exactly match canonical sitemap calculator routes');
+  assert.equal(unique.length, expected.length, 'Every published search/discovery calculator should appear in the directory');
+  assert.deepEqual(unique, expected, 'Directory routes must exactly match sitemap plus retained quality-pass routes');
   assert.deepEqual(duplicates, [], 'Every calculator route must appear exactly once across the 20 categories');
   assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
   assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
@@ -56,7 +64,7 @@ test('homepage category totals match the directory sections and canonical sitema
   const sectionCounts = sections.map(section => [...section[2].matchAll(/<a class="card"[^>]*href="\/calculators\//g)].length);
   assert.equal(navCounts.length, 20);
   assert.deepEqual(navCounts, sectionCounts, 'Homepage category counters must match the linked directory sections');
-  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length, 'Every canonical calculator route is counted exactly once');
+  assert.equal(navCounts.reduce((sum, count) => sum + count, 0), sitemapCalculatorUrls().length, 'Every published discovery route is counted exactly once');
   assert.equal(links.length, sitemapCalculatorUrls().length);
 });
 

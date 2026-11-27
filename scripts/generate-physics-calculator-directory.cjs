@@ -5,7 +5,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
-const INDEX_FILE = path.join(ROOT, 'assets/calculator-search-index.json');
+const INDEX_FILE = path.join(ROOT, 'assets/physics-directory-index.json');
+const FALLBACK_INDEX_FILE = path.join(ROOT, 'assets/calculator-search-index.json');
 const SITE_DIRECTORY_FILE = path.join(ROOT, 'calculator/site-directory.html');
 const OUTPUT_FILE = path.join(ROOT, 'calculator/physics-calculators.html');
 const SITE_ORIGIN = 'https://friendlycalculator.in';
@@ -76,7 +77,8 @@ function classify(item) {
 }
 
 function physicsEntries() {
-  const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8'));
+  const sourceFile = fs.existsSync(INDEX_FILE) ? INDEX_FILE : FALLBACK_INDEX_FILE;
+  const index = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
   const byUrl = new Map();
   for (const item of index) {
     if (String(item.category || '').trim().toLowerCase() !== 'physics') continue;

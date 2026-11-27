@@ -1,0 +1,57 @@
+name: Repair indexability-aware hreflang metadata
+
+on:
+  push:
+    branches: [feat/bandwidth-lite-mode-20261127]
+    paths:
+      - 'scripts/normalize-hreflang-indexability.cjs'
+      - 'scripts/add-hreflang-reciprocals.cjs'
+      - '.github/workflows/repair-hreflang.yml'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to normalize
+        required: true
+        default: feat/bandwidth-lite-mode-20261127
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref_name }}
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Normalize invalid hreflang metadata
+        run: node scripts/normalize-hreflang-indexability.cjs --write
+      - name: Restore valid reciprocal hreflang metadata
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Commit metadata-only corrections to the PR branch
+        env:
+          BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(seo): normalize hreflang indexability and reciprocals"
+            git push origin "HEAD:$BRANCH"
+          else
+            echo "No hreflang metadata changes were needed."
+          fi
+      - name: Dispatch full validation on the updated branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.inputs.branch || github.ref_name }}
+        run: |
+          gh workflow run calculator-tests.yml --ref "$BRANCH"
+          gh workflow run site-health.yml --ref "$BRANCH"

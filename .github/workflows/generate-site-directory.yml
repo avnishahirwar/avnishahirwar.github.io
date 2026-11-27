@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/build-site-directory.cjs'
       - 'scripts/generate-physics-calculator-directory.cjs'
+      - 'scripts/build-physics-directory-index.cjs'
+      - 'assets/physics-directory-index.json'
       - 'scripts/sync-calculator-counts.cjs'
       - 'config/site-directory-category-assignments.json'
       - 'index.html'
@@ -22,6 +24,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/build-physics-directory-index.cjs'
+      - 'assets/physics-directory-index.json'
       - 'calculator/site-directory.html'
       - 'calculator/physics-calculators.html'
       - 'config/site-directory-category-assignments.json'
@@ -66,6 +70,8 @@ jobs:
           node-version: 20
       - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
+      - name: Preserve the complete Physics directory source
+        run: node scripts/build-physics-directory-index.cjs
       - name: Regenerate the physics subject directory from the curated catalogue
         run: node scripts/generate-physics-calculator-directory.cjs
       - name: Synchronize homepage and catalogue counters

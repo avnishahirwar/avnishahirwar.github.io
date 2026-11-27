@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'assets/calculator-search-index-additions.json'
+      - 'scripts/merge-search-index.cjs'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -21,15 +22,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node --check scripts/merge-search-index.cjs
+      - run: node --check scripts/merge-search-index.cjs && node --check scripts/build-physics-directory-index.cjs
+      - name: Preserve full Physics directory source before SEO index pruning
+        run: node scripts/build-physics-directory-index.cjs
+      - name: Generate canonical sitemap before search-index reconciliation
+        run: node scripts/generate-sitemaps.cjs
+      - name: Reconcile search index to canonical published calculator pages
+        run: node scripts/merge-search-index.cjs
       - run: node scripts/merge-search-index.cjs --check
+      - name: Rebuild the curated calculator discovery directory from the normalized index
+        run: node scripts/build-site-directory.cjs
       - name: Build and validate the merged catalogue and count surfaces
         run: |
-          node scripts/merge-search-index.cjs
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
+          node scripts/generate-sitemaps.cjs --check
           node --test tests/calculator-counts.test.cjs
       - run: node --check scripts/sync-calculator-counts.cjs
 
@@ -43,7 +52,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Merge only additions with existing calculator pages
+      - name: Preserve full Physics directory source before SEO index pruning
+        run: node scripts/build-physics-directory-index.cjs
+      - name: Generate canonical sitemap before search-index reconciliation
+        run: node scripts/generate-sitemaps.cjs
+      - name: Reconcile search index to canonical published calculator pages
         run: node scripts/merge-search-index.cjs
       - name: Synchronize every public calculator count
         run: node scripts/sync-calculator-counts.cjs
@@ -57,6 +70,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- \
             assets/calculator-search-index.json \
+            assets/physics-directory-index.json \
             index.html \
             calculator/about.html \
             calculator/api.html \

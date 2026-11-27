@@ -3,14 +3,14 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/credit-utilization-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/credit-utilization-calculator.html">
+
+
+
+
+
+
+
+
+
+
 </head><body><header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/id/index.html">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links"><a href="/id/index.html">Beranda</a><a href="/calculator/site-directory.html">Semua kalkulator</a></nav></div></header><main class="wrap"><p class="muted"><a href="/id/index.html">Beranda</a> / Kalkulator Utilisasi Kredit</p><header class="hero"><h1>Kalkulator Utilisasi Kredit</h1><p class="muted">Masukkan total limit kredit dan saldo terutang saat ini untuk melihat persentase penggunaan.</p></header><section class="panel"><form id="calc"><div class="fields"><div class="field"><label for="v0">Total limit kredit tersedia (₹)</label><input id="v0" type="number" min="0" max="1000000000000" step="any" value="100000" required></div><div class="field"><label for="v1">Saldo terutang saat ini (₹)</label><input id="v1" type="number" min="0" max="1000000000000" step="any" value="25000" required></div></div><div class="actions"><button class="btn" type="submit">Hitung</button><button class="btn alt" type="button" id="reset">Atur ulang</button></div><p id="error" class="error" role="alert"></p></form><div class="results" aria-live="polite"><div class="result"><span>Utilisasi kredit (%)</span><strong id="ratio">—</strong></div><div class="result"><span>Sisa kredit tersedia</span><strong id="available">—</strong></div></div><p class="note">Perhitungan ini bersifat edukatif dan bukan perkiraan skor kredit atau kelayakan pinjaman. Verifikasi saldo kepada penerbit kartu.</p></section><section class="panel"><h2>Pertanyaan umum</h2><details><summary>Bagaimana utilisasi kredit dihitung?</summary><p>Saldo terutang dibagi total limit, lalu dikalikan 100.</p></details><details><summary>Bisakah nilainya melebihi 100%?</summary><p>Ya. Jika saldo melebihi limit, persentase penggunaan akan lebih dari 100%.</p></details><details><summary>Apakah ini menghitung skor kredit saya?</summary><p>Tidak. Kalkulator hanya menunjukkan rasio penggunaan; skor kredit dipengaruhi banyak faktor.</p></details></section><section class="panel"><p><a href="/calculators/credit-utilization-calculator.html">English</a> · <a href="/id/index.html">Beranda</a></p></section></main><script>(()=>{'use strict';const f=document.getElementById('calc'),err=document.getElementById('error'),fmt=new Intl.NumberFormat('id-ID',{style:'currency',currency:'INR',maximumFractionDigits:2});function calc(e){if(e)e.preventDefault();const limit=Number(document.getElementById('v0').value),balance=Number(document.getElementById('v1').value);if(!(Number.isFinite(limit)&&limit>0&&limit<=1e12&&Number.isFinite(balance)&&balance>=0&&balance<=1e12)){err.textContent="Masukkan limit dan saldo yang valid.";return;}document.getElementById('ratio').textContent=(balance/limit*100).toLocaleString('id-ID',{maximumFractionDigits:2})+'%';document.getElementById('available').textContent=fmt.format(limit-balance);err.textContent='';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}f.addEventListener('submit',calc);document.getElementById('reset').addEventListener('click',()=>{f.reset();document.getElementById('ratio').textContent='—';document.getElementById('available').textContent='—';err.textContent='';});calc();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>

@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 jobs:
   calculator-tests:
     runs-on: ubuntu-latest
@@ -17,8 +18,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Remove invalid hreflang metadata from non-indexable or invalid targets
+        run: node scripts/normalize-hreflang-indexability.cjs --write
+      - name: Restore only valid reciprocal hreflang alternates
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Generate canonical sitemap before calculator catalogue reconciliation
+        run: node scripts/generate-sitemaps.cjs
+      - name: Preserve the full Physics directory source before SEO index pruning
+        run: node scripts/build-physics-directory-index.cjs
+      - name: Reconcile the calculator search index with the canonical sitemap
+        run: node scripts/merge-search-index.cjs && node scripts/merge-search-index.cjs --check
+      - name: Rebuild the complete calculator discovery directory
+        run: node scripts/build-site-directory.cjs
       - name: Build the complete published calculator catalogue
-        run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+        run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs && node scripts/generate-sitemaps.cjs --check
       - name: Run calculator search matcher regression tests
         run: node --test tests/search-matcher-acronyms.test.cjs
       - name: Run landed cost calculator regression tests
@@ -27,6 +40,9 @@ jobs:
         run: node --test tests/world-top20.test.cjs
       - name: Run calculator regression tests
         run: node --test tests/calculator-formulas.test.cjs tests/extended-science-astrology.test.cjs tests/api-platform.test.cjs tests/combination-calculator.test.cjs tests/language-routing.test.cjs tests/hindi-rural-localization.test.cjs tests/omni-math-expansion.test.cjs tests/omni-home-productivity-expansion.test.cjs tests/omni-construction-expansion.test.cjs tests/financial-yml-content.test.cjs tests/global-fx-hreflang.test.cjs tests/international-seo.test.cjs tests/global-locale.test.cjs tests/country-routing.test.cjs tests/us-uk-mortgage-calculators.test.cjs tests/us-sales-tax-calculator.test.cjs tests/us-auto-loan-calculator.test.cjs tests/us-personal-loan-calculator.test.cjs tests/uk-mortgage-overpayment-calculator.test.cjs tests/uk-workplace-pension-calculator.test.cjs tests/study-calculator.test.cjs tests/international-seo-diagnostic.test.cjs tests/brand-discovery.test.cjs tests/global-locale-sitemaps.test.cjs tests/us-additional-medicare-tax.test.cjs tests/brazil-indonesia-payroll.test.cjs tests/international-calculators.test.cjs tests/human-sitemap.test.cjs tests/worldwide-mortgage-calculator.test.cjs tests/mortgage-tools.test.cjs tests/trigonometry-calculator.test.cjs tests/uk-us-expansion.test.cjs tests/uk-student-loan-us-affordability.test.cjs
+      - name: Run bandwidth-aware Lite Mode regression tests
+        if: always()
+        run: node --test tests/lite-mode.test.cjs
   catalogue-audit:
     runs-on: ubuntu-latest
     steps:

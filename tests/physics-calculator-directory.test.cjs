@@ -20,7 +20,9 @@ const supplementalRoutes = [
 ];
 
 function directoryEntriesFromIndex() {
-  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
+  const source = fs.existsSync(path.join(root, 'assets/physics-directory-index.json'))
+    ? 'physics-directory-index.json' : 'calculator-search-index.json';
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'assets', source), 'utf8'));
   const expected = new Set(index.filter(item => String(item.category || '').trim().toLowerCase() === 'physics')
     .map(item => String(item.url || ''))
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html') &&
