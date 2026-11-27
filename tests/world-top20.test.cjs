@@ -30,3 +30,23 @@ test('homepage renders the world section directly after India Top 20 and loads i
   const section = html.slice(world, html.indexOf('</section>', world));
   for (const c of W.CALCS) assert.ok(section.includes('href="' + c.url + '"'), c.id + ' crawlable link missing');
 });
+
+
+test('monthly-payment tools reject terms shorter than one payment period', () => {
+  const invalid = { years: 0.01, rate: 0, principal: 1000, target: 1000, current: 0 };
+  for (const id of ['mortgage', 'loanEmi', 'savingsGoal']) {
+    const calc = W.CALCS.find(c => c.id === id);
+    const result = calc.calc({ ...defaults(calc), ...invalid });
+    assert.ok(result.error, id + ' must reject a rounded payment count below one');
+  }
+  const zeroRate = W.CALCS.find(c => c.id === 'mortgage').calc({ principal: 1200, rate: 0, years: 1 });
+  assert.equal(zeroRate.rows[0][1], '100.00 (your currency)');
+});
+
+test('age calculator handles month ends and leap years without negative day components', () => {
+  const age = W.CALCS.find(c => c.id === 'age');
+  const result = (dob, asof) => age.calc({ dob, asof }).rows[0][1];
+  assert.equal(result('2026-01-31', '2026-03-01'), '0 years, 1 months, 1 days');
+  assert.equal(result('2024-01-31', '2024-03-01'), '0 years, 1 months, 1 days');
+  assert.equal(result('2024-02-29', '2025-02-28'), '1 years, 0 months, 0 days');
+});
