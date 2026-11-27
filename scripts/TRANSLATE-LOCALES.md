@@ -1,6 +1,6 @@
 # Machine-translation draft generator
 
-`scripts/translate-locales.mjs` generates **review-only HTML drafts** for configured non-default languages, with planned languages selected by default in `config/language-catalogue.json`. The default set is the current 33 planned locales. It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
+`scripts/translate-locales.mjs` generates **review-only HTML drafts** for configured non-default languages, with planned languages selected by default in `config/language-catalogue.json`. The default set is the planned locales only. It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Never place API keys in this repository or command-line arguments. Keep them in 
 node scripts/translate-locales.mjs --source index.html --dry-run
 ```
 
-This reports text-node counts for all 33 planned languages and performs no network calls or writes. To create drafts for a limited pilot:
+This reports text-node counts for all currently planned languages and performs no network calls or writes. To create drafts for a limited pilot in any configured locale (including currently available locales), explicitly pass `--locale`:
 
 ```sh
 TRANSLATION_API_BASE="https://api.example.com/v1" \
