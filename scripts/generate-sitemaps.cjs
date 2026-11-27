@@ -3,7 +3,6 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { execFileSync } = require('node:child_process');
 
 const ROOT = process.cwd();
 const SITE_ORIGIN = 'https://friendlycalculator.in';
@@ -78,16 +77,7 @@ function isNoindex(html) {
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(html);
 }
 
-function getLastmod(file) {
-  try {
-    return execFileSync('git', ['log', '-1', '--format=%cs', '--', file], {
-      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']
-    }).trim();
-  } catch {
-    return '';
-  }
-}
-
+function getLastmod() { return ''; }
 function xmlEscape(value) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -131,7 +121,7 @@ function build() {
   }
   const hreflangGroups = [...languageGroups.values()].filter(group => group.size > 1).length;
   entries.sort((a, b) => a.loc.localeCompare(b.loc));
-  const body = entries.map(entry =>
+  const renderedEntries = entries.map(entry =>
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
     (entry.lastmod ? '<lastmod>' + entry.lastmod + '</lastmod>' : '') +
     (entry.alternates ? [...entry.alternates.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([lang,url]) =>
@@ -142,31 +132,59 @@ function build() {
       ? '<image:image><image:loc>' + xmlEscape(BRAND_IMAGE_URL) + '</image:loc></image:image>'
       : '') +
     '</url>'
-  ).join('\n');
-  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  );
+  // Cloudflare Pages rejects any individual asset above 25 MiB. Keep each
+  // sitemap shard comfortably below that hard limit while retaining every URL.
+  const MAX_SHARD_BYTES = 8 * 1024 * 1024;
+  const XML_OPEN = '<?xml version="1.0" encoding="UTF-8"?>\\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' +
     'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ' +
-    'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
-    body + '\n</urlset>\n';
-
-  if (Buffer.byteLength(xml, 'utf8') > MAX_BYTES) {
-    throw new Error('Single sitemap exceeds the 50 MB uncompressed limit.');
+    'xmlns:xhtml="http://www.w3.org/1999/xhtml">\\n';
+  const XML_CLOSE = '\\n</urlset>\\n';
+  const shards = [];
+  let current = [];
+  let currentBytes = Buffer.byteLength(XML_OPEN + XML_CLOSE, 'utf8');
+  for (const item of renderedEntries) {
+    const itemBytes = Buffer.byteLength(item + '\\n', 'utf8');
+    if (current.length && currentBytes + itemBytes > MAX_SHARD_BYTES) {
+      shards.push(current);
+      current = [];
+      currentBytes = Buffer.byteLength(XML_OPEN + XML_CLOSE, 'utf8');
+    }
+    current.push(item);
+    currentBytes += itemBytes;
   }
-  return { xml, urlCount: entries.length, pageCount: candidates.length, hreflangGroups };
+  if (current.length) shards.push(current);
+  const sitemaps = new Map();
+  shards.forEach((items, index) => {
+    const name = index === 0 ? 'sitemap.xml' : 'sitemap-pages-' + (index + 1) + '.xml';
+    sitemaps.set(name, XML_OPEN + items.join('\\n') + XML_CLOSE);
+  });
+  return { sitemaps, urlCount: entries.length, pageCount: candidates.length, hreflangGroups };
 }
 
 function main() {
-  const { xml, urlCount, pageCount, hreflangGroups } = build();
+  const { sitemaps, urlCount, pageCount, hreflangGroups } = build();
   if (process.argv.includes('--check')) {
-    if (!xml.startsWith('<?xml') || !xml.includes('<urlset') || !xml.includes('xmlns:xhtml=') || !xml.includes('<xhtml:link') || hreflangGroups < 1) {
-      throw new Error('Invalid sitemap XML envelope.');
+    let totalBytes = 0;
+    for (const [name, xml] of sitemaps) {
+      const bytes = Buffer.byteLength(xml, 'utf8');
+      totalBytes += bytes;
+      if (!xml.startsWith('<?xml') || !xml.includes('<urlset') || !xml.includes('xmlns:xhtml=') ||
+          bytes > 25 * 1024 * 1024) {
+        throw new Error('Invalid or oversized sitemap shard: ' + name + ' (' + bytes + ' bytes).');
+      }
     }
-    console.log('Single sitemap check passed: ' + urlCount +
-      ' unique canonical URLs from ' + pageCount + ' HTML files; ' + hreflangGroups + ' language clusters.');
+    if (![...sitemaps.values()].some(xml => xml.includes('<xhtml:link'))) {
+      throw new Error('Sitemap shards are missing hreflang alternates.');
+    }
+    console.log('Sitemap shard check passed: ' + urlCount +
+      ' unique canonical URLs in ' + sitemaps.size + ' files (' + totalBytes +
+      ' bytes total); ' + pageCount + ' HTML files; ' + hreflangGroups + ' language clusters.');
     return;
   }
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
-  console.log('Generated one sitemap.xml with ' + urlCount +
+  for (const [name, xml] of sitemaps) fs.writeFileSync(path.join(ROOT, name), xml);
+  console.log('Generated ' + sitemaps.size + ' sitemap shards with ' + urlCount +
     ' unique canonical URLs from ' + pageCount + ' HTML files; ' + hreflangGroups + ' language clusters.');
 }
 

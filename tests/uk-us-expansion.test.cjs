@@ -65,7 +65,10 @@ test('council-tax calculator uses user-entered local bill and does not assume a 
 
 test('new UK and US calculator URLs are listed in the additive country sitemap', () => {
   const sitemap = read('sitemap-uk-us.xml');
-  const mainSitemap = read('sitemap.xml');
+  const sitemapFiles = ['sitemap.xml', ...fs.readdirSync(root)
+    .filter(name => /^sitemap-pages-\d+\.xml$/.test(name))
+    .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]))];
+  const mainSitemap = sitemapFiles.map(read).join('\n');
   for (const route of [
     'https://friendlycalculator.in/uk/',
     'https://friendlycalculator.in/us/',
