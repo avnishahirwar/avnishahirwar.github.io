@@ -1,6 +1,6 @@
 # Machine-translation draft generator
 
-`scripts/translate-locales.mjs` generates **review-only HTML drafts** for languages whose status is `planned` in `config/language-catalogue.json`. The default set is the current 33 planned locales. It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
+`scripts/translate-locales.mjs` generates **review-only HTML drafts** for configured non-default languages, with planned languages selected by default in `config/language-catalogue.json`. The default set is the current 33 planned locales. It deliberately does not enable languages, overwrite published locale files, publish drafts, or change the public language selector.
 
 ## Requirements
 
