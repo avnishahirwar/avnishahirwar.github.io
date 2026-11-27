@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'assets/calculator-search-index-additions.json'
+      - 'scripts/merge-search-index.cjs'
   pull_request:
     branches: [main]
   workflow_dispatch:
