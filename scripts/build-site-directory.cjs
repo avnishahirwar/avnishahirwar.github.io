@@ -38,7 +38,7 @@ function esc(value) {
 }
 function readCanonicalCalculatorUrls() {
   const xml = fs.readFileSync(SITEMAP_FILE, 'utf8');
-  const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\\.in[^<]*)<\\/loc>/g)]
+  const sitemapUrls = [...xml.matchAll(/<loc>(https:\/\/friendlycalculator\.in[^<]*)<\/loc>/g)]
     .map(match => new URL(match[1]).pathname)
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html'));
 
