@@ -14,8 +14,8 @@
   const pageTitle = (titleNode.textContent || '').trim();
   const route = location.pathname.toLowerCase();
   // Skip restricted or safety-sensitive calculator topics.
-  const excludedTopic = /(?:firearm|weapon|ammunition|rounds-per-minute|twist-rate|bullet|rifle|opioid|overdose|dosage|drug-dose|medication|paracetamol|acetaminophen|prescription|poison|toxic-substance|casino|gambling|sports-bet|wager|betting|alcohol|nicotine|vape|self-harm)/i;
-  if (excludedTopic.test(route) || excludedTopic.test(pageTitle)) return;
+  const approvedTopic = /(?:absolute[- ]value|compound[- ]interest|sip|mortgage|loan|emi|gst|tax|percentage|fraction|decimal|algebra|geometry|statistics|probability|trigonometry|currency|inflation|retirement|budget|salary|invoice|sales|profit|loss|discount|business|accounting|roi|margin|break[- ]even|markup|ratio|date|time|calendar|anniversary|age|unit[- ]conversion|temperature|distance|length|area|volume|weight|speed|interest|investment|401k|ppf|nps)/i;
+  if (!approvedTopic.test(route + ' ' + pageTitle)) return;
 
   const headingText = node => (node.textContent || '').replace(/\s+/g, ' ').trim();
   const headings = Array.from(main.querySelectorAll('h2, h3, h4'));
