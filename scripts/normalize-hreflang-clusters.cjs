@@ -166,7 +166,7 @@ function normalizeDirectory(root, { write = false } = {}) {
   }
 
   for (const page of pages.values()) {
-    if (page.head === null) continue;
+    if (typeof page.head !== 'string') continue;
     const cleanHead = page.head.replace(
       /<link\b(?=[^>]*\brel\s*=\s*["']alternate["'])(?=[^>]*\bhreflang\s*=\s*["'][^"']+["'])[^>]*>\s*/gi,
       ''
