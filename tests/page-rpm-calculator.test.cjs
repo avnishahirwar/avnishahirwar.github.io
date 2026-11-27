@@ -64,6 +64,9 @@ test('Page RPM page has unique indexable metadata and useful methodology', () =>
   assert.match(page, /Worked examples/);
   assert.match(page, /Frequently asked questions/);
   assert.match(page, /Methodology reviewed: 27 November 2026/);
+  assert.match(page, /Interesting facts about Page RPM/);
+  assert.match(page, /Mille.*Latin word for one thousand/);
+  assert.match(page, /review total estimated earnings and page views alongside RPM/);
 });
 
 test('calculator computes Page RPM, estimated revenue and required page views', () => {
