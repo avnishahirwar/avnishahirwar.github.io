@@ -1055,7 +1055,7 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assert.ok(h.includes('/assets/keyword-calculators.js'));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapEligibility(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
+    assertSitemapEligibility(h, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1078,7 +1078,7 @@ test('Hindi average percentage, percentage-of-percentage and percent-error pages
     assert.ok(h.includes('/assets/keyword-calculators.js'));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapEligibility(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
+    assertSitemapEligibility(h, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1101,7 +1101,7 @@ test('Hindi digital root, divisibility test and reciprocal pages are localized a
     assert.ok(h.includes('/assets/keyword-calculators.js'));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapEligibility(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
+    assertSitemapEligibility(h, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1125,7 +1125,7 @@ test('Hindi percentile, prime number, scientific notation and completing-square 
     assert.ok(h.includes('/assets/keyword-calculators.js'));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapEligibility(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
+    assertSitemapEligibility(h, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1149,7 +1149,7 @@ test('Hindi quartile, coefficient of variation, complex conjugate and discrimina
     assert.ok(h.includes('/assets/keyword-calculators.js'));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapEligibility(hindi, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
+    assertSitemapEligibility(h, 'https://friendlycalculator.in/hi/calculators/' + slug + '.html');
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
