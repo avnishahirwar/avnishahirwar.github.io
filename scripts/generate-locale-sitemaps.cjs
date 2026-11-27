@@ -137,7 +137,8 @@ function build() {
   // Publish the standard top-level index requested by search engines. The
   // locale index fans out to its individual locale segments, while the
   // regional additive sitemap remains directly discoverable from robots.txt.
-  const topLevelFiles = ['sitemap.xml', 'sitemap-locales.xml', 'sitemap-uk-us.xml'];
+  const pageShards = fs.readdirSync(ROOT).filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name)).sort((a, b) => Number(a.match(/\\d+/)[0]) - Number(b.match(/\\d+/)[0]));
+  const topLevelFiles = ['sitemap.xml', ...pageShards, 'sitemap-locales.xml', 'sitemap-uk-us.xml'];
   const topLevelEntries = topLevelFiles.map(file => '  <sitemap><loc>' + ORIGIN + '/' + file + '</loc></sitemap>').join('\n');
   outputs.set('sitemap-index.xml', '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n' + topLevelEntries + '\n</sitemapindex>\n');
   return { outputs, groups, fileCount: files.length };
@@ -152,13 +153,14 @@ function main() {
       }
     }
     const topIndex = outputs.get('sitemap-index.xml');
-    for (const file of ['sitemap.xml', 'sitemap-locales.xml', 'sitemap-uk-us.xml']) {
+    const expectedTopLevel = ['sitemap.xml', ...fs.readdirSync(ROOT).filter(name => /^sitemap-pages-\\d+\\.xml$/.test(name)).sort((a, b) => Number(a.match(/\\d+/)[0]) - Number(b.match(/\\d+/)[0])), 'sitemap-locales.xml', 'sitemap-uk-us.xml'];
+    for (const file of expectedTopLevel) {
       if (!topIndex.includes('<loc>' + ORIGIN + '/' + file + '</loc>')) {
         throw new Error('Top-level sitemap index is missing ' + file);
       }
     }
-    if ((topIndex.match(/<sitemap>/g) || []).length !== 3) {
-      throw new Error('Top-level sitemap index must contain exactly three sitemap entries.');
+    if ((topIndex.match(/<sitemap>/g) || []).length !== expectedTopLevel.length) {
+      throw new Error('Top-level sitemap index has an unexpected sitemap count.');
     }
     const counts = [...groups.entries()].map(([locale, entries]) => locale + '=' + entries.length).join(', ');
     console.log('Locale sitemap check passed: ' + [...groups.values()].reduce((n, items) => n + items.length, 0) +
