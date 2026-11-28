@@ -7,6 +7,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = process.cwd();
 const ORIGIN = 'https://friendlycalculator.in';
+const SUPPORTED_HREFLANG = /^[a-z]{2}(?:-[a-z0-9]{2,8})*$/i;
+const KNOWN_UNTRANSLATED_TARGETS = new Set([
+  '/am/calculators/rd-calculator.html',
+  '/de/calculators/rd-calculator.html',
+  '/ja/calculators/loan-emi-calculator.html',
+  '/fa/calculators/loan-emi-calculator.html',
+  '/vi/calculators/loan-emi-calculator.html'
+]);
 const IGNORE = new Set(['.git', '.github', 'node_modules', 'tests', 'vendor', '_site', 'admin', 'avnish-ai']);
 
 function walk(dir, files = []) {
@@ -72,17 +80,22 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnsupportedLanguageCode: 0, skippedKnownUntranslatedTarget: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
     const sourceLang = langOf(sourceHtml, sourceFile);
+    if (!SUPPORTED_HREFLANG.test(sourceLang)) { stats.skippedUnsupportedLanguageCode++; continue; }
     const sourceCanonical = canonicalOf(sourceHtml);
     if (!sourceCanonical) continue;
     if (!selfCanonicalCandidates(sourceFile).has(sourceCanonical)) { stats.skippedNoncanonicalSource++; continue; }
     for (const link of linksOf(sourceHtml)) {
       stats.linksExamined++;
       if (link.lang === 'x-default') continue;
+      if (!SUPPORTED_HREFLANG.test(link.lang)) { stats.skippedUnsupportedLanguageCode++; continue; }
+      let targetUrl;
+      try { targetUrl = new URL(link.href, ORIGIN); } catch { stats.skippedMissingTarget++; continue; }
+      if (KNOWN_UNTRANSLATED_TARGETS.has(decodeURIComponent(targetUrl.pathname))) { stats.skippedKnownUntranslatedTarget++; continue; }
       const target = targetFile(link.href);
       if (!target) { stats.skippedMissingTarget++; continue; }
       if (target === sourceFile) continue;
