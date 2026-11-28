@@ -195,7 +195,7 @@ function build() {
     if (desired.length) {
       // Keep the normalized output idempotent: remove trailing whitespace left
       // where old alternate tags were removed before appending the canonical set.
-      nextHead = nextHead.replace(/[\\t \\r\\n]+$/, '');
+      nextHead = nextHead.replace(/[\t \r\n]+$/, '');
       nextHead += '\n' + desired.join('\n') + '\n';
     }
     const closeIndex = record.html.toLowerCase().indexOf('</head>');
