@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/free-ci.yml"
+      - "vercel.json"
+      - "tests/vercel-git-deployment-disabled.test.cjs"
       - "assets/site-shell.js"
       - "assets/site-shell.css"
       - "tests/no-google-programmable-search.test.cjs"
@@ -40,3 +42,5 @@ jobs:
         run: node --check assets/site-shell.js
       - name: Verify Google PSE is absent and native calculator search remains
         run: node --test tests/no-google-programmable-search.test.cjs
+      - name: Verify Vercel Git deployments are disabled
+        run: node --test tests/vercel-git-deployment-disabled.test.cjs
