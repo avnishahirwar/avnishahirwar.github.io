@@ -1,0 +1,28 @@
+name: Priority hreflang cluster dry run v2
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate and report explicit priority clusters
+        run: |
+          mkdir -p artifacts
+          node --check scripts/complete-priority-hreflang-clusters.cjs
+          node scripts/complete-priority-hreflang-clusters.cjs | tee artifacts/priority-hreflang-dry-run.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: priority-hreflang-dry-run-v2
+          path: artifacts/priority-hreflang-dry-run.json
+          if-no-files-found: error
