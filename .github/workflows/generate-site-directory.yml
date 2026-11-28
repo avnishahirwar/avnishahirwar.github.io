@@ -64,6 +64,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Regenerate the canonical sitemap before building the directory
+        run: node scripts/generate-sitemaps.cjs
       - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
       - name: Regenerate the physics subject directory from the curated catalogue
