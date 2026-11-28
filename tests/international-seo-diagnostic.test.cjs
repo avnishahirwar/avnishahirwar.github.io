@@ -145,3 +145,29 @@ test('invalid hreflang cleanup removes noindex, language-mismatch and noncanonic
     fs.rmSync(temp, { recursive: true, force: true });
   }
 });
+
+test('known untranslated destinations and unsupported hreflang language codes are removed', () => {
+  const os = require('node:os');
+  const { spawnSync } = require('node:child_process');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-locale-prune-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  try {
+    write('calculators/rd-calculator.html',
+      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/rd-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"></head></html>');
+    write('am/calculators/rd-calculator.html', '<html lang="am"><head><link rel="canonical" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"></head></html>');
+    write('de/calculators/rd-calculator.html', '<html lang="de"><head><link rel="canonical" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"></head></html>');
+    write('arz/calculators/rd-calculator.html', '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"></head></html>');
+    const result = spawnSync('python3', [path.join(root, 'scripts/prune-noindex-hreflang.py')], {
+      cwd: root, encoding: 'utf8', env: { ...process.env, FC_HREFLANG_ROOT: temp }
+    });
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const cleaned = fs.readFileSync(path.join(temp, 'calculators/rd-calculator.html'), 'utf8');
+    assert.doesNotMatch(cleaned, /hreflang="am"|hreflang="de"|hreflang="arz"/);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
