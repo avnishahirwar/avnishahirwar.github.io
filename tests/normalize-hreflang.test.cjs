@@ -57,14 +57,14 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
     '<meta name="description" content="[فارسی] Calculate a demo result with untranslated English metadata.">' +
     '</head><body><h1>Demo Calculator</h1></body></html>';
   const regional = '<!doctype html><html lang="en-US"><head>' +
+    '<link rel="canonical" href="https://friendlycalculator.in/international/us-mortgage-calculator.html">' +
+    '</head><body><h1>US Mortgage Calculator</h1></body></html>';
   const englishFallback = '<!doctype html><html lang="en"><head>' +
     '<link rel="canonical" href="https://friendlycalculator.in/calculators/locale-fallback-demo.html">' +
     '</head><body><h1>Locale fallback demo</h1></body></html>';
   const ukFallback = '<!doctype html><head>' +
     '<link rel="canonical" href="https://friendlycalculator.in/uk/calculators/locale-fallback-demo.html">' +
     '</head><body><h1>Locale fallback demo</h1></body></html>';
-    '<link rel="canonical" href="https://friendlycalculator.in/international/us-mortgage-calculator.html">' +
-    '</head><body><h1>US Mortgage Calculator</h1></body></html>';
 
   write(fixture, 'calculators/demo.html', english);
   write(fixture, 'fr/calculators/demo.html', french);
