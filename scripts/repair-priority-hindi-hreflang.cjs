@@ -3,6 +3,7 @@
 
 // Add only missing, self-canonical hreflang links for the ten priority Hindi calculator clusters.
 // Existing links are never removed or rewritten. Noindex pages are excluded.
+// Cluster membership is recalculated from each locale page's current robots and canonical metadata.
 const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = process.cwd();
