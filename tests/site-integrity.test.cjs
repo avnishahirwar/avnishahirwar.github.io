@@ -75,7 +75,7 @@ function assertLocaleCluster(baseUrl, locales) {
         lang:(tag.match(/\bhreflang=["']([^"']+)["']/i)||[])[1]?.toLowerCase(),
         href:new URL((tag.match(/\bhref=["']([^"']+)["']/i)||[])[1]||'', SITE_ORIGIN).href
       }));
-    const eligible = states.filter(item => item.indexable);
+    const eligible = states.filter(item => item.indexable && (item.locale === 'en' || String(item.lang || '').split('-')[0].toLowerCase() === item.locale));
     if (!state.indexable || eligible.length < 2) {
       assert.equal(tags.length, 0, 'Non-indexable or singleton locale page must not advertise hreflang: ' + state.url);
       continue;
