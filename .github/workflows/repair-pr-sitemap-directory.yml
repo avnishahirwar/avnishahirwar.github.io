@@ -1,0 +1,54 @@
+name: Repair PR sitemap and calculator directory
+# Re-run from the latest branch head so generated directory changes are committed without a stale-ref race.
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/generate-sitemaps.cjs
+      - scripts/build-site-directory.cjs
+      - scripts/sync-calculator-counts.cjs
+      - .github/workflows/repair-pr-sitemap-directory.yml
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerate canonical sitemap from all indexable self-canonical HTML pages
+        run: node scripts/generate-sitemaps.cjs
+      - name: Rebuild curated calculator directory and physics subject directory
+        run: |
+          node scripts/build-site-directory.cjs
+          node scripts/generate-physics-calculator-directory.cjs
+      - name: Synchronize catalogue counts and About catalogue list
+        run: node scripts/sync-calculator-counts.cjs
+      - name: Verify generated sitemap, directory and counters
+        run: |
+          node scripts/generate-sitemaps.cjs --check
+          node scripts/build-site-directory.cjs --check
+          node scripts/sync-calculator-counts.cjs --check
+          node scripts/generate-locale-sitemaps.cjs --check
+          node --test tests/sitemap-index.test.cjs tests/calculator-counts.test.cjs tests/physics-calculator-directory.test.cjs
+          git diff --check
+      - name: Commit generated SEO catalogue files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          if ! git diff --cached --quiet; then
+            git diff --cached --stat
+            git commit -m "seo: regenerate canonical sitemap and calculator directory [skip ci]"
+            git push
+          else
+            echo "Sitemap, directory and catalogue counts are already synchronized."
+          fi

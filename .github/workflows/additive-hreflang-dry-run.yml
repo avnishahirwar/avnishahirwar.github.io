@@ -1,0 +1,43 @@
+name: Additive hreflang repair report
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/add-hreflang-reciprocals.cjs
+      - .github/workflows/additive-hreflang-dry-run.yml
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate and report additive-only hreflang candidates
+        run: |
+          mkdir -p artifacts
+          node --check scripts/add-hreflang-reciprocals.cjs
+          node scripts/add-hreflang-reciprocals.cjs | tee artifacts/additive-hreflang-dry-run.txt
+      - name: Add report summary
+        if: always()
+        run: |
+          if [ -f artifacts/additive-hreflang-dry-run.txt ]; then
+            {
+              echo "## Additive hreflang repair — dry run"
+              echo 'No files were modified.'
+              echo '```text'
+              cat artifacts/additive-hreflang-dry-run.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: additive-hreflang-dry-run
+          path: artifacts/additive-hreflang-dry-run.txt
+          if-no-files-found: error

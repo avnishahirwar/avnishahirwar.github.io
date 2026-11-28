@@ -10,15 +10,36 @@ const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
 const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
+const canonicalOf=html=>{const tag=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return tag?tag[1]:'';};
+const configuredLocales=require('../config/language-catalogue.json').locales.map(locale=>locale.code);
+const localeCandidates=route=>configuredLocales.filter(locale=>fs.existsSync(pageFor(locale,route)));
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
- return fs.existsSync(file)&&!noindexOf(fs.readFileSync(file,'utf8'));
+ if(!fs.existsSync(file)) return false;
+ const html=fs.readFileSync(file,'utf8');
+ const language=(html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)||[])[1]||'';
+ return !noindexOf(html)&&language.toLowerCase()===locale&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
 });
-const expectedPairs=(locales,route)=>[
- ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
- ['x-default',origin+'/calculators/'+route]
-];
+const expectedPairs=(locales,route)=>[...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),...(locales.includes('en')?[['x-default',origin+'/calculators/'+route]]:[])];
 const sorted=items=>items.slice().sort(([a],[b])=>a.localeCompare(b));
+function assertReciprocalAlternates(html, locale, route) {
+ const sourceUrl=origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
+ const seen=new Set();
+ for(const [lang,href] of alternatesOf(html)){
+  assert.ok(!seen.has(lang),locale+'/'+route+' duplicate hreflang '+lang);
+  seen.add(lang);
+  if(lang==='x-default'){
+   assert.equal(href,origin+'/calculators/'+route);
+   continue;
+  }
+  const targetFile=pageFor(lang,route);
+  assert.ok(fs.existsSync(targetFile),locale+'/'+route+' hreflang target page missing: '+lang);
+  const targetHtml=fs.readFileSync(targetFile,'utf8');
+  assert.ok(!noindexOf(targetHtml),locale+'/'+route+' must not target noindex locale '+lang);
+  assert.equal(canonicalOf(targetHtml),href,locale+'/'+route+' canonical mismatch for '+lang);
+  assert.ok(alternatesOf(targetHtml).some(([backLang,backHref])=>backLang===locale&&backHref===sourceUrl),locale+'/'+route+' missing reciprocal link from '+lang);
+ }
+}
 
 test('all existing localized currency converters load the shared reference-rate client',()=>{
  for(const locale of locales){
@@ -29,17 +50,17 @@ test('all existing localized currency converters load the shared reference-rate 
  }
 });
 
-test('English currency converter and German page carry no hreflang cross-links',()=>{
+test('English and German currency converter pages preserve their intentional language separation and valid alternates',()=>{
  const route='currency-converter-calculator.html';
  const english=fs.readFileSync(pageFor('en',route),'utf8');
  const german=fs.readFileSync(pageFor('de',route),'utf8');
  assert.ok(!noindexOf(german),'German currency page is indexable');
- assert.deepEqual(alternatesOf(german),[],'German page does not carry hreflang yet');
- assert.doesNotMatch(english,/hreflang="de"/,'English page does not target German until reciprocal hreflang exists');
- assert.match(english,/hreflang="x-default"/);
- for(const html of [english,german]) assert.match(html,/\/assets\/currency-converter-live\.js/);
+ assert.ok(!alternatesOf(english).some(([lang])=>lang==='de'),'English currency page intentionally excludes the staged German edition');
+ assert.ok(!alternatesOf(german).some(([lang])=>lang==='en'),'German currency page intentionally remains outside the English cluster');
+ assertReciprocalAlternates(english,'en',route);
+ assertReciprocalAlternates(german,'de',route);
+ for(const html of [english,german]) assert.ok(html.includes('/assets/currency-converter-live.js'));
 });
-
 test('shared FX client uses free reference rates and preserves a manual fallback',()=>{
  const js=fs.readFileSync(path.join(root,'assets/currency-converter-live.js'),'utf8');
  assert.match(js,/api\.frankfurter\.dev\/v2\/rate/);
@@ -53,20 +74,17 @@ test('generated sitemap check includes hreflang clusters',()=>{
  assert.match(output,/language clusters/);
 });
 
-test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
+test('percentage calculator hreflang cluster contains only valid reciprocal indexable alternates',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
- const expected=expectedPairs(indexableLocales(candidates,route),route);
+ const candidates=localeCandidates(route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
   if(!fs.existsSync(file)) continue;
   const html=fs.readFileSync(file,'utf8');
-  const actual=alternatesOf(html);
-  if(noindexOf(html)) assert.deepEqual(actual,[],locale+' noindex page must not carry hreflang');
-  else assert.deepEqual(sorted(actual),sorted(expected),locale+'/'+route);
+  if(noindexOf(html)) assert.deepEqual(alternatesOf(html),[],locale+' noindex page must not carry hreflang');
+  else assertReciprocalAlternates(html,locale,route);
  }
 });
-
 test('simple-interest English and Bengali hreflang alternates match indexable published translations',()=>{
  const route='simple-interest-calculator.html';
  const candidates=['en','bn','ar','es','fr','hi','id','pt','ta'];
@@ -74,7 +92,8 @@ test('simple-interest English and Bengali hreflang alternates match indexable pu
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
   const html=fs.readFileSync(file,'utf8');
-  assert.deepEqual(sorted(alternatesOf(html)),sorted(expected),locale+'/'+route);
+  if(noindexOf(html)) assert.deepEqual(alternatesOf(html),[],locale+' noindex page must not carry hreflang');
+  else assert.deepEqual(sorted(alternatesOf(html)),sorted(expected),locale+'/'+route);
  }
 });
 
@@ -87,10 +106,8 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'discount-calculator.html',
   'ppf-calculator.html'
  ];
- const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
  for(const route of routes){
-  const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
+  const candidates=localeCandidates(route);
   const expected=expectedPairs(indexableLocales(candidates,route),route);
   for(const locale of candidates){
    const file=pageFor(locale,route);

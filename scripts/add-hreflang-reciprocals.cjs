@@ -2,6 +2,7 @@
 'use strict';
 
 // Add only missing reciprocal hreflang links. Never remove, rewrite or deduplicate
+// Existing canonical URLs and noindex exclusions are mandatory safety gates.
 // existing tags. Conflicting or invalid clusters are skipped for manual review.
 const fs = require('node:fs');
 const path = require('node:path');
