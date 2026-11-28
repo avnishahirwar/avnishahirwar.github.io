@@ -61,7 +61,7 @@
   ]);
 
   const match = String(window.location && window.location.pathname || '')
-    .match(/^\\/calculators\\/([a-z0-9-]+)\\.html$/i);
+    .match(/^[/]calculators[/]([a-z0-9-]+)[.]html$/i);
 
   if (!match || !document.head) return;
 
