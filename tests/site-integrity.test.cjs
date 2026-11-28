@@ -46,11 +46,11 @@ function pageIndexability(url) {
   const tags = [...head.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
   const canonicalTag = tags.find(tag => /\brel=["']canonical["']/i.test(tag));
   const canonical = canonicalTag?.match(/\bhref=["']([^"']+)["']/i)?.[1] || '';
-  const lang = head.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)?.[1]?.trim() || null;
+  const lang = head.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)?.[1]?.trim() || new URL(url).pathname.split('/').filter(Boolean)[0] || 'en';
   const descriptionTag = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0])
     .find(tag => /\bname=["']description["']/i.test(tag));
   const description = descriptionTag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] || '';
-  const placeholder = /^\s*\[[^\]]{2,40}\]\s*/.test(description);
+  const placeholder = !/^en(?:-|$)/i.test(lang) && /^\s*\[[^\]]{2,40}\]\s*/.test(description);
   const canonicalUrl = canonical ? new URL(canonical, SITE_ORIGIN).href : '';
   const isPublic = !noindex && !placeholder && canonicalUrl === url;
   return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
