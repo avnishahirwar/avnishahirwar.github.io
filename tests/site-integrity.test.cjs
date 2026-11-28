@@ -2212,6 +2212,12 @@ test('homepage keeps critical header CSS inline and defers the shared shell styl
   assert.doesNotMatch(html, /<link rel="preload" href="\/assets\/site-shell\.css"/);
   const sharedCss = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
   assert.match(sharedCss, /\.fc-global-header\{/);
+  assert.ok(sharedCss.includes('Reserve the shared Header and its deferred Google Search row before scripts run.'));
+  assert.match(sharedCss, /\.fc-global-header\{min-height:132px\}/);
+  assert.match(sharedCss, /\.fc-header-reservation\{height:132px;min-height:132px;flex:0 0 132px\}/);
+  assert.match(sharedCss, /\.fc-header-search\{min-height:66px\}/);
+  assert.match(sharedCss, /\.fc-header-search \.gcse-search\{min-height:56px\}/);
+  assert.ok(sharedCss.includes('.fc-global-header{min-height:170px}'), 'mobile header must reserve its final rendered height');
   assert.match(html,/src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
   assert.match(html, /src="\/assets\/site-shell\.js(?:\?v=[a-z0-9-]+)?" defer/);
 });
