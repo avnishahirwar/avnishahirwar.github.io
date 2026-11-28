@@ -1057,7 +1057,8 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
   }
 });
 
@@ -1077,7 +1078,8 @@ test('Hindi median and mode calculator pages are localized, reciprocal and index
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html'), 'Missing sitemap URL: ' + slug);
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
   }
 });
 
@@ -1114,7 +1116,8 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
   }
 });
 
@@ -1138,7 +1141,8 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1162,7 +1166,8 @@ test('Hindi average percentage, percentage-of-percentage and percent-error pages
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1186,7 +1191,8 @@ test('Hindi digital root, divisibility test and reciprocal pages are localized a
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1211,7 +1217,8 @@ test('Hindi percentile, prime number, scientific notation and completing-square 
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1236,7 +1243,8 @@ test('Hindi quartile, coefficient of variation, complex conjugate and discrimina
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    const localePageUrl='https://friendlycalculator.in/hi/calculators/' + slug + '.html';
+    assert.ok(!allSitemapUrls.has(localePageUrl) || pageIndexability(localePageUrl).indexable, 'A noindex Hindi page must not be submitted in the sitemap: ' + slug);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
