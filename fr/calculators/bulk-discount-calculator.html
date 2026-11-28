@@ -3,14 +3,50 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/bulk-discount-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/bulk-discount-calculator.html">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/bulk-discount-calculator.html">
+<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/bulk-discount-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/bulk-discount-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/bulk-discount-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/bulk-discount-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/bulk-discount-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/bulk-discount-calculator.html">
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/bulk-discount-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/bulk-discount-calculator.html">
+<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/bulk-discount-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/bulk-discount-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/bulk-discount-calculator.html">
 </head><body><main class="wrap"><p><a href="/fr/index.html">Accueil</a> / <a href="/calculator/site-directory.html">Tous les calculateurs</a> / Calculateur de remise sur quantité</p><header class="hero"><p>Calculateur gratuit · Inde · Friendly Calculator</p><h1>Calculateur de remise sur quantité</h1><p>Saisissez la quantité, le prix unitaire et la remise pour estimer le total de la commande.</p></header><section class="panel"><h2>Saisissez vos valeurs</h2><form id="calc"><div class="fields"><label class="field">Quantité<input id="qty" type="number" min="1" step="1" value="100" required></label><label class="field">Prix unitaire (₹)<input id="price" type="number" min="0" step="any" value="250" required></label><label class="field">Remise sur quantité (%)<input id="discount" type="number" min="0" max="100" step="any" value="10" required></label></div><p><button class="btn" type="submit">Calculer</button></p></form><div class="results" aria-live="polite"><div class="result"><span>Sous-total avant remise</span><strong id="subtotal">—</strong></div><div class="result"><span>Montant de la remise</span><strong id="saving">—</strong></div><div class="result"><span>Total après remise</span><strong id="total">—</strong></div></div><p id="status" class="muted">Saisissez la quantité, le prix et la remise.</p></section><section class="panel"><h2>Fonctionnement du calculateur</h2><p>Sous-total = quantité × prix unitaire. Remise = sous-total × taux de remise ÷ 100. Total final = sous-total − remise.</p><h2>Exemple</h2><p>100 unités × ₹250 = ₹25 000. Une remise de 10 % représente ₹2 500 ; le total estimé avant taxes, livraison ou autres frais est donc ₹22 500.</p><h2>Questions fréquentes</h2><details><summary>La remise est-elle appliquée avant les taxes ?</summary><p>Ce calculateur applique la remise au sous-total des articles. La facture réelle dépend des prix et du traitement fiscal du vendeur.</p></details><details><summary>La livraison est-elle incluse ?</summary><p>Non. Ajoutez séparément la livraison, la manutention et les autres frais.</p></details><details><summary>Vérifie-t-il la politique tarifaire du fournisseur ?</summary><p>Non. Il effectue le calcul avec le pourcentage saisi. Vérifiez les quantités minimales et les conditions auprès du fournisseur.</p></details></section><p class="muted">Les résultats sont des estimations fondées sur les valeurs saisies. Les taxes, frais, arrondis et conditions du vendeur peuvent modifier le montant réel. Ceci ne constitue pas un conseil financier, fiscal ou juridique.</p></main><script>(()=>{'use strict';const form=document.getElementById('calc'),status=document.getElementById('status'),fmt=new Intl.NumberFormat('fr',{style:'currency',currency:'INR',maximumFractionDigits:2});form.addEventListener('submit',e=>{e.preventDefault();const q=Number(document.getElementById('qty').value),p=Number(document.getElementById('price').value),d=Number(document.getElementById('discount').value);if(!Number.isFinite(q)||!Number.isInteger(q)||q<1||!Number.isFinite(p)||p<0||!Number.isFinite(d)||d<0||d>100){status.textContent='Saisissez la quantité, le prix et la remise.';return;}const subtotal=q*p,saving=subtotal*d/100,total=subtotal-saving;document.getElementById('subtotal').textContent=fmt.format(subtotal);document.getElementById('saving').textContent=fmt.format(saving);document.getElementById('total').textContent=fmt.format(total);status.textContent='✓';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});});form.requestSubmit();})();</script><script src="/assets/site-shell.js" defer></script></body></html>

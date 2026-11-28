@@ -3,14 +3,50 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/square-root-calculator.html">
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/square-root-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/square-root-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/square-root-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/square-root-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/square-root-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/square-root-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/square-root-calculator.html">
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/square-root-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/square-root-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/square-root-calculator.html">
+<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/square-root-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/square-root-calculator.html">
 </head><body><header class="head"><div class="wrap" style="margin:0 auto"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav><a href="/fr/index.html">Accueil</a><a href="/calculator/site-directory.html">Toutes les calculatrices</a></nav></div></header><main class="wrap"><header class="hero"><h1>Calculateur de racine carrée</h1><p class="muted">Calculez la racine carrée principale d’un nombre non négatif. Le résultat est la valeur non négative qui, multipliée par elle-même, donne le nombre initial.</p></header><section class="panel"><div class="field"><label for="number">Saisissez un nombre non négatif</label><input id="number" type="number" min="0" step="any" value="25"></div><button class="btn" id="calculate" type="button">Calculer la racine carrée</button><p id="error" role="alert" aria-live="polite"></p><div class="output" aria-live="polite"><p>Racine carrée principale</p><strong id="root">5</strong><p>Vérification : résultat au carré</p><strong id="check">25</strong></div></section><section class="panel"><h2>Comment utiliser le calculateur</h2><p>Saisissez un nombre supérieur ou égal à zéro et sélectionnez Calculer. L’outil affiche la racine carrée et une vérification en élevant le résultat au carré.</p><div class="formula"><strong>Si y = √x, alors y × y = x, avec x ≥ 0 et y ≥ 0.</strong></div><h3>Exemple et interprétation</h3><p>Par exemple, la racine carrée principale de 25 est 5, car 5 × 5 = 25.</p></section><section class="panel"><h2>Limites importantes</h2><p>Ce calculateur de nombres réels accepte uniquement les valeurs non négatives. Les racines carrées de nombres négatifs nécessitent des nombres complexes. La précision numérique de l’ordinateur peut limiter les résultats pour des valeurs extrêmement grandes ou petites.</p><p><a href="/calculators/square-root-calculator.html">Version anglaise</a> · <a href="/calculator/site-directory.html">Toutes les calculatrices</a></p></section><section class="panel faq"><h2>Questions fréquentes</h2><details><summary>Qu’est-ce qu’une racine carrée ?</summary><p>C’est une valeur qui, multipliée par elle-même, donne le nombre initial.</p></details><details><summary>Puis-je calculer la racine d’un nombre négatif ?</summary><p>Ce calculateur de nombres réels accepte uniquement les entrées non négatives.</p></details><details><summary>Qu’est-ce que la racine carrée principale ?</summary><p>C’est la racine carrée non négative, par exemple √25 = 5.</p></details></section></main><footer><div class="wrap"><a href="/calculator/about.html">About</a> · <a href="/calculator/privacy.html">Privacy</a> · <a href="/calculator/terms.html">Terms</a> · <a href="/calculator/disclaimer.html">Disclaimer</a></div></footer><script>(()=>{'use strict';const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString("fr-FR",{maximumFractionDigits:12});function calculate(){const raw=$('number').value,n=Number(raw);if(raw.trim()===''||!Number.isFinite(n)||n<0){$('error').textContent="Saisissez un nombre valide supérieur ou égal à zéro.";$('root').textContent='—';$('check').textContent='—';return;}const root=Math.sqrt(n),check=root*root;$('error').textContent='';$('root').textContent=fmt(root);$('check').textContent=fmt(check);if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}$('calculate').addEventListener('click',calculate);calculate();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>

@@ -21,8 +21,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node --check scripts/merge-search-index.cjs
-      - run: node scripts/merge-search-index.cjs --check
+      - run: node --check scripts/generate-sitemaps.cjs && node --check scripts/merge-search-index.cjs
+      - name: Rebuild the canonical sitemap and search index before validation
+        run: node scripts/generate-sitemaps.cjs && node scripts/merge-search-index.cjs && node scripts/merge-search-index.cjs --check
       - name: Build and validate the merged catalogue and count surfaces
         run: |
           node scripts/merge-search-index.cjs

@@ -6,12 +6,12 @@ const source=fs.readFileSync(new URL('../assets/global-locale.js','file://'+__fi
 const genericSource=fs.readFileSync(new URL('../assets/page-calculators.js','file://'+__filename),'utf8');
 const vatPage=fs.readFileSync(new URL('../international/vat-calculator.html','file://'+__filename),'utf8');
 const vatSource=fs.readFileSync(new URL('../assets/vat-calculator.js','file://'+__filename),'utf8');
-function boot(initial={},browserLocale='') {
+function boot(initial={},browserLocale='',pathname='/') {
  const values=new Map(Object.entries(initial)),listeners={},events=[];
  const select=()=>({value:'',addEventListener(type,fn){listeners[type]=fn;}});
  const elements={'fc-currency-select':select(),'fc-locale-select':select(),'fc-unit-system-select':select()};
  const context={
-  Intl,Number,Date,Object,navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
+  Intl,Number,Date,Object,location:{pathname},navigator:browserLocale?{language:browserLocale,languages:[browserLocale]}:undefined,
   localStorage:{getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)},
   document:{documentElement:{dataset:{}},getElementById:id=>elements[id],querySelectorAll:()=>[]},
   window:{dispatchEvent:event=>events.push(event),addEventListener:(type,fn)=>{(listeners['window:'+type]??=[]).push(fn);}},
@@ -84,6 +84,9 @@ test('VAT preset engine includes official rates and preserves manual override',(
  assert.match(vatSource,/Manual rate selected/);
 });
 
+test('Hindi calculator paths retain INR as the default display currency',()=>{
+ const hindi=boot({},'en-US','/hi/index.html');assert.equal(hindi.api.getCurrency(),'INR');
+});
 test('browser region auto-detects currency and number locale when no saved preference exists',()=>{
  const us=boot({},'en-US');assert.equal(us.api.getCurrency(),'USD');assert.equal(us.api.getLocale(),'en-US');
  const jp=boot({},'ja-JP');assert.equal(jp.api.getCurrency(),'JPY');assert.equal(jp.api.getLocale(),'ja-JP');

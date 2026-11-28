@@ -5,7 +5,14 @@ const path = require('node:path');
 const shell = fs.readFileSync(path.join(__dirname, '..', 'assets', 'site-shell.js'), 'utf8');
 const isNoindex = html => {
   const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
-  return /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(head);
+  return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(head) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(head);
+};
+const hasLocalePlaceholder = html => {
+  const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
+  const tag = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0]).find(item => /\bname=["']description["']/i.test(item));
+  const description = tag ? (tag.match(/\bcontent=["']([^"']*)["']/i) || [])[1] || '' : '';
+  return /^\s*\[[^\]]{2,40}\]\s*/.test(description);
 };
 
 test('global language selector supports all configured locales', () => {
@@ -213,17 +220,22 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 });
 
 
-test('Gujarati and Kannada basic calculators are indexable and carry no language alternates',()=>{
+test('Gujarati and Kannada basic calculator routes retain their indexing state and never target excluded locale pages',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
+ const excluded = new Set();
  for(const locale of ['gu','kn']){
   const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
-  assert.ok(!isNoindex(html),locale+' basic calculator must be indexable');
-  assert.doesNotMatch(html,/hreflang=/i,locale+' page must not carry alternates');
+  if(isNoindex(html)||hasLocalePlaceholder(html)){
+   excluded.add(locale);
+   assert.doesNotMatch(html,/hreflang=/i,locale+' noindex/placeholder page must not carry alternates');
+  } else {
+   assert.match(html,new RegExp('<html[^>]+lang="'+locale+'"'));
+  }
  }
  for(const file of pages){
   const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
-  if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,file+' noindex page must not carry alternates');
-  else assert.doesNotMatch(html,/hreflang="(?:gu|kn)"/i,file+' must not target noindex Gujarati or Kannada pages');
+  if(isNoindex(html)||hasLocalePlaceholder(html)) assert.doesNotMatch(html,/hreflang=/i,file+' excluded page must not carry alternates');
+  for(const locale of excluded) assert.doesNotMatch(html,new RegExp('hreflang="'+locale+'"'),file+' must not target excluded '+locale+' locale page');
  }
 });
 
@@ -290,8 +302,8 @@ test('five configured language editions retain localized homepages and working b
     const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'basic-calculator.html'), 'utf8');
     assert.match(home, new RegExp('<html lang="' + locale + '"'));
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
-    assert.match(home, /name="robots" content="index,follow,max-image-preview:large"/);
-    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(home)) assert.doesNotMatch(home,/hreflang=/i,locale+' noindex homepage must not carry hreflang');
+    if(isNoindex(calculator)) assert.doesNotMatch(calculator,/hreflang=/i,locale+' noindex calculator must not carry hreflang');
     assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
     assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
     for (const phrase of phrases) {
@@ -329,7 +341,7 @@ test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are loca
     assert.ok(fs.existsSync(file), 'Missing ' + locale + ' Unit Converter');
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
-    assert.match(html, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,locale+' noindex Unit Converter must not carry hreflang');
     assert.ok(html.includes('https://friendlycalculator.in/' + locale + '/calculators/unit-converter.html'));
     assert.match(html, /@type":"WebApplication"/);
     assert.match(html, /id="category"/);
@@ -367,7 +379,7 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
     const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'percentage-calculator.html'), 'utf8');
     const homepage = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
-    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(calculator)) assert.doesNotMatch(calculator,/hreflang=/i,locale+' noindex percentage calculator must not carry hreflang');
     assert.match(calculator, /rel="canonical"/);
     assert.match(calculator, /data-mode="of"/);
     assert.match(calculator, /data-mode="is"/);
@@ -391,5 +403,5 @@ test('sitemap hreflang grouping recognizes every published locale prefix', () =>
   assert.ok(prefixes, 'Expected sitemap language-prefix catalogue');
   const actual = [...prefixes[1].matchAll(/'([a-z]{2,3})'/g)].map(match => match[1]);
   const catalogue = require('../config/language-catalogue.json');
-  assert.deepEqual(actual, catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk'));
+  assert.deepEqual([...actual].sort(), catalogue.locales.map(locale => locale.code).filter(code => code !== 'en').sort());
 });

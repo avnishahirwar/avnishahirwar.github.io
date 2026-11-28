@@ -3,16 +3,16 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="mr" href="https://friendlycalculator.in/mr/calculators/home-loan-emi-calculator.html">
-<link rel="alternate" hreflang="te" href="https://friendlycalculator.in/te/calculators/home-loan-emi-calculator.html">
+
+
+
+
+
+
+
+
+
+
+
+
 </head><body><header class="fc-header"><div class="fc-shell fc-nav"><a class="fc-brand" href="/ar/index.html">FRIENDLY <b>CALCULATOR</b></a><nav class="fc-links"><a href="/ar/index.html">الرئيسية</a><a href="/calculator/site-directory.html">جميع الحاسبات</a></nav></div></header><main class="wrap"><p class="muted"><a href="/ar/index.html">الرئيسية</a> / حاسبة قسط التمويل العقاري</p><header class="hero"><h1>حاسبة قسط التمويل العقاري</h1><p class="muted">أدخل مبلغ التمويل ومعدل الفائدة السنوي والمدة لتقدير القسط الشهري.</p></header><section class="panel"><form id="calc"><div class="fields"><div class="field"><label for="p">مبلغ التمويل (₹)</label><input id="p" type="number" min="1" max="1000000000000" step="any" value="3000000" required></div><div class="field"><label for="rate">معدل الفائدة السنوي (%)</label><input id="rate" type="number" min="0" max="100" step="0.01" value="8.5" required></div><div class="field"><label for="months">المدة (بالأشهر)</label><input id="months" type="number" min="1" max="600" step="1" value="240" required></div></div><div class="actions"><button class="btn" type="submit">احسب القسط</button><button class="btn alt" id="reset" type="button">إعادة ضبط</button></div><p id="error" class="error" role="alert"></p></form><div class="results" aria-live="polite"><div class="result"><span>القسط الشهري</span><strong id="emi">—</strong></div><div class="result"><span>إجمالي الفائدة</span><strong id="interest">—</strong></div><div class="result"><span>إجمالي السداد</span><strong id="total">—</strong></div></div><p class="note">هذا تقدير تعليمي وليس نصيحة مالية أو عرض تمويل. تحقق من الشروط لدى المقرض.</p></section><section class="panel"><h2>EMI</h2><p>EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1)</p><p>P هو أصل التمويل، وr معدل الفائدة الشهري، وn عدد الأقساط. عند فائدة 0% يكون القسط = P ÷ n.</p></section><section class="panel faq"><h2>الأسئلة الشائعة</h2><details><summary>كيف يُحسب القسط؟</summary><p>تستخدم الحاسبة معادلة الرصيد المتناقص بمعدل شهري ثابت وأقساط متساوية.</p></details><details><summary>هل تشمل الرسوم والتأمين؟</summary><p>لا. الرسوم والتأمين والضرائب والتكاليف الأخرى للمقرض غير مشمولة.</p></details><details><summary>هل تؤكد الحاسبة الموافقة على التمويل؟</summary><p>لا. هذا تقدير رياضي فقط؛ ويحدد المقرض الأهلية والموافقة.</p></details></section><section class="panel"><p><a href="/calculators/home-loan-emi-calculator.html">English</a> · <a href="/ar/index.html">الرئيسية</a></p></section></main><script>(()=>{'use strict';const f=document.getElementById('calc'),err=document.getElementById('error'),fmt=new Intl.NumberFormat('ar',{style:'currency',currency:'INR',maximumFractionDigits:2});function calc(e){if(e)e.preventDefault();const p=Number(document.getElementById('p').value),annual=Number(document.getElementById('rate').value),n=Number(document.getElementById('months').value);if(!(Number.isFinite(p)&&p>0&&p<=1e12&&Number.isFinite(annual)&&annual>=0&&annual<=100&&Number.isInteger(n)&&n>=1&&n<=600)){err.textContent='Invalid input';return;}const r=annual/1200,emi=r===0?p/n:p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1),total=emi*n;document.getElementById('emi').textContent=fmt.format(emi);document.getElementById('interest').textContent=fmt.format(total-p);document.getElementById('total').textContent=fmt.format(total);err.textContent='';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}f.addEventListener('submit',calc);document.getElementById('reset').addEventListener('click',()=>{f.reset();['emi','interest','total'].forEach(id=>document.getElementById(id).textContent='—');err.textContent='';});calc();})();</script><script src="/assets/site-shell.js" defer></script></body></html>

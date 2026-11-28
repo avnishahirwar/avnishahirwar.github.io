@@ -3,14 +3,58 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/swp-calculator.html">
+<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/swp-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/swp-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/swp-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/swp-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/swp-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/swp-calculator.html">
+<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/swp-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/swp-calculator.html">
 </head><body><header class="head"><div class="wrap"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav aria-label="Main navigation"><a href="/fr/index.html">Accueil</a><a href="/calculator/site-directory.html">Toutes les calculatrices</a><a href="/calculator/finance-calculators.html">Calculatrices financières</a><a href="/calculator/contact.html">Contact</a></nav></div></header><main class="wrap"><div class="hero"><div class="eyebrow">Finance · Planification des retraits · Inde</div><h1>Calculateur SWP</h1><p class="muted">Visualisez une illustration des retraits totaux et du solde restant avec un retrait mensuel fixe et un rendement supposé.</p></div><section class="panel"><h2>Saisissez vos valeurs</h2><form id="calcForm" class="fields"><div class="field"><label for="principal">Capital initial (₹)</label><input id="principal" name="principal" type="number" min="0" step="any" value="2500000" required></div><div class="field"><label for="withdrawal">Retrait mensuel (₹)</label><input id="withdrawal" name="withdrawal" type="number" min="0" step="any" value="20000" required></div><div class="field"><label for="rate">Rendement annuel effectif (%)</label><input id="rate" name="rate" type="number" min="0" step="any" value="7" required></div><div class="field"><label for="years">Durée des retraits (années)</label><input id="years" name="years" type="number" min="0" step="any" value="10" required></div><div><button class="btn" type="submit">Calculer</button><button class="btn" type="reset">Réinitialiser</button></div></form><div id="result" class="result" role="status" aria-live="polite">—</div><p class="note">Il s’agit d’une illustration mathématique, pas d’un conseil en investissement ni d’une garantie de rendement. Les rendements réels dépendent du marché, des frais, des impôts et du calendrier des retraits. Les résultats peuvent varier. Lisez les documents officiels du produit et consultez un adulte responsable ou un professionnel financier qualifié avant toute décision.</p></section><section class="panel"><h2>Méthode de calcul</h2><div class="formula"><strong>Solde mensuel = solde précédent × (1 + taux mensuel) − retrait réel du mois</strong></div><p>Le rendement annuel effectif est converti en taux mensuel avec (1 + rendement annuel)^(1/12) − 1. Chaque mois, le rendement est d’abord appliqué au solde, puis le retrait est effectué. Le retrait ne peut pas dépasser le solde disponible. La durée est arrondie au nombre entier de mois le plus proche.</p></section><section class="panel"><h2>Limites importantes</h2><p>Il s’agit d’une illustration mathématique, pas d’un conseil en investissement ni d’une garantie de rendement. Les rendements réels dépendent du marché, des frais, des impôts et du calendrier des retraits. Les résultats peuvent varier. Lisez les documents officiels du produit et consultez un adulte responsable ou un professionnel financier qualifié avant toute décision.</p><p><a href="/calculators/swp-calculator.html">English version</a> · <a href="/fr/index.html">Accueil</a> · <a href="/calculator/site-directory.html">Toutes les calculatrices</a></p></section><section class="panel"><h2>Questions fréquentes</h2><details><summary>Qu’est-ce qu’un SWP ?</summary><p>Un plan de retraits systématiques permet de retirer régulièrement des sommes d’un investissement. Ce calcul n’est qu’une estimation simplifiée.</p></details><details><summary>Le solde restant est-il garanti ?</summary><p>Non. Les rendements du marché, les frais, les impôts et le calendrier des retraits peuvent modifier le solde réel.</p></details></section></main><footer><div class="wrap"><a href="/calculator/about.html">About</a> · <a href="/calculator/privacy.html">Privacy</a> · <a href="/calculator/terms.html">Terms</a> · <a href="/calculator/disclaimer.html">Disclaimer</a></div></footer><script>(()=>{const form=document.getElementById('calcForm'),out=document.getElementById('result');const money=n=>'₹'+Number(n).toLocaleString("fr-FR",{maximumFractionDigits:2});function calculate(v){let b=Number(v.principal),paid=0;const r=Math.pow(1+Number(v.rate)/100,1/12)-1,n=Math.round(Number(v.years)*12),w=Number(v.withdrawal);for(let i=0;i<n;i++){b*=1+r;if(b<=0){b=0;break;}const actualWithdrawal=Math.min(w,b);b-=actualWithdrawal;paid+=actualWithdrawal;if(b<=0)break;}return {balance:b,paid};}function render(){const v=Object.fromEntries([...new FormData(form)].map(([k,x])=>[k,Number(x)]));if(Object.values(v).some(x=>!Number.isFinite(x)||x<0)){out.textContent="Saisissez des nombres valides supérieurs ou égaux à zéro dans tous les champs.";return;}try{const r=calculate(v);if(![r.balance,r.paid].every(Number.isFinite))throw new Error();out.textContent="Retraits totaux"+': '+money(r.paid)+' | '+"Solde restant estimé"+': '+money(r.balance);if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}catch(e){out.textContent="Saisissez des nombres valides supérieurs ou égaux à zéro dans tous les champs.";}}form.addEventListener('submit',e=>{e.preventDefault();render();});form.addEventListener('reset',()=>setTimeout(render,0));render();})();</script><script src="/assets/site-shell.js" defer></script></body></html>
