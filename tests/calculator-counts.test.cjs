@@ -67,6 +67,9 @@ test('all catalog-driven counts are synchronized and repeatable after catalogue 
   const stale = `<meta content="Search all ${staleCount.toLocaleString('en-US')} calculator entries"> <p>Total catalogue: ${staleCount.toLocaleString('en-US')} calculators</p>`;
   const core = catalogueStats().core;
   const updated = updateHomepage(stale, total, false, core);
+  const staleNew = `<p>Catalogue: ${staleCount.toLocaleString('en-US')} core calculators; ${staleCount.toLocaleString('en-US')} total searchable entries across languages</p>`;
+  const updatedNew = updateHomepage(staleNew, total, false, core);
   assert.ok(updated.includes(`Search all ${total.toLocaleString('en-US')} calculator entries`));
   assert.ok(updated.includes(`Catalogue: ${core.toLocaleString('en-US')} core calculators; ${total.toLocaleString('en-US')} total searchable entries across languages`));
+  assert.ok(updatedNew.includes(`Catalogue: ${core.toLocaleString('en-US')} core calculators; ${total.toLocaleString('en-US')} total searchable entries across languages`));
 });
