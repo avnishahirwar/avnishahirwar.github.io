@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/merge-search-index.cjs'
+      - 'scripts/generate-sitemaps.cjs'
+      - 'scripts/normalize-hreflang.cjs'
+      - 'tests/normalize-hreflang.test.cjs'
+      - 'tests/international-seo.test.cjs'
       - 'scripts/generate-physics-calculator-directory.cjs'
       - 'scripts/sync-calculator-counts.cjs'
       - 'config/site-directory-category-assignments.json'
@@ -22,6 +27,11 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-site-directory.cjs'
+      - 'scripts/merge-search-index.cjs'
+      - 'scripts/generate-sitemaps.cjs'
+      - 'scripts/normalize-hreflang.cjs'
+      - 'tests/normalize-hreflang.test.cjs'
+      - 'tests/international-seo.test.cjs'
       - 'calculator/site-directory.html'
       - 'calculator/physics-calculators.html'
       - 'config/site-directory-category-assignments.json'
@@ -49,9 +59,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: node --check scripts/normalize-hreflang.cjs
+      - run: node --check scripts/generate-sitemaps.cjs
+      - run: node --check scripts/merge-search-index.cjs
       - run: node --check scripts/build-site-directory.cjs
+      - run: node --test tests/normalize-hreflang.test.cjs
+      - run: node scripts/normalize-hreflang.cjs --check
+      - run: node scripts/generate-sitemaps.cjs --check
+      - run: node scripts/merge-search-index.cjs --check
       - run: node scripts/build-site-directory.cjs --check
+      - run: node scripts/generate-physics-calculator-directory.cjs --check
       - run: node scripts/sync-calculator-counts.cjs --check
+      - run: node scripts/generate-human-sitemap.cjs --check
+      - run: node --test tests/international-seo.test.cjs
 
   generate:
     runs-on: ubuntu-latest
@@ -64,12 +84,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Generate sitemap from the current indexable canonical pages
+        run: node scripts/generate-sitemaps.cjs
+      - name: Rebuild the public search index from the sitemap and quality-pass pages
+        run: node scripts/merge-search-index.cjs
       - name: Rebuild the curated calculator directory from the canonical sitemap
         run: node scripts/build-site-directory.cjs
       - name: Regenerate the physics subject directory from the curated catalogue
         run: node scripts/generate-physics-calculator-directory.cjs
-      - name: Synchronize homepage and catalogue counters
-        run: node scripts/sync-calculator-counts.cjs
+      - name: Synchronize homepage, About and catalogue counters
+        run: node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
+      - name: Normalize hreflang to reciprocal indexable canonical language groups
+        run: node scripts/normalize-hreflang.cjs --write
+      - name: Regenerate sitemap alternates from normalized language metadata
+        run: node scripts/generate-sitemaps.cjs
       - name: Commit the regenerated directory when changed
         run: |
           git config user.name "github-actions[bot]"
