@@ -20,7 +20,11 @@ jobs:
         with:
           node-version: 22
       - name: Restore HTML inputs from the main branch
-        run: git checkout origin/main -- '*.html'
+        run: |
+          git ls-files -z -- '*.html' | xargs -0 -r -n 100 git update-index --no-skip-worktree --no-assume-unchanged --
+          git ls-files -z -- '*.html' | xargs -0 -r -n 100 git restore --source=origin/main --staged --worktree --
+          echo "HTML baseline reset from origin/main"
+          git diff --quiet -- '*.html' || { echo "Unexpected HTML changes after baseline restore"; exit 1; }
       - name: Check repair script syntax
         run: node --check scripts/add-hreflang-reciprocals.cjs
       - name: Add only unambiguous reciprocal links
