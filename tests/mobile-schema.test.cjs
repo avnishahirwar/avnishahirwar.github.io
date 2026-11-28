@@ -104,8 +104,9 @@ test('homepage calculator search loads its index only after typing and renders a
 test('directory preloads its measured LCP hero illustration from the document head', () => {
   const head = directory.slice(0, directory.indexOf('</head>'));
   assert.ok(head.includes('<link rel="preload" as="image" href="/assets/friendly-calculator-brand-illustration.svg" type="image/svg+xml" fetchpriority="high">'));
-  assert.ok(directory.includes('<img src="/assets/friendly-calculator-brand-illustration.svg"'));
-  assert.ok(directory.includes('fetchpriority="high" decoding="async"'));
+  const heroImage = directory.match(/<img\\b[^>]*src="\\/assets\\/friendly-calculator-brand-illustration\\.svg"[^>]*>/)?.[0] || '';
+  assert.ok(heroImage.includes('fetchpriority="high"'), 'Directory hero image must retain high fetch priority.');
+  assert.ok(heroImage.includes('decoding="async"'), 'Directory hero image must use asynchronous decoding.');
 });
 
 
