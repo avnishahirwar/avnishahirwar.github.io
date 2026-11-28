@@ -70,10 +70,10 @@ function langOf(html, relative) {
 }
 function hasUntranslatedLocalePlaceholder(html) {
   const head = headOf(html);
-  const descriptionTag = [...head.matchAll(/<meta\\b[^>]*>/gi)].map(match => match[0])
+  const descriptionTag = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0])
     .find(tag => attribute(tag, 'name').toLowerCase() === 'description');
   const description = descriptionTag ? attribute(descriptionTag, 'content') : '';
-  return /^\\s*\\[[^\\]]{2,40}\\]\\s*/.test(description);
+  return /^\s*\[[^\]]{2,40}\]\s*/.test(description);
 }
 function normalizedPathname(value) {
   if (value === '/') return '/';
