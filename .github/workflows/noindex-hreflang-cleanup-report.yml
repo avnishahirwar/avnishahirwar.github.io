@@ -1,0 +1,45 @@
+name: Noindex hreflang cleanup report
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/prune-noindex-hreflang.py
+      - .github/workflows/noindex-hreflang-cleanup-report.yml
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Generate non-mutating cleanup report
+        run: |
+          mkdir -p artifacts
+          python scripts/prune-noindex-hreflang.py --report artifacts/noindex-hreflang-cleanup-report.json | tee artifacts/noindex-hreflang-cleanup-report.txt
+      - name: Add report summary
+        if: always()
+        run: |
+          if [ -f artifacts/noindex-hreflang-cleanup-report.txt ]; then
+            {
+              echo "## Noindex hreflang cleanup — dry run"
+              echo 'No files were modified.'
+              echo '```json'
+              cat artifacts/noindex-hreflang-cleanup-report.json
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload dry-run report
+        uses: actions/upload-artifact@v4
+        with:
+          name: noindex-hreflang-cleanup-dry-run
+          path: artifacts/
+          if-no-files-found: error
