@@ -38,7 +38,7 @@ setUnitSystem(value){if(value!=='metric'&&value!=='imperial')return false;unitSy
 });
 window.FCLocale=api;
 const countrySelect=document.getElementById('fc-country-select'),currencySelect=document.getElementById('fc-currency-select'),localeSelect=document.getElementById('fc-locale-select'),unitSelect=document.getElementById('fc-unit-system-select');
-if(countrySelect){countrySelect.value=country;countrySelect.addEventListener('change',()=>api.setCountry(countrySelect.value));}
+if(countrySelect){countrySelect.value=country;countrySelect.addEventListener('change',()=>{api.setCountry(countrySelect.value);const nextCurrency=currencySelect?.value;if(nextCurrency&&nextCurrency!==currency)api.setCurrency(nextCurrency);});}
 if(currencySelect){currencySelect.title='Display currency only. Changing it does not convert existing numeric inputs.';currencySelect.value=currency;currencySelect.addEventListener('change',()=>api.setCurrency(currencySelect.value));}
 if(localeSelect){localeSelect.value=formatLocale;localeSelect.addEventListener('change',()=>api.setLocale(localeSelect.value));}
 if(unitSelect){unitSelect.value=unitSystem;unitSelect.addEventListener('change',()=>api.setUnitSystem(unitSelect.value));}
