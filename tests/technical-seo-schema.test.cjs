@@ -4,6 +4,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 const pages = [
@@ -31,8 +32,6 @@ function flattenTypes(value, output = []) {
 
 test('priority calculator pages expose one accurate static WebApplication and preserve page schemas', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
-  assert.match(shell, /function injectCalculatorApplicationSchema/);
-  assert.match(shell, /hasApplicationSchema/);
   assert.match(shell, /function injectVisibleCalculatorFaqSchema/);
 
   for (const file of pages) {
@@ -65,7 +64,69 @@ test('priority calculator pages expose one accurate static WebApplication and pr
     assert.match(html, /<details[\s\S]*?<summary/i, file + ' must retain visible FAQ content');
     assert.ok(objects.some(item => item['@type'] === 'FAQPage'), file + ' must retain matching FAQPage schema');
 
-    // The shared runtime injector must detect the static object and avoid adding a duplicate.
-    assert.match(shell, /types\.some\(type=>type==='WebApplication'\|\|type==='SoftwareApplication'\)/);
   }
+});
+
+function runApplicationSchemaInjector({ pathname = '/calculators/example-tax-calculator.html', lang = 'en', existing = [] } = {}) {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  const start = shell.indexOf('function injectCalculatorApplicationSchema(){');
+  const invocation = '\\ninjectCalculatorApplicationSchema();';
+  const end = shell.indexOf(invocation, start);
+  assert.ok(start >= 0 && end > start, 'The shared application-schema injector must be present');
+  const source = shell.slice(start, end + invocation.length);
+  const appended = [];
+  const canonical = 'https://friendlycalculator.in' + pathname;
+  const selectors = {
+    'link[rel="canonical"]': { href: canonical },
+    'main h1,h1': { textContent: 'Example Tax Calculator' },
+    'meta[name="description"]': { content: 'Calculate an example tax amount with clear assumptions.' }
+  };
+  const document = {
+    documentElement: { lang },
+    querySelectorAll(selector) {
+      assert.equal(selector, 'script[type="application/ld+json"]');
+      return existing;
+    },
+    querySelector(selector) { return selectors[selector] || null; },
+    createElement(tagName) {
+      return { tagName: tagName.toUpperCase(), dataset: {}, type: '', textContent: '' };
+    },
+    head: { appendChild(node) { appended.push(node); } }
+  };
+  const window = { location: { pathname, href: canonical } };
+  vm.runInNewContext(source, { window, document, URL, JSON });
+  return appended;
+}
+
+test('application schema injector emits accurate JSON-LD in an isolated browser context', () => {
+  const appended = runApplicationSchemaInjector({ pathname: '/calculators/example-tax-calculator.html', lang: 'hi' });
+  assert.equal(appended.length, 1);
+  assert.equal(appended[0].type, 'application/ld+json');
+  const schema = JSON.parse(appended[0].textContent);
+  assert.equal(schema['@type'], 'WebApplication');
+  assert.equal(schema.url, 'https://friendlycalculator.in/calculators/example-tax-calculator.html');
+  assert.equal(schema.name, 'Example Tax Calculator');
+  assert.equal(schema.description, 'Calculate an example tax amount with clear assumptions.');
+  assert.equal(schema.inLanguage, 'hi');
+  assert.equal(schema.applicationCategory, 'FinanceApplication');
+  assert.equal(schema.isAccessibleForFree, true);
+  assert.equal(schema.offers.price, '0');
+  assert.equal(schema.provider.name, 'Friendly Calculator');
+});
+
+test('application schema injector does not duplicate existing application schema', () => {
+  const existing = [{
+    textContent: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Existing Calculator'
+    })
+  }];
+  const appended = runApplicationSchemaInjector({ existing });
+  assert.equal(appended.length, 0);
+});
+
+test('application schema injector ignores non-calculator routes', () => {
+  const appended = runApplicationSchemaInjector({ pathname: '/about.html' });
+  assert.equal(appended.length, 0);
 });
