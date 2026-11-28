@@ -7,20 +7,20 @@ const root=path.join(__dirname,'..');
 const origin='https://friendlycalculator.in';
 const locales=['hi','es','fr','pt','ar','id','bn','ta'];
 const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
-const noindexOf=html=>/<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(headOf(html));
+const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const hasPlaceholder=html=>{
- const tags=[...headOf(html).matchAll(/<meta\\b[^>]*>/gi)].map(m=>m[0]);
- const tag=tags.find(t=>/\\bname=["']description["']/i.test(t));
- const desc=tag?(tag.match(/\\bcontent=["']([^"']*)["']/i)||[])[1]||'':'';
- return /^\\s*\\[[^\\]]{2,40}\\]\\s*/.test(desc);
+ const tags=[...headOf(html).matchAll(/<meta\b[^>]*>/gi)].map(m=>m[0]);
+ const tag=tags.find(t=>/\bname=["']description["']/i.test(t));
+ const desc=tag?(tag.match(/\bcontent=["']([^"']*)["']/i)||[])[1]||'':'';
+ return /^\s*\[[^\]]{2,40}\]\s*/.test(desc);
 };
 const canonicalOf=html=>{
- const tags=[...headOf(html).matchAll(/<link\\b[^>]*>/gi)].map(m=>m[0]);
- const tag=tags.find(t=>/\\brel=["']canonical["']/i.test(t));
- return tag?(tag.match(/\\bhref=["']([^"']+)["']/i)||[])[1]||'':'';
+ const tags=[...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]);
+ const tag=tags.find(t=>/\brel=["']canonical["']/i.test(t));
+ return tag?(tag.match(/\bhref=["']([^"']+)["']/i)||[])[1]||'':'';
 };
-const declaredLang=html=>((headOf(html).match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i)||[])[1]||'').toLowerCase();
-const alternatesOf=html=>[...headOf(html).matchAll(/<link\\b(?=[^>]*\\brel=["']alternate["'])(?=[^>]*\\bhreflang=["']([^"']+)["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
+const declaredLang=html=>((headOf(html).match(/<html\b[^>]*\blang=["']([^"']+)["']/i)||[])[1]||'').toLowerCase();
+const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
 const expectedForLocale=(candidates,sourceLocale,route)=>{
  const entries=[];
@@ -57,7 +57,7 @@ test('English currency converter and German page use only published reciprocal h
  for(const locale of ['en','de']){
   const html=fs.readFileSync(pageFor(locale,route),'utf8');
   assert.deepEqual(sorted(alternatesOf(html)),sorted(expectedForLocale(candidates,locale,route)),locale+' hreflang must match the eligible reciprocal cluster');
-  assert.match(html,/\\/assets\\/currency-converter-live\\.js/);
+  assert.match(html,/\/assets\/currency-converter-live\.js/);
  }
 });
 
