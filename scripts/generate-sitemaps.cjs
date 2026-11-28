@@ -94,7 +94,7 @@ function xmlEscape(value) {
 }
 
 function getLanguage(file, html) {
-  const declared = html.match(/<html\\b[^>]*\\blang\\s*=\\s*["']([^"']+)["']/i);
+  const declared = html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i);
   if (declared) return declared[1].trim().toLowerCase();
   const first = file.split('/')[0].toLowerCase();
   return LANGUAGE_PREFIXES.has(first) ? first : 'en';
