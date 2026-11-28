@@ -123,13 +123,24 @@ jobs:
               candidate="$(grep -Eo "https://deploy-preview-$PR_NUMBER--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
             fi
             if [ -n "$candidate" ]; then
-              html="$(curl -fsSL "$candidate/calculators/income-tax-calculator.html" || true)"
-              service_worker="$(curl -fsSL "$candidate/sw.js" || true)"
-              if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
-                base_url="$candidate"
-                echo "Using published pull-request preview: $base_url"
-                break
-              fi
+              # A hosted preview must remain on its own origin. Cloudflare account-level
+              # redirect rules can send *.pages.dev to production, which would make
+              # Lighthouse measure the live site instead of this pull-request checkout.
+              effective_page_url="$(curl -fsSL -o /dev/null -w '%{url_effective}' "$candidate/calculators/income-tax-calculator.html" || true)"
+              case "$effective_page_url" in
+                "$candidate"/*)
+                  html="$(curl -fsSL "$candidate/calculators/income-tax-calculator.html" || true)"
+                  service_worker="$(curl -fsSL "$candidate/sw.js" || true)"
+                  if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
+                    base_url="$candidate"
+                    echo "Using published pull-request preview: $base_url"
+                    break
+                  fi
+                  ;;
+                *)
+                  echo "Hosted preview redirected off-origin to '$effective_page_url'; rejecting it so Lighthouse cannot silently audit production."
+                  ;;
+              esac
             fi
             echo "Waiting for an optional Cloudflare/Netlify preview comment (attempt $attempt/10)."
             sleep 10
