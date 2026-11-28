@@ -794,8 +794,7 @@ test('Dividend yield and markup margin calculators are localized in all nine lan
       const html=fs.readFileSync(file,'utf8');
       assert.match(html,new RegExp('<html lang="'+locale+'"'));
       assertExpectedHreflang(html, path.relative(root, file));
-      for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing hreflang '+alt+': '+url);
-      assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);
+      assertSitemapRoute(new URL(url).pathname, html);
       assert.ok(html.includes('application/ld+json'),'Missing structured data: '+url);
       if(locale==='en')assert.ok(html.includes('id="form"'),'Missing English form: '+url);
       else assert.ok(html.includes('id="calcForm"'),'Missing localized form: '+url);
@@ -1047,10 +1046,10 @@ test('Hindi decimal-to-percent converter is localized, reciprocal and indexed', 
   const hindi = fs.readFileSync(hindiPath, 'utf8');
   const english = fs.readFileSync(englishPath, 'utf8');
   assert.match(hindi, /<html lang="hi">/);
-  assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
-  assert.ok(english.includes('hreflang="hi"'));
+  assertExpectedHreflang(hindi, 'hi/calculators/decimal-to-percent-converter.html');
+  assertExpectedHreflang(english, 'calculators/decimal-to-percent-converter.html');
   for (const phrase of ['दशमलव से प्रतिशत कनवर्टर','प्रतिशत = दशमलव मान × 100','अक्सर पूछे जाने वाले सवाल','गणना करें']) assert.ok(hindi.includes(phrase), 'Hindi page is missing: ' + phrase);
-  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html'));
+  assertSitemapRoute('/hi/calculators/decimal-to-percent-converter.html', hindi);
 });
 
 
@@ -1067,8 +1066,8 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     const hindi = fs.readFileSync(hindiPath, 'utf8');
     const english = fs.readFileSync(englishPath, 'utf8');
     assert.match(hindi, /<html lang="hi">/);
-    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
-    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assertExpectedHreflang(hindi, path.relative(root, hindiPath));
+    assertExpectedHreflang(english, path.relative(root, englishPath));
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
@@ -1088,8 +1087,8 @@ test('Hindi median and mode calculator pages are localized, reciprocal and index
     const hindi = fs.readFileSync(hindiPath, 'utf8');
     const english = fs.readFileSync(englishPath, 'utf8');
     assert.match(hindi, /<html lang="hi">/);
-    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
-    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assertExpectedHreflang(hindi, path.relative(root, hindiPath));
+    assertExpectedHreflang(english, path.relative(root, englishPath));
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
@@ -1126,8 +1125,8 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.match(hindi, /<html lang="hi">/);
     assert.ok(hindi.includes('data-calculator="' + key + '"'));
     assert.ok(hindi.includes('/assets/keyword-calculators.js'));
-    assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
-    assert.ok(english.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assertExpectedHreflang(hindi, path.relative(root, hindiPath));
+    assertExpectedHreflang(english, path.relative(root, englishPath));
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
@@ -1152,8 +1151,8 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assert.match(h, /<html lang="hi">/);
     assert.ok(h.includes('data-calculator="' + key + '"'));
     assert.ok(h.includes('/assets/keyword-calculators.js'));
-    assert.ok(h.includes('hreflang="en"') && h.includes('hreflang="hi"') && h.includes('hreflang="x-default"'));
-    assert.ok(e.includes('hreflang="hi"'), 'Missing reciprocal English hreflang: ' + slug);
+    assertExpectedHreflang(h, path.relative(root, hp));
+    assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
     assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
