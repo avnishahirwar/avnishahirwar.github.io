@@ -157,16 +157,18 @@ test('known untranslated destinations and unsupported hreflang language codes ar
   };
   try {
     write('calculators/rd-calculator.html',
-      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/rd-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"></head></html>');
+      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/rd-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/rd-calculator.html"></head></html>');
     write('am/calculators/rd-calculator.html', '<html lang="am"><head><link rel="canonical" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"></head></html>');
     write('de/calculators/rd-calculator.html', '<html lang="de"><head><link rel="canonical" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"></head></html>');
     write('arz/calculators/rd-calculator.html', '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"></head></html>');
+    write('en-gb/calculators/rd-calculator.html', '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/en-gb/calculators/rd-calculator.html"></head></html>');
     const result = spawnSync('python3', [path.join(root, 'scripts/prune-noindex-hreflang.py')], {
       cwd: root, encoding: 'utf8', env: { ...process.env, FC_HREFLANG_ROOT: temp }
     });
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const cleaned = fs.readFileSync(path.join(temp, 'calculators/rd-calculator.html'), 'utf8');
     assert.doesNotMatch(cleaned, /hreflang="am"|hreflang="de"|hreflang="arz"/);
+    assert.match(cleaned, /hreflang="en-GB"/, 'valid language-region tags should be preserved');
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
