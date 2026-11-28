@@ -2393,18 +2393,14 @@ test('About and Methodology use the hostname-gated shared analytics bootstrap', 
 });
 
 
-test('shared header loads a site-restricted Google Programmable Search outside embed mode', () => {
+test('shared header omits Google Programmable Search and retains native calculator search', () => {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site-shell.css'), 'utf8');
-  assert.match(shell, /className='fc-header-search'/);
-  assert.match(shell, /className='gcse-search'/);
-  assert.match(shell, /data-as_sitesearch/);
-  assert.match(shell, /friendlycalculator\.in/);
-  assert.match(shell, /cse\.google\.com\/cse\.js\?cx=17b864c76cb8f48b3/);
-  assert.match(shell, /data-fc-google-cse/);
-  assert.match(shell, /if\(!embedMode\)/);
-  assert.match(styles, /\.fc-header-search/);
-  assert.match(styles, /gsc-search-button-v2/);
+  assert.doesNotMatch(shell, /Google Programmable Search|gcse-search|data-as_sitesearch|cse\\.google\\.com|data-fc-google-cse/i);
+  assert.doesNotMatch(styles, /Google Programmable Search|gsc-control-cse|gsc-search-box|gsc-search-button-v2/i);
+  assert.match(shell, /FriendlyCalculatorSearchMatcher/);
+  assert.match(shell, /fc-header-search/);
+  assert.match(shell, /calculator-search-index/);
 });
 
 
