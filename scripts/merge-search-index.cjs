@@ -73,7 +73,7 @@ function pageMetadata(route, previous, addition) {
   // Values already stored in JSON are plain text, not HTML. Do not decode entities
   // or strip angle-bracket sequences from them on repeat rebuilds; only sanitize
   // values extracted from page markup.
-  const plainText = value => String(value ?? '').replace(/\\s+/g, ' ').trim();
+  const plainText = value => String(value ?? '').replace(/\s+/g, ' ').trim();
   const storedName = previous?.name || addition?.name;
   const name = storedName
     ? plainText(storedName)
