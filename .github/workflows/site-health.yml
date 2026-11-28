@@ -24,8 +24,8 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
-      - name: Validate reciprocal hreflang normalization
-        run: node scripts/normalize-hreflang.cjs --check && node --test tests/normalize-hreflang.test.cjs tests/international-seo.test.cjs tests/international-seo-diagnostic.test.cjs
+      - name: Normalize and validate reciprocal hreflang metadata
+        run: node scripts/normalize-hreflang.cjs --write && node scripts/normalize-hreflang.cjs --check && node --test tests/normalize-hreflang.test.cjs tests/international-seo.test.cjs tests/international-seo-diagnostic.test.cjs
       - name: Generate the current canonical sitemap before indexing
         run: node scripts/generate-sitemaps.cjs
       - name: Build the current published calculator catalogue
