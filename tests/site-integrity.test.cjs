@@ -1863,9 +1863,7 @@ test('four chemistry batch calculators are complete and discoverable', () => {
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
     assert.match(page, /aria-live="polite"/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
 });
@@ -1894,9 +1892,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1927,9 +1923,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1960,9 +1954,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1993,9 +1985,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2026,9 +2016,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2059,9 +2047,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2092,9 +2078,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2122,9 +2106,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    assertPublicCataloguePresence(route, directory, about, index);
   }
   assert.equal(index.length, expectedSearchIndexLength);
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
