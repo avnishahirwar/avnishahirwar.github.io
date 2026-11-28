@@ -47,15 +47,17 @@ function addCluster(route, locales, report) {
     const file = pagePath(locale, route);
     if (!fs.existsSync(file)) return report.skipped.push({route, reason:'missing page', locale}), false;
     const html = read(file);
-    if (noindex(html)) return report.skipped.push({route, reason:'noindex page', locale}), false;
+    if (noindex(html)) { report.skipped.push({route, reason:'noindex page excluded from cluster', locale}); continue; }
     if (langOf(html) !== locale) return report.skipped.push({route, reason:'language attribute mismatch', locale, actual:langOf(html)}), false;
     const canonicalTag = (html.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["'][^"']+["'])[^>]*>/i) || [])[0] || '';
     if (attr(canonicalTag, 'href') !== canonical(locale, route)) return report.skipped.push({route, reason:'non-self canonical', locale, canonical:attr(canonicalTag,'href')}), false;
     pages.push({locale,file,html});
   }
 
-  const expected = new Map(locales.map(locale => [locale, canonical(locale, route)]));
-  expected.set('x-default', canonical('en', route));
+  const indexable = pages.map(page => page.locale);
+  if (indexable.length < 2) return report.skipped.push({route, reason:'fewer than two indexable locale pages'}), false;
+  const expected = new Map(indexable.map(locale => [locale, canonical(locale, route)]));
+  if (expected.has('en')) expected.set('x-default', canonical('en', route));
   const staged = [];
   for (const page of pages) {
     const tags = [...page.html.slice(0, page.html.toLowerCase().indexOf('</head>')).matchAll(/<link\b[^>]*>/gi)]
