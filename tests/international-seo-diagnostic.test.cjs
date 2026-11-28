@@ -64,7 +64,7 @@ test('additive hreflang repair skips sources whose canonical points elsewhere', 
     const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     assert.equal(summary.added, 0);
     assert.ok(summary.skippedNoncanonicalSource > 0);
-    assert.equal(fs.readFileSync(path.join(temp, 'hi/index.html'), 'utf8'), target);
+    assert.equal(fs.readFileSync(path.join(temp, 'hi/calculators/basic-calculator.html'), 'utf8'), target);
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
