@@ -57,6 +57,12 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
     '<meta name="description" content="[فارسی] Calculate a demo result with untranslated English metadata.">' +
     '</head><body><h1>Demo Calculator</h1></body></html>';
   const regional = '<!doctype html><html lang="en-US"><head>' +
+  const englishFallback = '<!doctype html><html lang="en"><head>' +
+    '<link rel="canonical" href="https://friendlycalculator.in/calculators/locale-fallback-demo.html">' +
+    '</head><body><h1>Locale fallback demo</h1></body></html>';
+  const ukFallback = '<!doctype html><head>' +
+    '<link rel="canonical" href="https://friendlycalculator.in/uk/calculators/locale-fallback-demo.html">' +
+    '</head><body><h1>Locale fallback demo</h1></body></html>';
     '<link rel="canonical" href="https://friendlycalculator.in/international/us-mortgage-calculator.html">' +
     '</head><body><h1>US Mortgage Calculator</h1></body></html>';
 
@@ -68,6 +74,8 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
   write(fixture, 'uk/calculators/uk-only.html', ukrainian);
   write(fixture, 'fa/calculators/demo.html', placeholder);
   write(fixture, 'international/us-mortgage-calculator.html', regional);
+  write(fixture, 'calculators/locale-fallback-demo.html', englishFallback);
+  write(fixture, 'uk/calculators/locale-fallback-demo.html', ukFallback);
 
   const run = spawnSync(process.execPath, [script, '--write'], { cwd: fixture, encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr || run.stdout);
@@ -80,6 +88,8 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
   const ukTool = read(fixture, 'uk/calculators/uk-only.html');
   const faPlaceholder = read(fixture, 'fa/calculators/demo.html');
   const usMortgage = read(fixture, 'international/us-mortgage-calculator.html');
+  const enFallback = read(fixture, 'calculators/locale-fallback-demo.html');
+  const ukFallbackPage = read(fixture, 'uk/calculators/locale-fallback-demo.html');
 
   for (const html of [en, fr]) {
     assert.match(html, /hreflang="en"/);
@@ -102,6 +112,9 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
   assert.match(faPlaceholder, /\[فارسی\]/);
   assert.doesNotMatch(faPlaceholder, /hreflang=/);
   assert.doesNotMatch(usMortgage, /hreflang=/);
+  assert.match(enFallback, /hreflang="uk"/);
+  assert.match(ukFallbackPage, /hreflang="en"/);
+  assert.match(ukFallbackPage, /hreflang="x-default"/);
   assert.match(en, /<h1>Demo Calculator<\/h1>/);
   assert.match(en, /Keep this content/);
 
