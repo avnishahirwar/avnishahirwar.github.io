@@ -10,10 +10,10 @@ const ORIGIN = 'https://friendlycalculator.in';
 const LOCALES = ['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
 const SLUGS = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
 function read(file){return fs.readFileSync(file,'utf8');}
-function isNoindex(html){const h=html.slice(0,html.toLowerCase().indexOf('</head>'));return /<meta\\b(?=[^>]*\\bname=[\"'](?:robots|googlebot)[\"'])(?=[^>]*\\bcontent=[\"'][^\"']*\\bnoindex\\b)[^>]*>/i.test(h)||/<meta\\b(?=[^>]*\\bcontent=[\"'][^\"']*\\bnoindex\\b)(?=[^>]*\\bname=[\"'](?:robots|googlebot)[\"'])[^>]*>/i.test(h);}
-function langOf(html){return (html.match(/<html\\b[^>]*\\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase()||null;}
-function canonicalOf(html){const m=html.slice(0,html.toLowerCase().indexOf('</head>')).match(/<link\\b(?=[^>]*\\brel=[\"']canonical[\"'])(?=[^>]*\\bhref=[\"']([^\"']+)[\"'])[^>]*>/i);if(!m)return null;try{const u=new URL(m[1],ORIGIN);return u.origin===ORIGIN&&!u.search&&!u.hash?u.href:null;}catch{return null;}}
-function alternates(html){const h=html.slice(0,html.toLowerCase().indexOf('</head>'));return [...h.matchAll(/<link\\b[^>]*>/gi)].map(m=>m[0]).filter(t=>/\\brel=[\"']alternate[\"']/i.test(t)).map(t=>({lang:(t.match(/\\bhreflang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase(),href:(t.match(/\\bhref=[\"']([^\"']+)[\"']/i)||[])[1]})).filter(x=>x.lang&&x.href);}
+function isNoindex(html){const h=html.slice(0,html.toLowerCase().indexOf('</head>'));return /<meta\b(?=[^>]*\bname=[\"'](?:robots|googlebot)[\"'])(?=[^>]*\bcontent=[\"'][^\"']*\bnoindex\b)[^>]*>/i.test(h)||/<meta\b(?=[^>]*\bcontent=[\"'][^\"']*\bnoindex\b)(?=[^>]*\bname=[\"'](?:robots|googlebot)[\"'])[^>]*>/i.test(h);}
+function langOf(html){return (html.match(/<html\b[^>]*\blang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase()||null;}
+function canonicalOf(html){const m=html.slice(0,html.toLowerCase().indexOf('</head>')).match(/<link\b(?=[^>]*\brel=[\"']canonical[\"'])(?=[^>]*\bhref=[\"']([^\"']+)[\"'])[^>]*>/i);if(!m)return null;try{const u=new URL(m[1],ORIGIN);return u.origin===ORIGIN&&!u.search&&!u.hash?u.href:null;}catch{return null;}}
+function alternates(html){const h=html.slice(0,html.toLowerCase().indexOf('</head>'));return [...h.matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]).filter(t=>/\brel=[\"']alternate[\"']/i.test(t)).map(t=>({lang:(t.match(/\bhreflang=[\"']([^\"']+)[\"']/i)||[])[1]?.toLowerCase(),href:(t.match(/\bhref=[\"']([^\"']+)[\"']/i)||[])[1]})).filter(x=>x.lang&&x.href);}
 function main(){
  const report={clusters:0,indexablePages:0,pagesChanged:0,linksAdded:0,skippedNoindex:0,skippedMissing:0,conflicts:[]};
  for(const slug of SLUGS){
@@ -45,7 +45,7 @@ function main(){
     additions.push('<link rel=\"alternate\" hreflang=\"'+target.lang+'\" href=\"'+target.href+'\">');
    }
    if(!additions.length)continue;
-   const next=page.html.replace(/<\\/head>/i,additions.join('\\n')+'\\n</head>');
+   const next=page.html.replace(/<\/head>/i,additions.join('\n')+'\n</head>');
    if(next===page.html)continue;
    report.pagesChanged++;report.linksAdded+=additions.length;
    if(process.argv.includes('--write'))fs.writeFileSync(page.file,next);
