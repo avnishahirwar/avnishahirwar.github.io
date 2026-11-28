@@ -31,8 +31,8 @@ jobs:
         run: node scripts/merge-search-index.cjs
       - name: Rebuild the curated calculator directory
         run: node scripts/build-site-directory.cjs && node scripts/build-site-directory.cjs --check
-      - name: Rebuild the Physics subject directory
-        run: node scripts/generate-physics-calculator-directory.cjs
+      - name: Rebuild and validate the curated Physics subject directory
+        run: node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs
       - name: Synchronize published catalogue counts
         run: node scripts/sync-calculator-counts.cjs
       - name: Rebuild the human-readable sitemap
@@ -47,7 +47,6 @@ jobs:
           node scripts/generate-sitemaps.cjs --check
           node scripts/generate-locale-sitemaps.cjs --check
           node scripts/merge-search-index.cjs --check
-          node scripts/generate-physics-calculator-directory.cjs --check
           node scripts/sync-calculator-counts.cjs --check
           node scripts/generate-human-sitemap.cjs --check
           node --test tests/normalize-hreflang.test.cjs
