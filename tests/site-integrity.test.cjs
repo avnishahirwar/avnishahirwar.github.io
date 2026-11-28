@@ -1848,7 +1848,7 @@ test('four chemistry batch calculators are complete and discoverable', () => {
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
     assert.match(page, /aria-live="polite"/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -1885,7 +1885,7 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -1924,7 +1924,7 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -1963,7 +1963,7 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -2002,7 +2002,7 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -2041,7 +2041,7 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -2080,7 +2080,7 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -2119,7 +2119,7 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
@@ -2155,7 +2155,7 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    const noindexPage = isNoindexHtml(page);
     if (noindexPage) {
       assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
       assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
