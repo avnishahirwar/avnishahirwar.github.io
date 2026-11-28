@@ -1747,7 +1747,7 @@ test('five new informational calculators are indexed, discoverable and use bound
   const pages = {
     'medical-unit-converter': ['Medical Unit Converter', '18.0182', '38.67', 'does not interpret'],
     'dream-reflection-calculator': ['Dream Reflection Calculator', 'recall', 'vivid', 'not a validated'],
-    'love-compatibility-calculator': ['Love Compatibility Calculator', 'respect', 'communication', 'not a prediction'],
+    'love-compatibility-calculator': ['Love Compatibility Calculator 2026', 'respect', 'communication', 'not a prediction'],
     'friendship-compatibility-calculator': ['Friendship Compatibility Calculator', 'support', 'interests', 'not a scientific'],
     'goal-success-calculator': ['Goal Success Calculator', 'completed', 'planned', 'not a success prediction']
   };
