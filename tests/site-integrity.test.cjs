@@ -622,7 +622,8 @@ test('Hindi RD calculator is localized and linked from the English alternate', (
   assert.ok(fs.existsSync(file));
   const html = fs.readFileSync(file, 'utf8');
   assert.match(html, /<html lang="hi">/);
-  assert.ok(html.includes('rel="canonical"') && html.includes('hreflang="en"') && html.includes('hreflang="x-default"'));
+  assert.ok(html.includes('rel="canonical"'));
+  assertLocaleCluster('https://friendlycalculator.in/calculators/rd-calculator.html', ['en','hi']);
   for (const id of ['monthly','rate','years','months','calculate','invested','interest','maturity']) assert.ok(html.includes('id="' + id + '"'));
   assert.ok(html.includes('Math.pow(1+quarterly,1/3)-1'));
   assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/rd-calculator.html'));
@@ -760,8 +761,7 @@ test('Unit converter is available in all nine languages with reciprocal hreflang
     assert.ok(file&&fs.existsSync(file),'Missing unit-converter locale: '+url);
     const html=fs.readFileSync(file,'utf8');
     assert.match(html,new RegExp('<html lang="'+locale+'"'));
-    assert.ok(html.includes('hreflang="x-default"'));
-    for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));
+    assertLocaleCluster(url,locales);
     assert.ok(allSitemapUrls.has(url));
     for(const id of ['category','amount','from','to','convert','swap','result','status'])assert.ok(html.includes('id="'+id+'"'));
     if(locale!=='en')assert.ok(html.includes('/assets/unit-converter-localized.js'));
