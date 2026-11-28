@@ -1,4 +1,5 @@
 'use strict';
+// Keep the measured LCP brand illustration preloaded in the generated directory head.
 /**
  * Rebuild the curated 20-section calculator directory from the canonical sitemap
  * and the search index. The checked-in assignment file preserves the pre-existing
