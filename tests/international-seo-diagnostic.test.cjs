@@ -111,6 +111,23 @@ test('hreflang page edits preserve every original byte except the inserted alter
   }
 });
 
+test('additive repair skips malformed percent-encoded alternate URLs', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-malformed-href-'));
+  try {
+    fs.writeFileSync(path.join(temp, 'index.html'),
+      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/%ZZ.html"></head></html>');
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\\{[^\\n]+\\})/)[1]);
+    assert.equal(summary.added, 0);
+    assert.ok(summary.skippedMissingTarget > 0);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
+
 test('additive repair skips unsupported codes and known untranslated destinations', () => {
   const os = require('node:os');
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-safe-additions-'));
