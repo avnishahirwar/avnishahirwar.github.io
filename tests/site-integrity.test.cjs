@@ -1372,9 +1372,9 @@ test('About page category summary and directory markup match the published catal
   assert.match(about, /organised into clearly labelled categories/);
   assert.doesNotMatch(directory, /\\\\n/);
   assert.ok(directory.includes('Browse by category'));
-  assert.match(directory, /hreflang="en" href="https:\/\/friendlycalculator\\.in\/calculator\/site-directory\\.html"/);
-  assert.match(directory, /hreflang="hi" href="https:\/\/friendlycalculator\\.in\/hi\/calculator\/site-directory\\.html"/);
-  assert.match(directory, /hreflang="x-default" href="https:\/\/friendlycalculator\\.in\/calculator\/site-directory\\.html"/);
+  assert.ok(directory.includes('hreflang="en" href="https://friendlycalculator.in/calculator/site-directory.html'));
+  assert.ok(directory.includes('hreflang="hi" href="https://friendlycalculator.in/hi/calculator/site-directory.html'));
+  assert.ok(directory.includes('hreflang="x-default" href="https://friendlycalculator.in/calculator/site-directory.html'));
 });
 
 
