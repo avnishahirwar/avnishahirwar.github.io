@@ -21,6 +21,69 @@ function localFile(url, baseFile = 'index.html') {
   return target;
 }
 
+const SITE_ORIGIN = 'https://friendlycalculator.in';
+function pageIndexability(url) {
+  const file = localFile(url);
+  if (!file || !fs.existsSync(file)) return {file, html:'', indexable:false, lang:null};
+  const html = fs.readFileSync(file, 'utf8');
+  const headEnd = html.toLowerCase().indexOf('</head>');
+  const head = headEnd < 0 ? html : html.slice(0, headEnd);
+  const noindex = /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(head) ||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(head);
+  const tags = [...head.matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
+  const canonicalTag = tags.find(tag => /\brel=["']canonical["']/i.test(tag));
+  const canonical = canonicalTag?.match(/\bhref=["']([^"']+)["']/i)?.[1] || '';
+  const lang = head.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)?.[1]?.trim() || null;
+  const descriptionTag = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0])
+    .find(tag => /\bname=["']description["']/i.test(tag));
+  const description = descriptionTag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] || '';
+  const placeholder = /^\s*\[[^\]]{2,40}\]\s*/.test(description);
+  const canonicalUrl = canonical ? new URL(canonical, SITE_ORIGIN).href : '';
+  const isPublic = !noindex && !placeholder && canonicalUrl === url && urls.includes(url);
+  return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
+}
+function localeUrlFor(baseUrl, locale) {
+  const pathname = new URL(baseUrl).pathname;
+  return SITE_ORIGIN + (locale === 'en' ? pathname : '/' + locale + pathname);
+}
+function assertLocaleCluster(baseUrl, locales) {
+  const candidates = locales.map(locale => ({url:localeUrlFor(baseUrl, locale), locale}));
+  const states = candidates.map(item => ({...item, ...pageIndexability(item.url)}));
+  for (const state of states) {
+    assert.equal(urls.includes(state.url), state.indexable, 'Sitemap membership must match indexability: ' + state.url);
+    const headEnd = state.html.toLowerCase().indexOf('</head>');
+    const head = headEnd < 0 ? state.html : state.html.slice(0, headEnd);
+    const tags = [...head.matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+      .filter(tag => /\brel=["']alternate["']/i.test(tag) && /\bhreflang=["'][^"']+["']/i.test(tag))
+      .map(tag => ({
+        lang:(tag.match(/\bhreflang=["']([^"']+)["']/i)||[])[1]?.toLowerCase(),
+        href:new URL((tag.match(/\bhref=["']([^"']+)["']/i)||[])[1]||'', SITE_ORIGIN).href
+      }));
+    const eligible = states.filter(item => item.indexable);
+    if (!state.indexable || eligible.length < 2) {
+      assert.equal(tags.length, 0, 'Non-indexable or singleton locale page must not advertise hreflang: ' + state.url);
+      continue;
+    }
+    const expected = eligible.map(item => ({lang:(item.lang||item.locale).toLowerCase(), href:item.url}));
+    for (const item of expected) {
+      assert.ok(tags.some(tag => tag.lang===item.lang && tag.href===item.href),
+        'Missing reciprocal hreflang ' + item.lang + ' -> ' + item.href + ' on ' + state.url);
+    }
+    const english = expected.find(item => item.lang==='en' || item.lang.startsWith('en-'));
+    if (english) assert.ok(tags.some(tag=>tag.lang==='x-default'&&tag.href===english.href),
+      'Missing x-default on ' + state.url);
+    assert.equal(tags.length, expected.length + (english?1:0), 'Unexpected or duplicate hreflang entries on ' + state.url);
+  }
+}
+function assertPublicCataloguePresence(route, directory, about, index) {
+  const url = SITE_ORIGIN + route;
+  const published = pageIndexability(url).indexable;
+  assert.equal(urls.includes(url), published, 'Sitemap/indexability mismatch: ' + route);
+  assert.equal(directory.includes('href="' + route + '"'), published, 'Directory/indexability mismatch: ' + route);
+  assert.equal(about.includes('href="' + route + '"'), published, 'About catalogue/indexability mismatch: ' + route);
+  assert.equal(index.some(item=>item.url===route), published, 'Search index/indexability mismatch: ' + route);
+}
+
 test('international hub hero links meet the dark-header contrast style', () => {
   const html = fs.readFileSync(path.join(root, 'international/index.html'), 'utf8');
   assert.match(html, /\.hero\s+\.links\s+a\s*\{[^}]*color:\s*#e6d6b2/i);
