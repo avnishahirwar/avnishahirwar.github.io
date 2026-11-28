@@ -6,14 +6,14 @@ const root=path.resolve(__dirname,'..');
 const home=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const page=fs.readFileSync(path.join(root,'calculator/why-friendly-calculator.html'),'utf8');
 test('homepage presents Friendly Calculator consistently as an India and worldwide calculator platform',()=>{
- assert.ok(home.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
+ assert.ok(home.includes('<title>Free Calculators India | EMI, SIP, GST | Friendly Calculator</title>'));
  assert.match(home,/<meta property="og:site_name" content="Friendly Calculator">/);
  const entities=[...home.matchAll(/<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi)].flatMap(match=>{
   const data=JSON.parse(match[1]);
   return Array.isArray(data['@graph'])?data['@graph']:[data];
  });
  assert.ok(entities.some(entity=>entity['@type']==='WebSite'&&entity['@id']==='https://friendlycalculator.in/#website'&&entity.url==='https://friendlycalculator.in/'&&entity.name==='Friendly Calculator'));
- assert.match(home,/<h1>Free Online Calculators for India and Worldwide<\/h1>/);
+ assert.match(home,/<h1>Free Online Calculators – Fast, Free &amp; Clear<\\/h1>/);
  // The homepage no longer links to the brand page; the page itself must stay valid (checked below).
 });
 test('brand discovery page targets regional and multilingual intent without unsupported popularity claims',()=>{
