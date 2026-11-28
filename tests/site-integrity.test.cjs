@@ -853,7 +853,8 @@ test('homepage, directory, About and sitemap agree on their distinct calculator 
   const navCalculatorTotal = [...nav.matchAll(/<span>(\d+) calculator(?:s)?<\/span>/g)].reduce((sum, m) => sum + Number(m[1]), 0);
   const categoryCount = (directory.match(/<section class="section calculator-category"/g) || []).length;
   assert.ok(searchIndex.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
-  assert.deepEqual(searchUrls, expectedSearchIndexUrls);
+  assert.equal(new Set(searchUrls).size, searchUrls.length, 'Raw search-index URLs must be unique');
+  assert.ok(expectedSearchIndexUrls.every(url => searchUrls.includes(url)), 'Every published canonical search URL must remain in the raw search index');
   assert.deepEqual(sitemapCalc, canonicalCalculatorUrls);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(searchIndex.some(item => item.name === 'UK Student Loan Calculator' && item.url === '/international/uk-student-loan-calculator.html'));
@@ -1431,12 +1432,11 @@ test('Bengali and Tamil aspect-ratio pages preserve the shared formula and recip
     assert.match(html, /id="fcNewFields"/);
     assert.match(html, /id="fcNewOutput"/);
     assert.match(html, /(?:1920 × 1080|১৯২০ × ১০৮০)/);
-    assert.match(html, /hreflang="en"/);
-    assert.match(html, /hreflang="hi"/);
-    assert.match(html, /hreflang="bn"/);
-    assert.match(html, /hreflang="ta"/);
-    assert.match(html, /hreflang="x-default"/);
+    assert.match(html, /<meta name="robots" content="noindex,follow">/);
+    assert.doesNotMatch(html, /hreflang=/, 'Noindex aspect-ratio locale pages must not carry hreflang alternates');
     assert.match(html, /MutationObserver/);
+    assert.doesNotMatch(en, /hreflang="bn"|hreflang="ta"/, 'English page must not target noindex Bengali/Tamil destinations');
+    assert.doesNotMatch(hi, /hreflang="bn"|hreflang="ta"/, 'Hindi page must not target noindex Bengali/Tamil destinations');
     assert.ok(fs.readFileSync(path.join(root, locale, 'index.html'), 'utf8').includes('/' + locale + '/calculators/aspect-ratio-calculator.html'));
   }
   for (const html of [en, hi]) {
@@ -1513,7 +1513,9 @@ test('homepage search runtime validates the complete sitemap-backed deferred cat
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const searchIndex = JSON.parse(fs.readFileSync(path.join(root, 'assets/calculator-search-index.json'), 'utf8'));
   assert.ok(searchIndex.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
-  assert.deepEqual([...new Set(searchIndex.map(item => item.url))].sort(), expectedSearchIndexUrls);
+  const rawUrls = searchIndex.map(item => item.url);
+  assert.equal(new Set(rawUrls).size, rawUrls.length, 'Raw search-index URLs must be unique');
+  assert.ok(expectedSearchIndexUrls.every(url => rawUrls.includes(url)), 'Every published canonical calculator must be searchable');
   assert.match(homepage, /!Array\.isArray\(items\)/);
   assert.match(homepage, /items\.filter\(x=>x&&typeof x\.name==='string'&&typeof x\.url==='string'/);
   assert.ok(homepage.includes('FriendlyCalculatorSearchMatcher.getCalculatorMatch'));
@@ -1815,9 +1817,15 @@ test('four chemistry batch calculators are complete and discoverable', () => {
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
     assert.match(page, /aria-live="polite"/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
 });
@@ -1846,9 +1854,15 @@ test('ten chemistry batch 03 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1879,9 +1893,15 @@ test('ten chemistry batch 04 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1912,9 +1932,15 @@ test('ten chemistry batch 05 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1945,9 +1971,15 @@ test('ten chemistry batch 06 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -1978,9 +2010,15 @@ test('ten chemistry batch 07 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2011,9 +2049,15 @@ test('ten chemistry batch 08 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2044,9 +2088,15 @@ test('ten chemistry batch 09 calculators are present in pages, search and direct
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
@@ -2074,9 +2124,15 @@ test('seven chemistry batch 10 calculators are present in pages, search and dire
     assert.match(page, /<form id="calcForm"/);
     assert.match(page, /<h2>Formula<\/h2>/);
     assert.match(page, /Assumptions and limitations/);
-    assert.ok(directory.includes('href="' + route + '"'));
-    assert.ok(about.includes('href="' + route + '"'));
-    assert.ok(index.some(item => item.url === route));
+    const noindexPage = /<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(page);
+    if (noindexPage) {
+      assert.ok(!directory.includes('href="' + route + '"'), 'Noindex route must stay out of the public directory: ' + route);
+      assert.ok(!about.includes('href="' + route + '"'), 'Noindex route must stay out of the About catalogue: ' + route);
+    } else {
+      assert.ok(directory.includes('href="' + route + '"'));
+      assert.ok(about.includes('href="' + route + '"'));
+      assert.ok(index.some(item => item.url === route));
+    }
   }
   assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
   assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
