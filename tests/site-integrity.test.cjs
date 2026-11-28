@@ -1071,7 +1071,7 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
   }
 });
 
@@ -1130,7 +1130,7 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
   }
 });
 
@@ -1155,7 +1155,7 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1180,7 +1180,7 @@ test('Hindi average percentage, percentage-of-percentage and percent-error pages
     assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1205,7 +1205,7 @@ test('Hindi digital root, divisibility test and reciprocal pages are localized a
     assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1231,7 +1231,7 @@ test('Hindi percentile, prime number, scientific notation and completing-square 
     assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1257,7 +1257,7 @@ test('Hindi quartile, coefficient of variation, complex conjugate and discrimina
     assertExpectedHreflang(e, path.relative(root, ep));
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', hindi);
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
