@@ -14,10 +14,10 @@ function assertCatalogueVisibility(slug,directory,sitemap,about){
  const fullUrl='https://friendlycalculator.in'+url;
  const html=fs.readFileSync(path.join(root,url.slice(1)),'utf8');
  const head=html.slice(0,html.toLowerCase().indexOf('</head>'));
- const canonicalTag=(head.match(/<link\\b(?=[^>]*\\brel=["']canonical["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/i)||[])[1]||'';
- const noindex=/<meta\\b(?=[^>]*\\bname=["'](?:robots|googlebot)["'])(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)[^>]*>/i.test(head)||
-  /<meta\\b(?=[^>]*\\bcontent=["'][^"']*\\bnoindex\\b)(?=[^>]*\\bname=["'](?:robots|googlebot)["'])[^>]*>/i.test(head);
- const indexable=!noindex&&canonicalTag===fullUrl;
+ const canonical=(head.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i)||[])[1]||'';
+ const noindex=/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(head)||
+  /<meta\b(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)(?=[^>]*\bname=["'](?:robots|googlebot)["'])[^>]*>/i.test(head);
+ const indexable=!noindex&&canonical===fullUrl;
  const indexed=searchIndex.some(item=>item.url===url);
  const inDirectory=directory.includes('href="'+url+'"');
  const inSitemap=sitemap.includes(fullUrl);
@@ -32,6 +32,7 @@ function assertCatalogueVisibility(slug,directory,sitemap,about){
  }
  if(about)assert.ok(about.includes('href="'+url+'"'),'About page must retain its navigation link: '+url);
 }
+
 test('seventeen new calculator routes are listed and use the shared calculator engine',()=>{
  const slugs=["percentage-change-calculator","percentage-increase-calculator","percentage-decrease-calculator","percentage-difference-calculator","fraction-to-percent-calculator","decimal-to-percent-converter","weighted-average-calculator","median-calculator","mode-calculator","sample-standard-deviation-calculator","z-score-calculator","percentile-rank-calculator","quartile-calculator","coefficient-of-variation-calculator","geometric-mean-calculator","harmonic-mean-calculator","mean-absolute-deviation-calculator"];
  for(const slug of slugs){const html=fs.readFileSync(new URL('../calculators/'+slug+'.html','file://'+__filename),'utf8');assert.match(html,/keyword-calculators\.js/);assert.ok(html.includes('data-calculator="'+({ "percentage-change-calculator":"percentage-change", "percentage-increase-calculator":"percentage-increase", "percentage-decrease-calculator":"percentage-decrease", "percentage-difference-calculator":"percentage-difference", "fraction-to-percent-calculator":"fraction-to-percent", "decimal-to-percent-converter":"decimal-to-percent", "weighted-average-calculator":"weighted-average", "median-calculator":"median", "mode-calculator":"mode", "sample-standard-deviation-calculator":"sample-standard-deviation", "z-score-calculator":"z-score", "percentile-rank-calculator":"percentile-rank", "quartile-calculator":"quartile", "coefficient-of-variation-calculator":"coefficient-of-variation", "geometric-mean-calculator":"geometric-mean", "harmonic-mean-calculator":"harmonic-mean", "mean-absolute-deviation-calculator":"mean-absolute-deviation" }[slug]) +'"'));}
