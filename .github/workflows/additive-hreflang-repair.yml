@@ -31,14 +31,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f -A -- .
-          echo "Working-tree status:"
-          git status --short
-          echo "Staged changes:"
-          git diff --cached --stat
-          if ! git diff --cached --quiet; then
-            git commit -m "seo: add missing hreflang reciprocals [skip ci]"
-            git push
-          else
-            echo "No safe additive reciprocal links were missing."
+          mapfile -t changed_html < <(git diff --name-only origin/main -- '*.html')
+          printf 'HTML files differing from main: %s\n' "${#changed_html[@]}"
+          if [ "${#changed_html[@]}" -eq 0 ]; then
+            echo "Expected generated HTML changes, but none were found."
+            exit 1
           fi
+          for file in "${changed_html[@]}"; do
+            git add -f -- "$file"
+          done
+          echo "Staged HTML changes:"
+          git diff --cached --stat -- '*.html'
+          if git diff --cached --quiet; then
+            echo "Expected HTML modifications were not staged."
+            exit 1
+          fi
+          git commit -m "seo: add missing hreflang reciprocals [skip ci]"
+          git push
