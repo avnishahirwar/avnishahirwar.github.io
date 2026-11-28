@@ -56,7 +56,10 @@ function pageIndexability(url) {
   return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
 }
 function localeUrlFor(baseUrl, locale) {
-  const pathname = new URL(baseUrl).pathname;
+  let pathname = new URL(baseUrl).pathname;
+  const first = pathname.split('/')[1];
+  const configured = new Set(require('../config/language-catalogue.json').locales.map(item => item.code));
+  if (configured.has(first)) pathname = pathname.slice(first.length + 1) || '/';
   return SITE_ORIGIN + (locale === 'en' ? pathname : '/' + locale + pathname);
 }
 function assertLocaleCluster(baseUrl, locales) {
