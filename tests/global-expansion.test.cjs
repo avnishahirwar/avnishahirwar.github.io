@@ -192,7 +192,8 @@ test('regional defaults follow the visitor browser region and preserve explicit 
   const locale = fs.readFileSync(path.join(root, 'assets/global-locale.js'), 'utf8');
   assert.ok(locale.includes("navigator.languages?.[0]||navigator.language"), 'Browser locale must be used for first-visit regional defaults.');
   assert.ok(locale.includes("read(COUNTRY_KEY,detectedCountry"), 'A saved country must override the detected browser country.');
-  assert.ok(locale.includes("read(CURRENCY_KEY,COUNTRY_CURRENCY[country]||browserCurrency"), 'Currency must default from the selected or detected country.');
+  assert.ok(locale.includes("let currencyDefault=(isHindiPath||country==='IN')?'INR':(COUNTRY_CURRENCY[country]||browserCurrency);"), 'India and Hindi routes must retain the India-first INR default unless a visitor has saved a currency.');
+  assert.ok(locale.includes("read(CURRENCY_KEY,currencyDefault"), 'An explicitly saved currency must override the detected India-first regional default.');
   assert.ok(locale.includes("read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat"), 'Number/date format must default from the selected or detected locale.');
   assert.ok(locale.includes("read(UNIT_KEY,browserRegion==='US'?'imperial':'metric'"), 'Measurement units must default by visitor region and retain saved preference.');
 });
