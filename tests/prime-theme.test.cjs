@@ -19,7 +19,7 @@ test('Prime theme defines the shared brand tokens and readable dark hero heading
   assert.match(theme, /\.hero\s*>\s*:is\(h1,h2,h3,strong\)/);
   assert.match(theme, /\.hero\s*>\s*p/);
   assert.match(theme, /:not\(\.card\)/);
-  assert.match(theme, /\\.card a\\{color:var\\(--fc-link\\)\\}/);
+  assert.ok(theme.includes('.card a{color:var(--fc-link)}'));
 });
 
 test('Prime theme preserves responsive and reduced-motion behavior', () => {
