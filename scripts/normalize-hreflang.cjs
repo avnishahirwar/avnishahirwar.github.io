@@ -21,7 +21,7 @@ const IGNORE = new Set([
   '.git', '.github', 'node_modules', 'tests', 'vendor', '_site',
   'admin', 'avnish-ai', 'artifacts'
 ]);
-const FALLBACK_LOCALES = new Set(['hi', 'de', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'ja', 'ru']);
+const FALLBACK_LOCALES = new Set(require(path.join(ROOT, 'config/supported-locale-prefixes.json')));
 
 function walk(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
