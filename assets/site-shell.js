@@ -1,3 +1,12 @@
+/* Load the shared calculator indexability policy once. */
+(()=> {
+  if(!document.head || document.querySelector('script[data-fc-adsense-curate]')) return;
+  const script=document.createElement('script');
+  script.src='/assets/adsense-curate.js?v=20261128-index-policy';
+  script.async=false;
+  script.setAttribute('data-fc-adsense-curate','1');
+  document.head.appendChild(script);
+})();
 (()=>{'use strict';
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
@@ -1790,47 +1799,7 @@ if (isProductionAnalyticsHost) {
     document.head.appendChild(a);
   }
 
-  /* ---------- B. Thin calculator pages -> noindex ---------- */
-  const KEEP = new Set([
-    '/calculators/emi-calculator.html','/calculators/loan-emi-calculator.html',
-    '/calculators/home-loan-emi-calculator.html','/calculators/car-loan-calculator.html',
-    '/calculators/home-loan-eligibility-calculator.html','/calculators/personal-loan-eligibility-calculator.html',
-    '/calculators/loan-prepayment-calculator.html','/calculators/loan-comparison-calculator.html',
-    '/calculators/mortgage-calculator.html',
-    '/calculators/gst-calculator.html','/calculators/gst-input-tax-credit-calculator.html',
-    '/calculators/reverse-charge-gst-calculator.html','/calculators/gst-on-rent-calculator.html',
-    '/calculators/gst-late-fee-calculator.html','/calculators/gst-interest-calculator.html',
-    '/calculators/income-tax-calculator.html','/calculators/tds-calculator.html',
-    '/calculators/hra-calculator.html','/calculators/gratuity-calculator.html',
-    '/calculators/salary-calculator.html','/calculators/salary-hike-calculator.html',
-    '/calculators/ctc-salary-calculator.html','/calculators/bonus-calculator.html',
-    '/calculators/advance-tax-calculator.html','/calculators/professional-tax-calculator.html',
-    '/calculators/capital-gains-tax-calculator.html','/calculators/leave-encashment-calculator.html',
-    '/calculators/freelancer-tax-calculator.html',
-    '/calculators/sip-calculator.html','/calculators/lumpsum-calculator.html',
-    '/calculators/fd-calculator.html','/calculators/rd-calculator.html',
-    '/calculators/ppf-calculator.html','/calculators/swp-calculator.html',
-    '/calculators/cagr-calculator.html','/calculators/401k-calculator.html',
-    '/calculators/percentage-calculator.html','/calculators/simple-interest-calculator.html',
-    '/calculators/compound-interest-calculator.html','/calculators/discount-calculator.html',
-    '/calculators/tip-calculator.html','/calculators/sales-tax-calculator.html',
-    '/calculators/profit-loss-calculator.html','/calculators/currency-converter-calculator.html',
-    '/calculators/basic-calculator.html','/calculators/graphing-calculator.html',
-    '/calculators/fraction-calculator.html','/calculators/unit-converter.html',
-    '/calculators/bmi-calculator.html','/calculators/age-calculator.html'
-  ]);
-  const path = location.pathname.replace(/\/index\.html$/, '/');
-  if (/\/calculators\/[^/]+\.html$/.test(path) && !KEEP.has(path)) {
-    let m = document.querySelector('meta[name="robots"]');
-    if (m) m.setAttribute('content', 'noindex,follow');
-    else {
-      m = document.createElement('meta');
-      m.name = 'robots';
-      m.content = 'noindex,follow';
-      document.head.appendChild(m);
-    }
-  }
-
+  /* ---------- B. Indexability is handled by adsense-curate.js. ---------- */
   /* ---------- C. De-duplicate repeated template blocks ---------- */
   const tidy = () => {
     const main = document.querySelector('main') || document.body;
