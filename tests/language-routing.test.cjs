@@ -7,6 +7,37 @@ const isNoindex = html => {
   const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
   return /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(head);
 };
+const languageCatalogue=require('../config/language-catalogue.json');
+const origin='https://friendlycalculator.in';
+const headOf=html=>{const end=html.toLowerCase().indexOf('</head>');return end<0?html:html.slice(0,end);};
+const alternatesOf=html=>[...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]).filter(tag=>/\brel=["']alternate["']/i.test(tag)).map(tag=>[(tag.match(/\bhreflang=["']([^"']+)["']/i)||[])[1],(tag.match(/\bhref=["']([^"']+)["']/i)||[])[1]]).filter(pair=>pair[0]&&pair[1]);
+function homepageState(locale){
+ const relative=locale==='en'?'index.html':locale+'/index.html',file=path.join(__dirname,'..',relative);
+ if(!fs.existsSync(file))return {exists:false,indexable:false,locale,file,url:origin+'/'+(locale==='en'?'':locale+'/')};
+ const html=fs.readFileSync(file,'utf8'),head=headOf(html);
+ const tags=[...head.matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]);
+ const canonicalTag=tags.find(tag=>/\brel=["']canonical["']/i.test(tag));
+ const canonical=(canonicalTag?.match(/\bhref=["']([^"']+)["']/i)||[])[1]||'';
+ const descriptionTag=[...head.matchAll(/<meta\b[^>]*>/gi)].map(m=>m[0]).find(tag=>/\bname=["']description["']/i.test(tag));
+ const description=(descriptionTag?.match(/\bcontent=["']([^"']*)["']/i)||[])[1]||'';
+ const lang=(head.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)||[])[1]||locale;
+ const url=origin+'/'+(locale==='en'?'':locale+'/');
+ let canonicalUrl='';try{canonicalUrl=new URL(canonical,origin).href;}catch{}
+ const canonicalPath=canonicalUrl?new URL(canonicalUrl).pathname:'';
+ const expectedPath=locale==='en'?'/':'/'+locale+'/';
+ const selfCanonical=canonicalUrl===url||canonicalPath===expectedPath+'index.html';
+ const placeholder=locale!=='en'&&/^\s*\[[^\]]{2,40}\]\s*/.test(description);
+ return {exists:true,indexable:!isNoindex(html)&&!placeholder&&selfCanonical,locale,lang:lang.trim(),url,html};
+}
+function expectedHomepageAlternates(){
+ const pages=['en',...languageCatalogue.locales.map(item=>item.code)].map(homepageState).filter(item=>item.indexable);
+ const langs=pages.map(item=>item.lang),urls=pages.map(item=>item.url);
+ if(pages.length<2||new Set(langs).size!==langs.length||new Set(urls).size!==urls.length)return [];
+ const pairs=pages.map(item=>[item.lang,item.url]);
+ const english=pages.find(item=>item.lang==='en'||item.lang.toLowerCase().startsWith('en-'));
+ if(english)pairs.push(['x-default',english.url]);
+ return pairs.sort(([a],[b])=>a.localeCompare(b));
+}
 
 test('global language selector supports all configured locales', () => {
   for (const locale of ['en','de','hi','es','fr','pt','ar','id','bn','ta','ja','ru','mr','vi','te','gu','kn']) {
@@ -158,20 +189,18 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 });
 
 
-test('homepage hreflang clusters include published language homepages and exclude the UK market hub', () => {
-  const catalogue = require('../config/language-catalogue.json');
-  const locales = catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk');
-  const pages = ['index.html', ...locales.map(locale => locale + '/index.html')];
-  for (const file of pages) {
-    const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    for (const locale of ['en', ...locales, 'x-default']) {
-      assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
-    }
-    assert.doesNotMatch(html, /hreflang="(?:uk|en-GB)"/);
+test('homepage hreflang clusters include only self-canonical indexable language homepages', () => {
+  const expected=expectedHomepageAlternates();
+  const locales=['en',...languageCatalogue.locales.map(item=>item.code)];
+  for(const locale of locales){
+    const state=homepageState(locale);
+    if(!state.exists)continue;
+    const actual=alternatesOf(state.html).sort(([a],[b])=>a.localeCompare(b));
+    assert.deepEqual(actual,expected,locale+' homepage hreflang must match the indexable reciprocal homepage group');
   }
-  const ukHub = fs.readFileSync(path.join(__dirname, '..', 'uk', 'index.html'), 'utf8');
-  assert.match(ukHub, /<html lang="en-GB">/);
-  assert.equal((ukHub.match(/rel="alternate"/g) || []).length, 0, 'UK market hub must not claim unrelated locale alternates');
+  const ukHub=fs.readFileSync(path.join(__dirname,'..','uk','index.html'),'utf8');
+  assert.match(ukHub,/<html lang="en-GB">/);
+  assert.equal(alternatesOf(ukHub).length,0,'UK market hub must not claim unrelated locale alternates');
 });
 
 
@@ -213,17 +242,13 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 });
 
 
-test('Gujarati and Kannada basic calculators are indexable and carry no language alternates',()=>{
- const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
+test('Gujarati and Kannada basic calculator drafts remain noindex until they have a complete working tool',()=>{
  for(const locale of ['gu','kn']){
   const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
-  assert.ok(!isNoindex(html),locale+' basic calculator must be indexable');
-  assert.doesNotMatch(html,/hreflang=/i,locale+' page must not carry alternates');
- }
- for(const file of pages){
-  const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
-  if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,file+' noindex page must not carry alternates');
-  else assert.doesNotMatch(html,/hreflang="(?:gu|kn)"/i,file+' must not target noindex Gujarati or Kannada pages');
+  assert.ok(isNoindex(html),locale+' basic calculator is a noindex draft');
+  assert.doesNotMatch(html,/hreflang=/i,locale+' noindex draft must not advertise alternates');
+  assert.match(html,new RegExp('<html[^>]+lang="'+locale+'"'));
+  assert.match(html,new RegExp('rel="canonical" href="https://friendlycalculator\\.in/'+locale+'/calculators/basic-calculator\\.html"'));
  }
 });
 
