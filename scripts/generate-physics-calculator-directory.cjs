@@ -6,6 +6,7 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
 const INDEX_FILE = path.join(ROOT, 'assets/calculator-search-index.json');
+const MANUAL_FILE = path.join(ROOT, 'config/physics-directory-manual-entries.json');
 const SITE_DIRECTORY_FILE = path.join(ROOT, 'calculator/site-directory.html');
 const OUTPUT_FILE = path.join(ROOT, 'calculator/physics-calculators.html');
 const SITE_ORIGIN = 'https://friendlycalculator.in';
@@ -86,6 +87,18 @@ function physicsEntries() {
     const entry = {...item, url, section: classify(item)};
     const previous = byUrl.get(url);
     if (!previous || String(entry.description || '').length > String(previous.description || '').length) byUrl.set(url, entry);
+  }
+
+  // Preserve the existing editorially curated Physics directory entries.
+  // They remain listed even when they are outside the current searchable index;
+  // their individual robots/canonical directives are not modified here.
+  const manual = JSON.parse(fs.readFileSync(MANUAL_FILE, 'utf8'));
+  for (const item of manual) {
+    const url = String(item.url || '');
+    if (!url.startsWith('/calculators/') || !url.endsWith('.html') || url.includes('..') || url.includes('?') || url.includes('#')) continue;
+    if (!fs.existsSync(path.join(ROOT, url.slice(1))) || byUrl.has(url)) continue;
+    const section = SECTION_ORDER.has(item.section) ? item.section : classify(item);
+    byUrl.set(url, {...item, url, category: 'Physics', section});
   }
 
   const directory = fs.readFileSync(SITE_DIRECTORY_FILE, 'utf8');
