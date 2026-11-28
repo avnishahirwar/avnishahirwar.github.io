@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {catalogueCount, transformedFiles, sync} = require('../scripts/sync-calculator-counts.cjs');
+const {catalogueCount, catalogueStats, transformedFiles, sync} = require('../scripts/sync-calculator-counts.cjs');
 const root = path.join(__dirname, '..');
 
 function sitemapCalculatorUrls() {
@@ -65,7 +65,13 @@ test('all catalog-driven counts are synchronized and repeatable after catalogue 
   const staleCount = total - 1;
   const {updateHomepage} = require('../scripts/sync-calculator-counts.cjs');
   const stale = `<meta content="Search all ${staleCount.toLocaleString('en-US')} calculator entries"> <p>Total catalogue: ${staleCount.toLocaleString('en-US')} calculators</p>`;
-  const updated = updateHomepage(stale, total);
+  const staleNew = `<p>Catalogue: ${staleCount.toLocaleString('en-US')} core calculators; ${staleCount.toLocaleString('en-US')} total searchable entries across languages</p>`;
+  const core = catalogueStats().core;
+  const curated = directoryCategoryLinks(fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8')).links.length;
+  const categoryCounts = new Map([['test-category', curated]]);
+  const updated = updateHomepage(stale, total, false, core, categoryCounts);
+  const updatedNew = updateHomepage(staleNew, total, false, core, categoryCounts);
   assert.ok(updated.includes(`Search all ${total.toLocaleString('en-US')} calculator entries`));
-  assert.ok(updated.includes(`Total catalogue: ${total.toLocaleString('en-US')} calculators`));
+  assert.ok(updated.includes(`Searchable entries: ${total.toLocaleString('en-US')}; curated directory tools: ${curated.toLocaleString('en-US')}`));
+  assert.ok(updatedNew.includes(`Searchable entries: ${total.toLocaleString('en-US')}; curated directory tools: ${curated.toLocaleString('en-US')}`));
 });

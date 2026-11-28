@@ -5,7 +5,8 @@ const vm = require('node:vm');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { canonicalCalculatorUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
+const { canonicalCalculatorUrls, expectedSearchIndexLength } = catalogueCounts;
+const { catalogueStats } = require('../scripts/sync-calculator-counts.cjs');
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -741,7 +742,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(homepage.includes('aria-label="Search all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator entries by name or topic"'));
-  assert.ok(homepage.includes('Total catalogue: ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  const catalogueStatus = 'Searchable entries: ' + expectedSearchIndexLength.toLocaleString('en-US') + '; curated directory tools: 1,657';
+  assert.ok(homepage.includes(catalogueStatus));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });

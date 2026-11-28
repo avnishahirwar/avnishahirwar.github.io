@@ -5,6 +5,7 @@ const vm = require('node:vm');
 const root = require('node:path').resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { expectedSearchIndexLength } = catalogueCounts;
+const { catalogueStats } = require('../scripts/sync-calculator-counts.cjs');
 
 test('Study Calculator is indexed, discoverable and uses the published catalogue count', () => {
   const index = JSON.parse(fs.readFileSync(root + '/assets/calculator-search-index.json', 'utf8'));
@@ -15,7 +16,7 @@ test('Study Calculator is indexed, discoverable and uses the published catalogue
   assert.ok(index.some(item => item.name === 'Study Calculator' && item.url === '/calculators/study-calculator.html'));
   assert.match(directory, /href="\/calculators\/study-calculator\.html"/);
   assert.ok(home.includes('aria-label="Search all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator entries by name or topic"'));
-  assert.ok(home.includes('Total catalogue: ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  assert.ok(home.includes('Catalogue: ' + catalogueStats().core.toLocaleString('en-US') + ' core calculators; ' + expectedSearchIndexLength.toLocaleString('en-US') + ' total searchable entries across languages'));
   assert.match(page, /name="robots" content="index,follow/);
   assert.match(page, /rel="canonical"/);
   assert.match(page, /EducationalApplication/);
