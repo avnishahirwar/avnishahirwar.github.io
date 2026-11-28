@@ -29,11 +29,11 @@ function pageState(locale,route){
  const pathname=new URL(url).pathname;
  const canonicalPath=canonicalUrl?new URL(canonicalUrl).pathname:'';
  const selfCanonical=canonicalUrl===url || canonicalPath===pathname+'/index.html' || (pathname.endsWith('/index.html')&&canonicalPath===pathname.slice(0,-'index.html'.length));
- return {exists:true,indexable:!noindexOf(html)&&!placeholder&&selfCanonical,file,url,lang:lang.trim(),html};
+ return {exists:true,indexable:!noindexOf(html)&&!placeholder&&selfCanonical,file,url,lang:lang.trim(),locale,html};
 }
 const routeLocales=route=>candidates.filter(locale=>pageState(locale,route).exists);
 function expectedPairs(route){
- const entries=routeLocales(route).map(locale=>pageState(locale,route)).filter(page=>page.indexable);
+ const entries=routeLocales(route).map(locale=>pageState(locale,route)).filter(page=>page.indexable&&(page.locale==='en'||page.lang.split('-')[0].toLowerCase()===page.locale));
  const langs=entries.map(page=>page.lang),urls=entries.map(page=>page.url);
  if(entries.length<2||new Set(langs).size!==langs.length||new Set(urls).size!==urls.length)return [];
  const pairs=entries.map(page=>[page.lang,page.url]);
