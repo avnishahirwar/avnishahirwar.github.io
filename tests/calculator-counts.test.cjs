@@ -70,6 +70,10 @@ test('all catalog-driven counts are synchronized and repeatable after catalogue 
   const staleNew = `<p>Catalogue: ${staleCount.toLocaleString('en-US')} core calculators; ${staleCount.toLocaleString('en-US')} total searchable entries across languages</p>`;
   const updatedNew = updateHomepage(staleNew, total, false, core);
   assert.ok(updated.includes(`Search all ${total.toLocaleString('en-US')} calculator entries`));
-  assert.ok(updated.includes(`Catalogue: ${core.toLocaleString('en-US')} core calculators; ${total.toLocaleString('en-US')} total searchable entries across languages`));
-  assert.ok(updatedNew.includes(`Catalogue: ${core.toLocaleString('en-US')} core calculators; ${total.toLocaleString('en-US')} total searchable entries across languages`));
+  const curated = directoryCategoryLinks(fs.readFileSync(path.join(root, 'calculator/site-directory.html'), 'utf8')).links.length;
+  const categoryCounts = new Map([['test-category', curated]]);
+  const updatedWithDirectory = updateHomepage(staleNew, total, false, core, categoryCounts);
+  assert.ok(updated.includes(`Searchable entries: ${total.toLocaleString('en-US')}; curated directory tools: ${curated.toLocaleString('en-US')}`));
+  assert.ok(updatedNew.includes(`Searchable entries: ${total.toLocaleString('en-US')}; curated directory tools: ${core.toLocaleString('en-US')}`));
+  assert.ok(updatedWithDirectory.includes(`Searchable entries: ${total.toLocaleString('en-US')}; curated directory tools: ${curated.toLocaleString('en-US')}`));
 });
