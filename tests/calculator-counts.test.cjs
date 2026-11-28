@@ -37,6 +37,8 @@ test('curated directory covers every canonical sitemap calculator across 20 uniq
   assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
   assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
   assert.ok(directory.includes('/calculator/insurance-calculators.html'), 'The directory should link the insurance category hub');
+  assert.ok(directory.includes('/calculators/home-loan-emi-calculator.html'), 'The richer Home Loan EMI calculator should be listed');
+  assert.ok(!directory.includes('/calculators/home-loan-calculator.html'), 'The duplicate noindex Home Loan route must stay out of the curated directory');
 });
 
 test('all catalog-driven counts are synchronized and repeatable', () => {
