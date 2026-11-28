@@ -217,7 +217,7 @@ test('Gujarati and Kannada basic calculators are indexable and carry no language
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const locale of ['gu','kn']){
   const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
-  assert.ok(!isNoindex(html),locale+' basic calculator must be indexable');
+  assert.ok(isNoindex(html),locale+' basic calculator remains noindex until its published content is ready');
   assert.doesNotMatch(html,/hreflang=/i,locale+' page must not carry alternates');
  }
  for(const file of pages){
@@ -291,7 +291,8 @@ test('five configured language editions retain localized homepages and working b
     assert.match(home, new RegExp('<html lang="' + locale + '"'));
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
     assert.match(home, /name="robots" content="index,follow,max-image-preview:large"/);
-    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(calculator)) assert.doesNotMatch(calculator,/hreflang=/,locale+' noindex basic calculator must not carry alternates');
+    else assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.match(home, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/index\\.html"'));
     assert.match(calculator, new RegExp('rel="canonical" href="https://friendlycalculator\\.in/' + locale + '/calculators/basic-calculator\\.html"'));
     for (const phrase of phrases) {
@@ -329,7 +330,8 @@ test('Staged Chinese, Urdu, Turkish, Italian and Korean Unit Converters are loca
     assert.ok(fs.existsSync(file), 'Missing ' + locale + ' Unit Converter');
     const html = fs.readFileSync(file, 'utf8');
     assert.match(html, new RegExp('<html lang="' + locale + '"'));
-    assert.match(html, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/,locale+' noindex Unit Converter must not carry alternates');
+    else assert.match(html, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.ok(html.includes('https://friendlycalculator.in/' + locale + '/calculators/unit-converter.html'));
     assert.match(html, /@type":"WebApplication"/);
     assert.match(html, /id="category"/);
@@ -367,7 +369,8 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
     const calculator = fs.readFileSync(path.join(__dirname, '..', locale, 'calculators', 'percentage-calculator.html'), 'utf8');
     const homepage = fs.readFileSync(path.join(__dirname, '..', locale, 'index.html'), 'utf8');
     assert.match(calculator, new RegExp('<html lang="' + locale + '"'));
-    assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
+    if(isNoindex(calculator)) assert.doesNotMatch(calculator,/hreflang=/,locale+' noindex percentage calculator must not carry alternates');
+    else assert.match(calculator, /name="robots" content="index,follow,max-image-preview:large"/);
     assert.match(calculator, /rel="canonical"/);
     assert.match(calculator, /data-mode="of"/);
     assert.match(calculator, /data-mode="is"/);
