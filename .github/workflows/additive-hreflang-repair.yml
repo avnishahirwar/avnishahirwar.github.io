@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: additive-hreflang-repair-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   add-only-reciprocals:
     runs-on: ubuntu-latest
