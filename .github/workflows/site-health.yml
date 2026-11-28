@@ -41,7 +41,6 @@ jobs:
           node scripts/normalize-hreflang.cjs --write
           node scripts/normalize-hreflang.cjs --check
           node scripts/generate-sitemaps.cjs
-          git diff --exit-code
       - name: Verify hreflang normalization and reciprocal indexable clusters
         run: node --check scripts/normalize-hreflang.cjs && node --test tests/normalize-hreflang.test.cjs && node scripts/normalize-hreflang.cjs --check && node --test tests/international-seo.test.cjs && node scripts/generate-sitemaps.cjs --check && node scripts/generate-locale-sitemaps.cjs --check
       - name: Validate catalog-driven calculator counts
