@@ -111,64 +111,49 @@ test('hreflang page edits preserve every original byte except the inserted alter
   }
 });
 
-test('invalid hreflang cleanup removes noindex, language-mismatch and noncanonical targets only', () => {
+test('additive repair skips unsupported codes and known untranslated destinations', () => {
   const os = require('node:os');
-  const { spawnSync } = require('node:child_process');
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-prune-'));
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-safe-additions-'));
   const write = (file, html) => {
     const target = path.join(temp, file);
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, html);
   };
-  const en = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/en/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/"></head></html>';
-  const hi = '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
-  const de = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/de/"></head></html>';
-  const fr = '<html lang="fr"><head><link rel="canonical" href="https://friendlycalculator.in/fr-canonical/"></head></html>';
-  const noindex = '<html lang="it"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/it/"><link rel="alternate" hreflang="en" href="https://friendlycalculator.in/en/"></head></html>';
   try {
-    write('en/index.html', en);
-    write('hi/index.html', hi);
-    write('de/index.html', de);
-    write('fr/index.html', fr);
-    write('it/index.html', noindex);
-    const result = spawnSync('python3', [path.join(root, 'scripts/prune-noindex-hreflang.py')], {
-      cwd: root, encoding: 'utf8', env: { ...process.env, FC_HREFLANG_ROOT: temp }
-    });
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-    const cleanedEn = fs.readFileSync(path.join(temp, 'en/index.html'), 'utf8');
-    assert.match(cleanedEn, /hreflang="hi"/);
-    assert.doesNotMatch(cleanedEn, /hreflang="de"/);
-    assert.doesNotMatch(cleanedEn, /hreflang="fr"/);
-    const cleanedNoindex = fs.readFileSync(path.join(temp, 'it/index.html'), 'utf8');
-    assert.doesNotMatch(cleanedNoindex, /rel="alternate"/);
-  } finally {
-    fs.rmSync(temp, { recursive: true, force: true });
-  }
-});
+    write('ar/index.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/"></head></html>');
+    for (const locale of ['am', 'de']) {
+      write(locale + '/calculators/rd-calculator.html',
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"></head></html>');
+    }
+    for (const locale of ['ja', 'fa', 'vi']) {
+      write(locale + '/calculators/loan-emi-calculator.html',
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/loan-emi-calculator.html"></head></html>');
+    }
+    write('arz/calculators/basic-calculator.html',
+      '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"></head></html>');
+    write('en-gb/index.html',
+      '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/en-gb/"></head></html>');
+    write('arz/index.html',
+      '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/"></head></html>');
 
-test('known untranslated destinations and unsupported hreflang language codes are removed', () => {
-  const os = require('node:os');
-  const { spawnSync } = require('node:child_process');
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-locale-prune-'));
-  const write = (file, html) => {
-    const target = path.join(temp, file);
-    fs.mkdirSync(path.dirname(target), { recursive: true });
-    fs.writeFileSync(target, html);
-  };
-  try {
-    write('calculators/rd-calculator.html',
-      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/rd-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/rd-calculator.html"></head></html>');
-    write('am/calculators/rd-calculator.html', '<html lang="am"><head><link rel="canonical" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"></head></html>');
-    write('de/calculators/rd-calculator.html', '<html lang="de"><head><link rel="canonical" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"></head></html>');
-    write('arz/calculators/rd-calculator.html', '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/rd-calculator.html"></head></html>');
-    write('en-gb/calculators/rd-calculator.html', '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/en-gb/calculators/rd-calculator.html"></head></html>');
-    const result = spawnSync('python3', [path.join(root, 'scripts/prune-noindex-hreflang.py')], {
-      cwd: root, encoding: 'utf8', env: { ...process.env, FC_HREFLANG_ROOT: temp }
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs'), '--write'], {
+      cwd: temp, encoding: 'utf8'
     });
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-    const cleaned = fs.readFileSync(path.join(temp, 'calculators/rd-calculator.html'), 'utf8');
-    assert.doesNotMatch(cleaned, /hreflang="am"|hreflang="de"|hreflang="arz"/);
-    assert.match(cleaned, /hreflang="en-GB"/, 'valid language-region tags should be preserved');
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    assert.equal(summary.added, 1, 'only the verified en-GB target should receive a reciprocal');
+    assert.ok(summary.skippedKnownUntranslatedTarget >= 5);
+    assert.ok(summary.skippedUnsupportedLanguageCode >= 2);
+    const enGb = fs.readFileSync(path.join(temp, 'en-gb/index.html'), 'utf8');
+    assert.match(enGb, /hreflang="ar"/);
+    for (const locale of ['am', 'de']) {
+      const html = fs.readFileSync(path.join(temp, locale, 'calculators/rd-calculator.html'), 'utf8');
+      assert.doesNotMatch(html, /hreflang="ar"/);
+    }
+    for (const locale of ['ja', 'fa', 'vi']) {
+      const html = fs.readFileSync(path.join(temp, locale, 'calculators/loan-emi-calculator.html'), 'utf8');
+      assert.doesNotMatch(html, /hreflang="ar"/);
+    }
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
