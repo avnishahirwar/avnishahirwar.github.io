@@ -3,14 +3,19 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
-<link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/arithmetic-progression-calculator.html">
+
+
+
+
+
+
+
+
+
+
+
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/arithmetic-progression-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/arithmetic-progression-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/arithmetic-progression-calculator.html">
 <link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/arithmetic-progression-calculator.html">
-<link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/arithmetic-progression-calculator.html">
 </head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/es/index.html">Inicio</a> / <a href="/calculator/site-directory.html">Todas las calculadoras</a> / Calculadora de progresión aritmética</nav><header class="hero"><h1>Calculadora de progresión aritmética</h1><p>Introduce el primer término, la diferencia común y el número de términos para calcular el término n y la suma.</p></header><section class="panel"><h2>Introduce los valores</h2><div class="fields"><div class="field"><label for="a">Primer término (a)</label><input id="a" type="number" step="any" value="2" required></div><div class="field"><label for="d">Diferencia común (d)</label><input id="d" type="number" step="any" value="3" required></div><div class="field"><label for="n">Número de términos (n)</label><input id="n" type="number" min="1" max="1000000" step="1" value="10" required></div></div><div class="actions"><button class="btn" id="calculate" type="button">Calcular</button><button class="btn alt" id="reset" type="button">Restablecer</button></div><p id="error" class="error" role="alert" aria-live="polite"></p></section><section class="panel" aria-live="polite"><h2>Resultado</h2><div class="results"><div class="result"><span>Término n</span><strong id="nth">—</strong></div><div class="result"><span>Suma de n términos</span><strong id="sum">—</strong></div></div></section><section class="panel"><h2>Cómo usar esta calculadora</h2><p>Introduce el primer término, la diferencia común y el número de términos para calcular el término n y la suma.</p><h2>Fórmula y método</h2><p>aₙ = a + (n − 1)d; Sₙ = n ÷ 2 × (2a + (n − 1)d).</p><h2>Cómo interpretar el resultado</h2><p>Una progresión aritmética mantiene constante la diferencia entre términos consecutivos. Una diferencia negativa produce una secuencia decreciente.</p><h2>Limitaciones importantes</h2><p>Cálculo matemático basado en los valores introducidos. Los valores muy grandes pueden superar la precisión numérica habitual.</p></section><section class="panel faq"><h2>Preguntas frecuentes</h2><details><summary>¿Qué es una progresión aritmética?</summary><p>Es una secuencia en la que la diferencia entre términos consecutivos es constante.</p></details><details><summary>¿La diferencia común puede ser negativa?</summary><p>Sí. Una diferencia negativa hace que la secuencia disminuya.</p></details><details><summary>¿Qué representa la suma?</summary><p>Es el total de los primeros n términos de la secuencia.</p></details></section></main><script>(()=>{'use strict';const fmt=new Intl.NumberFormat("es-ES",{maximumFractionDigits:8});function fail(){document.getElementById('error').textContent="Introduce números válidos y un número entero de términos entre 1 y 1.000.000.";}function calc(){document.getElementById('error').textContent='';const a=Number(document.getElementById('a').value),d=Number(document.getElementById('d').value),n=Number(document.getElementById('n').value);if(!Number.isFinite(a)||!Number.isFinite(d)||!Number.isInteger(n)||n<1||n>1000000){fail();return;}const nth=a+(n-1)*d,sum=n/2*(2*a+(n-1)*d);if(!Number.isFinite(nth)||!Number.isFinite(sum)){fail();return;}document.getElementById('nth').textContent=fmt.format(nth);document.getElementById('sum').textContent=fmt.format(sum);if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}document.getElementById('calculate').addEventListener('click',calc);document.getElementById('reset').addEventListener('click',()=>{document.getElementById('a').value='2';document.getElementById('d').value='3';document.getElementById('n').value='10';calc();});calc();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>

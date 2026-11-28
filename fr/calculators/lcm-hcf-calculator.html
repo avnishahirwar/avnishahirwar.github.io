@@ -3,14 +3,25 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
+
+
+
+
+
+
+
+
+
+
+
+<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/lcm-hcf-calculator.html">
+<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/lcm-hcf-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/lcm-hcf-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/lcm-hcf-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/lcm-hcf-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/lcm-hcf-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/lcm-hcf-calculator.html">
+<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/lcm-hcf-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/lcm-hcf-calculator.html">
 </head><body><header class="head"><div class="wrap" style="margin:0 auto"><a class="brand" href="/">FRIENDLY <b>CALCULATOR</b></a><nav><a href="/fr/index.html">Accueil</a><a href="/calculator/site-directory.html">Toutes les calculatrices</a></nav></div></header><main class="wrap"><p class="eyebrow">FRIENDLY CALCULATOR · MATH TOOL</p><h1>Calculateur de PPCM et PGCD</h1><p class="intro">Calculez le PPCM et le PGCD de deux à dix entiers positifs. Séparez les nombres par des virgules.</p><section class="tool"><label for="numbers">Nombres entiers</label><input id="numbers" class="field" value="12, 18, 30" inputmode="numeric"><div class="tool-row"><button id="calculate" type="button" class="action">Calculer le PPCM et le PGCD</button><button id="clear" type="button" class="clear">Effacer</button></div><div class="result" aria-live="polite"><p>PGCD / GCD</p><strong id="hcf">6</strong><p>PPCM</p><strong id="lcm">180</strong><p id="status" style="color:#647487">Pour ces nombres 12, 18, 30</p></div></section><article class="content"><h2>Que sont le PPCM et le PGCD ?</h2><p>Le plus grand commun diviseur (PGCD), aussi appelé GCD, est le plus grand entier positif qui divise tous les nombres sans reste. Le plus petit commun multiple (PPCM) est le plus petit entier positif multiple de chaque nombre saisi.</p><h2>Formula</h2><p class="formula">Pour deux entiers positifs a et b : PPCM(a,b) × PGCD(a,b) = a × b</p><p>Pour plus de deux nombres, le PGCD ou le PPCM est calculé successivement sur la liste. Ce calculateur utilise l’algorithme d’Euclide pour le PGCD et la relation entre PGCD et PPCM.</p><h2>Exemple</h2><p>Pour 12, 18 et 30, le PGCD est 6 et le PPCM est 180. Le résultat peut aider à trouver des dénominateurs communs, des horaires répétitifs et à résoudre des exercices d’arithmétique.</p><h2>Limites</h2><p>Saisissez de deux à dix entiers positifs. Les décimales, valeurs négatives et zéro ne sont pas acceptés. Les très grands nombres peuvent dépasser la plage exacte des entiers JavaScript.</p><h2>Questions fréquentes</h2><h3>PGCD et GCD désignent-ils la même chose ?</h3><p>Oui. Les deux termes désignent le plus grand entier positif qui divise tous les entiers donnés.</p><h3>Puis-je calculer le PPCM de plus de deux nombres ?</h3><p>Oui. Saisissez de deux à dix entiers positifs séparés par des virgules.</p><h3>Quelle relation existe entre le PPCM et le PGCD ?</h3><p>Pour deux entiers positifs, leur produit est égal au PPCM multiplié par le PGCD.</p><a href="/calculators/lcm-hcf-calculator.html">Version anglaise</a> · <a href="/calculator/site-directory.html">Toutes les calculatrices</a></article></main><script>(()=>{'use strict';const $=id=>document.getElementById(id),gcd=(a,b)=>{while(b){const r=a%b;a=b;b=r}return a};function calc(){const raw=$('numbers').value.split(',').map(x=>x.trim());if(raw.length<2||raw.length>10||raw.some(x=>!/^\d+$/.test(x))){$('status').textContent="Saisissez de 2 à 10 entiers positifs séparés par des virgules.";return;}const nums=raw.map(Number);if(nums.some(n=>!Number.isSafeInteger(n)||n<=0)){$('status').textContent="Chaque valeur doit être un entier positif sûr.";return;}let h=nums[0],l=nums[0];for(const n of nums.slice(1)){h=gcd(h,n);l=(l/gcd(l,n))*n;if(!Number.isSafeInteger(l)){$('status').textContent="Le PPCM dépasse la plage des entiers exacts prise en charge par ce navigateur.";return;}}$('hcf').textContent=String(h);$('lcm').textContent=String(l);$('status').textContent="Pour ces nombres"+' '+nums.join(', ')+'.';if(typeof gtag==='function')gtag('event','calculator_used',{calculator_page:location.pathname,calculator_action:'calculate'});}function clear(){$('numbers').value='';$('hcf').textContent='—';$('lcm').textContent='—';$('status').textContent="Saisissez au moins deux nombres entiers.";}$('calculate').addEventListener('click',calc);$('clear').addEventListener('click',clear);calc();})();</script><script src="/assets/site-shell.js" defer></script></body></html>

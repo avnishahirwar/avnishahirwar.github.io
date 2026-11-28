@@ -3,14 +3,22 @@
 <meta name="twitter:image:alt" content="Friendly Calculator — online calculators and practical tools">
 
 
+
+
+
+
+
+
+
+
+
+
+
 <link rel="alternate" hreflang="en" href="https://friendlycalculator.in/calculators/hours-to-minutes-calculator.html">
-<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/hours-to-minutes-calculator.html">
 <link rel="alternate" hreflang="es" href="https://friendlycalculator.in/es/calculators/hours-to-minutes-calculator.html">
 <link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/hours-to-minutes-calculator.html">
-<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/hours-to-minutes-calculator.html">
-<link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/hours-to-minutes-calculator.html">
+<link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/hours-to-minutes-calculator.html">
 <link rel="alternate" hreflang="id" href="https://friendlycalculator.in/id/calculators/hours-to-minutes-calculator.html">
-<link rel="alternate" hreflang="bn" href="https://friendlycalculator.in/bn/calculators/hours-to-minutes-calculator.html">
-<link rel="alternate" hreflang="ta" href="https://friendlycalculator.in/ta/calculators/hours-to-minutes-calculator.html">
+<link rel="alternate" hreflang="pt" href="https://friendlycalculator.in/pt/calculators/hours-to-minutes-calculator.html">
 <link rel="alternate" hreflang="x-default" href="https://friendlycalculator.in/calculators/hours-to-minutes-calculator.html">
 </head><body><main class="wrap"><nav aria-label="Breadcrumb"><a href="/id/index.html">Beranda</a> / <a href="/calculator/site-directory.html">Semua kalkulator</a> / Kalkulator Jam ke Menit</nav><header class="hero"><p class="muted">Friendly Calculator</p><h1>Kalkulator Jam ke Menit</h1><p class="muted">Masukkan durasi dalam jam dan menit tambahan untuk mendapatkan total menit dan jam desimal.</p></header><section class="panel"><h2>Masukkan durasi</h2><div class="fields"><label class="field" for="hours">Jam<input id="hours" type="number" min="0" step="1" value="2" inputmode="numeric" required></label><label class="field" for="minutes">Menit tambahan (0–59)<input id="minutes" type="number" min="0" max="59" step="1" value="30" inputmode="numeric" required></label></div><div class="actions"><button class="btn" id="calculate" type="button">Hitung</button><button class="btn alt" id="reset" type="button">Atur ulang</button></div><p id="error" class="error" role="alert" aria-live="polite"></p></section><section class="panel" aria-live="polite"><h2>Hasil</h2><div class="results"><div class="result"><span>Total menit</span><strong id="total">—</strong></div><div class="result"><span>Jam desimal</span><strong id="decimal">—</strong></div></div></section><section class="panel"><h2>Cara menggunakan kalkulator ini</h2><p>Masukkan jumlah jam, lalu menit tambahan. Nilai menit harus antara 0 dan 59. Pilih Hitung untuk mengonversi durasi.</p><h2>Rumus dan metode</h2><p>Total menit = (jam × 60) + menit tambahan. Jam desimal = total menit ÷ 60.</p><h2>Contoh perhitungan</h2><p>Jika Anda memasukkan 2 jam dan 30 menit, total durasinya adalah 150 menit atau 2,5 jam dalam format desimal.</p><h2>Batasan penting</h2><p>Alat ini hanya melakukan konversi matematika atas durasi yang dimasukkan. Alat ini tidak memverifikasi timesheet, penggajian, kebijakan kerja, atau ketentuan kontrak. Periksa aturan terkait bila diperlukan.</p></section><section class="panel faq"><h2>Pertanyaan umum</h2><details><summary>Berapa menit dalam satu jam?</summary><p>Satu jam terdiri dari 60 menit.</p></details><details><summary>Berapa menit untuk 2,5 jam?</summary><p>Kalikan 2,5 dengan 60 untuk mendapatkan 150 menit.</p></details><details><summary>Bisakah saya memasukkan lebih dari 59 menit?</summary><p>Masukkan menit tambahan antara 0 dan 59, lalu masukkan jam penuh pada kolom jam.</p></details></section></main><script>(()=>{'use strict';const locale="id-ID",hours=document.getElementById('hours'),minutes=document.getElementById('minutes'),total=document.getElementById('total'),decimal=document.getElementById('decimal'),error=document.getElementById('error');const fmt=new Intl.NumberFormat(locale,{maximumFractionDigits:4});function calculate(){error.textContent='';total.textContent='—';decimal.textContent='—';const h=Number(hours.value),m=Number(minutes.value);if(hours.value.trim()===''||minutes.value.trim()===''||!Number.isInteger(h)||h<0||!Number.isInteger(m)||m<0||m>59){error.textContent="Masukkan jam bulat yang tidak negatif dan menit bulat antara 0 hingga 59.";return;}const t=h*60+m;total.textContent=fmt.format(t);decimal.textContent=fmt.format(t/60);if(typeof window.gtag==='function')window.gtag('event','calculator_used',{calculator_name:'hours-to-minutes',calculator_page:location.pathname});}document.getElementById('calculate').addEventListener('click',calculate);document.getElementById('reset').addEventListener('click',()=>{hours.value='2';minutes.value='30';calculate();});hours.addEventListener('input',calculate);minutes.addEventListener('input',calculate);calculate();})();</script><script src="/assets/site-shell.js" defer></script><script src="/assets/site-chrome.js?v=1" defer></script></body></html>
