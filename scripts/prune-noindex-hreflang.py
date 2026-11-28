@@ -30,7 +30,7 @@ def parse_tags(source):
 
 def is_noindex(source):
     for tag, attrs in parse_tags(source[:12000]):
-        if tag == 'meta' and attrs.get('name', '').strip().lower() == 'robots':
+        if tag == 'meta' and attrs.get('name', '').strip().lower() in {'robots', 'googlebot'}:
             if re.search(r'\bnoindex\b', attrs.get('content', ''), re.IGNORECASE):
                 return True
     return False
