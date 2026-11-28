@@ -37,6 +37,7 @@ jobs:
           node scripts/generate-human-sitemap.cjs
           node --check scripts/merge-search-index.cjs
           node --test tests/merge-search-index.test.cjs
+          node scripts/normalize-hreflang.cjs --write
           node scripts/normalize-hreflang.cjs --check
           node scripts/generate-sitemaps.cjs
           git diff --exit-code
