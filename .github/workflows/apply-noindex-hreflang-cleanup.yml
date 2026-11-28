@@ -1,0 +1,51 @@
+name: Apply approved noindex hreflang cleanup
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/prune-noindex-hreflang.py
+      - .github/workflows/apply-noindex-hreflang-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply only the approved noindex hreflang cleanup
+        run: |
+          mkdir -p artifacts
+          python scripts/prune-noindex-hreflang.py --apply --report artifacts/noindex-hreflang-cleanup-applied.json
+      - name: Verify noindex hreflang integrity
+        run: |
+          node --test tests/international-seo.test.cjs
+          node --test tests/international-seo-diagnostic.test.cjs
+          git diff --check
+          git diff --stat -- '*.html' | tee artifacts/noindex-hreflang-cleanup-diff-stat.txt
+      - name: Upload cleanup report
+        uses: actions/upload-artifact@v4
+        with:
+          name: noindex-hreflang-cleanup-applied
+          path: artifacts/
+          if-no-files-found: error
+      - name: Commit verified noindex cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --name-only -- '*.html' | xargs -r git add --
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: remove hreflang from noindex pages [skip ci]"
+            git push
+          else
+            echo "No noindex hreflang tags needed removal. No page changes committed."
+          fi
