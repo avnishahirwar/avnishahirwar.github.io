@@ -38,7 +38,7 @@
 <h2 id="gst-live-title">GST Calculator</h2>
 <p class="muted">Enter an amount, type the GST rate confirmed for the relevant HSN/SAC classification, and choose whether GST should be added or extracted. The prefilled 18% is an example only.</p>
 <form id="gst-live-form" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px">
-<label>Amount (₹)<input name="amount" type="number" min="0" step="0.01" value="10000" required style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"></label>
+<label>Amount (INR)<input name="amount" type="number" min="0" step="0.01" value="10000" required style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"></label>
 <label>Verified GST rate (%)<input name="rate" type="number" min="0" max="100" step="0.01" value="18" list="gst-common-rates" required style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><datalist id="gst-common-rates"><option value="5"><option value="18"><option value="40"></datalist></label>
 <label>Calculation<select name="mode" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>Add GST</option><option>Remove GST</option></select></label>
 <label>Supply type<select name="supply" style="display:block;width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px"><option>Intra-state (CGST + SGST)</option><option>Inter-state (IGST)</option></select></label>
