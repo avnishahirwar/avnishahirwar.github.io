@@ -30,7 +30,7 @@ function assertCatalogueVisibility(slug,directory,sitemap,about){
   assert.equal(inDirectory,false,'Noindex or non-self-canonical route must stay out of directory: '+url);
   assert.equal(inSitemap,false,'Noindex or non-self-canonical route must stay out of sitemap: '+url);
  }
- if(about)assert.ok(about.includes('href="'+url+'"'),'About page must retain its navigation link: '+url);
+ if(about&&indexable)assert.ok(about.includes('href="'+url+'"'),'About page must retain an internal link to indexable routes: '+url);
 }
 
 test('seventeen new calculator routes are listed and use the shared calculator engine',()=>{
