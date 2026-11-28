@@ -59,7 +59,9 @@ jobs:
           git add -A -- ':(glob)**/*.html' 'sitemap*.xml' 'assets/calculator-search-index.json'
           if ! git diff --cached --quiet; then
             git commit -m "chore(seo): generated canonical catalogue and hreflang"
-            git push
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
           else
             echo "Generated catalogue and hreflang outputs are already synchronized."
           fi
