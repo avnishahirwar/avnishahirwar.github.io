@@ -16,8 +16,11 @@ const COUNTRY_LOCALE={IN:'en-IN',US:'en-US',GB:'en-GB',CA:'en-CA',AU:'en-AU',AE:
 const isHindiPath=/^\/hi(?:\/|$)/i.test(location.pathname||'');
 const detectedCountry=Object.hasOwn(COUNTRY_CURRENCY,browserRegion)?browserRegion:'IN';
 let country=read(COUNTRY_KEY,detectedCountry,v=>Object.hasOwn(COUNTRY_CURRENCY,v));
-let currencyDefault=(isHindiPath||country==='IN')?'INR':(COUNTRY_CURRENCY[country]||browserCurrency);
-if(isHindiPath && !localStorage.getItem(CURRENCY_KEY)) currencyDefault='INR';
+// Unless a visitor explicitly selected a display currency, derive the initial
+// currency from the detected or saved country. Hindi language alone must not
+// override a visitor's regional currency preference.
+const hasSavedCurrency=!!read(CURRENCY_KEY,'',v=>Object.hasOwn(CURRENCIES,v));
+let currencyDefault=hasSavedCurrency?read(CURRENCY_KEY,'INR',v=>Object.hasOwn(CURRENCIES,v)):(COUNTRY_CURRENCY[country]||browserCurrency);
 let currency=read(CURRENCY_KEY,currencyDefault,v=>Object.hasOwn(CURRENCIES,v));
 let formatLocale=read(LOCALE_KEY,COUNTRY_LOCALE[country]||detectedFormat,v=>Object.hasOwn(LOCALES,v));
 let unitSystem=read(UNIT_KEY,browserRegion==='US'?'imperial':'metric',v=>v==='metric'||v==='imperial');
