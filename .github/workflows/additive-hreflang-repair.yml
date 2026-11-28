@@ -1,9 +1,10 @@
 name: One-time additive hreflang reciprocal repair
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - seo/additive-hreflang-reciprocals-2026-11-16
+      - seo/additive-hreflang-reciprocals-2026-11-28
 
 permissions:
   contents: write
