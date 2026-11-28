@@ -36,7 +36,7 @@ const HINDI_PAIRS = [
 const read = file => fs.readFileSync(file, 'utf8');
 const noindex = html => /<meta\b(?=[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'])(?=[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b)[^>]*>/i.test(html) ||
   /<meta\b(?=[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b)(?=[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'])[^>]*>/i.test(html);
-const attr = (tag, name) => (tag.match(new RegExp('\\b' + name + '\\s*=\\s*["\\']([^"\\']*)["\\']', 'i')) || [])[1] || '';
+const attr = (tag, name) => (tag.match(new RegExp("\\b" + name + "\\s*=\\s*['\"]([^'\"]*)['\"]", 'i')) || [])[1] || '';
 const pagePath = (locale, route) => path.join(ROOT, locale === 'en' ? 'calculators' : path.join(locale, 'calculators'), route);
 const canonical = (locale, route) => ORIGIN + '/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + route;
 const langOf = html => ((html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i) || [])[1] || '').toLowerCase();
