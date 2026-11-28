@@ -1,4 +1,5 @@
 name: Repair PR sitemap and calculator directory
+# Re-run from the latest branch head so generated directory changes are committed without a stale-ref race.
 
 on:
   push:
