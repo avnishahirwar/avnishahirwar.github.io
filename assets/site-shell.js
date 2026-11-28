@@ -1774,3 +1774,243 @@ if (isProductionAnalyticsHost) {
   }, true);
 }
 })();
+
+/* ===== Friendly Calculator — quality, AdSense & header search (single block) ===== */
+(() => {
+  'use strict';
+  if (window.__fcFix) return;
+  window.__fcFix = true;
+
+  /* ---------- A. AdSense code on every page ---------- */
+  if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+    const a = document.createElement('script');
+    a.async = true;
+    a.crossOrigin = 'anonymous';
+    a.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7201974268016404';
+    document.head.appendChild(a);
+  }
+
+  /* ---------- B. Thin calculator pages -> noindex ---------- */
+  const KEEP = new Set([
+    '/calculators/emi-calculator.html','/calculators/loan-emi-calculator.html',
+    '/calculators/home-loan-emi-calculator.html','/calculators/car-loan-calculator.html',
+    '/calculators/home-loan-eligibility-calculator.html','/calculators/personal-loan-eligibility-calculator.html',
+    '/calculators/loan-prepayment-calculator.html','/calculators/loan-comparison-calculator.html',
+    '/calculators/mortgage-calculator.html',
+    '/calculators/gst-calculator.html','/calculators/gst-input-tax-credit-calculator.html',
+    '/calculators/reverse-charge-gst-calculator.html','/calculators/gst-on-rent-calculator.html',
+    '/calculators/gst-late-fee-calculator.html','/calculators/gst-interest-calculator.html',
+    '/calculators/income-tax-calculator.html','/calculators/tds-calculator.html',
+    '/calculators/hra-calculator.html','/calculators/gratuity-calculator.html',
+    '/calculators/salary-calculator.html','/calculators/salary-hike-calculator.html',
+    '/calculators/ctc-salary-calculator.html','/calculators/bonus-calculator.html',
+    '/calculators/advance-tax-calculator.html','/calculators/professional-tax-calculator.html',
+    '/calculators/capital-gains-tax-calculator.html','/calculators/leave-encashment-calculator.html',
+    '/calculators/freelancer-tax-calculator.html',
+    '/calculators/sip-calculator.html','/calculators/lumpsum-calculator.html',
+    '/calculators/fd-calculator.html','/calculators/rd-calculator.html',
+    '/calculators/ppf-calculator.html','/calculators/swp-calculator.html',
+    '/calculators/cagr-calculator.html','/calculators/401k-calculator.html',
+    '/calculators/percentage-calculator.html','/calculators/simple-interest-calculator.html',
+    '/calculators/compound-interest-calculator.html','/calculators/discount-calculator.html',
+    '/calculators/tip-calculator.html','/calculators/sales-tax-calculator.html',
+    '/calculators/profit-loss-calculator.html','/calculators/currency-converter-calculator.html',
+    '/calculators/basic-calculator.html','/calculators/graphing-calculator.html',
+    '/calculators/fraction-calculator.html','/calculators/unit-converter.html',
+    '/calculators/bmi-calculator.html','/calculators/age-calculator.html'
+  ]);
+  const path = location.pathname.replace(/\/index\.html$/, '/');
+  if (/\/calculators\/[^/]+\.html$/.test(path) && !KEEP.has(path)) {
+    let m = document.querySelector('meta[name="robots"]');
+    if (m) m.setAttribute('content', 'noindex,follow');
+    else {
+      m = document.createElement('meta');
+      m.name = 'robots';
+      m.content = 'noindex,follow';
+      document.head.appendChild(m);
+    }
+  }
+
+  /* ---------- C. De-duplicate repeated template blocks ---------- */
+  const tidy = () => {
+    const main = document.querySelector('main') || document.body;
+    const seen = new Set();
+    main.querySelectorAll('h2').forEach(h => {
+      const t = h.textContent.trim().toLowerCase();
+      if (!['related calculators','related tools','more free calculators'].includes(t)) return;
+      if (!seen.has(t)) { seen.add(t); return; }
+      let n = h.nextElementSibling;
+      h.remove();
+      while (n && n.tagName !== 'H2') { const nx = n.nextElementSibling; n.remove(); n = nx; }
+    });
+    const acts = document.querySelector('.fc-share-panel .fc-share-actions');
+    if (acts && !acts.closest('details')) {
+      const d = document.createElement('details');
+      d.className = 'fc-fold';
+      const s = document.createElement('summary');
+      s.textContent = 'Share options';
+      acts.parentNode.insertBefore(d, acts);
+      d.appendChild(s);
+      d.appendChild(acts);
+    }
+    if (!document.getElementById('fc-fold-css')) {
+      const st = document.createElement('style');
+      st.id = 'fc-fold-css';
+      st.textContent = '.fc-fold>summary{min-height:40px;display:flex;align-items:center;cursor:pointer;font-weight:700;color:#8b6500}.fc-fold .fc-share-actions{margin-top:8px}';
+      document.head.appendChild(st);
+    }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tidy, { once: true });
+  else tidy();
+
+  /* ---------- D. Header search ---------- */
+  const row = document.querySelector('.fc-top-row');
+  if (!row) return;
+  const nav = document.getElementById('fc-primary-navigation');
+  const LANG = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+  const PH = { en:'Search 3,971 calculators…', hi:'3,971 कैलकुलेटर खोजें…', ar:'ابحث في 3,971 حاسبة…',
+    ur:'3,971 کیلکولیٹر تلاش کریں…', fa:'جست‌وجوی ۳٬۹۷۱ ماشین‌حساب…', es:'Buscar 3.971 calculadoras…',
+    fr:'Rechercher 3 971 calculatrices…', pt:'Pesquisar 3.971 calculadoras…', de:'3.971 Rechner durchsuchen…',
+    ja:'3,971件の計算機を検索…', ru:'Поиск среди 3 971 калькулятора…', bn:'৩,৯৭১ ক্যালকুলেটর খুঁজুন…' };
+
+  if (!document.getElementById('fc-hs-style')) {
+    const st = document.createElement('style');
+    st.id = 'fc-hs-style';
+    st.textContent = `
+.fc-visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.fc-header-search{position:relative;flex:0 1 270px;min-width:190px;max-width:300px;margin:0}
+.fc-header-search-field{display:flex;align-items:center;gap:6px;height:42px;padding:0 5px 0 12px;border:1px solid #52657a;border-radius:9px;background:#0e1b2b}
+.fc-header-search-field:focus-within{border-color:#d8bd82;box-shadow:0 0 0 3px #d8bd8230}
+.fc-header-search input{flex:1;min-width:0;height:38px;border:0;background:transparent;color:#fff;font:600 .88rem/1.2 system-ui,sans-serif}
+.fc-header-search input::placeholder{color:#a9b7c5;font-weight:500}
+.fc-header-search input:focus{outline:none}
+.fc-header-search-submit{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:0;border:0;border-radius:7px;background:#d8bd82;color:#101c2c;cursor:pointer}
+.fc-header-search-submit svg{width:16px;height:16px;display:block}
+.fc-header-search-submit:hover{background:#f0dfb5}
+.fc-header-search-list{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:1500;max-height:min(60vh,420px);overflow-y:auto;padding:6px;border:1px solid #cbd5df;border-radius:10px;background:#fff;box-shadow:0 14px 34px #07132145}
+.fc-header-search-list[hidden]{display:none}
+.fc-header-search-option{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:7px;color:#172638!important;text-decoration:none}
+.fc-header-search-option strong{font-size:.88rem;font-weight:700}
+.fc-header-search-option span{font-size:.72rem;color:#64717d}
+.fc-header-search-option:hover,.fc-header-search-option[aria-selected="true"]{background:#edf2f6;text-decoration:none}
+.fc-header-search-all{display:block;margin:4px 2px 2px;padding:9px 10px;border-top:1px solid #e2e8ee;color:#8b6500!important;font-size:.8rem;font-weight:750;text-decoration:none}
+.fc-header-search-empty{margin:0;padding:11px 10px;color:#64717d;font-size:.82rem}
+html[data-fc-theme="dark"] .fc-header-search-list{background:#142235;border-color:#40536a}
+html[data-fc-theme="dark"] .fc-header-search-option{color:#edf3f8!important}
+html[data-fc-theme="dark"] .fc-header-search-option span{color:#bdc9d5}
+html[data-fc-theme="dark"] .fc-header-search-option:hover,html[data-fc-theme="dark"] .fc-header-search-option[aria-selected="true"]{background:#20334a}
+@media(max-width:1120px){.fc-header-search{order:2;flex:1 1 100%;width:100%;max-width:none;margin:2px 0}}
+@media(max-width:760px){
+ .fc-top-row>.fc-header-search{grid-column:1/-1!important;grid-row:2!important;width:100%!important;max-width:none!important;margin:0!important}
+ .fc-top-row>.fc-language-control{grid-row:3!important}
+ .fc-top-row>.fc-global-links{grid-row:4!important}
+ .fc-header-search-field{height:46px}
+ .fc-header-search input{font-size:16px}
+ .fc-header-search-list{max-height:min(52vh,340px)}
+}`;
+    document.head.appendChild(st);
+  }
+
+  const form = document.createElement('form');
+  form.className = 'fc-header-search';
+  form.setAttribute('role', 'search');
+  form.setAttribute('action', '/');
+  form.setAttribute('method', 'get');
+  form.innerHTML =
+    '<label class="fc-header-search-field">' +
+      '<span class="fc-visually-hidden">Search all calculators</span>' +
+      '<input type="search" name="q" placeholder="' + (PH[LANG] || PH.en) + '" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="fc-header-search-list">' +
+      '<button type="submit" class="fc-header-search-submit" aria-label="Search calculators">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4.2-4.2"></path></svg>' +
+      '</button></label>' +
+    '<div id="fc-header-search-list" class="fc-header-search-list" role="listbox" hidden></div>' +
+    '<p class="fc-visually-hidden" role="status" aria-live="polite"></p>';
+  if (nav && nav.parentNode === row) row.insertBefore(form, nav); else row.appendChild(form);
+
+  const input = form.querySelector('input');
+  const list = form.querySelector('#fc-header-search-list');
+  const status = form.querySelector('[role="status"]');
+  const STOP = new Set(['calculator','calculators','calculate','online','free','the','for','a','an','of','and','tool','tools']);
+  const norm = v => String(v || '').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const esc = v => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let mp, ip, timer = 0, items = [], active = -1;
+
+  const matcher = () => window.FriendlyCalculatorSearchMatcher
+    ? Promise.resolve(window.FriendlyCalculatorSearchMatcher)
+    : (mp = mp || new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = '/assets/calculator-search-matcher.js'; s.async = true;
+        s.onload = () => window.FriendlyCalculatorSearchMatcher ? res(window.FriendlyCalculatorSearchMatcher) : rej(0);
+        s.onerror = () => { mp = null; rej(0); };
+        document.head.appendChild(s);
+      }));
+
+  const index = () => ip || (ip = fetch('/assets/calculator-search-index.json', { credentials: 'same-origin' })
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(d => Array.isArray(d) ? d.filter(x => x && typeof x.name === 'string' && typeof x.url === 'string') : [])
+    .catch(() => { ip = null; throw 0; }));
+
+  const close = () => {
+    list.hidden = true; list.innerHTML = '';
+    input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
+    active = -1; items = [];
+  };
+
+  const move = step => {
+    if (!items.length) return;
+    active = (active + step + items.length) % items.length;
+    list.querySelectorAll('[role="option"]').forEach((n, i) => n.setAttribute('aria-selected', String(i === active)));
+    input.setAttribute('aria-activedescendant', 'fc-hs-' + active);
+    const n = list.querySelectorAll('[role="option"]')[active];
+    if (n) n.scrollIntoView({ block: 'nearest' });
+  };
+
+  const draw = (hits, raw) => {
+    items = hits.slice(0, 8);
+    list.innerHTML = items.length
+      ? items.map((it, i) => '<a class="fc-header-search-option" role="option" id="fc-hs-' + i + '" aria-selected="false" href="' + esc(it.url) + '"><strong>' + esc(it.name) + '</strong><span>' + esc(it.category || 'Calculator') + '</span></a>').join('') +
+        (hits.length > items.length ? '<a class="fc-header-search-all" href="/?q=' + encodeURIComponent(raw) + '">See all ' + hits.length + ' matching calculators →</a>' : '')
+      : '<p class="fc-header-search-empty">No calculator found. Try a shorter name.</p>';
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    status.textContent = hits.length ? hits.length + ' calculators found.' : 'No matching calculators.';
+  };
+
+  async function run() {
+    const raw = input.value.trim();
+    const q = norm(raw);
+    const terms = q.split(' ').filter(t => t && !STOP.has(t));
+    if (q.length < 2 || !terms.length) { close(); return; }
+    try {
+      const [m, all] = await Promise.all([matcher(), index()]);
+      if (input.value.trim() !== raw) return;
+      const hits = [];
+      for (const it of all) {
+        const s = m.getCalculatorMatch(it, terms, raw, it.category || '');
+        if (s !== null) hits.push({ it, s });
+      }
+      hits.sort((a, b) => b.s - a.s || a.it.name.localeCompare(b.it.name));
+      draw(hits.map(h => h.it), raw);
+    } catch (e) { close(); status.textContent = 'Search unavailable.'; }
+  }
+
+  input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 120); });
+  input.addEventListener('focus', () => { if (input.value.trim().length > 1 && !items.length) run(); });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Escape') close();
+    else if (e.key === 'Enter' && active >= 0 && items[active]) { e.preventDefault(); location.href = items[active].url; }
+  });
+  input.addEventListener('blur', () => setTimeout(close, 160));
+  document.addEventListener('click', e => { if (!form.contains(e.target)) close(); });
+  form.addEventListener('submit', close);
+
+  const initial = new URLSearchParams(location.search).get('q');
+  const homeInput = document.getElementById('fc-home-tool-search');
+  if (initial && homeInput && !input.value) {
+    homeInput.value = initial;
+    homeInput.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+})();
