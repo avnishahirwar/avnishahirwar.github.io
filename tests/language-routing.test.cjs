@@ -213,17 +213,17 @@ test('Gujarati and Kannada locale routes are enabled in the shared shell',()=>{
 });
 
 
-test('Gujarati and Kannada basic calculators are indexable and carry no language alternates',()=>{
+test('Gujarati and Kannada basic calculators are indexable and join the indexable basic-calculator hreflang cluster',()=>{
  const pages=['calculators/basic-calculator.html','hi/calculators/basic-calculator.html','de/calculators/basic-calculator.html','ja/calculators/basic-calculator.html','ru/calculators/basic-calculator.html','vi/calculators/basic-calculator.html','te/calculators/basic-calculator.html','gu/calculators/basic-calculator.html','kn/calculators/basic-calculator.html'];
  for(const locale of ['gu','kn']){
   const html=fs.readFileSync(path.join(__dirname,'..',locale,'calculators/basic-calculator.html'),'utf8');
   assert.ok(!isNoindex(html),locale+' basic calculator must be indexable');
-  assert.doesNotMatch(html,/hreflang=/i,locale+' page must not carry alternates');
+  assert.match(html,/hreflang="x-default"/i,locale+' page must carry the cluster alternates');
  }
  for(const file of pages){
   const html=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
   if(isNoindex(html)) assert.doesNotMatch(html,/hreflang=/i,file+' noindex page must not carry alternates');
-  else assert.doesNotMatch(html,/hreflang="(?:gu|kn)"/i,file+' must not target noindex Gujarati or Kannada pages');
+  else assert.match(html,/hreflang="gu"[\s\S]*hreflang="kn"|hreflang="kn"[\s\S]*hreflang="gu"/i,file+' must target the indexable Gujarati and Kannada pages');
  }
 });
 
