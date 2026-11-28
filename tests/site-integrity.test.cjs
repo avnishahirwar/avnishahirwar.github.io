@@ -70,6 +70,7 @@ function expectedHreflang(relative) {
   const languages = entries.map(entry => entry.lang);
   const urls = entries.map(entry => entry.url);
   if (new Set(languages).size !== languages.length || new Set(urls).size !== urls.length) return [];
+  if (entries.length < 2) return [];
   const expected = entries.map(entry => [entry.lang, entry.url]);
   const english = entries.find(entry => entry.lang === 'en') || entries.find(entry => entry.lang.startsWith('en-'));
   if (english) expected.push(['x-default', english.url]);

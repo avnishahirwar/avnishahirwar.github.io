@@ -131,7 +131,8 @@ function build() {
     alternateTagsAdded: 0,
     pagesChanged: 0,
     languageGroups: 0,
-    ambiguousGroups: 0
+    ambiguousGroups: 0,
+    singleLanguagePages: 0
   };
 
   for (const file of files) {
@@ -164,6 +165,10 @@ function build() {
 
   const validGroups = new Map();
   for (const [key, entries] of groups) {
+    if (entries.length < 2) {
+      stats.singleLanguagePages += entries.length;
+      continue;
+    }
     const langs = entries.map(entry => entry.lang);
     const urls = entries.map(entry => entry.canonical);
     if (new Set(langs).size !== langs.length || new Set(urls).size !== urls.length) {
@@ -172,8 +177,7 @@ function build() {
     }
     validGroups.set(key, entries);
   }
-  stats.languageGroups = [...validGroups.values()].filter(entries => entries.length > 1).length;
-  stats.singleLanguagePages = [...validGroups.values()].filter(entries => entries.length === 1).length;
+  stats.languageGroups = validGroups.size;
 
   const outputs = new Map();
   for (const [file, record] of cache) {

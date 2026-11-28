@@ -96,14 +96,12 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
   assert.doesNotMatch(es, /hreflang=/);
   assert.match(es, /rel="canonical"/);
   assert.match(ukHome, /lang="en-GB"/);
-  assert.match(ukHome, /hreflang="en-GB"/);
-  assert.doesNotMatch(ukHome, /href="https:\/\/friendlycalculator\.in\/uk\/calculators\/uk-only\.html"/);
+  assert.doesNotMatch(ukHome, /hreflang=/);
   assert.match(ukTool, /lang="uk"/);
-  assert.match(ukTool, /hreflang="uk"/);
+  assert.doesNotMatch(ukTool, /hreflang=/);
   assert.match(faPlaceholder, /\[فارسی\]/);
   assert.doesNotMatch(faPlaceholder, /hreflang=/);
-  assert.match(usMortgage, /hreflang="en-US"/);
-  assert.match(usMortgage, /hreflang="x-default"/);
+  assert.doesNotMatch(usMortgage, /hreflang=/);
   assert.match(en, /<h1>Demo Calculator<\/h1>/);
   assert.match(en, /Keep this content/);
 

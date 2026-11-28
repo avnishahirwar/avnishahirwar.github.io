@@ -807,7 +807,8 @@ test('the ten priority Hindi calculators expose canonical URLs, schemas, formula
       return [lang.toLowerCase(), 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html'];
     });
     const english = expectedAlternates.find(([lang]) => lang === 'en' || lang.toLowerCase().startsWith('en-'));
-    if (english) expectedAlternates.push(['x-default', english[1]]);
+    if (expectedAlternates.length < 2) expectedAlternates.length = 0;
+    else if (english) expectedAlternates.push(['x-default', english[1]]);
 
     const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
     const actualAlternates = [...head.matchAll(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="([^"]+)")(?=[^>]*\bhref="([^"]+)")[^>]*>/gi)].map(match => [match[1], match[2]]);
