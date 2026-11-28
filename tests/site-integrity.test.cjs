@@ -28,22 +28,30 @@ function isNoindexHtml(html) {
     /<meta\b(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)(?=[^>]*\bname=["'](?:robots|googlebot)["'])[^>]*>/i.test(head);
 }
 
+function isIndexableCanonicalLocalePage(html, locale, route) {
+  if (isNoindexHtml(html)) return false;
+  const lang = (html.match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i) || [])[1] || '';
+  const canonical = (html.match(/<link\\b(?=[^>]*\\brel=["']canonical["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/i) || [])[1] || '';
+  const expected = 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + route;
+  return lang.toLowerCase() === locale && canonical === expected;
+}
+
 function assertLocaleCluster(html, locale, route, candidates) {
-  if (isNoindexHtml(html)) {
-    assert.doesNotMatch(html, /hreflang=/, locale + '/' + route + ' is noindex and must not carry hreflang');
-    return;
-  }
+  const currentIsIndexable = isIndexableCanonicalLocalePage(html, locale, route);
+  if (!currentIsIndexable) assert.doesNotMatch(html, /hreflang=/, locale + '/' + route + ' is not an indexable self-canonical page and must not carry hreflang');
   const indexable = candidates.filter(candidate => {
     const url = 'https://friendlycalculator.in/' + (candidate === 'en' ? '' : candidate + '/') + 'calculators/' + route;
     const file = localFile(url);
-    return file && fs.existsSync(file) && !isNoindexHtml(fs.readFileSync(file, 'utf8'));
+    return file && fs.existsSync(file) && isIndexableCanonicalLocalePage(fs.readFileSync(file, 'utf8'), candidate, route);
   });
-  assert.ok(indexable.includes(locale), locale + '/' + route + ' should be indexable');
-  for (const alternate of indexable) assert.ok(html.includes('hreflang="' + alternate + '"'), locale + '/' + route + ' missing indexable alternate ' + alternate);
-  for (const alternate of candidates.filter(candidate => !indexable.includes(candidate))) {
-    assert.doesNotMatch(html, new RegExp('hreflang="' + alternate + '"'), locale + '/' + route + ' must not target noindex locale ' + alternate);
+  if (currentIsIndexable) {
+    for (const alternate of indexable) assert.ok(html.includes('hreflang="' + alternate + '"'), locale + '/' + route + ' missing indexable alternate ' + alternate);
+    for (const alternate of candidates.filter(candidate => !indexable.includes(candidate))) assert.doesNotMatch(html, new RegExp('hreflang="' + alternate + '"'), locale + '/' + route + ' must not target non-indexable locale ' + alternate);
+    if (indexable.includes('en')) assert.ok(html.includes('hreflang="x-default"'), locale + '/' + route + ' missing x-default');
   }
-  if (indexable.includes('en')) assert.ok(html.includes('hreflang="x-default"'), locale + '/' + route + ' missing x-default');
+  const url = 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + route;
+  if (currentIsIndexable) assert.ok(sitemap.includes(url), 'Published locale page missing from sitemap: ' + url);
+  else assert.ok(!sitemap.includes(url), 'Non-indexable locale page must stay out of sitemap: ' + url);
 }
 function assertHindiPairIndexability(hindi, english, url, slug) {
   const hiIndexable = !isNoindexHtml(hindi);
@@ -1464,8 +1472,7 @@ test('Bengali and Tamil aspect-ratio pages preserve the shared formula and recip
     assert.ok(fs.readFileSync(path.join(root, locale, 'index.html'), 'utf8').includes('/' + locale + '/calculators/aspect-ratio-calculator.html'));
   }
   for (const html of [en, hi]) {
-    assert.match(html, /hreflang="bn"/);
-    assert.match(html, /hreflang="ta"/);
+    assert.doesNotMatch(html, /hreflang="bn"|hreflang="ta"/);
   }
 });
 
@@ -2169,7 +2176,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const about=fs.readFileSync(path.join(root,'calculator/about.html'),'utf8');
  const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
- for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}
+ for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);if(isNoindexHtml(page)){assert.ok(!directory.includes('href="'+route+'"'));assert.ok(!about.includes('href="'+route+'"'));assert.ok(!index.some(item=>item.url===route));}else{assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}}
  assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
