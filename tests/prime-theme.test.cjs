@@ -16,9 +16,9 @@ test('shared shell loads the unified Prime theme stylesheet', () => {
 test('Prime theme defines the shared brand tokens and readable dark hero headings', () => {
   assert.match(theme, /--fc-brand-navy:#101c2c/);
   assert.match(theme, /--fc-brand-gold:#d8bd82/);
-  assert.match(theme, /\.hero\\s*>\\s*:is\\(h1,h2,h3,strong\\)/);
-  assert.match(theme, /\.hero\\s*>\\s*p/);
-  assert.match(theme, /:not\\(\\.card\\)/);
+  assert.match(theme, /\.hero\s*>\s*:is\(h1,h2,h3,strong\)/);
+  assert.match(theme, /\.hero\s*>\s*p/);
+  assert.match(theme, /:not\(\.card\)/);
 });
 
 test('Prime theme preserves responsive and reduced-motion behavior', () => {
