@@ -192,7 +192,12 @@ function build() {
       if (/(?:^|\s)alternate(?:\s|$)/i.test(attribute(tag, 'rel')) && attribute(tag, 'hreflang')) return '';
       return tag;
     });
-    if (desired.length) nextHead += '\n' + desired.join('\n') + '\n';
+    if (desired.length) {
+      // Keep the normalized output idempotent: remove trailing whitespace left
+      // where old alternate tags were removed before appending the canonical set.
+      nextHead = nextHead.replace(/[\\t \\r\\n]+$/, '');
+      nextHead += '\n' + desired.join('\n') + '\n';
+    }
     const closeIndex = record.html.toLowerCase().indexOf('</head>');
     if (closeIndex < 0) continue;
     const next = nextHead + record.html.slice(closeIndex);
