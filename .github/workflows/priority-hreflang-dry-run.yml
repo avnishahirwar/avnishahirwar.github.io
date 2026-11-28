@@ -1,4 +1,5 @@
 name: Priority hreflang cluster dry run
+# Validates that explicit cluster members are indexable, self-canonical and conflict-free.
 
 on:
   push:
