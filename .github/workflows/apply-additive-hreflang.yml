@@ -1,0 +1,40 @@
+name: Apply additive hreflang reciprocals (review artifact)
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/add-hreflang-reciprocals.cjs
+      - .github/workflows/apply-additive-hreflang.yml
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply only unambiguous reciprocal links
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Verify hreflang integrity and additive-only diff
+        run: |
+          node --test tests/international-seo-diagnostic.test.cjs
+          git diff --check
+          mkdir -p artifacts/changed-html
+          git diff --name-only -- '*.html' | while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            mkdir -p "artifacts/changed-html/$(dirname "$file")"
+            cp "$file" "artifacts/changed-html/$file"
+          done
+          git diff --stat -- '*.html' | tee artifacts/additive-hreflang-diff-stat.txt
+      - name: Upload reviewed HTML changes
+        uses: actions/upload-artifact@v4
+        with:
+          name: additive-hreflang-html-changes
+          path: artifacts/
+          if-no-files-found: error
