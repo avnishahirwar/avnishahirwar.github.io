@@ -6,6 +6,9 @@ const path = require('node:path');
 
 const root = path.join(__dirname, '..');
 
+// This focused suite validates additive-only reciprocity; full hreflang cluster validity
+// (including noindex and language-mismatch exclusions) remains covered by the main SEO tests.
+
 test('additive hreflang repair has no remaining unambiguous reciprocal additions', () => {
   const output = execFileSync(process.execPath, ['scripts/add-hreflang-reciprocals.cjs'], {
     cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
