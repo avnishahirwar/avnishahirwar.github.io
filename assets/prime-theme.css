@@ -24,8 +24,11 @@ body :where(.panel,.card,.quick,.note,.calculator-card,.tool-card,.feature-card,
 body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero){
   background:var(--fc-brand-navy);color:#f5f7fa;border:1px solid #26384b;border-radius:18px
 }
-body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) :where(h1,h2,h3,strong){color:#fff!important}
-body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) p{color:#dce5ed}
+/* Scope light text to hero content; nested light cards retain their normal contrast. */
+.hero > :is(h1,h2,h3,strong),.page-hero > :is(h1,h2,h3,strong),.fc-hero > :is(h1,h2,h3,strong),.hero-section > :is(h1,h2,h3,strong),.directory-hero > :is(h1,h2,h3,strong),
+.hero > :not(.card) > :is(h1,h2,h3,strong),.page-hero > :not(.card) > :is(h1,h2,h3,strong),.fc-hero > :not(.card) > :is(h1,h2,h3,strong),.hero-section > :not(.card) > :is(h1,h2,h3,strong),.directory-hero > :not(.card) > :is(h1,h2,h3,strong){color:#fff!important}
+.hero > p,.page-hero > p,.fc-hero > p,.hero-section > p,.directory-hero > p,
+.hero > :not(.card) > p,.page-hero > :not(.card) > p,.fc-hero > :not(.card) > p,.hero-section > :not(.card) > p,.directory-hero > :not(.card) > p{color:#dce5ed!important}
 body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) a{color:#f0dfb5}
 body :where(button,.btn,.button,.primary-button,input[type=submit],input[type=button]){
   border-radius:9px;font-weight:750;transition:background-color .18s ease,border-color .18s ease,transform .18s ease
