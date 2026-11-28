@@ -43,6 +43,8 @@ function publishedCalculatorEntries() {
 function catalogueStats() {
   const entries = publishedCalculatorEntries();
   const urls = new Set(entries.map(item => item.url));
+  // Core catalogue counts published canonical calculator pages, including quality-pass pages;
+  // sitemap eligibility is a separate SEO signal and must not be substituted for this UI count.
   const core = [...urls].filter(url => url.startsWith('/calculators/')).length;
   return {total: urls.size, core, international: urls.size - core, entries};
 }
