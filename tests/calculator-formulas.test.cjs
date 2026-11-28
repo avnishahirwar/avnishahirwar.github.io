@@ -743,6 +743,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
   const searchIndexUrls = searchIndex.map(item => String(item.url || ''));
   const indexedUrls = new Set(searchIndexUrls);
+  assert.equal(searchIndex.length, expectedSearchIndexLength, 'Public search index must match the canonical URL catalogue count.');
   assert.equal(indexedUrls.size, searchIndex.length, 'Search index must not contain duplicate URL entries.');
   for (const url of expectedSearchIndexUrls) {
     assert.ok(indexedUrls.has(url), 'Canonical public calculator missing from search index: ' + url);
