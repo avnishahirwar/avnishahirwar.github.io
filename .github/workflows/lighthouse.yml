@@ -118,17 +118,31 @@ jobs:
           base_url=""
           for attempt in {1..10}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            candidate="$(grep -Eo "https://$slug(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            # Prefer the immutable commit-specific Cloudflare Pages URL; the branch
+            # alias may be affected by account-level redirects to the production domain.
+            candidate="$(grep -Eo "https://[a-f0-9]{8}\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            if [ -z "$candidate" ]; then
+              candidate="$(grep -Eo "https://$slug(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            fi
             if [ -z "$candidate" ]; then
               candidate="$(grep -Eo "https://deploy-preview-$PR_NUMBER--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
             fi
             if [ -n "$candidate" ]; then
-              html="$(curl -fsSL "$candidate/calculators/income-tax-calculator.html" || true)"
-              service_worker="$(curl -fsSL "$candidate/sw.js" || true)"
-              if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
-                base_url="$candidate"
-                echo "Using published pull-request preview: $base_url"
-                break
+              # A hosted preview must remain on its own origin. Cloudflare account-level
+              # redirect rules can send *.pages.dev to production, which would make
+              # Lighthouse measure the live site instead of this pull-request checkout.
+              effective_page_url="$(curl -fsSL -o /dev/null -w '%{url_effective}' "$candidate/calculators/income-tax-calculator.html" || true)"
+              effective_sw_url="$(curl -fsSL -o /dev/null -w '%{url_effective}' "$candidate/sw.js" || true)"
+              if [[ "$effective_page_url" == "$candidate"/* && "$effective_sw_url" == "$candidate"/* ]]; then
+                html="$(curl -fsSL "$candidate/calculators/income-tax-calculator.html" || true)"
+                service_worker="$(curl -fsSL "$candidate/sw.js" || true)"
+                if grep -q 'fc-calculator-reserved' <<<"$html" && grep -Eq "const CACHE_NAME = 'friendly-calculator-public-v[0-9]+'" <<<"$service_worker" && grep -q "__fc_home_refresh" <<<"$service_worker"; then
+                  base_url="$candidate"
+                  echo "Using published pull-request preview: $base_url"
+                  break
+                fi
+              else
+                echo "Hosted preview redirected off-origin (page: '$effective_page_url'; service worker: '$effective_sw_url'); rejecting it so Lighthouse cannot silently audit production."
               fi
             fi
             echo "Waiting for an optional Cloudflare/Netlify preview comment (attempt $attempt/10)."
