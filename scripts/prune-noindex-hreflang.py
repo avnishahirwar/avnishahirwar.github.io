@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safely prune hreflang tags on noindex pages and links to noindex destinations.
+"""Safely remove hreflang tags on noindex pages and links to noindex destinations.
 
 Default mode is a non-mutating dry run. Pass --apply only after reviewing the report.
 """
@@ -7,25 +7,28 @@ import argparse
 import json
 import os
 import re
+from urllib.parse import unquote, urljoin, urlsplit
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SKIP_DIRS = {".git", "node_modules", "tests", "artifacts", "docs"}
+SKIP_DIRS = {".git", ".github", "node_modules", "tests", "artifacts", "docs"}
 NOINDEX_RE = re.compile(
-    r'<meta\s+name=["\']robots["\']\s+content=["\'][^"\']*\bnoindex\b',
+    r'<meta\b(?=[^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\'])'
+    r'(?=[^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b)[^>]*>',
     re.IGNORECASE,
 )
-LINK_RE = re.compile(
-    r'[ \t]*<link\b[^>]*\brel=["\']alternate["\'][^>]*\bhreflang=["\'][^"\']+["\'][^>]*>[ \t]*\n?'
-    r'|[ \t]*<link\b[^>]*\bhreflang=["\'][^"\']+["\'][^>]*\brel=["\']alternate["\'][^>]*>[ \t]*\n?',
+NOINDEX_RE_REVERSED = re.compile(
+    r'<meta\b(?=[^>]*\bcontent\s*=\s*["\'][^"\']*\bnoindex\b)'
+    r'(?=[^>]*\bname\s*=\s*["\'](?:robots|googlebot)["\'])[^>]*>',
     re.IGNORECASE,
 )
-HREF_RE = re.compile(r'\bhref=["\']([^"\']*)["\']', re.IGNORECASE)
+LINK_TAG_RE = re.compile(r'<link\b[^>]*>', re.IGNORECASE)
+ATTR_RE = re.compile(r'([\w:-]+)\s*=\s*(["\'])(.*?)\2', re.IGNORECASE)
 
 
 def html_files():
     found = []
     for directory, dirs, names in os.walk(ROOT):
-        dirs[:] = [name for name in dirs if name not in SKIP_DIRS]
+        dirs[:] = [name for name in dirs if name not in SKIP_DIRS and not name.startswith(".")]
         found.extend(
             os.path.join(directory, name)
             for name in names
@@ -34,18 +37,34 @@ def html_files():
     return sorted(found)
 
 
-def url_to_file(url):
-    url = re.sub(r'^https://friendlycalculator\.in', '', url, flags=re.IGNORECASE)
-    url = url.split("#", 1)[0].split("?", 1)[0]
-    if not url:
-        url = "/"
-    if url.startswith("/"):
-        relative = url.lstrip("/")
-    else:
-        relative = url
-    if url.endswith("/") or not os.path.splitext(relative)[1]:
-        relative = os.path.join(relative, "index.html")
-    return os.path.normpath(os.path.join(ROOT, relative))
+def attributes(tag):
+    return {match.group(1).lower(): match.group(3) for match in ATTR_RE.finditer(tag)}
+
+
+def is_noindex(html):
+    head_end = html.lower().find("</head>")
+    head = html if head_end < 0 else html[:head_end]
+    return bool(NOINDEX_RE.search(head) or NOINDEX_RE_REVERSED.search(head))
+
+
+def target_file(href):
+    absolute = urljoin("https://friendlycalculator.in/", href)
+    parsed = urlsplit(absolute)
+    if parsed.scheme not in ("http", "https") or parsed.netloc.lower() not in (
+        "friendlycalculator.in", "www.friendlycalculator.in"
+    ):
+        return None
+    pathname = unquote(parsed.path or "/")
+    if pathname == "/":
+        pathname = "/index.html"
+    elif pathname.endswith("/"):
+        pathname += "index.html"
+    elif not os.path.splitext(pathname)[1]:
+        pathname += "/index.html"
+    candidate = os.path.normpath(os.path.join(ROOT, pathname.lstrip("/")))
+    if not candidate.startswith(ROOT + os.sep) and candidate != os.path.join(ROOT, "index.html"):
+        return None
+    return candidate
 
 
 def main():
@@ -58,7 +77,7 @@ def main():
     noindex = set()
     for path in files:
         with open(path, encoding="utf-8", errors="ignore") as handle:
-            if NOINDEX_RE.search(handle.read(4000)):
+            if is_noindex(handle.read()):
                 noindex.add(os.path.normpath(path))
 
     changes = []
@@ -72,16 +91,19 @@ def main():
         removed = {"self_noindex": 0, "noindex_destination": 0}
 
         def prune(match):
-            href = HREF_RE.search(match.group(0))
+            attrs = attributes(match.group(0))
+            if attrs.get("rel", "").lower() != "alternate" or not attrs.get("hreflang"):
+                return match.group(0)
             if self_noindex:
                 removed["self_noindex"] += 1
                 return ""
-            if href and os.path.normpath(url_to_file(href.group(1))) in noindex:
+            destination = target_file(attrs.get("href", ""))
+            if destination and os.path.normpath(destination) in noindex:
                 removed["noindex_destination"] += 1
                 return ""
             return match.group(0)
 
-        updated = LINK_RE.sub(prune, original)
+        updated = LINK_TAG_RE.sub(prune, original)
         if updated != original:
             changes.append({
                 "file": os.path.relpath(path, ROOT).replace(os.sep, "/"),
