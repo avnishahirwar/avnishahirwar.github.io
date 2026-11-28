@@ -26,7 +26,7 @@ jobs:
       - name: Add only unambiguous reciprocal links
         run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Verify additive repair is complete and non-destructive
-        run: node --test tests/international-seo-diagnostic.test.cjs
+        run: CHECK_HREFLANG_ADDITIVE_REPAIR=true GITHUB_BASE_REF=main node --test tests/international-seo-diagnostic.test.cjs
       - name: Commit additive page updates
         run: |
           git config user.name "github-actions[bot]"
