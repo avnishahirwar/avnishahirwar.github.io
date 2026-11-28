@@ -1,3 +1,12 @@
+/* Load the unified Prime theme after page-level styles so public pages share one visual system. */
+(()=> {
+  if(!document.head || document.querySelector('link[data-fc-prime-theme]')) return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href='/assets/prime-theme.css?v=20261128';
+  link.setAttribute('data-fc-prime-theme','1');
+  document.head.appendChild(link);
+})();
 /* Load the shared calculator indexability policy once. */
 (()=> {
   if(!document.head || document.querySelector('script[data-fc-adsense-curate]')) return;

@@ -70,6 +70,8 @@ jobs:
         run: node --test tests/free-smart-assistant.test.cjs
       - name: Validate mobile calculator layouts and structured data
         run: node --test tests/mobile-schema.test.cjs
+      - name: Validate Prime theme and directory LCP behavior
+        run: node --test tests/prime-theme.test.cjs
       - name: Check calculator-only embed mode
         run: node --test tests/embed-mode.test.cjs
       - name: Check shared JavaScript syntax
