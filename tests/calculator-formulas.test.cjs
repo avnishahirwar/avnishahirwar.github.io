@@ -51,7 +51,7 @@ test('standalone interest calculator pages expose complete social metadata', () 
   const simple = fs.readFileSync(new URL('../calculators/simple-interest-calculator.html', 'file://' + __filename), 'utf8');
   const compound = fs.readFileSync(new URL('../calculators/compound-interest-calculator.html', 'file://' + __filename), 'utf8');
   assert.match(simple, /<title>Simple Interest Calculator \| Principal, Rate &amp; Time \| Friendly Calculator<\/title>/);
-  assert.match(simple, /property="og:title" content="Simple Interest Calculator Online/);
+  assert.match(simple, /property="og:title" content="Simple Interest Calculator 2026 \\| Friendly Calculator India"/);
   assert.ok(simple.includes('<meta name="twitter:image" content="https://friendlycalculator.in/og-friendly-calculator.png">'));
   assert.ok(!simple.includes('<meta name="twitter:image" content="website">'));
   assert.match(compound, /<title>Compound Interest Calculator \| Friendly Calculator<\/title>/);
@@ -734,7 +734,7 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   const about = fs.readFileSync(new URL('../calculator/about.html', 'file://' + __filename), 'utf8');
   const contact = fs.readFileSync(new URL('../calculator/contact.html', 'file://' + __filename), 'utf8');
   assert.match(about, /Avnish Ahirwar/);
-  assert.ok(about.includes(canonicalCalculatorUrls.length.toLocaleString('en-US') + ' public calculators'));
+  assert.ok(about.includes(canonicalCalculatorUrls.length.toLocaleString('en-US') + ' core catalogue entries are indexed for search'));
   assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length.toLocaleString('en-US') + ' tools)'));
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
