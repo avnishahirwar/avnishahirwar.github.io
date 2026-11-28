@@ -10,15 +10,15 @@ const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
 const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
-const canonicalOf=html=>{const tag=headOf(html).match(/<link\\b(?=[^>]*\\brel=[\"']canonical[\"'])(?=[^>]*\\bhref=[\"']([^\"']+)[\"'])[^>]*>/i);return tag?tag[1]:'';};
+const canonicalOf=html=>{const tag=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return tag?tag[1]:'';};
 const localeCandidates=route=>['en',...fs.readdirSync(root,{withFileTypes:true}).filter(entry=>entry.isDirectory()&&/^[a-z]{2,3}$/i.test(entry.name)).map(entry=>entry.name.toLowerCase())].filter((locale,index,array)=>array.indexOf(locale)===index&&fs.existsSync(pageFor(locale,route)));
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
  if(!fs.existsSync(file)) return false;
  const html=fs.readFileSync(file,'utf8');
- return !noindexOf(html)&&new RegExp('<html\\\\b[^>]*\\\\blang=[\"']'+locale+'[\"']','i').test(html)&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
+ return !noindexOf(html)&&new RegExp('<html\\b[^>]*\\blang=["']'+locale+'["']','i').test(html)&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
 });
-const expectedPairs=(locales,route)=>[
+const expectedPairs=(locales,route)=>[...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),...(locales.includes('en')?[['x-default',origin+'/calculators/'+route]]:[])];
  ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
  ['x-default',origin+'/calculators/'+route]
 ];
