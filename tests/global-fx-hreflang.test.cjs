@@ -59,7 +59,7 @@ test('English and German currency converter pages preserve their intentional lan
  assert.ok(!alternatesOf(german).some(([lang])=>lang==='en'),'German currency page intentionally remains outside the English cluster');
  assertReciprocalAlternates(english,'en',route);
  assertReciprocalAlternates(german,'de',route);
- for(const html of [english,german]) assert.match(html,/\\/assets\\/currency-converter-live\\.js/);
+ for(const html of [english,german]) assert.ok(html.includes('/assets/currency-converter-live.js'));
 });
 test('shared FX client uses free reference rates and preserves a manual fallback',()=>{
  const js=fs.readFileSync(path.join(root,'assets/currency-converter-live.js'),'utf8');
