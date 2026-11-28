@@ -22,6 +22,19 @@ function localFile(url, baseFile = 'index.html') {
 }
 
 const SITE_ORIGIN = 'https://friendlycalculator.in';
+// Locale sitemaps are split into sitemap-<locale>.xml children referenced by
+// sitemap-locales.xml. Build one complete set rather than treating sitemap.xml
+// alone as the entire indexability inventory.
+const allSitemapUrls = new Set();
+for (const file of fs.readdirSync(root).filter(name => /^sitemap(?:-|\.)[^/]*\.xml$/i.test(name) || /^sitemap\.xml$/i.test(name))) {
+  const xml = fs.readFileSync(path.join(root, file), 'utf8');
+  for (const match of xml.matchAll(/<loc>\s*(https:\/\/friendlycalculator\.in[^<]*)\s*<\/loc>/gi)) {
+    try {
+      const parsed = new URL(match[1].replace(/&amp;/g, '&'));
+      if (parsed.origin === SITE_ORIGIN && !parsed.search && !parsed.hash) allSitemapUrls.add(parsed.href);
+    } catch {}
+  }
+}
 function pageIndexability(url) {
   const file = localFile(url);
   if (!file || !fs.existsSync(file)) return {file, html:'', indexable:false, lang:null};
@@ -39,7 +52,7 @@ function pageIndexability(url) {
   const description = descriptionTag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] || '';
   const placeholder = /^\s*\[[^\]]{2,40}\]\s*/.test(description);
   const canonicalUrl = canonical ? new URL(canonical, SITE_ORIGIN).href : '';
-  const isPublic = !noindex && !placeholder && canonicalUrl === url && urls.includes(url);
+  const isPublic = !noindex && !placeholder && canonicalUrl === url && allSitemapUrls.has(url);
   return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
 }
 function localeUrlFor(baseUrl, locale) {
