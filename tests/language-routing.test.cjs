@@ -403,5 +403,5 @@ test('sitemap hreflang grouping recognizes every published locale prefix', () =>
   assert.ok(prefixes, 'Expected sitemap language-prefix catalogue');
   const actual = [...prefixes[1].matchAll(/'([a-z]{2,3})'/g)].map(match => match[1]);
   const catalogue = require('../config/language-catalogue.json');
-  assert.deepEqual(actual, catalogue.locales.map(locale => locale.code).filter(code => code !== 'en'));
+  assert.deepEqual([...actual].sort(), catalogue.locales.map(locale => locale.code).filter(code => code !== 'en').sort());
 });

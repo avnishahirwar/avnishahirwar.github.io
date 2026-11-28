@@ -93,11 +93,23 @@ function xmlEscape(value) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
+function hasLocalePlaceholder(html) {
+  const end = html.toLowerCase().indexOf('</head>');
+  const head = end < 0 ? '' : html.slice(0, end);
+  const tags = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0]);
+  const descriptionTag = tags.find(tag => /\bname\s*=\s*["']description["']/i.test(tag));
+  const description = descriptionTag
+    ? (descriptionTag.match(/\bcontent\s*=\s*["']([^"']*)["']/i) || [])[1] || ''
+    : '';
+  return /^\s*\[[^\]]{2,40}\]\s*/.test(description);
+}
+
 function getLanguage(file, html) {
   const declared = html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i);
-  if (declared) return declared[1].trim().toLowerCase();
   const first = file.split('/')[0].toLowerCase();
-  return LANGUAGE_PREFIXES.has(first) ? first : 'en';
+  const language = declared ? declared[1].trim().toLowerCase() :
+    (LANGUAGE_PREFIXES.has(first) ? first : 'en');
+  return language !== 'en' && hasLocalePlaceholder(html) ? null : language;
 }
 
 function getLanguageGroupKey(file, lang) {
@@ -133,6 +145,7 @@ function build() {
 
   const languageGroups = new Map();
   for (const entry of entries) {
+    if (!entry.lang) { entry.alternates = null; continue; }
     const key = getLanguageGroupKey(entry.file, entry.lang);
     if (!languageGroups.has(key)) languageGroups.set(key, new Map());
     const group = languageGroups.get(key);
@@ -143,6 +156,7 @@ function build() {
     }
   }
   for (const entry of entries) {
+    if (!entry.lang) { entry.alternates = null; continue; }
     const group = languageGroups.get(getLanguageGroupKey(entry.file, entry.lang));
     entry.alternates = group && group.size > 1 && [...group.values()].every(Boolean) ? group : null;
   }
