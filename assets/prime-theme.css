@@ -1,0 +1,54 @@
+/* Friendly Calculator — unified Prime design system
+   Shared, additive visual layer. Preserves page content, routes and calculator behavior. */
+:root{
+  --fc-brand-navy:#101c2c;--fc-brand-navy-deep:#0b1928;--fc-brand-gold:#d8bd82;
+  --fc-brand-gold-strong:#b58b3d;--fc-text:#172638;--fc-text-muted:#596b7c;
+  --fc-page:#f4f6f8;--fc-surface:#fff;--fc-border:#dfe5eb;--fc-soft:#edf2f6;
+  --fc-link:#174d79;--fc-radius:14px;--fc-shadow:0 8px 24px rgba(16,28,44,.07);
+  color-scheme:light;
+}
+html{scroll-behavior:smooth}
+body{background:var(--fc-page);color:var(--fc-text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65}
+body :where(h1,h2,h3,h4){color:var(--fc-text);font-family:inherit;letter-spacing:-.018em}
+body :where(h1){font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.12;font-weight:850}
+body :where(h2){font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.22;font-weight:800}
+body :where(h3){font-size:1.12rem;line-height:1.35;font-weight:750}
+body :where(p,li){line-height:1.7}
+body a{color:var(--fc-link);text-underline-offset:3px}
+body a:hover{color:#8b6500;text-decoration-thickness:2px}
+body :where(.wrap,.container,.page-container,.content-wrap){max-width:1180px}
+body :where(.panel,.section,.card,.quick,.note,.callout,.formula,.faq details,.calculator-card,.tool-card,.feature-card,.content-card,.result-card,.calc-card){
+  border-color:var(--fc-border);border-radius:var(--fc-radius);box-shadow:0 2px 10px rgba(16,28,44,.035)
+}
+body :where(.panel,.card,.quick,.note,.calculator-card,.tool-card,.feature-card,.content-card,.result-card,.calc-card){background:var(--fc-surface)}
+body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero){
+  background:var(--fc-brand-navy);color:#f5f7fa;border:1px solid #26384b;border-radius:18px
+}
+body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) :where(h1,h2,h3,strong){color:#fff!important}
+body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) p{color:#dce5ed}
+body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) a{color:#f0dfb5}
+body :where(button,.btn,.button,.primary-button,input[type=submit],input[type=button]){
+  border-radius:9px;font-weight:750;transition:background-color .18s ease,border-color .18s ease,transform .18s ease
+}
+body :where(.btn,.button,.primary-button,input[type=submit],input[type=button]){
+  background:var(--fc-brand-navy);border:1px solid var(--fc-brand-navy);color:#fff;text-decoration:none
+}
+body :where(.btn,.button,.primary-button,input[type=submit],input[type=button]):hover{background:#243b55;border-color:#243b55;color:#fff}
+body :where(input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button]),select,textarea){
+  border:1px solid #bdc9d4;border-radius:9px;background:#fff;color:var(--fc-text);min-height:42px
+}
+body :where(input,select,textarea):focus-visible{outline:3px solid rgba(181,139,61,.38);outline-offset:2px;border-color:var(--fc-brand-gold-strong)}
+body :where(table){border-color:var(--fc-border);border-radius:10px;overflow:hidden}
+body :where(th){background:var(--fc-soft);color:var(--fc-brand-navy);font-weight:800}
+body :where(td,th){border-color:var(--fc-border)}
+body :where(.muted,.note,.crumb,.eyebrow,.section-head p){color:var(--fc-text-muted)}
+body :where(.callout,.formula){background:var(--fc-soft);border-color:var(--fc-border)}
+body :where(.fc-global-header){background:var(--fc-brand-navy);color:#fff}
+body :where(.fc-global-footer){background:var(--fc-brand-navy-deep);color:#d4dde5}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline-color:var(--fc-brand-gold-strong)}
+@media(max-width:700px){
+  body :where(.wrap,.container,.page-container,.content-wrap){width:min(100% - 28px,1180px)}
+  body :where(.panel,.section,.card,.note){padding:clamp(14px,4vw,20px)}
+  body :where(h1){font-size:clamp(1.7rem,7vw,2.35rem)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
