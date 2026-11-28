@@ -15,6 +15,33 @@ const KNOWN_UNTRANSLATED_TARGETS = new Set([
   '/fa/calculators/loan-emi-calculator.html',
   '/vi/calculators/loan-emi-calculator.html'
 ]);
+
+// Only add reciprocal links for route-specific language sets that are already
+// published and verified by the repository's locale-cluster tests. Expand a
+// route only after its localized page is reviewed; do not infer translation
+// from a folder name or <html lang> attribute alone.
+const BASE_LOCALES = ['en', 'hi', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta'];
+const TOP_HINDI_LOCALES = [...BASE_LOCALES, 'mr', 'te'];
+const EXPANDED_BASIC_LOCALES = [...BASE_LOCALES, 'de', 'ja', 'ru', 'vi', 'te', 'gu', 'kn'];
+const PUBLISHED_HREFLANG_LOCALES_BY_ROUTE = {
+  'currency-converter-calculator.html': BASE_LOCALES,
+  'percentage-calculator.html': ['en', 'hi', 'de', 'es', 'fr', 'pt', 'ar', 'id', 'bn', 'ta', 'ja', 'ru'],
+  'simple-interest-calculator.html': ['en', 'bn', 'ar', 'es', 'fr', 'hi', 'id', 'pt', 'ta'],
+  'basic-calculator.html': EXPANDED_BASIC_LOCALES,
+  'bike-loan-calculator.html': BASE_LOCALES,
+  'business-loan-emi-calculator.html': BASE_LOCALES,
+  'car-loan-calculator.html': BASE_LOCALES,
+  'discount-calculator.html': BASE_LOCALES,
+  'ppf-calculator.html': BASE_LOCALES,
+  'loan-emi-calculator.html': TOP_HINDI_LOCALES,
+  'home-loan-emi-calculator.html': TOP_HINDI_LOCALES,
+  'personal-loan-eligibility-calculator.html': TOP_HINDI_LOCALES,
+  'sip-calculator.html': TOP_HINDI_LOCALES,
+  'fd-calculator.html': TOP_HINDI_LOCALES,
+  'rd-calculator.html': TOP_HINDI_LOCALES,
+  'gst-calculator.html': TOP_HINDI_LOCALES,
+  'income-tax-calculator.html': TOP_HINDI_LOCALES
+};
 const IGNORE = new Set(['.git', '.github', 'node_modules', 'tests', 'vendor', '_site', 'admin', 'avnish-ai']);
 
 function walk(dir, files = []) {
@@ -28,6 +55,16 @@ function walk(dir, files = []) {
 }
 function repositoryPath(file) {
   return '/' + path.relative(ROOT, file).split(path.sep).join('/');
+}
+function calculatorRoute(pathname) {
+  const marker = '/calculators/';
+  const index = pathname.lastIndexOf(marker);
+  return index < 0 ? null : pathname.slice(index + marker.length).split('/')[0].toLowerCase();
+}
+function localeIsAllowed(allowed, locale) {
+  if (!allowed) return false;
+  const normalized = locale.toLowerCase();
+  return allowed.includes(normalized) || allowed.includes(normalized.split('-')[0]);
 }
 function headOf(html) {
   const end = html.toLowerCase().indexOf('</head>');
@@ -83,7 +120,7 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnsupportedLanguageCode: 0, skippedKnownUntranslatedTarget: 0, skippedKnownUntranslatedSource: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnsupportedLanguageCode: 0, skippedKnownUntranslatedTarget: 0, skippedKnownUntranslatedSource: 0, skippedUnreviewedRoute: 0, skippedLocaleNotPublishedForRoute: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
     if (KNOWN_UNTRANSLATED_TARGETS.has(repositoryPath(sourceFile))) { stats.skippedKnownUntranslatedSource++; continue; }
@@ -93,6 +130,10 @@ function main() {
     const sourceCanonical = canonicalOf(sourceHtml);
     if (!sourceCanonical) continue;
     if (!selfCanonicalCandidates(sourceFile).has(sourceCanonical)) { stats.skippedNoncanonicalSource++; continue; }
+    const sourceRoute = calculatorRoute(new URL(sourceCanonical).pathname);
+    const allowedLocales = sourceRoute && PUBLISHED_HREFLANG_LOCALES_BY_ROUTE[sourceRoute];
+    if (!allowedLocales) { stats.skippedUnreviewedRoute++; continue; }
+    if (!localeIsAllowed(allowedLocales, sourceLang)) { stats.skippedLocaleNotPublishedForRoute++; continue; }
     for (const link of linksOf(sourceHtml)) {
       stats.linksExamined++;
       if (link.lang === 'x-default') continue;
@@ -107,6 +148,10 @@ function main() {
         continue;
       }
       if (KNOWN_UNTRANSLATED_TARGETS.has(decodedPath)) { stats.skippedKnownUntranslatedTarget++; continue; }
+      if (calculatorRoute(decodedPath) !== sourceRoute || !localeIsAllowed(allowedLocales, link.lang)) {
+        stats.skippedLocaleNotPublishedForRoute++;
+        continue;
+      }
       const target = targetFile(link.href);
       if (!target) { stats.skippedMissingTarget++; continue; }
       if (target === sourceFile) continue;
