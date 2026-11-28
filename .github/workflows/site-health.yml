@@ -24,8 +24,22 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
-      - name: Build the current published calculator catalogue
-        run: node scripts/generate-sitemaps.cjs && node scripts/merge-search-index.cjs && node scripts/build-site-directory.cjs && node scripts/build-site-directory.cjs --check && node scripts/generate-physics-calculator-directory.cjs && node scripts/generate-physics-calculator-directory.cjs --check && node --test tests/physics-calculator-directory.test.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs && node scripts/normalize-hreflang.cjs --write && node scripts/generate-sitemaps.cjs
+      - name: Build and validate the committed public calculator catalogue
+        run: |
+          node scripts/generate-sitemaps.cjs
+          node scripts/merge-search-index.cjs
+          node scripts/build-site-directory.cjs
+          node scripts/build-site-directory.cjs --check
+          node scripts/generate-physics-calculator-directory.cjs
+          node scripts/generate-physics-calculator-directory.cjs --check
+          node --test tests/physics-calculator-directory.test.cjs
+          node scripts/sync-calculator-counts.cjs
+          node scripts/generate-human-sitemap.cjs
+          node --check scripts/merge-search-index.cjs
+          node --test tests/merge-search-index.test.cjs
+          node scripts/normalize-hreflang.cjs --check
+          node scripts/generate-sitemaps.cjs
+          git diff --exit-code
       - name: Verify hreflang normalization and reciprocal indexable clusters
         run: node --check scripts/normalize-hreflang.cjs && node --test tests/normalize-hreflang.test.cjs && node scripts/normalize-hreflang.cjs --check && node --test tests/international-seo.test.cjs && node scripts/generate-sitemaps.cjs --check && node scripts/generate-locale-sitemaps.cjs --check
       - name: Validate catalog-driven calculator counts
