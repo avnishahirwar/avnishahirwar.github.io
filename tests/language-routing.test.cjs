@@ -450,10 +450,7 @@ test('staged Chinese, Urdu, Turkish, Italian and Korean percentage calculators a
 
 
 test('sitemap hreflang grouping recognizes every published locale prefix', () => {
-  const generator = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'generate-sitemaps.cjs'), 'utf8');
-  const prefixes = generator.match(/const LANGUAGE_PREFIXES = new Set\(\[([^\]]+)\]\);/);
-  assert.ok(prefixes, 'Expected sitemap language-prefix catalogue');
-  const actual = [...prefixes[1].matchAll(/'([a-z]{2,3})'/g)].map(match => match[1]);
+  const actual = require('../config/supported-locale-prefixes.json');
   const catalogue = require('../config/language-catalogue.json');
   assert.deepEqual([...actual].sort(), catalogue.locales.map(locale => locale.code).filter(code => code !== 'en').sort());
 });
