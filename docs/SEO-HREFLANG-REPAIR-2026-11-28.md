@@ -32,3 +32,17 @@ The corrected dry-run scanned 12,232 HTML files, detected 5,941 noindex pages, a
 ## Deployment status
 
 These changes are committed to the PR branch only. They are **not merged** and **not deployed to production**. Full PR CI must pass before merge.
+
+
+## Sitemap and catalogue regeneration — completed on PR branch
+
+The PR validation workflow had regenerated the sitemap in its temporary runner workspace but did not commit the generated file, leaving the checked-in sitemap stale. A branch-scoped workflow now regenerates and commits the canonical sitemap, calculator directory, physics directory, and catalogue counters together.
+
+- Generated `sitemap.xml`: 3,191 unique canonical URLs from 12,206 HTML files, with 131 language clusters.
+- Rebuilt `calculator/site-directory.html`: 1,615 unique calculator links across 20 categories.
+- Rebuilt `calculator/physics-calculators.html`: 364 verified calculator links.
+- Synchronized published catalogue count: 1,618 calculators across 35 public count surfaces.
+- Validation: sitemap check, site-directory check, count sync check, locale sitemap check, and 12 targeted sitemap/catalogue/physics tests all passed.
+- Workflow run: [46114340512](https://github.com/avnishahirwar/avnishahirwar.github.io/actions/runs/46114340512). Generated sitemap/directory commit: `5fb29a19b0066b43e282aff4c6856f5cafdaf3ee`.
+
+These changes remain on PR #930; no production deployment has occurred.
