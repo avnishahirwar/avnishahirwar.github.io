@@ -44,10 +44,10 @@ test('source code license is MIT and does not claim editorial content or brand a
 
 test('substantive home-loan calculator is indexable after its full guide and worked example', () => {
   const html = fs.readFileSync(path.join(ROOT, 'calculators/home-loan-calculator.html'), 'utf8');
-  const robots = html.match(/<meta\\b[^>]*\\bname=["']robots["'][^>]*>/i)?.[0] || '';
-  assert.doesNotMatch(robots, /\\bnoindex\\b/i);
-  assert.match(html, /Home loan EMI formula/i);
-  assert.match(html, /₹30,00,000/);
-  assert.match(html, /₹26,034\\.70/);
-  assert.equal((html.match(/<details\\b/gi) || []).length, 5);
+  const robots = html.match(/<meta[^>]*name=["']robots["'][^>]*>/i)?.[0] || '';
+  assert.doesNotMatch(robots, /noindex/i);
+  assert.ok(html.includes('Home loan EMI formula'));
+  assert.ok(html.includes('₹30,00,000'));
+  assert.ok(html.includes('₹26,034.70'));
+  assert.equal(html.split('<details').length - 1, 5);
 });
