@@ -42,8 +42,8 @@ jobs:
           mapfile -t changed_html < <(git diff --name-only origin/main -- '*.html')
           printf 'HTML files differing from main: %s\n' "${#changed_html[@]}"
           if [ "${#changed_html[@]}" -eq 0 ]; then
-            echo "Expected generated HTML changes, but none were found."
-            exit 1
+            echo "No reviewed reciprocal additions are missing; nothing to commit."
+            exit 0
           fi
           for file in "${changed_html[@]}"; do
             git add -f -- "$file"
