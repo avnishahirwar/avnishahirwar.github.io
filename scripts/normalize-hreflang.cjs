@@ -68,6 +68,13 @@ function langOf(html, relative) {
   const first = relative.split('/')[0].toLowerCase();
   return FALLBACK_LOCALES.has(first) ? first : 'en';
 }
+function hasUntranslatedLocalePlaceholder(html) {
+  const head = headOf(html);
+  const descriptionTag = [...head.matchAll(/<meta\\b[^>]*>/gi)].map(match => match[0])
+    .find(tag => attribute(tag, 'name').toLowerCase() === 'description');
+  const description = descriptionTag ? attribute(descriptionTag, 'content') : '';
+  return /^\\s*\\[[^\\]]{2,40}\\]\\s*/.test(description);
+}
 function normalizedPathname(value) {
   if (value === '/') return '/';
   return value.endsWith('/index.html') ? value.slice(0, -'index.html'.length) :
@@ -117,6 +124,7 @@ function build() {
   const stats = {
     htmlPages: files.length,
     noindexPages: 0,
+    placeholderLocalePages: 0,
     selfCanonicalIndexablePages: 0,
     pagesWithExistingAlternates: 0,
     alternateTagsRemoved: 0,
@@ -135,9 +143,16 @@ function build() {
       stats.noindexPages++;
       continue;
     }
+    const lang = langOf(html, relative);
+    // Some staged locale files still contain a literal [Language] placeholder in
+    // their meta description. Keep their current robots/canonical state untouched,
+    // but do not advertise them as translated alternates until localized metadata is complete.
+    if (lang !== 'en' && hasUntranslatedLocalePlaceholder(html)) {
+      stats.placeholderLocalePages++;
+      continue;
+    }
     const canonical = canonicalOf(html);
     if (!canonical || !selfCanonical(relative, canonical) || !headOf(html)) continue;
-    const lang = langOf(html, relative);
     if (!/^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/i.test(lang)) continue;
     stats.selfCanonicalIndexablePages++;
     const key = groupKey(relative, lang);
@@ -149,7 +164,6 @@ function build() {
 
   const validGroups = new Map();
   for (const [key, entries] of groups) {
-    if (entries.length < 2) continue;
     const langs = entries.map(entry => entry.lang);
     const urls = entries.map(entry => entry.canonical);
     if (new Set(langs).size !== langs.length || new Set(urls).size !== urls.length) {
@@ -158,7 +172,8 @@ function build() {
     }
     validGroups.set(key, entries);
   }
-  stats.languageGroups = validGroups.size;
+  stats.languageGroups = [...validGroups.values()].filter(entries => entries.length > 1).length;
+  stats.singleLanguagePages = [...validGroups.values()].filter(entries => entries.length === 1).length;
 
   const outputs = new Map();
   for (const [file, record] of cache) {
