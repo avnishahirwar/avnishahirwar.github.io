@@ -1,0 +1,41 @@
+name: Scoped hreflang metadata repair
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: write
+concurrency:
+  group: hreflang-repair-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  normalize:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate normalizer and fixture tests
+        run: node --check scripts/normalize-hreflang.cjs && node --test tests/normalize-hreflang.test.cjs
+      - name: Normalize only hreflang alternate metadata
+        run: node scripts/normalize-hreflang.cjs --write
+      - name: Verify normalized output is repeatable
+        run: node scripts/normalize-hreflang.cjs --check
+      - name: Commit generated HTML head metadata
+        env:
+          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(seo): normalize reciprocal hreflang metadata"
+            git push origin "HEAD:${BRANCH_NAME}"
+          else
+            echo "No hreflang metadata changes required."
+          fi
