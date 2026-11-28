@@ -1,0 +1,42 @@
+name: Repair priority Hindi hreflang clusters
+
+on:
+  push:
+    branches:
+      - fix/gst-inr-label-consistency-20261128
+    paths:
+      - scripts/repair-priority-hindi-hreflang.cjs
+      - .github/workflows/repair-priority-hindi-hreflang.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate repair script
+        run: node --check scripts/repair-priority-hindi-hreflang.cjs
+      - name: Preview safe additions
+        run: node scripts/repair-priority-hindi-hreflang.cjs
+      - name: Add missing links only
+        run: node scripts/repair-priority-hindi-hreflang.cjs --write
+      - name: Verify all safe additions are present
+        run: node scripts/repair-priority-hindi-hreflang.cjs
+      - name: Commit generated HTML changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*/calculators/*.html' 'calculators/*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: repair priority Hindi hreflang clusters [skip ci]"
+            git push
+          else
+            echo "No missing priority-cluster links required changes."
+          fi
