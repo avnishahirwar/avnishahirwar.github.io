@@ -1219,7 +1219,7 @@ if(isCalculatorRoute&&main){
   // Retain the first meaningful related-calculator section and remove repeats.
   const relatedHeadings=[...main.querySelectorAll('h2,h3')].filter(heading=>
     /^(?:related calculators|related tools|more calculators|more free calculators)$/i
-      .test((heading.textContent||'').replace(/\\s+/g,' ').trim())
+      .test((heading.textContent||'').replace(/\s+/g,' ').trim())
   );
   const relatedBlocks=[];
   relatedHeadings.forEach(heading=>{
