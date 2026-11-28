@@ -32,7 +32,7 @@ function directoryEntriesFromIndex() {
 
 test('physics directory covers Physics-tagged catalogue tools plus verified directory-only physics pages', () => {
   const expected = directoryEntriesFromIndex();
-  assert.ok(entries.length >= 300, `expected a broad physics directory, got ${entries.length}`);
+  assert.ok(entries.length > supplementalRoutes.length, `expected the public Physics catalogue plus supplemental routes, got ${entries.length}`);
   assert.equal(urls.size, entries.length, 'directory URLs should be unique');
   assert.deepEqual(new Set(urls), expected, 'directory should include the verified catalog set without adding unrelated pages');
   for (const entry of entries) {

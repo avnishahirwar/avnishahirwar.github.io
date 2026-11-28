@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'assets/calculator-search-index-additions.json'
+      - 'sitemap.xml'
+      - 'scripts/merge-search-index.cjs'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -22,10 +24,11 @@ jobs:
         with:
           node-version: 20
       - run: node --check scripts/merge-search-index.cjs
-      - run: node scripts/merge-search-index.cjs --check
-      - name: Build and validate the merged catalogue and count surfaces
+      - name: Build and validate the canonical public search index and count surfaces
         run: |
+          node scripts/generate-sitemaps.cjs
           node scripts/merge-search-index.cjs
+          node scripts/merge-search-index.cjs --check
           node scripts/sync-calculator-counts.cjs
           node scripts/generate-human-sitemap.cjs
           node scripts/sync-calculator-counts.cjs --check
@@ -43,20 +46,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Merge only additions with existing calculator pages
+      - name: Generate canonical sitemap before updating public search index
+        run: node scripts/generate-sitemaps.cjs
+      - name: Merge only canonical public calculator additions
         run: node scripts/merge-search-index.cjs
       - name: Synchronize every public calculator count
         run: node scripts/sync-calculator-counts.cjs
       - name: Regenerate the human-readable sitemap
         run: node scripts/generate-human-sitemap.cjs
-      - name: Verify synchronized counts and sitemap
-        run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check
+      - name: Verify synchronized public search index, counts and sitemap
+        run: node scripts/merge-search-index.cjs --check && node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check
       - name: Commit updated index, count surfaces and human sitemap when changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- \
             assets/calculator-search-index.json \
+            sitemap.xml \
             index.html \
             calculator/about.html \
             calculator/api.html \

@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
-const { canonicalCalculatorUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
+const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -736,9 +736,18 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.match(about, /Avnish Ahirwar/);
   assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
   assert.ok(about.includes('Available calculators (' + canonicalCalculatorUrls.length.toLocaleString('en-US') + ' tools)'));
+  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' core calculators in the curated directory'));
+  assert.ok(about.includes(expectedSearchIndexLength.toLocaleString('en-US') + ' distinct public calculator pages'));
+  assert.doesNotMatch(about, /3,129 distinct calculator routes/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  assert.equal(searchIndex.length, expectedSearchIndexLength);
+  const searchIndexUrls = searchIndex.map(item => String(item.url || ''));
+  const indexedUrls = new Set(searchIndexUrls);
+  assert.equal(searchIndex.length, expectedSearchIndexLength, 'Public search index must match the canonical URL catalogue count.');
+  assert.equal(indexedUrls.size, searchIndex.length, 'Search index must not contain duplicate URL entries.');
+  for (const url of expectedSearchIndexUrls) {
+    assert.ok(indexedUrls.has(url), 'Canonical public calculator missing from search index: ' + url);
+  }
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(homepage.includes('aria-label="Search all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator entries by name or topic"'));
   assert.ok(homepage.includes('Total catalogue: ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));

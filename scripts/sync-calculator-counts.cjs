@@ -137,6 +137,10 @@ function updateGlobalText(html, total, core = total, international = Math.max(0,
     (_, count, suffix) => coreFormatted + suffix);
   html = html.replace(/[\d,]+ public calculator pages, including international tools/gi,
     `${coreFormatted} public calculators in the core catalogue plus ${internationalFormatted} international calculators (${formatted} calculator pages total)`);
+  html = html.replace(/including\s+[\d,]+\s+distinct calculator routes in the curated directory,\s*plus\s+[\d,]+\s+international calculator entries/i,
+    `plus ${internationalFormatted} selected international calculator entries, for ${formatted} distinct public calculator pages`);
+  html = html.replace(/[\d,]+\s+public calculators in the curated directory;\s*[\d,]+\s+core catalogue entries are indexed for search/i,
+    `${coreFormatted} core calculators in the curated directory; ${coreFormatted} core catalogue entries are indexed for search; ${internationalFormatted} selected international tools are listed separately`);
   // The About-page directory count is intentionally distinct from XML-sitemap core routes.
   html = html.replace(/(\b(?:Available\s+)?calculators\s*\()[\d,]+(\s+tools?\))/gi, (_, a, b) => `${a}${coreFormatted}${b}`);
   html = html.replace(/(offering\s+)[\d,]+(\s+public\s+calculators)/gi, (_, a, b) => `${a}${formatted}${b}`);
