@@ -110,9 +110,9 @@ function main() {
     );
   }
 
-  const nextIndex = [...byUrl.values()].sort((a, b) =>
-    String(a.name).localeCompare(String(b.name), 'en') || String(a.url).localeCompare(String(b.url))
-  );
+  // Preserve the current deterministic source ordering; additions remain appended
+  // in their committed order so --check is stable across runners and locales.
+  const nextIndex = [...byUrl.values()];
   const nextText = JSON.stringify(nextIndex, null, 2) + '\n';
   const currentText = fs.readFileSync(INDEX, 'utf8');
   const changed = currentText !== nextText;
