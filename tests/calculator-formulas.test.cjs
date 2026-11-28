@@ -1364,6 +1364,6 @@ test('credit utilization page explains its formula, worked example and limits', 
 
 test('India GST calculator keeps the entered amount explicitly denominated in INR', () => {
   const gst = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
-  assert.match(gst, /<label>Amount \\(INR\\)<input name="amount"/);
+  assert.ok(gst.includes('<label>Amount (INR)<input name="amount"'));
   assert.match(gst, /const money=n=>'₹'/);
 });
