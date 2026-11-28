@@ -207,7 +207,12 @@ function build() {
 function main() {
   const { outputs, stats } = build();
   if (process.argv.includes('--check')) {
-    if (outputs.size) throw new Error('hreflang metadata needs normalization on ' + outputs.size + ' HTML pages. Run node scripts/normalize-hreflang.cjs --write.');
+    if (outputs.size) {
+      const samples = [...outputs.keys()].slice(0, 25)
+        .map(file => path.relative(ROOT, file)).join(', ');
+      console.error('Sample pages still requiring hreflang normalization: ' + samples);
+      throw new Error('hreflang metadata needs normalization on ' + outputs.size + ' HTML pages. Run node scripts/normalize-hreflang.cjs --write.');
+    }
     console.log('Hreflang normalization check passed: ' + JSON.stringify(stats));
     return;
   }
