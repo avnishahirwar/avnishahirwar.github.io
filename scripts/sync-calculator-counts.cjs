@@ -117,7 +117,8 @@ function updateHomepage(html, total, localized = false, core = total, categoryCo
   html = html.replace(/(offering\s+)[\d,]+(\s+public\s+calculators)/i, (_, a, b) => `${a}${formatted}${b}`);
   html = html.replace(/(Search\s+all\s+)[\d,]+(\s+calculator\s+entries)/i, (_, a, b) => `${a}${formatted}${b}`);
   html = html.replace(/(All\s+\d+\s+categories\s+·\s+)[\d,]+(\s+calculators)/i, (_, a, b) => `${a}${core.toLocaleString('en-US')}${b}`);
-  html = html.replace(/(Total\s+catalogue:\s*)[\d,]+(\s+calculators)/i, (_, a, b) => `${a}${formatted}${b}`);
+  html = html.replace(/Total\s+catalogue:\s*[\d,]+\s+calculators/i,
+    `Catalogue: ${core.toLocaleString('en-US')} core calculators; ${formatted} total searchable entries across languages`);
   if (categoryCounts) {
     for (const [id, count] of categoryCounts) {
       const re = new RegExp(`(<a\\b[^>]*href="/calculator/site-directory\\.html#${id}"[^>]*>[\\s\\S]*?<span>)[\\d,]+(\\s+calculators?<\\/span>)`, 'i');
