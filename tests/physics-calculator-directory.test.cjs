@@ -26,6 +26,13 @@ function directoryEntriesFromIndex() {
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html') &&
       !url.includes('..') && !url.includes('?') && !url.includes('#') &&
       fs.existsSync(path.join(root, url.slice(1)))));
+  const manual = require('../config/physics-directory-manual-entries.json');
+  for (const item of manual) {
+    const url = String(item.url || '');
+    if (url.startsWith('/calculators/') && url.endsWith('.html') &&
+        !url.includes('..') && !url.includes('?') && !url.includes('#') &&
+        fs.existsSync(path.join(root, url.slice(1)))) expected.add(url);
+  }
   for (const url of supplementalRoutes) expected.add(url);
   return expected;
 }
