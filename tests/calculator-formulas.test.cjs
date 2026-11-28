@@ -741,7 +741,9 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.doesNotMatch(about, /3,129 distinct calculator routes/);
   const searchIndex = JSON.parse(fs.readFileSync(new URL('../assets/calculator-search-index.json', 'file://' + __filename), 'utf8'));
   const homepage = fs.readFileSync(new URL('../index.html', 'file://' + __filename), 'utf8');
-  const indexedUrls = new Set(searchIndex.map(item => String(item.url || '')));
+  const searchIndexUrls = searchIndex.map(item => String(item.url || ''));
+  const indexedUrls = new Set(searchIndexUrls);
+  assert.equal(indexedUrls.size, searchIndex.length, 'Search index must not contain duplicate URL entries.');
   for (const url of expectedSearchIndexUrls) {
     assert.ok(indexedUrls.has(url), 'Canonical public calculator missing from search index: ' + url);
   }
