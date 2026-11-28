@@ -1839,3 +1839,20 @@ html[data-fc-theme="dark"] main form#gst-live-form small {
     padding: 12px 1px;
   }
 }
+
+
+/* Reserve the shared Header and its deferred Google Search row before scripts run.
+   The header is rebuilt by site-shell.js and the CSE widget fills this row later;
+   stable reservations prevent those enhancements from moving the page content. */
+.fc-global-header{min-height:132px}
+.fc-header-reservation{height:132px;min-height:132px;flex:0 0 132px}
+.fc-header-search{min-height:66px}
+.fc-header-search .gcse-search{min-height:56px}
+@media(max-width:1100px){
+  .fc-global-header{min-height:156px}
+  .fc-header-reservation{height:156px;min-height:156px;flex-basis:156px}
+}
+@media(max-width:640px){
+  .fc-global-header{min-height:170px}
+  .fc-header-reservation{height:170px;min-height:170px;flex-basis:170px}
+}

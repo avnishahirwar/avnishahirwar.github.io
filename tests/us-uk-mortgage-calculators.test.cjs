@@ -34,7 +34,8 @@ test('US and UK mortgage pages are country-scoped, self-canonical and cite consu
  ];
  for(const [file,locale,hub,source] of checks){
   const html=fs.readFileSync(path.join(root,file),'utf8');
-  assert.match(html,new RegExp('hreflang="'+locale+'"'));
+  // These market-specific pages have no translated siblings; do not emit a one-page hreflang cluster.
+  assert.doesNotMatch(html,/hreflang=/);
   assert.match(html,/rel="canonical"/);
   assert.ok(html.includes(hub));
   assert.ok(html.includes(source));

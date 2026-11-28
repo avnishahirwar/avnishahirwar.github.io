@@ -1,18 +1,17 @@
 /**
- * Keep Cloudflare Pages project and preview URLs from serving duplicate pages.
- * Requests on pages.dev are redirected to the canonical production domain;
- * custom production hosts continue through the normal static asset pipeline.
+ * Redirect only the stable Cloudflare Pages project hostname to production.
+ * Branch-preview hosts must serve their own deployed content so pull requests
+ * can be inspected without silently testing the production site.
+ * Custom production hosts continue through the normal static asset pipeline.
  */
-const PREVIEW_ROOT = 'friendly-calculator.pages.dev';
-const PREVIEW_SUFFIX = '.friendly-calculator.pages.dev';
+const CANONICAL_PAGES_HOST = 'friendly-calculator.pages.dev';
 const PRODUCTION_ORIGIN = 'https://friendlycalculator.in';
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const hostname = url.hostname.toLowerCase();
-  const isPagesHost = hostname === PREVIEW_ROOT || hostname.endsWith(PREVIEW_SUFFIX);
 
-  if (!isPagesHost) {
+  if (hostname !== CANONICAL_PAGES_HOST) {
     return context.next();
   }
 

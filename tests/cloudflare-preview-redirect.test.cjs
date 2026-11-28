@@ -25,17 +25,20 @@ async function invokeMiddleware(requestUrl) {
   return { response, nextCalls };
 }
 
-test('redirects a Cloudflare preview hostname to production and preserves path/query', async () => {
-  const { response, nextCalls } = await invokeMiddleware(
-    'https://feature-branch.friendly-calculator.pages.dev/hi/calculator?amount=42&unit=kg',
-  );
+test('serves branch preview hostnames without redirecting to production', async () => {
+  for (const host of [
+    'feature-branch.friendly-calculator.pages.dev',
+    'seo-catalogue-hreflang-recon.friendly-calculator.pages.dev',
+  ]) {
+    const { response, nextCalls } = await invokeMiddleware(
+      `https://${host}/hi/calculator?amount=42&unit=kg`,
+    );
 
-  assert.equal(response.status, 301);
-  assert.equal(
-    response.headers.get('location'),
-    'https://friendlycalculator.in/hi/calculator?amount=42&unit=kg',
-  );
-  assert.equal(nextCalls, 0);
+    assert.equal(response.status, 200, host);
+    assert.equal(response.headers.get('location'), null, host);
+    assert.equal(await response.text(), 'served by Pages', host);
+    assert.equal(nextCalls, 1, host);
+  }
 });
 
 test('redirects the Cloudflare Pages project root hostname', async () => {

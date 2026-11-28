@@ -26,13 +26,21 @@ function directoryEntriesFromIndex() {
     .filter(url => url.startsWith('/calculators/') && url.endsWith('.html') &&
       !url.includes('..') && !url.includes('?') && !url.includes('#') &&
       fs.existsSync(path.join(root, url.slice(1)))));
+  const manual = require('../config/physics-directory-manual-entries.json');
+  for (const item of manual) {
+    const url = String(item.url || '');
+    if (url.startsWith('/calculators/') && url.endsWith('.html') &&
+        !url.includes('..') && !url.includes('?') && !url.includes('#') &&
+        fs.existsSync(path.join(root, url.slice(1)))) expected.add(url);
+  }
   for (const url of supplementalRoutes) expected.add(url);
   return expected;
 }
 
 test('physics directory covers Physics-tagged catalogue tools plus verified directory-only physics pages', () => {
   const expected = directoryEntriesFromIndex();
-  assert.ok(entries.length >= 300, `expected a broad physics directory, got ${entries.length}`);
+  assert.ok(expected.size > 0, 'canonical Physics catalogue should contain at least one published tool');
+  assert.equal(entries.length, expected.size, 'directory count should match the canonical searchable Physics catalogue');
   assert.equal(urls.size, entries.length, 'directory URLs should be unique');
   assert.deepEqual(new Set(urls), expected, 'directory should include the verified catalog set without adding unrelated pages');
   for (const entry of entries) {

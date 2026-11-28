@@ -30,6 +30,9 @@ test('sitemaps exclude canonical aliases and do not publish the UK market hub as
   const fs = require('node:fs');
   const os = require('node:os');
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-sitemap-canonical-'));
+  const configDir = path.join(temp, 'config');
+  fs.mkdirSync(configDir, { recursive: true });
+  fs.copyFileSync(path.join(root, 'config/supported-locale-prefixes.json'), path.join(configDir, 'supported-locale-prefixes.json'));
   const write = (file, html) => {
     const target = path.join(temp, file);
     fs.mkdirSync(path.dirname(target), { recursive: true });
