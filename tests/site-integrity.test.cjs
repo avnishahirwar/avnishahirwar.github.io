@@ -30,7 +30,7 @@ function isNoindexHtml(html) {
 
 function isIndexableCanonicalLocalePage(html, locale, route) {
   if (isNoindexHtml(html)) return false;
-  const lang = (html.match(/<html\\b[^>]*\\blang=["']([^"']+)["']/i) || [])[1] || '';
+  const lang = (html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i) || [])[1] || '';
   const canonical = (html.match(/<link\\b(?=[^>]*\\brel=["']canonical["'])(?=[^>]*\\bhref=["']([^"']+)["'])[^>]*>/i) || [])[1] || '';
   const expected = 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + route;
   return lang.toLowerCase() === locale && canonical === expected;
