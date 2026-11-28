@@ -56,3 +56,99 @@ body :where(.fc-global-footer){background:var(--fc-brand-navy-deep);color:#d4dde
   body :where(h1){font-size:clamp(1.7rem,7vw,2.35rem)}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+
+/* Refined page composition: consistent content width, breathing room and clean card edges. */
+body main.wrap{
+  width:min(1180px,calc(100% - 40px));
+  max-width:1180px;
+  margin-inline:auto;
+}
+body main.wrap > .hero{
+  display:flow-root;
+  width:100%;
+  margin:22px auto 18px!important;
+  padding:clamp(22px,4vw,40px)!important;
+  border:1px solid #26384b!important;
+  border-radius:22px!important;
+  overflow:hidden;
+  background:linear-gradient(125deg,#101c2c 0%,#172b42 72%,#203b55 100%)!important;
+  box-shadow:0 12px 30px rgba(16,28,44,.12);
+}
+body main.wrap > .hero .eyebrow{color:#e2c78e!important;margin:0 0 8px}
+body main.wrap > .hero h1{color:#fff!important;margin:0 0 12px}
+body main.wrap > .hero p{color:#e0e8ef!important;max-width:760px;margin:0}
+body main.wrap > .hero :where(button,.btn){margin-top:14px}
+body main.wrap > .panel,
+body main.wrap > .content{
+  width:100%;
+  margin:18px auto!important;
+  padding:clamp(20px,3.2vw,34px)!important;
+  border:1px solid #dce3e9!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(16,28,44,.055)!important;
+}
+body main.wrap > .panel h2,
+body main.wrap > .content h2{margin:0 0 18px;color:#172638}
+body main.wrap > .panel h2:not(:first-child),
+body main.wrap > .content h2:not(:first-child){margin-top:26px}
+body main.wrap .fields{gap:16px 20px;align-items:end}
+body main.wrap .field label{display:block;margin:0 0 7px;font-size:.96rem;font-weight:750;color:#24384b}
+body main.wrap .field input,
+body main.wrap .field select,
+body main.wrap .field textarea{
+  width:100%;min-height:48px;padding:11px 14px;border:1px solid #c5d0da;
+  border-radius:10px;background:#fff;color:#172638;font-size:1rem;
+}
+body main.wrap .field input:focus-visible{border-color:#b58b3d;box-shadow:0 0 0 3px rgba(181,139,61,.14)}
+body main.wrap .fields .btn,
+body main.wrap form button[type=submit]{
+  min-height:48px;padding:11px 24px;border-radius:10px;font-weight:800;
+}
+body main.wrap .result{
+  min-height:54px;margin:18px 0 12px;padding:16px 18px;
+  border:1px solid #e5d8b8;border-radius:12px;background:#fbf7ed;
+  color:#172638;white-space:normal;overflow-wrap:anywhere;line-height:1.55;
+}
+body main.wrap .note{font-size:.9rem;line-height:1.7}
+body main.wrap .content details,
+body main.wrap details{
+  margin:10px 0;padding:13px 16px;border:1px solid #dfe5eb;
+  border-radius:11px;background:#fbfcfd;
+}
+body main.wrap details summary{cursor:pointer;font-weight:700;color:#24384b}
+body main.wrap ol,body main.wrap ul{padding-left:1.35rem}
+body main.wrap li{margin:.35rem 0}
+body main.wrap > .panel a,
+body main.wrap > .content a{overflow-wrap:anywhere}
+body main.wrap > .panel :focus-visible,
+body main.wrap > .content :focus-visible{scroll-margin-top:90px}
+
+/* The assistant remains available, but no longer floats over calculator inputs/results. */
+#fc-ai-lazy-launch{
+  position:static!important;
+  display:flex!important;
+  width:max-content;
+  max-width:calc(100% - 32px);
+  min-height:44px;
+  margin:18px auto 24px!important;
+  box-shadow:0 3px 12px rgba(7,19,33,.12)!important;
+}
+@media(max-width:700px){
+  body main.wrap{width:calc(100% - 28px)}
+  body main.wrap > .hero{margin:14px auto 16px!important;padding:22px 20px!important;border-radius:18px!important}
+  body main.wrap > .panel,
+  body main.wrap > .content{margin:14px auto!important;padding:18px 16px!important;border-radius:15px!important}
+  body main.wrap .fields{grid-template-columns:minmax(0,1fr);gap:13px}
+  body main.wrap .fields>div{min-width:0}
+  body main.wrap .fields .btn,
+  body main.wrap form button[type=submit]{width:100%;min-height:48px}
+  body main.wrap .result{padding:14px;border-radius:11px}
+}
+@media(max-width:380px){
+  body main.wrap{width:calc(100% - 24px)}
+  body main.wrap > .hero{padding:19px 16px!important}
+  body main.wrap > .panel,
+  body main.wrap > .content{padding:16px 13px!important}
+}
