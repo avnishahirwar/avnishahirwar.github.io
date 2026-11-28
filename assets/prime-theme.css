@@ -30,6 +30,7 @@ body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero){
 .hero > p,.page-hero > p,.fc-hero > p,.hero-section > p,.directory-hero > p,
 .hero > :not(.card) > p,.page-hero > :not(.card) > p,.fc-hero > :not(.card) > p,.hero-section > :not(.card) > p,.directory-hero > :not(.card) > p{color:#dce5ed!important}
 body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) a{color:#f0dfb5}
+body :where(.hero,.page-hero,.fc-hero,.hero-section,.directory-hero) .card a{color:var(--fc-link)}
 body :where(button,.btn,.button,.primary-button,input[type=submit],input[type=button]){
   border-radius:9px;font-weight:750;transition:background-color .18s ease,border-color .18s ease,transform .18s ease
 }
