@@ -30,7 +30,7 @@ function homepageState(locale){
  return {exists:true,indexable:!isNoindex(html)&&!placeholder&&selfCanonical,locale,lang:lang.trim(),url,html};
 }
 function expectedHomepageAlternates(){
- const pages=['en',...languageCatalogue.locales.map(item=>item.code)].map(homepageState).filter(item=>item.indexable);
+ const pages=['en',...languageCatalogue.locales.map(item=>item.code)].map(homepageState).filter(item=>item.indexable&&(item.locale==='en'||item.lang.split('-')[0].toLowerCase()===item.locale));
  const langs=pages.map(item=>item.lang),urls=pages.map(item=>item.url);
  if(pages.length<2||new Set(langs).size!==langs.length||new Set(urls).size!==urls.length)return [];
  const pairs=pages.map(item=>[item.lang,item.url]);
