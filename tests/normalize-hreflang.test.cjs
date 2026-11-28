@@ -134,10 +134,11 @@ test('normalizer dry run reports required changes but does not mutate files', t 
   const configDir = path.join(fixture, 'config');
   fs.mkdirSync(configDir, {recursive: true});
   fs.copyFileSync(path.join(repoRoot, 'config/supported-locale-prefixes.json'), path.join(configDir, 'supported-locale-prefixes.json'));
-  const html = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"></head><body></body></html>';
+  const html = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/index.html"></head><body></body></html>';
   const file = write(fixture, 'index.html', html);
   const dry = spawnSync(process.execPath, [script], { cwd: fixture, encoding: 'utf8' });
   assert.equal(dry.status, 0, dry.stderr || dry.stdout);
   assert.match(dry.stdout, /\[dry run\]/);
-  assert.equal(fs.readFileSync(file, 'utf8'), html);
+  assert.match(dry.stdout, /"pagesChanged":1/);
+  assert.equal(fs.readFileSync(file, 'utf8'), html, 'dry run must leave stale alternate metadata untouched');
 });
