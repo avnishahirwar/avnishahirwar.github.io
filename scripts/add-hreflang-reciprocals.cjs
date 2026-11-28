@@ -98,8 +98,15 @@ function main() {
       if (link.lang === 'x-default') continue;
       if (!SUPPORTED_HREFLANG.test(link.lang)) { stats.skippedUnsupportedLanguageCode++; continue; }
       let targetUrl;
-      try { targetUrl = new URL(link.href, ORIGIN); } catch { stats.skippedMissingTarget++; continue; }
-      if (KNOWN_UNTRANSLATED_TARGETS.has(decodeURIComponent(targetUrl.pathname))) { stats.skippedKnownUntranslatedTarget++; continue; }
+      let decodedPath;
+      try {
+        targetUrl = new URL(link.href, ORIGIN);
+        decodedPath = decodeURIComponent(targetUrl.pathname);
+      } catch {
+        stats.skippedMissingTarget++;
+        continue;
+      }
+      if (KNOWN_UNTRANSLATED_TARGETS.has(decodedPath)) { stats.skippedKnownUntranslatedTarget++; continue; }
       const target = targetFile(link.href);
       if (!target) { stats.skippedMissingTarget++; continue; }
       if (target === sourceFile) continue;
