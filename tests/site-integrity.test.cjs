@@ -674,7 +674,7 @@ test('EPF and PPF calculators are localized and discoverable in all nine support
         assert.ok(html.includes('id="calculate"') && html.includes('id="result"'), 'Calculator controls missing on ' + locale + '/' + slug);
       }
       assert.ok(html.includes('/assets/site-shell.js'));
-      assert.ok(sitemap.includes(url), 'Missing sitemap URL: ' + url);
+      assert.ok(allSitemapUrls.has(url), 'Missing sitemap URL: ' + url);
     }
   }
   const epfHindi = fs.readFileSync(path.join(root, 'hi/calculators/epf-pf-calculator.html'), 'utf8');
@@ -690,26 +690,26 @@ test('EPF and PPF calculators are localized and discoverable in all nine support
 
 test('RD calculator is localized in all nine languages with reciprocal hreflang and preserved quarterly-to-monthly rate formula', () => {
  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/rd-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/rd-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing RD locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing '+alt+' hreflang on '+url);assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="calculate"')&&html.includes('id="maturity"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}
+ for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/rd-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/rd-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing RD locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing '+alt+' hreflang on '+url);assert.ok(allSitemapUrls.has(url),'Missing sitemap URL: '+url);assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="calculate"')&&html.includes('id="maturity"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}
  const hi=fs.readFileSync(path.join(root,'hi/calculators/rd-calculator.html'),'utf8');assert.ok(hi.includes('Math.pow(1+quarterly,1/3)-1'),'RD monthly-equivalent rate formula must be preserved');
 });
 
 
 test('Savings account interest calculator is localized in all nine languages with reciprocal hreflang and preserved simple-interest model', () => {
  const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/savings-interest-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/savings-interest-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing savings-interest locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing '+alt+' hreflang on '+url);assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="balance"')&&html.includes('id="calculate"')&&html.includes('id="out"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}
+ for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/savings-interest-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/savings-interest-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing savings-interest locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing '+alt+' hreflang on '+url);assert.ok(allSitemapUrls.has(url),'Missing sitemap URL: '+url);assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="balance"')&&html.includes('id="calculate"')&&html.includes('id="out"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}
  const hi=fs.readFileSync(path.join(root,'hi/calculators/savings-interest-calculator.html'),'utf8');assert.ok(hi.includes('balance*rate/100*days/365'),'Savings interest simple-interest formula must be preserved');
 });
 
 
-test('Inflation calculator has all locale pages and preserves the annual compound inflation formula',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/inflation-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/inflation-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing inflation locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));assert.ok(sitemap.includes(url));assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="amount"')&&html.includes('id="calculate"')&&html.includes('id="future"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}const hi=fs.readFileSync(path.join(root,'hi/calculators/inflation-calculator.html'),'utf8');assert.ok(hi.includes('amount*Math.pow(1+rate/100,years)'));});
+test('Inflation calculator has all locale pages and preserves the annual compound inflation formula',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/inflation-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/inflation-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing inflation locale page: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('rel="canonical"')&&html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));assert.ok(allSitemapUrls.has(url));assert.ok(html.includes('/assets/site-shell.js'));if(locale!=='en')assert.ok(html.includes('id="amount"')&&html.includes('id="calculate"')&&html.includes('id="future"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}const hi=fs.readFileSync(path.join(root,'hi/calculators/inflation-calculator.html'),'utf8');assert.ok(hi.includes('amount*Math.pow(1+rate/100,years)'));});
 
 
 test('Lumpsum calculator is localized in all nine languages and retains the compounding formula',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/lumpsum-investment-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/lumpsum-investment-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file));const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assertLocaleCluster(url, locales);if(locale!=='en')assert.ok(html.includes('id="principal"')&&html.includes('id="frequency"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}const hi=fs.readFileSync(path.join(root,'hi/calculators/lumpsum-investment-calculator.html'),'utf8');assert.ok(hi.includes('Math.pow(1+v.rate/100/n,n*v.years)'));});
 
 
 // The English legacy page uses one combined result container; localized pages expose individual outputs.
-test('NPS calculator is available in all nine locales with reciprocal hreflang and preserved monthly contribution annuity model',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/nps-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/nps-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing NPS locale: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing hreflang '+alt+' in '+url);assert.ok(sitemap.includes(url));assert.ok(html.includes('id="monthly"')&&html.includes('id="annuityRate"'));if(locale!=='en')assert.ok(html.includes('id="corpus"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}const hi=fs.readFileSync(path.join(root,'hi/calculators/nps-calculator.html'),'utf8');assert.ok(hi.includes('p*(Math.pow(1+i,n)-1)/i'),'NPS corpus formula must be preserved');assert.ok(hi.includes('annuity*ar/1200'),'NPS annuity estimate must be preserved');});
+test('NPS calculator is available in all nine locales with reciprocal hreflang and preserved monthly contribution annuity model',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/nps-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/nps-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing NPS locale: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assert.ok(html.includes('hreflang="x-default"'));for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'),'Missing hreflang '+alt+' in '+url);assert.ok(allSitemapUrls.has(url));assert.ok(html.includes('id="monthly"')&&html.includes('id="annuityRate"'));if(locale!=='en')assert.ok(html.includes('id="corpus"'));if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}const hi=fs.readFileSync(path.join(root,'hi/calculators/nps-calculator.html'),'utf8');assert.ok(hi.includes('p*(Math.pow(1+i,n)-1)/i'),'NPS corpus formula must be preserved');assert.ok(hi.includes('annuity*ar/1200'),'NPS annuity estimate must be preserved');});
 
 
 test('XIRR calculator is localized in all nine languages with reciprocal hreflang and preserved dated-cash-flow root solver',()=>{const locales=['en','hi','es','fr','pt','ar','id','bn','ta'];for(const locale of locales){const url=locale==='en'?'https://friendlycalculator.in/calculators/xirr-calculator.html':'https://friendlycalculator.in/'+locale+'/calculators/xirr-calculator.html';const file=localFile(url);assert.ok(file&&fs.existsSync(file),'Missing XIRR locale: '+url);const html=fs.readFileSync(file,'utf8');assert.match(html,new RegExp('<html lang="'+locale+'"'));assertLocaleCluster(url, locales);for(let i=0;i<5;i++)assert.ok(html.includes('id="d'+i+'"')&&html.includes('id="a'+i+'"'));if(locale!=='en'){assert.ok(html.includes('Math.pow(1+rate,(f.date-base)/86400000/365)'));assert.ok(html.includes('for(let k=0;k<180;k++)'));}if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);}});
@@ -764,7 +764,7 @@ test('Unit converter is available in all nine languages with reciprocal hreflang
     assert.match(html,new RegExp('<html lang="'+locale+'"'));
     assert.ok(html.includes('hreflang="x-default"'));
     for(const alt of locales)assert.ok(html.includes('hreflang="'+alt+'"'));
-    assert.ok(sitemap.includes(url));
+    assert.ok(allSitemapUrls.has(url));
     for(const id of ['category','amount','from','to','convert','swap','result','status'])assert.ok(html.includes('id="'+id+'"'));
     if(locale!=='en')assert.ok(html.includes('/assets/unit-converter-localized.js'));
     if(locale==='ar')assert.match(html,/<html lang="ar" dir="rtl">/);
@@ -1060,7 +1060,7 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
   }
 });
 
@@ -1080,7 +1080,7 @@ test('Hindi median and mode calculator pages are localized, reciprocal and index
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html'), 'Missing sitemap URL: ' + slug);
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '-calculator.html'), 'Missing sitemap URL: ' + slug);
   }
 });
 
@@ -1117,7 +1117,7 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
   }
 });
 
@@ -1141,7 +1141,7 @@ test('Hindi percentage increase, decrease, difference and percentage-point pages
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1165,7 +1165,7 @@ test('Hindi average percentage, percentage-of-percentage and percent-error pages
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1189,7 +1189,7 @@ test('Hindi digital root, divisibility test and reciprocal pages are localized a
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1214,7 +1214,7 @@ test('Hindi percentile, prime number, scientific notation and completing-square 
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1239,7 +1239,7 @@ test('Hindi quartile, coefficient of variation, complex conjugate and discrimina
     assertLocaleCluster('https://friendlycalculator.in/calculators/' + slug + '.html', ['en', 'hi']);
     assert.ok(h.includes(title) && h.includes(formula));
     for (const phrase of phrases) assert.ok(h.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
+    assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/' + slug + '.html'));
     assert.ok(fs.readFileSync(path.join(root, 'hi/index.html'), 'utf8').includes('/hi/calculators/' + slug + '.html'));
   }
 });
@@ -1739,8 +1739,8 @@ test('homepage exposes crawlable internal links to Hindi and Arabic language edi
   assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
-  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
-  assert.ok(sitemap.includes('https://friendlycalculator.in/ar/index.html'));
+  assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/index.html'));
+  assert.ok(allSitemapUrls.has('https://friendlycalculator.in/ar/index.html'));
 });
 
 test('Hindi and Arabic homepages cross-link the English and each other language editions', () => {
