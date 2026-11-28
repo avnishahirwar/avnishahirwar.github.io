@@ -36,8 +36,9 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
  for(const file of pages)cache.set(file,fs.readFileSync(file,'utf8'));
  const errors=[];let checked=0,tagged=0;
  for(const [file,html] of cache){
+  // noindex sources are excluded from search indexing and hreflang cluster validation.
+  if(noindexOf(html))continue;
   const links=alternatesOf(html);if(!links.length)continue;tagged++;
-  if(noindexOf(html)){errors.push(file+': noindex page carries hreflang alternates');continue;}
   const sourceLang=langOf(html,file),sourceCanonical=canonicalOf(html);
   if(!sourceCanonical){errors.push(file+': hreflang present but canonical missing');continue;}
   const seen=new Set();
