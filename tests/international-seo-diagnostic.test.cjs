@@ -6,6 +6,9 @@ const path = require('node:path');
 
 const root = path.join(__dirname, '..');
 
+// This focused suite validates additive-only reciprocity; full hreflang cluster validity
+// (including noindex and language-mismatch exclusions) remains covered by the main SEO tests.
+
 test('additive hreflang repair has no remaining unambiguous reciprocal additions', () => {
   const output = execFileSync(process.execPath, ['scripts/add-hreflang-reciprocals.cjs'], {
     cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
@@ -27,16 +30,16 @@ test('additive hreflang repair never adds alternates to noindex pages', () => {
     fs.writeFileSync(target, html);
   };
   try {
-    write('index.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"></head></html>');
-    const noindex = '<html lang="hi"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
-    write('hi/index.html', noindex);
+    write('calculators/basic-calculator.html', '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/calculators/basic-calculator.html"></head></html>');
+    const noindex = '<html lang="hi"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/hi/calculators/basic-calculator.html"></head></html>';
+    write('hi/calculators/basic-calculator.html', noindex);
     const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
       cwd: temp, encoding: 'utf8'
     });
     const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     assert.equal(summary.added, 0);
     assert.ok(summary.skippedNoindex > 0);
-    assert.equal(fs.readFileSync(path.join(temp, 'hi/index.html'), 'utf8'), noindex);
+    assert.equal(fs.readFileSync(path.join(temp, 'hi/calculators/basic-calculator.html'), 'utf8'), noindex);
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
@@ -53,15 +56,15 @@ test('additive hreflang repair skips sources whose canonical points elsewhere', 
   try {
     const source = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/legacy-home/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"></head></html>';
     const target = '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
-    write('index.html', source);
-    write('hi/index.html', target);
+    write('calculators/basic-calculator.html', source);
+    write('hi/calculators/basic-calculator.html', target);
     const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
       cwd: temp, encoding: 'utf8'
     });
     const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     assert.equal(summary.added, 0);
     assert.ok(summary.skippedNoncanonicalSource > 0);
-    assert.equal(fs.readFileSync(path.join(temp, 'hi/index.html'), 'utf8'), target);
+    assert.equal(fs.readFileSync(path.join(temp, 'hi/calculators/basic-calculator.html'), 'utf8'), target);
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
@@ -71,10 +74,18 @@ test('hreflang page edits preserve every original byte except the inserted alter
   if (process.env.CHECK_HREFLANG_ADDITIVE_REPAIR !== 'true') { t.skip('Historical byte-preservation check was verified on PR #453; do not compare unrelated future page edits against the current main branch.'); return; }
   const baseRef = process.env.GITHUB_BASE_REF;
   if (!baseRef) { t.skip('byte-preservation comparison is a pull-request-only check'); return; }
-  const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef + '...HEAD', '--', '*.html'], {
+  const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef, '--', '*.html'], {
     cwd: root, encoding: 'utf8'
   }).trim().split('\n').filter(Boolean);
-  assert.ok(changed.length > 0, 'expected repaired HTML pages');
+  if (changed.length === 0) {
+    const output = execFileSync(process.execPath, ['scripts/add-hreflang-reciprocals.cjs'], {
+      cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
+    });
+    const match = output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/);
+    assert.ok(match, 'repair script must report a JSON summary');
+    assert.equal(JSON.parse(match[1]).added, 0, 'an empty HTML diff is valid only when no reviewed reciprocal is missing');
+    return;
+  }
 
   for (const file of changed) {
     const original = execFileSync('git', ['show', 'origin/main:' + file], { cwd: root, encoding: 'utf8' });
@@ -105,5 +116,70 @@ test('hreflang page edits preserve every original byte except the inserted alter
       }
     }
     assert.equal(current, original, 'unexpected non-additive page change: ' + file);
+  }
+});
+
+test('additive repair skips malformed percent-encoded alternate URLs', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-malformed-href-'));
+  try {
+    fs.mkdirSync(path.join(temp, 'calculators'), { recursive: true });
+    fs.writeFileSync(path.join(temp, 'calculators/basic-calculator.html'),
+      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/%E0%A4%A.html"></head></html>');
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    assert.equal(summary.added, 0);
+    assert.ok(summary.skippedMissingTarget > 0);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('additive repair skips unsupported codes and known untranslated destinations', () => {
+  const os = require('node:os');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-safe-additions-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  try {
+    write('ar/calculators/basic-calculator.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.html"></head></html>');
+    for (const locale of ['am', 'de']) {
+      write(locale + '/calculators/rd-calculator.html',
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
+    }
+    for (const locale of ['ja', 'fa', 'vi']) {
+      write(locale + '/calculators/loan-emi-calculator.html',
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html"></head></html>');
+    }
+    write('ar/calculators/rd-calculator.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
+    write('ar/calculators/loan-emi-calculator.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html"></head></html>');
+    write('en-gb/calculators/basic-calculator.html',
+      '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.html"></head></html>');
+    write('arz/calculators/basic-calculator.html',
+      '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"></head></html>');
+
+    const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs'), '--write'], {
+      cwd: temp, encoding: 'utf8'
+    });
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
+    assert.equal(summary.added, 1, 'only the verified en-GB target should receive a reciprocal');
+    assert.ok(summary.skippedKnownUntranslatedTarget >= 5);
+    assert.ok(summary.skippedKnownUntranslatedSource >= 5);
+    assert.ok(summary.skippedUnsupportedLanguageCode >= 2);
+    const enGb = fs.readFileSync(path.join(temp, 'en-gb/calculators/basic-calculator.html'), 'utf8');
+    assert.match(enGb, /hreflang="ar"/);
+    const arRd = fs.readFileSync(path.join(temp, 'ar/calculators/rd-calculator.html'), 'utf8');
+    assert.doesNotMatch(arRd, /hreflang="am"|hreflang="de"/);
+    const arEmi = fs.readFileSync(path.join(temp, 'ar/calculators/loan-emi-calculator.html'), 'utf8');
+    assert.doesNotMatch(arEmi, /hreflang="ja"|hreflang="fa"|hreflang="vi"/);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
   }
 });

@@ -1,12 +1,18 @@
 name: One-time additive hreflang reciprocal repair
+# Scope: this workflow adds only safe reciprocal tags to the current feature branch.
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - seo/additive-hreflang-reciprocals-2026-11-16
+      - seo/additive-hreflang-reciprocals-2026-11-28
 
 permissions:
   contents: write
+
+concurrency:
+  group: additive-hreflang-repair-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   add-only-reciprocals:
@@ -18,20 +24,36 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Restore HTML inputs from the main branch
+        run: |
+          git ls-files -z -- '*.html' | xargs -0 -r -n 100 git update-index --no-skip-worktree --no-assume-unchanged --
+          git ls-files -z -- '*.html' | xargs -0 -r -n 100 git restore --source=origin/main --staged --worktree --
+          echo "HTML baseline reset from origin/main"
+          git diff --quiet -- '*.html' || { echo "Unexpected HTML changes after baseline restore"; exit 1; }
       - name: Check repair script syntax
         run: node --check scripts/add-hreflang-reciprocals.cjs
       - name: Add only unambiguous reciprocal links
         run: node scripts/add-hreflang-reciprocals.cjs --write
       - name: Verify additive repair is complete and non-destructive
-        run: node --test tests/international-seo-diagnostic.test.cjs
+        run: CHECK_HREFLANG_ADDITIVE_REPAIR=true GITHUB_BASE_REF=main node --test tests/international-seo-diagnostic.test.cjs
       - name: Commit additive page updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- '*.html'
-          if ! git diff --cached --quiet; then
-            git commit -m "seo: add missing hreflang reciprocals [skip ci]"
-            git push
-          else
-            echo "No safe additive reciprocal links were missing."
+          mapfile -t changed_html < <(git diff --name-only origin/main -- '*.html')
+          printf 'HTML files differing from main: %s\n' "${#changed_html[@]}"
+          if [ "${#changed_html[@]}" -eq 0 ]; then
+            echo "No reviewed reciprocal additions are missing; nothing to commit."
+            exit 0
           fi
+          for file in "${changed_html[@]}"; do
+            git add -f -- "$file"
+          done
+          echo "Staged HTML changes:"
+          git diff --cached --stat -- '*.html'
+          if git diff --cached --quiet; then
+            echo "No new HTML changes; this repair output is already committed."
+            exit 0
+          fi
+          git commit -m "seo: add missing hreflang reciprocals [skip ci]"
+          git push
