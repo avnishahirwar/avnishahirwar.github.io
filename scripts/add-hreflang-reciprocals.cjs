@@ -26,6 +26,9 @@ function walk(dir, files = []) {
   }
   return files;
 }
+function repositoryPath(file) {
+  return '/' + path.relative(ROOT, file).split(path.sep).join('/');
+}
 function headOf(html) {
   const end = html.toLowerCase().indexOf('</head>');
   return end < 0 ? '' : html.slice(0, end);
@@ -80,9 +83,10 @@ function main() {
   const pages = walk(ROOT);
   const cache = new Map(pages.map(file => [file, fs.readFileSync(file, 'utf8')]));
   const additions = new Map();
-  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnsupportedLanguageCode: 0, skippedKnownUntranslatedTarget: 0 };
+  const stats = { pages: pages.length, linksExamined: 0, added: 0, alreadyPresent: 0, skippedMissingTarget: 0, skippedLanguageMismatch: 0, skippedCanonicalMismatch: 0, skippedNoncanonicalSource: 0, skippedConflict: 0, skippedNoHead: 0, skippedNoindex: 0, skippedUnsupportedLanguageCode: 0, skippedKnownUntranslatedTarget: 0, skippedKnownUntranslatedSource: 0 };
 
   for (const [sourceFile, sourceHtml] of cache) {
+    if (KNOWN_UNTRANSLATED_TARGETS.has(repositoryPath(sourceFile))) { stats.skippedKnownUntranslatedSource++; continue; }
     if (isNoindex(sourceHtml)) { stats.skippedNoindex++; continue; }
     const sourceLang = langOf(sourceHtml, sourceFile);
     if (!SUPPORTED_HREFLANG.test(sourceLang)) { stats.skippedUnsupportedLanguageCode++; continue; }
