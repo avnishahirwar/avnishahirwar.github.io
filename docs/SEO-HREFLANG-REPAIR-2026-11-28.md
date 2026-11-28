@@ -23,9 +23,11 @@ The repository's existing additive-only hreflang repair script was run in a non-
 
 The repair was additive: no calculator formulas, page copy, canonical URLs, robots directives, navigation, header/footer, or sitemap entries were intentionally modified. The generated diff showed 115 HTML files changed with 4,446 insertions and 2 line replacements around the closing head tags.
 
-## Noindex cleanup decision
+## Approved noindex cleanup — completed
 
-A separate dry-run of `scripts/prune-noindex-hreflang.py` scanned 12,232 HTML files and detected 5,884 noindex pages, but found **0** hreflang tags to remove and **0** pages to change. Therefore no cleanup was applied.
+The first dry-run exposed a parser limitation: it detected noindex pages but failed to recognize their existing `<link rel="alternate" hreflang>` tags. The scanner was corrected to parse link-tag attributes independently of attribute order and to detect robots/googlebot noindex directives robustly.
+
+The corrected dry-run scanned 12,232 HTML files, detected 5,941 noindex pages, and identified **55 pages containing 110 hreflang tags** to remove. The approved cleanup was applied on the PR branch by [workflow run 46114251911](https://github.com/avnishahirwar/avnishahirwar.github.io/actions/runs/46114251911). Both `tests/international-seo.test.cjs` and `tests/international-seo-diagnostic.test.cjs` passed; the full hreflang audit reported **0 defects** (12,218 pages scanned, 2,901 pages with alternates, 48,386 alternate references).
 
 ## Deployment status
 
