@@ -47,8 +47,8 @@ jobs:
           echo "Staged HTML changes:"
           git diff --cached --stat -- '*.html'
           if git diff --cached --quiet; then
-            echo "Expected HTML modifications were not staged."
-            exit 1
+            echo "No new HTML changes; this repair output is already committed."
+            exit 0
           fi
           git commit -m "seo: add missing hreflang reciprocals [skip ci]"
           git push
