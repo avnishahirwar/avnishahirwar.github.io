@@ -118,7 +118,12 @@ jobs:
           base_url=""
           for attempt in {1..10}; do
             comments="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[].body' 2>/dev/null || true)"
-            candidate="$(grep -Eo "https://$slug(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            # Prefer the immutable commit-specific Cloudflare Pages URL; the branch
+            # alias may be affected by account-level redirects to the production domain.
+            candidate="$(grep -Eo "https://[a-f0-9]{8}\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            if [ -z "$candidate" ]; then
+              candidate="$(grep -Eo "https://$slug(-[a-z0-9-]+)?\\.friendly-calculator\\.pages\\.dev" <<<"$comments" | tail -n1 || true)"
+            fi
             if [ -z "$candidate" ]; then
               candidate="$(grep -Eo "https://deploy-preview-$PR_NUMBER--[a-z0-9-]+\\.netlify\\.app" <<<"$comments" | tail -n1 || true)"
             fi
