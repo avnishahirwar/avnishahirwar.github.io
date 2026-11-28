@@ -1,0 +1,42 @@
+name: Free CI — Friendly Calculator Shell
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/free-ci.yml"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "tests/no-google-programmable-search.test.cjs"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/free-ci.yml"
+      - "assets/site-shell.js"
+      - "assets/site-shell.css"
+      - "tests/no-google-programmable-search.test.cjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: friendly-calculator-free-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shared-shell-regression:
+    name: Shared shell regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check shared shell JavaScript syntax
+        run: node --check assets/site-shell.js
+      - name: Verify Google PSE is absent and native calculator search remains
+        run: node --test tests/no-google-programmable-search.test.cjs
