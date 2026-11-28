@@ -24,6 +24,8 @@ jobs:
           node-version: 22
       - name: Validate Cloudflare preview host redirects
         run: node --test tests/cloudflare-preview-redirect.test.cjs
+      - name: Validate priority calculator WebApplication structured data
+        run: node --test tests/technical-seo-schema.test.cjs
       - name: Build the current published calculator catalogue
         run: node scripts/merge-search-index.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs
       - name: Validate catalog-driven calculator counts
