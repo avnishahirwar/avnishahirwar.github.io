@@ -74,7 +74,8 @@ test('simple-interest English and Bengali hreflang alternates match indexable pu
  for(const locale of ['en','bn']){
   const file=pageFor(locale,route);
   const html=fs.readFileSync(file,'utf8');
-  assert.deepEqual(sorted(alternatesOf(html)),sorted(expected),locale+'/'+route);
+  if(noindexOf(html)) assert.deepEqual(alternatesOf(html),[],locale+' noindex page must not carry hreflang');
+  else assert.deepEqual(sorted(alternatesOf(html)),sorted(expected),locale+'/'+route);
  }
 });
 
