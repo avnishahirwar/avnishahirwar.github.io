@@ -10,9 +10,13 @@ const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
 const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
+const canonicalOf=html=>{const tag=headOf(html).match(/<link\\b(?=[^>]*\\brel=[\"']canonical[\"'])(?=[^>]*\\bhref=[\"']([^\"']+)[\"'])[^>]*>/i);return tag?tag[1]:'';};
+const localeCandidates=route=>['en',...fs.readdirSync(root,{withFileTypes:true}).filter(entry=>entry.isDirectory()&&/^[a-z]{2,3}$/i.test(entry.name)).map(entry=>entry.name.toLowerCase())].filter((locale,index,array)=>array.indexOf(locale)===index&&fs.existsSync(pageFor(locale,route)));
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
- return fs.existsSync(file)&&!noindexOf(fs.readFileSync(file,'utf8'));
+ if(!fs.existsSync(file)) return false;
+ const html=fs.readFileSync(file,'utf8');
+ return !noindexOf(html)&&new RegExp('<html\\\\b[^>]*\\\\blang=[\"']'+locale+'[\"']','i').test(html)&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
 });
 const expectedPairs=(locales,route)=>[
  ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
@@ -29,14 +33,20 @@ test('all existing localized currency converters load the shared reference-rate 
  }
 });
 
-test('English currency converter and German page carry no hreflang cross-links',()=>{
+test('English and German currency converter pages join the reciprocal cluster only with indexable localized targets',()=>{
  const route='currency-converter-calculator.html';
+ const candidates=localeCandidates(route);
+ const expected=expectedPairs(indexableLocales(candidates,route),route);
+ for(const locale of candidates){
+  const html=fs.readFileSync(pageFor(locale,route),'utf8');
+  if(noindexOf(html)) assert.deepEqual(alternatesOf(html),[],locale+' noindex page must not carry hreflang');
+  else assert.deepEqual(sorted(alternatesOf(html)),sorted(expected),locale+' currency converter cluster');
+ }
  const english=fs.readFileSync(pageFor('en',route),'utf8');
  const german=fs.readFileSync(pageFor('de',route),'utf8');
  assert.ok(!noindexOf(german),'German currency page is indexable');
- assert.deepEqual(alternatesOf(german),[],'German page does not carry hreflang yet');
- assert.doesNotMatch(english,/hreflang="de"/,'English page does not target German until reciprocal hreflang exists');
- assert.match(english,/hreflang="x-default"/);
+ assert.ok(alternatesOf(english).some(([lang,href])=>lang==='de'&&href===origin+'/de/calculators/'+route));
+ assert.ok(alternatesOf(german).some(([lang,href])=>lang==='en'&&href===origin+'/calculators/'+route));
  for(const html of [english,german]) assert.match(html,/\/assets\/currency-converter-live\.js/);
 });
 
@@ -55,7 +65,7 @@ test('generated sitemap check includes hreflang clusters',()=>{
 
 test('percentage calculator hreflang cluster contains only indexable published language pages',()=>{
  const route='percentage-calculator.html';
- const candidates=['en','hi','de','es','fr','pt','ar','id','bn','ta','ja','ru'];
+ const candidates=localeCandidates(route);
  const expected=expectedPairs(indexableLocales(candidates,route),route);
  for(const locale of candidates){
   const file=pageFor(locale,route);
@@ -88,10 +98,8 @@ test('priority calculator hreflang clusters are complete and reciprocal across i
   'discount-calculator.html',
   'ppf-calculator.html'
  ];
- const baseLocales=['en','hi','es','fr','pt','ar','id','bn','ta'];
- const expandedLocales=[...baseLocales,'de','ja','ru','vi','te','gu','kn'];
  for(const route of routes){
-  const candidates=route==='basic-calculator.html'?expandedLocales:baseLocales;
+  const candidates=localeCandidates(route);
   const expected=expectedPairs(indexableLocales(candidates,route),route);
   for(const locale of candidates){
    const file=pageFor(locale,route);
