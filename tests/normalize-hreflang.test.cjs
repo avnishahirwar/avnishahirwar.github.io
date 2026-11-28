@@ -19,7 +19,7 @@ function read(root, relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
 }
 
-test('normalizer rebuilds reciprocal language groups and removes noindex/alias alternates only', t => {
+test('normalizer rebuilds reciprocal language groups and preserves noindex/canonical page state', t => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-normalize-hreflang-'));
   t.after(() => fs.rmSync(fixture, { recursive: true, force: true }));
   const script = path.join(fixture, 'scripts/normalize-hreflang.cjs');
@@ -52,6 +52,13 @@ test('normalizer rebuilds reciprocal language groups and removes noindex/alias a
   const ukrainian = '<!doctype html><html lang="uk"><head>' +
     '<link rel="canonical" href="https://friendlycalculator.in/uk/calculators/uk-only.html">' +
     '</head><body>Ukrainian calculator</body></html>';
+  const placeholder = '<!doctype html><html lang="fa"><head>' +
+    '<link rel="canonical" href="https://friendlycalculator.in/fa/calculators/demo.html">' +
+    '<meta name="description" content="[فارسی] Calculate a demo result with untranslated English metadata.">' +
+    '</head><body><h1>Demo Calculator</h1></body></html>';
+  const regional = '<!doctype html><html lang="en-US"><head>' +
+    '<link rel="canonical" href="https://friendlycalculator.in/international/us-mortgage-calculator.html">' +
+    '</head><body><h1>US Mortgage Calculator</h1></body></html>';
 
   write(fixture, 'calculators/demo.html', english);
   write(fixture, 'fr/calculators/demo.html', french);
@@ -59,6 +66,8 @@ test('normalizer rebuilds reciprocal language groups and removes noindex/alias a
   write(fixture, 'es/calculators/demo.html', alias);
   write(fixture, 'uk/index.html', ukHub);
   write(fixture, 'uk/calculators/uk-only.html', ukrainian);
+  write(fixture, 'fa/calculators/demo.html', placeholder);
+  write(fixture, 'international/us-mortgage-calculator.html', regional);
 
   const run = spawnSync(process.execPath, [script, '--write'], { cwd: fixture, encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr || run.stdout);
@@ -69,6 +78,8 @@ test('normalizer rebuilds reciprocal language groups and removes noindex/alias a
   const es = read(fixture, 'es/calculators/demo.html');
   const ukHome = read(fixture, 'uk/index.html');
   const ukTool = read(fixture, 'uk/calculators/uk-only.html');
+  const faPlaceholder = read(fixture, 'fa/calculators/demo.html');
+  const usMortgage = read(fixture, 'international/us-mortgage-calculator.html');
 
   for (const html of [en, fr]) {
     assert.match(html, /hreflang="en"/);
@@ -85,9 +96,14 @@ test('normalizer rebuilds reciprocal language groups and removes noindex/alias a
   assert.doesNotMatch(es, /hreflang=/);
   assert.match(es, /rel="canonical"/);
   assert.match(ukHome, /lang="en-GB"/);
-  assert.doesNotMatch(ukHome, /hreflang=/);
+  assert.match(ukHome, /hreflang="en-GB"/);
+  assert.doesNotMatch(ukHome, /href="https:\/\/friendlycalculator\.in\/uk\/calculators\/uk-only\.html"/);
   assert.match(ukTool, /lang="uk"/);
-  assert.doesNotMatch(ukTool, /hreflang=/);
+  assert.match(ukTool, /hreflang="uk"/);
+  assert.match(faPlaceholder, /\[فارسی\]/);
+  assert.doesNotMatch(faPlaceholder, /hreflang=/);
+  assert.match(usMortgage, /hreflang="en-US"/);
+  assert.match(usMortgage, /hreflang="x-default"/);
   assert.match(en, /<h1>Demo Calculator<\/h1>/);
   assert.match(en, /Keep this content/);
 
