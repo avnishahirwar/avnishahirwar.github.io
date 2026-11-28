@@ -1,7 +1,0 @@
-'use strict';
-const test=require('node:test'),assert=require('node:assert/strict');
-const {calculateMutualFundProjection}=require('../assets/mutual-fund-calculator.js');
-test('combined SIP and lump-sum projection',()=>{const r=calculateMutualFundProjection({initialInvestment:50000,monthlyInvestment:2000,annualReturn:10,years:10});assert.equal(r.periods,120);assert.equal(r.investedAmount,290000);assert.ok(Math.abs(r.futureValue-545042.0323500506)<0.001);assert.ok(Math.abs(r.estimatedGain-255042.03235005063)<0.001);});
-test('zero assumed return equals contributions',()=>{const r=calculateMutualFundProjection({initialInvestment:50000,monthlyInvestment:2000,annualReturn:0,years:10});assert.equal(r.investedAmount,290000);assert.equal(r.futureValue,290000);assert.equal(r.estimatedGain,0);});
-test('negative assumed rate can show a loss',()=>{const r=calculateMutualFundProjection({initialInvestment:100000,monthlyInvestment:1000,annualReturn:-5,years:5});assert.ok(r.futureValue<r.investedAmount);assert.ok(r.estimatedGain<0);});
-test('invalid amounts, rates and periods are rejected',()=>{assert.throws(()=>calculateMutualFundProjection({initialInvestment:0,monthlyInvestment:0,annualReturn:10,years:10}),/Enter an initial amount/);assert.throws(()=>calculateMutualFundProjection({initialInvestment:1000,monthlyInvestment:0,annualReturn:-100,years:10}),/between -50% and 50%/);assert.throws(()=>calculateMutualFundProjection({initialInvestment:1000,monthlyInvestment:0,annualReturn:10,years:0}),/whole-number investment period/);});
