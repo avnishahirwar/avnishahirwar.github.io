@@ -6,12 +6,55 @@ on:
   pull_request:
     branches: [main]
 jobs:
+  additive-hreflang-repair:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'seo/additive-hreflang-reciprocals-2026-11-28'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the exact hreflang repair branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Refuse to overwrite any pre-existing HTML edits
+        run: |
+          git diff --quiet origin/main -- '*.html' || { echo "Existing HTML edits detected; refusing to overwrite them."; exit 1; }
+      - name: Check additive repair script
+        run: node --check scripts/add-hreflang-reciprocals.cjs
+      - name: Add only unambiguous reciprocal links
+        run: node scripts/add-hreflang-reciprocals.cjs --write
+      - name: Verify additions and byte preservation
+        env:
+          CHECK_HREFLANG_ADDITIVE_REPAIR: "true"
+          GITHUB_BASE_REF: main
+        run: node --test tests/international-seo-diagnostic.test.cjs
+      - name: Commit only generated HTML additions to this PR branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if ! git diff --cached --quiet; then
+            git diff --cached --stat -- '*.html'
+            git commit -m "seo: add safe hreflang reciprocals [skip ci]"
+            git push origin HEAD:${{ github.head_ref }}
+          else
+            echo "No safe additive hreflang updates were required."
+          fi
+
   calculator-tests:
+    needs: additive-hreflang-repair
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.head_ref || github.sha }}
           fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v4
