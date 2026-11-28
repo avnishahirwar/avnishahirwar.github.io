@@ -29,7 +29,7 @@ function localePageState(locale,slug){
   return {exists:true,html,file,relative,url,lang:lang.trim(),indexable:!noindex&&!placeholder&&canonicalUrl===url};
 }
 function localeAlternates(slug){
-  const entries=localeCodes.map(locale=>localePageState(locale,slug)).filter(page=>page.indexable);
+  const entries=localeCodes.map(locale=>localePageState(locale,slug)).filter(page=>page.indexable&&(page.relative.startsWith('calculators/')||page.lang.split('-')[0].toLowerCase()===page.relative.split('/')[0]));
   const langs=entries.map(page=>page.lang),urls=entries.map(page=>page.url);
   if(entries.length<2||new Set(langs).size!==langs.length||new Set(urls).size!==urls.length)return [];
   const pairs=entries.map(page=>[page.lang,page.url]);
