@@ -6,6 +6,37 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const catalogueCounts = require('./catalogue-counts.cjs')(root);
 const { canonicalCalculatorUrls, expectedSearchIndexUrls, expectedSearchIndexLength, expectedCoreCalculatorCount } = catalogueCounts;
+const SITE_ORIGIN='https://friendlycalculator.in';
+const localeCodes=[...new Set(['en',...require('../config/language-catalogue.json').locales.map(item=>item.code)])];
+function localePageState(locale,slug){
+  const relative=locale==='en'?'calculators/'+slug+'.html':locale+'/calculators/'+slug+'.html';
+  const file=path.join(root,relative);
+  const url=SITE_ORIGIN+'/'+relative;
+  if(!fs.existsSync(file))return {exists:false,indexable:false,relative,file,url,lang:locale};
+  const html=fs.readFileSync(file,'utf8');
+  const end=html.toLowerCase().indexOf('</head>');
+  const head=end<0?html:html.slice(0,end);
+  const noindex=/<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^'"]*\bnoindex\b/i.test(head)||
+    /<meta\b[^>]*\bcontent\s*=\s*["'][^'"]*\bnoindex\b[^'"]*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(head);
+  const tags=[...head.matchAll(/<link\b[^>]*>/gi)].map(match=>match[0]);
+  const canonicalTag=tags.find(tag=>/\brel=["']canonical["']/i.test(tag));
+  const canonical=(canonicalTag?.match(/\bhref=["']([^'"]+)["']/i)||[])[1]||'';
+  const descriptionTag=[...head.matchAll(/<meta\b[^>]*>/gi)].map(match=>match[0]).find(tag=>/\bname=["']description["']/i.test(tag));
+  const description=(descriptionTag?.match(/\bcontent=["']([^'"]*)["']/i)||[])[1]||'';
+  const lang=(head.match(/<html\b[^>]*\blang=["']([^'"]+)["']/i)||[])[1]||locale;
+  let canonicalUrl='';try{canonicalUrl=new URL(canonical,SITE_ORIGIN).href;}catch{}
+  const placeholder=locale!=='en'&&/^\s*\[[^\]]{2,40}\]\s*/.test(description);
+  return {exists:true,html,file,relative,url,lang:lang.trim(),indexable:!noindex&&!placeholder&&canonicalUrl===url};
+}
+function localeAlternates(slug){
+  const entries=localeCodes.map(locale=>localePageState(locale,slug)).filter(page=>page.indexable);
+  const langs=entries.map(page=>page.lang),urls=entries.map(page=>page.url);
+  if(entries.length<2||new Set(langs).size!==langs.length||new Set(urls).size!==urls.length)return [];
+  const pairs=entries.map(page=>[page.lang,page.url]);
+  const english=entries.find(page=>page.lang==='en'||page.lang.toLowerCase().startsWith('en-'));
+  if(english)pairs.push(['x-default',english.url]);
+  return pairs.sort(([a],[b])=>a.localeCompare(b));
+}
 
 const source = fs.readFileSync(new URL('../assets/page-calculators.js', 'file://' + __filename), 'utf8');
 
@@ -784,23 +815,14 @@ test('the ten priority Hindi calculators expose canonical URLs, indexable langua
   const slugs = ['loan-emi-calculator','home-loan-emi-calculator','car-loan-calculator','personal-loan-eligibility-calculator','sip-calculator','fd-calculator','rd-calculator','ppf-calculator','gst-calculator','income-tax-calculator'];
   const candidates = ['en','hi','es','fr','pt','ar','id','bn','ta','mr','te'];
   const isNoindex = html => /<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html.slice(0, html.toLowerCase().indexOf('</head>')));
-  const sortPairs = pairs => pairs.slice().sort(([a],[b]) => a.localeCompare(b));
   for (const slug of slugs) {
     const html = fs.readFileSync(new URL('../hi/calculators/' + slug + '.html', 'file://' + __filename), 'utf8');
     assert.match(html, /<html[^>]+lang="hi"/, slug + ' is marked Hindi');
     assert.match(html, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bhref="https:\/\/friendlycalculator\.in\/hi\/calculators\/)[^>]*>/i, slug + ' has a Hindi canonical');
-    const indexable = candidates.filter(locale => {
-      const page = locale === 'en' ? '../calculators/' + slug + '.html' : '../' + locale + '/calculators/' + slug + '.html';
-      const localeHtml = fs.readFileSync(new URL(page, 'file://' + __filename), 'utf8');
-      return !isNoindex(localeHtml);
-    });
-    const expectedAlternates = [
-      ...indexable.map(locale => [locale, 'https://friendlycalculator.in/' + (locale === 'en' ? '' : locale + '/') + 'calculators/' + slug + '.html']),
-      ['x-default', 'https://friendlycalculator.in/calculators/' + slug + '.html']
-    ];
+    const expectedAlternates = localeAlternates(slug);
     const head = html.slice(0, html.toLowerCase().indexOf('</head>'));
     const actualAlternates = [...head.matchAll(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="([^"]+)")(?=[^>]*\bhref="([^"]+)")[^>]*>/gi)].map(match => [match[1], match[2]]);
-    assert.deepEqual(sortPairs(actualAlternates), sortPairs(expectedAlternates), slug + ' hreflang cluster must exclude noindex pages');
+    assert.deepEqual(actualAlternates.slice().sort(([a],[b])=>a.localeCompare(b)), expectedAlternates, slug + ' hreflang cluster must match self-canonical indexable siblings');
     assert.match(html, /"@type":"SoftwareApplication"/, slug + ' has SoftwareApplication schema');
     assert.match(html, /"@type":"FAQPage"/, slug + ' has FAQ schema');
     assert.match(html, /hi-formula-intro/, slug + ' has a formula summary');
