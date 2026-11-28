@@ -70,10 +70,20 @@ function pageMetadata(route, previous, addition) {
     (html.match(/<meta\b[^>]*>/gi) || []).find(tag => attr(tag, 'name').toLowerCase() === 'description') || '',
     'content'
   );
-  const name = stripTags(previous?.name || addition?.name || h1 || titleTag.split('|')[0] || path.basename(route, '.html').replace(/-/g, ' '));
-  const description = stripTags(previous?.description || addition?.description || metaDescription);
-  const category = stripTags(previous?.category || addition?.category || 'Everyday Life');
-  const keywords = stripTags(previous?.keywords || addition?.keywords || (name + ' ' + description).toLowerCase());
+  // Values already stored in JSON are plain text, not HTML. Do not decode entities
+  // or strip angle-bracket sequences from them on repeat rebuilds; only sanitize
+  // values extracted from page markup.
+  const plainText = value => String(value ?? '').replace(/\\s+/g, ' ').trim();
+  const storedName = previous?.name || addition?.name;
+  const name = storedName
+    ? plainText(storedName)
+    : stripTags(h1 || titleTag.split('|')[0] || path.basename(route, '.html').replace(/-/g, ' '));
+  const storedDescription = previous?.description || addition?.description;
+  const description = storedDescription ? plainText(storedDescription) : stripTags(metaDescription);
+  const storedCategory = previous?.category || addition?.category;
+  const category = storedCategory ? plainText(storedCategory) : 'Everyday Life';
+  const storedKeywords = previous?.keywords || addition?.keywords;
+  const keywords = storedKeywords ? plainText(storedKeywords) : plainText((name + ' ' + description).toLowerCase());
   if (!name) return null;
   return { name, url: route, category, keywords, description };
 }
