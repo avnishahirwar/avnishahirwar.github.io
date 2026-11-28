@@ -178,7 +178,7 @@ function main() {
   const html = build();
   const count = (html.match(/class="physics-tool"/g) || []).length;
   if (process.argv.includes('--check')) {
-    if (!html.includes('Physics Calculators</h1>') || count < supplementalRoutes.length) throw new Error('Generated physics directory is incomplete: it must include the verified indexable catalogue and supplemental routes.');
+    if (!html.includes('Physics Calculators</h1>') || count < SUPPLEMENTAL_ROUTES.size) throw new Error('Generated physics directory is incomplete: it must include the verified indexable catalogue and supplemental routes.');
     console.log(`Physics directory check passed: ${count} calculators.`);
     return;
   }
