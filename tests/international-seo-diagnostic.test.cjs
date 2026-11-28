@@ -124,12 +124,16 @@ test('additive repair skips unsupported codes and known untranslated destination
       '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/"></head></html>');
     for (const locale of ['am', 'de']) {
       write(locale + '/calculators/rd-calculator.html',
-        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"></head></html>');
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
     }
     for (const locale of ['ja', 'fa', 'vi']) {
       write(locale + '/calculators/loan-emi-calculator.html',
-        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/loan-emi-calculator.html"></head></html>');
+        '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html"></head></html>');
     }
+    write('ar/calculators/rd-calculator.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
+    write('ar/calculators/loan-emi-calculator.html',
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html"></head></html>');
     write('arz/calculators/basic-calculator.html',
       '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"></head></html>');
     write('en-gb/index.html',
@@ -143,17 +147,14 @@ test('additive repair skips unsupported codes and known untranslated destination
     const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     assert.equal(summary.added, 1, 'only the verified en-GB target should receive a reciprocal');
     assert.ok(summary.skippedKnownUntranslatedTarget >= 5);
+    assert.ok(summary.skippedKnownUntranslatedSource >= 5);
     assert.ok(summary.skippedUnsupportedLanguageCode >= 2);
     const enGb = fs.readFileSync(path.join(temp, 'en-gb/index.html'), 'utf8');
     assert.match(enGb, /hreflang="ar"/);
-    for (const locale of ['am', 'de']) {
-      const html = fs.readFileSync(path.join(temp, locale, 'calculators/rd-calculator.html'), 'utf8');
-      assert.doesNotMatch(html, /hreflang="ar"/);
-    }
-    for (const locale of ['ja', 'fa', 'vi']) {
-      const html = fs.readFileSync(path.join(temp, locale, 'calculators/loan-emi-calculator.html'), 'utf8');
-      assert.doesNotMatch(html, /hreflang="ar"/);
-    }
+    const arRd = fs.readFileSync(path.join(temp, 'ar/calculators/rd-calculator.html'), 'utf8');
+    assert.doesNotMatch(arRd, /hreflang="am"|hreflang="de"/);
+    const arEmi = fs.readFileSync(path.join(temp, 'ar/calculators/loan-emi-calculator.html'), 'utf8');
+    assert.doesNotMatch(arEmi, /hreflang="ja"|hreflang="fa"|hreflang="vi"/);
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
