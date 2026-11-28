@@ -36,7 +36,9 @@ jobs:
           git add -- '*/calculators/*.html' 'calculators/*.html'
           if ! git diff --cached --quiet; then
             git commit -m "seo: repair priority Hindi hreflang clusters [skip ci]"
-            git push
+            git fetch origin "${GITHUB_REF_NAME}"
+          git rebase "origin/${GITHUB_REF_NAME}"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
           else
             echo "No missing priority-cluster links required changes."
           fi
