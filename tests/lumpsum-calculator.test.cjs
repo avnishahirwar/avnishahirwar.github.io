@@ -87,5 +87,6 @@ test('page uses the purpose-built engine and retains its canonical URL and index
   assert.match(page, /<script src="\/assets\/lumpsum-calculator\.js"><\/script>/);
   assert.doesNotMatch(page, /generated-equation-calculator\.js|FC_EQUATION_CONFIG/);
   assert.match(page, /<h1>Lumpsum Calculator<\/h1>/);
+  assert.match(page, /data-fc-native-calculator/);
   assert.match(page, /inflationAdjustedValue/);
 });
