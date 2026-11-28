@@ -1,4 +1,12 @@
 (()=>{'use strict';
+/* Apply the local calculator indexability allowlist on every page using the shared shell. */
+if(document.head&&!document.querySelector('script[data-fc-adsense-curate]')){
+  const curateScript=document.createElement('script');
+  curateScript.src='/assets/adsense-curate.js?v=20261128-t1-curated-index';
+  curateScript.async=false;
+  curateScript.setAttribute('data-fc-adsense-curate','1');
+  document.head.appendChild(curateScript);
+}
 /* Render site-wide chrome before optional enhancements run. If a later feature
    throws, public pages still retain the shared header and footer. */
 const footerCategoryHrefs=new Set(['/','/calculator/business-calculators.html','/calculator/finance-calculators.html','/calculator/tax.html','/calculator/industry-calculators.html','/calculator/manufacturing-calculators.html','/calculator/everyday-calculators.html','/blog/']);
