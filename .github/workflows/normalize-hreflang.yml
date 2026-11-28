@@ -1,0 +1,54 @@
+name: Normalize published hreflang metadata
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'scripts/normalize-hreflang.cjs'
+      - 'tests/normalize-hreflang.test.cjs'
+      - '.github/workflows/normalize-hreflang.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: friendly-calculator-hreflang-normalize-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  normalize:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the pull request branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          persist-credentials: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate the normalizer on safe fixtures
+        run: node --test tests/normalize-hreflang.test.cjs
+      - name: Normalize only reciprocal hreflang metadata
+        run: node scripts/normalize-hreflang.cjs --write
+      - name: Verify normalization is complete
+        run: node scripts/normalize-hreflang.cjs --check
+      - name: Verify locale links are reciprocal and indexability-safe
+        run: node --test tests/international-seo.test.cjs tests/international-seo-diagnostic.test.cjs
+      - name: Commit generated hreflang-only page-head changes to this branch
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html'
+          if git diff --cached --quiet; then
+            echo "No hreflang page-head changes were required."
+          else
+            git commit -m "Normalize reciprocal hreflang on indexable pages"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
