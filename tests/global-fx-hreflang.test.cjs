@@ -21,9 +21,6 @@ const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  return !noindexOf(html)&&language.toLowerCase()===locale&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
 });
 const expectedPairs=(locales,route)=>[...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),...(locales.includes('en')?[['x-default',origin+'/calculators/'+route]]:[])];
- ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
- ['x-default',origin+'/calculators/'+route]
-];
 const sorted=items=>items.slice().sort(([a],[b])=>a.localeCompare(b));
 
 test('all existing localized currency converters load the shared reference-rate client',()=>{
