@@ -28,6 +28,8 @@ jobs:
         run: node --test tests/cloudflare-preview-redirect.test.cjs
       - name: Build the current published calculator catalogue
         run: node scripts/generate-sitemaps.cjs && node scripts/merge-search-index.cjs && node scripts/build-site-directory.cjs && node scripts/generate-physics-calculator-directory.cjs && node scripts/sync-calculator-counts.cjs && node scripts/generate-human-sitemap.cjs && node scripts/normalize-hreflang.cjs --write && node scripts/generate-sitemaps.cjs
+      - name: Verify hreflang normalization and reciprocal indexable clusters
+        run: node --check scripts/normalize-hreflang.cjs && node --test tests/normalize-hreflang.test.cjs && node scripts/normalize-hreflang.cjs --check && node --test tests/international-seo.test.cjs && node scripts/generate-sitemaps.cjs --check
       - name: Validate catalog-driven calculator counts
         run: node scripts/sync-calculator-counts.cjs --check && node scripts/generate-human-sitemap.cjs --check && node --test tests/calculator-counts.test.cjs
       - name: Validate physics calculator directory
