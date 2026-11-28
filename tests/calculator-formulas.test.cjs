@@ -1361,3 +1361,9 @@ test('credit utilization page explains its formula, worked example and limits', 
   assert.ok(ratio(125000, 100000) > 100);
   assert.ok(Number.isNaN(ratio(25000, 0)));
 });
+
+test('India GST calculator keeps the entered amount explicitly denominated in INR', () => {
+  const gst = fs.readFileSync(new URL('../calculators/gst-calculator.html', 'file://' + __filename), 'utf8');
+  assert.match(gst, /<label>Amount \\(INR\\)<input name="amount"/);
+  assert.match(gst, /const money=n=>'₹'/);
+});
