@@ -25,6 +25,9 @@ test('normalizer rebuilds reciprocal language groups and preserves noindex/canon
   const script = path.join(fixture, 'scripts/normalize-hreflang.cjs');
   fs.mkdirSync(path.dirname(script), { recursive: true });
   fs.copyFileSync(sourceScript, script);
+  const configDir = path.join(fixture, 'config');
+  fs.mkdirSync(configDir, {recursive: true});
+  fs.copyFileSync(path.join(repoRoot, 'config/supported-locale-prefixes.json'), path.join(configDir, 'supported-locale-prefixes.json'));
 
   const english = '<!doctype html><html lang="en"><head>' +
     '<link rel="canonical" href="https://friendlycalculator.in/calculators/demo.html">' +
