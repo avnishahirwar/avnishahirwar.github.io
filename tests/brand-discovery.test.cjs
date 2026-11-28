@@ -13,7 +13,7 @@ test('homepage presents Friendly Calculator consistently as an India and worldwi
   return Array.isArray(data['@graph'])?data['@graph']:[data];
  });
  assert.ok(entities.some(entity=>entity['@type']==='WebSite'&&entity['@id']==='https://friendlycalculator.in/#website'&&entity.url==='https://friendlycalculator.in/'&&entity.name==='Friendly Calculator'));
- assert.match(home,/<h1>Free Online Calculators – Fast, Free &amp; Clear<\\/h1>/);
+ assert.ok(home.includes('<h1>Free Online Calculators – Fast, Free &amp; Clear</h1>'));
  // The homepage no longer links to the brand page; the page itself must stay valid (checked below).
 });
 test('brand discovery page targets regional and multilingual intent without unsupported popularity claims',()=>{
