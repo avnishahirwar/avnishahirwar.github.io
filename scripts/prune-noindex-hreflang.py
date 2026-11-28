@@ -97,7 +97,8 @@ def main():
     cache = {p: p.read_text(encoding="utf-8", errors="replace") for p in files}
     stats = {"pages_scanned": len(files), "noindex_sources": 0, "removed_noindex_source": 0,
              "removed_noindex_target": 0, "removed_language_mismatch": 0,
-             "removed_noncanonical_target": 0, "removed_missing_canonical_source": 0,\n             "removed_unsupported_language_code": 0, "removed_known_untranslated_target": 0,
+             "removed_noncanonical_target": 0, "removed_missing_canonical_source": 0,
+             "removed_unsupported_language_code": 0, "removed_known_untranslated_target": 0,
              "removed_duplicate": 0, "pages_changed": 0}
 
     # Pass 1: remove annotations that cannot describe an indexable, language-matching target.
