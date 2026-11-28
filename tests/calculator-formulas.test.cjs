@@ -1382,3 +1382,8 @@ test('credit utilization page explains its formula, worked example and limits', 
   assert.ok(ratio(125000, 100000) > 100);
   assert.ok(Number.isNaN(ratio(25000, 0)));
 });
+
+test('GST calculator labels its entered amount as INR', () => {
+  const gst = fs.readFileSync(path.join(root, 'calculators/gst-calculator.html'), 'utf8');
+  assert.ok(gst.includes('<label>Amount (INR)<input name="amount"'), 'GST amount input must identify its currency as INR');
+});
