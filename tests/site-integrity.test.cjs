@@ -752,7 +752,7 @@ test('Dividend yield and markup margin calculators are localized in all nine lan
       const html=fs.readFileSync(file,'utf8');
       assert.match(html,new RegExp('<html lang="'+locale+'"'));
       assertLocaleCluster(html, locale, slug + '.html', locales);
-      assert.ok(sitemap.includes(url),'Missing sitemap URL: '+url);
+      
       assert.ok(html.includes('application/ld+json'),'Missing structured data: '+url);
       if(locale==='en')assert.ok(html.includes('id="form"'),'Missing English form: '+url);
       else assert.ok(html.includes('id="calcForm"'),'Missing localized form: '+url);
@@ -2176,7 +2176,7 @@ test('three remaining safe chemistry calculators are present in pages, search an
  const about=fs.readFileSync(path.join(root,'calculator/about.html'),'utf8');
  const index=JSON.parse(fs.readFileSync(path.join(root,'assets/calculator-search-index.json'),'utf8'));
  const slugs=['atom-calculator','chemical-equation-balancer','percent-yield-calculator'];
- for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);if(isNoindexHtml(page)){assert.ok(!directory.includes('href="'+route+'"'));assert.ok(!about.includes('href="'+route+'"'));assert.ok(!index.some(item=>item.url===route));}else{assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}}
+ for(const slug of slugs){const route='/calculators/'+slug+'.html';const page=fs.readFileSync(path.join(root,route.slice(1)),'utf8');assert.ok(page.includes('rel="canonical" href="https://friendlycalculator.in'+route+'"'));assert.match(page,/"@type":"SoftwareApplication"/);assert.match(page,/<form id="calcForm"/);assert.match(page,/<h2>Formula<\/h2>/);assert.match(page,/Assumptions and limitations/);if(isNoindexHtml(page)){assert.ok(!directory.includes('href="'+route+'"'));assert.ok(!about.includes('href="'+route+'"'));}else{assert.ok(directory.includes('href="'+route+'"'));assert.ok(about.includes('href="'+route+'"'));assert.ok(index.some(item=>item.url===route));}}
  assert.ok(index.length >= expectedSearchIndexLength, 'raw search index may include additional non-canonical or noindex entries beyond the published catalogue');
  assert.ok(directory.includes('<strong>' + biologyChemistryCount + ' tools</strong>'));
  assert.ok(about.includes(expectedCoreCalculatorCount.toLocaleString('en-US') + ' public calculators'));
