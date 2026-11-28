@@ -41,6 +41,8 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
   const links=alternatesOf(html);if(!links.length)continue;tagged++;
   const sourceLang=langOf(html,file),sourceCanonical=canonicalOf(html);
   if(!sourceCanonical){errors.push(file+': hreflang present but canonical missing');continue;}
+  // Only self-canonical, indexable documents participate as hreflang sources.
+  if(localFile(sourceCanonical)!==file)continue;
   const seen=new Set();
   for(const link of links){
    checked++;
@@ -51,6 +53,7 @@ test('international hreflang alternates are unique, same-domain, resolvable and 
    if(link.lang==='x-default')continue;
    const targetHtml=cache.get(targetFile)||fs.readFileSync(targetFile,'utf8');
    if(noindexOf(targetHtml)){errors.push(file+': '+link.lang+' target is noindex: '+link.href);continue;}
+   if(canonicalOf(targetHtml)!==link.href){errors.push(file+': '+link.lang+' target is not self-canonical: '+link.href);continue;}
    const targetLang=langOf(targetHtml,targetFile);
    if(targetLang!==link.lang)errors.push(file+': hreflang '+link.lang+' points to page declaring lang='+targetLang);
    const targetLinks=alternatesOf(targetHtml);
