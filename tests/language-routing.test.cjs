@@ -165,23 +165,75 @@ test('Marathi homepage is configured with a self-canonical route and reciprocal 
 });
 
 
-test('homepage hreflang clusters include published language homepages and exclude the UK market hub', () => {
+test('homepage hreflang clusters include only published, self-canonical language homepages and exclude the UK market hub', () => {
   const catalogue = require('../config/language-catalogue.json');
+  const base = path.join(__dirname, '..');
   const locales = catalogue.locales.map(locale => locale.code).filter(code => code !== 'en' && code !== 'uk');
   const pages = ['index.html', ...locales.map(locale => locale + '/index.html')];
+  const headOf = html => html.slice(0, Math.max(0, html.toLowerCase().indexOf('</head>')));
+  const attr = (tag, name) => {
+    const re = /([a-z][a-z0-9:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
+    let match;
+    while ((match = re.exec(tag))) if (match[1].toLowerCase() === name) return match[2] ?? match[3] ?? '';
+    return '';
+  };
+  const noindex = html => {
+    const head = headOf(html);
+    return /<meta\b[^>]*\bname\s*=\s*["'](?:robots|googlebot)["'][^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b/i.test(head) ||
+      /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(head);
+  };
+  const placeholder = html => {
+    const tags = [...headOf(html).matchAll(/<meta\b[^>]*>/gi)].map(match => match[0]);
+    const tag = tags.find(item => attr(item, 'name').toLowerCase() === 'description');
+    return /^\s*\[[^\]]{2,40}\]\s*/.test(tag ? attr(tag, 'content') : '');
+  };
+  const canonical = html => {
+    const tag = [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+      .find(item => attr(item, 'rel').toLowerCase() === 'canonical');
+    return tag ? attr(tag, 'href') : '';
+  };
+  const language = (html, file) => {
+    const match = html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i);
+    return (match ? match[1] : (file === 'index.html' ? 'en' : file.split('/')[0])).toLowerCase();
+  };
+  const expected = (file) => {
+    const ownHtml = fs.readFileSync(path.join(base, file), 'utf8');
+    if (noindex(ownHtml) || placeholder(ownHtml)) return [];
+    const entries = pages.filter(candidate => {
+      const full = path.join(base, candidate);
+      if (!fs.existsSync(full)) return false;
+      const html = fs.readFileSync(full, 'utf8');
+      const expectedUrl = 'https://friendlycalculator.in/' + (candidate === 'index.html' ? '' : candidate);
+      return !noindex(html) && !placeholder(html) && canonical(html) === expectedUrl;
+    }).map(candidate => {
+      const html = fs.readFileSync(path.join(base, candidate), 'utf8');
+      return {
+        lang: language(html, candidate),
+        url: 'https://friendlycalculator.in/' + (candidate === 'index.html' ? '' : candidate)
+      };
+    });
+    const langs = entries.map(entry => entry.lang);
+    if (entries.length < 2 || new Set(langs).size !== langs.length) return [];
+    const pairs = entries.map(entry => [entry.lang, entry.url]);
+    const english = entries.find(entry => entry.lang === 'en' || entry.lang.startsWith('en-'));
+    if (english) pairs.push(['x-default', english.url]);
+    return pairs.sort((a,b) => a[0].localeCompare(b[0]));
+  };
+
   for (const file of pages) {
-    const html = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    for (const locale of ['en', ...locales, 'x-default']) {
-      assert.match(html, new RegExp('hreflang="' + locale + '"'), file + ' missing ' + locale + ' alternate');
-    }
+    const html = fs.readFileSync(path.join(base, file), 'utf8');
+    const actual = [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+      .filter(tag => attr(tag, 'rel').toLowerCase() === 'alternate')
+      .map(tag => [attr(tag, 'hreflang').toLowerCase(), attr(tag, 'href')])
+      .filter(pair => pair[0] && pair[1])
+      .sort((a,b) => a[0].localeCompare(b[0]));
+    assert.deepEqual(actual, expected(file), file + ' hreflang must match the published language-homepage set');
     assert.doesNotMatch(html, /hreflang="(?:uk|en-GB)"/);
   }
-  const ukHub = fs.readFileSync(path.join(__dirname, '..', 'uk', 'index.html'), 'utf8');
+  const ukHub = fs.readFileSync(path.join(base, 'uk', 'index.html'), 'utf8');
   assert.match(ukHub, /<html lang="en-GB">/);
-  assert.equal((ukHub.match(/rel="alternate"/g) || []).length, 0, 'UK market hub must not claim unrelated locale alternates');
+  assert.equal((headOf(ukHub).match(/rel="alternate"/g) || []).length, 0, 'UK market hub must not claim unrelated locale alternates');
 });
-
-
 
 test('Vietnamese and Telugu homepages declare localized, canonical, indexable documents', () => {
   for (const [locale, phrases] of Object.entries({vi:['Máy tính trực tuyến miễn phí','Phạm vi ngôn ngữ'],te:['ఉచిత ఆన్‌లైన్ కాలిక్యులేటర్లు','భాషా పరిధి']})) {
