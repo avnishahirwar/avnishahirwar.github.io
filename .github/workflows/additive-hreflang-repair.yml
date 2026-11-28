@@ -1,4 +1,5 @@
 name: One-time additive hreflang reciprocal repair
+# Scope: this workflow adds only safe reciprocal tags to the current feature branch.
 
 on:
   workflow_dispatch:
