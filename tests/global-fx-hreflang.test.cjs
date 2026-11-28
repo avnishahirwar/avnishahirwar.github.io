@@ -11,7 +11,8 @@ const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>
 const alternatesOf=html=>[...headOf(html).matchAll(/<link\b(?=[^>]*\brel=["']alternate["'])(?=[^>]*\bhreflang=["']([^"']+)["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi)].map(m=>[m[1],m[2]]);
 const pageFor=(locale,route)=>path.join(root,locale==='en'?'':locale,'calculators',route);
 const canonicalOf=html=>{const tag=headOf(html).match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i);return tag?tag[1]:'';};
-const localeCandidates=route=>['en',...fs.readdirSync(root,{withFileTypes:true}).filter(entry=>entry.isDirectory()&&/^[a-z]{2,3}$/i.test(entry.name)).map(entry=>entry.name.toLowerCase())].filter((locale,index,array)=>array.indexOf(locale)===index&&fs.existsSync(pageFor(locale,route)));
+const configuredLocales=require('../config/language-catalogue.json').locales.map(locale=>locale.code);
+const localeCandidates=route=>configuredLocales.filter(locale=>fs.existsSync(pageFor(locale,route)));
 const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
  if(!fs.existsSync(file)) return false;
