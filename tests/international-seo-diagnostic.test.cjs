@@ -77,7 +77,15 @@ test('hreflang page edits preserve every original byte except the inserted alter
   const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef, '--', '*.html'], {
     cwd: root, encoding: 'utf8'
   }).trim().split('\n').filter(Boolean);
-  assert.ok(changed.length > 0, 'expected repaired HTML pages');
+  if (changed.length === 0) {
+    const output = execFileSync(process.execPath, ['scripts/add-hreflang-reciprocals.cjs'], {
+      cwd: root, encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
+    });
+    const match = output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/);
+    assert.ok(match, 'repair script must report a JSON summary');
+    assert.equal(JSON.parse(match[1]).added, 0, 'an empty HTML diff is valid only when no reviewed reciprocal is missing');
+    return;
+  }
 
   for (const file of changed) {
     const original = execFileSync('git', ['show', 'origin/main:' + file], { cwd: root, encoding: 'utf8' });
@@ -117,7 +125,7 @@ test('additive repair skips malformed percent-encoded alternate URLs', () => {
   try {
     fs.mkdirSync(path.join(temp, 'calculators'), { recursive: true });
     fs.writeFileSync(path.join(temp, 'calculators/basic-calculator.html'),
-      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/%ZZ.html"></head></html>');
+      '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/calculators/basic-calculator.html"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/calculators/%E0%A4%A.html"></head></html>');
     const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
       cwd: temp, encoding: 'utf8'
     });
@@ -139,7 +147,7 @@ test('additive repair skips unsupported codes and known untranslated destination
   };
   try {
     write('ar/calculators/basic-calculator.html',
-      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/"></head></html>');
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.html"></head></html>');
     for (const locale of ['am', 'de']) {
       write(locale + '/calculators/rd-calculator.html',
         '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
