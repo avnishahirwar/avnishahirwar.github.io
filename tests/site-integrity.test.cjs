@@ -56,14 +56,15 @@ function pageIndexability(url) {
   return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
 }
 function localeUrlFor(baseUrl, locale) {
-  const pathname = new URL(baseUrl).pathname.replace(/^\/(?:hi|es|fr|pt|ar|id|bn|ta)\//, '/');
+  const pathname = new URL(baseUrl).pathname;
   return SITE_ORIGIN + (locale === 'en' ? pathname : '/' + locale + pathname);
 }
 function assertLocaleCluster(baseUrl, locales) {
-  const candidates = locales.map(locale => ({url:localeUrlFor(baseUrl, locale), locale}));
+  const configuredLocales = require('../config/language-catalogue.json').locales.map(locale => locale.code);
+  const candidates = [...new Set(['en', ...configuredLocales, ...locales])].map(locale => ({url:localeUrlFor(baseUrl, locale), locale}));
   const states = candidates.map(item => ({...item, ...pageIndexability(item.url)}));
   for (const state of states) {
-    assert.equal(urls.includes(state.url), state.indexable, 'Sitemap membership must match indexability: ' + state.url);
+    assert.equal(allSitemapUrls.has(state.url), state.indexable, 'Sitemap membership must match indexability: ' + state.url);
     const headEnd = state.html.toLowerCase().indexOf('</head>');
     const head = headEnd < 0 ? state.html : state.html.slice(0, headEnd);
     const tags = [...head.matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
@@ -620,7 +621,7 @@ test('Hindi RD calculator is localized and linked from the English alternate', (
   assert.ok(html.includes('rel="canonical"') && html.includes('hreflang="en"') && html.includes('hreflang="x-default"'));
   for (const id of ['monthly','rate','years','months','calculate','invested','interest','maturity']) assert.ok(html.includes('id="' + id + '"'));
   assert.ok(html.includes('Math.pow(1+quarterly,1/3)-1'));
-  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/rd-calculator.html'));
+  assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/rd-calculator.html'));
   const english = fs.readFileSync(path.join(root, 'calculators/rd-calculator.html'), 'utf8');
   assert.ok(english.includes('hreflang="hi"'));
 });
@@ -1035,7 +1036,7 @@ test('Hindi decimal-to-percent converter is localized, reciprocal and indexed', 
   assert.ok(hindi.includes('hreflang="en"') && hindi.includes('hreflang="hi"') && hindi.includes('hreflang="x-default"'));
   assert.ok(english.includes('hreflang="hi"'));
   for (const phrase of ['दशमलव से प्रतिशत कनवर्टर','प्रतिशत = दशमलव मान × 100','अक्सर पूछे जाने वाले सवाल','गणना करें']) assert.ok(hindi.includes(phrase), 'Hindi page is missing: ' + phrase);
-  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html'));
+  assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/decimal-to-percent-converter.html'));
 });
 
 
@@ -1252,7 +1253,7 @@ test('Hindi appliance energy cost page is localized, linked and included in site
   assert.ok(engine.includes('उपकरण की शक्ति (वॉट)'));
   assert.ok(engine.includes('अनुमानित मासिक बिजली खर्च'));
   assert.ok(hindiHome.includes('/hi/calculators/appliance-energy-cost-calculator.html'));
-  assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/appliance-energy-cost-calculator.html'));
+  assert.ok(allSitemapUrls.has('https://friendlycalculator.in/hi/calculators/appliance-energy-cost-calculator.html'));
 });
 
 
