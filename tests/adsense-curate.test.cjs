@@ -83,3 +83,9 @@ test('non-calculator and localized calculator routes remain untouched', () => {
     assert.equal(existing.getAttribute('content'), 'noindex,follow');
   }
 });
+
+test('shared site shell loads the single index policy and no longer applies a competing blanket rule', () => {
+  const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
+  assert.match(shell, /assets\/adsense-curate\.js\?v=20261128-index-policy/);
+  assert.doesNotMatch(shell, /Thin calculator pages -> noindex/);
+});
