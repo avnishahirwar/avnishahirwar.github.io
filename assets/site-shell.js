@@ -1193,6 +1193,42 @@ if(isCalculatorRoute&&main){
   }
 }
 
+/* Keep secondary calculator actions compact and keyboard-accessible.
+   Native <details> provides disclosure semantics without extra dependencies. */
+if(isCalculatorRoute&&main){
+  const collapseToolPanel=(selector,label)=>{
+    document.querySelectorAll(selector).forEach(panel=>{
+      if(panel.querySelector(':scope > details.fc-tool-disclosure'))return;
+      const heading=panel.querySelector(':scope > h2');
+      if(heading)heading.remove();
+      const disclosure=document.createElement('details');
+      disclosure.className='fc-tool-disclosure';
+      const summary=document.createElement('summary');
+      summary.textContent=label;
+      const content=document.createElement('div');
+      content.className='fc-tool-disclosure-content';
+      while(panel.firstChild)content.appendChild(panel.firstChild);
+      disclosure.append(summary,content);
+      panel.appendChild(disclosure);
+    });
+  };
+  collapseToolPanel('.fc-share-panel','Share options');
+  collapseToolPanel('.fc-export-panel','Export and embed');
+  collapseToolPanel('.fc-scenario-panel','Save and compare scenarios');
+
+  // Retain the first meaningful related-calculator section and remove repeats.
+  const relatedHeadings=[...main.querySelectorAll('h2,h3')].filter(heading=>
+    /^(?:related calculators|related tools|more calculators|more free calculators)$/i
+      .test((heading.textContent||'').replace(/\\s+/g,' ').trim())
+  );
+  const relatedBlocks=[];
+  relatedHeadings.forEach(heading=>{
+    const block=heading.closest('.fc-related-tools,section,aside,article')||heading.parentElement;
+    if(block&&block!==main&&!relatedBlocks.includes(block))relatedBlocks.push(block);
+  });
+  relatedBlocks.slice(1).forEach(block=>block.remove());
+}
+
 // Add a truthful WebApplication entity to calculator pages that do not already define one.
 // WebApplication is a schema.org subtype of SoftwareApplication. Do not invent ratings or reviews.
 function injectCalculatorApplicationSchema(){
