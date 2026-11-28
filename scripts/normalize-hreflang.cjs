@@ -43,9 +43,12 @@ function isNoindex(html) {
     /<meta\b[^>]*\bcontent\s*=\s*["'][^"']*\bnoindex\b[^"']*["'][^>]*\bname\s*=\s*["'](?:robots|googlebot)["']/i.test(head);
 }
 function attribute(tag, name) {
-  const pattern = "\\b" + name + "\\s*=\\s*(["'])(.*?)\\1";
-  const match = tag.match(new RegExp(pattern, "i"));
-  return match ? match[1] : '';
+  const pattern = /([a-z][a-z0-9:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
+  let match;
+  while ((match = pattern.exec(tag))) {
+    if (match[1].toLowerCase() === name.toLowerCase()) return match[2] ?? match[3] ?? '';
+  }
+  return '';
 }
 function canonicalOf(html) {
   const tags = [...headOf(html).matchAll(/<link\b[^>]*>/gi)].map(match => match[0]);
