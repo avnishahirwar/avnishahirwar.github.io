@@ -741,7 +741,8 @@ test('About and Contact pages show consistent ownership, catalogue count and the
   assert.equal(searchIndex.length, expectedSearchIndexLength);
   assert.ok(searchIndex.some(item => item.name === 'VAT Calculator' && item.url === '/international/vat-calculator.html'));
   assert.ok(homepage.includes('aria-label="Search all ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculator entries by name or topic"'));
-  assert.ok(homepage.includes('Total catalogue: ' + expectedSearchIndexLength.toLocaleString('en-US') + ' calculators'));
+  const catalogueStatus = 'Catalogue: ' + canonicalCalculatorUrls.length.toLocaleString('en-US') + ' core calculators; ' + expectedSearchIndexLength.toLocaleString('en-US') + ' total searchable entries across languages';
+  assert.ok(homepage.includes(catalogueStatus));
   assert.match(contact, /secure enquiry form is on this Contact page/);
   assert.doesNotMatch(contact, /homepage enquiry form/);
 });
