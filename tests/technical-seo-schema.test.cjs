@@ -70,7 +70,7 @@ test('priority calculator pages expose one accurate static WebApplication and pr
 function runApplicationSchemaInjector({ pathname = '/calculators/example-tax-calculator.html', lang = 'en', existing = [] } = {}) {
   const shell = fs.readFileSync(path.join(root, 'assets/site-shell.js'), 'utf8');
   const start = shell.indexOf('function injectCalculatorApplicationSchema(){');
-  const invocation = '\\ninjectCalculatorApplicationSchema();';
+  const invocation = '\ninjectCalculatorApplicationSchema();';
   const end = shell.indexOf(invocation, start);
   assert.ok(start >= 0 && end > start, 'The shared application-schema injector must be present');
   const source = shell.slice(start, end + invocation.length);
