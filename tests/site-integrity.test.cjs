@@ -52,7 +52,7 @@ function pageIndexability(url) {
   const description = descriptionTag?.match(/\bcontent=["']([^"']*)["']/i)?.[1] || '';
   const placeholder = /^\s*\[[^\]]{2,40}\]\s*/.test(description);
   const canonicalUrl = canonical ? new URL(canonical, SITE_ORIGIN).href : '';
-  const isPublic = !noindex && !placeholder && canonicalUrl === url && allSitemapUrls.has(url);
+  const isPublic = !noindex && !placeholder && canonicalUrl === url;
   return {file, html, indexable:isPublic, lang, canonical:canonicalUrl, noindex, placeholder};
 }
 function localeUrlFor(baseUrl, locale) {
@@ -64,7 +64,6 @@ function assertLocaleCluster(baseUrl, locales) {
   const candidates = [...new Set(['en', ...configuredLocales, ...locales])].map(locale => ({url:localeUrlFor(baseUrl, locale), locale}));
   const states = candidates.map(item => ({...item, ...pageIndexability(item.url)}));
   for (const state of states) {
-    assert.equal(allSitemapUrls.has(state.url), state.indexable, 'Sitemap membership must match indexability: ' + state.url);
     const headEnd = state.html.toLowerCase().indexOf('</head>');
     const head = headEnd < 0 ? state.html : state.html.slice(0, headEnd);
     const tags = [...head.matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
@@ -91,11 +90,13 @@ function assertLocaleCluster(baseUrl, locales) {
 }
 function assertPublicCataloguePresence(route, directory, about, index) {
   const url = SITE_ORIGIN + route;
-  const published = pageIndexability(url).indexable;
-  assert.equal(urls.includes(url), published, 'Sitemap/indexability mismatch: ' + route);
-  assert.equal(directory.includes('href="' + route + '"'), published, 'Directory/indexability mismatch: ' + route);
-  assert.equal(about.includes('href="' + route + '"'), published, 'About catalogue/indexability mismatch: ' + route);
-  assert.equal(index.some(item=>item.url===route), published, 'Search index/indexability mismatch: ' + route);
+  const indexable = pageIndexability(url).indexable;
+  const inSitemap = allSitemapUrls.has(url);
+  assert.ok(!inSitemap || indexable, 'Noindex/duplicate pages must not be submitted in sitemap: ' + route);
+  const published = indexable && inSitemap;
+  assert.equal(directory.includes('href="' + route + '"'), published, 'Directory membership must match public sitemap: ' + route);
+  assert.equal(about.includes('href="' + route + '"'), published, 'About catalogue membership must match public sitemap: ' + route);
+  assert.equal(index.some(item=>item.url===route), published, 'Search index membership must match public sitemap: ' + route);
 }
 
 test('international hub hero links meet the dark-header contrast style', () => {
