@@ -1668,11 +1668,11 @@ test('homepage inline CSS has valid rule separation and the calculator search pa
 
 test('homepage exposes crawlable internal links to Hindi and Arabic language editions', () => {
   const homepage = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-  assert.ok(homepage.includes('<h1>Free Online Calculators for India and Worldwide</h1>'));
-  assert.ok(homepage.includes('<title>Free Online Calculators | Friendly Calculator</title>'));
+  assert.ok(homepage.includes('<h1>Free Online Calculators – Fast, Free &amp; Clear</h1>'));
+  assert.ok(homepage.includes('<title>Free Calculators India | EMI, SIP, GST | Friendly Calculator</title>'));
   assert.match(homepage, /<meta name="description" content="[^"]*(?:calculators|calculators)[^"]*">/i);
-  assert.ok(homepage.includes('property="og:title" content="Free Online Calculators | Friendly Calculator"'));
-  assert.ok(homepage.includes('name="twitter:title" content="Free Online Calculators India &amp; Worldwide | EMI, GST &amp; Tax"'));
+  assert.ok(homepage.includes('property="og:title" content="Free Calculators India | EMI, SIP, GST | Friendly Calculator"'));
+  assert.ok(homepage.includes('name="twitter:title" content="Free Calculators India | EMI, SIP, GST | Friendly Calculator"'));
   assert.ok(homepage.includes('<a href="/hi/index.html" lang="hi">हिन्दी</a>'));
   assert.ok(homepage.includes('<a href="/ar/index.html" lang="ar" dir="rtl">العربية</a>'));
   assert.ok(sitemap.includes('https://friendlycalculator.in/hi/index.html'));
@@ -1747,7 +1747,7 @@ test('five new informational calculators are indexed, discoverable and use bound
   const pages = {
     'medical-unit-converter': ['Medical Unit Converter', '18.0182', '38.67', 'does not interpret'],
     'dream-reflection-calculator': ['Dream Reflection Calculator', 'recall', 'vivid', 'not a validated'],
-    'love-compatibility-calculator': ['Love Compatibility Calculator', 'respect', 'communication', 'not a prediction'],
+    'love-compatibility-calculator': ['Love Compatibility Calculator 2026', 'respect', 'communication', 'not a prediction'],
     'friendship-compatibility-calculator': ['Friendship Compatibility Calculator', 'support', 'interests', 'not a scientific'],
     'goal-success-calculator': ['Goal Success Calculator', 'completed', 'planned', 'not a success prediction']
   };

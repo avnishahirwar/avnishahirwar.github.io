@@ -29,12 +29,16 @@ test('curated directory covers every canonical sitemap calculator across 20 uniq
   const unique = [...new Set(links)].sort();
   const duplicates = links.filter((url, index) => links.indexOf(url) !== index);
   assert.equal(sections.length, 20, 'The directory should retain all 20 curated category sections');
-  assert.equal(unique.length, expected.length, 'Every canonical sitemap calculator should appear in the directory');
-  assert.deepEqual(unique, expected, 'Directory routes must exactly match canonical sitemap calculator routes');
+  const missing = expected.filter(url => !unique.includes(url));
+  const unexpected = unique.filter(url => !expected.includes(url));
+  assert.deepEqual(missing, [], 'Missing canonical sitemap calculator routes: ' + missing.join(', '));
+  assert.deepEqual(unexpected, [], 'Directory routes absent from the canonical sitemap: ' + unexpected.join(', '));
   assert.deepEqual(duplicates, [], 'Every calculator route must appear exactly once across the 20 categories');
   assert.ok(directory.includes('/calculator/image-tools.html'), 'The directory should expose the browser image utility');
   assert.ok(directory.includes('/calculator/bhopal-calculators.html'), 'The directory should expose the Bhopal resource hub');
   assert.ok(directory.includes('/calculator/insurance-calculators.html'), 'The directory should link the insurance category hub');
+  assert.ok(directory.includes('/calculators/home-loan-emi-calculator.html'), 'The richer Home Loan EMI calculator should be listed');
+  assert.ok(!directory.includes('/calculators/home-loan-calculator.html'), 'The duplicate noindex Home Loan route must stay out of the curated directory');
 });
 
 test('all catalog-driven counts are synchronized and repeatable', () => {

@@ -27,7 +27,7 @@ test('homepage has a readable search title, canonical URL, and social preview', 
   assert.doesNotMatch(title[1], /&amp;amp;/i, 'title must not be double escaped');
   assert.ok(title[1].length >= 30 && title[1].length <= 60, 'title is within a useful display length');
   assert.match(html, /<link\s+rel="canonical"\s+href="https:\/\/friendlycalculator\.in\/"/i);
-  assert.match(html, /<meta\s+property="og:title"\s+content="Free Online Calculators \| Friendly Calculator"/i);
+  assert.match(html, /<meta\s+property="og:title"\s+content="Free Calculators India \| EMI, SIP, GST \| Friendly Calculator"/i);
   assert.match(html, /<meta\s+name="twitter:card"\s+content="summary_large_image"/i);
 });
 
@@ -40,4 +40,15 @@ test('source code license is MIT and does not claim editorial content or brand a
   assert.match(license, /does not grant rights in the website's editorial articles/i);
   assert.match(readme, /CC BY 4\.0/i);
   assert.match(readme, /Logos, trademarks, brand illustrations, third-party assets/i);
+});
+
+test('duplicate home-loan route remains noindex while the richer EMI calculator stays indexable', () => {
+  const duplicate = fs.readFileSync(path.join(ROOT, 'calculators/home-loan-calculator.html'), 'utf8');
+  const canonical = fs.readFileSync(path.join(ROOT, 'calculators/home-loan-emi-calculator.html'), 'utf8');
+  const duplicateRobots = duplicate.match(/<meta[^>]*name=["']robots["'][^>]*>/i)?.[0] || '';
+  const canonicalRobots = canonical.match(/<meta[^>]*name=["']robots["'][^>]*>/i)?.[0] || '';
+  assert.match(duplicateRobots, /noindex/i);
+  assert.doesNotMatch(canonicalRobots, /noindex/i);
+  assert.ok(canonical.includes('id="shareResult"'));
+  assert.ok(canonical.includes('id="printReport"'));
 });
