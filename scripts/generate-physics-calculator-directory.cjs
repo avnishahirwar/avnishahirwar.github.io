@@ -190,8 +190,9 @@ function build() {
 function main() {
   const html = build();
   const count = (html.match(/class="physics-tool"/g) || []).length;
+  const expectedCount = physicsEntries().length;
   if (process.argv.includes('--check')) {
-    if (!html.includes('Physics Calculators</h1>') || count < 300) throw new Error('Generated physics directory is incomplete.');
+    if (!html.includes('Physics Calculators</h1>') || count === 0 || count !== expectedCount) throw new Error('Generated physics directory is incomplete or does not match the verified catalogue.');
     console.log(`Physics directory check passed: ${count} calculators.`);
     return;
   }
