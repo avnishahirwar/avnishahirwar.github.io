@@ -16,7 +16,8 @@ const indexableLocales=(candidates,route)=>candidates.filter(locale=>{
  const file=pageFor(locale,route);
  if(!fs.existsSync(file)) return false;
  const html=fs.readFileSync(file,'utf8');
- return !noindexOf(html)&&new RegExp('<html\\b[^>]*\\blang=["']'+locale+'["']','i').test(html)&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
+ const language=(html.match(/<html\b[^>]*\blang=["']([^"']+)["']/i)||[])[1]||'';
+ return !noindexOf(html)&&language.toLowerCase()===locale&&canonicalOf(html)===origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route;
 });
 const expectedPairs=(locales,route)=>[...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),...(locales.includes('en')?[['x-default',origin+'/calculators/'+route]]:[])];
  ...locales.map(locale=>[locale,origin+'/'+(locale==='en'?'':locale+'/')+'calculators/'+route]),
