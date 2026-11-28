@@ -8,7 +8,7 @@ const { execFileSync } = require('node:child_process');
 const ROOT = process.cwd();
 const SITE_ORIGIN = 'https://friendlycalculator.in';
 const MAX_URLS = 50000;
-const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd']);
+const LANGUAGE_PREFIXES = new Set(['zh','hi','es','ar','fr','bn','pt','id','ur','ru','uk','de','ja','pcm','arz','mr','vi','te','sw','ha','tr','pa','fil','ta','yue','wuu','fa','ko','am','th','jv','it','gu','kn','yo','bho','nl','pl','ml','or','ne','si','uz','ps','so','he','my','ro','sd']);
 const MAX_BYTES = 50 * 1024 * 1024;
 const EXCLUDED_DIRS = new Set([
   '.git', '.github', 'node_modules', 'tests', 'admin', 'avnish-ai', 'artifacts'
@@ -93,6 +93,35 @@ function xmlEscape(value) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
+function hasLocalePlaceholder(html) {
+  const end = html.toLowerCase().indexOf('</head>');
+  const head = end < 0 ? '' : html.slice(0, end);
+  const tags = [...head.matchAll(/<meta\b[^>]*>/gi)].map(match => match[0]);
+  const descriptionTag = tags.find(tag => /\bname\s*=\s*["']description["']/i.test(tag));
+  const description = descriptionTag
+    ? (descriptionTag.match(/\bcontent\s*=\s*["']([^"']*)["']/i) || [])[1] || ''
+    : '';
+  return /^\s*\[[^\]]{2,40}\]\s*/.test(description);
+}
+
+function getLanguage(file, html) {
+  const declared = html.match(/<html\b[^>]*\blang\s*=\s*["']([^"']+)["']/i);
+  const first = file.split('/')[0].toLowerCase();
+  const language = declared ? declared[1].trim().toLowerCase() :
+    (LANGUAGE_PREFIXES.has(first) ? first : 'en');
+  return language !== 'en' && hasLocalePlaceholder(html) ? null : language;
+}
+
+function getLanguageGroupKey(file, lang) {
+  const parts = file.split('/');
+  const primary = String(lang || 'en').toLowerCase().split('-')[0];
+  // Only strip a locale directory when it agrees with the page's declared language.
+  // For example, /uk/index.html is en-GB, while /uk/calculators/*.html is Ukrainian.
+  return parts.length > 1 && parts[0].toLowerCase() === primary
+    ? parts.slice(1).join('/')
+    : file;
+}
+
 function build() {
   const seen = new Set();
   const entries = [];
@@ -104,7 +133,7 @@ function build() {
     const loc = getCanonical(file, html);
     if (!loc || !canonicalMatchesFile(file, loc) || seen.has(loc)) continue;
     seen.add(loc);
-    entries.push({ loc, lastmod: getLastmod(file), file });
+    entries.push({ loc, lastmod: getLastmod(file), file, lang: getLanguage(file, html) });
   }
 
   if (!seen.has(SITE_ORIGIN + '/')) {
@@ -116,20 +145,23 @@ function build() {
 
   const languageGroups = new Map();
   for (const entry of entries) {
-    const parts = entry.file.split('/');
-    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
-    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
+    if (!entry.lang) { entry.alternates = null; continue; }
+    const key = getLanguageGroupKey(entry.file, entry.lang);
     if (!languageGroups.has(key)) languageGroups.set(key, new Map());
-    languageGroups.get(key).set(locale, entry.loc);
+    const group = languageGroups.get(key);
+    if (group.has(entry.lang) && group.get(entry.lang) !== entry.loc) {
+      group.set(entry.lang, null); // Ambiguous same-language siblings must not be linked.
+    } else {
+      group.set(entry.lang, entry.loc);
+    }
   }
   for (const entry of entries) {
-    const parts = entry.file.split('/');
-    const locale = parts.length > 1 && LANGUAGE_PREFIXES.has(parts[0]) ? parts[0] : 'en';
-    const key = locale === 'en' ? entry.file : parts.slice(1).join('/');
-    const group = languageGroups.get(key);
-    entry.alternates = group && group.size > 1 ? group : null;
+    if (!entry.lang) { entry.alternates = null; continue; }
+    const group = languageGroups.get(getLanguageGroupKey(entry.file, entry.lang));
+    entry.alternates = group && group.size > 1 && [...group.values()].every(Boolean) ? group : null;
   }
-  const hreflangGroups = [...languageGroups.values()].filter(group => group.size > 1).length;
+  const hreflangGroups = [...languageGroups.values()]
+    .filter(group => group.size > 1 && [...group.values()].every(Boolean)).length;
   entries.sort((a, b) => a.loc.localeCompare(b.loc));
   const body = entries.map(entry =>
     '  <url><loc>' + xmlEscape(entry.loc) + '</loc>' +
