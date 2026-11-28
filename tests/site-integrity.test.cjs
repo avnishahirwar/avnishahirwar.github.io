@@ -1071,7 +1071,7 @@ test('Hindi utility calculator pages are localized, reciprocal and indexed', () 
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
   }
 });
 
@@ -1130,7 +1130,7 @@ test('Hindi percentage change, fraction-to-percent and cube-root pages are local
     assert.ok(hindi.includes(title), 'Missing localized title: ' + slug);
     assert.ok(hindi.includes(formula), 'Missing localized formula: ' + slug);
     for (const phrase of phrases) assert.ok(hindi.includes(phrase), 'Missing localized text: ' + phrase);
-    assert.ok(sitemap.includes('https://friendlycalculator.in/hi/calculators/' + slug + '.html'), 'Missing sitemap URL: ' + slug);
+    assertSitemapRoute('/hi/calculators/' + slug + '.html', h);
   }
 });
 
