@@ -110,3 +110,38 @@ test('hreflang page edits preserve every original byte except the inserted alter
     assert.equal(current, original, 'unexpected non-additive page change: ' + file);
   }
 });
+
+test('invalid hreflang cleanup removes noindex, language-mismatch and noncanonical targets only', () => {
+  const os = require('node:os');
+  const { spawnSync } = require('node:child_process');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'fc-hreflang-prune-'));
+  const write = (file, html) => {
+    const target = path.join(temp, file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, html);
+  };
+  const en = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/en/"><link rel="alternate" hreflang="hi" href="https://friendlycalculator.in/hi/"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/"><link rel="alternate" hreflang="fr" href="https://friendlycalculator.in/fr/"></head></html>';
+  const hi = '<html lang="hi"><head><link rel="canonical" href="https://friendlycalculator.in/hi/"></head></html>';
+  const de = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/de/"></head></html>';
+  const fr = '<html lang="fr"><head><link rel="canonical" href="https://friendlycalculator.in/fr-canonical/"></head></html>';
+  const noindex = '<html lang="it"><head><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://friendlycalculator.in/it/"><link rel="alternate" hreflang="en" href="https://friendlycalculator.in/en/"></head></html>';
+  try {
+    write('en/index.html', en);
+    write('hi/index.html', hi);
+    write('de/index.html', de);
+    write('fr/index.html', fr);
+    write('it/index.html', noindex);
+    const result = spawnSync('python3', [path.join(root, 'scripts/prune-noindex-hreflang.py')], {
+      cwd: root, encoding: 'utf8', env: { ...process.env, FC_HREFLANG_ROOT: temp }
+    });
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const cleanedEn = fs.readFileSync(path.join(temp, 'en/index.html'), 'utf8');
+    assert.match(cleanedEn, /hreflang="hi"/);
+    assert.doesNotMatch(cleanedEn, /hreflang="de"/);
+    assert.doesNotMatch(cleanedEn, /hreflang="fr"/);
+    const cleanedNoindex = fs.readFileSync(path.join(temp, 'it/index.html'), 'utf8');
+    assert.doesNotMatch(cleanedNoindex, /rel="alternate"/);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
