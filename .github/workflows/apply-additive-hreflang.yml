@@ -9,7 +9,7 @@ on:
       - .github/workflows/apply-additive-hreflang.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   prepare:
@@ -38,3 +38,14 @@ jobs:
           name: additive-hreflang-html-changes
           path: artifacts/
           if-no-files-found: error
+      - name: Commit verified additive-only page metadata
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --name-only -- '*.html' | xargs -r git add --
+          if ! git diff --cached --quiet; then
+            git commit -m "seo: add verified hreflang reciprocals [skip ci]"
+            git push
+          else
+            echo "No reciprocal hreflang changes were needed."
+          fi
