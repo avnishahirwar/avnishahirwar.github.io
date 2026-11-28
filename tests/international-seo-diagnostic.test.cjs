@@ -74,7 +74,7 @@ test('hreflang page edits preserve every original byte except the inserted alter
   if (process.env.CHECK_HREFLANG_ADDITIVE_REPAIR !== 'true') { t.skip('Historical byte-preservation check was verified on PR #453; do not compare unrelated future page edits against the current main branch.'); return; }
   const baseRef = process.env.GITHUB_BASE_REF;
   if (!baseRef) { t.skip('byte-preservation comparison is a pull-request-only check'); return; }
-  const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef + '...HEAD', '--', '*.html'], {
+  const changed = execFileSync('git', ['diff', '--name-only', 'origin/' + baseRef, '--', '*.html'], {
     cwd: root, encoding: 'utf8'
   }).trim().split('\n').filter(Boolean);
   assert.ok(changed.length > 0, 'expected repaired HTML pages');
