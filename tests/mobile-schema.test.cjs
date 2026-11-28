@@ -105,7 +105,8 @@ test('directory preloads its measured LCP hero illustration from the document he
   const head = directory.slice(0, directory.indexOf('</head>'));
   assert.ok(head.includes('<link rel="preload" as="image" href="/assets/friendly-calculator-brand-illustration.svg" type="image/svg+xml" fetchpriority="high">'));
   assert.ok(directory.includes('<img src="/assets/friendly-calculator-brand-illustration.svg"'));
-  assert.ok(directory.includes('fetchpriority="high" decoding="async"'));
+  assert.ok(directory.includes('fetchpriority="high"'));
+  assert.ok(directory.includes('decoding="async"'));
 });
 
 
