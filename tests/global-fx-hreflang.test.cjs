@@ -5,7 +5,7 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const root=path.join(__dirname,'..');
 const origin='https://friendlycalculator.in';
-const locales=['hi','es','fr','pt','ar','id','bn','ta'];
+const locales=['hi','de','es','fr','pt','ar','id','bn','ta'];
 const headOf=html=>html.slice(0,html.toLowerCase().indexOf('</head>'));
 const noindexOf=html=>/<meta\b(?=[^>]*\bname=["'](?:robots|googlebot)["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(headOf(html));
 const hasPlaceholder=html=>{
@@ -53,7 +53,7 @@ test('all existing localized currency converters load the shared reference-rate 
 
 test('English currency converter and German page use only published reciprocal hreflang clusters',()=>{
  const route='currency-converter-calculator.html';
- const candidates=['en','de',...locales];
+ const candidates=['en',...locales];
  for(const locale of ['en','de']){
   const html=fs.readFileSync(pageFor(locale,route),'utf8');
   assert.deepEqual(sorted(alternatesOf(html)),sorted(expectedForLocale(candidates,locale,route)),locale+' hreflang must match the eligible reciprocal cluster');
