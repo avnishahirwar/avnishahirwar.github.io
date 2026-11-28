@@ -147,7 +147,7 @@ test('additive repair skips unsupported codes and known untranslated destination
   };
   try {
     write('ar/calculators/basic-calculator.html',
-      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.htmlcalculators/basic-calculator.html"></head></html>');
+      '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/basic-calculator.html"><link rel="alternate" hreflang="am" href="https://friendlycalculator.in/am/calculators/rd-calculator.html"><link rel="alternate" hreflang="de" href="https://friendlycalculator.in/de/calculators/rd-calculator.html"><link rel="alternate" hreflang="ja" href="https://friendlycalculator.in/ja/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="fa" href="https://friendlycalculator.in/fa/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="vi" href="https://friendlycalculator.in/vi/calculators/loan-emi-calculator.html"><link rel="alternate" hreflang="arz" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"><link rel="alternate" hreflang="en-GB" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.html"></head></html>');
     for (const locale of ['am', 'de']) {
       write(locale + '/calculators/rd-calculator.html',
         '<html lang="' + locale + '"><head><link rel="canonical" href="https://friendlycalculator.in/' + locale + '/calculators/rd-calculator.html"><link rel="alternate" hreflang="ar" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
@@ -160,8 +160,6 @@ test('additive repair skips unsupported codes and known untranslated destination
       '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/rd-calculator.html"></head></html>');
     write('ar/calculators/loan-emi-calculator.html',
       '<html lang="ar"><head><link rel="canonical" href="https://friendlycalculator.in/ar/calculators/loan-emi-calculator.html"></head></html>');
-    write('arz/calculators/basic-calculator.html',
-      '<html lang="arz"><head><link rel="canonical" href="https://friendlycalculator.in/arz/calculators/basic-calculator.html"></head></html>');
     write('en-gb/calculators/basic-calculator.html',
       '<html lang="en-GB"><head><link rel="canonical" href="https://friendlycalculator.in/en-gb/calculators/basic-calculator.html"></head></html>');
     write('arz/calculators/basic-calculator.html',
