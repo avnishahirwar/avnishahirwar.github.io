@@ -15,6 +15,17 @@ LINK = re.compile(r"<link\b[^>]*>", re.I)
 HTML_LANG = re.compile(r"<html\b[^>]*>", re.I)
 HEAD_END = re.compile(r"</head\s*>", re.I)
 LOCALE_FALLBACK = {"hi", "de", "es", "fr", "pt", "ar", "id", "bn", "ta", "ja", "ru"}
+# Google hreflang language identifiers use two-letter ISO 639-1 language codes
+# (plus optional script/region subtags); x-default is handled separately.
+SUPPORTED_HREFLANG = re.compile(r"^[a-z]{2}(?:-[a-z0-9]{2,8})*$", re.I)
+
+# Review-confirmed translated-page gaps from the reciprocal-link repair.
+# Keep this narrow and explicit: do not infer that an entire locale is missing.
+KNOWN_UNTRANSLATED = {
+    "/calculators/rd-calculator.html": {"am", "de"},
+    "/id/calculators/emi-calculator.html": {"ja", "fa", "vi"},
+    "/pt/calculators/emi-calculator.html": {"ja", "fa", "vi"},
+}
 
 def attrs(tag):
     return {m.group(1).lower(): (m.group(2) if m.group(2) is not None else m.group(3))
@@ -50,6 +61,11 @@ def canonical(html):
         if "canonical" in a.get("rel", "").lower().split() and a.get("href"):
             return normalized_url(a["href"])
     return None
+
+def known_untranslated_source(file, html, hreflang):
+    source = canonical(html)
+    source_path = urlsplit(source).path if source else "/" + file.relative_to(ROOT).as_posix()
+    return hreflang in KNOWN_UNTRANSLATED.get(source_path, set())
 
 def normalized_url(value):
     try:
@@ -117,6 +133,14 @@ def main():
             remove = []
             for start, end, hreflang, href in tags:
                 if hreflang == "x-default":
+                    continue
+                if not SUPPORTED_HREFLANG.fullmatch(hreflang):
+                    stats["removed_unsupported_language_code"] += 1
+                    remove.append((start, end))
+                    continue
+                if known_untranslated_source(file, html, hreflang):
+                    stats["removed_known_untranslated_target"] += 1
+                    remove.append((start, end))
                     continue
                 target = local_file(href)
                 if not target or target not in cache:
