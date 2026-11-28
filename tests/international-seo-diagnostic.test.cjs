@@ -120,7 +120,7 @@ test('additive repair skips malformed percent-encoded alternate URLs', () => {
     const output = execFileSync(process.execPath, [path.join(root, 'scripts/add-hreflang-reciprocals.cjs')], {
       cwd: temp, encoding: 'utf8'
     });
-    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\\{[^\\n]+\\})/)[1]);
+    const summary = JSON.parse(output.match(/Additive hreflang reciprocal repair: (\{[^\n]+\})/)[1]);
     assert.equal(summary.added, 0);
     assert.ok(summary.skippedMissingTarget > 0);
   } finally {
