@@ -200,7 +200,9 @@ function build() {
       if (/(?:^|\s)alternate(?:\s|$)/i.test(attribute(tag, 'rel')) && attribute(tag, 'hreflang')) return '';
       return tag;
     });
-    if (desired.length) nextHead += '\n' + desired.join('\n') + '\n';
+    // Canonicalize the insertion boundary so write/check is idempotent. Without
+    // trimming this suffix, each pass accumulates another blank line before tags.
+    if (desired.length) nextHead = nextHead.replace(/\s*$/, '') + '\n' + desired.join('\n') + '\n';
     const closeIndex = record.html.toLowerCase().indexOf('</head>');
     if (closeIndex < 0) continue;
     const next = nextHead + record.html.slice(closeIndex);
