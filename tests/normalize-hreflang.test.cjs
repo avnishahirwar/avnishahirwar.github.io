@@ -131,6 +131,9 @@ test('normalizer dry run reports required changes but does not mutate files', t 
   const script = path.join(fixture, 'scripts/normalize-hreflang.cjs');
   fs.mkdirSync(path.dirname(script), { recursive: true });
   fs.copyFileSync(sourceScript, script);
+  const configDir = path.join(fixture, 'config');
+  fs.mkdirSync(configDir, {recursive: true});
+  fs.copyFileSync(path.join(repoRoot, 'config/supported-locale-prefixes.json'), path.join(configDir, 'supported-locale-prefixes.json'));
   const html = '<html lang="en"><head><link rel="canonical" href="https://friendlycalculator.in/"></head><body></body></html>';
   const file = write(fixture, 'index.html', html);
   const dry = spawnSync(process.execPath, [script], { cwd: fixture, encoding: 'utf8' });
